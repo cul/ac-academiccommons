@@ -21,6 +21,7 @@ class Gatekeeper
     result
   end
 end
+
 namespace :solr do
  namespace :cul do
    namespace :fedora do
