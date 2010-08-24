@@ -1,8 +1,9 @@
 require 'rubygems'
+require 'openssl'
 require 'net/https'
 require 'rexml/document'
 require 'nokogiri'
-require 'xml/xslt'
+# require 'xml/xslt'
 require 'logger'
 
 @uri_prefix = "info:fedora/"
@@ -85,8 +86,10 @@ resDoc.elements.each('//member') do |ele|
   counter += 1
 end
 
+test_file = File.open("output_doc.xml", "w") {|f| f.write(indoc.to_s) }
+
   doc = Nokogiri::XML(indoc.to_s)
-  xslt  = Nokogiri::XSLT(File.read('/Users/Will/getIndex/ac2.xslt'))
+  xslt  = Nokogiri::XSLT(File.read('ac2.xslt'))
 
   solrdoc = xslt.transform(doc, Nokogiri::XSLT.quote_params(['repositoryService', 'https://repository2.cul.columbia.edu:8443/fedora']))
 
