@@ -39,6 +39,8 @@ namespace :solr do
      desc "index objects from a CUL fedora repository"
      task :index => :configure do
        urls_to_scan = case
+       when ENV['URL']
+         ENV['URL'].split(",")
        when ENV['URL_LIST']
          url = ENV['URL_LIST']
          uri = URI.parse(url) # where is url assigned?
