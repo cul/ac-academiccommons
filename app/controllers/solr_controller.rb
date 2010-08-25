@@ -41,38 +41,106 @@ class SolrController < ApplicationController
     end
     
     normalize_space = lambda { |s| s.to_s.strip.gsub(/\s{2,}/," ") }
+    search_to_content = lambda { |x| x.kind_of?(Nokogiri::XML::Element) ? x.content : x.to_s }
+    add_field = lambda { |x, name, value| x.field(:name => name) { x.text search_to_content.call(value) }}
+
+    get_fullname = lambda { |node| node.nil? ? nil : (node.css("namePart[@type='family']").collect(&:content) | node.css("namePart[@type='given']").collect(&:content)).join(", ") }
+
     roles = ["Author","author","Creator","Thesis Advisor","Collector","Owner","Speaker","Seminar Chairman","Secretary","Rapporteur","Committee Member","Degree Grantor","Moderator","Editor","Interviewee","Interviewer","Organizer of Meeting","Originator","Teacher"]
     
     builder = Nokogiri::XML::Builder.new do |xml|
       xml.add {
         xml.doc_ {
-          xml.field(:name => "pid") { xml.text pid }
+          add_field.call(xml, "pid", pid)
           
           collections.each do |collection|
-            xml.field(:name => "member_of") { xml.text collection }
+            add_field.call(xml, "member_of", collection)
           end
 
           if (mods = docs[:meta_pid].at_css("mods"))
             title = normalize_space.call(mods.css("titleInfo>nonSort,title").collect(&:content).join(" "))
-            xml.field(:name => "title_display") { xml.text title }
-            xml.field(:name => "title_search") { xml.text title }
-          
+            add_field.call(xml, "title_display", title)
+            add_field.call(xml, "title_search", title)
+         
+            all_names = []
             mods.css("name[@type='personal']").each do |name_node|
               if name_node.css("role>roleTerm[@type='text']").collect(&:content).any_in?(*roles)
                 
-                fullname = (name_node.css("namePart[@type='family']").collect(&:content) | name_node.css("namePart[@type='given']").collect(&:content)).join(", ")
+                fullname = get_fullname.call(name_node)
                 
+                all_names << fullname
                 
-                xml.field(:name => "author_search") { xml.text fullname.downcase }
-                xml.field(:name => "author_facet") { xml.text fullname }
+                add_field.call(xml, "author_search", fullname.downcase)
+                add_field.call(xml, "author_facet", fullname)
 
               end
               
             end
+
+            add_field.call(xml, "authors_display",all_names.join("; "))
+            add_field.call(xml, "date", mods.at_css("*[@keyDate='yes']"))
+
+            mods.css("genre").each do |genre_node|
+              add_field.call(xml, "genre_facet", genre_node)
+              add_field.call(xml, "genre_search", genre_node)
+
+            end
               
 
+            add_field.call(xml, "abstract", mods.at_css("abstract"))
+            add_field.call(xml, "handle", mods.at_css("identifier[@type='hdl']"))
+         
+            mods.css("subject:not([@authority='local'])>topic").each do |topic_node|
+              add_field.call(xml, "keyword_search", topic_node.content.downcase)
+              add_field.call(xml, "keyword_facet", topic_node)
+            end
+
+            mods.css("subject[@authority='local']>topic").each do |topic_node|
+              add_field.call(xml, "subject", topic_node)
+              add_field.call(xml, "subject_search", topic_node)
+            end
+
+
+            add_field.call(xml, "tableOfContents", mods.at_css("tableOfContents"))
+            
+            mods.css("note").each { |note| add_field.call(xml, "notes", note) }
+            
+            related_host = mods.at_css("relatedItem[@type='host']")
+
+            book_journal_title = related_host.at_css("titleInfo>title")
+
+            if book_journal_title
+              book_journal_subtitle = mods.at_css("name>titleInfo>subTitle")
+              
+              book_journal_title = book_journal_title.content + ": " + book_journal_subtitle.content.to_s if book_journal_subtitle
+
+            end
+
+            add_field.call(xml, "book_journal_title", book_journal_title)
+
+            add_field.call(xml, "book_author", get_fullname.call(related_host.at_css("name")))
+  
+            add_field.call(xml, "issn", related_host.at_css("identifier[@type='issn']"))
+            add_field.call(xml, "publisher", mods.at_css("relatedItem>originInfo>publisher"))
+            add_field.call(xml, "publisher_location", mods.at_css("relatedItem > originInfo>place>placeTerm[@type='text']"))
+            add_field.call(xml, "isbn", mods.at_css("relatedItem>identifier[@type='isbn']"))
+            add_field.call(xml, "doi", mods.at_css("identifier[@type='doi'][@displayLabel='Published version']"))
+            
+            mods.css("physicalDescription>internetMediaType").each { |mt| add_field.call(xml, "media_type_facet", mt) }
+
+            mods.css("typeOfResource").each { |tr| add_field.call(xml, "type_of_resource_facet", tr)}
+            mods.css("subject>geographic").each do |geo|
+              add_field.call(xml, "geographic_area", geo)
+              add_field.call(xml, "geographic_area_search", geo)
+            end
+
+
+            
           end
 
+          members.each do |member|
+            add_field.call(xml, "ac.fulltext_#{member[:position]}", member[:full_text])
+          end
           
         }
       }
@@ -81,6 +149,7 @@ class SolrController < ApplicationController
     end
 
     return builder 
+
   end
 
 
