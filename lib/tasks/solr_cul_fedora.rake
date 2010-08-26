@@ -6,7 +6,9 @@ class Gatekeeper
     @allowed = arg1.collect { |pid|
       Regexp.new('\b' + pid + '[\b\/]')
     }
-  end
+  end 
+
+
   def accept?(filedata)
     result = false
     if (allowed.length == 0)

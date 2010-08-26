@@ -51,8 +51,15 @@ class SolrController < ApplicationController
     builder = Nokogiri::XML::Builder.new do |xml|
       xml.add(:xmlns => "http://solr.apache.org") {
         xml.doc_ {
+          # baseline blacklight fields: id is the unique identifier, format determines by default, what partials get called
+          add_field.call(xml, "id", pid)
+          
+          # probably you want to determine a different format more than just a generic AC2, but we'll start here:
+          add_field.call(xml, "format", "Object")
+
           add_field.call(xml, "pid", pid)
-         
+
+          # FIXME: This is a hack to get it to pass the ingest gatekeeper, saying that is in the hierarchy of its first collection. 
           add_field.call(xml, "internal_h", collections.first.to_s+"/")
           collections.each do |collection|
             add_field.call(xml, "member_of", collection)

@@ -31,16 +31,9 @@ Blacklight.configure(:shared) do |config|
     :qt=>:search,
     :per_page => 10,
     :facets => {:fields=>
-      ["format",
-        "language_facet",
-        "lc_1letter_facet",
-        "lc_alpha_facet",
-        "lc_b4cutter_facet",
-        "language_facet",
-        "pub_date",
-        "subject_era_facet",
-        "subject_geo_facet",
-        "subject_topic_facet"]
+      ["format", 
+        "genre_facet"
+      ]
     }  
   }
   
@@ -75,24 +68,20 @@ Blacklight.configure(:shared) do |config|
   # config[:facet] << {:field_name => "format", :label => "Format", :limit => 10}
   config[:facet] = {
     :field_names => [
-      "format_h",
-      "collection_h",
-      "date_created_h",
+      "format",
+      "genre_facet",
       "pub_date",
       "subject_topic_facet",
       "language_facet",
-      "descriptor",
       "lc_1letter_facet",
       "subject_geo_facet",
       "subject_era_facet"
     ],
     :labels => {
-      "format_h"              => "Format",
-      "collection_h"              => "In Hierarchy",
-      "date_created_h"              => "Date Created",
+      "format"              => "Format",
+      "genre_facet"         => "Genre",
       "pub_date"            => "Publication Year",
       "subject_topic_facet" => "Topic",
-      "descriptor"          => "Metadata Type",
       "language_facet"      => "Language",
       "lc_1letter_facet"    => "Call Number",
       "subject_era_facet"   => "Era",
@@ -107,12 +96,8 @@ Blacklight.configure(:shared) do |config|
     :limits => {
       nil => 10,
       "subject_facet" => 20
-    },
-    :hierarchy => {
-      "format_h" => true,
-      "date_created_h" => true,
-      "collection_h" => true
     }
+      
   }
 
   # solr fields to be displayed in the index (search results) view
