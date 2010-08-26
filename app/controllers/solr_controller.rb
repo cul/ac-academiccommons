@@ -49,10 +49,11 @@ class SolrController < ApplicationController
     roles = ["Author","author","Creator","Thesis Advisor","Collector","Owner","Speaker","Seminar Chairman","Secretary","Rapporteur","Committee Member","Degree Grantor","Moderator","Editor","Interviewee","Interviewer","Organizer of Meeting","Originator","Teacher"]
     
     builder = Nokogiri::XML::Builder.new do |xml|
-      xml.add {
+      xml.add(:xmlns => "http://solr.apache.org") {
         xml.doc_ {
           add_field.call(xml, "pid", pid)
-          
+         
+          add_field.call(xml, "internal_h", collections.first.to_s+"/")
           collections.each do |collection|
             add_field.call(xml, "member_of", collection)
           end

@@ -235,8 +235,13 @@
        fields or fields that need an index-time boost need norms.
    -->
 
+   <!-- hierarchical fields -->
+   <field name="internal_h" type="string" indexed="true" stored="true"/>
+
    <!-- Academic Commons Fields -->
-   
+
+
+
 		<field name="pid" type="string" indexed="true" stored="true" required="true" /> 
 		<field name="member_of" type="string" stored="true" indexed="true" multiValued="true"/>
 		<field name="genre_search" type="text" indexed="true" stored="true" multiValued="true"/>
@@ -261,7 +266,7 @@
 		<field name="issn" type="string" indexed="true" stored="false" />
 		<field name="doi" type="string" indexed="true" stored="false" />
 		<field name="link_on" type="string" indexed="true" stored="true" />
- 
+  <field name="tableOfContents" type="string" indexed="true" stored="true"/>
    
             <field name="genre_facet" type="string" indexed="true" stored="true" multiValued="true"/>
             <field name="author_facet" type="string" indexed="true" stored="true" multiValued="true"/>

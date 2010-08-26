@@ -14,8 +14,9 @@ class Gatekeeper
     end
     doc = Nokogiri::XML::Document.parse(filedata,'utf-8')
     doc.xpath('//xmlns:field[@name="internal_h"]').each do |element|
+      
       allowed.each do |pid|
-        result |= (pid =~ element.content)
+        result |= (pid =~ element.content) 
       end
     end
     result
@@ -33,14 +34,14 @@ namespace :solr do
        yaml = YAML::load(File.open("config/fedora.yml"))[env]
        ENV['RI_URL'] ||= yaml['riurl'] 
        ENV['RI_QUERY'] ||= yaml['riquery'] 
-       ALLOWED = Gatekeeper.new(yaml['collections'].split(';'))
+       ALLOWED = Gatekeeper.new(yaml['collections'].to_s.split(';'))
      end
 
      desc "index objects from a CUL fedora repository"
      task :index => :configure do
        urls_to_scan = case
-       when ENV['URL']
-         ENV['URL'].split(",")
+       when ENV['URLS']
+         url_array = ENV['URLS'].split(",")
        when ENV['URL_LIST']
          url = ENV['URL_LIST']
          uri = URI.parse(url) # where is url assigned?
@@ -74,7 +75,7 @@ namespace :solr do
        puts "#{url_array.size} URLs to scan."
 
        successes = 0
-
+      
        solr_url = ENV['SOLR'] || Blacklight.solr_config[:url]
        puts "Using Solr at: #{solr_url}"
        
@@ -86,12 +87,15 @@ namespace :solr do
            source = Net::HTTP.new(source_uri.host, source_uri.port)
            source.use_ssl = source_uri.scheme.eql? "https"
            source.start
+           
            res =  source.get(source_uri.path)
            source.finish
+            puts "success!"
            if res.response.code == "200" && ALLOWED.accept?(res.body)
              Net::HTTP.start(update_uri.host, update_uri.port) do |http|
                hdrs = {'Content-Type'=>'text/xml','Content-Length'=>res.body.length.to_s}
                begin
+                 
                   update_res = http.post(update_uri.path, res.body, hdrs)
                   if update_res.response.code == "200"
                      successes += 1
