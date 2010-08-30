@@ -41,6 +41,8 @@ namespace :solr do
 
      desc "index objects from a CUL fedora repository"
      task :index => :configure do
+       profile = ENV['PROFILE']
+
        urls_to_scan = case
        when ENV['URLS']
          url_array = ENV['URLS'].split(",")
@@ -65,7 +67,7 @@ namespace :solr do
        when ENV['PID']
          pid = ENV['PID']
          fedora_uri = URI.parse(ENV['RI_URL'])
-         url_array = [ fedora_uri.merge('/fedora/get/' + pid + '/ldpd:sdef.Core/getIndex').to_s]
+         url_array = [ fedora_uri.merge('/fedora/get/' + pid + "/ldpd:sdef.Core/getIndex?profile=#{profile}").to_s]
        when ENV['SAMPLE_DATA']
          File.read(File.join(RAILS_ROOT,"test","sample_data","cul_fedora_index.json"))
        else
