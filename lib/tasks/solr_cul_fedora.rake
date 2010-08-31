@@ -10,6 +10,7 @@ class Gatekeeper
 
 
   def accept?(filedata)
+    return true
     result = false
     if (allowed.length == 0)
       p "Warning: No allowable collection regex's"
@@ -63,7 +64,7 @@ namespace :solr do
          members = risearch.post(fedora_uri.path + '/risearch',query)
          risearch.finish
          members = JSON::parse(members.body)['results']
-         url_array = members.collect {|member| fedora_uri.merge('/fedora/get/' + member['member'].split('/')[1] + '/ldpd:sdef.Core/getIndex').to_s}
+         url_array = members.collect {|member| fedora_uri.merge('/fedora/get/' + member['member'].split('/')[1] + "/ldpd:sdef.Core/getIndex?profile=#{profile}").to_s}
        when ENV['PID']
          pid = ENV['PID']
          fedora_uri = URI.parse(ENV['RI_URL'])
@@ -82,7 +83,8 @@ namespace :solr do
       
        solr_url = ENV['SOLR'] || Blacklight.solr_config[:url]
        puts "Using Solr at: #{solr_url}"
-       
+      
+
        update_uri = URI.parse(solr_url.gsub(/\/$/, "") + "/update")
 
        url_array.each do |source_url|
@@ -92,9 +94,10 @@ namespace :solr do
            source.use_ssl = source_uri.scheme.eql? "https"
            source.start
            
-           res =  source.get(source_uri.path)
+           res =  source.get(source_uri.path + "?" + source_uri.query)
            source.finish
-            puts "success!"
+           puts source_url + " : no add generated" unless res.body.include?("<doc>")
+              
            if res.response.code == "200" && ALLOWED.accept?(res.body)
              Net::HTTP.start(update_uri.host, update_uri.port) do |http|
                hdrs = {'Content-Type'=>'text/xml','Content-Length'=>res.body.length.to_s}

@@ -1,7 +1,8 @@
 class SolrController < ApplicationController
   def get_index
-     
-    render :xml => index_ac2(params[:id]).to_xml
+    pid = params[:objuri].sub("info:fedora/","")
+
+    render :xml => index_ac2(pid)
   
   end
 
@@ -48,8 +49,10 @@ class SolrController < ApplicationController
 
     roles = ["Author","author","Creator","Thesis Advisor","Collector","Owner","Speaker","Seminar Chairman","Secretary","Rapporteur","Committee Member","Degree Grantor","Moderator","Editor","Interviewee","Interviewer","Organizer of Meeting","Originator","Teacher"]
     
-    builder = Nokogiri::XML::Builder.new do |xml|
-      xml.add(:xmlns => "http://solr.apache.org") {
+    return "<nodoc/>" unless docs[:meta_pid]
+
+    builder = Nokogiri::XML::Builder.new(:encoding => "UTF-8") do |xml|
+      xml.add {
         xml.doc_ {
           # baseline blacklight fields: id is the unique identifier, format determines by default, what partials get called
           add_field.call(xml, "id", pid)
@@ -65,6 +68,7 @@ class SolrController < ApplicationController
             add_field.call(xml, "member_of", collection)
           end
 
+          
           if (mods = docs[:meta_pid].at_css("mods"))
             title = normalize_space.call(mods.css("titleInfo>nonSort,title").collect(&:content).join(" "))
             add_field.call(xml, "title_display", title)
@@ -113,22 +117,23 @@ class SolrController < ApplicationController
             
             mods.css("note").each { |note| add_field.call(xml, "notes", note) }
             
-            related_host = mods.at_css("relatedItem[@type='host']")
+            if (related_host = mods.at_css("relatedItem[@type='host']"))
+              book_journal_title = related_host.at_css("titleInfo>title") 
 
-            book_journal_title = related_host.at_css("titleInfo>title")
+              if book_journal_title
+                book_journal_subtitle = mods.at_css("name>titleInfo>subTitle")
+                
+                book_journal_title = book_journal_title.content + ": " + book_journal_subtitle.content.to_s if book_journal_subtitle
 
-            if book_journal_title
-              book_journal_subtitle = mods.at_css("name>titleInfo>subTitle")
-              
-              book_journal_title = book_journal_title.content + ": " + book_journal_subtitle.content.to_s if book_journal_subtitle
+              end
 
+              add_field.call(xml, "book_journal_title", book_journal_title)
+
+              add_field.call(xml, "book_author", get_fullname.call(related_host.at_css("name"))) 
+  
+              add_field.call(xml, "issn", related_host.at_css("identifier[@type='issn']"))
             end
 
-            add_field.call(xml, "book_journal_title", book_journal_title)
-
-            add_field.call(xml, "book_author", get_fullname.call(related_host.at_css("name")))
-  
-            add_field.call(xml, "issn", related_host.at_css("identifier[@type='issn']"))
             add_field.call(xml, "publisher", mods.at_css("relatedItem>originInfo>publisher"))
             add_field.call(xml, "publisher_location", mods.at_css("relatedItem > originInfo>place>placeTerm[@type='text']"))
             add_field.call(xml, "isbn", mods.at_css("relatedItem>identifier[@type='isbn']"))
@@ -156,7 +161,7 @@ class SolrController < ApplicationController
     
     end
 
-    return builder 
+    return builder.to_xml.to_s.sub('<?xml version="1.0" encoding="UTF-8"?>',"").strip 
 
   end
 
