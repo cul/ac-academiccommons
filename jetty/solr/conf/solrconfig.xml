@@ -60,6 +60,11 @@
           <str name="facet.mincount">1</str>
           <str name="facet.limit">10</str>
           <str name="facet.field">format</str>
+          <str name="facet.field">genre_facet</str>
+          <str name="facet.field">author_facet</str>
+          <str name="facet.field">keyword_facet</str>
+          <str name="facet.field">media_type_facet</str>
+          <str name="facet.field">type_of_resource_facet</str>
           <str name="facet.field">lc_1letter_facet</str>
           <str name="f.lc_1letter_facet.facet.sort">false</str>
           <str name="facet.field">lc_alpha_facet</str>
@@ -69,7 +74,6 @@
           <str name="facet.field">subject_era_facet</str>
           <str name="facet.field">subject_geo_facet</str>
           <str name="facet.field">subject_topic_facet</str>
-          <str name="facet.field">genre_facet</str>
         </lst>
         <!-- query for single document to populate filter cache -->
         <lst>
@@ -91,6 +95,10 @@
           <str name="facet.field">subject_geo_facet</str>
           <str name="facet.field">subject_topic_facet</str>
           <str name="facet.field">genre_facet</str>
+          <str name="facet.field">keyword_facet</str>
+          <str name="facet.field">media_type_facet</str>
+          <str name="facet.field">type_of_resource_facet</str>
+          <str name="facet.field">lc_1letter_facet</str>
         </lst>
       </arr>
     </listener>
@@ -115,6 +123,10 @@
           <str name="facet.field">language_facet</str>
           <str name="facet.field">pub_date</str>
           <str name="facet.field">genre_facet</str>
+          <str name="facet.field">keyword_facet</str>
+          <str name="facet.field">media_type_facet</str>
+          <str name="facet.field">type_of_resource_facet</str>
+          <str name="facet.field">lc_1letter_facet</str>
           <str name="facet.field">subject_era_facet</str>
           <str name="facet.field">subject_geo_facet</str>
           <str name="facet.field">subject_topic_facet</str>
@@ -136,6 +148,10 @@
           <str name="facet.field">language_facet</str>
           <str name="facet.field">pub_date</str>
           <str name="facet.field">genre_facet</str>
+          <str name="facet.field">keyword_facet</str>
+          <str name="facet.field">media_type_facet</str>
+          <str name="facet.field">type_of_resource_facet</str>
+          <str name="facet.field">lc_1letter_facet</str>
           <str name="facet.field">subject_era_facet</str>
           <str name="facet.field">subject_geo_facet</str>
           <str name="facet.field">subject_topic_facet</str>
@@ -221,9 +237,11 @@
       <str name="fl">
         id, 
         score,
-        author_display,
+        authors_display,
         author_vern_display, 
         format, 
+        date,
+        keyword_facet,
         isbn_t, 
         language_facet, 
         lc_callnum_display,
@@ -252,7 +270,11 @@
       <str name="facet.field">lc_b4cutter_facet</str>
       <str name="facet.field">language_facet</str>
       <str name="facet.field">pub_date</str>
-          <str name="facet.field">genre_facet</str>
+      <str name="facet.field">genre_facet</str>
+      <str name="facet.field">author_facet</str>
+      <str name="facet.field">keyword_facet</str>
+      <str name="facet.field">media_type_facet</str>
+      <str name="facet.field">type_of_resource_facet</str>
       <str name="facet.field">subject_era_facet</str>
       <str name="facet.field">subject_geo_facet</str>
       <str name="facet.field">subject_topic_facet</str>
@@ -296,9 +318,11 @@
       <str name="fl">
         id, 
         score,
-        author_display,
+        authors_display,
         author_vern_display, 
         format, 
+        date,
+        keyword_facet,
         isbn_t, 
         language_facet, 
         lc_callnum_display,
@@ -383,9 +407,11 @@
       <str name="fl">
         id, 
         score,
-        author_display,
+        authors_display,
         author_vern_display, 
-        format, 
+        format,	  
+        date,
+        keyword_facet,        
         isbn_t, 
         language_facet, 
         lc_callnum_display,
@@ -462,9 +488,11 @@
       <str name="fl">
         id, 
         score,
-        author_display,
+        authors_display,
         author_vern_display, 
         format, 
+        date,
+        keyword_facet,
         isbn_t, 
         language_facet, 
         lc_callnum_display,
@@ -493,7 +521,11 @@
       <str name="facet.field">lc_b4cutter_facet</str>
       <str name="facet.field">language_facet</str>
       <str name="facet.field">pub_date</str>
-          <str name="facet.field">genre_facet</str>
+      <str name="facet.field">genre_facet</str>
+      <str name="facet.field">author_facet</str>
+      <str name="facet.field">keyword_facet</str>
+      <str name="facet.field">media_type_facet</str>
+      <str name="facet.field">type_of_resource_facet</str>
       <str name="facet.field">subject_era_facet</str>
       <str name="facet.field">subject_geo_facet</str>
       <str name="facet.field">subject_topic_facet</str>
