@@ -3,7 +3,7 @@
 	<%= render 'home' %>
 <% else %>
 
-	<% @page_title = application_name + " Search Results" %>
+	<% @page_title = "Search Results | " + application_name  %>
 
 	<%= render :partial => 'search_form' %>
 

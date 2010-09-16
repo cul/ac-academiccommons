@@ -7,7 +7,7 @@ module ApplicationHelper
 
   
   def application_name
-    'Blacklight'
+    'Columbia University Libraries | Academic Commons'
   end
 
   ##
