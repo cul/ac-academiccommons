@@ -1,10 +1,18 @@
 /* @override 
-	http://localhost:3000/stylesheets/application.css?1281548187
-	http://dyn-iab-163-44.dyn.columbia.edu:3000/stylesheets/application.css
-	http://dyn-iab-163-44.dyn.columbia.edu:3000/stylesheets/application.css?1281987162
+	http://localhost:3000/stylesheets/application.css?1284758077
+	http://localhost:3000/stylesheets/application.css?1284760141
+	http://localhost:3000/stylesheets/application.css?1284761609
+	http://localhost:3000/stylesheets/application.css?1284762545
 */
 
+html {
+	background: #191736 url(../images/page-background.png) repeat-x;
+	
+}
 
+div#bd {
+	 min-height: 600px;
+}
 
 #descriptive_information .label {
   font-weight: bold; 
@@ -12,8 +20,8 @@
   }
 
 #cu-header{
-
-	background-color:#2d2a62;margin-bottom:2px;padding-left:7px;height:18px
+ 
+ padding-left:7px;height:18px
 
 }
 
@@ -42,4 +50,13 @@
 	cursor: pointer;
 	background-color:#ECF5FF;
 	height: 2em;
+}
+
+div#doc4.yui-t2 {
+	width:960px;
+	
+}
+
+span.index_counter {
+	margin-left: -16px;
 }

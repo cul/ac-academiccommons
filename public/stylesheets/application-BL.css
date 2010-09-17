@@ -3,13 +3,22 @@
 	http://dyn-iab-163-44.dyn.columbia.edu:3000/plugin_assets/blacklight/stylesheets/application.css?1282054235
 	http://dyn-iab-163-44.dyn.columbia.edu:3000/plugin_assets/blacklight/stylesheets/application.css?1282074315
 	http://localhost:3000/stylesheets/application-BL.css?1282077909
+	http://localhost:3000/stylesheets/application-BL.css?1284747958
+	http://localhost:3000/stylesheets/application-BL.css?1284753248
+	http://localhost:3000/stylesheets/application-BL.css?1284757621
+	http://localhost:3000/stylesheets/application-BL.css?1284757908
+	http://localhost:3000/stylesheets/application-BL.css?1284758540
+	http://localhost:3000/stylesheets/application-BL.css?1284759340
+	http://localhost:3000/stylesheets/application-BL.css?1284760081
+	http://localhost:3000/stylesheets/application-BL.css?1284761720
+	http://localhost:3000/stylesheets/application-BL.css?1284762411
 */
 
 /* Global */
 
-html {
+/*html {
 	background: #eeeeee;
-}
+}*/
 
 body {
 	font: 0.7em Verdana, "Lucida Grande", "Lucida Sans Unicode", Arial, sans-serif;
@@ -91,9 +100,9 @@ a:hover {
 /* Header Container Layout */
 
 #hd {
-	margin: 0em 2em 0 2em;
-	padding: 2em 0 2em 0;
-	border-bottom: 1px dotted #ccc;
+	margin: 2em 0;
+	padding: 1em 0 1em 0;
+
 }
 
 #hd .yui-g {
@@ -104,42 +113,46 @@ a:hover {
 	text-align: left;
 }
 
-.yui-t2 {
-	background-color: #fff;
+/*.yui-t2 {
+ 
 	border-bottom: 2px solid #555;
 	margin: 0px auto;
-}
+}*/
 
 /* border-top: 10px solid #548cd8; -moz-border-top-colors: #548cd8 #5188d3 #4e84d0 #4b81cd #497dc9 #457ac6 #4376c2 #4173be #3e71bc #3d6fba; */
 
-#doc1, #doc2, #doc1, #doc4 {
-	width: 920px;
-}
+/*#doc1, #doc2, #doc1, #doc4 {
+	width: 974px;
+}*/
 
 /* Body Container Layout */
 
-#bd {
+/*#bd {
 	padding: 0 2em 2em 2em;
-}
+}*/
 
 #yui-main {
-	position: relative;
-	width: 875px;
+	/*position: relative;*/
+    /*min-height: 600px;*/
+	background-color: #f5f5f5;
 }
+
+ 
 
 .yui-t2 #yui-main .yui-b {
 	border-left: 1px dotted #ccc;
-	padding: 2em 0 2em 2em;
-	position: relative;
+	padding: 2em 1em 2em 2em;
+	/*position: relative;*/
 	margin-left: 200px;
+	min-height: 500px;
 }
 
 /* Left Sidebar Layout */
 
-.yui-t2 .yui-b {
+/*.yui-t2 .yui-b {
 	float: left;
 	width: 180px;
-}
+}*/
 
 .yui-t2 .yui-b p {
 	padding-top: 2em;
@@ -148,21 +161,19 @@ a:hover {
 /* Top Banner */
 
 h1.site_title {
-	/*background: transparent url('../images/logo.png') no-repeat top left;*/
-	margin: 2em 0px 0px 1em;
-	height: 35px;
-	width: 120px;
+	background: transparent url('../images/ac_logo.png') no-repeat top left;
+	height: 32px;
+	width: 334px;
+	margin-top: 11px;
+	margin-bottom: 0;
 }
 
-.first h1 {
-	margin: 0px;
-	padding: 0px;
-}
+
 
 h1.site_title a {
 	display: block;
-	height: 35px;
-	width: 120px;
+	/*height: 35px;
+	width: 120px;*/
 	text-indent: -9999px;
 	overflow: hidden;
 	text-decoration: none;
@@ -181,11 +192,11 @@ h2.search {
 /* Search Box */
 
 #search {
-	position: absolute;
+	/*position: absolute;
 	top: -2.5em;
 	left: 0;
 	text-align: left;
-	font-size: 120%;
+	font-size: 120%;*/
 }
 
 #search #q {
@@ -263,7 +274,11 @@ th, td {
 }
 
 #facets span.selected {
-	color: green;
+	color: #4800e6;
+	background-color: #c6f9fe;
+	padding-right: 20px;
+	padding-top: 7px;
+	padding-bottom: 6px;
 }
 
 #facets li.more_facets_link {
@@ -348,15 +363,17 @@ ul.facet_extended_list li {
 /* Search Results */
 
 .document {
-	padding: 0.5em 0 0 0;
+	padding: 0.75em 0 0 2em;
 	background-color: #fff;
 	border-bottom: 1px dotted #ccc;
 }
 
+/* My Comment */
+
 #documents {
-	background-color: #eee;
+	background-color: #ccc;
 	color: #333;
-	width: 650px;
+	/*width: 650px;*/
 }
 
 #documents .documentHeader {
@@ -380,9 +397,10 @@ ul.facet_extended_list li {
 
 h3.index_title {
 	clear: both;
-	margin: 0px;
 	padding: 0px;
-	width: 460px;
+	margin-bottom: 0px;
+	margin-top: 0px;
+	margin-right: 0px;
 }
 
 dl {
@@ -658,47 +676,47 @@ body {
 	padding: 0px;
 }
 
-#hd {
+/*#hd {
 	margin: 0;
 	padding: 0 0 2em 0;
-}
+}*/
 
-.yui-t2 {
+/*.yui-t2 {
 	background: none;
 	border: 0px;
 	margin: 0px;
-}
+}*/
 
 .first {
 	margin: 2em 0px 0px 0px;
 }
 
-#doc1, #doc2, #doc1, #doc4 {
+/*#doc1, #doc2, #doc1, #doc4 {
 	width: 100%;
 	margin: 0;
 	padding: 0;
-}
+}*/
 
-#bd {
+/*#bd {
 	padding: 0;
-}
+}*/
 
-#yui-main {
+/*#yui-main {
 	position: relative;
 	width: 100%;
-}
+}*/
 
 .yui-t2 #yui-main .yui-b {
 	border-left: 1px dotted #ccc;
-	padding: 2em 0 2em 1em;
-	position: relative;
-	margin-left: 150px;
+	/*padding: 2em 0 2em 1em;*/
+	/*position: relative;*/
+	/*margin-left: 150px;*/
 }
 
-.yui-t2 .yui-b {
+/*.yui-t2 .yui-b {
 	float: none;
 	width: 130px;
-}
+}*/
 
 .yui-t2 .yui-b p {
 	padding-top: 2em;
@@ -860,6 +878,3 @@ ul#appliedFiltersList,
 	background: url(../images/separator.gif) no-repeat right center;
 }
 
-* {
-	
-}
