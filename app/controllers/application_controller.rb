@@ -65,9 +65,9 @@ class ApplicationController < ActionController::Base
     '<link href="' + href + '" rel="stylesheet" type="text/css" media="' + args[:media] + '" />'
   end
   def default_html_head
-    stylesheet_links << ['yui', 'jquery/ui-lightness/jquery-ui-1.8.1.custom.css', 'application',{:plugin=>:blacklight, :media=>'all'}]
+    #stylesheet_links << ['yui', 'jquery/ui-lightness/jquery-ui-1.8.1.custom.css', 'application',{:plugin=>:blacklight, :media=>'all'}]
     stylesheet_links << ['zooming_image', 'accordion', {:media=>'all'}]
-    stylesheet_links << ['application']
+    stylesheet_links << ['yui','jquery/ui-lightness/jquery-ui-1.8.1.custom.css', 'application-BL','application']
     javascript_includes << ['jquery-1.4.2.min.js', 'jquery-ui-1.8.1.custom.min.js', 'blacklight', 'application', { :plugin=>:blacklight } ]
     javascript_includes << ['accordion', 'zooming_image']
     extra_head_content << [stylesheet_tag(openlayers_css, :media=>'all'), javascript_tag(openlayers_js)]

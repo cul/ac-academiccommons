@@ -4,19 +4,27 @@
 	http://dyn-iab-163-44.dyn.columbia.edu:3000/stylesheets/application.css?1281987162
 */
 
-/* My Comment */
+
 
 #descriptive_information .label {
-  font-weight: bold; }
+  font-weight: bold; 
+  
+  }
 
-#cu-header { 
-	 background-color:#2d2a62;margin-bottom:2px;padding-left:7px;height:18px
+#cu-header{
+
+	background-color:#2d2a62;margin-bottom:2px;padding-left:7px;height:18px
+
 }
 
-#cu-header img {
+#cu-header img{
+
 	margin-top: 2px;
+
 }
+
 #cu-header a{
+	
 	font-size: 1.1em;
 	margin-left: 2px;
 	vertical-align: 2px;
@@ -26,11 +34,12 @@
 
 
 #facets h3 {
+	
 	margin-bottom: 0;
 	color: #2d2a62;
 	font-weight: bold;
 	text-align: justify;
 	cursor: pointer;
-	 background-color:#ECF5FF;
-	 height: 2em;
+	background-color:#ECF5FF;
+	height: 2em;
 }
