@@ -2,6 +2,7 @@
 	http://localhost:3000/plugin_assets/blacklight/stylesheets/application.css?1281548187
 	http://dyn-iab-163-44.dyn.columbia.edu:3000/plugin_assets/blacklight/stylesheets/application.css?1282054235
 	http://dyn-iab-163-44.dyn.columbia.edu:3000/plugin_assets/blacklight/stylesheets/application.css?1282074315
+	http://localhost:3000/stylesheets/application-BL.css?1282077909
 */
 
 /* Global */
@@ -398,7 +399,7 @@ dl.defList dt {
 	float: left;
 	text-align: right;
 	width: 20%;
-	clear: both;
+	/*clear: both;*/
 	color: #888;
 	margin: 0;
 	padding: 2px 1em 2px 0px;
@@ -410,6 +411,7 @@ dl.defList dd {
 	margin: 0;
 	padding: 2px 0;
 	width: 450px;
+	 
 }
 
 /* Individual Result Listing */
