@@ -12,6 +12,8 @@
 	http://localhost:3000/stylesheets/application-BL.css?1284760081
 	http://localhost:3000/stylesheets/application-BL.css?1284761720
 	http://localhost:3000/stylesheets/application-BL.css?1284762411
+	http://localhost:3000/stylesheets/application-BL.css?1284762609
+	http://localhost:3000/stylesheets/application-BL.css?1284996673
 */
 
 /* Global */
@@ -135,6 +137,7 @@ a:hover {
 	/*position: relative;*/
     /*min-height: 600px;*/
 	background-color: #f5f5f5;
+	border: 1px dotted navy;
 }
 
  
@@ -231,20 +234,21 @@ th, td {
 
 /* Facets */
 
-#facets {
-	font-size: 93%;
-	padding: 1em 0 0 1em;
-}
+ 
 
 #facets h2 {
 	color: #555;
+	font-family: "Helvetica Neue", Arial, Helvetica, Geneva, sans-serif;
+	font-weight: normal;
+	font-style: normal;
+
 }
 
 #facets h3 {
 	margin-bottom: 0;
 	color: #fff;
 	font-weight: normal;
-	text-align: justify;
+	text-align: left;
 	cursor: pointer;
 	 background-color:#2d2a62;
 	 height: 2em;
@@ -258,6 +262,7 @@ th, td {
 	border-bottom: 1px dotted #ccc;
 	padding-bottom: 1em;
 	margin: 0;
+	padding-left: 5px;
 }
 
 #facets li {
@@ -275,7 +280,7 @@ th, td {
 
 #facets span.selected {
 	color: #4800e6;
-	background-color: #c6f9fe;
+	background-color: #d3e9f3;
 	padding-right: 20px;
 	padding-top: 7px;
 	padding-bottom: 6px;
@@ -722,9 +727,7 @@ body {
 	padding-top: 2em;
 }
 
-#facets {
-	padding: 1em 0 0 0;
-}
+ 
 
 .solrQuery {
 	display: none;

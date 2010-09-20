@@ -3,6 +3,8 @@
 	http://localhost:3000/stylesheets/application.css?1284760141
 	http://localhost:3000/stylesheets/application.css?1284761609
 	http://localhost:3000/stylesheets/application.css?1284762545
+	http://localhost:3000/stylesheets/application.css?1284762653
+	http://localhost:3000/stylesheets/application.css?1284996679
 */
 
 html {
@@ -45,13 +47,34 @@ div#bd {
 	
 	margin-bottom: 0;
 	color: #2d2a62;
-	font-weight: bold;
-	text-align: justify;
+ 
 	cursor: pointer;
-	background-color:#ECF5FF;
+ 
 	height: 2em;
+	padding-top: 4px;
+    padding-left: 5px;
 }
 
+div.yui-b.sidebar {
+	width: 180px;
+	margin-left: 6px;
+}
+
+#facets div {
+	border-right: 1px dotted #8a8c8d;
+	border-left: 1px dotted #8a8c8d;
+}
+h3.toggle{
+	
+
+
+	background-color: #eae9e9;
+	color: #336699;
+	font-size: 1.2em;
+	font-weight: bold;
+		background-image: url('../images/accordion-gradient.png');
+
+}
 div#doc4.yui-t2 {
 	width:960px;
 	

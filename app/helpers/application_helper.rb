@@ -50,7 +50,7 @@ module ApplicationHelper
     '<span class="selected">' +
     link_to_unless(true, item.label, add_facet_params_and_redirect(facet_solr_field, item.value), :class=>"facet_select") + " (" + format_num(item.hits) + ")" +
     '</span>' +
-    ' [' + link_to("remove", remove_facet_params(facet_solr_field, item.value, params), :class=>"remove") + ']' +
+    ' [' + link_to("X", remove_facet_params(facet_solr_field, item.value, params), :class=>"remove") + ']' +
     render_subfacets(facet_solr_field, item)
   end
   def render_subfacets(facet_solr_field, item, options ={})
