@@ -1,5 +1,5 @@
 class CatalogController < ApplicationController
-  after_filter :record_stats, :only => :show
+  before_filter :record_stats, :only => :show
   unloadable
   # before_filter :require_user
   
