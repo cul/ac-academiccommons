@@ -14,6 +14,7 @@ Rails::Initializer.run do |config|
   config.plugin_paths += ["#{RAILS_ROOT}/vendor/plugins/blacklight/vendor/plugins"]
   config.gem 'authlogic', :version => '2.1.2'
   config.gem 'authlogic_wind', :version => '>= 0.4.0'
+  config.gem 'ruby-googlechart', :version => ">= 0.6.4"
   config.gem 'haml'
   config.gem 'httpclient'
   config.gem 'nokogiri'

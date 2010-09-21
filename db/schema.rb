@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100701170542) do
+ActiveRecord::Schema.define(:version => 20100916192809) do
 
   create_table "bookmarks", :force => true do |t|
     t.integer  "user_id",     :null => false
@@ -62,6 +62,21 @@ ActiveRecord::Schema.define(:version => 20100701170542) do
 
   add_index "sessions", ["session_id"], :name => "index_sessions_on_session_id"
   add_index "sessions", ["updated_at"], :name => "index_sessions_on_updated_at"
+
+  create_table "statistics", :force => true do |t|
+    t.string   "session_id"
+    t.string   "event",      :null => false
+    t.string   "ip_address"
+    t.string   "identifier"
+    t.string   "result"
+    t.datetime "at_time",    :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "statistics", ["at_time"], :name => "index_statistics_on_at_time"
+  add_index "statistics", ["event"], :name => "index_statistics_on_event"
+  add_index "statistics", ["identifier"], :name => "index_statistics_on_identifier"
 
   create_table "taggings", :force => true do |t|
     t.integer  "tag_id"
