@@ -1,22 +1,40 @@
 /* @override 
-	http://localhost:3000/stylesheets/application.css?1281548187
-	http://dyn-iab-163-44.dyn.columbia.edu:3000/stylesheets/application.css
-	http://dyn-iab-163-44.dyn.columbia.edu:3000/stylesheets/application.css?1281987162
+	http://localhost:3000/stylesheets/application.css?1284758077
+	http://localhost:3000/stylesheets/application.css?1284760141
+	http://localhost:3000/stylesheets/application.css?1284761609
+	http://localhost:3000/stylesheets/application.css?1284762545
+	http://localhost:3000/stylesheets/application.css?1284762653
+	http://localhost:3000/stylesheets/application.css?1284996679
 */
 
-/* My Comment */
+html {
+	background: #191736 url(../images/page-background.png) repeat-x;
+	
+}
+
+div#bd {
+	 min-height: 600px;
+}
 
 #descriptive_information .label {
-  font-weight: bold; }
+  font-weight: bold; 
+  
+  }
 
-#cu-header { 
-	 background-color:#2d2a62;margin-bottom:2px;padding-left:7px;height:18px
+#cu-header{
+ 
+ padding-left:7px;height:18px
+
 }
 
-#cu-header img {
+#cu-header img{
+
 	margin-top: 2px;
+
 }
+
 #cu-header a{
+	
 	font-size: 1.1em;
 	margin-left: 2px;
 	vertical-align: 2px;
@@ -26,11 +44,42 @@
 
 
 #facets h3 {
+	
 	margin-bottom: 0;
 	color: #2d2a62;
-	font-weight: bold;
-	text-align: justify;
+ 
 	cursor: pointer;
-	 background-color:#ECF5FF;
-	 height: 2em;
+ 
+	height: 2em;
+	padding-top: 4px;
+    padding-left: 5px;
+}
+
+div.yui-b.sidebar {
+	width: 180px;
+	margin-left: 6px;
+}
+
+#facets div {
+	border-right: 1px dotted #8a8c8d;
+	border-left: 1px dotted #8a8c8d;
+}
+h3.toggle{
+	
+
+
+	background-color: #eae9e9;
+	color: #336699;
+	font-size: 1.2em;
+	font-weight: bold;
+		background-image: url('../images/accordion-gradient.png');
+
+}
+div#doc4.yui-t2 {
+	width:960px;
+	
+}
+
+span.index_counter {
+	margin-left: -16px;
 }
