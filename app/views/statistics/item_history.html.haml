@@ -1,0 +1,15 @@
+%h5 Statistics:
+
+- content_for :jstemplates do
+  $(function() { $("#searchselect").tabs(); });
+
+- form_tag '/item_history' do 
+  #searchselect
+    %ul 
+      %li= link_to "By Year", "#by-year"
+      %li= link_to "By Month", "#by-month"
+      %li= link_to "By Week", "#by-week"
+    #by-year
+
+    #by-month
+    #by-week

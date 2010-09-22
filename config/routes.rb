@@ -14,13 +14,11 @@ ActionController::Routing::Routes.draw do |map|
     :uri => /.+/, :filename => /.+/, :download_method => /(download|show|show_pretty)/
   map.wind_logout '/wind_logout', :controller => 'welcome', :action => 'logout'
   map.access_denied '/access_denied', :controller => 'welcome', :action => 'access_denied'
-
-
-  map.resource :report
   
-  map.connect '/reports/preview/:category', :controller => 'reports', :action => 'preview', 
-    :category => /(by_collection)/
-  
+  map.with_options :controller => "statistics" do |stats|
+    stats.item_statistics "/statistics/item_history/:id", :action => "item_history"
+  end
+
   map.connect ':controller/:action/:id'
   map.connect ':controller/:action/:id.:format'
 
