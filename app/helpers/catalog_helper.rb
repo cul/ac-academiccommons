@@ -5,6 +5,35 @@ module CatalogHelper
     obj_display = (document["object_display"] || []).first
     results = []
     case document["format"]
+    when "Object"
+    uri_prefix = "info:fedora/"
+    hc = HTTPClient.new()
+    
+    fedora_url = "#{FEDORA_CONFIG[:riurl]}/get/"
+    urls = {
+      :members => fedora_url + document["id"] +  "/ldpd:sdef.Aggregator/listMembers?max=&format=&start=",
+    }
+   
+    docs = {}
+    urls.each_pair do |key, url|
+      docs[key] = Nokogiri::XML(hc.get_content(url))
+    end
+
+    domain = "#{FEDORA_CONFIG[:riurl]}"
+    user = "cdrs"
+    password = "***REMOVED***"
+    hc.set_auth(domain, user, password)
+
+
+    members = docs[:members].css("member").to_enum(:each_with_index).collect do |member, i|
+        res = {}
+        member_pid = member.attributes["uri"].value.sub(uri_prefix, "")
+        res[:pid] = member_pid
+	res[:filename] = Nokogiri::XML(hc.get_content("#{FEDORA_CONFIG[:riurl]}/" + "objects/" + member.attributes["uri"].value.sub(uri_prefix, "") + "/objectXML")).xpath("/foxml:digitalObject/foxml:objectProperties/foxml:property[@NAME='info:fedora/fedora-system:def/model#label']/@VALUE")      
+	results << res
+	end
+
+
     when "image/zooming"
       base_id = base_id_for(document)
       url = FEDORA_CONFIG[:riurl] + "/get/" + base_id + "/SOURCE"
