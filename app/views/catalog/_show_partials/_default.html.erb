@@ -22,11 +22,15 @@
 
 </dl>
 <dl class="defList">
+        <dt>File(s):</dt>
   <% build_resource_list(document).each do |resource| -%>
-        <dt>Url:</dt>
-        <dd><a href="http://academiccommons.columbia.edu/assets/files/download.php?pid=<%=  resource[:pid] %>&filename=<%= resource[:filename] %>" > <%=  resource[:filename] %></a></dd>
+        <dd><%= link_to resource[:filename], resource[:download_path] if resource[:download_path] %></dd>
       <% end -%>
-</dl>
-<dl>
-<%= document.inspect  %>
+        <dt>Metadata:</dt>
+<% if false %>
+	<% get_metadata_list(document).each do |resource| -%>
+        <dd><%= link_to "View", resource[:show_url] if resource[:show_url] %></dd>
+      <% end -%>
+<% end -%>
+
 </dl>

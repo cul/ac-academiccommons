@@ -86,7 +86,7 @@ module CatalogHelper
   end
 
   def get_metadata_list(doc)
-    
+
     json = doc_json_method(doc, "/ldpd:sdef.Core/describedBy?format=json")["results"]
     json << {"DC" => base_id_for(doc)}
     results = []
