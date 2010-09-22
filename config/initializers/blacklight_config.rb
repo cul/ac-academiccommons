@@ -115,11 +115,10 @@ Blacklight.configure(:shared) do |config|
   #   The ordering of the field names is the order of the display 
   config[:index_fields] = {
     :field_names => [
-      "title_display",
-      "title_vern_display",
-      "author_display",
-      "author_vern_display",
-      "format",
+      "authors_display",
+      "date",
+      "keyword_facet",
+      "genre_facet",
       "language_facet",
       "published_display",
       "published_vern_display",
@@ -127,11 +126,10 @@ Blacklight.configure(:shared) do |config|
       "lc_callnum_display"
     ],
     :labels => {
-      "title_display"           => "Title:",
-      "title_vern_display"      => "Title:",
-      "author_display"          => "Author:",
-      "author_vern_display"     => "Author:",
-      "format"                  => "Format:",
+      "authors_display"         => "Author(s):",
+      "date"                    => "Date:",
+      "keyword_facet"           => "Subject:",
+      "genre_facet"             => "Type:",
       "language_facet"          => "Language:",
       "published_display"       => "Published:",
       "published_vern_display"  => "Published:",
@@ -172,6 +170,7 @@ Blacklight.configure(:shared) do |config|
       "title_vern_display",
       "subtitle_display",
       "subtitle_vern_display",
+      "authors_display",
       "author_vern_display",
       "url_fulltext_display",
       "url_suppl_display",
@@ -212,6 +211,7 @@ Blacklight.configure(:shared) do |config|
       "title_vern_display"      => "Title:",
       "subtitle_display"        => "Subtitle:",
       "subtitle_vern_display"   => "Subtitle:",
+      "authors_display"          => "Author:",
       "author_vern_display"     => "Author:",
       "url_fulltext_display"    => "URL:",
       "url_suppl_display"       => "More Information:",
