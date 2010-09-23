@@ -1,15 +1,35 @@
-%h5 Statistics:
+%h3 Statistics:
 
 - content_for :jstemplates do
-  $(function() { $("#searchselect").tabs(); });
+  $(function() { $(".datepicker").datepicker(); });
 
-- form_tag '/item_history' do 
-  #searchselect
-    %ul 
-      %li= link_to "By Year", "#by-year"
-      %li= link_to "By Month", "#by-month"
-      %li= link_to "By Week", "#by-week"
-    #by-year
+%explanation Please select a date range to search over, and how to group the results:
 
-    #by-month
-    #by-week
+- form_tag item_statistics_path(params[:id]) do 
+  %div
+    Search for stats for item #{params[:id]}
+  %div
+    Display:
+    = check_box_tag "event[]", "show", params[:event].listify.include?("show")
+    Views
+    = check_box_tag "event[]", "download", params[:event].listify.include?("download")
+    Downloads
+    
+  %div
+    Date range:
+    = text_field_tag :start_date, params[:start_date] , :class => :datepicker
+    to
+    = text_field_tag :end_date, params[:end_date] , :class => :datepicker
+
+  %div
+    Group by:
+    = select_tag :group, options_for_select(["Year", "Month", "Week"], params[:group] || "Month")
+
+  %div
+    = submit_tag "View Statistics"
+
+
+
+- if @results
+  = image_tag(@chart).to_s
+  = @chart.to_s
