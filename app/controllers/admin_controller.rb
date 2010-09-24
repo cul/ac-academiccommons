@@ -2,6 +2,14 @@ class AdminController < ApplicationController
   before_filter :require_admin 
   before_filter :add_jhtmlarea, :only => [:edit_home_page]
 
+  def ingest
+    if params[:commit]
+      raise fedora_server.inspect
+    end
+  end
+
+
+
   def edit_home_page
     if params[:commit]
       if existing_block = ContentBlock.find_by_title("Home Page")
