@@ -31,16 +31,13 @@ Blacklight.configure(:shared) do |config|
     :qt=>:search,
     :per_page => 10,
     :facets => {:fields=>
-      ["format",
-        "language_facet",
-        "lc_1letter_facet",
-        "lc_alpha_facet",
-        "lc_b4cutter_facet",
-        "language_facet",
-        "pub_date",
-        "subject_era_facet",
-        "subject_geo_facet",
-        "subject_topic_facet"]
+      ["format", 
+        "genre_facet",
+        "keyword_facet",
+        "author_facet",
+        "media_type_facet",
+        "type_of_resource_facet"
+      ]
     }  
   }
   
@@ -75,24 +72,28 @@ Blacklight.configure(:shared) do |config|
   # config[:facet] << {:field_name => "format", :label => "Format", :limit => 10}
   config[:facet] = {
     :field_names => [
-      "format_h",
-      "collection_h",
-      "date_created_h",
+       "author_facet",
+       "genre_facet",
+       "keyword_facet",
+       "media_type_facet",
+       "type_of_resource_facet",
+      "format",
       "pub_date",
-      "subject_topic_facet",
       "language_facet",
-      "descriptor",
       "lc_1letter_facet",
+      "subject_topic_facet",
       "subject_geo_facet",
       "subject_era_facet"
     ],
     :labels => {
-      "format_h"              => "Format",
-      "collection_h"              => "In Hierarchy",
-      "date_created_h"              => "Date Created",
+      "author_facet"         => "Author",
+      "genre_facet"         => "Genre",
+      "keyword_facet"         => "Keyword",
+      "media_type_facet"         => "Media Type",
+      "type_of_resource_facet"         => "Type of Resource",
+      "format"              => "Format",
       "pub_date"            => "Publication Year",
       "subject_topic_facet" => "Topic",
-      "descriptor"          => "Metadata Type",
       "language_facet"      => "Language",
       "lc_1letter_facet"    => "Call Number",
       "subject_era_facet"   => "Era",
@@ -105,25 +106,19 @@ Blacklight.configure(:shared) do |config|
     # limit value is the actual number of items you want _displayed_,
     # #solr_search_params will do the "add one" itself, if neccesary.
     :limits => {
-      nil => 10,
-      "subject_facet" => 20
-    },
-    :hierarchy => {
-      "format_h" => true,
-      "date_created_h" => true,
-      "collection_h" => true
+      nil => 7
     }
+      
   }
 
   # solr fields to be displayed in the index (search results) view
   #   The ordering of the field names is the order of the display 
   config[:index_fields] = {
     :field_names => [
-      "title_display",
-      "title_vern_display",
-      "author_display",
-      "author_vern_display",
-      "format",
+      "authors_display",
+      "date",
+      "keyword_facet",
+      "genre_facet",
       "language_facet",
       "published_display",
       "published_vern_display",
@@ -131,11 +126,10 @@ Blacklight.configure(:shared) do |config|
       "lc_callnum_display"
     ],
     :labels => {
-      "title_display"           => "Title:",
-      "title_vern_display"      => "Title:",
-      "author_display"          => "Author:",
-      "author_vern_display"     => "Author:",
-      "format"                  => "Format:",
+      "authors_display"         => "Author(s):",
+      "date"                    => "Date:",
+      "keyword_facet"           => "Subject:",
+      "genre_facet"             => "Type:",
       "language_facet"          => "Language:",
       "published_display"       => "Published:",
       "published_vern_display"  => "Published:",
@@ -149,12 +143,35 @@ Blacklight.configure(:shared) do |config|
   config[:show_fields] = {
     :field_names => [
       "title_display",
+      "authors_display",
+      "date",
+      "genre_facet",
+      "handle",
+      "keyword_facet",
+      "book_journal_title",
+      "volume",
+      "issue",
+      "pages",
+      "media_type_facet",
+      "file_size",
+      "table_of_contents", 
+      "geographic_area", 
+      "book_author", 
+      "format", 
+      "notes", 
+      "publisher", 
+      "publisher_location", 
+      "abstract", 
+      "subject", 
+      "type_of_resource", 
+      "isbn",
+      "issn",
+      "doi",
       "title_vern_display",
       "subtitle_display",
       "subtitle_vern_display",
-      "author_display",
+      "authors_display",
       "author_vern_display",
-      "format",
       "url_fulltext_display",
       "url_suppl_display",
       "material_type_display",
@@ -167,12 +184,35 @@ Blacklight.configure(:shared) do |config|
     ],
     :labels => {
       "title_display"           => "Title:",
+      "authors_display"          => "Author(s):",
+      "date"			 => "Date:",
+      "genre_facet"		 => "Type:",
+      "handle"			  => "Handle:",
+      "keyword_facet"		  => "Keyword(s):",
+      "book_journal_title"	  => "Book/Journal Title:",
+      "volume"        		  => "Volume:",
+      "issue"        		  => "Issue:",
+      "pages"        		  => "Pages:",
+      "media_type_facet"          => "Media Type:",
+      "file_size"        	  => "File Size:",
+      "table_of_contents"	  =>"Table of Contents:", 
+      "geographic_area"		  =>"Geographic Area:", 
+      "book_author"		  =>"Book Author:", 
+      "format"			  =>"Format:", 
+      "notes"			  =>"Notes:", 
+      "publisher"		  =>"Publisher:", 
+      "publisher_location"	  =>"Publisher Location:", 
+      "abstract"		  =>"Abstract:", 
+      "subject"			  =>"Topic(s):", 
+      "isbn"			  =>"ISBN:",
+      "issn"			  =>"ISSN:",
+      "doi"			  =>"DOI:",
+      "type_of_resource"	  => "Type of Resource:", 
       "title_vern_display"      => "Title:",
       "subtitle_display"        => "Subtitle:",
       "subtitle_vern_display"   => "Subtitle:",
-      "author_display"          => "Author:",
+      "authors_display"          => "Author:",
       "author_vern_display"     => "Author:",
-      "format"                  => "Format:",
       "url_fulltext_display"    => "URL:",
       "url_suppl_display"       => "More Information:",
       "material_type_display"   => "Physical description:",

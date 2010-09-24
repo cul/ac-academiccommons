@@ -1,0 +1,6 @@
+production:
+    url: ***REMOVED***
+development:
+    url: http://localhost:8984/solr 
+taft_pass:
+    url: ***REMOVED***

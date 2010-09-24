@@ -4,7 +4,7 @@
     http://wiki.apache.org/solr/SchemaXml.  The page also has a link to an 
     extensively commented version of this file.
 -->
-<schema name="Blacklight Demo Index" version="2.4">
+<schema name="AC2" version="1.2">
   <types>
     <fieldType name="string" class="solr.StrField" sortMissingLast="true" omitNorms="true"/>
     <fieldType name="boolean" class="solr.BoolField" sortMissingLast="true" omitNorms="true"/>
@@ -91,24 +91,52 @@
     <!-- default, catch all search field -->
     <field name="text" type="text" indexed="true" stored="false" multiValued="true"/>
 
-    <!-- these display fields are NOT multi-valued -->
-    <field name="marc_display" type="string" indexed="false" stored="true" multiValued="false"/>
-    <field name="title_display" type="string" indexed="false" stored="true" multiValued="false"/>
-    <field name="title_vern_display" type="string" indexed="false" stored="true" multiValued="false"/>
-    <field name="subtitle_display" type="string" indexed="false" stored="true" multiValued="false"/>
-    <field name="subtitle_vern_display" type="string" indexed="false" stored="true" multiValued="false"/>
-    <field name="author_display" type="string" indexed="false" stored="true" multiValued="false"/>
-    <field name="author_vern_display" type="string" indexed="false" stored="true" multiValued="false"/>
+  
+  <!-- Academic Commons non-dynamic fields -->
+		<field name="pid" type="string" indexed="true" stored="true" required="true" /> 
+		<field name="member_of" type="string" stored="true" indexed="true" multiValued="true"/>
+		<field name="genre_search" type="text" indexed="true" stored="true" multiValued="true"/>
+		<field name="abstract" type="string" indexed="true" stored="true"/>
+		<field name="handle" type="string" indexed="true" stored="true"/>
+		<field name="date" type="string" indexed="true" stored="true"/>
+		<field name="keyword_search" type="text" indexed="true" stored="true" multiValued="true"/>
+		<field name="author_search" type="text" indexed="true" stored="true" multiValued="true"/>
+		<field name="title_search" type="text" indexed="true" stored="true"/>
+		<field name="title_display" type="string" indexed="true" stored="true"/>
+  		<field name="table_of_contents" type="string" indexed="true" stored="true" />
+		<field name="notes" type="string" indexed="true" stored="true" multiValued="true" />
+		<field name="book_journal_title" type="string" indexed="true" stored="true" />
+		<field name="book_author" type="string" indexed="true" stored="true" multiValued="true" />
+		<field name="publisher" type="string" indexed="true" stored="true" />
+		<field name="publisher_location" type="string" indexed="true" stored="true" />
+  		<field name="subject" type="string" indexed="true" stored="true" multiValued="true"/>
+		<field name="subject_search" type="text" indexed="true" stored="true" multiValued="true" />
+		<field name="geographic_area" type="string" indexed="true" stored="true" multiValued="true"/>
+    <field name="geographic_area_search" type="text" indexed="true" stored="true" multiValued="true"/>
+		<field name="isbn" type="string" indexed="true" stored="false" />
+		<field name="issn" type="string" indexed="true" stored="false" />
+		<field name="doi" type="string" indexed="true" stored="false" />
+		<field name="link_on" type="string" indexed="true" stored="true" />
+  <field name="tableOfContents" type="string" indexed="true" stored="true"/>
+  <!-- pub_date is used for facet and display so it must be indexed and stored -->
+  <field name="pub_date" type="string" indexed="true" stored="true" multiValued="true"/>
 
-    <!-- these fields are also used for display, so they must be stored -->
-    <field name="isbn_t" type="text" indexed="true" stored="true" multiValued="true"/>
-    <field name="language_facet" type="string" indexed="true" stored="true" multiValued="true" />
-    <field name="subject_topic_facet" type="string" indexed="true" stored="true" multiValued="true" />
-    <field name="subject_era_facet" type="string" indexed="true" stored="true" multiValued="true" />
-    <field name="subject_geo_facet" type="string" indexed="true" stored="true" multiValued="true" />
-    <!-- pub_date is used for facet and display so it must be indexed and stored -->
-    <field name="pub_date" type="string" indexed="true" stored="true" multiValued="true"/>
-    <!-- format is used for facet, display, and choosing which partial to use for the show view, so it must be stored and indexed -->
+  <!-- TODO: This is a placeholder field to handle internal_h, which stores the hierarchical collection value. Will fix with Ben later -->
+
+    <field name="internal_h" type="string" indexed="true" stored="true" multiValued="true"/>
+            <field name="genre_facet" type="string" indexed="true" stored="true" multiValued="true"/>
+            <field name="author_facet" type="string" indexed="true" stored="true" multiValued="true"/>
+            <field name="keyword_facet" type="string" indexed="true" stored="true" multiValued="true"/>
+            <field name="type_of_resource_facet" type="string" indexed="true" stored="true" multiValued="true" />
+            <field name="media_type_facet" type="string" indexed="true" stored="true" multiValued="true" />
+
+  
+   <!-- Academic Commons Dynamic Fields -->
+   <dynamicField name="ac.fulltext_*"  type="text"  indexed="true"  stored="false"/>
+
+
+
+<!-- format is used for facet, display, and choosing which partial to use for the show view, so it must be stored and indexed -->
     <field name="format" type="string" indexed="true" stored="true"/>
 
     <dynamicField name="*_i"  type="sint"    indexed="true"  stored="true"/>

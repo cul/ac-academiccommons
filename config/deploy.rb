@@ -1,5 +1,5 @@
 set :default_stage, "taft_pass"
-set :stages, %w(taft_pass pass_test ludwig_prod)
+set :stages, %w(taft_pass)
 
 require 'capistrano/ext/multistage'
 default_run_options[:pty] = true
@@ -12,6 +12,7 @@ set :use_sudo, false
 namespace :deploy do
   desc "Restart Application"
   task :restart, :roles => :app do
+    run "mkdir -p #{current_path}/tmp/cookies"
     run "touch #{current_path}/tmp/restart.txt"
   end
 
