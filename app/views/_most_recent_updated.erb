@@ -1,0 +1,7 @@
+<dt>Recently Updated</dt>
+<% query_params = {:q => "", :fl => "title_display, id, author_facet", :sort => 'timestamp asc', :per_page => 20} %>
+<% results = Blacklight.solr.find(query_params) %>
+<% results["response"]["docs"].each do |r| %>
+<dt><%= r %></dt>
+<% end %>
+
