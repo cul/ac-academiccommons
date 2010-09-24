@@ -1,6 +1,29 @@
 module CatalogHelper
 
 
+  def build_recent_updated_list()
+      query_params = {:q => "", :fl => "title_display, id, author_facet", :sort => 'timestamp asc', :per_page => 100}
+      return build_distinct_authors_list(0, query_params)
+   end
+
+  def build_distinct_authors_list(start, query_params)
+      results = Hash.new{}
+      updated = Blacklight.solr.find(query_params)
+      updated["response"]["docs"].each do |r|
+      	author = r["author_facet"]
+        if(!results[author])
+	   results[author] = r
+	   if(results.length == 20)
+   	   return results
+	   end
+	elsif(updated.empty?)
+	   query_params.merge(:start_row => start + 100)
+      	   build_distinct_authors_list(list_length, query_params)
+      end
+      end
+  end
+
+
   def build_resource_list(document)
     obj_display = (document["object_display"] || []).first
     results = []
