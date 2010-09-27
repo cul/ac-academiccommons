@@ -3,6 +3,8 @@
 	http://localhost:3000/stylesheets/application.css?1285608507
 	http://localhost:3000/stylesheets/application.css?1285608801
 	http://localhost:3000/stylesheets/application.css?1285613758
+	http://localhost:3000/stylesheets/application.css?1285616214
+	http://localhost:3000/stylesheets/application.css?1285620065
 */
 
 /* Global */
@@ -170,10 +172,16 @@ h2.search {
 	left: 0;
 	text-align: left;
 	font-size: 120%;*/
+	
+	text-align:center;
+	padding-top: 1em;
+	padding-bottom: 1em;
 }
 
 #search #q {
-	width: 200px;
+	width: 11em;
+	font-size: 2em;
+	line-height: 3em;
 }
 
 #search .submit {
@@ -744,10 +752,8 @@ Search Parameters
 	margin: 0 0 3px 0;
 	background: #fff7e5;
 	border: 1px solid #e0d9ca;
-	over
-
-flow: visible;
-	/*font:normal normal normal 15px/15px helvetica, arial, sans-serif; */ color: #555;
+	overflow: visible;
+    color: #555;
 }
 
 #appliedParams img {

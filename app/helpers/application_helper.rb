@@ -69,3 +69,9 @@ module ApplicationHelper
     render
   end
 end
+
+# jackson added this helper function from rails 3 to generate html5 search field type (rounded corners)
+
+def search_field_tag(name, value = nil, options = {})
+         text_field_tag(name, value, options.stringify_keys.update("type" => "search"))
+end
