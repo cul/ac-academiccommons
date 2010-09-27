@@ -1,10 +1,67 @@
 module CatalogHelper
 
 
+  def build_recent_updated_list()
+      query_params = {:q => "", :fl => "title_display, id, author_facet", :sort => 'timestamp asc', :per_page => 100}
+      return build_distinct_authors_list(0, query_params)
+   end
+
+  def build_distinct_authors_list(start, query_params)
+      results = Hash.new{}
+      updated = Blacklight.solr.find(query_params)
+      updated["response"]["docs"].each do |r|
+      	author = r["author_facet"]
+        if(!results[author])
+	   results[author] = r
+	   if(results.length == 20)
+   	   return results
+	   end
+	elsif(updated.empty?)
+	   query_params.merge(:start_row => start + 100)
+      	   build_distinct_authors_list(list_length, query_params)
+      end
+      end
+  end
+
+
   def build_resource_list(document)
     obj_display = (document["object_display"] || []).first
     results = []
     case document["format"]
+
+    when "Object"
+    uri_prefix = "info:fedora/"
+    hc = HTTPClient.new()
+    
+    fedora_url = "#{FEDORA_CONFIG[:riurl]}/get/"
+    document["object_display"] = [fedora_url + document["id"]]
+    
+
+    urls = {
+      :members => fedora_url + document["id"] +  "/ldpd:sdef.Aggregator/listMembers?max=&format=&start=",
+    }
+   
+    docs = {}
+    urls.each_pair do |key, url|
+      docs[key] = Nokogiri::XML(hc.get_content(url))
+    end
+
+    domain = "#{FEDORA_CONFIG[:riurl]}"
+    user = "cdrs"
+    password = "***REMOVED***"
+    hc.set_auth(domain, user, password)
+
+
+    members = docs[:members].css("member").to_enum(:each_with_index).collect do |member, i|
+        res = {}
+        member_pid = member.attributes["uri"].value.sub(uri_prefix, "")
+        res[:pid] = member_pid
+	res[:filename] = Nokogiri::XML(hc.get_content("#{FEDORA_CONFIG[:riurl]}/" + "objects/" + member.attributes["uri"].value.sub(uri_prefix, "") + "/objectXML")).xpath("/foxml:digitalObject/foxml:objectProperties/foxml:property[@NAME='info:fedora/fedora-system:def/model#label']/@VALUE")      
+	res[:download_path] = fedora_content_path(:download, res[:pid], 'CONTENT', res[:filename])
+	results << res
+	end
+
+
     when "image/zooming"
       base_id = base_id_for(document)
       url = FEDORA_CONFIG[:riurl] + "/get/" + base_id + "/SOURCE"
