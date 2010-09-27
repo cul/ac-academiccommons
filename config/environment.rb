@@ -8,7 +8,7 @@ RELEASE_STAMP = '0.3.0'
 require File.join(File.dirname(__FILE__), 'boot')
 require File.join(File.dirname(__FILE__), '../vendor/plugins/blacklight/vendor/plugins/engines/boot')
 require "james_monkeys"
-require "getIndex/ac2_to_solr"
+
 
 Rails::Initializer.run do |config|
   config.plugin_paths += ["#{RAILS_ROOT}/vendor/plugins/blacklight/vendor/plugins"]
