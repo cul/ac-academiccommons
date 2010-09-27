@@ -1,0 +1,35 @@
+%h3 Author Monthly Statistics
+
+-form_tag "/statistics/author_monthly" do
+
+  %div
+    Please enter the uni of the author you wish to generate the report for:
+    = text_field_tag :author_id, params[:author_id]
+
+  %div
+    Please pick a month and year:
+    = select_tag :month, options_for_select(Date::ABBR_MONTHNAMES, params[:month])
+    = select_tag :year, options_for_select((2010..Date.today.year), params[:year])
+
+  %div
+    = check_box_tag :exclude_zeroes, "true", true
+    Exclude all zero results from the report.
+
+  = submit_tag "View"
+
+
+- if @results
+  %table
+    %tr
+      %th Title
+      %th Views
+      %th Downloads
+
+    - @results.each do |item|
+      %tr
+        %td= link_to item["title_display"], catalog_path(item["id"])
+        %td= @stats["View"][item["id"]] || 0
+        %td= @stats["Download"][item["id"]] || 0
+
+  = @results.inspect
+  = @stats.inspect

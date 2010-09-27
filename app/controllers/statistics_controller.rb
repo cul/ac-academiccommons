@@ -1,13 +1,27 @@
 class StatisticsController < ApplicationController
   layout "no_sidebar"
 
-  def author_facets
-    
+
+  def author_monthly
+
+
+    if params[:commit] == "View"
+      startdate = Date.parse(params[:month] + " " + params[:year])
+      enddate = startdate + 1.month
+      events = ["View", "Download"]
+      @results = Blacklight.solr.find(:per_page => 10000, :fq => "author_id_uni:#{params[:author_id]}", :fl => "title_display,id", :page => 1)["response"]["docs"]
+      ids = @results.collect { |r| r["id"] }
+      @stats = {}
+      events.each do |event|
+        @stats[event] = Statistic.count(:group => "identifier", :conditions => ["event = ? and identifier IN (?) AND at_time BETWEEN ? and ?", event, ids,startdate, enddate])
+      end
+    end
+     
 
   end
 
   def item_history
-    params[:event] ||= ["show"]
+    params[:event] ||= ["View"]
     
     six_months_ago = Date.today - 6.months
     next_month = Date.today + 1.months
@@ -36,8 +50,8 @@ class StatisticsController < ApplicationController
       dates_top = []
       dates_bottom = []
 
-      legend_hash = { "show" => "Views", "download" => "Downloads" }
-      colors_hash = { "show" => "0022FF", "download" => "FF00CC" }
+      legend_hash = { "View" => "Views", "Download" => "Downloads" }
+      colors_hash = { "View" => "0022FF", "Download" => "FF00CC" }
 
       if formatted_dates.length > 15
         formatted_dates.each_with_index do |date, i|
