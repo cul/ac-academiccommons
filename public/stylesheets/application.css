@@ -1,29 +1,30 @@
 /* @override 
 	http://localhost:3000/stylesheets/application.css?1285598300
 	http://localhost:3000/stylesheets/application.css?1285608507
+	http://localhost:3000/stylesheets/application.css?1285608801
 */
 
 /* Global */
 
 body {
-	font: 0.7em Verdana, "Lucida Grande", "Lucida Sans Unicode", Arial, sans-serif;
-	line-height: 1.4;
+	/*font: 0.7em Verdana, "Lucida Grande", "Lucida Sans Unicode", Arial, sans-serif;*/
+	/*line-height: 1.4;*/
 	color: #333;
 	margin: 0px;
 	padding: 0px;
 }
 
 select,input,button,textarea {
-	font: 1em Verdana, "Lucida Grande", "Lucida Sans Unicode", Arial, sans-serif;
+	/*font: 1em Verdana, "Lucida Grande", "Lucida Sans Unicode", Arial, sans-serif;*/
 }
 
-strong {
+/*strong {
 	font-weight: bold;
-}
+}*/
 
-input {
+/*input {
 	padding: .1em;
-}
+}*/
 
 label {
 	color: #555;
@@ -88,13 +89,13 @@ a:hover {
 
 }
 
-#hd .yui-g {
+/*#hd .yui-g {
 	text-align: right;
-}
+}*/
 
-#hd .yui-g .first {
+/*#hd .yui-g .first {
 	text-align: left;
-}
+}*/
 
 /*.yui-t2 {
  
@@ -120,9 +121,8 @@ a:hover {
 div#main {
 	border-left: 1px dotted #ccc;
 	padding: 2em 1em 2em 2em;
- 
 	margin-left: 250px;
-	min-height: 500px;
+ 
  }
 
  
@@ -852,7 +852,7 @@ ul#appliedFiltersList,
 
 
 html {
-	background: #191736 url(../images/page-background.png) repeat-x;
+	background: #1F1B3A url(../images/page-background.png) repeat-x;
 	
 }
 
@@ -902,7 +902,7 @@ div#page {
 }
 
 div.sidebar {
-	width: 210px;
+	width: 225px;
 	margin-left: 6px;
 	float: left;
 }
