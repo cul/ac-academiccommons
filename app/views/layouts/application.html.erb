@@ -1,60 +1,90 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!doctype html>
+<html lang="en" class="no-js">
+<head>
+<meta charset="utf-8">
+<!--[if IE]><![endif]-->
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"> <!-- render with chromeframe plugin on IE where available -->
 
-  <head>
+<title><%= h(@page_title || application_name) %></title>
+
+<meta name="description" content="Academic Commons is Columbia University's digital repository for academic research and scholarship produced by the university community.">
+
+<!--  <meta name="author" content=""> -->
+
+<meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0;">
+
+<!--  <link rel="shortcut icon" href="/favicon.ico"> -->
+
+<!--  <link rel="apple-touch-icon" href="/apple-touch-icon.png"> -->
     
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    
-    <title><%= h(@page_title || application_name) %></title>
-    <link href="<%= url_for :controller=>'catalog',:action => 'opensearch', :format => 'xml', :only_path => false %>" title="<%= application_name%>" type="application/opensearchdescription+xml" rel="search"/>
+  
+<link href="<%= url_for :controller=>'catalog',:action => 'opensearch', :format => 'xml', :only_path => false %>" title="<%= application_name%>" type="application/opensearchdescription+xml" rel="search"/>
     
     <%= render_head_content %>
+    
     <% javascript_tag do -%>
-      <%= yield(:jstemplates) %> 
+    <%= yield(:jstemplates) %> 
     <% end -%>
-  </head>
-  <% if params[:q].to_s.empty? and params[:f].to_s.empty? and params[:id].nil? %>
-    <body onload="$('input#q').focus();">
-  <% else %>
-    <body>
-  <% end %>
+  
+</head>
+
+
+<% if params[:q].to_s.empty? and params[:f].to_s.empty? and params[:id].nil? %>
+<!--[if lt IE 7 ]> <body class="ie6" onload="$('input#q').focus();"> <![endif]-->
+<!--[if IE 7 ]>    <body class="ie7" onload="$('input#q').focus();"> <![endif]-->
+<!--[if IE 8 ]>    <body class="ie8" onload="$('input#q').focus();"> <![endif]-->
+<!--[if IE 9 ]>    <body class="ie9" onload="$('input#q').focus();"> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!--> <body onload="$('input#q').focus();"> <!--<![endif]--> 
+<% else %>
+<!--[if lt IE 7 ]> <body class="ie6"> <![endif]-->
+<!--[if IE 7 ]>    <body class="ie7"> <![endif]-->
+<!--[if IE 8 ]>    <body class="ie8"> <![endif]-->
+<!--[if IE 9 ]>    <body class="ie9"> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!--> <body> <!--<![endif]-->
+<% end %>
   
   
-	  <div id="doc4" class="yui-t2">
-	  
-	  <div id="cu-header"  > <img src="images/crown.w18h14.white.gif" width="18" height="14" border="0">  <a href="http://www.columbia.edu" style="color:white; text-decoration:none" target="_blank">Columbia University Libraries</a> </div>
+<div id="container">
+
+<header><!--  need to assess rendering of html5 semantic elements once browser specs have been determined. -->
+
+<div id="cu-header"> <img src="/images/crown.w18h14.white.gif" width="18" height="14" border="0">  <a href="http://www.columbia.edu" style="color:white; text-decoration:none" target="_blank">Columbia University Libraries</a> </div>
+
+<div id="header">
+<!--  all header artwork is FPO -->   
+	<div id="util_links"><%= render :partial=>'/user_util_links' %></div><br style="clear:both">
+    
+    <img src="/images/cu_logo.png" id="cuLogo" alt="Columbia University Logo"> 
+    
+	<h1 class="site_title"><%= link_to application_name, root_path %><%= (params[:controller] == "catalog" and !params[:id]) ? "<span id='results_text'>Search Results</span>" : "" %></h1>
+     
+	
+
+
+	</div> <!-- div#header -->
+
+</header>
 	    
-	    <div id="hd">
-        <div class="yui-g">
-          <div class="yui-u first">
-            <h1 class="site_title"><%= link_to application_name, root_path %><%= (params[:controller] == "catalog" and !params[:id]) ? "<span id='results_text'>Search Results</span>" : "" %></h1>
-          </div>
-          <div class="yui-u">
-  <img src="images/cu_logo.png" align="Columbia University Logo"> 
- <!--  this logo is FPO!! -->
-  
-  <!--            <%= render :partial=>'/user_util_links' %> -->
-          </div>
-        </div>
-      </div>
-	    
-	    <div id="bd">
-      	
-      	<div id="yui-main">
-          <div class="yui-b">
+	    <div id="page">
+      	    <div class="sidebar"><%= sidebar_items.join('') %></div>
+      	<div id="main">
+            
             <%= render :partial=>'/flash_msg' %>
             <%= yield %>
-          </div>
+         
         </div>
         
-        <div class="yui-b sidebar"><%= sidebar_items.join('') %></div>
+    
         
 	    </div>
 	    
-	    <div id="ft"><%= @footer %></div>
-	    
-	  </div>
-  </body>
+<footer>
+<div id="foot"><%= @footer %></div>
+</footer> 
+
+
+</div><!-- div#container -->
+</body>
   
 </html>
