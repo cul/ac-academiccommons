@@ -8,6 +8,15 @@ class ApplicationController < ActionController::Base
 
   protected
 
+  def fedora_server
+    @fedora_server ||= Cul::Fedora::Server.new(FEDORA_CONFIG)
+  end
+
+  def solr_server
+    @solr_server ||= Cul::Fedora::Solr.new(Blacklight.solr_config)
+  end
+
+
   def require_user
     unless current_user
       store_location

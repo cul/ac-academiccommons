@@ -15,12 +15,17 @@ Rails::Initializer.run do |config|
   config.plugin_paths += ["#{RAILS_ROOT}/vendor/plugins/blacklight/vendor/plugins"]
   config.gem 'authlogic', :version => '2.1.2'
   config.gem 'authlogic_wind', :version => '>= 0.4.0'
+<<<<<<< HEAD
   config.gem 'googlecharts', :lib => "gchart"
+=======
+  config.gem 'cul-fedora', :version => '>= 0.3.0'
+>>>>>>> sprint-3
   config.gem 'haml'
 
   config.gem 'httpclient'
   config.gem 'nokogiri'
   config.gem 'net-ldap', :version => '>=0.1.1'
+  
   # Settings in config/environments/* take precedence over those specified here.
   #
   # Application configuration should go into files in config/initializers

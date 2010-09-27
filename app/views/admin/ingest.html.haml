@@ -1,0 +1,19 @@
+%h3 Ingest objects
+
+- form_tag "ingest" do 
+
+  %div Please enter a list of space-delimited items to ingest:
+  %div= text_field_tag :items, params[:items]
+
+  %div Please enter a list of space-delimited collections to ingest:
+  %div= text_field_tag :collections, params[:collection]
+
+ 
+
+  = submit_tag "Commit"
+
+
+  %div Or, you can delete the entire index. This is irreversible.
+
+  = submit_tag "Delete All", :confirm => "This will delete the entire index. Are you sure you want to do this?"
+

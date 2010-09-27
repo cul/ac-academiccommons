@@ -1,0 +1,8 @@
+<dt>Recently Updated</dt>
+<% results = build_recent_updated_list() %>
+<% results.each do |r, v| %>
+<dt>
+<dd><%= v[:author_facet] %></dd> <dd><%= v[:title_display] %></dd> 
+</dt>
+<% end %>
+
