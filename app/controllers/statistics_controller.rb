@@ -1,6 +1,11 @@
 class StatisticsController < ApplicationController
   layout "no_sidebar"
 
+  def author_facets
+    
+
+  end
+
   def item_history
     params[:event] ||= ["show"]
     
