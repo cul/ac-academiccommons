@@ -3,9 +3,23 @@ class AdminController < ApplicationController
   before_filter :add_jhtmlarea, :only => [:edit_home_page]
 
   def ingest
-    if params[:commit]
-      raise fedora_server.inspect
+    if params[:commit] == "Commit"
+      items, collections = [params[:items], params[:collections]].collect { |pids| pids.split(" ").collect { |pid| fedora_server.item(pid) }}
+
+      solr_server.ingest(:items => items, :collections => collections, :format => "ac2") 
+      flash[:notice] = "Ingest successful."
     end
+
+
+    
+
+    if params[:commit] == "Delete All"
+      Blacklight.solr.delete_by_query("*:*")
+      Blacklight.solr.commit
+
+      flash[:notice] = "Index deleted."
+    end
+
   end
 
 
