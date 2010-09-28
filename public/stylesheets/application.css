@@ -1,10 +1,6 @@
 /* @override 
-	http://localhost:3000/stylesheets/application.css?1285598300
-	http://localhost:3000/stylesheets/application.css?1285608507
-	http://localhost:3000/stylesheets/application.css?1285608801
-	http://localhost:3000/stylesheets/application.css?1285613758
-	http://localhost:3000/stylesheets/application.css?1285616214
-	http://localhost:3000/stylesheets/application.css?1285620065
+
+	http://localhost:3000/stylesheets/application.css?1285693074
 */
 
 /* Global */
@@ -725,9 +721,9 @@ body {
 	left: 1em;
 }
 
-* html #documents {
+/** html #documents {
 	width: 75%;
-}
+}*/
 
 }
 
