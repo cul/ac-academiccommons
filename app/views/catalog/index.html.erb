@@ -13,7 +13,6 @@
 	<%= render 'constraints', :localized_params=>params %>
 
 	<div class="pagination">
-	  <h2>Results navigation</h2>
 	  <%= will_paginate @response.docs, :page_links => false, :class => 'prev_next_links' %>
 	  <%= will_paginate @response.docs, :container => false %>
 	</div>
