@@ -14,10 +14,17 @@ class StatisticsController < ApplicationController
       @stats = {}
       @totals = {}
       events.each do |event|
+
         @stats[event] = Statistic.count(:group => "identifier", :conditions => ["event = ? and identifier IN (?) AND at_time BETWEEN ? and ?", event, ids,startdate, enddate])
         @totals[event] = @stats[event].values.inject { |sum,x| sum ? sum+x : x}
       end
-      
+     
+      @results.reject! { |r| params[:exclude_zeroes] && !@stats["View"][r["id"]] && !@stats["Download"][r["id"]] }
+      @results.sort! do |x,y|
+        result = (@stats["Download"][y["id"]] || 0) <=> (@stats["Download"][x["id"]] || 0) 
+        result = x["title_display"] <=> y["title_display"] if result == 0
+        result
+      end
     end
      
 
