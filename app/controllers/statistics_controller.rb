@@ -9,7 +9,7 @@ class StatisticsController < ApplicationController
       startdate = Date.parse(params[:month] + " " + params[:year])
       enddate = startdate + 1.month
       events = ["View", "Download"]
-      @results = Blacklight.solr.find(:per_page => 10000, :fq => "author_id_uni:#{params[:author_id]}", :fl => "title_display,id", :page => 1)["response"]["docs"]
+      @results = Blacklight.solr.find(:per_page => 10000, :sort => "title_display asc" , :fq => "author_id_uni:#{params[:author_id]}", :fl => "title_display,id", :page => 1)["response"]["docs"]
       ids = @results.collect { |r| r["id"] }
       @stats = {}
       events.each do |event|

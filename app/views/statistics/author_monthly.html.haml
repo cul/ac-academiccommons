@@ -8,7 +8,7 @@
 
   %div
     Please pick a month and year:
-    = select_tag :month, options_for_select(Date::ABBR_MONTHNAMES, params[:month])
+    = select_tag :month, options_for_select(Date::ABBR_MONTHNAMES, params[:month] || (Date.today - 1.months).strftime("%b"))
     = select_tag :year, options_for_select((2010..Date.today.year), params[:year])
 
   %div
@@ -19,6 +19,12 @@
 
 
 - if @results
+
+  %div
+    .span-8 Title
+    .span-8 Views
+    .span-8.last Downloads
+
   %table
     %tr
       %th Title
