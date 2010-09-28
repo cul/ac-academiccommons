@@ -12,9 +12,12 @@ class StatisticsController < ApplicationController
       @results = Blacklight.solr.find(:per_page => 10000, :sort => "title_display asc" , :fq => "author_id_uni:#{params[:author_id]}", :fl => "title_display,id", :page => 1)["response"]["docs"]
       ids = @results.collect { |r| r["id"] }
       @stats = {}
+      @totals = {}
       events.each do |event|
         @stats[event] = Statistic.count(:group => "identifier", :conditions => ["event = ? and identifier IN (?) AND at_time BETWEEN ? and ?", event, ids,startdate, enddate])
+        @totals[event] = @stats[event].values.inject { |sum,x| sum ? sum+x : x}
       end
+      
     end
      
 

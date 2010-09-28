@@ -20,16 +20,17 @@
 
 - if @results
 
-  %div
-    .span-8 Title
-    .span-8 Views
-    .span-8.last Downloads
-
   %table
     %tr
       %th Title
       %th Views
       %th Downloads
+
+    %tr
+      %td 
+        %b Total for #{params[:month]} #{params[:year]}
+      %td= @totals["View"] || 0
+      %td= @totals["Download"] || 0
 
     - @results.each do |item|
       %tr
@@ -37,5 +38,3 @@
         %td= @stats["View"][item["id"]] || 0
         %td= @stats["Download"][item["id"]] || 0
 
-  = @results.inspect
-  = @stats.inspect
