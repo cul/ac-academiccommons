@@ -107,11 +107,10 @@ module CatalogHelper
   end
 
   def get_metadata_list(doc)
-    
-    doc["object_display"] = doc["id"]
-#    json = doc_json_method(doc, "/ldpd:sdef.Core/describedBy?format=json")["results"]
+
     hc = HTTPClient.new
-    json = JSON.parse(hc.get_content("https://repository2.cul.columbia.edu:8443/fedora/objects/ac:124978/methods/ldpd:sdef.Core/describedBy?format=json"))["results"]
+    doc["object_display"] = [ "#{FEDORA_CONFIG[:riurl]}" + "/objects/" + doc["id"] + "/methods" ]
+    json = doc_json_method(doc, "/ldpd:sdef.Core/describedBy?format=json")["results"]
     json << {"DC" => base_id_for(doc)}
     results = []
     json.each do  |meta_hash|
