@@ -21,17 +21,27 @@
   <% end -%>
 
 </dl>
+
+<%= render :partial => "catalog/_show_partials/statistics" %>
+
+<h3> Files: </h3>
+
 <dl class="defList">
-        <dt>File(s):</dt>
-  <% build_resource_list(document).each do |resource| -%>
-        <dd><%= link_to resource[:filename], resource[:download_path] if resource[:download_path] %></dd>
-      <% end -%>
-        <dt>Metadata:</dt>
-<% if false %>
+	<% build_resource_list(document).each do |resource| -%>
+    <dt> </dt>
+    <dd<%= link_to resource[:filename], resource[:download_path] if resource[:download_path] %></dd>
+	<% end -%>
+</dl>
+
+<h3> Metadata:</h3>
+  <dl class="defList">
 	<% get_metadata_list(document).each do |resource| -%>
-        <dd><%= link_to "View", resource[:show_url] if resource[:show_url] %></dd>
-      <% end -%>
-<% end -%>
+    <dt><%= resource[:title] %></dt>
+    <dd>
+    <%= link_to "View", resource[:show_url] if resource[:show_url] %> 
+    <%= link_to "Download", resource[:download_url] if resource[:download_url] %> 
+    </dd>
+	<% end -%>
 
 </dl>
 

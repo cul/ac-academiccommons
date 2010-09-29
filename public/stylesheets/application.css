@@ -115,7 +115,11 @@ a:hover {
 }*/
 
  
-
+div#main_nosidebar {
+  border-left: 1px dotted #ccc;
+  padding: 2em 1em 2em 2em;
+  margin-left: 0px;
+}
  
 div#main {
 	border-left: 1px dotted #ccc;
