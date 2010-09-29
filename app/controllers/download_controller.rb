@@ -1,4 +1,6 @@
 class DownloadController < ApplicationController
+  after_filter :record_stats
+  
   def fedora_content
       
     url = FEDORA_CONFIG[:riurl] + "/get/" + params[:uri]+ "/" + params[:block]
@@ -39,6 +41,13 @@ class DownloadController < ApplicationController
     end
   end
 
+  private
+  
+  def record_stats()
+    Statistic.create!(:session_id => request.session_options[:id], :ip_address => request.env['HTTP_X_FORWARDED_FOR'] || request.remote_addr, :event => "Download", :identifier => params["id"], :at_time => Time.now())
+
+    
+  end
 end
 
 
