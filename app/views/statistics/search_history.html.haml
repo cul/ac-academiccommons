@@ -5,14 +5,18 @@
 
 %explanation Please select a date range to search over, and how to group the results:
 
-- form_tag item_statistics_path(params[:id]) do 
+- form_tag search_statistics_path do 
   %div
-    Search for stats for item #{params[:id]}
+    Search for stats on field
+    = select_tag :search_type, options_for_select(@search_types, params[:search_type])
+    with value
+    = text_field_tag :search_value, params[:search_value]
+
   %div
     Display:
-    = check_box_tag "event[]", "show", params[:event].listify.include?("show")
+    = check_box_tag "event[]", "View", params[:event].listify.include?("View")
     Views
-    = check_box_tag "event[]", "download", params[:event].listify.include?("download")
+    = check_box_tag "event[]", "Download", params[:event].listify.include?("Download")
     Downloads
     
   %div
@@ -32,4 +36,3 @@
 
 - if @results
   = image_tag(@chart).to_s
-  = @chart.to_s

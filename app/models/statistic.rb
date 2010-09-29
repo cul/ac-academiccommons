@@ -14,14 +14,14 @@ class Statistic < ActiveRecord::Base
 
     conditions[:start_date] = options[:start_date] || Time.now - 6.months
     conditions[:end_date] = options[:end_date] || Time.now
-    conditions[:identifier] = options[:identifier]
+    conditions[:identifier] = options[:identifier].listify
 
     events.each do |event|
       
       conditions[:event] = event
 
     condition_text = "statistics.at_time >= :start_date and  statistics.at_time <= :end_date AND statistics.event = :event"
-    condition_text += " AND statistics.identifier = :identifier" if conditions[:identifier]
+    condition_text += " AND statistics.identifier IN (:identifier)" if conditions[:identifier]
 
 
     if group == :year

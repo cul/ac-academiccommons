@@ -16,7 +16,7 @@ ActionController::Routing::Routes.draw do |map|
   map.access_denied '/access_denied', :controller => 'welcome', :action => 'access_denied'
   
   map.with_options :controller => "statistics" do |stats|
-    stats.item_statistics "/statistics/item_history/:id", :action => "item_history"
+    stats.search_statistics "/statistics/search_history", :action => "search_history"
   end
 
   map.connect ':controller/:action/:id'

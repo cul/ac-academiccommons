@@ -1,5 +1,8 @@
 class StatisticsController < ApplicationController
   layout "no_sidebar"
+  before_filter :require_admin
+  include Blacklight::SolrHelper
+
 
 
   def author_monthly
@@ -30,7 +33,9 @@ class StatisticsController < ApplicationController
 
   end
 
-  def item_history
+
+  def search_history
+    @search_types = [["Item","id"],["UNI","author_id_uni"],["Genre","genre_search"]]
     params[:event] ||= ["View"]
     
     six_months_ago = Date.today - 6.months
@@ -38,63 +43,104 @@ class StatisticsController < ApplicationController
     params[:start_date] ||= Date.civil(six_months_ago.year, six_months_ago.month).to_formatted_s(:datepicker)
     params[:end_date] ||= (Date.civil(next_month.year, next_month.month) - 1.day).to_formatted_s(:datepicker)
 
-    unless params[:id]
-      flash[:error] = "No ID specified."
-      redirect_to root_path
-    end
+    
 
     if params[:commit] == "View Statistics"
-      @results = Statistic.count_intervals(:identifier => params[:id], :event => params[:event], :start_date => DateTime.parse(params[:start_date]), :end_date => DateTime.parse(params[:end_date]), :group => params[:group].downcase.to_sym)
-      date_format = ("chart_" + params[:group]).downcase.to_sym
 
-      chart_params = {:size => "700x400", :title => "Statistics for #{params[:id]}|#{params[:start_date]} to #{params[:end_date]}", :axis_with_labels => "x,y,x", :data => [], :legend => [], :bg => "F6F6F6", :line_colors => [], :custom => "chxs=0,676767,11.5,0,lt,676767"}
-
-      events = @results.keys
-      data_hash = Hash.new { |h,k| h[k] = [] }
-
-      max_y = (([@results.values.collect { |s| s.values }.flatten.max, 100].max + 100)/ 100) * 100    
-      y_labels = (0..4).collect { |part| part * max_y / 4 }
-
-      dates = @results.values.collect { |s| s.keys}.flatten.uniq.sort
-      formatted_dates = dates.collect { |d| d.to_formatted_s(date_format) }
-      dates_top = []
-      dates_bottom = []
-
-      legend_hash = { "View" => "Views", "Download" => "Downloads" }
-      colors_hash = { "View" => "0022FF", "Download" => "FF00CC" }
-
-      if formatted_dates.length > 15
-        formatted_dates.each_with_index do |date, i|
-          dates_top << (i % 2 == 0 ? date : "")
-          dates_bottom << (i % 2 == 0 ? "" : date)
-        end
-        chart_params[:axis_labels] = [dates_top, y_labels, dates_bottom]
+      unless params[:search_value]
+        flash[:warning] = "You must specify a search value."
+       
       else
-        chart_params[:axis_labels] = [formatted_dates, y_labels, []]
-      end
+        @fq = params[:search_type] + ":" + params[:search_value].gsub(/:/,'\\:')
 
-      dates.each do |date|
+        @ids = Blacklight.solr.find(:per_page => 100000, :sort => "title_display asc" , :fq => @fq, :fl => "id", :page => 1)["response"]["docs"].collect { |r| r["id"] }
+
+        @results = Statistic.count_intervals(:identifier => @ids, :event => params[:event], :start_date => DateTime.parse(params[:start_date]), :end_date => DateTime.parse(params[:end_date]), :group => params[:group].downcase.to_sym)
+        date_format = ("chart_" + params[:group]).downcase.to_sym
+
+        chart_params = {:size => "700x400", :title => "Statistics for #{params[:id]}|#{params[:start_date]} to #{params[:end_date]}", :axis_with_labels => "x,y,x", :data => [], :legend => [], :bg => "F6F6F6", :line_colors => [], :custom => "chxs=0,676767,11.5,0,lt,676767"}
+        events = @results.keys
+        data_hash = Hash.new { |h,k| h[k] = [] }
+        max_y = (([@results.values.collect { |s| s.values }.flatten.max.to_i].max))    
+        y_labels = (0..1).collect { |part| part * max_y / 1 }
+
+        dates = @results.values.collect { |s| s.keys}.flatten.uniq.sort
+        formatted_dates = dates.collect { |d| d.to_formatted_s(date_format) }
+        dates_top = []
+        dates_bottom = []
+
+        legend_hash = { "View" => "Views", "Download" => "Downloads" }
+        colors_hash = { "View" => "0022FF", "Download" => "FF00CC" }
+
+        if formatted_dates.length > 15
+          formatted_dates.each_with_index do |date, i|
+            dates_top << (i % 2 == 0 ? date : "")
+            dates_bottom << (i % 2 == 0 ? "" : date)
+          end
+          chart_params[:axis_labels] = [dates_top, y_labels, dates_bottom]
+        else
+          chart_params[:axis_labels] = [formatted_dates, y_labels, []]
+        end
+
+        dates.each do |date|
+          events.each do |event|
+            val = @results[event][date] 
+            val = val.nil? || val == {} ? 0 : val
+            data_hash[event] << val
+          end
+        end
+
         events.each do |event|
-          data_hash[event] << @results[event][date] || 0
+          chart_params[:data] << data_hash[event]
+          chart_params[:legend] << legend_hash[event]
+          chart_params[:line_colors] << colors_hash[event]
         end
-      end
 
-      events.each do |event|
-        chart_params[:data] << data_hash[event]
-        chart_params[:legend] << legend_hash[event]
-        chart_params[:line_colors] << colors_hash[event]
-      end
-
-      chart_params[:line_colors] = chart_params[:line_colors].join(",")
-      if params[:group] == "Year"
-        chart_params[:custom] += "&chma=150,25,25,25"
-        @chart = Gchart.bar(chart_params.merge(:stacked => false))
-      else
-        chart_params[:custom] += "&chma=50,25,25,25"
-        @chart = Gchart.line(chart_params)
+        chart_params[:line_colors] = chart_params[:line_colors].join(",")
+        if params[:group] == "Year"
+          chart_params[:custom] += "&chma=150,25,25,25"
+          @chart = Gchart.bar(chart_params.merge(:stacked => false))
+        else
+          chart_params[:custom] += "&chma=50,25,25,25"
+          @chart = Gchart.line(chart_params)
+        end
       end
     end
 
 
   end
+
+  private
+
+
+  ##################
+  # Config-lookup methods. Should be moved to a module of some kind, once
+  # all this stuff is modulized. But methods to look up config'ed values,
+  # so logic for lookup is centralized in case storage methods changes.
+  # Such methods need to be available from controller and helper sometimes,
+  # so they go in controller with helper_method added.
+  # TODO: Move to a module, and make them look inside the controller
+  # for info instead of in global Blacklight.config object!
+  ###################
+
+  # Look up configged facet limit for given facet_field. If no
+  # limit is configged, may drop down to default limit (nil key)
+  # otherwise, returns nil for no limit config'ed. 
+  def facet_limit_for(facet_field)
+    limits_hash = facet_limit_hash
+    return nil unless limits_hash
+
+    limit = limits_hash[facet_field]
+    limit = limits_hash[nil] unless limit
+
+    return limit
+  end
+  helper_method :facet_limit_for
+  # Returns complete hash of key=facet_field, value=limit.
+  # Used by SolrHelper#solr_search_params to add limits to solr
+  # request for all configured facet limits.
+  def facet_limit_hash
+    Blacklight.config[:facet][:limits]           
+  end
+  helper_method :facet_limit_hash
 end
