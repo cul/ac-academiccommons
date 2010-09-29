@@ -23,15 +23,14 @@
 </dl>
 <dl class="defList">
         <dt>File(s):</dt>
-  <% build_resource_list(document).each do |resource| -%>
+	<% build_resource_list(document).each do |resource| -%>
         <dd><%= link_to resource[:filename], resource[:download_path] if resource[:download_path] %></dd>
-      <% end -%>
+	<% end -%>
         <dt>Metadata:</dt>
-<% if false %>
 	<% get_metadata_list(document).each do |resource| -%>
-        <dd><%= link_to "View", resource[:show_url] if resource[:show_url] %></dd>
-      <% end -%>
-<% end -%>
+        <dd><%= link_to "View #{resource[:title]}", resource[:show_url] if resource[:show_url] %></dd>
+        <dd><%= link_to "Download #{resource[:title]}", resource[:download_url] if resource[:download_url] %></dd>
+	<% end -%>
 
 </dl>
 

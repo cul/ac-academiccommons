@@ -2,7 +2,7 @@ module CatalogHelper
 
 
   def build_recent_updated_list()
-      query_params = {:q => "", :fl => "title_display, id, author_facet", :sort => 'timestamp asc', :per_page => 100}
+      query_params = {:q => "", :fl => "title_display, id, author_facet, author_id_uni", :sort => 'timestamp desc', :per_page => 100}
       return build_distinct_authors_list(0, query_params)
    end
 
@@ -34,8 +34,6 @@ module CatalogHelper
     hc = HTTPClient.new()
     
     fedora_url = "#{FEDORA_CONFIG[:riurl]}/get/"
-    document["object_display"] = [fedora_url + document["id"]]
-    
 
     urls = {
       :members => fedora_url + document["id"] +  "/ldpd:sdef.Aggregator/listMembers?max=&format=&start=",
@@ -110,7 +108,10 @@ module CatalogHelper
 
   def get_metadata_list(doc)
     
-    json = doc_json_method(doc, "/ldpd:sdef.Core/describedBy?format=json")["results"]
+    doc["object_display"] = doc["id"]
+#    json = doc_json_method(doc, "/ldpd:sdef.Core/describedBy?format=json")["results"]
+    hc = HTTPClient.new
+    json = JSON.parse(hc.get_content("https://repository2.cul.columbia.edu:8443/fedora/objects/ac:124978/methods/ldpd:sdef.Core/describedBy?format=json"))["results"]
     json << {"DC" => base_id_for(doc)}
     results = []
     json.each do  |meta_hash|
