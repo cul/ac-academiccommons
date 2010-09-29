@@ -1,0 +1,6 @@
+%dl.defList 
+  %dt Item views:
+  %dd
+    = Statistic.count(:conditions => {:identifier => params[:id], :event => "View"})
+    = link_to "History", url_for(:controller => "statistics", :action => "search_history",  :search_type => "id", :search_value => params[:id])
+
