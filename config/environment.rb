@@ -17,7 +17,7 @@ Rails::Initializer.run do |config|
   config.gem 'googlecharts', :lib => "gchart"
   config.gem 'cul-fedora', :version => '>= 0.3.0'
   config.gem 'haml'
-
+  config.gem 'compass', :version => '>= 0.10.5'
   config.gem 'httpclient'
   config.gem 'nokogiri'
   config.gem 'net-ldap', :version => '>=0.1.1'
