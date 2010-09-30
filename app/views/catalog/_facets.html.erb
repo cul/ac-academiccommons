@@ -2,9 +2,10 @@
 <div id="facets" class="facets">
   <h2>Refine Your Search</h2>
   <% facet_field_names.each do |solr_fname| %>
-    <div>
+   
       <% display_facet = @response.facets.detect {|f| f.name == solr_fname} -%>
       <% if display_facet &&  display_facet.items.length > 0 %>
+       <div>
         <h3 class="toggle"><%= facet_field_labels[solr_fname] -%></h3>
         <ul>
           <% paginator =
@@ -26,7 +27,8 @@
           <% end %>
           
         </ul>
+         </div>
       <% end %>
-    </div>
+   
   <% end %>
 </div>

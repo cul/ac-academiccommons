@@ -1,6 +1,8 @@
 /* @override 
-
 	http://localhost:3000/stylesheets/application.css?1285693074
+	http://dyn-iab-163-151.dyn.columbia.edu:3000/stylesheets/application.css?1285859529
+	http://dyn-iab-163-151.dyn.columbia.edu:3000/stylesheets/application.css?1285871508
+	http://dyn-iab-163-151.dyn.columbia.edu:3000/stylesheets/application.css?1285873068
 */
 
 /* Global */
@@ -222,30 +224,11 @@ th, td {
 
 }
 
-#facets h3 {
-	margin-bottom: 0;
-	color: #fff;
-	font-weight: normal;
-	text-align: left;
-	cursor: pointer;
-	 background-color:#2d2a62;
-	 height: 2em;
-}
-
-/* My Comment */
-
-/* My Comment */
-
-#facets ul, #facets h3 +div {
-	border-bottom: 1px dotted #ccc;
-	padding-bottom: 1em;
-	margin: 0;
-	padding-left: 5px;
-}
-
 #facets li {
 	list-style: none;
-	margin: .3em 0;
+	
+	padding: .25em 0;
+	 
 }
 
 #facets li a:hover {
@@ -253,19 +236,18 @@ th, td {
 }
 
 #facets li a.remove {
-	color: #666;
+	color: #red;
 }
 
 #facets span.selected {
-	color: #4800e6;
-	background-color: #d3e9f3;
-	padding-right: 20px;
-	padding-top: 7px;
-	padding-bottom: 6px;
+	color: #fff;
+	background: #2D2A62;
+	font-weight: bold;
 }
 
 #facets li.more_facets_link {
 	text-align: right;
+	margin-right: .5em;
 }
 
 ul.facet_extended_list {
@@ -859,7 +841,7 @@ ul#appliedFiltersList,
 
 
 html {
-	background: #1F1B3A url(../images/page-background.png) repeat-x;
+	background: #1A1535 url(../images/page-background.png) repeat-x;
 	
 }
 
@@ -895,17 +877,50 @@ div#page {
 	border: none;
 }
 
+#facets ul {
+	/*border-bottom: 1px dotted #ccc;*/
+	padding-bottom: 1em;
+	margin: 0;
+	padding-left: .75em;
+	margin-top: .75em;
+}
 
 #facets h3 {
 	
 	margin-bottom: 0;
-	color: #2d2a62;
- 
+	height: 1.5em; 
 	cursor: pointer;
  
-	height: 2em;
+	
 	padding-top: 4px;
     padding-left: 5px;
+    
+    
+    	 
+	color: #314E83;
+	font-weight: bold;
+	text-align: left;
+	cursor: pointer;
+	 background: #d9d9d9;
+	border-bottom: 1px solid #C9E5FF;
+	
+	
+	/* gecko based browsers */
+background: -moz-linear-gradient(top, #55aaee, #003366);
+
+/* webkit based browsers */
+background: -webkit-gradient(linear, left top, left bottom, from(#C9E5FF), to(#F5FBFF));
+}
+
+#facets h3:hover{
+	
+	background: #EAF5FF;
+	}
+
+#facets div{
+	margin-top: .5em;
+	background-color: white;
+	border: 1px solid #b8b8b8;
 }
 
 div.sidebar {
@@ -914,18 +929,9 @@ div.sidebar {
 	float: left;
 }
 
-#facets div {
-	border-right: 1px dotted #8a8c8d;
-	border-left: 1px dotted #8a8c8d;
-}
+ 
 
-h3.toggle{
-	background-color: #eae9e9;
-	color: #336699;
-	font-size: 1.2em;
-	font-weight: bold;
-	background-image: url('../images/accordion-gradient.png');
-}
+
 
 div#container {
 	width:960px;
