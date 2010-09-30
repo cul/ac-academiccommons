@@ -1,8 +1,9 @@
-<dt>Recently Updated</dt>
 <% results = build_recent_updated_list() %>
-<% results.each do |r, v| %>
-<dt>
-<dd><%= v[:author_facet] %></dd> <dd><%= v[:title_display] %></dd> <dd><%= v[:author_id_uni] %></dd>
-</dt>
-<% end %>
+<dl>
+<h3>Recently Updated</h3>
+<% results.each do |v| %>
+    <dt> </dt>
+    <dd<%= link_to v[:title_display], catalog_index_path+"/"+v[:id] %></dd>
+	<% end -%>
+</dl>
 

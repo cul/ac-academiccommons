@@ -2,26 +2,36 @@ module CatalogHelper
 
 
   def build_recent_updated_list()
-    query_params = {:q => "", :fl => "title_display, id, author_facet, author_id_uni", :sort => 'timestamp desc', :per_page => 100}
+    query_params = {:q => "", :fl => "title_display, id,  author_facet, author_id_uni, timestamp", :sort => "timestamp desc", :per_page => 100}
     return build_distinct_authors_list(0, query_params)
   end
 
   def build_distinct_authors_list(start, query_params)
-    results = Hash.new{}
+    results = []
+    unis = []
     updated = Blacklight.solr.find(query_params)
-    updated["response"]["docs"].each do |r|
-      author = r["author_facet"]
-      if(!results[author])
-        results[author] = r
-        if(results.length == 20)
-          return results
-        end
-      elsif(updated.empty?)
-        query_params.merge(:start_row => start + 100)
-        build_distinct_authors_list(list_length, query_params)
-      end
+    items = updated["response"]["docs"]
+    items.sort! do  |x,y|     
+    	y["timestamp"]<=>x["timestamp"]
     end
-  end
+    items.each do |r|
+    	if(r["author_id_uni"])
+	  r["author_id_uni"].each do |uni|
+	    if(!unis.include?(uni) && !results.include?(r))
+		unis << uni
+		results << r
+          	if(results.length == 20)
+          	  return results
+      	  	elsif(items.empty?)
+		  query_params.merge(:start_row => start + 100)
+          	  build_distinct_authors_list(list_length, query_params)
+      	  	 end
+	    end
+	   end
+        end
+    end
+    return results
+    end
 
 
   def build_resource_list(document)
