@@ -1,24 +1,6 @@
 /* @override 
-	http://localhost:3000/stylesheets/application.css?1285693074
-	http://dyn-iab-163-151.dyn.columbia.edu:3000/stylesheets/application.css?1285859529
-	http://dyn-iab-163-151.dyn.columbia.edu:3000/stylesheets/application.css?1285871508
-	http://dyn-iab-163-151.dyn.columbia.edu:3000/stylesheets/application.css?1285873068
-	http://dyn-iab-163-151.dyn.columbia.edu:3000/stylesheets/application.css?1285873843
-	http://dyn-iab-163-151.dyn.columbia.edu:3000/stylesheets/application.css?1285876872
-	http://dyn-iab-163-151.dyn.columbia.edu:3000/stylesheets/application.css?1285876912
-	http://dyn-iab-163-151.dyn.columbia.edu:3000/stylesheets/application.css?1285877538
-	http://dyn-iab-163-151.dyn.columbia.edu:3000/stylesheets/application.css?1285878971
-	http://dyn-iab-163-151.dyn.columbia.edu:3000/stylesheets/application.css?1285879557
-	http://localhost:3000/stylesheets/application.css?1285884152
-	http://localhost:3000/stylesheets/application.css?1285947479
-	http://localhost:3000/stylesheets/application.css?1285947835
-	http://localhost:3000/stylesheets/application.css?1285948848
-	http://localhost:3000/stylesheets/application.css?1285955539
-	http://localhost:3000/stylesheets/application.css?1285955881
-	http://localhost:3000/stylesheets/application.css?1285956361
-	http://localhost:3000/stylesheets/application.css?1285956499
-	http://localhost:3000/stylesheets/application.css?1285960422
 	http://localhost:3000/stylesheets/application.css?1285961751
+	http://localhost:3000/stylesheets/application.css?1285965521
 */
 
 /* Global */
@@ -82,9 +64,9 @@ hr {
 	border-bottom: 1px dotted #ccc;
 }
 
-.formElement {
+/*.formElement {
 	font: 8pt Verdana, Arial, sans-serif;
-}
+}*/
 
 /* Links */
 
@@ -198,7 +180,7 @@ h2.search {
 	padding-bottom: 1em;
 	
  
-    background: -moz-linear-gradient(top, #ccc, #F5FBFF);
+    background: -moz-linear-gradient(top, #F5FBFF, #EAF5FF);
  
     background: -webkit-gradient(linear, left top, left bottom, from(#F5FBFF), to(#EAF5FF));
 	border-bottom: 1px dotted #2D2A62;
@@ -215,7 +197,7 @@ div.back-to-search {
 #search #q {
 	width:10em;
 	color: #000;
-	font: 2em Arial, Helvetica, Geneva, sans-serif;
+	font: 1.5em Arial, Helvetica, Geneva, sans-serif;
 }
 
 #search .submit {
@@ -269,6 +251,20 @@ th, td {
 
 #facets li a.remove {
 	color: #red;
+	font-weight: bold;
+	border-bottom: none;
+}
+
+a#startOverLink {
+	border-bottom: none;
+}
+
+a.btnRemove.imgReplace {
+	border-bottom: none;
+}
+
+* {
+	
 }
 
 #facets span.selected {
