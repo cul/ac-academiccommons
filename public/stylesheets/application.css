@@ -3,6 +3,12 @@
 	http://dyn-iab-163-151.dyn.columbia.edu:3000/stylesheets/application.css?1285859529
 	http://dyn-iab-163-151.dyn.columbia.edu:3000/stylesheets/application.css?1285871508
 	http://dyn-iab-163-151.dyn.columbia.edu:3000/stylesheets/application.css?1285873068
+	http://dyn-iab-163-151.dyn.columbia.edu:3000/stylesheets/application.css?1285873843
+	http://dyn-iab-163-151.dyn.columbia.edu:3000/stylesheets/application.css?1285876872
+	http://dyn-iab-163-151.dyn.columbia.edu:3000/stylesheets/application.css?1285876912
+	http://dyn-iab-163-151.dyn.columbia.edu:3000/stylesheets/application.css?1285877538
+	http://dyn-iab-163-151.dyn.columbia.edu:3000/stylesheets/application.css?1285878971
+	http://dyn-iab-163-151.dyn.columbia.edu:3000/stylesheets/application.css?1285879557
 */
 
 /* Global */
@@ -10,22 +16,22 @@
 body {
 	/*font: 0.7em Verdana, "Lucida Grande", "Lucida Sans Unicode", Arial, sans-serif;*/
 	/*line-height: 1.4;*/
-	color: #333;
-	margin: 0px;
-	padding: 0px;
+	/*color: #333;*/
+	/*margin: 0px;
+	padding: 0px;*/
 }
 
 select,input,button,textarea {
 	/*font: 1em Verdana, "Lucida Grande", "Lucida Sans Unicode", Arial, sans-serif;*/
 }
 
-/*strong {
+strong {
 	font-weight: bold;
-}*/
+}
 
-/*input {
+input {
 	padding: .1em;
-}*/
+}
 
 label {
 	color: #555;
@@ -125,9 +131,11 @@ div#main_nosidebar {
  
 div#main {
 	border-left: 1px dotted #ccc;
-	padding: 2em 1em 2em 2em;
-	margin-left: 250px;
- 
+	width: 700px;
+	margin-left: 240px;
+    position: absolute;
+    
+  
  }
 
  
@@ -272,11 +280,9 @@ ul.facet_extended_list li {
 /* Solr Query */
 
 .solrQuery {
-	padding: .5em;
-	margin: 2em;
-	background-color: #eee;
-	border: 1px dotted #ccc;
-	font-size: 90%;
+position: absolute;
+bottom: 0;
+
 }
 
 /* Page Navigation */
@@ -691,6 +697,7 @@ body {
 
 .solrQuery {
 	display: none;
+ 
 }
 
 /* IE 6 Adjustments */
@@ -846,9 +853,10 @@ html {
 }
 
 div#page {
-	min-height: 600px;
+	 
 	background-color: #f5f5f5;
-	border: 1px dotted navy;
+	 
+   min-height: 700px;
 }
 
 #descriptive_information .label {
@@ -923,12 +931,19 @@ background: -webkit-gradient(linear, left top, left bottom, from(#C9E5FF), to(#F
 	border: 1px solid #b8b8b8;
 }
 
-div.sidebar {
-	width: 225px;
+div#sidebar {
+	width: 220px;
 	margin-left: 6px;
 	float: left;
 }
 
+#sidebar.sidebar-fixed{
+	
+	
+ 
+position: fixed ;
+top: 0px ;
+}
  
 
 
@@ -951,4 +966,8 @@ img#cuLogo{
 
 span.index_counter {
 	margin-left: -1em;
+}
+
+#footer{
+	position: relative;
 }

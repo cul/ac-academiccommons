@@ -70,26 +70,45 @@
 </header>
 	    
 	    <div id="page">
-	        <%= render :partial=>'/catalog/search_form' %>
-      	<div class="sidebar"><%= sidebar_items.join('') %></div>
+	    
+	    <%= render :partial=>'/catalog/search_form' %>
       	
-      	<div id="main">
+      	<br style="clear:both">
+	
+		  	
+		
+		<div id="main">
         
             <%= render :partial=>'/flash_msg' %>
+            
             <%= yield %>
-         
+        
         </div>
         
+       <br style="clear:both"> 
+           <div id="sidebar-wrapper">
+        	<div id="sidebar">
+        	<nav>
+			<%= sidebar_items.join('') %>
+		    </nav> 
+		</div>
+		</div>
     
+             
+      
         
-	    </div>
-	    
-<footer>
-<div id="foot"><%= @footer %></div>
+        <footer>
+        
+        
+<div id="footer"> hello footer. <%= @footer %></div>
 </footer> 
+        </div>
+	    
+
 
 
 </div><!-- div#container -->
+
 </body>
   
 </html>

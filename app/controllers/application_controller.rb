@@ -78,9 +78,9 @@ class ApplicationController < ActionController::Base
     stylesheet_links << ['zooming_image', 'accordion', {:media=>'all'}]
     stylesheet_links << [ 'style.css','jquery/ui-lightness/jquery-ui-1.8.1.custom.css', 'application']
     stylesheet_links << [ 'handheld.css?v=1',{:media=>'handheld'}]
-    javascript_includes << ['modernizr-1.5.min.js','jquery-1.4.2.min.js', 'jquery-ui-1.8.1.custom.min.js', 'blacklight', 'application-BL' ]
+    javascript_includes << ['modernizr-1.5.min.js','jquery-1.4.2.min.js', 'jquery-ui-1.8.1.custom.min.js', 'blacklight', 'application' ]
     javascript_includes << ['accordion', 'zooming_image']
-    extra_head_content << [stylesheet_tag(openlayers_css, :media=>'all'), javascript_tag(openlayers_js)]
+    #extra_head_content << [stylesheet_tag(openlayers_css, :media=>'all'), javascript_tag(openlayers_js)]
   end
 
 end
