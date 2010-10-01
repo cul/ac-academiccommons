@@ -89,73 +89,38 @@ $(document).ready(function() {
   $('#page').height(function(){return $('#main').height()+100+'px'; } );
   
   
-// Get a reference to the placeholder. This element
-// will take up visual space when the message is
-// moved into a fixed position.
+
 var placeholder = $( "#sidebar-wrapper" );
- 
-// Get a reference to the message whose position
-// we want to "fix" on window-scroll.
 var sb = $( "#sidebar" );
- 
-// Get a reference to the window object; we will use
-// this several time, so cache the jQuery wrapper.
 var view = $( window );
- 
- 
-// Bind to the window scroll and resize events.
-// Remember, resizing can also change the scroll
-// of the page.
 view.bind(
 "scroll resize",
 function(){
-// Get the current offset of the placeholder.
-// Since the message might be in fixed
-// position, it is the plcaeholder that will
-// give us reliable offsets.
-var placeholderTop = placeholder.offset().top;
- 
-// Get the current scroll of the window.
-var viewTop = view.scrollTop();
- 
-// Check to see if the view had scroll down
-// past the top of the placeholder AND that
-// the message is not yet fixed.
-if (
-(viewTop > placeholderTop) &&
-!sb.is( ".sidebar-fixed" )
-){
- 
-// The message needs to be fixed. Before
-// we change its positon, we need to re-
-// adjust the placeholder height to keep
-// the same space as the message.
-//
-// NOTE: All we're doing here is going
-// from auto height to explicit height.
-placeholder.height(
-placeholder.height()
-);
- 
-// Make the message fixed.
-sb.addClass( "sidebar-fixed" );
 
+    var placeholderTop = placeholder.offset().top;
+
+    var viewTop = view.scrollTop();
+
+  if (
+    (viewTop > placeholderTop) &&
+    !sb.is( ".sidebar-fixed" )
+  ){
  
+
+    placeholder.height(placeholder.height());
  
-// Check to see if the view has scroll back up
-// above the message AND that the message is
-// currently fixed.
+
+    sb.addClass( "sidebar-fixed" );
+
+
 } else if (
 (viewTop <= placeholderTop) &&
 sb.is( ".sidebar-fixed" )
 ){
  
-// Make the placeholder height auto again.
+
 placeholder.css( "height", "auto" );
- 
-// Remove the fixed position class on the
-// message. This will pop it back into its
-// static position.
+
 sb.removeClass( "sidebar-fixed" );
  
 }

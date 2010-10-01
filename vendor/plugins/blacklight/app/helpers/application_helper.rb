@@ -353,7 +353,7 @@ module ApplicationHelper
 
   # link_back_to_catalog(:label=>'Back to Search')
   # Create a link back to the index screen, keeping the user's facet, query and paging choices intact by using session.
-  def link_back_to_catalog(opts={:label=>'Back to Search'})
+  def link_back_to_catalog(opts={:label=>'Back to Search Results'})
     query_params = session[:search].dup || {}
     query_params.delete :counter
     query_params.delete :total
