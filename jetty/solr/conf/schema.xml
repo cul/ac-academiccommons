@@ -180,7 +180,9 @@
   <copyField source="subject_topic_facet" dest="subject_topic_unstem_search"/>
   
   <!-- sort fields -->
-  <copyField source="pub_date" dest="pub_date_sort"/>
+  <copyField source="date" dest="pub_date_sort"/>
+  <copyField source="title_display" dest="title_sort"/>
+  <copyField source="authors_display" dest="author_sort"/>
 
   <!-- spellcheck fields -->
   <!-- default spell check;  should match fields for default request handler -->
