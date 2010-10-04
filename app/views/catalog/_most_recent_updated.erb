@@ -1,9 +1,10 @@
 <% results = build_recent_updated_list() %>
+<div>
 <dl>
 <h3>Recently Updated</h3>
 <% results.each do |v| %>
-    <dt> </dt>
-    <dd<%= link_to v[:title_display], catalog_index_path+"/"+v[:id] %></dd>
+    <dt><%= v[:authors_display] %> </dt>
+    <dd><%= link_to v[:title_display], catalog_index_path+"/"+v[:id] %></dd>
 	<% end -%>
 </dl>
-
+</div>

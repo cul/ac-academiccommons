@@ -181,8 +181,6 @@
   
   <!-- sort fields -->
   <copyField source="pub_date" dest="pub_date_sort"/>
-  <copyField source="title_display" dest="title_sort"/>
-  <copyField source="author_facet" dest="author_sort"/>
 
   <!-- spellcheck fields -->
   <!-- default spell check;  should match fields for default request handler -->
