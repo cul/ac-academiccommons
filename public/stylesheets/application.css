@@ -1,6 +1,8 @@
 /* @override 
 	http://localhost:3000/stylesheets/application.css?1285961751
 	http://localhost:3000/stylesheets/application.css?1285965521
+	http://localhost:3000/stylesheets/application.css?1286213672
+	http://localhost:3000/stylesheets/application.css?1286213908
 */
 
 /* Global */
@@ -1004,4 +1006,16 @@ div#footer{
 	background: white;
 	background: rgba(214,229,255,0.75);
 	text-align: center;
+}
+
+.dialog_box {
+	
+	width: 500px;
+	height: 500px;
+	position: absolute;
+	z-index: 100;
+	top: 10px;
+	left: 20px;
+	background-color: white;
+	border: 1px solid #2888cd;
 }
