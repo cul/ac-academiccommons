@@ -876,7 +876,7 @@ html {
 	
 }
 
-div#page {
+div#container {
 	 
 	background: #f5f5f5;
 	 
@@ -955,30 +955,18 @@ background: -webkit-gradient(linear, left top, left bottom, from(#C9E5FF), to(#F
 	background: #EAF5FF;
 	}
 
+
 #facets div{
 	margin-top: .5em;
 	background-color: white;
 	border: 1px solid #b8b8b8;
 }
 
-div#sidebar {
-	width: 220px;
-	margin-left: 6px;
-	float: left;
-}
-
-#sidebar.sidebar-fixed{
-	
-	
- 
-position: fixed ;
-top: 0px ;
-}
  
 
 
 
-div#container {
+div#wrapper {
 	width:960px;
 	margin-left: auto;
 	margin-right: auto;

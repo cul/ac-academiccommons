@@ -1,0 +1,52 @@
+<!doctype html>
+%html.no-js{:lang => "en"}
+  %head
+    %meta{:charset => "utf-8"}
+    %meta{:content => "IE=edge,chrome=1", "http-equiv" => "X-UA-Compatible"}
+    
+    %title= h(@page_title || application_name)
+    %meta{:content => "Academic Commons is Columbia University's digital repository for academic research and scholarship produced by the university community.", :name => "description"}
+    %meta{:content => "width=device-width; initial-scale=1.0; maximum-scale=1.0;", :name => "viewport"}
+    %link{:href => url_for(:controller=>'catalog',:action => 'opensearch', :format => 'xml', :only_path => false, :rel => "search", :title => application_name, :type => "application/opensearchdescription+xml")}/
+    = stylesheet_link_tag 'compiled/screen.css', :media => 'screen, projection'
+    = stylesheet_link_tag 'compiled/print.css', :media => "print"
+    /[if IE]
+      = stylesheet_link_tag 'compiled/ie.css', :media => 'screen, projection'
+
+    = render_head_content
+    - javascript_tag do
+      = yield(:jstemplates)
+
+    - onload = "$('input#q').focus();" if params[:q].to_s.empty? and params[:f].to_s.empty? and params[:id].nil? 
+
+    /[if lt IE 7 ]
+      - body_class = 'ie6'
+    /[if IE 7 ] 
+      - body_class = 'ie7'
+    /[if IE 8 ] 
+      - body_class = 'ie8'
+    /[if IE 9 ] 
+      - body_class = 'ie9'
+  %body.bp.two-col{:class => body_class, :onload => onload}
+    #wrapper
+      %header
+        / need to assess rendering of html5 semantic elements once browser specs have been determined.
+        #cu-header
+          %img{:border => "0", :height => "14", :src => "/images/crown.w18h14.white.gif", :width => "18"}
+          %a{:href => "http://www.columbia.edu", :style => "color:white; text-decoration:none", :target => "_blank"} Columbia University Libraries
+        #header
+          #util_links= render :partial=>'/user_util_links'
+          %br{:style => "clear:both"}
+          %img#cuLogo{:alt => "Columbia University Logo", :src => "/images/cu_logo.png"}
+          %h1.site_title
+            = link_to application_name, root_path
+            = (params[:controller] == "catalog" and !params[:id]) ? "<span id='results_text'>Search Results</span>" : ""
+      #container
+        = render :partial => "/catalog/search_form"
+        #sidebar
+          = sidebar_items.join()
+        #content
+          = render :partial=>'/flash_msg'
+          = yield
+      #footer= @footer
+
