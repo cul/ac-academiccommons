@@ -167,6 +167,16 @@
 
   <!-- Copy Fields -->
 
+        <copyField source="ac.fulltext_*" dest="text"/>
+        <copyField source="author_search" dest="text"/>
+        <copyField source="title_search" dest="text"/>
+        <copyField source="abstract" dest="text"/>
+        <copyField source="keyword_search" dest="text"/>
+        <copyField source="subject_search" dest="text"/>
+        <copyField source="genre_search" dest="text"/>
+        <copyField source="table_of_contents" dest="text"/>
+
+
   <!-- unstemmed fields -->
   <copyField source="title_t" dest="title_unstem_search"/>
   <copyField source="subtitle_t" dest="subtitle_unstem_search"/>
@@ -180,7 +190,9 @@
   <copyField source="subject_topic_facet" dest="subject_topic_unstem_search"/>
   
   <!-- sort fields -->
-  <copyField source="pub_date" dest="pub_date_sort"/>
+  <copyField source="date" dest="pub_date_sort"/>
+  <copyField source="title_display" dest="title_sort"/>
+  <copyField source="authors_display" dest="author_sort"/>
 
   <!-- spellcheck fields -->
   <!-- default spell check;  should match fields for default request handler -->

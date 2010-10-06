@@ -1,5 +1,24 @@
 module CatalogHelper
 
+  def get_total_count
+      query_params = {:qt=>"search"}
+      return get_count(query_params)
+  end
+
+  def get_count_by_year
+      query_params = {:qt=>"standard", :q=>"timestamp:[NOW-1YEAR TO NOW]"}      
+      return get_count(query_params)
+  end
+
+  def get_count_by_month
+      query_params = {:qt=>"standard", :q=>"timestamp:[NOW-1MONTH TO NOW]"}      
+      return get_count(query_params)
+  end
+
+  def get_count(query_params)
+    results = Blacklight.solr.find(query_params)
+    return results["response"]["numFound"]
+  end
 
   def build_recent_updated_list()
     query_params = {:q => "", :fl => "title_display, id,  authors_display, author_id_uni, timestamp", :sort => "timestamp desc", :per_page => 100, :start => 0}
