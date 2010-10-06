@@ -12,6 +12,11 @@
     = stylesheet_link_tag 'compiled/print.css', :media => "print"
     /[if IE]
       = stylesheet_link_tag 'compiled/ie.css', :media => 'screen, projection'
+      
+      
+    
+      
+    %link{:rel=>'stylesheet', :href=>'/stylesheets/application.css', :type => "text/css"}   
 
     = render_head_content
     - javascript_tag do
@@ -43,10 +48,10 @@
             = (params[:controller] == "catalog" and !params[:id]) ? "<span id='results_text'>Search Results</span>" : ""
       #srch.span-24.last
         = render :partial => "/catalog/search_form"
-      #page.span-24.last.clearfix
-        #sidebar.span-8
+      #page.span-24.clearfix
+        #sidebar.span-9 
           = sidebar_items.join()
-        #content.span-18.last
+        #content.span-15.last
           = render :partial=>'/flash_msg'
           = yield
       #footer.span-24.last= @footer
