@@ -1,7 +1,7 @@
 module CatalogHelper
 
   def get_total_count
-      query_params = {:qt=>"search"}
+      query_params = {:qt=>"standard", :q=>"timestamp:[* TO NOW]"}
       return get_count(query_params)
   end
 
