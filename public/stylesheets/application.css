@@ -3,9 +3,14 @@
 	http://localhost:3000/stylesheets/application.css?1285965521
 	http://localhost:3000/stylesheets/application.css?1286213672
 	http://localhost:3000/stylesheets/application.css?1286213908
+	http://dyn-iab-164-74.dyn.columbia.edu:3000/stylesheets/application.css?1286313848
+	http://dyn-iab-164-74.dyn.columbia.edu:3000/stylesheets/application.css?1286318186
+	http://localhost:3000/stylesheets/application.css?1286318893
 */
 
 /* Global */
+
+
 
 body {
 	/*font: 0.7em Verdana, "Lucida Grande", "Lucida Sans Unicode", Arial, sans-serif;*/
@@ -71,6 +76,8 @@ hr {
 }*/
 
 /* Links */
+
+ 
 
 a:link, a:visited, a:active {
 	border-bottom: 1px solid #1fecfe;
@@ -171,11 +178,7 @@ h2.search {
 /* Search Box */
 
 #search {
-	/*position: absolute;
-	top: -2.5em;
-	left: 0;
-	text-align: left;
-	font-size: 120%;*/
+ 
 	
 	text-align:center;
 	padding-top: 1em;
@@ -876,37 +879,25 @@ html {
 	
 }
 
-div#container {
-	 
-	background: #f5f5f5;
-	 
-   min-height: 700px;
-   
-/* gecko based browsers */
-background: -moz-linear-gradient(top, #E6E6E6, #CCC);
-
-/* webkit based browsers */
-background: -webkit-gradient(linear, left top, left bottom, from(#e6e6e6), to(#CCC));
-}
-
+ 
 #descriptive_information .label {
   font-weight: bold; 
   
   }
 
-#cu-header{
+#rooftop{
  
  height:18px
 
 }
 
-#cu-header img{
+#rooftop img{
 
 	margin-top: 2px;
 
 }
 
-#cu-header a{
+#rooftop a{
 	
 	font-size: 1.1em;
 	margin-left: 2px;
@@ -983,7 +974,7 @@ img#cuLogo{
 }
 
 span.index_counter {
-	margin-left: -1em;
+	margin-left: -1.25em;
 }
 
 div#footer{
@@ -1007,3 +998,8 @@ div#footer{
 	background-color: white;
 	border: 1px solid #2888cd;
 }
+
+#content {
+	background-color: #ccc;
+}
+ 
