@@ -43,7 +43,7 @@
             = (params[:controller] == "catalog" and !params[:id]) ? "<span id='results_text'>Search Results</span>" : ""
       #srch.span-24.last
         = render :partial => "/catalog/search_form"
-      #page.span-24
+      #page.span-24.last.clearfix
         #sidebar.span-8
           = sidebar_items.join()
         #content.span-18.last

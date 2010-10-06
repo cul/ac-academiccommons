@@ -95,7 +95,7 @@ $("#container").append(dialog);
     
 /* set height of #page element based on #main... fixes height clearing issue */
     
-  $('#page').height(function(){return $('#main').height()+100+'px'; } );
+//  $('#page').height(function(){return $('#main').height()+100+'px'; } );
   
   
 /* keep facet boxes visible after page scroll --- may be optimized/re-factored later */

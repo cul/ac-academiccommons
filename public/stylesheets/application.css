@@ -6,6 +6,8 @@
 	http://dyn-iab-164-74.dyn.columbia.edu:3000/stylesheets/application.css?1286313848
 	http://dyn-iab-164-74.dyn.columbia.edu:3000/stylesheets/application.css?1286318186
 	http://localhost:3000/stylesheets/application.css?1286318893
+	http://localhost:3000/stylesheets/application.css?1286379774
+	http://localhost:3000/stylesheets/application.css?1286380633
 */
 
 /* Global */
@@ -728,18 +730,8 @@ body {
 
 
 /* IE 6 Adjustments */
-
-* html .yui-t2 #yui-main .yui-b {
-	position: absolute;
-	top: 0px;
-	left: 0px;
-}
-
-* html #search {
-	position: absolute;
-	top: -4em;
-	left: 1em;
-}
+ 
+ 
 
 /** html #documents {
 	width: 75%;
@@ -999,7 +991,9 @@ div#footer{
 	border: 1px solid #2888cd;
 }
 
-#content {
-	background-color: #ccc;
+
+#page {
+  
+ background: #dee1df;
+	 
 }
- 
