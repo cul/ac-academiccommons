@@ -133,7 +133,7 @@ body.bp form.inline p {
   margin-bottom: 0;
 }
 
-/* line 22, ../../../app/stylesheets/screen.scss */
+/* line 24, ../../../app/stylesheets/screen.scss */
 body.bp {
   line-height: 1.5;
   font-family: "Helvetica Neue", Arial, Helvetica, sans-serif;
@@ -503,14 +503,14 @@ form.bp textarea {
   height: 250px;
 }
 
-/* line 36, ../../../app/stylesheets/screen.scss */
+/* line 38, ../../../app/stylesheets/screen.scss */
 body.two-col #container {
   width: 950px;
   margin: 0 auto;
   overflow: hidden;
   *zoom: 1;
 }
-/* line 38, ../../../app/stylesheets/screen.scss */
+/* line 40, ../../../app/stylesheets/screen.scss */
 body.two-col #header, body.two-col #footer {
   display: inline;
   float: left;
@@ -521,25 +521,44 @@ body.two-col #header, body.two-col #footer {
 * html body.two-col #header, * html body.two-col #footer {
   overflow-x: hidden;
 }
-/* line 40, ../../../app/stylesheets/screen.scss */
+/* line 42, ../../../app/stylesheets/screen.scss */
 body.two-col #sidebar {
   display: inline;
   float: left;
   margin-right: 10px;
-  width: 310px;
+  width: 230px;
 }
 /* line 139, ../../../../../../../../usr/local/lib/ruby/gems/1.8/gems/compass-0.10.5/frameworks/blueprint/stylesheets/blueprint/_grid.scss */
 * html body.two-col #sidebar {
   overflow-x: hidden;
 }
-/* line 44, ../../../app/stylesheets/screen.scss */
+/* line 46, ../../../app/stylesheets/screen.scss */
 body.two-col #content {
   display: inline;
   float: left;
   margin-right: 0;
-  width: 630px;
+  width: 710px;
 }
 /* line 139, ../../../../../../../../usr/local/lib/ruby/gems/1.8/gems/compass-0.10.5/frameworks/blueprint/stylesheets/blueprint/_grid.scss */
 * html body.two-col #content {
+  overflow-x: hidden;
+}
+
+/* line 55, ../../../app/stylesheets/screen.scss */
+body.single-col #container {
+  width: 950px;
+  margin: 0 auto;
+  overflow: hidden;
+  *zoom: 1;
+}
+/* line 57, ../../../app/stylesheets/screen.scss */
+body.single-col #header, body.single-col #footer, body.single-col #content {
+  display: inline;
+  float: left;
+  margin-right: 10px;
+  width: 950px;
+}
+/* line 139, ../../../../../../../../usr/local/lib/ruby/gems/1.8/gems/compass-0.10.5/frameworks/blueprint/stylesheets/blueprint/_grid.scss */
+* html body.single-col #header, * html body.single-col #footer, * html body.single-col #content {
   overflow-x: hidden;
 }

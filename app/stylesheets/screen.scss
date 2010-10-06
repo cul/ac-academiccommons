@@ -7,12 +7,14 @@
 // Import all the default blueprint modules so that we can access their mixins.
 @import "blueprint";
 
+@import "blueprint/grid";
+
 // Import the non-default scaffolding module.
 @import "blueprint/scaffolding";
 
 // To generate css equivalent to the blueprint css but with your
 // configuration applied, uncomment:
-// @include blueprint
+//@include blueprint
 
 // But Compass recommends that you scope your blueprint styles
 // So that you can better control what pages use blueprint
@@ -24,8 +26,8 @@ body.bp {
   @include blueprint-utilities;
   @include blueprint-debug;
   @include blueprint-interaction;
-  // Remove the scaffolding when you're ready to start doing visual design.
-  // Or leave it in if you're happy with how blueprint looks out-of-the-box
+//  // Remove the scaffolding when you're ready to start doing visual design.
+//  // Or leave it in if you're happy with how blueprint looks out-of-the-box
 }
 
 form.bp {
@@ -38,12 +40,22 @@ body.two-col {
   #header, #footer {
     @include column($blueprint-grid-columns); }
   #sidebar {
-    // One third of the grid columns, rounding down. With 24 cols, this is 8.
-    $sidebar-columns: floor($blueprint-grid-columns / 3);
+    // One quarter of the grid columns, rounding down. With 24 cols, this is 6.
+    $sidebar-columns: floor($blueprint-grid-columns / 4);
     @include column($sidebar-columns); }
   #content {
-    // Two thirds of the grid columns, rounding up.
-    // With 24 cols, this is 16.
-    $content-columns: ceil(2 * $blueprint-grid-columns / 3);
+    // Three quarters of the grid columns, rounding up.
+    // With 24 cols, this is 18.
+    $content-columns: ceil(3 * $blueprint-grid-columns / 4);
     // true means it's the last column in the row
     @include column($content-columns, true); } }
+
+
+body.single-col {
+  #container {
+    @include container; }
+  #header, #footer, #content {
+    @include column($blueprint-grid-columns); }
+  
+
+}

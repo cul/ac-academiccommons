@@ -40,12 +40,17 @@ $(document).ready(function() {
 
     function positionDialog(dialog) {
       dialog = $(dialog);
+
       
-      dialog.dialog("option", "height", $(window).height()-125);
-      dialog.dialog("option", "width", Math.max(  ($(window).width() /2), 45));
+      dialog.height($(window).height()-125);
+  /*    dialog.dialog("option", "width", Math.max(  ($(window).width() /2), 45));
       dialog.dialog("option", "position", ['center', 75]);
       
       dialog.dialog("open").dialog("moveToTop");
+*/
+$("#container").append(dialog);
+
+ 
     }
     
 
@@ -59,7 +64,7 @@ $(document).ready(function() {
       $(this).click( function() {     
         //lazy create of dialog
         if ( dialog_box == "empty") {
-          dialog_box = $('<div class="dialog_box"></div>').dialog({ autoOpen: false});          
+          dialog_box = $('<div class="dialog_box"></div>');          
         }
         // Load the original URL on the link into the dialog associated
         // with it. Rails app will give us an appropriate partial.
@@ -71,8 +76,10 @@ $(document).ready(function() {
 				  }
 				  // Remove first header from loaded content, and make it a dialog
 		      // title instead
-		      var heading = dialog_box.find("h1, h2, h3, h4, h5, h6").eq(0).remove();
-		      dialog_box.dialog("option", "title", heading.text());
+		      //var heading = dialog_box.find("h1, h2, h3, h4, h5, h6").eq(0).remove();
+		      //dialog_box.dialog("option", "title", heading.text());
+		      var facet_dialog_controls = '<a href="#" class="close_button">close</a> ';
+		      dialog_box.prepend(facet_dialog_controls);
           $("body").css("cursor", "auto");
         });
 
@@ -82,14 +89,16 @@ $(document).ready(function() {
       });
       
     });
-    
-    
-    /* set height of #page element based on #main */
-    
-  $('#page').height(function(){return $('#main').height()+100+'px'; } );
-  
-  
 
+/* AC2 Specific functions written by jackson h below to end of file */
+
+    
+/* set height of #page element based on #main... fixes height clearing issue */
+    
+//  $('#page').height(function(){return $('#main').height()+100+'px'; } );
+  
+  
+/* keep facet boxes visible after page scroll --- may be optimized/re-factored later */
 var placeholder = $( "#sidebar-wrapper" );
 var sb = $( "#sidebar" );
 var view = $( window );
