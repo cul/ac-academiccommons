@@ -1,8 +1,18 @@
-<dt>Recently Updated</dt>
-<% results = build_recent_updated_list() %>
-<% results.each do |r, v| %>
-<dt>
-<dd><%= v[:author_facet] %></dd> <dd><%= v[:title_display] %></dd> <dd><%= v[:author_id_uni] %></dd>
-</dt>
-<% end %>
+<div>
+    <dd>&nbsp;</dd>
+    <dd>Total objects in repository:  <%= get_total_count() %></dd>
+    <dd>Objects added in the last year:  <%= get_count_by_year() %></dd>
+    <dd>Objects added in the last 30 days:  <%= get_count_by_month() %></dd>
+    <dd>&nbsp;</dd>
+</div>
 
+<% results = build_recent_updated_list() %>
+<div>
+<dl class="solrQuery">
+<h3>Recently Updated </h3>
+<% results.each do |v| %>
+    <dd><%= v[:authors_display] %> -  <%= link_to v[:title_display], catalog_index_path+"/"+v[:id] %></dd>
+    <dd>&nbsp;</dd>
+<% end -%>
+</dl>
+</div>

@@ -1,27 +1,66 @@
 module CatalogHelper
 
+  def get_total_count
+      query_params = {:qt=>"standard", :q=>"timestamp:[* TO NOW]"}
+      return get_count(query_params)
+  end
+
+  def get_count_by_year
+      query_params = {:qt=>"standard", :q=>"timestamp:[NOW-1YEAR TO NOW]"}      
+      return get_count(query_params)
+  end
+
+  def get_count_by_month
+      query_params = {:qt=>"standard", :q=>"timestamp:[NOW-1MONTH TO NOW]"}      
+      return get_count(query_params)
+  end
+
+  def get_count(query_params)
+    results = Blacklight.solr.find(query_params)
+    return results["response"]["numFound"]
+  end
 
   def build_recent_updated_list()
-    query_params = {:q => "", :fl => "title_display, id, author_facet, author_id_uni", :sort => 'timestamp desc', :per_page => 100}
-    return build_distinct_authors_list(0, query_params)
+    query_params = {:q => "", :fl => "title_display, id,  authors_display, author_id_uni, timestamp", :sort => "timestamp desc", :per_page => 100, :start => 0}
+    unis = []
+    results = []
+    return build_distinct_authors_list(0, query_params, unis, results)
   end
 
-  def build_distinct_authors_list(start, query_params)
-    results = Hash.new{}
+  def build_distinct_authors_list(start, query_params, unis, results)
     updated = Blacklight.solr.find(query_params)
-    updated["response"]["docs"].each do |r|
-      author = r["author_facet"]
-      if(!results[author])
-        results[author] = r
-        if(results.length == 20)
-          return results
-        end
-      elsif(updated.empty?)
-        query_params.merge(:start_row => start + 100)
-        build_distinct_authors_list(list_length, query_params)
-      end
+    items = updated["response"]["docs"]
+    if(items.empty?)
+	return results
     end
-  end
+    items.sort! do  |x,y|     
+    	y["timestamp"]<=>x["timestamp"]
+    end
+    items.each do |r|
+	new = true
+    	if(r["author_id_uni"])
+	  r["author_id_uni"].each do |uni|
+	    if(unis.include?(uni))
+		new = false
+	    else
+		unis << uni
+	    end
+	   end
+	  if (new)
+		results << r
+          	if(results.length == 20)
+          	  return results
+      	  	 end
+	   end
+        end
+    end
+    if(results.length < 20)
+          new_start = start + 100
+	  query_params[:start] = new_start
+          build_distinct_authors_list(new_start, query_params, unis, results)
+    end
+    end
+
 
 
   def build_resource_list(document)
