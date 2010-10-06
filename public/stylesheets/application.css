@@ -823,6 +823,10 @@ html {
 	
 }
 
+body.single-col #page {
+	padding: 2em;
+	min-height: 600px;}
+
  
 #descriptive_information .label {
   font-weight: bold; 
@@ -861,6 +865,7 @@ html {
 #facets {
 	margin-left: .5em;
 	margin-right: .5em;
+	width: 220px;
 }
 
 #facets h3 {
@@ -905,7 +910,10 @@ html {
 
  
 
-
+.facets-fixed{
+	position: fixed;
+	top: 50px;
+}
 
  
 

@@ -15,6 +15,9 @@
       = stylesheet_link_tag 'compiled/ie.css', :media => 'screen, projection'
 
     = render_head_content
+    
+    %link{:rel=>'stylesheet', :href=>'/stylesheets/application.css', :type => "text/css"}   
+    
     - javascript_tag do
       = yield(:jstemplates)
  
@@ -27,21 +30,20 @@
     /[if IE 9 ] 
       - body_class = 'ie9'
   %body.bp.single-col(class = body_class)
-    #wrapper
-      %header
-        / need to assess rendering of html5 semantic elements once browser specs have been determined.
-        #cu-header
+    #container
+      %header.span-24.last
+        #rooftop
           %img{:border => "0", :height => "14", :src => "/images/crown.w18h14.white.gif", :width => "18"}
           %a{:href => "http://www.columbia.edu", :style => "color:white; text-decoration:none", :target => "_blank"} Columbia University Libraries
-        #header
+        #hd
           #util_links= render :partial=>'/user_util_links'
           %br{:style => "clear:both"}
           %img#cuLogo{:alt => "Columbia University Logo", :src => "/images/cu_logo.png"}
           %h1.site_title
             = link_to application_name, root_path
             = (params[:controller] == "catalog" and !params[:id]) ? "<span id='results_text'>Search Results</span>" : ""
-      #container
-        #content
+      #page.span-24.clearfix
+        #content.span-24.last
           = render :partial=>'/flash_msg'
           = yield
-      #footer= @footer
+      #footer.span-24.last= @footer
