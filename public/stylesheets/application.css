@@ -278,8 +278,10 @@ ul.facet_extended_list li {
 
 .pagination {
 	text-align: right;
-	padding-top: 1em;
-	margin-bottom: .5em;
+	padding-top: .5em;
+	padding-bottom: .5em; 
+	margin:  0 1em .5em 1em;
+	background-color: #e1e1e6;
 }
 
 .pagination h2 {
@@ -290,11 +292,21 @@ ul.facet_extended_list li {
 	display: none;
 }
 
-.pagination a, .pagination span {
-	padding: 0px 5px;
-	border: 0px;
+body.bp .pagination a, .pagination span {
+	padding:  5px;
+	 
+	border-bottom: none;
+	border-width: 1px;
+	border-style: solid;
+	font-weight: bold;
+	color: white;
+	background-color: navy;
 }
 
+body.bp .pagination span.current{
+	background: transparent;
+	color: navy;
+}
 .pagination .prev_page, .pagination .next_page {
 	display: none;
 }
@@ -312,14 +324,14 @@ ul.facet_extended_list li {
 }
 
 #sortAndPerPage {
-	background-color: #eee;
+ 
 }
 
 /* Search Results */
 
 .document {
 	 
-	background: #f0f0f0;
+ 
 	border-bottom: 1px dotted #ccc;
 	
  
@@ -344,14 +356,11 @@ ul.facet_extended_list li {
 /* Result List (http://www.quirksmode.org/css/clearing.html) */
 
 body.bp h3.index_title {
- font-size: 1.25em;
- line-height: 1.5em;
-	 background: #d9d9d9;
-	border-bottom: 1px solid #C9E5FF;
-	background: -moz-linear-gradient(top, #C9E5FF, #F5FBFF);
-	background: -webkit-gradient(linear, left top, right top, from(#FFF), to(#F5FBFF));
-	
-	padding-left: 1em;
+    
+    font-size: 1.25em;
+    line-height: 1.5em;
+	font-weight: bold;
+	padding-left: 2em;
 	padding-right: 1em;
 }
 
@@ -365,17 +374,18 @@ dl.defList {
 	padding: 0.5em 0;
 }
 
-dl.defList dt {
+body.bp dl.defList dt {
 	float: left;
 	text-align: right;
 	width: 20%;
 	/*clear: both;*/
 	color: #888;
 	margin: 0;
-	padding: 2px 1em 2px 0px;
+	padding: 2px .5em 2px 0px;
+	font-weight: normal;
 }
 
-dl.defList dd {
+body.bp dl.defList dd {
 	float: left;
 	text-align: left;
 	margin: 0;
@@ -699,6 +709,9 @@ Search Parameters
 
 #appliedParams {
 	margin-bottom: 0 !important;
+	margin-left: 1em;
+	margin-right: 1em;
+
 }
 
 #appliedQueries,
@@ -929,8 +942,8 @@ img#cuLogo{
 
 span.index_counter {
 	float: left;
-	margin-left: -1.3em;
-	font-size: .75em;
+	margin-left: -2em;
+ 
 }
 
 div#footer{
@@ -958,7 +971,8 @@ div#footer{
 
 #page {
  padding-top: .5em;
-background: #f0f0f0;
+ background: #f0f0f0;
+ min-height:650px;
 
    	 
 }
@@ -972,6 +986,5 @@ body.bp a {
 #sidebar {
 	
 	padding-bottom: 2.5em;
-	 background: -moz-linear-gradient(top, #C9E5FF, #F5FBFF);
-	background: -webkit-gradient(linear, left top, left bottom, from(#ccc), to(#F5FBFF));
+ 
 }
