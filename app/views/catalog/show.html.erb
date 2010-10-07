@@ -5,19 +5,15 @@
 <%= render 'constraints', :localized_params=>session[:search] %>
 
 <%# this should be in a partial -%>
-<div class="yui-g">
-	<div class="yui-u first">
+<div>
+	<div>
 	  <script type="text/javascript">
 	    if(history.length > 1){
-	      document.write(<%= render 'previous_next_doc' %>);
+	      document.write('<%= render 'previous_next_doc' -%>');
 	    }
       </script>
     </div>
-	<!--
-<div class="yui-u">
-		
-	</div>
--->
+ 
 </div>
 <% sidebar_items << capture do %>
   <div class="back-to-search"><%= link_back_to_catalog %></div>
