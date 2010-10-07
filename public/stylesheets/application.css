@@ -880,8 +880,9 @@ body.single-col #page {
 	background: -webkit-gradient(linear, left top, left bottom, from(#C9E5FF), to(#F5FBFF));
 	font-weight: bold;
 	color: #414097;
-	font-size: 1.25em;
+	font-size: 1em;
 	text-shadow: #c4d1d9 2px 2px 1px;
+	text-transform: uppercase;
 }
 
 #facets h2 {
@@ -958,13 +959,15 @@ div#footer{
 #page {
  padding-top: .5em;
 background: #f0f0f0;
-	 
+
+   	 
 }
 
 body.bp a {
   text-decoration: none;
    
 }
+ 
 
 #sidebar {
 	
