@@ -93,14 +93,12 @@ $("#container").append(dialog);
 /* AC2 Specific functions written by jackson h below to end of file */
 
     
-/* set height of #page element based on #main... fixes height clearing issue */
-    
-//  $('#page').height(function(){return $('#main').height()+100+'px'; } );
+ 
   
   
 /* keep facet boxes visible after page scroll --- may be optimized/re-factored later */
-var placeholder = $( "#sidebar-wrapper" );
-var sb = $( "#sidebar" );
+var placeholder = $( "#facet-wrapper" );
+var sb = $( "#facets" );
 var view = $( window );
 view.bind(
 "scroll resize",
@@ -112,25 +110,25 @@ function(){
 
   if (
     (viewTop > placeholderTop) &&
-    !sb.is( ".sidebar-fixed" )
+    !sb.is( ".facets-fixed" )
   ){
  
 
     placeholder.height(placeholder.height());
  
 
-    sb.addClass( "sidebar-fixed" );
+    sb.addClass( "facets-fixed" );
 
 
 } else if (
 (viewTop <= placeholderTop) &&
-sb.is( ".sidebar-fixed" )
+sb.is( ".facets-fixed" )
 ){
  
 
 placeholder.css( "height", "auto" );
 
-sb.removeClass( "sidebar-fixed" );
+sb.removeClass( "facets-fixed" );
  
 }
 }

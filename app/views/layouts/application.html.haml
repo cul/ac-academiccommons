@@ -49,8 +49,9 @@
       #srch.span-24.last
         = render :partial => "/catalog/search_form"
       #page.span-24.clearfix
-        #sidebar.span-9 
-          = sidebar_items.join()
+        #sidebar.span-9
+          #facet-wrapper
+            = sidebar_items.join()
         #content.span-15.last
           = render :partial=>'/flash_msg'
           = yield
