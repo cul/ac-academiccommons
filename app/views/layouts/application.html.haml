@@ -16,9 +16,10 @@
       
     
       
-    %link{:rel=>'stylesheet', :href=>'/stylesheets/application.css', :type => "text/css"}   
+    
 
     = render_head_content
+    %link{:rel=>'stylesheet', :href=>'/stylesheets/application.css', :type => "text/css"}  
     - javascript_tag do
       = yield(:jstemplates)
 

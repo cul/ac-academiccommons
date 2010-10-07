@@ -40,17 +40,12 @@ $(document).ready(function() {
 
     function positionDialog(dialog) {
       dialog = $(dialog);
-
       
-      dialog.height($(window).height()-125);
-  /*    dialog.dialog("option", "width", Math.max(  ($(window).width() /2), 45));
+      dialog.dialog("option", "height", $(window).height()-125);
+      dialog.dialog("option", "width", Math.max(  ($(window).width() /2), 45));
       dialog.dialog("option", "position", ['center', 75]);
       
       dialog.dialog("open").dialog("moveToTop");
-*/
-$("#container").append(dialog);
-
- 
     }
     
 
@@ -64,7 +59,7 @@ $("#container").append(dialog);
       $(this).click( function() {     
         //lazy create of dialog
         if ( dialog_box == "empty") {
-          dialog_box = $('<div class="dialog_box"></div>');          
+          dialog_box = $('<div class="dialog_box"></div>').dialog({ autoOpen: false});          
         }
         // Load the original URL on the link into the dialog associated
         // with it. Rails app will give us an appropriate partial.
@@ -76,10 +71,8 @@ $("#container").append(dialog);
 				  }
 				  // Remove first header from loaded content, and make it a dialog
 		      // title instead
-		      //var heading = dialog_box.find("h1, h2, h3, h4, h5, h6").eq(0).remove();
-		      //dialog_box.dialog("option", "title", heading.text());
-		      var facet_dialog_controls = '<a href="#" class="close_button">close</a> ';
-		      dialog_box.prepend(facet_dialog_controls);
+		      var heading = dialog_box.find("h1, h2, h3, h4, h5, h6").eq(0).remove();
+		      dialog_box.dialog("option", "title", heading.text());
           $("body").css("cursor", "auto");
         });
 
@@ -89,10 +82,9 @@ $("#container").append(dialog);
       });
       
     });
-
-/* AC2 Specific functions written by jackson h below to end of file */
-
     
+    
+
  
   
   
