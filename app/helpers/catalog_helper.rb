@@ -1,18 +1,18 @@
 module CatalogHelper
 
   def get_total_count
-      query_params = {:qt=>"standard", :q=>"timestamp:[* TO NOW]"}
-      return get_count(query_params)
+    query_params = {:qt=>"standard", :q=>"timestamp:[* TO NOW]"}
+    return get_count(query_params)
   end
 
   def get_count_by_year
-      query_params = {:qt=>"standard", :q=>"timestamp:[NOW-1YEAR TO NOW]"}      
-      return get_count(query_params)
+    query_params = {:qt=>"standard", :q=>"timestamp:[NOW-1YEAR TO NOW]"}      
+    return get_count(query_params)
   end
 
   def get_count_by_month
-      query_params = {:qt=>"standard", :q=>"timestamp:[NOW-1MONTH TO NOW]"}      
-      return get_count(query_params)
+    query_params = {:qt=>"standard", :q=>"timestamp:[NOW-1MONTH TO NOW]"}      
+    return get_count(query_params)
   end
 
   def get_count(query_params)
@@ -31,35 +31,35 @@ module CatalogHelper
     updated = Blacklight.solr.find(query_params)
     items = updated["response"]["docs"]
     if(items.empty?)
-	return results
+      return results
     end
     items.sort! do  |x,y|     
-    	y["timestamp"]<=>x["timestamp"]
+      y["timestamp"]<=>x["timestamp"]
     end
     items.each do |r|
-	new = true
-    	if(r["author_id_uni"])
-	  r["author_id_uni"].each do |uni|
-	    if(unis.include?(uni))
-		new = false
-	    else
-		unis << uni
-	    end
-	   end
-	  if (new)
-		results << r
-          	if(results.length == 20)
-          	  return results
-      	  	 end
-	   end
+      new = true
+      if(r["author_id_uni"])
+        r["author_id_uni"].each do |uni|
+          if(unis.include?(uni))
+            new = false
+          else
+            unis << uni
+          end
         end
+        if (new)
+          results << r
+          if(results.length == 20)
+            return results
+          end
+        end
+      end
     end
     if(results.length < 20)
-          new_start = start + 100
-	  query_params[:start] = new_start
-          build_distinct_authors_list(new_start, query_params, unis, results)
+      new_start = start + 100
+      query_params[:start] = new_start
+      build_distinct_authors_list(new_start, query_params, unis, results)
     end
-    end
+  end
 
 
 
