@@ -7,9 +7,9 @@
 </div>
 
 <h3>Recently Updated</h3>
-<% results = build_recent_updated_list() %>
-<% results.each do |r, v| %>
+<% build_recent_updated_list.each do |v| %>
 <dl>
-<dt><%= v[:author_facet] %></dt> <dd><%= v[:title_display] %></dd> <!-- <dd><%= v[:author_id_uni] %></dd> -->
+  <dt><%= v[:authors_display] %></dt> 
+  <dd><%= v[:title_display] %></dd> 
 </dl>
 <% end %>
