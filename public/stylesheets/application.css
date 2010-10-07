@@ -880,8 +880,9 @@ body.single-col #page {
 	background: -webkit-gradient(linear, left top, left bottom, from(#C9E5FF), to(#F5FBFF));
 	font-weight: bold;
 	color: #414097;
-	font-size: 1.25em;
+	font-size: 1em;
 	text-shadow: #c4d1d9 2px 2px 1px;
+	text-transform: uppercase;
 }
 
 #facets h2 {
@@ -942,7 +943,7 @@ div#footer{
 	text-align: center;
 }
 
-.dialog_box {
+/*.dialog_box {
 	
 	width: 500px;
 	height: 500px;
@@ -952,19 +953,21 @@ div#footer{
 	left: 20px;
 	background-color: white;
 	border: 1px solid #2888cd;
-}
+}*/
 
 
 #page {
  padding-top: .5em;
 background: #f0f0f0;
-	 
+
+   	 
 }
 
 body.bp a {
   text-decoration: none;
    
 }
+ 
 
 #sidebar {
 	
