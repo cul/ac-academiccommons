@@ -1,4 +1,8 @@
-/* @override http://localhost:3000/stylesheets/application.css */
+/* @override 
+	http://localhost:3000/stylesheets/application.css
+ 
+	http://dyn-iab-164-74.dyn.columbia.edu:3000/stylesheets/application.css
+*/
 
 body.bp a:link, body.bp a:visited, body.bp a:active {
 	border-bottom: 1px solid #1fecfe;
@@ -107,8 +111,13 @@ th, td {
 }
 
 #facets li a:hover {
-	background-color: #eee;
+ 
 }
+body.bp #facets a.facet_deselect{
+		border-bottom: 1px solid #1fec11;
+}
+
+/* My Comment */
 
 #facets li a.remove {
 	color: #red;
@@ -139,6 +148,7 @@ li.facet_unselected {
 
 li.facet_selected {
 	background: url(../images/facet-toggle-ui.png) no-repeat -1px -16px;
+	font-weight: bold;
 }
 
 li.facet_selected:hover {
