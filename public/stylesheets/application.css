@@ -117,8 +117,6 @@ body.bp #facets a.facet_deselect{
 		border-bottom: 1px solid #1fec11;
 }
 
-/* My Comment */
-
 #facets li a.remove {
 	color: #red;
 	font-weight: bold;
@@ -161,16 +159,19 @@ li.facet_selected:hover {
 }
 
 ul.facet_extended_list {
+	padding-bottom: 1em;
 	margin: 0;
-}
+	padding-left: .75em;
+	margin-top: .75em;}
 
 ul.facet_extended_list li {
 	list-style: none;
-	margin: 0.5em 0;
+		padding: .25em 0 .25em 20px;
 }
 
 .facet_extended_list {
 	text-align: left;
+	
 }
 
 /* for our ajaxy dialog to make sure we're overriding the yui global text-align: center */
