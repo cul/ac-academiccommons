@@ -100,10 +100,10 @@ th, td {
 
 
 #facets li {
-	list-style: none;
+ 
 	color: #a5a4c9;
-	padding: .25em 0;
-	 
+	padding: .25em 0 .25em 20px;
+	list-style-type: none;
 }
 
 #facets li a:hover {
@@ -126,9 +126,23 @@ a.btnRemove.imgReplace {
  
 
 #facets span.selected {
-	color: #fff;
-	background: #2D2A62;
+	 
+ 
 	font-weight: bold;
+	color: navy;
+}
+
+li.facet_unselected {
+	background: url(../images/facet-toggle-ui.png) no-repeat 0 5px;
+}
+
+
+li.facet_selected {
+	background: url(../images/facet-toggle-ui.png) no-repeat -1px -16px;
+}
+
+li.facet_selected:hover {
+	background: url(../images/facet-toggle-ui.png) no-repeat -1px -36px;
 }
 
 #facets li.more_facets_link {
@@ -896,5 +910,14 @@ body.bp a {
 #sidebar {
 	
 	padding-bottom: 2.5em;
+ 
+}
+
+div.documentFunctions {
+ text-align: right;
+ margin-bottom: .5em;
+}
+
+form#new_bookmark.new_bookmark {
  
 }
