@@ -106,15 +106,21 @@ th, td {
 #facets li {
  
 	color: #a5a4c9;
-	padding: .25em 0 .25em 20px;
+	padding: .25em 0 .25em 0px;
 	list-style-type: none;
 }
 
 #facets li a:hover {
  
 }
-body.bp #facets a.facet_deselect{
-		border-bottom: 1px solid #1fec11;
+body.bp #facets a {
+		border-bottom: none;
+		text-decoration: none;
+		 padding: .25em 0 .25em 22px;
+}
+
+body.bp #facets a:hover{
+	text-decoration: underline;
 }
 
 #facets li a.remove {
@@ -139,7 +145,7 @@ a.btnRemove.imgReplace {
 	color: navy;
 }
 
-li.facet_unselected {
+/*li.facet_unselected {
 	background: url(../images/facet-toggle-ui.png) no-repeat 0 5px;
 }
 
@@ -151,7 +157,7 @@ li.facet_selected {
 
 li.facet_selected:hover {
 	background: url(../images/facet-toggle-ui.png) no-repeat -1px -36px;
-}
+}*/
 
 #facets li.more_facets_link {
 	text-align: right;
@@ -172,6 +178,35 @@ ul.facet_extended_list li {
 .facet_extended_list {
 	text-align: left;
 	
+}
+a.facet_deselect{
+	
+		background: url(../images/facet-toggle-ui.png) no-repeat -1px -34px;
+	font-weight: bold;
+	
+}
+
+a.facet_deselect:hover{
+	background: url(../images/facet-toggle-ui.png) no-repeat -1px -56px;
+}
+
+a.facet_select{
+	background: url(../images/facet-toggle-ui.png) no-repeat -1px 2px;
+}
+a.facet_select:hover{
+ 
+		background: url(../images/facet-toggle-ui.png) no-repeat -1px -16px;
+	
+	}
+
+#facets li a{
+	 
+	padding-left: 22px;
+ 
+}
+
+span.item_count{
+	 
 }
 
 /* for our ajaxy dialog to make sure we're overriding the yui global text-align: center */
