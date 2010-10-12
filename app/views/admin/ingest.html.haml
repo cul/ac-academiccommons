@@ -1,34 +1,67 @@
-%h1 Ingest objects
 %h2 Ingest objects
-%h3 Ingest objects
-%h4 Ingest objects
-%h5 Ingest objects
-%h6 Ingest objects
 
-#grid
-  #left Grid
-  #center Grid
-  #right Grid
+#admin_ingest
+  - form_tag "ingest" do 
 
-.span-24.last
-  .span-8 Grid
-  .span-8 Grid 2
-  .span-8.last Grid 3
+    .label Items:
+    .value
+      = text_field_tag :items, params[:items]
+      (space delimited)
+    
+    .label Collections:
+    .value
+      = text_field_tag :collections, params[:collection]
+      (space delimited)
 
-- form_tag "ingest" do 
+    .label Overwrite existing?
+    .value
+      = check_box_tag :overwrite, 1, params[:overwrite]
 
-  %div Please enter a list of space-delimited items to ingest:
-  %div= text_field_tag :items, params[:items]
+    .label Metadata?
+    .value
+      = check_box_tag :metadata, 1, params[:metadata] || "1"
 
-  %div Please enter a list of space-delimited collections to ingest:
-  %div= text_field_tag :collections, params[:collection]
+    .label Full-text index?
+    .value
+      = check_box_tag :fulltext, 1, params[:fulltext]
 
- 
+    .label Skip
+    .value
+      skip
+      = text_field_tag :skip, params[:skip]
+      items before processing the first one
 
-  = submit_tag "Commit"
+    .label Process
+    .value
+      only the first
+      = text_field_tag :process, params[:process]
+      items
 
 
-  %div Or, you can delete the entire index. This is irreversible.
 
-  = submit_tag "Delete All", :confirm => "This will delete the entire index. Are you sure you want to do this?"
+    .label &nbsp;
+    .value
+      = submit_tag "Commit"
 
+    
+
+    %hr
+
+    .label Delete Index:
+    .value
+      = submit_tag "Delete All", :confirm => "This will delete the entire index. Are you sure you want to do this?"
+      %b This is irreversible.
+
+  -if @results
+    %h3 Ingest results:
+  
+    - @results[:results].keys.sort.each do |status|
+      .label= status.capitalize
+      .value= @results[:results][status].length
+
+
+    .label Errors:
+    .value
+      - @results[:errors].each_pair do |pid, message|
+        .error #{pid} : #{message}
+    
