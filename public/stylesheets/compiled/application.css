@@ -1,4 +1,16 @@
-/* line 3, ../../../app/stylesheets/application.sass */
+/* line 4, ../../../app/stylesheets/application.sass */
+#appliedParams a#feedLink {
+  display: inline;
+  text-decoration: none;
+}
+/* line 8, ../../../app/stylesheets/application.sass */
+#appliedParams a#feedLink img {
+  position: static;
+  padding-top: 2px;
+  padding-left: 5px;
+}
+
+/* line 15, ../../../app/stylesheets/application.sass */
 #admin_ingest {
   display: inline;
   float: left;
@@ -9,7 +21,7 @@
 * html #admin_ingest {
   overflow-x: hidden;
 }
-/* line 6, ../../../app/stylesheets/application.sass */
+/* line 18, ../../../app/stylesheets/application.sass */
 #admin_ingest .label {
   display: inline;
   float: left;
@@ -21,7 +33,7 @@
 * html #admin_ingest .label {
   overflow-x: hidden;
 }
-/* line 10, ../../../app/stylesheets/application.sass */
+/* line 22, ../../../app/stylesheets/application.sass */
 #admin_ingest .value {
   display: inline;
   float: left;
