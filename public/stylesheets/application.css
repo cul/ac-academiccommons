@@ -1,63 +1,5 @@
 /* @override http://localhost:3000/stylesheets/application.css */
 
-/* Global */
-
- 
-/*strong {
-	font-weight: bold;
-}
-
-input {
-	padding: .1em;
-}
-
-label {
-	color: #555;
-	font-weight: bold;
-}
-
-hr {
-	border: none;
-	height: 1px;
-	background-color: #ccc;
-}
-
-.width100p {
-	width: 100%;
-}
-
-.left {
-	float: left;
-}
-
-.right {
-	float: right;
-}
-
-.clear-left {
-	clear: left;
-}
-
-.clear-both {
-	clear: both;
-}
-
-.topDottedBorder {
-	border-top: 1px dotted #ccc;
-}
-
-.bottomDottedBorder {
-	border-bottom: 1px dotted #ccc;
-}*/
-
-/*.formElement {
-	font: 8pt Verdana, Arial, sans-serif;
-}*/
-
-/* Links */
-
- 
-
 body.bp a:link, body.bp a:visited, body.bp a:active {
 	border-bottom: 1px solid #1fecfe;
 	color: #2e4f81;
@@ -67,51 +9,6 @@ body.bp a:link, body.bp a:visited, body.bp a:active {
 body.bp a:hover {
 	color: #029;
 }
-
-/* Header Container Layout */
-
-/*#header {
- height: 8em;
- 
-
-}*/
-
-/*#hd .yui-g {
-	text-align: right;
-}*/
-
-/*#hd .yui-g .first {
-	text-align: left;
-}*/
-
-/*.yui-t2 {
- 
-	border-bottom: 2px solid #555;
-	margin: 0px auto;
-}*/
-
-/* border-top: 10px solid #548cd8; -moz-border-top-colors: #548cd8 #5188d3 #4e84d0 #4b81cd #497dc9 #457ac6 #4376c2 #4173be #3e71bc #3d6fba; */
-
-/*#doc1, #doc2, #doc1, #doc4 {
-	width: 974px;
-}*/
-
-/* Body Container Layout */
-
-/*#bd {
-	padding: 0 2em 2em 2em;
-}*/
-
- 
- 
-
- 
-
-/*.yui-t2 .yui-b p {
-	padding-top: 2em;
-}*/
-
-/* Top Banner */
 
 h1.site_title {
 	background: transparent url('../images/ac_logo.png') no-repeat top left;
@@ -124,8 +21,6 @@ h1.site_title {
 
 h1.site_title a {
 	display: block;
-	/*height: 35px;
-	width: 120px;*/
 	text-indent: -9999px;
 	overflow: hidden;
 	text-decoration: none;
@@ -136,9 +31,10 @@ h1.site_title a:link, h1.site_title a:visited, h1.site_title a:hover, h1.site_ti
 	border: 0px;
 }
 
-h2.search {
+body.bp h2.search {
 	margin: 0;
 	display: inline;
+	font-size: 1.5em;
 }
 
 /* Search Box */
@@ -278,8 +174,14 @@ ul.facet_extended_list li {
 
 .pagination {
 	text-align: right;
-	padding-top: 1em;
-	margin-bottom: .5em;
+	padding-top: .5em;
+	padding-bottom: .5em; 
+ 	margin-right: 1em;
+	background: #e1e1e6;
+	background: -moz-linear-gradient(top, #e6e6e6, #CCC);
+	background: -webkit-gradient(linear, left top, left bottom, from(#e6e6e6), to(#ccc));
+
+	
 }
 
 .pagination h2 {
@@ -290,11 +192,21 @@ ul.facet_extended_list li {
 	display: none;
 }
 
-.pagination a, .pagination span {
-	padding: 0px 5px;
-	border: 0px;
+body.bp .pagination a, .pagination span {
+	padding:  5px;
+	 
+	border-bottom: none;
+	border-width: 1px;
+	border-style: solid;
+	font-weight: bold;
+	color: white;
+	background-color: navy;
 }
 
+body.bp .pagination span.current{
+	background: transparent;
+	color: navy;
+}
 .pagination .prev_page, .pagination .next_page {
 	display: none;
 }
@@ -312,17 +224,17 @@ ul.facet_extended_list li {
 }
 
 #sortAndPerPage {
-	background-color: #eee;
+ margin-right: 1em;
 }
 
 /* Search Results */
 
 .document {
 	 
-	background: #f0f0f0;
+ 
 	border-bottom: 1px dotted #ccc;
 	
- 
+    margin-top: 0;
 
 }
 
@@ -344,14 +256,11 @@ ul.facet_extended_list li {
 /* Result List (http://www.quirksmode.org/css/clearing.html) */
 
 body.bp h3.index_title {
- font-size: 1.25em;
- line-height: 1.5em;
-	 background: #d9d9d9;
-	border-bottom: 1px solid #C9E5FF;
-	background: -moz-linear-gradient(top, #C9E5FF, #F5FBFF);
-	background: -webkit-gradient(linear, left top, right top, from(#FFF), to(#F5FBFF));
-	
-	padding-left: 1em;
+    
+    font-size: 1.25em;
+    line-height: 1.5em;
+	font-weight: bold;
+	padding-left: 2em;
 	padding-right: 1em;
 }
 
@@ -360,22 +269,23 @@ dl {
 	padding: 0px;
 }
 
-dl.defList {
+body.bp dl.defList {
 	overflow: auto;
 	padding: 0.5em 0;
 }
 
-dl.defList dt {
+body.bp dl.defList dt {
 	float: left;
 	text-align: right;
 	width: 20%;
 	/*clear: both;*/
 	color: #888;
 	margin: 0;
-	padding: 2px 1em 2px 0px;
+	padding: 2px .5em 2px 0px;
+	font-weight: normal;
 }
 
-dl.defList dd {
+body.bp dl.defList dd {
 	float: left;
 	text-align: left;
 	margin: 0;
@@ -386,14 +296,23 @@ dl.defList dd {
 
 /* Individual Result Listing */
 #document {
-	background: white;
+ margin-right: 1em;
+	border-style: dotted;
+	border-width: 1px;
 }
+
 #document h1 {
-	margin: 0px;
-	padding:  1em;
-	line-height: 1.5em;
+	line-height: 1.25em;
 	font-size: 1.5em;
-	}
+	font-weight: bold;
+	text-shadow: white 2px 2px 0;
+	padding: .25em 1em;
+	
+	background: -moz-linear-gradient(top, #C9E5FF, #F5FBFF);
+	background: -webkit-gradient(linear, left top, right bottom, from(#FFF), to(#EAF5FF));
+    margin-top: 1em;
+    margin-bottom: 0; 
+}
 
 #marc_view {
 	padding: 5px;
@@ -699,8 +618,12 @@ Search Parameters
 
 #appliedParams {
 	margin-bottom: 0 !important;
+	margin-right: 1em;
+ 
+
 }
 
+ 
 #appliedQueries,
 #appliedFilters {
 	
@@ -929,8 +852,8 @@ img#cuLogo{
 
 span.index_counter {
 	float: left;
-	margin-left: -1.3em;
-	font-size: .75em;
+	margin-left: -2em;
+ 
 }
 
 div#footer{
@@ -958,7 +881,8 @@ div#footer{
 
 #page {
  padding-top: .5em;
-background: #f0f0f0;
+ background: #f0f0f0;
+ min-height:650px;
 
    	 
 }
@@ -972,6 +896,5 @@ body.bp a {
 #sidebar {
 	
 	padding-bottom: 2.5em;
-	 background: -moz-linear-gradient(top, #C9E5FF, #F5FBFF);
-	background: -webkit-gradient(linear, left top, left bottom, from(#ccc), to(#F5FBFF));
+ 
 }
