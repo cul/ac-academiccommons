@@ -1,14 +1,36 @@
 class StatisticsController < ApplicationController
   layout "no_sidebar"
-  before_filter :require_admin
+  before_filter :require_admin, :except => [:unsubscribe_monthly]
   include Blacklight::SolrHelper
 
+  def unsubscribe_monthly
+    author_id = params[:author_id]
+    
+    if author_id && author_id.to_s.crypt("xZ") == params[:chk]
+      epref = EmailPreference.find_by_author(author_id)
+      if epref
+        epref.update_attributes(:monthly_opt_out => true)
+      else
+        EmailPreference.create!(:author => author_id, :monthly_opt_out => true)
+      end
+    else
+      error=true
+    end
+
+    if error 
+      flash[:error] = "There was an error with your unsubscribe request"
+    else
+      flash[:notice] = "Unsubscribe request successful"
+    end
+    
+    redirect_to root_url
+  end
 
 
   def author_monthly
 
 
-    if params[:commit] == "View"
+    if params[:commit].in?("View","Email")
       startdate = Date.parse(params[:month] + " " + params[:year])
       enddate = startdate + 1.month
       events = ["View", "Download"]
@@ -22,12 +44,18 @@ class StatisticsController < ApplicationController
         @totals[event] = @stats[event].values.inject { |sum,x| sum ? sum+x : x}
       end
      
-      @results.reject! { |r| params[:exclude_zeroes] && !@stats["View"][r["id"]] && !@stats["Download"][r["id"]] }
+      @results.reject! { |r| !params[:include_zeroes] && !@stats["View"][r["id"]] && !@stats["Download"][r["id"]] }
       @results.sort! do |x,y|
         result = (@stats["Download"][y["id"]] || 0) <=> (@stats["Download"][x["id"]] || 0) 
         result = x["title_display"] <=> y["title_display"] if result == 0
         result
       end
+
+      if params[:commit] == "Email"
+        Notifier.deliver_author_monthly(params[:email_destination], params[:author_id], startdate, @results, @stats, @totals)
+      end
+    
+    
     end
      
 
