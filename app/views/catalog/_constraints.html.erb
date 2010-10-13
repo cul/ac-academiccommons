@@ -1,16 +1,40 @@
-<div id="appliedParams">
+<div id="search-breadcrumb">
+  <dl>
+    <dt >
 
-	<h3>You searched for:<%= image_tag "magnifying_glass.gif", :alt=>"search icon", :plugin=>'blacklight' %></h3>
-  
-  <%= render_constraints(localized_params) %>  
-	
-	<div>
-		<% if params[:action] == 'index' %>
-			<%= page_entries_info @response.docs, :entry_name=>'item' %>
-		<% else %>
-			Showing <%= session[:search][:counter].to_i %> of <%= format_num(session[:search][:total]) %> items from your search.
-		<% end %>
-		<%=link_to "Start&nbsp;over&thinsp;", catalog_index_path, :id=>"startOverLink" %>
-	</div>
-	
+       Showing Results for:
+    
+    </dt>
+    <dd>
+      <%- if !localized_params[:q].to_s.empty? -%>
+        <% q_arr = get_search_breadcrumb_terms(localized_params[:q]) %>
+        <span class='search_terms'>
+          <ul>
+            <%- q_arr.each do |q_param| -%>
+              <li>
+                <span class="q_param">
+                  <%= q_param %>
+                </span> 
+                <span class='remove_link'>
+                  <%= link_to(image_tag('icons/remove-icon.png', :alt=>'remove', :title=>'remove this from your search'),root_path(remove_query_params(q_param,localized_params)), :class=>"remove"  ) %>
+                </span>
+                <%= " + " unless q_param == q_arr.last %>
+              </li>
+            <%- end #each param -%>
+                </ul>
+        </span>
+        
+
+      <%- else -%>
+        <ul>
+          <li>
+            (no search term entered)
+          </li>
+        </ul>
+      <%- end -%>
+    </dd>
+   
+     
+    <div class="ie_fix" style="clear:both;">&nbsp;</div>
+  </dl>
 </div>

@@ -47,14 +47,40 @@ body.bp h2.search {
  
 	
 	text-align:center;
-	padding-top: 1em;
-	padding-bottom: 1em;
+
 	
  
     background: -moz-linear-gradient(top, #F5FBFF, #EAF5FF);
  
     background: -webkit-gradient(linear, left top, left bottom, from(#F5FBFF), to(#EAF5FF));
 	border-bottom: 1px dotted #2D2A62;
+}
+
+#hd-mini {
+width: 950px;
+height: 30px;
+position: fixed;
+top: 0;
+  background: -moz-linear-gradient(top, #F5FBFF, #EAF5FF);
+ 
+    background: -webkit-gradient(linear, left top, left bottom, from(#F5FBFF), to(#EAF5FF));
+    
+    -moz-box-shadow: 0px 1px 4px #333;
+  -webkit-box-shadow: 0px 1px 4px #333;
+  box-shadow: 0px 1px 4px #333;
+
+display: none;
+}
+#hd-mini.visible{
+	display: block;
+}
+#search-mini {
+	float: left;
+	
+}
+
+#hd-mini .pagination{
+	float: right;
 }
 
 div.back-to-search {
@@ -110,9 +136,7 @@ th, td {
 	list-style-type: none;
 }
 
-#facets li a:hover {
- 
-}
+
 body.bp #facets a {
 		border-bottom: none;
 		text-decoration: none;
@@ -170,14 +194,14 @@ ul.facet_extended_list {
 	padding-left: .75em;
 	margin-top: .75em;}
 
-ul.facet_extended_list li {
-	list-style: none;
+body.bp ul.facet_extended_list li a {
+        border-bottom: none;
 		padding: .25em 0 .25em 20px;
 }
 
-.facet_extended_list {
+body.bp .facet_extended_list {
 	text-align: left;
-	
+	list-style-type: none;	
 }
 a.facet_deselect{
 	
@@ -199,11 +223,7 @@ a.facet_select:hover{
 	
 	}
 
-#facets li a{
-	 
-	padding-left: 22px;
- 
-}
+
 
 span.item_count{
 	 
@@ -268,15 +288,15 @@ body.bp .pagination span.current{
 	color: navy;
 }
 .pagination .prev_page, .pagination .next_page {
-	display: none;
+	/*display: none;*/
 }
 
 .prev_next_links .prev_page, .prev_next_links .next_page {
-	display: inline;
+	/*display: inline;*/
 }
 
 .prev_next_links {
-	float: left;
+	/*float: left;*/
 }
 
 #previousNextDocument {
@@ -717,10 +737,10 @@ ul#appliedFiltersList,
 }
 
 .appliedFilter {
-	display: block;
-	position: relative;
-	overflow: visible;
-	position: relative;
+	/*display: block;*/
+	/*position: relative;*/
+	/*overflow: visible;*/
+	float:left;
 	background: #e2edfe;
 	padding: 5px 5px 5px 25px;
 	margin-bottom: 3px;
@@ -898,7 +918,12 @@ body.single-col #page {
 	position: fixed;
 	top: 50px;
 }
-
+.search-fixed{
+	position: fixed;
+	top: 0px;
+	padding-top:0;
+	
+}
  
 
 div#util_links{

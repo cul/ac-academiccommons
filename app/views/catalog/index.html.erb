@@ -12,11 +12,13 @@
 
 	<%= render 'constraints', :localized_params=>params %>
 
-	<div class="pagination">
-	  <%= will_paginate @response.docs, :page_links => false, :class => 'prev_next_links' %>
-	  <%= will_paginate @response.docs, :container => false %>
-	</div>
-
+	<div class="pagination-wrapper">
+	    <div class="pagination">
+	      <%= will_paginate @response.docs, :container => false %>
+	      <%#= will_paginate @response.docs, :page_links => false, :class => 'prev_next_links' %>
+	  
+	    </div>
+    </div>
 	<%= render 'sort_and_per_page' %>
 
 	<%= render :partial=>'document_list' %>
@@ -25,10 +27,12 @@
 	  <%= render :partial=>'facets' %>
 	<% end %>
 
-	<div class="pagination">
-	  <%= will_paginate @response.docs, :page_links => false, :class => 'prev_next_links' %>
-	  <%= will_paginate @response.docs, :container => false %>
-	</div>
+
+	<!-- FIXME: commented out this pagination and added it to layouts/application.html.erb however it is a hack, should be added to @footer? please review -->
+	<!-- <div class="pagination"> -->
+	  <%#= will_paginate @response.docs, :page_links => false, :class => 'prev_next_links' %>
+	  <%#= will_paginate @response.docs, :container => false %>
+	<!-- </div> -->
 
 	<%= render :partial=>'solr_request' %>
 

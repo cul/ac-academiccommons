@@ -91,6 +91,7 @@ $(document).ready(function() {
 /* keep facet boxes visible after page scroll --- may be optimized/re-factored later */
 var placeholder = $( "#facet-wrapper" );
 var sb = $( "#facets" );
+var sc = $("#hd-mini");
 var view = $( window );
 view.bind(
 "scroll resize",
@@ -110,6 +111,8 @@ function(){
  
 
     sb.addClass( "facets-fixed" );
+   
+   sc.addClass('visible');
 
 
 } else if (
@@ -121,6 +124,7 @@ sb.is( ".facets-fixed" )
 placeholder.css( "height", "auto" );
 
 sb.removeClass( "facets-fixed" );
+sc.removeClass("visible");
  
 }
 }

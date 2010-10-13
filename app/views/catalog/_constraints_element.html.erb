@@ -11,7 +11,7 @@
     options[:escape_value] = true unless options.has_key?(:escape_value)
 -%>
 
-<span class="appliedFilter constraint <%= options[:classes].join(" ") if options[:classes] %>">
+<li class="appliedFilter constraint <%= options[:classes].join(" ") if options[:classes] %>">
       <%- unless label.blank? -%>
         <span class="filterName"><%= options[:escape_label] ? h(label) : label %></span> 
       <%- end -%>
@@ -28,4 +28,4 @@
       <% if options[:check] %>
         <%= image_tag("checkmark.gif", :alt=>"", :plugin=>'blacklight') %>
       <% end %>
-</span>
+</li>
