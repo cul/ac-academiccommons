@@ -1,4 +1,6 @@
 ActionController::Routing::Routes.draw do |map|
+  map.resources :email_preferences
+
   map.resources :reports
 
   map.resources :reports
