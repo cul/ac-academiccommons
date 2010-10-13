@@ -719,13 +719,47 @@ Search Parameters
     color: #555;
 }
 
-#appliedParams img {
-	position: absolute;
+#appliedFilter img {
+	/*position: absolute;
 	left: 5px;
 	bottom: -8px;
-	z-index: 5;
+	z-index: 5;*/
 }
 
+ li.appliedFilter.constraint.filter img {
+	/*position: absolute;*/
+}
+
+li.appliedFilter.constraint.filter {
+	background: url(../images/breadcrumb_background.png) repeat-x 0;
+	height: 17px;
+		list-style-type: none;
+	padding: 7px 0;
+	float: left;
+}
+
+span.filterValue {
+
+	padding-top: 6px;
+	padding-bottom: 6px;
+	 
+}
+span.filterJoin{
+		background: url(../images/breadcrumb_join.png);
+	padding-right: 11px;
+	padding-top: 10px;
+	padding-bottom: 9px;
+}
+
+#search-breadcrumb dl dt {
+ display: block;
+	float: left;	
+}
+
+#search-breadcrumb dl dd {
+ float: left;
+	
+}
 ul#appliedFiltersList,
 	ul#appliedQueriesList,
 	ul#appliedFiltersList li,
@@ -740,11 +774,28 @@ ul#appliedFiltersList,
 	/*display: block;*/
 	/*position: relative;*/
 	/*overflow: visible;*/
-	float:left;
-	background: #e2edfe;
-	padding: 5px 5px 5px 25px;
-	margin-bottom: 3px;
-	border: 1px solid #c4dafe;
+	/*float:left;
+	background: #e2edfe;*/
+	/*padding: 5px;
+	margin-bottom: 3px;*/
+	/*border: 1px solid #c4dafe;*/
+
+}
+div#search-breadcrumb {
+	background: #e1e1e6;
+	background: -moz-linear-gradient(top, #e6e6e6, #CCC);
+	background: -webkit-gradient(linear, left top, left bottom, from(#e6e6e6), to(#ccc));
+
+
+}
+
+#search-breadcrumb dl dd ul li {
+	list-style-type: none;
+}
+ul.search_facets {
+	list-style-type: none;
+	 
+	display: inline;
 }
 
 #appliedParams div {
@@ -754,7 +805,7 @@ ul#appliedFiltersList,
 }
 
 .appliedFilter .btnRemove {
-	display: block;
+	/*display: block;
 	position: absolute;
 	z-index: 5;
 	right: 0px;
@@ -762,7 +813,7 @@ ul#appliedFiltersList,
 	width: 32px;
 	height: 100%;
 	background: url(../images/remove.gif) no-repeat center center;
-	border-left: 1px solid #d0daea;
+	border-left: 1px solid #d0daea;*/
 }
 
 .appliedFilter span {
@@ -783,7 +834,8 @@ ul#appliedFiltersList,
 }
 
 .appliedFilter span.first span.filterValue {
-	border: 0;
+	 
+	background: url(../images/breadcrumb_join.png)  right center;
 }
 
 #appliedParams a:link {
@@ -816,8 +868,8 @@ ul#appliedFiltersList,
 }
 
 .appliedFilter .queryName, .appliedFilter .filterName {
-	padding-right: 14px;
-	background: url(../images/separator.gif) no-repeat right center;
+	padding-right: 6px;
+	/*background: url(../images/separator.gif) no-repeat right center;*/
 }
 
 

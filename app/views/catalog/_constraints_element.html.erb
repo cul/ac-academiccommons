@@ -13,19 +13,23 @@
 
 <li class="appliedFilter constraint <%= options[:classes].join(" ") if options[:classes] %>">
       <%- unless label.blank? -%>
-        <span class="filterName"><%= options[:escape_label] ? h(label) : label %></span> 
+        <span class="filterName"><%= options[:escape_label] ? h(label) : label %>: </span> 
       <%- end -%>
       <%- unless value.blank? -%>
         <span class="filterValue"><%= options[:escape_value] ? h(value) : value %></span>
       <%- end -%>
       <%- unless options[:remove].blank? -%>
-        <%= link_to('',
+        <%= link_to('X',
 					options[:remove],
 					:class=>'btnRemove imgReplace',
           :alt=>'remove'
 				) %>
+				
+				
       <%- end -%>
-      <% if options[:check] %>
-        <%= image_tag("checkmark.gif", :alt=>"", :plugin=>'blacklight') %>
-      <% end %>
+      
+      <span class="filterJoin"> &nbsp;</span>
+      <%# if options[:check] %>
+        <%#= image_tag("checkmark.gif", :alt=>"", :plugin=>'blacklight') %>
+      <%# end %>
 </li>

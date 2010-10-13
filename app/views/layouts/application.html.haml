@@ -52,6 +52,7 @@
       #srch.span-24.last
         = render :partial => "/catalog/search_form"
       #page.span-24.clearfix
+        = render 'constraints', :localized_params=>params 
         #sidebar.span-9
           #facet-wrapper
             = sidebar_items.join()

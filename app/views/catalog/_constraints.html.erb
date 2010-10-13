@@ -33,6 +33,7 @@
         </ul>
       <%- end -%>
     </dd>
+    <br style="clear:both">
        <dt >
 
        Limited to:
@@ -40,22 +41,23 @@
     </dt>
     <dd>
       <%- if !localized_params[:f].to_s.empty? -%>
-        <% q_arr =  localized_params[:f] %>
+ 
         <span class='search_terms'>
-          <ul>
-            <%- q_arr.each do |q_param| -%>
-              <li>
-                <span class="q_param">
-                  <%= q_param %>
-                </span> 
-                <span class='remove_link'>
-                  <%#= link_to(image_tag('icons/remove-icon.png', :alt=>'remove', :title=>'remove this from your search'), :remove => catalog_index_path(remove_facet_params(q_param, val, localized_params)), :classes => ["filter"]   ) %>
-                </span>
-                <%#= " + " unless q_param == q_arr.last %>
-              </li>
-            <%- end #each param -%>
-                </ul>
-        </span>
+          <ul class="search_facets">
+          
+          
+           
+    <%-  localized_params[:f].each_pair do |facet,values| %>
+    <%-    values.each do |val| %>
+ <%= render_constraint_element( facet_field_labels[facet],val, :remove => catalog_index_path(remove_facet_params(facet, val, localized_params)),:classes => ["filter"] )%> 
+    
+            	            
+				<%- end -%>
+			
+   
+</ul>
+ 	<%- end -%>
+                    </span>
         
 
       <%- else -%>
