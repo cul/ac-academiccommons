@@ -1,7 +1,7 @@
 /* @override 
 	http://localhost:3000/stylesheets/application.css
- 
 	http://dyn-iab-164-74.dyn.columbia.edu:3000/stylesheets/application.css
+	http://dyn-iab-164-209.dyn.columbia.edu:3000/stylesheets/application.css
 */
 
 body.bp a:link, body.bp a:visited, body.bp a:active {
@@ -706,8 +706,8 @@ Search Parameters
 }
 
 #appliedParams h3 {
-	position: relative;
-	padding: 5px 5px 5px 23px;
+ 
+	 
 	margin: 0 0 3px 0;
 	background: #fff7e5;
 	border: 1px solid #e0d9ca;
@@ -727,7 +727,7 @@ Search Parameters
 }
 
 li.appliedFilter {
-	background: url(../images/breadcrumb_background.png) repeat-x 0;
+	background: url(../images/breadcrumb_background.png) repeat-x 0 -2px;
 	height: 17px;
 		list-style-type: none;
 	padding: 7px 0;
@@ -737,7 +737,7 @@ li.appliedFilter {
 div#breadcrumbs {
 	margin-left: 100px;
 }
-ul.breadcrumb{
+body.bp ul.breadcrumb{
 	margin: 0;
 	padding: 0;
 }
@@ -745,26 +745,29 @@ ul.breadcrumb{
 ul.breadcrumb li{
 	padding: 7px 0;
 }
+
+ 
+
 ul.breadcrumb h3 {
-	float: left;
+ 
 	font-size: 1em;
 	width: 120px;
 	margin: 0 .5em 0 0;
-	 
-	padding: 9px 0;
+	  
+	 float: left;
+	padding: 9px 0 11px 0;
 	text-align: right;
-	font-weight: bold;
+	font-weight: bold; 
 }
 
 span.filterValue {
  
-	 
+	 font-weight: bold;
 }
 span.filterJoin{
-		background: url(../images/breadcrumb_join.png);
-	padding-right: 11px;
-	padding-top: 10px;
-	padding-bottom: 9px;
+		background: url(../images/breadcrumb_join.png) no-repeat 0 0;
+	padding: 10px 17px 10px 0;
+ 
 }
 
  
@@ -794,7 +797,11 @@ div#search-breadcrumb {
 	background: -moz-linear-gradient(top, #e6e6e6, #CCC);
 	background: -webkit-gradient(linear, left top, left bottom, from(#e6e6e6), to(#ccc));
 position: relative;
-
+padding-top: 1em;
+padding-bottom: 1em;
+	border-bottom-style: dotted;
+	border-bottom-width: 1px;
+	 
 }
 
 .breadcrumb  li {
@@ -879,7 +886,7 @@ div#crumbs {
 }
 
 .appliedFilter .queryName, .appliedFilter .filterName {
-	padding-right: 6px;
+	 margin-left: .25em;
 	/*background: url(../images/separator.gif) no-repeat right center;*/
 }
 
