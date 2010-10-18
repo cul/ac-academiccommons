@@ -1,69 +1,57 @@
 <div id="search-breadcrumb">
   <dl>
     <dt >
-
-       Showing Results for:
-    
+      Showing Results for:
     </dt>
     <dd>
-      <%- if !localized_params[:q].to_s.empty? -%>
-        <% q_arr = get_search_breadcrumb_terms(localized_params[:q]) %>
-        <span class='search_terms'>
+    
+    <span class='search_terms'>
           <ul>
-            <%- q_arr.each do |q_param| -%>
+            
               <li>
-                <span class="q_param">
-                  <%= q_param %>
-                </span> 
-                <span class='remove_link'>
-                  <%= link_to(image_tag('icons/remove-icon.png', :alt=>'remove', :title=>'remove this from your search'),root_path(remove_query_params(q_param,localized_params)), :class=>"remove"  ) %>
-                </span>
-                <%= " + " unless q_param == q_arr.last %>
-              </li>
-            <%- end #each param -%>
+                <span class="search-terms">
+                  <%- if (!localized_params[:q].blank?) -%>
+                  <%=render_constraint_element(search_field_label(localized_params),
+            localized_params[:q], 
+            :classes => ["query"], 
+            :remove => catalog_index_path(localized_params.merge(:q=>nil, :action=>'index')))%>
+            
+           
+			<%- else%>
+			<%= render_constraint_element(nil, "No Keywords", :classes => ["query"], :check => false)%> 
+			<%end%>
+          		</span>               
+          		</li>
                 </ul>
         </span>
         
-
-      <%- else -%>
-        <ul>
-          <li>
-            (no search term entered)
-          </li>
-        </ul>
-      <%- end -%>
     </dd>
     <br style="clear:both">
        <dt >
-
        Limited to:
-    
-    </dt>
+       </dt>
     <dd>
-      <%- if !localized_params[:f].to_s.empty? -%>
- 
-        <span class='search_terms'>
-          <ul class="search_facets">
+    <%- if !localized_params[:f].to_s.empty? -%>
+        
+        <span class="search_terms">
+        <ul class="search_facets">
           
           
            
-    <%-  localized_params[:f].each_pair do |facet,values| %>
-    <%-    values.each do |val| %>
- <%= render_constraint_element( facet_field_labels[facet],val, :remove => catalog_index_path(remove_facet_params(facet, val, localized_params)),:classes => ["filter"] )%> 
-    
-            	            
-				<%- end -%>
+<%-  localized_params[:f].each_pair do |facet,values| %>
+<%-    values.each do |val| %>
+<%= render_constraint_element( facet_field_labels[facet],val, :remove => catalog_index_path(remove_facet_params(facet, val, localized_params)),:classes => ["filter"] )%> 
+<%- end -%>
 			
-   
 </ul>
  	<%- end -%>
-                    </span>
+	</span>
         
 
       <%- else -%>
         <ul>
           <li>
-            Showing all results for your search terms.
+            Showing all search results.
           </li>
         </ul>
       <%- end -%>

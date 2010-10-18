@@ -13,7 +13,7 @@ module RenderConstraintsHelper
   def render_constraints(localized_params = params)
   
   
-  hello
+  
     render_constraints_query(localized_params) + render_constraints_filters(localized_params)
   end
   
