@@ -1,53 +1,38 @@
-<div id="search-breadcrumb">
-  <dl>
-    <dt >
-      Showing Results for:
-    </dt>
-    <dd>
-    
-    <span class='search_terms'>
-          <ul>
-            
-              <li>
-                <span class="search-terms">
-                  <%- if (!localized_params[:q].blank?) -%>
-                  <%=render_constraint_element(search_field_label(localized_params),
+<div id="search-breadcrumb" >
+
+  
+
+	<%=link_to "Start&nbsp;over&thinsp;", catalog_index_path, :id=>"startOverLink" %>
+	
+ 
+ <div id="breadcrumbs">
+  <ul class="breadcrumb query">
+     <h3>Showing Results for:</h3>
+		<%- if (!localized_params[:q].blank?) -%>
+		<%=render_constraint_element(search_field_label(localized_params),
             localized_params[:q], 
             :classes => ["query"], 
             :remove => catalog_index_path(localized_params.merge(:q=>nil, :action=>'index')))%>
-            
-           
+
 			<%- else%>
 			<%= render_constraint_element(nil, "No Keywords", :classes => ["query"], :check => false)%> 
-			<%end%>
-          		</span>               
-          		</li>
-                </ul>
-        </span>
-        
-    </dd>
-    <br style="clear:both">
-       <dt >
-       Limited to:
-       </dt>
-    <dd>
-    <%- if !localized_params[:f].to_s.empty? -%>
-        
-        <span class="search_terms">
-        <ul class="search_facets">
-          
-          
-           
-<%-  localized_params[:f].each_pair do |facet,values| %>
-<%-    values.each do |val| %>
-<%= render_constraint_element( facet_field_labels[facet],val, :remove => catalog_index_path(remove_facet_params(facet, val, localized_params)),:classes => ["filter"] )%> 
-<%- end -%>
+				<%- end -%>
+          	              
+ </ul>
+ 
+ <br style="clear:both">
+    
+ <ul class="breadcrumb facet">
+    <h3>Limited to:</h3>
+		<%- if !localized_params[:f].to_s.empty? -%>
+		<%-  localized_params[:f].each_pair do |facet,values| %>
+		<%-    values.each do |val| %>
+		<%= render_constraint_element( facet_field_labels[facet],val, :remove => catalog_index_path(remove_facet_params(facet, val, localized_params)),:classes => ["filter"] )%> 
+			<%- end -%>
 			
 </ul>
  	<%- end -%>
-	</span>
-        
-
+ 
       <%- else -%>
         <ul>
           <li>
@@ -55,8 +40,7 @@
           </li>
         </ul>
       <%- end -%>
-    </dd>
-     
-    <div class="ie_fix" style="clear:both;">&nbsp;</div>
-  </dl>
+       <br style="clear:both">
+      </div>
 </div>
+

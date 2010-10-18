@@ -153,10 +153,6 @@ body.bp #facets a:hover{
 	border-bottom: none;
 }
 
-a#startOverLink {
-	border-bottom: none;
-}
-
 a.btnRemove.imgReplace {
 	border-bottom: none;
 }
@@ -730,7 +726,7 @@ Search Parameters
 	/*position: absolute;*/
 }
 
-li.appliedFilter.constraint.filter {
+li.appliedFilter {
 	background: url(../images/breadcrumb_background.png) repeat-x 0;
 	height: 17px;
 		list-style-type: none;
@@ -738,10 +734,30 @@ li.appliedFilter.constraint.filter {
 	float: left;
 }
 
-span.filterValue {
+div#breadcrumbs {
+	margin-left: 100px;
+}
+ul.breadcrumb{
+	margin: 0;
+	padding: 0;
+}
 
-	padding-top: 6px;
-	padding-bottom: 6px;
+ul.breadcrumb li{
+	padding: 7px 0;
+}
+ul.breadcrumb h3 {
+	float: left;
+	font-size: 1em;
+	width: 120px;
+	margin: 0 .5em 0 0;
+	 
+	padding: 9px 0;
+	text-align: right;
+	font-weight: bold;
+}
+
+span.filterValue {
+ 
 	 
 }
 span.filterJoin{
@@ -751,15 +767,7 @@ span.filterJoin{
 	padding-bottom: 9px;
 }
 
-#search-breadcrumb dl dt {
- display: block;
-	float: left;	
-}
-
-#search-breadcrumb dl dd {
- float: left;
-	
-}
+ 
 ul#appliedFiltersList,
 	ul#appliedQueriesList,
 	ul#appliedFiltersList li,
@@ -785,18 +793,15 @@ div#search-breadcrumb {
 	background: #e1e1e6;
 	background: -moz-linear-gradient(top, #e6e6e6, #CCC);
 	background: -webkit-gradient(linear, left top, left bottom, from(#e6e6e6), to(#ccc));
-
+position: relative;
 
 }
 
-#search-breadcrumb dl dd ul li {
-	list-style-type: none;
-}
-ul.search_facets {
+.breadcrumb  li {
 	list-style-type: none;
 	 
-	display: inline;
 }
+ 
 
 #appliedParams div {
 	position: relative;
@@ -816,9 +821,7 @@ ul.search_facets {
 	border-left: 1px solid #d0daea;*/
 }
 
-.appliedFilter span {
-	
-}
+
 
 .appliedFilter span.first {
 	
@@ -846,17 +849,25 @@ ul.search_facets {
 	
 }
 
-#appliedParams a#startOverLink {
+ a#startOverLink {
 	display: block;
 	position: absolute;
-	top: 50%;
-	right: 0px;
-	margin-top: -12px;
+  top:30%;
+  left: 10px;
 	padding: 0 10px 3px 15px;
 	line-height: 22px;
 	text-decoration: none;
 	color: #fff;
 	background: url(../images/start_over.gif) no-repeat center center;
+		border-bottom: none;
+}
+
+#startover {
+	float: left;
+}
+
+div#crumbs {
+	float: left;
 }
 
 #appliedParams a#startOverLink:hover {
@@ -1017,8 +1028,7 @@ div#footer{
 
 
 #page {
- padding-top: .5em;
- background: #f0f0f0;
+   background: #f0f0f0;
  min-height:650px;
 
    	 
