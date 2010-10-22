@@ -1,3 +1,4 @@
+<% cache("most_recently_updated" , :expires_in => 10.seconds) do %>
 <div>
     <dd>&nbsp;</dd>
     <dd>Total objects in repository:  <%= get_total_count() %></dd>
@@ -6,10 +7,12 @@
     <dd>&nbsp;</dd>
 </div>
 
-<h3>Recently Updated</h3>
-<% build_recent_updated_list.each do |v| %>
-<dl>
-  <dt><%= v[:authors_display] %></dt> 
-  <dd><%= v[:title_display] %></dd> 
-</dl>
+
+  <h3>Recently Updated</h3>
+  <% build_recent_updated_list.each do |v| %>
+  <dl>
+    <dt><%= v[:authors_display] %></dt> 
+    <dd><%= v[:title_display] %></dd> 
+  </dl>
+  <% end %>
 <% end %>
