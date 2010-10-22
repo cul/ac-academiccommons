@@ -1,9 +1,13 @@
-%h3 Files:
+- resource_list = build_resource_list(document)
+- if resource_list.length > 0
 
-#show_resources
-  - (build_resource_list(document) * 5).each_with_index do |resource, i|
-    .resource{:class => "spot" + (i%3).to_s}
-      .thumbnail= image_tag("spacer.png", :size => "100x100")
-      .title= link_to auto_add_empty_spaces(resource[:filename]), resource[:download_path] if resource[:download_path] 
-  
+
+  %h3 Files:
+
+  #show_resources
+    - (resource_list * 5).each_with_index do |resource, i|
+      .resource{:class => "spot" + (i%3).to_s}
+        .thumbnail= image_tag("spacer.png", :size => "100x100")
+        .title= link_to auto_add_empty_spaces(resource[:filename]), resource[:download_path] if resource[:download_path] 
+
 
