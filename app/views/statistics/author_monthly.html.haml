@@ -1,40 +1,53 @@
 %h3 Author Monthly Statistics
+.split_form
 
--form_tag "/statistics/author_monthly" do
+  -form_tag "/statistics/author_monthly" do
 
-  %div
-    Please enter the uni of the author you wish to generate the report for:
-    = text_field_tag :author_id, params[:author_id]
+    .label Author uni:
+    .value= text_field_tag :author_id, params[:author_id]
 
-  %div
-    Please pick a month and year:
-    = select_tag :month, options_for_select(Date::ABBR_MONTHNAMES, params[:month] || (Date.today - 1.months).strftime("%b"))
-    = select_tag :year, options_for_select((2010..Date.today.year), params[:year])
+    .label Report month:
+    .value
+      = select_tag :month, options_for_select(Date::ABBR_MONTHNAMES, params[:month] || (Date.today - 1.months).strftime("%b"))
+      = select_tag :year, options_for_select((2010..Date.today.year), params[:year])
 
-  %div
-    = check_box_tag :exclude_zeroes, "true", true
-    Exclude all zero results from the report.
+    .label Include zeroes?
+    .value
+      = check_box_tag :include_zeroes, "true", params[:include_words]
 
-  = submit_tag "View"
+    .label 
+    .value
+      = submit_tag "View"
 
 
-- if @results
+    - if @results
+      %hr 
 
-  %table
-    %tr
-      %th Title
-      %th Views
-      %th Downloads
+      #author_stats_results
+        .item
+          .title.th Title
+          .views.th Views
+          .downloads.th Downloads
 
-    %tr
-      %td 
-        %b Total for #{params[:month]} #{params[:year]}
-      %td= @totals["View"] || 0
-      %td= @totals["Download"] || 0
+        .item
+          .title 
+            %b Total for #{params[:month]} #{params[:year]}
+          .views= @totals["View"] || 0
+          .downloads= @totals["Download"] || 0
 
-    - @results.each do |item|
-      %tr
-        %td= link_to item["title_display"], catalog_path(item["id"])
-        %td= @stats["View"][item["id"]] || 0
-        %td= @stats["Download"][item["id"]] || 0
+        - @results.each do |item|
+          .item
+            .title= link_to item["title_display"], catalog_path(item["id"])
+            .views= @stats["View"][item["id"]] || 0
+            .downloads= @stats["Download"][item["id"]] || 0
 
+
+      .label
+      .value
+
+      .label Email to:
+      .value
+        = text_field_tag :email_destination, params[:email_destination], :size => 40
+        = submit_tag "Email"
+
+      = render :partial => "/debug_deliveries"

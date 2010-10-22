@@ -1,35 +1,63 @@
 class StatisticsController < ApplicationController
   layout "no_sidebar"
-  before_filter :require_admin
+  before_filter :require_admin, :except => [:unsubscribe_monthly]
   include Blacklight::SolrHelper
 
+  def unsubscribe_monthly
+    author_id = params[:author_id]
 
+    if author_id && author_id.to_s.crypt("xZ") == params[:chk]
+      epref = EmailPreference.find_by_author(author_id)
+      if epref
+        epref.update_attributes(:monthly_opt_out => true)
+      else
+        EmailPreference.create!(:author => author_id, :monthly_opt_out => true)
+      end
+    else
+      error=true
+    end
+
+    if error 
+      flash[:error] = "There was an error with your unsubscribe request"
+    else
+      flash[:notice] = "Unsubscribe request successful"
+    end
+
+    redirect_to root_url
+  end
+
+  def all_author_monthlies
+    ids = Blacklight.solr.find(:per_page => 100000, :page => 1, :fl => "author_id_uni")["response"]["docs"].collect { |f| f["author_id_uni"] }.flatten.compact.uniq - EmailPreference.find_all_by_monthly_opt_out(true).collect(&:author)
+
+    alternate_emails = Hash[EmailPreference.find(:all, :conditions => "email is NOT NULL").collect { |ep| [ep.author, ep.email] }.flatten]
+    @authors = ids.collect { |id| {:id => id, :email => alternate_emails[id] || "#{id}@columbia.edu"}}
+
+    if params[:commit] == "Send"
+      @authors.each do |author|
+        author_id = author[:id]
+        startdate = Date.parse(params[:month] + " " + params[:year])
+
+        results, stats, totals  = get_monthly_author_stats(:startdate => startdate, :include_zeroes => false, :author_id => author_id)
+      
+        Notifier.deliver_author_monthly(author[:email], author_id, startdate, results, stats, totals)
+      end
+    end
+  end
 
   def author_monthly
 
 
-    if params[:commit] == "View"
+    if params[:commit].in?("View","Email")
       startdate = Date.parse(params[:month] + " " + params[:year])
-      enddate = startdate + 1.month
-      events = ["View", "Download"]
-      @results = Blacklight.solr.find(:per_page => 10000, :sort => "title_display asc" , :fq => "author_id_uni:#{params[:author_id]}", :fl => "title_display,id", :page => 1)["response"]["docs"]
-      ids = @results.collect { |r| r["id"] }
-      @stats = {}
-      @totals = {}
-      events.each do |event|
 
-        @stats[event] = Statistic.count(:group => "identifier", :conditions => ["event = ? and identifier IN (?) AND at_time BETWEEN ? and ?", event, ids,startdate, enddate])
-        @totals[event] = @stats[event].values.inject { |sum,x| sum ? sum+x : x}
+      @results, @stats, @totals = get_monthly_author_stats(:startdate => startdate, :include_zeroes => params[:include_zeroes], :author_id => params[:author_id])
+      if params[:commit] == "Email"
+        Notifier.deliver_author_monthly(params[:email_destination], params[:author_id], startdate, @results, @stats, @totals)
       end
-     
-      @results.reject! { |r| params[:exclude_zeroes] && !@stats["View"][r["id"]] && !@stats["Download"][r["id"]] }
-      @results.sort! do |x,y|
-        result = (@stats["Download"][y["id"]] || 0) <=> (@stats["Download"][x["id"]] || 0) 
-        result = x["title_display"] <=> y["title_display"] if result == 0
-        result
-      end
+
+
     end
-     
+
 
   end
 
@@ -37,19 +65,19 @@ class StatisticsController < ApplicationController
   def search_history
     @search_types = [["Item","id"],["UNI","author_id_uni"],["Genre","genre_search"]]
     params[:event] ||= ["View"]
-    
+
     six_months_ago = Date.today - 6.months
     next_month = Date.today + 1.months
     params[:start_date] ||= Date.civil(six_months_ago.year, six_months_ago.month).to_formatted_s(:datepicker)
     params[:end_date] ||= (Date.civil(next_month.year, next_month.month) - 1.day).to_formatted_s(:datepicker)
 
-    
+
 
     if params[:commit] == "View Statistics"
 
       unless params[:search_value]
         flash[:warning] = "You must specify a search value."
-       
+
       else
         @fq = params[:search_type] + ":" + params[:search_value].gsub(/:/,'\\:')
 
@@ -59,7 +87,7 @@ class StatisticsController < ApplicationController
         date_format = ("chart_" + params[:group]).downcase.to_sym
 
         chart_params = {:size => "700x400", :title => "Statistics for #{params[:id]}|#{params[:start_date]} to #{params[:end_date]}", :axis_with_labels => "x,y,x", :data => [], :legend => [], :bg => "F6F6F6", :line_colors => [], :custom => "chxs=0,676767,11.5,0,lt,676767"}
-        events = @results.keys
+          events = @results.keys
         data_hash = Hash.new { |h,k| h[k] = [] }
         max_y = (([@results.values.collect { |s| s.values }.flatten.max.to_i].max))    
         y_labels = (0..1).collect { |part| part * max_y / 1 }
@@ -112,6 +140,33 @@ class StatisticsController < ApplicationController
 
   private
 
+
+  def get_monthly_author_stats(options = {})
+    startdate = options[:startdate]
+    author_id = options[:author_id]
+    enddate = startdate + 1.month
+
+    events = ["View", "Download"]
+    results = Blacklight.solr.find(:per_page => 100000, :sort => "title_display asc" , :fq => "author_id_uni:#{author_id}", :fl => "title_display,id", :page => 1)["response"]["docs"]
+    ids = results.collect { |r| r["id"] }
+    stats = {}
+    totals = {}
+    events.each do |event|
+
+      stats[event] = Statistic.count(:group => "identifier", :conditions => ["event = ? and identifier IN (?) AND at_time BETWEEN ? and ?", event, ids,startdate, enddate])
+      totals[event] = stats[event].values.inject { |sum,x| sum ? sum+x : x}
+    end
+
+    results.reject! { |r| !params[:include_zeroes] && !stats["View"][r["id"]] && !stats["Download"][r["id"]] }
+    results.sort! do |x,y|
+      result = (stats["Download"][y["id"]] || 0) <=> (stats["Download"][x["id"]] || 0) 
+      result = x["title_display"] <=> y["title_display"] if result == 0
+      result
+    end
+
+    return results, stats, totals
+
+  end
 
   ##################
   # Config-lookup methods. Should be moved to a module of some kind, once

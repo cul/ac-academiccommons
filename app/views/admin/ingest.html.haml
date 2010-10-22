@@ -1,6 +1,6 @@
 %h2 Ingest objects
 
-#admin_ingest
+.split_form
   - form_tag "ingest" do 
 
     .label Items:
@@ -10,7 +10,7 @@
     
     .label Collections:
     .value
-      = text_field_tag :collections, params[:collection]
+      = text_field_tag :collections, params[:collections]
       (space delimited)
 
     .label Overwrite existing?
@@ -39,13 +39,13 @@
 
 
 
-    .label &nbsp;
+    .label
     .value
       = submit_tag "Commit"
 
-    
 
-    %hr
+    .label
+    .value
 
     .label Delete Index:
     .value
@@ -53,10 +53,12 @@
       %b This is irreversible.
 
   -if @results
+    %hr
     %h3 Ingest results:
+
   
-    - @results[:results].keys.sort.each do |status|
-      .label= status.capitalize
+    - @results[:results].keys.each do |status|
+      .label= status.to_s.capitalize
       .value= @results[:results][status].length
 
 
