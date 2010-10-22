@@ -96,11 +96,26 @@ module CatalogHelper
       res[:pid] = member_pid
       res[:filename] = Nokogiri::XML(hc.get_content("#{FEDORA_CONFIG[:riurl]}/" + "objects/" + member.attributes["uri"].value.sub(uri_prefix, "") + "/objectXML")).xpath("/foxml:digitalObject/foxml:objectProperties/foxml:property[@NAME='info:fedora/fedora-system:def/model#label']/@VALUE")      
       res[:download_path] = fedora_content_path(:download, res[:pid], 'CONTENT', res[:filename])
+      
+      url = FEDORA_CONFIG[:riurl] + "/get/" + member_pid + "/" + 'CONTENT'
+
+      cl = HTTPClient.new
+      h_ct = cl.head(url).header["Content-Type"].to_s
+      res[:content_type] = h_ct
+      
       results << res
     end
 
 
     return results
+  end
+
+  THUMBNAIL_MAPPINGS = {
+    'application/pdf' => 'thumbnail_pdf.png',
+    'unknown' => 'thumbnail_unknown.png'
+  }
+  def thumbnail_for_resource(resource)
+    THUMBNAIL_MAPPINGS[resource[:content_type]] || 'spacer.png'
   end
 
   def base_id_for(doc)
