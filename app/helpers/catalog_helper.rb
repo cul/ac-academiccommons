@@ -1,5 +1,9 @@
 module CatalogHelper
 
+  def auto_add_empty_spaces(text)
+    text.to_s.gsub(/([^\s-]{5})([^\s-]{5})/,'\1&#x200B;\2')
+  end
+
   def get_total_count
     query_params = {:qt=>"standard", :q=>"timestamp:[* TO NOW]"}
     return get_count(query_params)

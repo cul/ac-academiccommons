@@ -10,7 +10,57 @@
   padding-left: 5px;
 }
 
-/* line 15, ../../../app/stylesheets/application.sass */
+/* line 14, ../../../app/stylesheets/application.sass */
+#show_resources {
+  display: inline;
+  float: left;
+  margin-right: 0;
+  width: 590px;
+}
+/* line 139, ../../../../../../.rvm/gems/ruby-1.8.7-p299/gems/compass-0.10.5/frameworks/blueprint/stylesheets/blueprint/_grid.scss */
+* html #show_resources {
+  overflow-x: hidden;
+}
+/* line 16, ../../../app/stylesheets/application.sass */
+#show_resources .resource {
+  margin-bottom: 2em;
+  whitespace: pre-wrap;
+}
+/* line 19, ../../../app/stylesheets/application.sass */
+#show_resources .spot0 {
+  display: inline;
+  float: left;
+  margin-right: 10px;
+  width: 190px;
+}
+/* line 139, ../../../../../../.rvm/gems/ruby-1.8.7-p299/gems/compass-0.10.5/frameworks/blueprint/stylesheets/blueprint/_grid.scss */
+* html #show_resources .spot0 {
+  overflow-x: hidden;
+}
+/* line 21, ../../../app/stylesheets/application.sass */
+#show_resources .spot1 {
+  display: inline;
+  float: left;
+  margin-right: 10px;
+  width: 190px;
+}
+/* line 139, ../../../../../../.rvm/gems/ruby-1.8.7-p299/gems/compass-0.10.5/frameworks/blueprint/stylesheets/blueprint/_grid.scss */
+* html #show_resources .spot1 {
+  overflow-x: hidden;
+}
+/* line 23, ../../../app/stylesheets/application.sass */
+#show_resources .spot2 {
+  display: inline;
+  float: left;
+  margin-right: 0;
+  width: 190px;
+}
+/* line 139, ../../../../../../.rvm/gems/ruby-1.8.7-p299/gems/compass-0.10.5/frameworks/blueprint/stylesheets/blueprint/_grid.scss */
+* html #show_resources .spot2 {
+  overflow-x: hidden;
+}
+
+/* line 27, ../../../app/stylesheets/application.sass */
 .split_form {
   display: inline;
   float: left;
@@ -21,7 +71,7 @@
 * html .split_form {
   overflow-x: hidden;
 }
-/* line 18, ../../../app/stylesheets/application.sass */
+/* line 30, ../../../app/stylesheets/application.sass */
 .split_form .label {
   display: inline;
   float: left;
@@ -34,7 +84,7 @@
 * html .split_form .label {
   overflow-x: hidden;
 }
-/* line 23, ../../../app/stylesheets/application.sass */
+/* line 35, ../../../app/stylesheets/application.sass */
 .split_form .value {
   display: inline;
   float: left;
@@ -47,11 +97,11 @@
   overflow-x: hidden;
 }
 
-/* line 29, ../../../app/stylesheets/application.sass */
+/* line 41, ../../../app/stylesheets/application.sass */
 #author_stats_results .th {
   font-weight: bold;
 }
-/* line 31, ../../../app/stylesheets/application.sass */
+/* line 43, ../../../app/stylesheets/application.sass */
 #author_stats_results .item {
   display: inline;
   float: left;
@@ -62,7 +112,7 @@
 * html #author_stats_results .item {
   overflow-x: hidden;
 }
-/* line 34, ../../../app/stylesheets/application.sass */
+/* line 46, ../../../app/stylesheets/application.sass */
 #author_stats_results .title {
   display: inline;
   float: left;
@@ -73,7 +123,7 @@
 * html #author_stats_results .title {
   overflow-x: hidden;
 }
-/* line 37, ../../../app/stylesheets/application.sass */
+/* line 49, ../../../app/stylesheets/application.sass */
 #author_stats_results .views {
   display: inline;
   float: left;
@@ -84,7 +134,7 @@
 * html #author_stats_results .views {
   overflow-x: hidden;
 }
-/* line 40, ../../../app/stylesheets/application.sass */
+/* line 52, ../../../app/stylesheets/application.sass */
 #author_stats_results .downloads {
   display: inline;
   float: left;
