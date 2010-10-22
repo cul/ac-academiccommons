@@ -12,14 +12,11 @@
     = stylesheet_link_tag 'compiled/print.css', :media => "print"
     /[if IE]
       = stylesheet_link_tag 'compiled/ie.css', :media => 'screen, projection'
-      
-      
-    
-      
-    
 
     = render_head_content
+
     %link{:rel=>'stylesheet', :href=>'/stylesheets/application.css', :type => "text/css"}  
+
     - javascript_tag do
       = yield(:jstemplates)
 
@@ -48,11 +45,13 @@
             = link_to application_name, root_path
             = (params[:controller] == "catalog" and !params[:id]) ? "<span id='results_text'>Search Results</span>" : ""
         #hd-mini
-          = render :partial => "/catalog/mini_header"
+          = render :partial => "/catalog/drop_header"
       #srch.span-24.last
         = render :partial => "/catalog/search_form"
+        = render :partial => '/catalog/constraints' 
+       
+ 
       #page.span-24.clearfix
-        = render 'constraints', :localized_params=>params 
         #sidebar.span-9
           #facet-wrapper
             = sidebar_items.join()
@@ -60,6 +59,4 @@
           = render :partial=>'/flash_msg'
           = yield
       #footer.span-24.last
-        = will_paginate @response.docs, :page_links => false, :class => 'prev_next_links'
-        = will_paginate @response.docs, :container => false
-
+        =@footer

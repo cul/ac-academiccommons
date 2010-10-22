@@ -16,19 +16,23 @@
         <span class="filterName"><%= options[:escape_label] ? h(label) : label %>: </span> 
       <%- end -%>
       <%- unless value.blank? -%>
-        <span class="filterValue"><%= options[:escape_value] ? h(value) : value %></span>
+        <span class="filterValue"><%=link_to(( options[:escape_value] ? h(value) : value),
+					options[:remove],
+					:class=>options[:classes],
+                    :alt=>'remove search attribute'
+				) %></span>
       <%- end -%>
       <%- unless options[:remove].blank? -%>
-        <%= link_to('X',
-					options[:remove],
-					:class=>'btnRemove imgReplace',
-          :alt=>'remove'
-				) %>
+        <%#= link_to('X',
+			#		options[:remove],
+			#		:class=>'btnRemove imgReplace',
+          #:alt=>'remove'
+		#		) %>
 				
 				
       <%- end -%>
       
-      <span class="filterJoin"> &nbsp;</span>
+  
       <%# if options[:check] %>
         <%#= image_tag("checkmark.gif", :alt=>"", :plugin=>'blacklight') %>
       <%# end %>

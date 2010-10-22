@@ -5,13 +5,12 @@
 */
 
 body.bp a:link, body.bp a:visited, body.bp a:active {
-	border-bottom: 1px solid #1fecfe;
-	color: #2e4f81;
-	text-decoration: none;
+ color: #314E83;
+	border-bottom: 1px dotted #49A9A8;
 }
 
 body.bp a:hover {
-	color: #029;
+	 
 }
 
 h1.site_title {
@@ -61,13 +60,11 @@ width: 950px;
 height: 30px;
 position: fixed;
 top: 0;
-  background: -moz-linear-gradient(top, #F5FBFF, #EAF5FF);
- 
-    background: -webkit-gradient(linear, left top, left bottom, from(#F5FBFF), to(#EAF5FF));
-    
-    -moz-box-shadow: 0px 1px 4px #333;
-  -webkit-box-shadow: 0px 1px 4px #333;
-  box-shadow: 0px 1px 4px #333;
+background: -moz-linear-gradient(top, #F5FBFF, #EAF5FF);
+background: -webkit-gradient(linear, left top, left bottom, from(#F5FBFF), to(#EAF5FF));
+-moz-box-shadow: 0px 1px 4px #333;
+-webkit-box-shadow: 0px 1px 4px #333;
+box-shadow: 0px 1px 4px #333;
 
 display: none;
 }
@@ -94,7 +91,8 @@ div.back-to-search {
 #search #q {
 	width:10em;
 	color: #000;
-	font: 1.5em Arial, Helvetica, Geneva, sans-serif;
+	font: 1em Arial, Helvetica, Geneva, sans-serif;
+		-moz-border-radius: 15px;
 }
 
 #search .submit {
@@ -138,6 +136,7 @@ th, td {
 
 
 body.bp #facets a {
+		color: #2D2A62;
 		border-bottom: none;
 		text-decoration: none;
 		 padding: .25em 0 .25em 22px;
@@ -249,10 +248,11 @@ span.item_count{
 }
 
 .pagination {
-	text-align: right;
+	padding-right: 1em;
+    text-align: right;
 	padding-top: .5em;
 	padding-bottom: .5em; 
- 	margin-right: 1em;
+ 
 	background: #e1e1e6;
 	background: -moz-linear-gradient(top, #e6e6e6, #CCC);
 	background: -webkit-gradient(linear, left top, left bottom, from(#e6e6e6), to(#ccc));
@@ -276,16 +276,15 @@ body.bp .pagination a, .pagination span {
 	border-style: solid;
 	font-weight: bold;
 	color: white;
-	background-color: navy;
+	background-color: #336699;
 }
 
 body.bp .pagination span.current{
 	background: transparent;
 	color: navy;
 }
-.pagination .prev_page, .pagination .next_page {
-	/*display: none;*/
-}
+.pagination .prev_page{
+ margin-right: 1.5em;}
 
 .prev_next_links .prev_page, .prev_next_links .next_page {
 	/*display: inline;*/
@@ -299,9 +298,22 @@ body.bp .pagination span.current{
 	margin: 5px 0;
 }
 
-#sortAndPerPage {
- margin-right: 1em;
+a.next_page {
+	margin-left: 1.5em;
 }
+
+#sortAndPerPage {
+	
+  
+  	margin-top: .5em;
+  background: #e1e1e6;
+	background: -moz-linear-gradient(top, #e6e6e6, #CCC);
+	background: -webkit-gradient(linear, left top, left bottom, from(#e6e6e6), to(#ccc));
+
+	border-bottom: 1px dotted #2D2A62;
+	padding-top: .25em;
+	padding-bottom: .25em;
+ }
 
 /* Search Results */
 
@@ -475,7 +487,9 @@ form div.row.submit {
 }
 
 form.per_page {
-	float: right;
+display: inline;
+padding-right:1em ;
+float: right;
 }
 
 h2#results_label {
@@ -484,6 +498,7 @@ h2#results_label {
 
 h2#results_label, form.sort {
 	display: inline;
+	padding-left: .5;
 }
 
 textarea {
@@ -727,14 +742,81 @@ Search Parameters
 }
 
 li.appliedFilter {
-	background: url(../images/breadcrumb_background.png) repeat-x 0 -2px;
-	height: 17px;
-		list-style-type: none;
-	padding: 7px 0;
+
+	height: 29px;
+    list-style-type: none;
+    padding-left: 4px;
 	float: left;
+	line-height: 30px;
+	margin-bottom: 3px;
 }
 
-div#breadcrumbs {
+li.appliedFilter {
+	
+		
+	-moz-border-radius: 15px;
+	-webkit-border-radius: 15px;
+    border-radius: 15px;
+	background: #EAF5FF;
+	padding-right: 7px;
+	padding-left: 7px;
+	-moz-box-shadow: 0px 1px 4px #333;
+    -webkit-box-shadow: 0px 1px 4px #333;
+    box-shadow: 0px 1px 4px #333;
+
+}
+
+body.bp .highlight{
+	background: #5285B8;
+
+}
+
+li.appliedFilter:hover {
+	
+	
+ 
+	
+	}
+
+span.join {
+	float: left;
+	font-weight: bold;
+	font-size: 1.5em;
+	line-height: 1.5em;
+	color: gray;
+	padding-right: .15em;
+	padding-left: .15em;
+}
+
+body.bp li.appliedFilter a{
+    color:#314E83;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    border-bottom: none;
+   
+	padding-right: 18px;
+	background:  url(../images/link-ui.png) no-repeat 100% 8px;
+ 
+}
+
+
+
+body.bp li.appliedFilter a:hover{
+ 
+    color: white; 
+    background:  url(../images/link-ui.png) no-repeat 100% -12px;
+}
+
+
+li.appliedFilter.empty {
+	-moz-border-radius: 15px;
+	-webkit-border-radius: 15px;
+    border-radius: 15px;
+	background: #bcbcbc;
+	padding-right: 20px;
+	padding-left: 20px;
+}
+ div#breadcrumbs {
 	margin-left: 100px;
 }
 body.bp ul.breadcrumb{
@@ -742,33 +824,27 @@ body.bp ul.breadcrumb{
 	padding: 0;
 }
 
-ul.breadcrumb li{
-	padding: 7px 0;
-}
-
+ 
  
 
 ul.breadcrumb h3 {
- 
+  
 	font-size: 1em;
-	width: 120px;
-	margin: 0 .5em 0 0;
+    width: 89px;
 	  
 	 float: left;
-	padding: 9px 0 11px 0;
 	text-align: right;
-	font-weight: bold; 
+	font-weight: bold;
+	padding: 9px 0 12px;
+	margin: 0 .5em 0 0;
+	color: gray;
 }
 
 span.filterValue {
  
 	 font-weight: bold;
-}
-span.filterJoin{
-		background: url(../images/breadcrumb_join.png) no-repeat 0 0;
-	padding: 10px 17px 10px 0;
+	}
  
-}
 
  
 ul#appliedFiltersList,
@@ -797,17 +873,14 @@ div#search-breadcrumb {
 	background: -moz-linear-gradient(top, #e6e6e6, #CCC);
 	background: -webkit-gradient(linear, left top, left bottom, from(#e6e6e6), to(#ccc));
 position: relative;
-padding-top: 1em;
-padding-bottom: 1em;
+padding-top: .5em;
+ 
 	border-bottom-style: dotted;
 	border-bottom-width: 1px;
 	 
 }
 
-.breadcrumb  li {
-	list-style-type: none;
-	 
-}
+ 
  
 
 #appliedParams div {
@@ -843,10 +916,7 @@ padding-bottom: 1em;
 	border: 0;
 }
 
-.appliedFilter span.first span.filterValue {
-	 
-	background: url(../images/breadcrumb_join.png)  right center;
-}
+ 
 
 #appliedParams a:link {
 	text-decoration: underline;
@@ -936,9 +1006,10 @@ body.single-col #page {
 }
 
 #facets {
-	margin-left: .5em;
-	margin-right: .5em;
-	width: 220px;
+  margin-left: .25em;
+width: 230px;
+	 
+	 
 }
 
 #facets h3 {
@@ -1021,21 +1092,10 @@ div#footer{
 	text-align: center;
 }
 
-/*.dialog_box {
-	
-	width: 500px;
-	height: 500px;
-	position: absolute;
-	z-index: 100;
-	top: 10px;
-	left: 20px;
-	background-color: white;
-	border: 1px solid #2888cd;
-}*/
-
+ 
 
 #page {
-   background: #f0f0f0;
+ background: #f0f0f0;
  min-height:650px;
 
    	 
@@ -1048,6 +1108,7 @@ body.bp a {
  
 
 #sidebar {
+ 
 	
 	padding-bottom: 2.5em;
  

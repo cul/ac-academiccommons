@@ -12,15 +12,8 @@
 
 	<%#= render 'constraints', :localized_params=>params %>
 
-	<div class="pagination-wrapper">
-	    <div class="pagination">
-	      <%= will_paginate @response.docs, :container => false %>
-	      <%#= will_paginate @response.docs, :page_links => false, :class => 'prev_next_links' %>
-	  
-	    </div>
-    </div>
-	<%= render 'sort_and_per_page' %>
-
+    <%= render 'sort_and_per_page' %>
+    <%= render 'pagination' %>
 	<%= render :partial=>'document_list' %>
 
 	<% sidebar_items << capture do %>
@@ -35,6 +28,8 @@
 	<!-- </div> -->
 
 	<%= render :partial=>'solr_request' %>
+	
+	<% @footer = will_paginate @response.docs, :container => false%>
 
 <% end %>
 
