@@ -10,27 +10,26 @@
 	<%#= FIXME: did_you_mean is disabled until rsolr-ext is fixed. see http://jira.projectblacklight.org/jira/browse/CODEBASE-241 %>
 	<%#= render :partial => 'did_you_mean' %>
 
-	<%= render 'constraints', :localized_params=>params %>
+	<%#= render 'constraints', :localized_params=>params %>
 
-	<div class="pagination">
-	  <%= will_paginate @response.docs, :page_links => false, :class => 'prev_next_links' %>
-	  <%= will_paginate @response.docs, :container => false %>
-	</div>
-
-	<%= render 'sort_and_per_page' %>
-
+    <%= render 'sort_and_per_page' %>
+    <%= render 'pagination' %>
 	<%= render :partial=>'document_list' %>
 
 	<% sidebar_items << capture do %>
 	  <%= render :partial=>'facets' %>
 	<% end %>
 
-	<div class="pagination">
-	  <%= will_paginate @response.docs, :page_links => false, :class => 'prev_next_links' %>
-	  <%= will_paginate @response.docs, :container => false %>
-	</div>
+
+	<!-- FIXME: commented out this pagination and added it to layouts/application.html.erb however it is a hack, should be added to @footer? please review -->
+	<!-- <div class="pagination"> -->
+	  <%#= will_paginate @response.docs, :page_links => false, :class => 'prev_next_links' %>
+	  <%#= will_paginate @response.docs, :container => false %>
+	<!-- </div> -->
 
 	<%= render :partial=>'solr_request' %>
+	
+	<% @footer = will_paginate @response.docs, :container => false%>
 
 <% end %>
 

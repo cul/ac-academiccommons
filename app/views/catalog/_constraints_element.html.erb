@@ -11,21 +11,29 @@
     options[:escape_value] = true unless options.has_key?(:escape_value)
 -%>
 
-<span class="appliedFilter constraint <%= options[:classes].join(" ") if options[:classes] %>">
+<li class="appliedFilter constraint <%= options[:classes].join(" ") if options[:classes] %>">
       <%- unless label.blank? -%>
-        <span class="filterName"><%= options[:escape_label] ? h(label) : label %></span> 
+        <span class="filterName"><%= options[:escape_label] ? h(label) : label %>: </span> 
       <%- end -%>
       <%- unless value.blank? -%>
-        <span class="filterValue"><%= options[:escape_value] ? h(value) : value %></span>
+        <span class="filterValue"><%=link_to(( options[:escape_value] ? h(value) : value),
+					options[:remove],
+					:class=>options[:classes],
+                    :alt=>'remove search attribute'
+				) %></span>
       <%- end -%>
       <%- unless options[:remove].blank? -%>
-        <%= link_to('',
-					options[:remove],
-					:class=>'btnRemove imgReplace',
-          :alt=>'remove'
-				) %>
+        <%#= link_to('X',
+			#		options[:remove],
+			#		:class=>'btnRemove imgReplace',
+          #:alt=>'remove'
+		#		) %>
+				
+				
       <%- end -%>
-      <% if options[:check] %>
-        <%= image_tag("checkmark.gif", :alt=>"", :plugin=>'blacklight') %>
-      <% end %>
-</span>
+      
+  
+      <%# if options[:check] %>
+        <%#= image_tag("checkmark.gif", :alt=>"", :plugin=>'blacklight') %>
+      <%# end %>
+</li>
