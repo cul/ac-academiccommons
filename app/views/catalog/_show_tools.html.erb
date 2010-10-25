@@ -1,7 +1,7 @@
+<%= @document.inspect %>
 
   <ul class="tools">
-  
-    <% if (@document.respond_to?(:export_as_mla_citation_txt) || @document.respond_to?(:export_as_apa_citation_txt)) %>
+    <% if (@document[:export_as_mla_citation_txt] || @document[:export_as_apa_citation_txt]) %>
       <li class="cite">
          <%= link_to "Cite This", citation_catalog_path(@document[:id]), {:id => 'citeLink', :name => 'citation', :class => 'lightboxLink'} %>
       </li>

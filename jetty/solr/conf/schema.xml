@@ -118,7 +118,8 @@
 		<field name="geographic_area" type="string" indexed="true" stored="true" multiValued="true"/>
     <field name="geographic_area_search" type="text" indexed="true" stored="true" multiValued="true"/>
 		<field name="isbn" type="string" indexed="true" stored="false" />
-		<field name="issn" type="string" indexed="true" stored="false" />
+    <field name="issn" type="string" indexed="true" stored="false" />
+    <field name="export_as_mla_citation_txt" type="string" indexed="false" stored="true"/>
 		<field name="doi" type="string" indexed="true" stored="false" />
 		<field name="link_on" type="string" indexed="true" stored="true" />
   <field name="tableOfContents" type="string" indexed="true" stored="true"/>
