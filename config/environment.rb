@@ -21,7 +21,7 @@ Rails::Initializer.run do |config|
   config.gem 'httpclient'
   config.gem 'nokogiri'
   config.gem 'net-ldap', :version => '>=0.1.1'
-  config.gem "rsolr-ext", :version => '=0.12.0'
+  config.gem "rsolr-ext", :version => '=0.12.1'
   
   # Settings in config/environments/* take precedence over those specified here.
   #
