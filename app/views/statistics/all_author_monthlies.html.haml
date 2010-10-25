@@ -1,0 +1,20 @@
+%h3 Send out all Author Monthlies
+.split_form
+
+  -form_tag "/statistics/all_author_monthlies" do
+
+    .label Report month:
+    .value
+      = select_tag :month, options_for_select(Date::ABBR_MONTHNAMES, params[:month] || (Date.today - 1.months).strftime("%b"))
+      = select_tag :year, options_for_select((2010..Date.today.year), params[:year])
+
+    .label Number of reports to send:
+    .value
+      = @authors.length
+
+    .label 
+    .value
+      = submit_tag "Send"
+
+
+    = render :partial => "/debug_deliveries"

@@ -1,0 +1,29 @@
+%div These are the statistics for all Academic Commons items on which you are associated as an author for #{@date}. The top ten items, sorted by downloads, are listed.
+
+
+%table
+  %tr
+    %th{:width => "450px"} Title
+    %th{:width => "50px"} Views
+    %th{:width => "50px"} Downloads
+    %td
+  - @results.each_with_index do |item, i|
+    - break if i >=10
+    %tr
+      %td= link_to item["title_display"], catalog_path(item["id"])
+      %td= @stats["View"][item["id"]] || 0
+      %td= @stats["Download"][item["id"]] || 0
+
+  %tr
+    %th Totals: (may include items now shown)
+    %th= @totals["View"] || 0
+    %th= @totals["Download"] || 0
+
+
+%div 
+  Questions about this email: contact
+  #{mail_to "academic.commons@columbia.edu"}
+
+%div
+  Wish to unsubscribe:
+  #{link_to("click here", :controller => :statistics, :action => :unsubscribe_monthly, :author_id => @author_id, :chk => @author_id.crypt("xZ"))} 

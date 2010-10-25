@@ -259,6 +259,7 @@
         subtitle_vern_display,
         url_fulltext_display,
         url_suppl_display,
+        export_as_mla_citation_txt
       </str>
      
       <str name="facet">true</str>

@@ -1,1 +1,54 @@
 @import "blueprint/grid"
+
+#appliedParams 
+  a#feedLink 
+    :display inline
+    :text-decoration none
+
+    img
+      :position static
+      :padding-top 2px
+      :padding-left 5px
+
+
+#show_resources
+  +column(15,true)
+  .resource
+    :margin-bottom 2em
+    :whitespace pre-wrap
+  .spot0
+    +column(5)
+  .spot1
+    +column(5)
+  .spot2
+    +column(5,true)
+    
+
+.split_form
+  +column(24,true)
+
+  .label
+    +column(4)
+    :min-height 2.5em
+    :font-weight bold
+
+  .value
+    +column(20,true)
+    :min-height 2.5em
+
+
+#author_stats_results
+  .th
+    :font-weight bold
+  .item
+    +column(24,true)
+
+  .title
+    +column(10)
+
+  .views
+    +column(2)
+
+  .downloads
+    +column(2)
+    
