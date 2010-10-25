@@ -12,8 +12,8 @@
 
 	<%#= render 'constraints', :localized_params=>params %>
 
-    <%= render 'sort_and_per_page' %>
-    <%= render 'pagination' %>
+    <%= render :partial=>'sort_and_per_page' %>
+    <%= render :partial=>'pagination' %>
 	<%= render :partial=>'document_list' %>
 
 	<% sidebar_items << capture do %>
