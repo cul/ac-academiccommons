@@ -23,9 +23,9 @@ $(document).ready(function() {
 			  console.debug($(this));
 			  if($(this).children().length == 0)
 		      {
-				  var re = new RegExp(q, "g");
+				  var re = new RegExp(q, "ig");
 				  console.debug($(this).text());
-				  $(this).html($(this).text().replace(re, '<span class="highlight">' + q + '</span>'));
+				  $(this).html($(this).text().replace(re, "<span class=\"highlight\">$&</span>"));
 		      }
 		  }
 	  );
