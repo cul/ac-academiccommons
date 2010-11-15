@@ -281,12 +281,12 @@ module Blacklight::SolrHelper
     
     # Make the solr call
     response = Blacklight.solr.find(solr_params)
-
-    limit =       
+ 
+    limit =
       if respond_to?(:facet_list_limit)
         facet_list_limit.to_s.to_i
-      elsif solr_params[:"f.#{facet_field}.facet.limit"]
-        solr_params[:"f.#{facet_field}.facet.limit"] - 1
+       elsif solr_params[:"f.#{facet_field}.facet.limit"]
+       solr_params[:"f.#{facet_field}.facet.limit"] - 1
       else
         nil
       end

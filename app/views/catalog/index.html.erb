@@ -5,27 +5,16 @@
 
 	<% @page_title = "Search Results | " + application_name  %>
 
-	<%#= render :partial => 'search_form' %> <%#= i moved the search form into layouts/application.html.erb %>
-
 	<%#= FIXME: did_you_mean is disabled until rsolr-ext is fixed. see http://jira.projectblacklight.org/jira/browse/CODEBASE-241 %>
 	<%#= render :partial => 'did_you_mean' %>
 
-	<%#= render 'constraints', :localized_params=>params %>
-
     <%= render :partial=>'sort_and_per_page' %>
-    <%= render :partial=>'pagination' %>
+    <%#= render :partial=>'pagination' %>
 	<%= render :partial=>'document_list' %>
 
 	<% sidebar_items << capture do %>
 	  <%= render :partial=>'facets' %>
 	<% end %>
-
-
-	<!-- FIXME: commented out this pagination and added it to layouts/application.html.erb however it is a hack, should be added to @footer? please review -->
-	<!-- <div class="pagination"> -->
-	  <%#= will_paginate @response.docs, :page_links => false, :class => 'prev_next_links' %>
-	  <%#= will_paginate @response.docs, :container => false %>
-	<!-- </div> -->
 
 	<%= render :partial=>'solr_request' %>
 	

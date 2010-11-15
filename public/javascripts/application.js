@@ -7,6 +7,29 @@ $(function(){
 });
 
 $(document).ready(function() {
+
+$('#facets ul').each(function(){
+   var ul = $(this);
+   // find all ul's that don't have any span descendants with a class of "selected"
+   if($('li.facet_selected', ul).length == 0){
+        // hide it
+        ul.hide();
+        // attach the toggle behavior to the h3 tag
+        $(ul.parent().children('.toggle')).click(function(){
+           // toggle the next ul sibling
+           $(this).toggleClass('facet_selected').next('ul').slideToggle();
+           
+       });
+   }else{
+      ul.prev('h3').attr("class","facet_selected");
+    }
+
+});
+
+
+ 
+
+
   // adds classes for zebra striping table rows
   $('table.zebra tr:even').addClass('zebra_stripe');
   $('ul.zebra li:even').addClass('zebra_stripe');
@@ -82,20 +105,28 @@ $(document).ready(function() {
       });
       
     });
-    
-    
+
+
+/* highlight breadcrumb <li> element when mouseover <a>     */
  $("a.filter").hover(function(){
      $(this).parents("li").addClass("highlight");
    },function(){
      $(this).parents("li").removeClass("highlight");
    });
  
+ 
+  $("a.facet_deselect").hover(function(){
+   
+     $(this).parents("li").addClass("highlight");
+   },function(){
+     $(this).parents("li").removeClass("highlight");
+   });
   
   
 /* keep facet boxes visible after page scroll   */
 var placeholder = $( "#facet-wrapper" );
 var sb = $( "#facets" );
-var sc = $("#hd-mini");
+/* var sc = $("#hd-mini"); */
 var view = $( window );
 view.bind(
 "scroll resize",
@@ -116,7 +147,7 @@ function(){
 
     sb.addClass( "facets-fixed" );
    
-   sc.addClass('visible');
+  /*  sc.addClass('visible'); */
 
 
 } else if (

@@ -8,7 +8,9 @@ require "#{Blacklight.root}/app/helpers/application_helper.rb"
 module ApplicationHelper
 
 
-
+  def application_name
+    'Academic Commons'
+  end
 
 
   # RSolr presumes one suggested word, this is a temporary fix
@@ -43,12 +45,16 @@ module ApplicationHelper
   def render_facet_value(facet_solr_field, item, options ={})
     link_to_unless(options[:suppress_link], item.label, add_facet_params_and_redirect(facet_solr_field, item.value), :class=>"facet_select") + "<span class='item_count'> (" + format_num(item.hits) + ")</span>" + render_subfacets(facet_solr_field, item, options)
   end
+  
+  def facet_list_limit
+   10
+  end
 
   # Standard display of a SELECTED facet value, no link, special span
   # with class, and 'remove' button.
   def render_selected_facet_value(facet_solr_field, item)
     
-   link_to(item.label, remove_facet_params(facet_solr_field, item.value, params), :class=>"facet_deselect") + "<span class='item_count'> (" + format_num(item.hits) + ")</span>" +
+   link_to(item.label+"<span class='item_count'> (" + format_num(item.hits) + ")</span>" , remove_facet_params(facet_solr_field, item.value, params), :class=>"facet_deselect") +
 
     render_subfacets(facet_solr_field, item)
   end

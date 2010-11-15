@@ -1,7 +1,7 @@
 #
 # Methods added to this helper will be available to all templates in the application.
 #
-module ApplicationHelper
+  module ApplicationHelper
   include HashAsHiddenFields
   include RenderConstraintsHelper
 
@@ -177,8 +177,19 @@ module ApplicationHelper
   def document_heading
     @document[Blacklight.config[:show][:heading]]
   end
+  
+  def document_type
+  @document[Blacklight.config[:show][:genre]]
+  end
+  
+  def document_author
+  @document[Blacklight.config[:show][:author]]
+  end
+  
   def render_document_heading
-    '<h1>' + document_heading + '</h1>'
+    '<h2>' + document_type[0] + ':</h2>'+
+    '<h1>' + document_heading + '</h1>'+
+    '<h2 class="author_credit">By:' + document_author[0]  + '</h2>'
   end
   
   # Used in the show view for setting the main html document title

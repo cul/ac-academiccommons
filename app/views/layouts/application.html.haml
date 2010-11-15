@@ -40,12 +40,11 @@
         #hd
           #util_links= render :partial=>'/user_util_links'
           %br{:style => "clear:both"}
-          %img#cuLogo{:alt => "Columbia University Logo", :src => "/images/cu_logo.png"}
+          %img#cuLogo{:alt => "Columbia University Logo", :src => "/images/cu_logo.png", :width =>"200"}
           %h1.site_title
             = link_to application_name, root_path
             = (params[:controller] == "catalog" and !params[:id]) ? "<span id='results_text'>Search Results</span>" : ""
-        #hd-mini
-          = render :partial => "/catalog/drop_header"
+
       #srch.span-24.last
         = render :partial => "/catalog/search_form"
         = render :partial => '/catalog/constraints' 

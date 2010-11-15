@@ -32,8 +32,7 @@ Blacklight.configure(:shared) do |config|
   SolrDocument.field_semantics.merge!(    
     :title => "title_display",
     :author => "author_display",
-    :language => "language_facet"  
-  )
+    :language => "language_facet"  )
         
   
   ##############################
@@ -54,7 +53,10 @@ Blacklight.configure(:shared) do |config|
   config[:show] = {
     :html_title => "title_display",
     :heading => "title_display",
-    :display_type => "format"
+    :display_type => "format",
+    :genre => "genre_facet",
+    :author => "authors_display"
+
   }
 
   # solr fld values given special treatment in the index (search results) view
@@ -105,7 +107,10 @@ Blacklight.configure(:shared) do |config|
     # limit value is the actual number of items you want _displayed_,
     # #solr_search_params will do the "add one" itself, if neccesary.
     :limits => {
-      "subject_facet" => 20,
+     "author_facet"=>7,
+     "genre_facet"=>7,
+     "media_type_facet"=>7,
+      "subject_facet" => 5,
       "language_facet" => false
     }
       
