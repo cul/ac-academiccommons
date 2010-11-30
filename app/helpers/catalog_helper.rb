@@ -110,12 +110,10 @@ module CatalogHelper
     return results
   end
 
-  THUMBNAIL_MAPPINGS = {
-    'application/pdf' => 'thumbnail_pdf.png',
-    'unknown' => 'thumbnail_unknown.png'
-  }
   def thumbnail_for_resource(resource)
-    THUMBNAIL_MAPPINGS[resource[:content_type]] || 'spacer.png'
+    image_name = resource[:content_type]
+    image_name["/"] = "_"
+    image_name += ".png"
   end
 
   def base_id_for(doc)
