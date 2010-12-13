@@ -166,7 +166,7 @@ function(){
 
     sb.addClass( "facets-fixed" );
    
-  /*  sc.addClass('visible'); */
+ 
 
 
 } else if (
@@ -183,7 +183,26 @@ sc.removeClass("visible");
 }
 }
 );
- 
+
+
+    $("#split_button").toggle();
+   $('#hidden_search_field').attr("name","search_field");
+	 $('#hidden_search_field').attr("id","search_field");
+	 $("#split_button .drop_down li").each(function(){
+	  $(this,$(this).children("a")).click(function(){
+		  $('#search_field').attr('value',$(this).attr("class"));
+		  if($(this).text() == "All Fields"){
+			  $("#run").children(".ui-button-text").text("Search");
+			}else{
+		    $("#run").children(".ui-button-text").text("Search " + $(this).text());
+	    }
+		  $("#split_button .drop_down").toggle();
+		  $("#search form").trigger("submit");
+		  return false;
+	  });
+	 });
+
+
     
     
 });

@@ -1,6 +1,82 @@
-<% #render :partial=>'search_form' %>
-<%= render :partial=>'home_text' %>
+<div id="top-slug" class="span-18 last">
+<strong>Academic Commons</strong> is Columbia University's online repository where current faculty, students, and staff can deposit the results of their scholarly work and research. Most content in Academic Commons is freely available to the public. 
+ </div>
+<div class="span-12">
+<div id="home-recent">
 <%= render :partial=>"most_recent_updated.erb" %>
+</div>
+<div id="home-deposit">
+<h3>Deposit your Work in Academic Commons</h3>
+<p>Current faculty, staff, and students are invited to deposit research materials that are already in a digital format, including: articles, monographs, working papers, conference papers, images, datasets, multimedia creations, technical reports, preprints, software code, and theses.</p>
+<p>  To learn more about how to deposit your work into Academic Commons, please email 
+  <%= mail_to("nbufanio@columbia.edu", "Nichole Bufanio, Digital Repository Coordinator", :encode => :javascript)%></p>
+</div>
+
+</div>
+
+<div class="span-6  last">
+<div id="home-stats">
+<ul>
+<li><strong><%= get_total_count() %></strong> items in Academic Commons.</li>
+<li>Objects added in the last year:  <%= get_count_by_year() %></li> 
+<li>Objects added in the last 30 days:  <%= get_count_by_month() %></li>
+</ul>   
+</div>
+
+
+<div id="home-news">
+<strong>Academic Commons...</strong>
+<ul class="list">
+						<li>Is crawled by <a href="http://scholar.google.com">Google Scholar</a>, making work visible to the world.</li>
+						<li>Assists researchers in complying with grant requirements for deposit, archiving, and dissemination.</li>
+						<li>Provides a preservation plan and secure, long-term storage for many digital file types.</li>
+						<li>Ensures that work is findable and found online - today. And a hundred years from today.</li>
+						<li>A service of the Columbia University Libraries/Information Services and is managed by the Center for Digital Research and Scholarship.</li>
+					</ul>
+</div>
+
+<div id="twitter">
+
+<script src="http://widgets.twimg.com/j/2/widget.js"></script>
+<script>
+new TWTR.Widget({
+  version: 2,
+  type: 'profile',
+  rpp: 4,
+  interval: 6000,
+  width: 'auto',
+  height: 300,
+  theme: {
+    shell: {
+      background: '#d3e2f0',
+      color: '#000000'
+    },
+    tweets: {
+      background: '#fafafa',
+      color: '#444',
+      links: '#003296'
+    }
+  },
+  features: {
+    scrollbar: false,
+    loop: false,
+    live: false,
+    hashtags: true,
+    timestamp: true,
+    avatars: false,
+    behavior: 'all'
+  }
+}).render().setUser('madeatcolumbia').start();
+</script>
+
+
+</div>
+
+</div>
+
+
 <% sidebar_items << capture do %>
+  
+
   <%= render :partial=>'facets' %>
 <% end %>

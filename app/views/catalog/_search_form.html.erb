@@ -1,26 +1,43 @@
+
+
+<%localized_params = params %>
+
 <div id="search-wrap">
     <div id="search" class="search">
       <% form_tag catalog_index_path, :method => :get do %>
         <h2 class="search"><%= label_tag(:q, "Search ") %></h2>
-        <%= text_field_tag :q, params[:q], :class => "q" , :results => 5, :placeholder => "Search Academic Commons"%>
-        <%#= label_tag(:search_field, " in ") %>
-       
-        <%#= select_tag(:search_field, options_for_select(search_fields, h(params[:search_field])), :title => "Targeted search options", :class=>"search_field") %>
+        <%#= text_field_tag :q, params[:q], :class => "q" , :results => 5, :placeholder => "Search Academic Commons"%>
+        
+        <%= text_field_tag(:q, localized_params[:search_field] != nil ? localized_params[:q] : "", :class=>"search") %>
+        
+        <noscript>
+        <%= label_tag(:search_field, " in ") %>
+        <%= select_tag(:search_field, options_for_select(search_fields, h(params[:search_field])), :title => "Targeted search options", :class=>"search_field") %>
+        </noscript>
         
         <%= search_as_hidden_fields(:omit_keys => [:q, :search_field, :qt, :page]) %>        
         
-        <%#= image_submit_tag('mag_glass.png', :class=>'submit') %>
+                
         
-        
-        <span id="split_button">
-  	  <div class="button_set">
+        <span id="split_button" style="display:none;">
+  	    <div class="button_set">
+  	    <button id="select">select</button>
     		<button id="run">
     		 
+    			 <%- if localized_params[:search_field] and !localized_params[:search_field].blank?   -%>
+    			  <%#- if localized_params[:search_field] == 'search' or  !search_fields.flatten.include?(localized_params[:search_field]) -%>
+    			    <!-- Search -->
+    			  <%#- else -%>
+    					Search <%= search_fields.flatten[search_fields.flatten.rindex(localized_params[:search_field])-1] %>
+    			  <%#- end -%>
+    			<%- else -%>
     			  Search
+    			<%- end -%>
+
     		 
     		</button>
-    		<button id="select">select</button>
-  		</div>
+    		  		</div>
+
   		<div class="drop_down" style="display:none;">
   			<ul>
   				<%- search_fields.each do |key,value| -%>
@@ -29,9 +46,34 @@
   		  </ul>
   	  </div>
   	</span>
-
+<%= hidden_field_tag(:hidden_search_field,  localized_params[:search_field]) %>
+	
       <%- end -%>
     
       <hr/>
     </div>
 </div>
+
+<script type="text/javascript">
+  $(function(){
+	$("#run")
+		.button()
+		.click( function() {
+			$("#search form").trigger("submit");
+			return false;
+		})
+	.prev()
+		.button( {
+			text: false,
+			icons: {
+				primary: "ui-icon-triangle-1-s"
+			}
+		})
+		.click( function() {
+			$(this).parent().next(".drop_down").toggle();
+			return false;
+		})
+	.parent()
+		.buttonset();
+	});
+</script>

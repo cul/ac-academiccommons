@@ -2,14 +2,33 @@
 	http://localhost:3000/stylesheets/application.css
 	http://dyn-iab-164-74.dyn.columbia.edu:3000/stylesheets/application.css
 	http://dyn-iab-164-209.dyn.columbia.edu:3000/stylesheets/application.css
+	http://dyn-iab-164-97.dyn.columbia.edu:3000/stylesheets/application.css
 */
+ul, ol{
+	list-style-type: none;
+	padding: 0;
+}
 
-body.bp a:link, body.bp a:visited, body.bp a:active {
+h1, h2, h3{
+	margin-bottom: .25em;
+}
+
+#content {
+margin-top: .5em;	
+}
+
+#content div{
+	
+	 
+}
+
+
+a:link,  a:visited,   a:active {
  color: #314E83;
 	border-bottom: 1px dotted #49A9A8;
 }
 
-body.bp a:hover {
+ a:hover {
 	 
 }
 
@@ -34,7 +53,7 @@ h1.site_title a:link, h1.site_title a:visited, h1.site_title a:hover, h1.site_ti
 	border: 0px;
 }
 
-body.bp h2.search {
+h2.search {
 display: none;
 }
 
@@ -97,13 +116,68 @@ div.back-to-search {
 }
 
 #search #q {
-	 width: 319px;
-	color: #000;
-	background:transparent url(../images/search-bg.png);
-	border: none;
+	
+	color: #444;
+ 
+ 
 	font-size: 123.1%;
-	padding: 7px 13px 12px 16px;
+	padding-top: 3px;
+	padding-bottom: 3px;
+	margin: 0;
+	width: 246px;
 }
+
+#split_button {
+	position:relative;
+}
+#split_button .button_set {
+	display:inline;
+}
+
+#split_button .drop_down {
+	border-left:1px solid #CCCCCC;
+	border-right:1px solid #CCCCCC;
+	border-bottom:1px solid #CCCCCC;
+	background-color:white;
+	text-align:left;
+	position:absolute;
+	/**right:-88px;
+	*top:-20px;*/
+	z-index:1;
+	top: 22px;
+	width: 93px;
+	padding: 8px 5px 10px;
+}
+
+#split_button .drop_down ul{
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+}
+#split_button .drop_down li {
+	padding:0 5px;
+	border:1px solid white;
+	cursor:pointer;
+	white-space: nowrap;
+}
+#split_button .drop_down li:hover {
+	border:1px dotted #CCCCCC;
+}
+#split_button .drop_down li a {
+	color:black;
+}
+#split_button .drop_down li:hover a {
+	color:white;
+}
+#split_button .drop_down li a:hover {
+	border:none;
+	color:white;
+}
+#split_button .drop_down li:hover, #search_modifiers .drop_down li:hover {
+	background: none repeat scroll 0 0 #555555;
+}
+
+
 
 #search #q:focus  {
   outline: 0 none;
@@ -157,7 +231,7 @@ th, td {
 
  
 
-body.bp #facets a:hover{
+#facets a:hover{
 	text-decoration: underline;
 }
 
@@ -204,16 +278,16 @@ ul.facet_extended_list {
 	padding-left: .75em;
 	margin-top: .75em;}
 
-body.bp ul.facet_extended_list li a {
+ul.facet_extended_list li a {
         border-bottom: none;
 		padding: .25em 0 .25em 14px;
 }
 
-body.bp .facet_extended_list {
+.facet_extended_list {
 	text-align: left;
 	list-style-type: none;	
 }
-body.bp a.facet_deselect{
+a.facet_deselect{
 	
 	padding-right: 18px;
 	background: url(../images/link-ui.png) no-repeat 100% 4px;
@@ -230,7 +304,7 @@ body.bp a.facet_deselect{
 	color: #a5a4c9;
 }
 
-body.bp a.facet_deselect:hover{
+a.facet_deselect:hover{
 	    color: white; 
     background: url(../images/link-ui.png) no-repeat 100% -16px;
 }
@@ -312,7 +386,7 @@ span.item_count{
 	display: none;
 }
 
-body.bp .pagination a, .pagination span {
+.pagination a, .pagination span {
 	padding:  5px;
 	 
 	border-bottom: none;
@@ -323,12 +397,12 @@ body.bp .pagination a, .pagination span {
 	background-color: #336699;
 }
 
-body.bp .pagination span.current{
+.pagination span.current{
 	background: transparent;
 	color: navy;
 }
  
-body.bp .prev_next_links a{
+.prev_next_links a{
 	color: white;
 	font-weight: bold;
     background: url(../images/start_over.gif) no-repeat;
@@ -425,7 +499,7 @@ a.next_page {
 
 /* Result List (http://www.quirksmode.org/css/clearing.html) */
 
-body.bp h3.index_title {
+h3.index_title {
     
     font-size: 1.25em;
     line-height: 1.5em;
@@ -439,12 +513,12 @@ dl {
 	padding: 0px;
 }
 
-body.bp dl.defList {
+dl.defList {
 	overflow: auto;
 	padding: 0.5em 0;
 }
 
-body.bp dl.defList dt {
+dl.defList dt {
 	float: left;
 	text-align: right;
 	width: 20%;
@@ -455,7 +529,7 @@ body.bp dl.defList dt {
 	font-weight: normal;
 }
 
-body.bp dl.defList dd {
+dl.defList dd {
 	float: left;
 	text-align: left;
 	margin: 0;
@@ -872,7 +946,7 @@ li.appliedFilter {
 
 }
 
-body.bp li.highlight, #facets div ul li.facet_selected.highlight{
+li.highlight, #facets div ul li.facet_selected.highlight{
 	background: #5285B8;
 
 }
@@ -896,7 +970,7 @@ span.join {
 	padding-left: .15em;
 }
 
-body.bp li.appliedFilter a{
+li.appliedFilter a{
     color:#314E83;
     padding-top: .15em;
     padding-bottom: .15em;
@@ -909,7 +983,7 @@ body.bp li.appliedFilter a{
 
 
 
-body.bp li.appliedFilter a:hover{
+li.appliedFilter a:hover{
  
     color: white; 
     background: url(../images/link-ui.png) no-repeat 100% -16px;
@@ -927,7 +1001,7 @@ li.appliedFilter.empty {
  div#breadcrumbs {
 	margin-left: 100px;
 }
-body.bp ul.breadcrumb{
+ul.breadcrumb{
 	margin: 0;
 	padding: 0;
 }
@@ -1114,9 +1188,9 @@ body.single-col #page {
 }
 
 #facets {
-  margin-left: .25em;
-width: 230px;
-	 
+ margin-left: 5px;
+ 
+	width: 230px; 
 	 
 }
 
@@ -1126,11 +1200,11 @@ width: 230px;
 	margin-bottom: 0;
 	cursor: pointer;
 	cursor: pointer;
-	background: #122D62 url(../images/accordion-closed.png) no-repeat 96%;
+	background: #122D62 url(../images/accordion-closed.png) no-repeat 98%;
 	border-bottom: 1px solid #C9E5FF;
 	/*background: -moz-linear-gradient(top, #284585, #122D62);
 	background: -webkit-gradient(linear, left top, left bottom, from(#284585), to(#122D62));*/
-	font-weight: bold;
+ 
 	color: white;
     
     text-shadow: black 2px 2px 0px;
@@ -1139,8 +1213,28 @@ width: 230px;
 	font-size: 123.1%;
 }
 
+#top-slug {
+	height: 40px;
+ 
+	 
+}
+
+#top-slug, #home-recent, #home-deposit{
+	margin-bottom: 1em;
+}
+
+#home-stats, #home-news {
+	
+	
+	margin-right: .5em;
+	
+	background: rgba(255,255,255,.5);
+}
+
+
+
 #facets h3.facet_selected{
-		background: #122D62 url(../images/accordion-open.png) no-repeat 96%;
+		background: #122D62 url(../images/accordion-open.png) no-repeat 98%;
 }
 
 #facets h2 {
@@ -1152,13 +1246,20 @@ width: 230px;
 	margin: 0;
 }
 
-
+#home-stats ul li,#home-news ul li{
+	margin-bottom: .5em;
+}
  
 
 #facets h3:hover{
 	
-	background: #154784;
+	background: #154784 url(../images/accordion-closed.png) no-repeat 98%;
 	}
+	
+	
+	#facets h3.facet_selected:hover{
+		background: #154784 url(../images/accordion-open.png) no-repeat 98%;
+}
 
 
 #facets div{
@@ -1207,20 +1308,21 @@ div#footer{
 	text-align: center;
 }
 
+body{
+	background: none;
+}
  
 
 #page {
- background: #d0d0d0;
- min-height:650px;
- padding-bottom: 2em;
- 
+
+background-color: #CCC;
 
  
 
    	 
 }
 
-body.bp a {
+a {
   text-decoration: none;
    
 }
@@ -1244,4 +1346,9 @@ div.documentFunctions {
 
 form#new_bookmark.new_bookmark {
  
+}
+
+#home-stats, #home-news, #twitter{
+	padding: .5em;
+	margin-bottom: 1em;
 }

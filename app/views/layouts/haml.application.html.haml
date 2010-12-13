@@ -1,0 +1,62 @@
+<!doctype html>
+%html.no-js{:lang => "en"}
+  %head
+    %meta{:charset => "utf-8"}
+    %meta{:content => "IE=edge,chrome=1", "http-equiv" => "X-UA-Compatible"}
+    
+    %title= h(@page_title || application_name)
+    %meta{:content => "Academic Commons is Columbia University's digital repository for academic research and scholarship produced by the university community.", :name => "description"}
+    %meta{:content => "width=device-width; initial-scale=1.0; maximum-scale=1.0;", :name => "viewport"}
+    %link{:href => url_for(:controller=>'catalog',:action => 'opensearch', :format => 'xml', :only_path => false, :rel => "search", :title => application_name, :type => "application/opensearchdescription+xml")}/
+  -# = stylesheet_link_tag 'compiled/screen.css', :media => 'screen, projection'
+  -# = stylesheet_link_tag 'compiled/print.css', :media => "print"
+    /[if IE]
+      = stylesheet_link_tag 'compiled/ie.css', :media => 'screen, projection'
+
+    = render_head_content
+    %link{:rel=>'stylesheet', :href=>'/stylesheets/blueprint/screen.css', :type => "text/css"}  
+
+    %link{:rel=>'stylesheet', :href=>'/stylesheets/application.css', :type => "text/css"}  
+
+    - javascript_tag do
+      = yield(:jstemplates)
+
+    - onload = "$('input#q').focus();" if params[:q].to_s.empty? and params[:f].to_s.empty? and params[:id].nil? 
+
+    /[if lt IE 7 ]
+      - body_class = 'ie6'
+    /[if IE 7 ] 
+      - body_class = 'ie7'
+    /[if IE 8 ] 
+      - body_class = 'ie8'
+    /[if IE 9 ] 
+      - body_class = 'ie9'
+  %body {:class => body_class, :onload => onload}
+    #container
+      %header.span-24.last
+      
+        #rooftop
+          %img{:border => "0", :height => "14", :src => "/images/crown.w18h14.white.gif", :width => "18"}
+          %a{:href => "http://www.columbia.edu", :style => "color:white; text-decoration:none", :target => "_blank"} Columbia University Libraries
+        #hd
+          #util_links= render :partial=>'/user_util_links'
+          %br{:style => "clear:both"}
+          %img#cuLogo{:alt => "Columbia University Logo", :src => "/images/cu_logo.png", :width =>"200"}
+          %h1.site_title
+            = link_to application_name, root_path
+            = (params[:controller] == "catalog" and !params[:id]) ? "<span id='results_text'>Search Results</span>" : ""
+
+      #srch.span-24.last
+        = render :partial => "/catalog/search_form"
+        = render :partial => '/catalog/constraints' 
+       
+ 
+      #page.span-24.clearfix
+        #sidebar.span-9
+          #facet-wrapper
+            = sidebar_items.join()
+        #content.span-15
+          = render :partial=>'/flash_msg'
+          = yield
+      #footer.span-24.last
+        =@footer
