@@ -35,8 +35,10 @@ $('#facets ul').each(function(){
   $('ul.zebra li:even').addClass('zebra_stripe');
  
   //add highlight to search results
-  var q = $("#q");
-  if(q != null && q != undefined && q != "")
+ /*
+ var q = $("#q") 
+
+  if(q != null && q != undefined && q != " ")
   {
 	  q = q.val();
 	  $(".document *").each
@@ -44,6 +46,8 @@ $('#facets ul').each(function(){
 		  function()
 		  {
 			  console.debug($(this));
+			  
+			  
 			  if($(this).children().length == 0)
 		      {
 				  var re = new RegExp(q, "ig");
@@ -53,6 +57,7 @@ $('#facets ul').each(function(){
 		  }
 	  );
   }
+*/
   
 /*************  
  * Facet more dialog. Uses JQuery UI Dialog. Use crazy closure technique. 
