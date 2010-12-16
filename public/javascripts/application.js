@@ -148,9 +148,9 @@ $('#facets ul').each(function(){
   
   
 /* keep facet boxes visible after page scroll   */
-var placeholder = $( "#facet-wrapper" );
+/*var placeholder = $( "#facet-wrapper" );
 var sb = $( "#facets" );
-/* var sc = $("#hd-mini"); */
+ var sc = $("#hd-mini"); 
 var view = $( window );
 view.bind(
 "scroll resize",
@@ -187,7 +187,7 @@ sc.removeClass("visible");
  
 }
 }
-);
+);*/
 
 
     $("#split_button").toggle();

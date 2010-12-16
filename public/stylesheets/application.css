@@ -7,21 +7,34 @@
 ul, ol{
 	list-style-type: none;
 	padding: 0;
+	margin: 0;
 }
 
 h1, h2, h3{
 	margin-bottom: .25em;
 }
 
-#content {
-margin-top: .5em;	
+#home-recent h3  {
+	margin-bottom: 1em;
+	font-family: Georgia, "Times New Roman", Times, serif;
 }
 
-#content div{
-	
-	 
+#home-news strong {
+	font: 1.25em Georgia, "Times New Roman", Times, serif;
 }
 
+#top-slug {
+	font: 1.25em/1.5em Georgia, "Times New Roman", Times, serif;
+}
+
+ 
+
+ .box{
+ background: rgba(255,255,255,.7);
+ border: 3px solid white;
+ margin-bottom: .75em;
+ 
+}
 
 a:link,  a:visited,   a:active {
  color: #314E83;
@@ -33,13 +46,28 @@ a:link,  a:visited,   a:active {
 }
 
 h1.site_title {
-	background: transparent url('../images/ac_logo.png') no-repeat top left;
-	height: 32px;
-	width: 334px;
-	margin-top: 20px;
+	 
+}
+header{
+	margin: 0 auto;
+	width: 969px;
+	height: 100px;
+	background: url(../images/main-header-background.png) no-repeat 2px;
+ 
 }
 
-
+#search-left{
+	width: 92px;
+	height: 100px;
+	background: url(../images/bg-search-left.png) no-repeat;
+	float: left;
+}
+#search-right{
+		width: 100px;
+	height: 100px;
+	background: url(../images/bg-search-right.png) no-repeat;
+	float: left;
+}
 
 h1.site_title a {
 	display: block;
@@ -70,16 +98,38 @@ select#search_field.search_field {
 #search {
  
 	
-	text-align:center;
+ text-align:center;
+float: left;
+ height: 59px;
+ background: url(../images/bg-search-middle.png) repeat-x;
+	 
+	padding-top: 33px;
+}
 
+#search form {
+	padding: 0 1.5em;
+}
+
+#search-wrap {
+	width: 624px;
+	margin: 0 auto;
 	position: relative;
+}
+
+#recently-updated dt {
+	float: left;
+	margin-right: .5em;
+}
+
+#recently-updated dd {
+ margin-bottom: 1em;
  
-    background: -moz-linear-gradient(top, #F5FBFF, #EAF5FF);
- 
-    background: -webkit-gradient(linear, left top, left bottom, from(#F5FBFF), to(#EAF5FF));
-	border-bottom: 1px dotted #2D2A62;
-	padding-top: .5em;
-	padding-bottom: .5em;
+}
+
+div.container {
+	
+	background: url(../images/container-bg.png) repeat-y;
+	
 }
 
 #hd-mini {
@@ -810,10 +860,6 @@ ul.tools li {
 
 @media print {
 
-html {
-	background: #fff;
-}
-
 body {
 	background: none;
 	padding: 0px;
@@ -1051,10 +1097,7 @@ ul#appliedFiltersList,
 
 }
 div#search-breadcrumb {
-	background: #e1e1e6;
-	background: -moz-linear-gradient(top, #e6e6e6, #CCC);
-	background: -webkit-gradient(linear, left top, left bottom, from(#e6e6e6), to(#ccc));
-position: relative;
+ position: relative;
 padding-top: .5em;
  
 	border-bottom-style: dotted;
@@ -1143,8 +1186,8 @@ div#crumbs {
 }
 
 
-html {
-	background: #1A1535 url(../images/page-background.png) repeat-x;
+body {
+	background: #979797 url(../images/bg-pattern-crown.png);
 	
 }
 
@@ -1187,12 +1230,7 @@ body.single-col #page {
 	margin-top: .75em;
 }
 
-#facets {
- margin-left: 5px;
  
-	width: 230px; 
-	 
-}
 
 #facets h3 {
 	
@@ -1213,22 +1251,31 @@ body.single-col #page {
 	font-size: 123.1%;
 }
 
-#top-slug {
-	height: 40px;
+#top-slug .box{
  
-	 
+ background: rgba(255,255,255,.7);
+ border: 3px solid white;
+ margin-right: 1.5em;
 }
 
-#top-slug, #home-recent, #home-deposit{
-	margin-bottom: 1em;
+#facet-wrapper {
+	 background: rgba(255,255,255,.7);
+ border: 3px solid white;
+ margin-left: 1.5em;
+ padding: .5em;
 }
+
+#top-slug div.box {
+	padding: 1em;
+}
+
+ 
 
 #home-stats, #home-news {
 	
 	
-	margin-right: .5em;
-	
-	background: rgba(255,255,255,.5);
+ margin-right: 1.5em;
+ padding: .75em;
 }
 
 
@@ -1247,7 +1294,12 @@ body.single-col #page {
 }
 
 #home-stats ul li,#home-news ul li{
-	margin-bottom: .5em;
+	 margin-top: 1em;
+}
+
+#home-news ul{
+	list-style-image: url(../images/blue-check.png);
+	list-style-position: inside;
 }
  
 
@@ -1284,6 +1336,8 @@ body.single-col #page {
 
 div#util_links{
 	float: right;
+	margin-right: 1.5em;
+	font-weight: bold;
 }
 
 img#cuLogo{
@@ -1308,18 +1362,20 @@ div#footer{
 	text-align: center;
 }
 
-body{
-	background: none;
-}
+
  
 
 #page {
 
-background-color: #CCC;
+ 
 
  
 
    	 
+}
+
+div#hd {
+	background: url(../images/main-header-background.png) -10px;
 }
 
 a {
@@ -1331,7 +1387,7 @@ a {
 #sidebar {
  
 	
-	padding-bottom: 2.5em;
+	 
  
 }
 
@@ -1348,7 +1404,8 @@ form#new_bookmark.new_bookmark {
  
 }
 
-#home-stats, #home-news, #twitter{
-	padding: .5em;
-	margin-bottom: 1em;
+#twitter{
+	margin-right: 10px;
 }
+
+

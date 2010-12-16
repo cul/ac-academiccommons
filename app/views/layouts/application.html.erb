@@ -54,25 +54,35 @@
   
   
 <div  class="container">
+<div id="super" class="span-24">
 
-<header class="span-24 last"> 
-	<div id="rooftop">
+<div id="rooftop" style="display:none">
 		<img src="/images/crown.w18h14.white.gif" width="18" height="14" border="0">  <a href="http://www.columbia.edu" style="color:white; text-decoration:none" target="_blank">Columbia University Libraries</a>
-	</div>
-	<div id="hd">
-		<div id="util_links">
+</div>
+
+	<div id="util_links">
 			<%= render :partial=>'/user_util_links' %>
 		</div>
 	
-		<br style="clear:both">
+
+</div>
+</div>
+
+ 
+
+<header> 
 	
-		<img src="/images/cu_logo.png" id="cuLogo" alt="Columbia University Logo"> 
 	
+	 
+	
+		 	
 		<h1 class="site_title"><%= link_to application_name, root_path %><%= (params[:controller] == "catalog" and !params[:id]) ? "<span id='results_text'>Search Results</span>" : "" %></h1>
 	
-	</div> <!-- /hd -->
+ 
 
 </header>
+
+<div class="container"> 
 
 	<div id="srch" class="span-24 last">
 	    <%= render :partial=>'/catalog/search_form' %>
@@ -81,13 +91,13 @@
     
 <div id="page" class="span-24 clearfix">
     
-    <div id="sidebar" class="span-6">
-    	<div id="facet-wrapper">
+    <div id="sidebar" class="span-7">
+    	<div id="facet-wrapper" class="box">
 			<%= sidebar_items.join('') %>
 		</div>
 	</div>
 	
-	<div id="content" class="span-18 last">
+	<div id="content" class="span-17 last">
 		<%= render :partial=>'/flash_msg' %>
 		<%= yield %>
 	</div>
