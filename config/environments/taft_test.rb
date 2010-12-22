@@ -10,7 +10,7 @@ config.action_controller.perform_caching             = true
 config.action_view.debug_rjs                         = false
 
 # This line tells passenger we are serving under http://<server>/<app_name>/
-config.action_controller.relative_url_root = "/scv"
+config.action_controller.relative_url_root = "/ac2_test"
 
 # See everything in the log (default is :info)
 # config.log_level = :debug
@@ -38,3 +38,4 @@ config.action_mailer.smtp_settings = {
 }
 
 Haml::Template::options[:ugly] = true
+
