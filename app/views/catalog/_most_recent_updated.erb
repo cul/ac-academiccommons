@@ -1,30 +1,27 @@
-<% cache("most_recently_updated" , :expires_in => 10.seconds) do %>
+<%# cache("most_recently_updated" , :expires_in => 10.seconds) do %>
  
     
     
 
 
-  <h3 class='alt'>New knowlege in Academic Commons:</h3>
-  <% build_recent_updated_list.each do |v| %>
+  <h3 class='alt'>New Knowlege in Academic Commons:</h3>
+  <%# build_recent_updated_list.each do |v| %>
   <dl>
-    <dt><%= v[:authors_display] %></dt> 
-    <dd><%= v[:title_display] %></dd> 
+    <dt><%#= v[:authors_display] %></dt> 
+    <dd><%#= v[:title_display] %></dd> 
   </dl>
-  <% end %>
-<% end %>
+  <%# end %>
+<%# end %>
 
 
 <!-- begin boilerplate for UI development -->
 
-    
+    <div class="clearfix">
 <dl id="recently-updated">
   
   
   
-          <dt>
-                      
-          <a href="/?f%5Bauthor_facet%5D%5B%5D=Sachs%2C+Jeffrey+D." >Sachs, Jeffrey D.</a>           
-              </dt>
+          
 
         <dd class="home-recent">
       
@@ -35,16 +32,15 @@
           
         
         
-      </dd>
+      </dd><dt>
+                      
+          <a href="/?f%5Bauthor_facet%5D%5B%5D=Sachs%2C+Jeffrey+D." >Sachs, Jeffrey D.</a>           
+              </dt>
       
            
 
 
-      <dt>
-                      
-          <a href="/?f%5Bauthor_facet%5D%5B%5D=Bhagwati%2C+Jagdish" >Bhagwati, Jagdish</a>           
-              </dt>
-     
+           
     
   
 
@@ -55,16 +51,16 @@
            <a href="/catalog/ac:123734" class="trends-in-inter-state-inequalities-of-income-in-india-development-discussion-papers-harvard-university-institute-for-international-development" onclick="var f = document.createElement('form'); f.style.display = 'none'; this.parentNode.appendChild(f); f.method = 'POST'; f.action = this.href;if(event.metaKey || event.ctrlKey){f.target = '_blank';};var d = document.createElement('input'); d.setAttribute('type', 'hidden'); d.setAttribute('name', 'results_view'); d.setAttribute('value', ''); f.appendChild(d);var d = document.createElement('input'); d.setAttribute('type', 'hidden'); d.setAttribute('name', 'counter'); d.setAttribute('value', '2'); f.appendChild(d);var m = document.createElement('input'); m.setAttribute('type', 'hidden'); m.setAttribute('name', '_method'); m.setAttribute('value', 'put'); f.appendChild(m);var s = document.createElement('input'); s.setAttribute('type', 'hidden'); s.setAttribute('name', 'authenticity_token'); s.setAttribute('value', 'lXGchBEOCzqb2hiFoVcOAkK36D0VPkHg8oAxzpn0TE4='); f.appendChild(s);f.submit();return false;">Trends in Inter-State Inequalities of Income in India Development Discussion Papers (Harvard University. Institute for International Development)</a>
         
         
-      </dd>
+      </dd><dt>
+                      
+          <a href="/?f%5Bauthor_facet%5D%5B%5D=Bhagwati%2C+Jagdish" >Bhagwati, Jagdish</a>           
+              </dt>
+
       
              
 
 
-   <dt>
-                      
-          <a href="/?f%5Bauthor_facet%5D%5B%5D=Freedberg%2C+David" >Freedberg, David</a>           
-              </dt>
-    
+     
   
 
         <dd class="home-recent">
@@ -81,13 +77,15 @@
 
     </dd>
     
-    
-    
-          <dt>
+      <dt>
                       
-          <a href="/?f%5Bauthor_facet%5D%5B%5D=Smith%2C+Raymond" >Smith, Raymond</a>           
+          <a href="/?f%5Bauthor_facet%5D%5B%5D=Freedberg%2C+David" >Freedberg, David</a>           
               </dt>
+
     
+    
+    
+           
     
   
 
@@ -104,14 +102,13 @@
 
     </dd>
     
-    
-    
        <dt>
                       
-          <a href="/?f%5Bauthor_facet%5D%5B%5D=Gelman%2C+Andrew" >Gelman, Andrew</a>           
+          <a href="/?f%5Bauthor_facet%5D%5B%5D=Smith%2C+Raymond" >Smith, Raymond</a>           
               </dt>
+
     
-  
+        
 
         <dd class="home-recent">
       
@@ -125,12 +122,14 @@
 
 
     </dd>
-        <dt>
+    
+     <dt>
                       
-          <a href="/?f%5Bauthor_facet%5D%5B%5D=Sachs%2C+Jeffrey+D." >Suess, Doctor</a>           
+          <a href="/?f%5Bauthor_facet%5D%5B%5D=Gelman%2C+Andrew" >Gelman, Andrew</a>           
               </dt>
+    
 
-  
+        
 
         <dd class="home-recent">
       
@@ -162,13 +161,13 @@
                       
           <a href="/?f%5Bauthor_facet%5D%5B%5D=Sachs%2C+Jeffrey+D." >Sachs, Jeffrey D.</a>           
               </dt>
-
+<br style="clear:both">
         <dd class="home-recent">
                
          
           <a href="/catalog/ac:123722" class="the-big-push-natural-resource-booms-and-growth" onclick="var f = document.createElement('form'); f.style.display = 'none'; this.parentNode.appendChild(f); f.method = 'POST'; f.action = this.href;if(event.metaKey || event.ctrlKey){f.target = '_blank';};var d = document.createElement('input'); d.setAttribute('type', 'hidden'); d.setAttribute('name', 'results_view'); d.setAttribute('value', ''); f.appendChild(d);var d = document.createElement('input'); d.setAttribute('type', 'hidden'); d.setAttribute('name', 'counter'); d.setAttribute('value', '8'); f.appendChild(d);var m = document.createElement('input'); m.setAttribute('type', 'hidden'); m.setAttribute('name', '_method'); m.setAttribute('value', 'put'); f.appendChild(m);var s = document.createElement('input'); s.setAttribute('type', 'hidden'); s.setAttribute('name', 'authenticity_token'); s.setAttribute('value', 'lXGchBEOCzqb2hiFoVcOAkK36D0VPkHg8oAxzpn0TE4='); f.appendChild(s);f.submit();return false;">The Big Push, Natural Resource Booms and Growth</a>
         
-        
+        <br style="clear:both">
    
 
 
@@ -209,7 +208,12 @@
 
 
 
-    </dd>
+    </dd>  <dt>
+                      
+          <a href="/?f%5Bauthor_facet%5D%5B%5D=Sachs%2C+Jeffrey+D." >Suess, Doctor</a>           
+              </dt>
+
+
     
  <!--
   
@@ -376,5 +380,7 @@
     
   
 </dl> 
+
+</div>
 
 <!-- end dev boilerplate code -->

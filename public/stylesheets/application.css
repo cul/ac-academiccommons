@@ -117,13 +117,20 @@ float: left;
 }
 
 #recently-updated dt {
-	float: left;
+	 float: right;
 	margin-right: .5em;
+	 margin-bottom: 1em;
+}
+
+#recently-updated dt:before{
+	content: "by:";
+	font-weight: normal;
+	color: #888;
 }
 
 #recently-updated dd {
- margin-bottom: 1em;
- 
+
+ float: right;
 }
 
 div.container {

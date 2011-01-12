@@ -72,7 +72,7 @@ module CatalogHelper
     results = []
     uri_prefix = "info:fedora/"
     hc = HTTPClient.new()
-
+    hc.ssl_config.verify_mode = OpenSSL::SSL::VERIFY_NONE
     fedora_url = "#{FEDORA_CONFIG[:riurl]}/get/"
 
     urls = {
@@ -100,6 +100,7 @@ module CatalogHelper
       url = FEDORA_CONFIG[:riurl] + "/get/" + member_pid + "/" + 'CONTENT'
 
       cl = HTTPClient.new
+      cl.ssl_config.verify_mode = OpenSSL::SSL::VERIFY_NONE
       h_ct = cl.head(url).header["Content-Type"].to_s
       res[:content_type] = h_ct
       
@@ -139,6 +140,8 @@ module CatalogHelper
 
   def doc_json_method(doc, method)
     hc = HTTPClient.new
+     hc.ssl_config.verify_mode = OpenSSL::SSL::VERIFY_NONE
+    
     res = JSON.parse(hc.get_content(doc_object_method(doc,method)))
 
   end
