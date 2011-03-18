@@ -5,12 +5,19 @@
  
 <%localized_params = params %>
    
-   
-<div id="search-breadcrumb"  >
+ 
+
+		<%=link_to "Start&nbsp;over&thinsp;", catalog_index_path, :id=>"startOverLink" %>
+ 
+  
+
+ 
+<h2>Active Search Facets:</h2>
+ <%= render :partial=>'/catalog/search_form' %> 
 
  <div id="breadcrumbs">
   <ul class="breadcrumb query">
-     <h3>Results for:</h3>
+     <h3>Keywords:</h3>
 		<%- if (!localized_params[:q].blank?) -%>
 		<%=render_constraint_element(search_field_label(localized_params),
             localized_params[:q], 
@@ -48,12 +55,7 @@
        <br style="clear:both">
       </div>
       
-      <div>
-
-		<%=link_to "Start&nbsp;over&thinsp;", catalog_index_path, :id=>"startOverLink" %>
-	</div>
-
-</div>
+       
 
 
 

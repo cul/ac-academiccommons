@@ -1,5 +1,5 @@
 <% # main container for facets/limits menu -%>
-<div id="facets" class="facets">
+<div id="facets" class="facets left-column">
    <% facet_field_names.each do |solr_fname| %>
    
       <% display_facet = @response.facets.detect {|f| f.name == solr_fname} -%>

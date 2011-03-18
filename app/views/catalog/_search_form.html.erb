@@ -1,15 +1,17 @@
-
-
 <%localized_params = params %>
 
-<div id="search-wrap">
-<div id="search-left"></div>
+ 
     <div id="search" class="search">
-      <% form_tag catalog_index_path, :method => :get do %>
+    
+    <% form_tag catalog_index_path, :method => :get do %>
+        
         <h2 class="search"><%= label_tag(:q, "Search ") %></h2>
+        
         <%#= text_field_tag :q, params[:q], :class => "q" , :results => 5, :placeholder => "Search Academic Commons"%>
         
-        <%= text_field_tag(:q, localized_params[:search_field] != nil ? localized_params[:q] : "", :class=>"search") %>
+        <%#= text_field_tag(:q, localized_params[:search_field] != nil ? localized_params[:q] : "", :class=>"search") %>
+        
+        <%= text_field_tag(:q, localized_params[:search_field] != nil ? localized_params[:q] : "", :size=>45, :class=>"search") %>
         
         <noscript>
         <%= label_tag(:search_field, " in ") %>
@@ -20,24 +22,23 @@
         
                 
         
-        <span id="split_button" style="display:none;">
-  	    <div class="button_set">
-  	    <button id="select">select</button>
-    		<button id="run">
+           		 
+    		 <%- if page_location == "search_results" -%>
     		 
-    			 <%- if localized_params[:search_field] and !localized_params[:search_field].blank?   -%>
-    			  <%#- if localized_params[:search_field] == 'search' or  !search_fields.flatten.include?(localized_params[:search_field]) -%>
-    			    <!-- Search -->
-    			  <%#- else -%>
-    					Search <%= search_fields.flatten[search_fields.flatten.rindex(localized_params[:search_field])-1] %>
-    			  <%#- end -%>
-    			<%- else -%>
-    			  Search
-    			<%- end -%>
-
-    		 
+    			
+    		    <span id="split_button" style="display:none;">
+  	    
+  	     
+    	<button id="run">
+    		
+    			Add Search Term
+    			  
+    			  
+    			   
     		</button>
-    		  		</div>
+    		  	 
+    		 
+
 
   		<div class="drop_down" style="display:none;">
   			<ul>
@@ -49,13 +50,65 @@
   	</span>
 <%= hidden_field_tag(:hidden_search_field,  localized_params[:search_field]) %>
 	
-      <%- end -%>
+      
     
       <hr/>
     </div>
-    <div id="search-right"></div>
-</div>
+ 
+ 
+ 
+<script type="text/javascript">
+  $(function(){
+	$("#run")
+		.button()
+		.click( function() {
+			$("#search form").trigger("submit");
+			return false;
+		})
+	 
+	});
+</script>
 
+    		 
+    		 <% end %>
+     		  		
+    		  		
+    		  		
+    		  		<% if page_location == "home" %>
+    		  		
+    		  		
+    		  		
+    		    <span id="split_button" style="display:none;">
+  	    <div class="button_set">
+  	    <button id="select">select</button>
+    	<button id="run">
+    		
+    			  Search
+    			  
+    			  
+    			   
+    		</button>
+    		  		</div>
+    		 
+
+
+  		<div class="drop_down" style="display:none;">
+  			<ul>
+  				<%- search_fields.each do |key,value| -%>
+  				  <li class="<%= value %>"><a href=""><%= key %></a></li>
+  				<%- end -%>
+  		  </ul>
+  	  </div>
+  	</span>
+<%= hidden_field_tag(:hidden_search_field,  localized_params[:search_field]) %>
+	
+      
+    
+      <hr/>
+    </div>
+ 
+ 
+ 
 <script type="text/javascript">
   $(function(){
 	$("#run")
@@ -79,3 +132,7 @@
 		.buttonset();
 	});
 </script>
+ 
+ <%end%>
+
+<% end %>

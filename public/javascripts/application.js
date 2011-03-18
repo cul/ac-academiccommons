@@ -8,7 +8,7 @@ $(function(){
 
 $(document).ready(function() {
 
-$('#facets ul').each(function(){
+$('div.left-column ul').each(function(){
    var ul = $(this);
    // find all ul's that don't have any span descendants with a class of "selected"
    if($('li.facet_selected', ul).length == 0){

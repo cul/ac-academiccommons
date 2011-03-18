@@ -27,7 +27,9 @@
     <%= render_head_content %>
     
     <%= stylesheet_link_tag "blueprint/screen", :media => "screen,projection"  %>
-    <%= stylesheet_link_tag "application", :media => "screen,projection" %>
+    <%#= stylesheet_link_tag "application", :media => "screen,projection" %>
+        
+    <link rel="stylesheet" href="/stylesheets/application.css">    <!-- will revert link to native function when done editing stylesheets -->
         
     <% javascript_tag do -%>
     <%= yield(:jstemplates) %> 
@@ -54,60 +56,79 @@
 <div  class="container">
 <div id="super" class="span-24">
 
-<div id="rooftop" style="display:none">
-		<img src="/images/crown.w18h14.white.gif" width="18" height="14" border="0">  <a href="http://www.columbia.edu" style="color:white; text-decoration:none" target="_blank">Columbia University Libraries</a>
-</div>
-
-	<div id="util_links">
+    	<div id="util_links">
 			<%= render :partial=>'/user_util_links' %>
 		</div>
 	
-
 </div>
 </div>
 
- 
 
 <header> 
-	
-	
-	 
-	
 		 	
 		<h1 class="site_title"><%= link_to application_name, root_path %><%= (params[:controller] == "catalog" and !params[:id]) ? "<span id='results_text'>Search Results</span>" : "" %></h1>
 	
- 
-
 </header>
 
 <div class="container"> 
 
-	<div id="srch" class="span-24 last">
+	<%- if page_location == "home" -%>
+
+	<div id="home-search" class="span-16 prepend-4">
 	    <%= render :partial=>'/catalog/search_form' %>
-	    <%= render :partial=>'/catalog/constraints' %>
 	</div>
-    
-<div id="page" class="span-24 clearfix">
+	
+	
+	 
+	
+		<% end %>
+	    
+ 
+	
+	<%- if page_location == "home" -%>
+	  
+	<%= render :partial=>'/catalog/home_text' %>
+	
+	<% end %>
+	
+	<div id="page" class="span-24 clearfix">
     
     <div id="sidebar" class="span-7">
-    	<div id="facet-wrapper" class="box">
-			<%= sidebar_items.join('') %>
-		</div>
+    
+    <div id="facet-wrapper" class="box">
+	<%= sidebar_items.join('') %>
+	</div>
+
 	</div>
 	
 	<div id="content" class="span-17 last">
 		<%= render :partial=>'/flash_msg' %>
+
+
+	<%- if page_location == "search_results" -%>
+
+	<div id = "search-breadcrumbs">
+	
+	<%= render :partial=>'/catalog/constraints' %>
+	
+	</div> 
+ 
+	
+	<% end %>
+		
 		<%= yield %>
 	</div>
           
 </div><!-- div#page -->
 
 <footer class="span-24 last">
+	
 	<div id="footer"> 
 	
 		<%= @footer %>
 	
 	</div>
+
 </footer> 
 
 </div>  <!-- div#container -->    
