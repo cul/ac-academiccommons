@@ -25,5 +25,6 @@ ActionController::Routing::Routes.draw do |map|
   map.connect ':controller/:action/:id.:format'
   
   map.department_details '/catalog/browse/departments/:id', :controller => 'catalog', :action => 'browse_department'
+  map.department_details '/catalog/browse/subjects/:id', :controller => 'catalog', :action => 'browse_subject'
 
 end
