@@ -135,6 +135,8 @@
             <field name="type_of_resource_facet" type="string" indexed="true" stored="true" multiValued="true" />
             <field name="media_type_facet" type="string" indexed="true" stored="true" multiValued="true" />
 
+  	<field name="affiliation_school" type="string" indexed="true" stored="true" multiValued="true" />
+	<field name="affiliation_department" type="string" indexed="true" stored="true" multiValued="true" />
   
    <!-- Academic Commons Dynamic Fields -->
    <dynamicField name="ac.fulltext_*"  type="text"  indexed="true"  stored="false"/>

@@ -72,7 +72,7 @@
 
 <div class="container"> 
 
-	<%- if page_location == "home" -%>
+	<%- if page_location == "home" || page_location == "browse_view" -%>
 
 	<div id="home-search" class="span-16 prepend-4">
 	    <%= render :partial=>'/catalog/search_form' %>

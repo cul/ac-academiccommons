@@ -97,7 +97,7 @@ end
         return "search_results"
       elsif params[:action] == "show"
         return "record_view"
-      elsif params[:action] == "browse"
+      elsif params[:action] == "browse" || params[:action] == "browse_department" || params[:action] == "browse_subject"
         return "browse_view"
       end
     elsif params[:controller] == "advanced"

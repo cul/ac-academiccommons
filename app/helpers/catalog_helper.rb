@@ -111,16 +111,9 @@ module CatalogHelper
     return results
   end
  
-   
-   
- THUMBNAIL_MAPPINGS = {
-    'application/pdf' => 'thumbnail_pdf.png',
-    'unknown' => 'thumbnail_unknown.png'
-  }
- 
-  #  def thumbnail_for_resource(resource)
-#   
-#     THUMBNAIL_MAPPINGS[resource[:content_type]] || 'spacer.png'
+  def get_department_list
+    
+  end
  
 
   def thumbnail_for_resource(resource)

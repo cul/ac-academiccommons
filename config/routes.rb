@@ -20,8 +20,10 @@ ActionController::Routing::Routes.draw do |map|
   map.with_options :controller => "statistics" do |stats|
     stats.search_statistics "/statistics/search_history", :action => "search_history"
   end
-
+  
   map.connect ':controller/:action/:id'
   map.connect ':controller/:action/:id.:format'
+  
+  map.department_details '/catalog/browse/departments/:id', :controller => 'catalog', :action => 'browse_department'
 
 end

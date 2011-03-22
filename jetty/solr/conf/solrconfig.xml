@@ -74,6 +74,8 @@
           <str name="facet.field">subject_era_facet</str>
           <str name="facet.field">subject_geo_facet</str>
           <str name="facet.field">subject_topic_facet</str>
+		  <str name="facet.field">affiliation_school</str>
+		  <str name="facet.field">affiliation_department</str>
         </lst>
         <!-- query for single document to populate filter cache -->
         <lst>
@@ -99,6 +101,8 @@
           <str name="facet.field">media_type_facet</str>
           <str name="facet.field">type_of_resource_facet</str>
           <str name="facet.field">lc_1letter_facet</str>
+		  <str name="facet.field">affiliation_school</str>
+		  <str name="facet.field">affiliation_department</str>
         </lst>
       </arr>
     </listener>
@@ -130,6 +134,8 @@
           <str name="facet.field">subject_era_facet</str>
           <str name="facet.field">subject_geo_facet</str>
           <str name="facet.field">subject_topic_facet</str>
+		  <str name="facet.field">affiliation_school</str>
+		  <str name="facet.field">affiliation_department</str>
         </lst>
         <!-- query for single document to populate filter cache -->
         <lst>
@@ -155,6 +161,8 @@
           <str name="facet.field">subject_era_facet</str>
           <str name="facet.field">subject_geo_facet</str>
           <str name="facet.field">subject_topic_facet</str>
+		  <str name="facet.field">affiliation_school</str>
+		  <str name="facet.field">affiliation_department</str>
         </lst>
       </arr>
     </listener>
@@ -259,7 +267,9 @@
         subtitle_vern_display,
         url_fulltext_display,
         url_suppl_display,
-        export_as_mla_citation_txt
+        export_as_mla_citation_txt,
+		affiliation_school,
+		affiliation_department
       </str>
      
       <str name="facet">true</str>
@@ -279,6 +289,8 @@
       <str name="facet.field">subject_era_facet</str>
       <str name="facet.field">subject_geo_facet</str>
       <str name="facet.field">subject_topic_facet</str>
+	  <str name="facet.field">affiliation_school</str>
+	  <str name="facet.field">affiliation_department</str>
       
       <str name="spellcheck">true</str>
       <str name="spellcheck.dictionary">default</str>
@@ -341,6 +353,8 @@
         subtitle_vern_display,
         url_fulltext_display,
         url_suppl_display,
+		affiliation_school,
+		affiliation_department
       </str>
       
       <str name="facet">true</str>
@@ -356,6 +370,8 @@
       <str name="facet.field">subject_era_facet</str>
       <str name="facet.field">subject_geo_facet</str>
       <str name="facet.field">subject_topic_facet</str>
+	  <str name="facet.field">affiliation_school</str>
+	  <str name="facet.field">affiliation_department</str>
       
       <str name="spellcheck">true</str>
       <str name="spellcheck.dictionary">author</str>
@@ -430,6 +446,8 @@
         subtitle_vern_display,
         url_fulltext_display,
         url_suppl_display,
+		affiliation_school,
+		affiliation_department
       </str>
       
       <str name="facet">true</str>
@@ -445,6 +463,8 @@
       <str name="facet.field">subject_era_facet</str>
       <str name="facet.field">subject_geo_facet</str>
       <str name="facet.field">subject_topic_facet</str>
+	  <str name="facet.field">affiliation_school</str>
+	  <str name="facet.field">affiliation_department</str>
       
       <str name="spellcheck">true</str>
       <str name="spellcheck.dictionary">title</str>
@@ -511,6 +531,8 @@
         subtitle_vern_display,
         url_fulltext_display,
         url_suppl_display,
+		affiliation_school,
+		affiliation_department
       </str>
       
       <str name="facet">true</str>
@@ -530,6 +552,8 @@
       <str name="facet.field">subject_era_facet</str>
       <str name="facet.field">subject_geo_facet</str>
       <str name="facet.field">subject_topic_facet</str>
+	  <str name="facet.field">affiliation_school</str>
+	  <str name="facet.field">affiliation_department</str>
       
       <str name="spellcheck">true</str>
       <str name="spellcheck.dictionary">subject</str>
