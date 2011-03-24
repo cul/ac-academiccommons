@@ -129,6 +129,9 @@ module CatalogHelper
     return results
   end
  
+  def get_department_facet_list
+    
+  end
 
   def thumbnail_for_resource(resource)
     image_name = resource[:content_type]
