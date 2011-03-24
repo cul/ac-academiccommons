@@ -111,10 +111,27 @@ module CatalogHelper
     return results
   end
  
-  def get_department_list
-    
+  def get_departments_list
+    results = []
+    query_params = {:q=>"", :rows=>"0"}
+    solr_results = Blacklight.solr.find(query_params)
+    affiliation_departments = solr_results.facet_counts["facet_fields"]["affiliation_department"]
+    res = {}
+    affiliation_departments.each do |item|
+      if(item.to_s.match(/\A[+-]?\d+?(\.\d+)?\Z/) != nil)
+        res[:count] = item
+        results << res
+        res = {}
+      else
+        res[:name] = item
+      end
+    end
+    return results
   end
  
+  def get_department_facet_list
+    
+  end
 
   def thumbnail_for_resource(resource)
     image_name = resource[:content_type]

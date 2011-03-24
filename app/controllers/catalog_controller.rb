@@ -13,6 +13,10 @@ class CatalogController < ApplicationController
     index
   end
   
+  def browse_subject
+    index
+  end
+  
   def redirect_browse
     
     if(params[:id].to_s == 'browse')
