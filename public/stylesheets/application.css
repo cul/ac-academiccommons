@@ -15,14 +15,27 @@ p.caption {
 	
 	margin-top: 1em;
 	text-align: right;
-	font-weight: bold;
+ 
+	display: block;
+	position: absolute;
+	bottom: 0;
+	right: 1em;
+	margin-bottom: 1em;
+	 
  
 }
 p.caption:before {
 	
 	content:'by: ';
-	color: silver;}
+	color: #3f3f3f;}
+ 
+
+#recently-updated li.home-recent p.caption a {
+	font-weight: normal;
+	border-bottom: 1px dotted #81ff76;
+}
 li.home-recent {
+	position: relative;
 	display: block;
 	float: left;
 	width: 170px;
@@ -31,10 +44,26 @@ li.home-recent {
 	border: 1px solid rgba(19,46,99,0.61);
 	margin: 4px;
 	background: rgba(255,255,255,.5);
+	
+	  -moz-box-shadow: 3px 3px 3px rgba(0,0,0,.2);
+  -webkit-box-shadow: 3px 3px 3px rgba(0,0,0,.2);
+  box-shadow:3px 3px 3px rgba(0,0,0,.2);
+ 
 }
+
+div#home-deposit.box {
+		background: url(../images/alma-home-bg.png) no-repeat 28px;
+}
+
+
 
 li.home-recent:hover{
 	background: white;
+}
+
+li.home-recent a{
+	border-bottom: none;
+	font-weight: bold;
 }
 
 #sort-per-page {
@@ -53,14 +82,42 @@ h1, h2, h3{
 }
 
 #home-deposit h3 {
+	text-align: center;
+	margin-bottom: 1.5em;
 	font-size: 1.25em;
+	text-shadow: white 2px 2px 1px;
+}
+
+#home-deposit p {
+	text-shadow: white 2px 2px 1px;
+}
+
+#browse a {
+	display: block;
+background: #dbfbfe;
 	margin-bottom: .5em;
+	border: 1px solid #788ec1;
+	text-transform: uppercase;
+	font: 1.5em "Helvetica Neue", Arial, Helvetica, Geneva, sans-serif;
+	letter-spacing: 2px;
+	text-align: left;
+	padding-top: 2px;
+	padding-bottom: 2px;
+	padding-left: 5px;
+		-moz-border-radius: 15px;
+	-webkit-border-radius: 15px;
+    border-radius: 15px;
+}
+
+#browse {
+		font-family: "Lucida Grande", Lucida, Verdana, sans-serif;
 }
 
 
 #home-recent h3  {
 	margin-bottom: 1em;
 	font-family: Georgia, "Times New Roman", Times, serif;
+	text-align: center;
 }
 
 #home-news strong {
@@ -74,9 +131,10 @@ h1, h2, h3{
  
 
  .box{
- background: rgba(255,255,255,.7);
+ background: rgba(255,255,255,.5);
  border: 1px solid white;
  margin-bottom: .75em;
+ padding: 1em;
  
 }
 
@@ -87,12 +145,11 @@ h1, h2, h3{
 }
 
 #home-recent{
-	
-	margin-right: 1.5em;
+ 
 }
 a:link,  a:visited,   a:active {
  color: #314E83;
- border-bottom: 1px dotted #49A9A8;
+ 
 }
 
  a:hover {
@@ -104,9 +161,9 @@ h1.site_title {
 }
 header{
 	margin: 0 auto;
-	width: 969px;
+	width: 1050px;
 	height: 100px;
-	background: url(../images/main-header-background.png) no-repeat 2px;
+	background: url(../images/main-header-background.png) no-repeat 0;
  
 }
 
@@ -204,9 +261,10 @@ div#breadcrumbs {
  float: right;
 }
 
-div.container {
-  
-	
+div#main.container {
+  padding-left: 16px;
+  padding-right: 16px;
+	background: url('../images/bg-pattern-check.png') repeat-y;
 }
  #content{
  
@@ -1320,8 +1378,7 @@ div#crumbs {
 
 
 body {
-	background: #979797 url(../images/bg-pattern-check.png);
-	
+	background: #e5e5e5 	
 }
 
 body.single-col #page {
@@ -1363,9 +1420,12 @@ body.single-col #page {
 	margin-top: .75em;
 }
 
-.left-column h1{
-	font-size: 1.5em;
-} 
+#browse h1 {
+	font: 1.3em "Helvetica Neue", Arial, Helvetica, Geneva, sans-serif;
+	margin-bottom: .25em;
+}
+
+ 
 
 #facets h3 {
 	
@@ -1388,10 +1448,10 @@ body.single-col #page {
 
 #top-slug .box{
  
- background: rgba(255,255,255,.7);
- border: 3px solid white;
- margin-right: 1.5em;
- padding: 1em;
+ background: rgba(255,255,255,.5);
+ border: 1px solid white;
+ 
+ 
 }
 
 #facet-wrapper {

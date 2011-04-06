@@ -1,7 +1,7 @@
 production:
     url: ***REMOVED***
 development:
-    url: http://localhost:8984/solr 
+    url: ***REMOVED***
 taft_test:
     url: ***REMOVED***
 taft_dev:

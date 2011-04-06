@@ -3,7 +3,7 @@
 <h3>Deposit your Work in Academic Commons</h3>
 <p>Current faculty, staff, and students are invited to deposit research materials that are already in a digital format, including: articles, monographs, working papers, conference papers, images, datasets, multimedia creations, technical reports, preprints, software code, and theses.</p>
 <p>  To learn more about how to deposit your work into Academic Commons, please email 
-<%= mail_to("nbufanio@columbia.edu", "Nichole Bufanio, Digital Repository Coordinator", :encode => :javascript)%></p>
+<%= mail_to("rh2561@columbia.edu", "Robert Hilliker, Digital Repository Coordinator", :encode => :javascript)%></p>
 </div>
 </div>
 
@@ -19,27 +19,29 @@
 
 <% sidebar_items << capture do %>
 
-<div id="left-column-wrapper"  >
+ 
 
-<div id="home-sidebar" class="left-column">
+   <div id="sidebar" class="span-6">
+<div id="browse">
+     <h1>Browse AC Content</h1>
 
-     <h1>Browse By:</h1>
+ 
+	<a href="/catalog/browse/departments">Departments</a>
+ 
 
-<div>
-	<a href="/catalog/browse/departments">Department</a>
-</div>
-
-<div>
-	<a href="/catalog/browse/subjects">Subject</a>
-</div>
+ 
+	<a href="/catalog/browse/subjects">Subjects</a>
+ 
     
-
+</div>
 
 <%= render :partial=>'facets' %> 
+
 <hr>
-
+<div id="accessory_links">
+<h1>Helpful Links</h1>
 <%= render :partial=>'home_accessory_links' %>
-
+</div>
 
 
 
@@ -47,7 +49,7 @@
 
 
  </div>
-</div>
+ 
 
 <hr>
 

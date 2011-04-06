@@ -1,1 +1,20 @@
 <h3><%= params[:id] %></h3>
+
+
+
+<%= get_department_facet_list(params[:id]).inspect %>
+
+
+
+  <%  get_department_facet_list(params[:id]).each do |key| 
+  puts key.object_id.to_s
+  end %>
+  
+  
+ <%# department_list.each do |v| %>
+  <li>
+     <a href="departments/<%#= v[:name] %>"><%#= v[:name] %></a> (  <%#= v[:count] %> ) 
+   
+  </li>
+  <%# end %>
+ 
