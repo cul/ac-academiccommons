@@ -130,14 +130,13 @@ module CatalogHelper
   end
  
   def get_department_facet_list(department)
-    results = []
+    results = {}
     query_params = {:q=>"", :'q.alt'=>"affiliation_department:" + department, :rows=>"0"}
     solr_results = Blacklight.solr.find(query_params)
     facet_fields = solr_results.facet_counts["facet_fields"]
     
     facet_fields.each do |key, value|
       if(key != "affiliation_department" && key != "affiliation_school")
-        facet_field = {}
         facet_field_values = []
         facet_field_value = {}
         value.each do |item|
@@ -149,8 +148,7 @@ module CatalogHelper
             facet_field_value[:name] = item
           end
         end
-        facet_field[key] = facet_field_values
-        results << facet_field
+        results[key] = facet_field_values
       end
     end
     return results
