@@ -1,5 +1,7 @@
-<h3 class="span-16 last append-bottom" style="text-align:center">Academic Commons Content by School or Department</h3>
-
+<div class='span-17'>
+<h3 class="box" style="text-align:center">Academic Commons Content by School or Department</h3>
+ 
+<div class="box clearfix">
 <div class="span-4 school-top append-bottom">Columbia University</div>
 
 <div class="span-4 school-top">Barnard College</div>
@@ -12,11 +14,12 @@
 
   <% get_departments_list.each do |v| %>
   <li>
-     <a href="departments/<%= v[:name] %>"><%= v[:name] %></a> (  <%= v[:count] %> ) 
+  
+  <%= link_to(v[:name], catalog_index_path()+'/browse/departments/'+v[:name] ) %>(  <%= v[:count] %> ) 
    
   </li>
   <% end %>
- 
+ </div>
 <!--
 
 

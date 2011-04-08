@@ -1,29 +1,30 @@
-<div id="top-slug" class="span-17  last">
-<div id="home-deposit" class="box">
+<div id="top-slug" class="span-17 last">
+ <div class='box'>
 <h3>Deposit your Work in Academic Commons</h3>
 <p>Current faculty, staff, and students are invited to deposit research materials that are already in a digital format, including: articles, monographs, working papers, conference papers, images, datasets, multimedia creations, technical reports, preprints, software code, and theses.</p>
 <p>  To learn more about how to deposit your work into Academic Commons, please email 
 <%= mail_to("rh2561@columbia.edu", "Robert Hilliker, Digital Repository Coordinator", :encode => :javascript)%></p>
-</div>
+ </div>
 </div>
 
 <div class="span-17">
-<div id="home-recent" class="box">
-
+ 
+<div class='box clearfix'>
 <%= render :partial=>"most_recent_updated.erb" %>
-
 </div>
 </div>
  
+    <div id="sidebar" class="span-7">
  
 
 <% sidebar_items << capture do %>
 
  
 
-   <div id="sidebar" class="span-6">
-<div id="browse">
-     <h1>Browse AC Content</h1>
+ <h3>Browse AC Content</h3>
+ 
+<div id="browse" class='box'>
+    
 
  
 	<a href="/catalog/browse/departments">Departments</a>
@@ -35,11 +36,11 @@
     
 </div>
 
-<%= render :partial=>'facets' %> 
+<%#= render :partial=>'facets' %> 
+<h3>Helpful Links</h3>
+ 
+<div id="accessory_links" class='box'>
 
-<hr>
-<div id="accessory_links">
-<h1>Helpful Links</h1>
 <%= render :partial=>'home_accessory_links' %>
 </div>
 
@@ -48,13 +49,13 @@
 
 
 
- </div>
+  
  
 
-<hr>
+ 
 
-
-<div id="home-stats"  >
+<h3>AC by the Numbers</h3>
+<div id="home-stats" class='box'  >
 			
 			<ul>
 			<li><strong><%= get_total_count() %></strong> items in Academic Commons.</li>
@@ -65,3 +66,4 @@
 			</div>
  <% end %>
  
+</div>
