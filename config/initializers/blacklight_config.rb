@@ -82,9 +82,7 @@ Blacklight.configure(:shared) do |config|
       "pub_date",
       "language_facet",
       "lc_1letter_facet",
-      "subject_topic_facet",
-      "subject_geo_facet",
-      "subject_era_facet",
+      "subject",
       "affiliation_department"
     ]),
     :labels => {
@@ -95,11 +93,9 @@ Blacklight.configure(:shared) do |config|
       "type_of_resource_facet"         => "Type of Resource",
       "format"              => "Format",
       "pub_date"            => "Publication Year",
-      "subject_topic_facet" => "Topic",
+      "subject" => "Subject",
       "language_facet"      => "Language",
       "lc_1letter_facet"    => "Call Number",
-      "subject_era_facet"   => "Era",
-      "subject_geo_facet"   => "Region",
       "affiliation_department" => "Department"
     },
     # Setting a limit will trigger Blacklight's 'more' facet values link.
@@ -112,7 +108,7 @@ Blacklight.configure(:shared) do |config|
      "author_facet"=>7,
      "genre_facet"=>7,
      "media_type_facet"=>7,
-      "subject_facet" => 5,
+      "subject" => 5,
       "language_facet" => false,
       "affiliation_department" => 5
     }
@@ -131,7 +127,7 @@ Blacklight.configure(:shared) do |config|
     :field_names => [
       "authors_display",
       "date",
-      "keyword_facet",
+      "subject",
       "genre_facet",
       "language_facet",
       "published_display",
@@ -142,7 +138,7 @@ Blacklight.configure(:shared) do |config|
     :labels => {
       "authors_display"         => "Author(s):",
       "date"                    => "Date:",
-      "keyword_facet"           => "Subject:",
+      "subject"                 => "Subject:",
       "genre_facet"             => "Type:",
       "language_facet"          => "Language:",
       "published_display"       => "Published:",
@@ -161,7 +157,6 @@ Blacklight.configure(:shared) do |config|
       "date",
       "genre_facet",
       "handle",
-      "keyword_facet",
       "book_journal_title",
       "volume",
       "issue",
@@ -202,7 +197,6 @@ Blacklight.configure(:shared) do |config|
       "date"			 => "Date:",
       "genre_facet"		 => "Type:",
       "handle"			  => "Handle:",
-      "keyword_facet"		  => "Keyword(s):",
       "book_journal_title"	  => "Book/Journal Title:",
       "volume"        		  => "Volume:",
       "issue"        		  => "Issue:",
@@ -217,7 +211,7 @@ Blacklight.configure(:shared) do |config|
       "publisher"		  =>"Publisher:", 
       "publisher_location"	  =>"Publisher Location:", 
       "abstract"		  =>"Abstract:", 
-      "subject"			  =>"Topic(s):", 
+      "subject"			  =>"Subject(s):", 
       "isbn"			  =>"ISBN:",
       "issn"			  =>"ISSN:",
       "doi"			  =>"DOI:",

@@ -71,9 +71,7 @@
           <str name="facet.field">lc_b4cutter_facet</str>
           <str name="facet.field">language_facet</str>
           <str name="facet.field">pub_date</str>
-          <str name="facet.field">subject_era_facet</str>
-          <str name="facet.field">subject_geo_facet</str>
-          <str name="facet.field">subject_topic_facet</str>
+		  <str name="facet.field">subject</str>
 		  <str name="facet.field">affiliation_school</str>
 		  <str name="facet.field">affiliation_department</str>
         </lst>
@@ -93,9 +91,7 @@
           <str name="facet.field">lc_b4cutter_facet</str>
           <str name="facet.field">language_facet</str>
           <str name="facet.field">pub_date</str>
-          <str name="facet.field">subject_era_facet</str>
-          <str name="facet.field">subject_geo_facet</str>
-          <str name="facet.field">subject_topic_facet</str>
+          <str name="facet.field">subject</str>
           <str name="facet.field">genre_facet</str>
           <str name="facet.field">keyword_facet</str>
           <str name="facet.field">media_type_facet</str>
@@ -131,9 +127,7 @@
           <str name="facet.field">media_type_facet</str>
           <str name="facet.field">type_of_resource_facet</str>
           <str name="facet.field">lc_1letter_facet</str>
-          <str name="facet.field">subject_era_facet</str>
-          <str name="facet.field">subject_geo_facet</str>
-          <str name="facet.field">subject_topic_facet</str>
+          <str name="facet.field">subject</str>
 		  <str name="facet.field">affiliation_school</str>
 		  <str name="facet.field">affiliation_department</str>
         </lst>
@@ -158,9 +152,7 @@
           <str name="facet.field">media_type_facet</str>
           <str name="facet.field">type_of_resource_facet</str>
           <str name="facet.field">lc_1letter_facet</str>
-          <str name="facet.field">subject_era_facet</str>
-          <str name="facet.field">subject_geo_facet</str>
-          <str name="facet.field">subject_topic_facet</str>
+          <str name="facet.field">subject</str>
 		  <str name="facet.field">affiliation_school</str>
 		  <str name="facet.field">affiliation_department</str>
         </lst>
@@ -202,7 +194,7 @@
         title_added_entry_t^1250
         subject_topic_unstem_search^1000
         subject_unstem_search^750
-        subject_topic_facet^625
+        subject^625
         subject_t^500
         author_unstem_search^250
         author_addl_unstem_search^250
@@ -226,7 +218,7 @@
         title_added_entry_t^12500
         subject_topic_unstem_search^10000
         subject_unstem_search^7500
-        subject_topic_facet^6250
+        subject^6250
         subject_t^5000
         author_unstem_search^2500
         author_addl_unstem_search^2500
@@ -259,10 +251,8 @@
         pub_date,
         title_display,
         title_vern_display,
-        subject_topic_facet,
-        subject_geo_facet,
+        subject,
         genre_facet,
-        subject_era_facet,
         subtitle_display,
         subtitle_vern_display,
         url_fulltext_display,
@@ -286,9 +276,7 @@
       <str name="facet.field">keyword_facet</str>
       <str name="facet.field">media_type_facet</str>
       <str name="facet.field">type_of_resource_facet</str>
-      <str name="facet.field">subject_era_facet</str>
-      <str name="facet.field">subject_geo_facet</str>
-      <str name="facet.field">subject_topic_facet</str>
+      <str name="facet.field">subject</str>
 	  <str name="facet.field">affiliation_school</str>
 	  <str name="facet.field">affiliation_department</str>
       
@@ -345,10 +333,8 @@
         pub_date,
         title_display,
         title_vern_display,
-        subject_topic_facet,
-        subject_geo_facet,
+        subject,
         genre_facet,
-        subject_era_facet,
         subtitle_display,
         subtitle_vern_display,
         url_fulltext_display,
@@ -367,9 +353,7 @@
       <str name="facet.field">language_facet</str>
       <str name="facet.field">pub_date</str>
           <str name="facet.field">genre_facet</str>
-      <str name="facet.field">subject_era_facet</str>
-      <str name="facet.field">subject_geo_facet</str>
-      <str name="facet.field">subject_topic_facet</str>
+      <str name="facet.field">subject</str>
 	  <str name="facet.field">affiliation_school</str>
 	  <str name="facet.field">affiliation_department</str>
       
@@ -438,9 +422,7 @@
         pub_date,
         title_display,
         title_vern_display,
-        subject_topic_facet,
-        subject_geo_facet,
-        subject_era_facet,
+        subject,
         genre_facet,
         subtitle_display,
         subtitle_vern_display,
@@ -460,9 +442,7 @@
       <str name="facet.field">language_facet</str>
       <str name="facet.field">pub_date</str>
           <str name="facet.field">genre_facet</str>
-      <str name="facet.field">subject_era_facet</str>
-      <str name="facet.field">subject_geo_facet</str>
-      <str name="facet.field">subject_topic_facet</str>
+      <str name="facet.field">subject</str>
 	  <str name="facet.field">affiliation_school</str>
 	  <str name="facet.field">affiliation_department</str>
       
@@ -489,7 +469,7 @@
       <str name="qf">
         subject_topic_unstem_search^200
         subject_unstem_search^125
-        subject_topic_facet^100
+        subject^100
         subject_t^50
         subject_addl_unstem_search^10
         subject_addl_t
@@ -498,7 +478,7 @@
         subject_topic_unstem_search^2000
         subject_unstem_search^1250
         subject_t^1000
-        subject_topic_facet^500
+        subject^500
         subject_addl_unstem_search^100
         subject_addl_t^10
       </str>
@@ -523,9 +503,7 @@
         pub_date,
         title_display,
         title_vern_display,
-        subject_topic_facet,
-        subject_geo_facet,
-        subject_era_facet,
+        subject,
         genre_facet,
         subtitle_display,
         subtitle_vern_display,
@@ -549,9 +527,7 @@
       <str name="facet.field">keyword_facet</str>
       <str name="facet.field">media_type_facet</str>
       <str name="facet.field">type_of_resource_facet</str>
-      <str name="facet.field">subject_era_facet</str>
-      <str name="facet.field">subject_geo_facet</str>
-      <str name="facet.field">subject_topic_facet</str>
+      <str name="facet.field">subject</str>
 	  <str name="facet.field">affiliation_school</str>
 	  <str name="facet.field">affiliation_department</str>
       

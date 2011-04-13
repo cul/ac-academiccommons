@@ -153,6 +153,24 @@ module CatalogHelper
     end
     return results
   end
+  
+  def get_subjects_list
+    results = []
+    query_params = {:q=>"", :rows=>"0"}
+    solr_results = Blacklight.solr.find(query_params)
+    subjects = solr_results.facet_counts["facet_fields"]["subject"]
+    res = {}
+    subjects.each do |item|
+      if(item.to_s.match(/\A[+-]?\d+?(\.\d+)?\Z/) != nil)
+        res[:count] = item
+        results << res
+        res = {}
+      else
+        res[:name] = item
+      end
+    end
+    return results
+  end
 
   def thumbnail_for_resource(resource)
     image_name = resource[:content_type]
