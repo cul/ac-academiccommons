@@ -25,14 +25,8 @@
  
 <div id="browse" class='box'>
     
-
- 
-	<a href="/catalog/browse/departments">Departments</a>
- 
-
- 
-	<a href="/catalog/browse/subjects">Subjects</a>
- 
+  <%= link_to "Departments", :controller=>"catalog", :action=>"browse", :id=>"departments" %>
+  <%= link_to "Subjects", :controller=>"catalog", :action=>"browse", :id=>"subjects" %>
     
 </div>
 
