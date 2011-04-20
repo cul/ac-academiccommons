@@ -3,6 +3,19 @@
 	http://localhost:3000/stylesheets/application.css
 */
 
+li.home-recent.first {
+	border:none;
+	margin: 4px;
+	background: transparent;
+	
+	  -moz-box-shadow: none;
+  -webkit-box-shadow: none;
+  box-shadow:none;
+	text-align: right;
+	color: #78898f;
+	font: 3em/1.2em "Helvetica Neue", Arial, Helvetica, Geneva, sans-serif;
+}
+
 div#results-list-wrapper {
 	border: 1px solid navy;
 	margin-top: 1em;
