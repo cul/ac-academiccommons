@@ -1,4 +1,4 @@
-<h3 class='box'>Browsing: <%=  link_to('Departments',catalog_index_path()+'/browse/departments/')%> &raquo; <%= link_to(params[:id], catalog_index_path()+'/browse/departments/'+params[:id]) %></h3>
+<h1 class="content-title">Browsing: <%=  link_to('Departments',catalog_index_path()+'/browse/departments/')%> &raquo; <%= link_to(params[:id], catalog_index_path()+'/browse/departments/'+params[:id]) %></h1>
 
 <%
 
@@ -8,9 +8,11 @@ author_facets = department_facet_list['author_facet']
 
 genre_facets = department_facet_list['genre_facet']
 
+subject_facets = department_facet_list['subject']
+
 %>
- <div class='box'>
-<ul class='span-8'>
+ 
+<ul class='span-7 prepend-1'>
 <h3>Content by Author</h3>
 <% author_facets.each do |v| %>
 <li>
@@ -25,7 +27,7 @@ link_to(v[:name],   add_facet_params_and_redirect('author_facet', v[:name]), :cl
   </ul>
   
   
-  <ul class='span-8'>
+  <ul class='span-7'>
  <h3>Content by Genre</h3>
   <% genre_facets.each do |v| %>
   <li>
@@ -42,10 +44,26 @@ link_to(v[:name],   add_facet_params_and_redirect('genre_facet', v[:name]), :cla
    <% end %>
   </ul>
   
+<ul class='span-7 last'>
+ <h3>Content by Subject</h3>
+  <% subject_facets.each do |v| %>
+  <li>
+  
+  
+    
+<%=    
+ 
+link_to(v[:name],   add_facet_params_and_redirect('subject_facet', v[:name]), :class=>"broswe_select") + "<span class='item_count'> ("+ format_num(v[:count]) + ")</span>"  
+	     %>
+ 
+  </li>
+  
+   <% end %>
+  </ul>
   
   
   
- </div>
+ 
 
 
  

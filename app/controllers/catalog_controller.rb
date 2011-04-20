@@ -6,11 +6,14 @@ class CatalogController < ApplicationController
 
   
   def browse
-    index
+   
+    render :layout => "catalog_browse"
   end
   
   def browse_department
-    index
+ render :layout => "catalog_browse"
+
+
   end
   
   def browse_subject
