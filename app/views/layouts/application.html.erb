@@ -27,9 +27,8 @@
     <%= render_head_content %>
     
     <%= stylesheet_link_tag "blueprint/screen", :media => "screen,projection"  %>
-    <%#= stylesheet_link_tag "application", :media => "screen,projection" %>
-        
-    <link rel="stylesheet" href="/stylesheets/application.css">    <!-- will revert link to native function when done editing stylesheets -->
+    <%= stylesheet_link_tag "application", :media => "screen,projection" %>
+  <!-- will revert link to native function when done editing stylesheets -->
         
     <% javascript_tag do -%>
     <%= yield(:jstemplates) %> 
