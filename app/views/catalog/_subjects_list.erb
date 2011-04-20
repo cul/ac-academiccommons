@@ -1,19 +1,22 @@
 <h1 class="content-title">Browsing Content by Subjects</h1>
-<ul class="span-7 prepend-1 append-1 border">
-
-<% get_subjects_list.each do |v| %>
-
-<li>
-  
-<%= link_to(v[:name], catalog_index_path()+'?f%5Bsubject%5D%5B%5D='+v[:name] ) %> (<%= v[:count] %>) 
+ 
+ 
 
 
-<!--
-?f%5Bauthor_facet%5D%5B%5D
- 	
--->
-</li>
+<% subjects =  get_subjects_list %>
 
+ 
+
+<% col_size = subjects.size/3 %>
+
+ 
+<% subjects.in_groups_of(col_size, fill_with=false) do |group| %>
+   
+    <ul class = 'span-7'>
+    <% group.each do |v| %>
+      <li> <%= link_to(v[:name], catalog_index_path()+'?f%5Bsubject%5D%5B%5D='+v[:name] ) %> (<%= v[:count] %>)  </li>
+    <% end %>
+    </ul>
+ 
 <% end %>
-  
-</ul>
+

@@ -9,15 +9,27 @@
 				 
 <div class="span-6 affiliate last">Union Theological Society</div>
 
-<ul class="span-7 prepend-1 append-1 border">
-<% get_departments_list.each do |v| %>
+ 
 
-<li>
-  
-  <%= link_to(v[:name], catalog_index_path()+'/browse/departments/'+v[:name] ) %> (<%= v[:count] %>) 
+
+<% departments = get_departments_list %>
+
+ 
+
+<% col_size = departments.size/3 %>
+
+ 
+<% departments.in_groups_of(col_size, fill_with=false) do |group| %>
    
-</li>
-
+    <ul class = 'span-7'>
+    <% group.each do |v| %>
+      <li> <%= link_to( v[:name], catalog_index_path()+'/browse/departments/'+v[:name] ) %> (<%= v[:count] %>)  </li>
+    <% end %>
+    </ul>
+ 
 <% end %>
-  
-</ul>
+
+
+ 
+
+ 
