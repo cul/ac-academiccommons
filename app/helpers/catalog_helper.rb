@@ -25,13 +25,13 @@ module CatalogHelper
   end
 
   def build_recent_updated_list()
-    query_params = {:q => "", :fl => "title_display, id,  authors_display, author_id_uni, timestamp", :sort => "timestamp desc", :per_page => 100, :start => 0}
-    unis = []
+    query_params = {:q => "", :fl => "title_display, id, author_facet, author_id_uni, timestamp", :sort => "timestamp desc", :rows => 100}
+    included_authors = []
     results = []
-    return build_distinct_authors_list(0, query_params, unis, results)
+    return build_distinct_authors_list(query_params, included_authors, results)
   end
 
-  def build_distinct_authors_list(start, query_params, unis, results)
+  def build_distinct_authors_list(query_params, included_authors, results)
     updated = Blacklight.solr.find(query_params)
     items = updated["response"]["docs"]
     if(items.empty?)
@@ -42,12 +42,12 @@ module CatalogHelper
     end
     items.each do |r|
       new = true
-      if(r["author_id_uni"])
-        r["author_id_uni"].each do |uni|
-          if(unis.include?(uni))
+      if(r["author_facet"])
+        r["author_facet"].each do |author|
+          if(included_authors.include?(author))
             new = false
           else
-            unis << uni
+            included_authors << author
           end
         end
         if (new)
@@ -59,9 +59,10 @@ module CatalogHelper
       end
     end
     if(results.length < 20)
-      new_start = start + 100
-      query_params[:start] = new_start
-      build_distinct_authors_list(new_start, query_params, unis, results)
+      query_params[:start] = start + 100
+      build_distinct_authors_list(query_params, included_authors, results)
+    else
+      return results
     end
   end
 
