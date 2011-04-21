@@ -12,14 +12,14 @@
  
 
 
-<% departments = get_departments_list %>
+<%# departments = get_departments_list %>
 
  
 
-<% col_size = departments.size/3 %>
+ 
 
  
-<% departments.in_groups_of(col_size, fill_with=false) do |group| %>
+<% get_departments_list.in_groups(3, fill_with=false) do |group| %>
    
     <ul class = 'span-7'>
     <% group.each do |v| %>
