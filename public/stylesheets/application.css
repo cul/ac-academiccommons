@@ -1,6 +1,8 @@
 /* @override 
 	http://webdev.cdrs.columbia.edu:3000/stylesheets/application.css
 	http://localhost:3000/stylesheets/application.css
+	http://localhost:3000/stylesheets/application.css?1303325176
+	http://localhost:3000/stylesheets/application.css?1303491341
 */
 
 li.home-recent.first {
@@ -1693,17 +1695,31 @@ form#new_bookmark.new_bookmark {
 /* Overlays */
 .ui-widget-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
 
-div.affiliate {
+div.school{
 	 
 	background: rgba(255,255,255,.6);
- 
+ 	height: 62px;
 	text-align: center;
-	padding-top: 1em;
-	padding-bottom: 1em;
 	margin-bottom: 1.5em;
+	
+	-moz-box-shadow: 3px 3px 3px #999;
+	-webkit-box-shadow: 3px 3px 3px #999;
+	box-shadow: 3px 3px 3px #999;
 }
- 
+div.school.columbia{
+	background: url(../images/college-sprites.gif) 0 5px;
+}
 
+div.school.barnard{
+	background: url(../images/college-sprites.gif) -240px 5px;
+}
+div.school.teachers{
+	background: url(../images/college-sprites.gif) -434px 5px;
+}
+
+div.school.union{
+	background: url(../images/college-sprites.gif) -638px 5px;
+}
 #facets div h3  {
 	font-family: "Helvetica Neue", Arial, Helvetica, Geneva, sans-serif;
 }
