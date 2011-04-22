@@ -1,6 +1,3 @@
-<%# cache("most_recently_updated" , :expires_in => 10.seconds) do %>
- 
-    
 <ul id="recently-updated">
   
   <li class="home-recent first">New in Academic Commons:</li>
@@ -13,7 +10,7 @@
         <% num_authors = 0 %>
         <% recent_item[:author_facet].each do |author| %>
           <% break if(num_authors == 2) %>
-          <% if(num_authors > 0) %><%= ";" %><% end %>
+          <% if(num_authors > 0) %><%= "<br>" %><% end %>
           <a href="?f[author_facet][]=<%= author %>"><%= author %></a>
           <% num_authors += 1 %>
         <% end %>
