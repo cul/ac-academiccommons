@@ -125,6 +125,7 @@
   <field name="tableOfContents" type="string" indexed="true" stored="true"/>
   <!-- pub_date is used for facet and display so it must be indexed and stored -->
   <field name="pub_date" type="string" indexed="true" stored="true" multiValued="true"/>
+  <field name="record_creation_date" type="date" indexed="true" stored="true"/>
 
   <!-- TODO: This is a placeholder field to handle internal_h, which stores the hierarchical collection value. Will fix with Ben later -->
 
