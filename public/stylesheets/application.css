@@ -3,19 +3,28 @@
 	http://localhost:3000/stylesheets/application.css
 	http://localhost:3000/stylesheets/application.css?1303325176
 	http://localhost:3000/stylesheets/application.css?1303491341
+	http://localhost:3000/stylesheets/application.css?1303495398
+	http://localhost:3000/stylesheets/application.css?1303495509
+	http://localhost:3000/stylesheets/application.css?1303496048
 */
 
-li.home-recent.first {
+div.home-recent.first {
 	border:none;
 	margin: 4px;
 	background: transparent;
 	
-	  -moz-box-shadow: none;
-  -webkit-box-shadow: none;
-  box-shadow:none;
+    -moz-box-shadow: none;
+    -webkit-box-shadow: none;
+     box-shadow:none;
 	text-align: right;
 	color: #78898f;
 	font: 3em/1.2em "Helvetica Neue", Arial, Helvetica, Geneva, sans-serif;
+	float: left;
+	width: 180px;
+	width: 180px;
+	height: 180px;
+	padding: 11px;
+
 }
 
 div#results-list-wrapper {
@@ -111,7 +120,7 @@ h1, h2, h3{
 
 #browse a {
 	display: block;
-background: #dbfbfe;
+ 
 	margin-bottom: .5em;
  	text-transform: uppercase;
 	font: 1.5em "Helvetica Neue", Arial, Helvetica, Geneva, sans-serif;
@@ -262,7 +271,7 @@ select#search_field.search_field {
 }
  #home-search #search.search{
 	float: none;
-	 
+	 position: relative;
 	margin-left: 140px;
 }
 
@@ -384,12 +393,13 @@ div.back-to-search {
 	background-color:white;
 	text-align:left;
 	position:absolute;
-	/**right:-88px;
-	*top:-20px;*/
+	  
 	z-index:1;
-	top: 22px;
+	 
 	width: 93px;
 	padding: 8px 5px 10px;
+	left: 254px;
+	top: 33px;
 }
 
 #split_button .drop_down ul{
@@ -1722,5 +1732,9 @@ div.school.union{
 }
 #facets div h3  {
 	font-family: "Helvetica Neue", Arial, Helvetica, Geneva, sans-serif;
+}
+
+#colophon p{
+	text-align: center;
 }
  
