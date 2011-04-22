@@ -316,5 +316,9 @@ Blacklight.configure(:shared) do |config|
   # If there are more than this many search results, no spelling ("did you 
   # mean") suggestion is offered.
   config[:spell_max] = 5
+    
+  # For the most-recent list, this is the max number displayed
+  config[:max_most_recent] = 10  
+    
 end
 
