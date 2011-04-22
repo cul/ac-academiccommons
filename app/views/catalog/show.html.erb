@@ -19,7 +19,6 @@
 <div id="document">
   <div id="doc_<%= @document[:id] %>">
     <%= render_document_heading %>
-    <div class="tools"><%= render :partial => 'show_tools' %></div>
     <div class="document">
       <%= render_document_partial @document, :show %>
     </div>
