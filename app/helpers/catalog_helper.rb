@@ -25,7 +25,7 @@ module CatalogHelper
   end
 
   def build_recent_updated_list()
-    query_params = {:q => "", :fl => "title_display, id, author_facet, author_id_uni, timestamp", :sort => "timestamp desc", :rows => 100}
+    query_params = {:q => "", :fl => "title_display, id, author_facet, author_id_uni, timestamp", :sort => "record_creation_date desc", :rows => 100}
     included_authors = []
     results = []
     return build_distinct_authors_list(query_params, included_authors, results)
@@ -52,13 +52,13 @@ module CatalogHelper
         end
         if (new)
           results << r
-          if(results.length == 20)
+          if(results.length == Blacklight.config[:max_most_recent])
             return results
           end
         end
       end
     end
-    if(results.length < 20)
+    if(results.length < Blacklight.config[:max_most_recent])
       query_params[:start] = start + 100
       build_distinct_authors_list(query_params, included_authors, results)
     else
