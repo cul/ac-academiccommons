@@ -1,11 +1,11 @@
 production:
     url: ***REMOVED***
 development:
-    url: ***REMOVED***
-taft_test:
+    url: http://localhost:8984/solr
+rhys:
     url: ***REMOVED***
 taft_dev:
     url: ***REMOVED***
-rhys_prod:
+brahms:
     url: ***REMOVED***
 

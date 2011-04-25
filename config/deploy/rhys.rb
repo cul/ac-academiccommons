@@ -1,14 +1,11 @@
-set :rails_env, "taft_test"
+set :rails_env, "rhys"
 set :application, "ac2_test"
-set :domain,      "taft.cul.columbia.edu"
+set :domain,      "rhys.cul.columbia.edu"
 set :deploy_to,   "/opt/passenger/#{application}/"
 set :user, "deployer"
-set :branch, @variables[:branch] || "taft_test"
+set :branch, @variables[:branch] || "rhys"
 set :scm_passphrase, "Current user can full owner domains."
 
 role :app, domain
 role :web, domain
 role :db,  domain, :primary => true
-
-
-
