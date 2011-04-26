@@ -1,11 +1,10 @@
-production:
-    url: ***REMOVED***
 development:
     url: http://localhost:8984/solr
-rhys:
+test:
+    url: http://localhost:8984/solr
+passenger_dev:
     url: ***REMOVED***
-taft_dev:
+passenger_test:
     url: ***REMOVED***
-brahms:
+passenger_prod:
     url: ***REMOVED***
-
