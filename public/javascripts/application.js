@@ -202,7 +202,7 @@ sc.removeClass("visible");
 		    $("#run").children(".ui-button-text").text("Search " + $(this).text());
 	    }
 		  $("#split_button .drop_down").toggle();
-		  $("#search form").trigger("submit");
+		/*   $("#search form").trigger("submit"); */
 		  return false;
 	  });
 	 });

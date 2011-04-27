@@ -27,7 +27,9 @@
     <%= render_head_content %>
     
     <%= stylesheet_link_tag "blueprint/screen", :media => "screen,projection"  %>
-    <%= stylesheet_link_tag "application", :media => "screen,projection" %>
+    <%#= stylesheet_link_tag "application", :media => "screen,projection" %>
+    
+       <link href="/stylesheets/application.css" media="screen,projection" rel="stylesheet" type="text/css" />
         
     <!-- will revert link to native function when done editing stylesheets -->
         
@@ -53,13 +55,9 @@
 <% end %>
   
   
-<div  class="container">
-<div id="super" class="span-24">
+<div  class="container" id="header">
+ 
 
-    	
-	
-</div>
-</div>
 
 
 <header> 
@@ -67,6 +65,8 @@
 		<h1 class="site_title"><%= link_to application_name, root_path %><%= (params[:controller] == "catalog" and !params[:id]) ? "<span id='results_text'>Search Results</span>" : "" %></h1>
 	
 </header>
+</div>
+
 
 <div class="container clearfix" id="main" > 
 
@@ -87,7 +87,7 @@
   
     
     	
-	<div id="content" class="span-24">
+	<div id="browse" class="span-24">
 	
 	<%= render :partial=>'/flash_msg' %>
 
@@ -100,12 +100,7 @@
           
  
 
-
-
-</div>  <!-- div#container -->    
-<div class='container'>
-
-<footer class="span-24">
+<footer class="span-24 append-bottom">
 	
 	<div id="footer"> 
 	
@@ -113,8 +108,33 @@
 	
 	</div>
 
+</div>  <!-- div#container -->    
+ 
+<div class="container">
+
+
 </footer> 
+
+<div id="colophon" class="span-24 append-bottom">
+<p>Powered by the <a href="http://cdrs.columbia.edu/" target="_blank">Center for Digital Research and Scholarship</a> at <a href="http://www.columbia.edu/cu/lweb/" target="_blank">Columbia University Libraries/Information Services</a>.</p>
+
 </div>
+ 
+</div>
+
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-10481105-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
 </body>
   
 </html>

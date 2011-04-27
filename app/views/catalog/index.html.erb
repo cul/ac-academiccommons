@@ -9,13 +9,27 @@
 	<%#= render :partial => 'did_you_mean' %>
  
     <div id="results-list-wrapper">
- 
+    
+    <div class="result-set-tools">
+
+    <%= render :partial=>'pagination' %>
 	<%= render :partial=>'sort_and_per_page' %>
-	
-	<%= will_paginate @response.docs,  :class => 'prev_next_links' %>
+
+	</div>
+
+	<div class="results-set-list">
+ 	
 	
 	<%= render :partial=>'document_list' %>
+    </div>
+    
+     <div class="result-set-tools">
 
+    <%= render :partial=>'pagination' %>
+	 
+
+	</div>
+    
   	</div>
 	
 	<% sidebar_items << capture do %>
@@ -26,7 +40,7 @@
 
 	<%= render :partial=>'solr_request' %>
 	
-	<% @footer = will_paginate @response.docs, :container => false%>
+
 
 <% end %>
 

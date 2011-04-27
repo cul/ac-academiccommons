@@ -1,11 +1,11 @@
 <%localized_params = params %>
 
  
-    <div id="search" class="search">
+    <div id="search" class="search clearfix">
     
     <% form_tag catalog_index_path, :method => :get do %>
         
-        <h2 class="search"><%= label_tag(:q, "Search ") %></h2>
+        <!-- <h2 class="search"><%#= label_tag(:q, "Search ") %></h2> -->
         
         <%#= text_field_tag :q, params[:q], :class => "q" , :results => 5, :placeholder => "Search Academic Commons"%>
         
@@ -31,7 +31,7 @@
   	     
     	<button id="run">
     		
-    			Add Search Term
+    			Change Keywords
     			  
     			  
     			   

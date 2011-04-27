@@ -1,25 +1,24 @@
-<h1 class="content-title">Academic Commons Content by School or Department</h1>
+<h1 class="content-title">Browse Academic Commons Content</h1>
+<h2 class="content-title">by Institution</h2>
+<div class="span-1">&nbsp;</div>
  
- <div class="span-1">&nbsp;</div>
- 
-<div class="span-6 school columbia"> </div>
+<a href="/?f%5Baffiliation_school%5D%5B%5D=Columbia%20University"><div class="span-6 school columbia"> </div></a>
 				  
-<div class="span-5 school barnard"> </div> 
+<a href="/?f%5Baffiliation_school%5D%5B%5D=Barnard"><div class="span-5 school barnard"> </div> </a>
 				  
 <div class="span-5 school teachers"> </div> 
 				 
-<div class="span-6 school union last" > </div>
+<div class="span-6 school union last clearfix"> </div>
+
+<h2 class="content-title">by Department</h2>
+ 
 
  
+<div  id='browse-box' class='span-22 prepend-2'>  
 
- 
-
- 
-<div class='span-22 prepend-2'>  
- 
 <% get_departments_list.in_groups(3, fill_with=false) do |group| %>
-   <div class='span-6 colborder'>
-    <ul  >
+   <div class='span-7 browse-list'>
+    <ul>
     <% group.each do |v| %>
       <li> <%= link_to( v[:name], catalog_index_path()+'/browse/departments/'+v[:name] ) %> (<%= v[:count] %>)  </li>
     <% end %>

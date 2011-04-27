@@ -1,6 +1,10 @@
 <div class="pagination-wrapper">
 
 
-<%= will_paginate @response.docs,  :class => 'prev_next_links' %>
+<div id="pagination" class="clearfix">
 
+<div class="prev_next_links"><%= will_paginate @response.docs, :page_links => false, :container => false %></div>
+  <%= will_paginate @response.docs, :next_label => '', :previous_label => '', :class => "page_links" %>
+
+</div>
 </div>

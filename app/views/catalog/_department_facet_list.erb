@@ -21,8 +21,8 @@ subject_facets = department_facet_list['subject']
  
 # link_to(v[:name],   add_facet_params_and_redirect('author_facet', v[:name]), :class=>"broswe_select") + "<span class='item_count'> ("+ format_num(v[:count]) + ")</span>" 
 
-link_to(v[:name],   '/?f%5Baffiliation_department%5D%5B%5D='+params[:id]+'&f%5Bauthor_facet%5D%5B%5D='+v[:name], :class=>"broswe_select") + "<span class='item_count'> ("+ format_num(v[:count]) + ")</span>"  
-	     %>  
+link_to(v[:name],   '/?f%5Baffiliation_department%5D%5B%5D='+params[:id]+'&f%5Bauthor_facet%5D%5B%5D='+v[:name], :class=>"broswe_select")%>  <span class='item_count'> ( <%= format_num(v[:count]) %> )</span>  
+	       
   </li>
   
    <% end %>
@@ -38,8 +38,7 @@ link_to(v[:name],   '/?f%5Baffiliation_department%5D%5B%5D='+params[:id]+'&f%5Ba
     
 <%=    
  
-link_to(v[:name],    '/?f%5Baffiliation_department%5D%5B%5D='+params[:id]+'&f%5Bgenre_facet%5D%5B%5D='+v[:name], :class=>"broswe_select") + "<span class='item_count'> ("+ format_num(v[:count]) + ")</span>"  
-	     %>
+link_to(v[:name],    '/?f%5Baffiliation_department%5D%5B%5D='+params[:id]+'&f%5Bgenre_facet%5D%5B%5D='+v[:name], :class=>"broswe_select")%> <span class='item_count'> ( <%= format_num(v[:count])%>)</span> 
  
   </li>
   
@@ -55,8 +54,7 @@ link_to(v[:name],    '/?f%5Baffiliation_department%5D%5B%5D='+params[:id]+'&f%5B
     
 <%=    
  
-link_to(v[:name],    '/?f%5Baffiliation_department%5D%5B%5D='+params[:id]+'&f%5Bsubject%5D%5B%5D='+v[:name], :class=>"broswe_select") + "<span class='item_count'> ("+ format_num(v[:count]) + ")</span>"  
-	     %>
+link_to(v[:name],    '/?f%5Baffiliation_department%5D%5B%5D='+params[:id]+'&f%5Bsubject%5D%5B%5D='+v[:name], :class=>"broswe_select")%> <span class='item_count'> (<%= format_num(v[:count]) %> )</span> 
  
   </li>
   
