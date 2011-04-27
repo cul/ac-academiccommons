@@ -608,7 +608,7 @@ a.facet_deselect:hover{
 }
 
 a.facet_select{
-	background: url(../images/facet-toggle-ui.png) no-repeat -1px 20px;
+	/*background: url(../images/facet-toggle-ui.png) no-repeat -1px 20px;*/
 }
 
 #facets div ul li{
@@ -1837,4 +1837,48 @@ a.nav-link{
 	font-weight: bold;
 	text-transform: uppercase;
 }
- 
+
+/* jQuery UI facet dialogs */
+.facet_extended_list {
+	text-align: left;
+}
+
+.facet_extended_list .facet_pagination {
+	text-align: right;
+}
+.facet_extended_list .facet_pagination .ui-state-active {
+	border:none;
+}
+.facet_extended_list .facet_pagination .prev_next_links {
+	float: left;
+}
+
+.facet_extended_list .top {
+	border-bottom:1px dotted #CCCCCC;
+	margin-bottom:10px;
+	padding-bottom:5px;
+}
+
+.facet_extended_list .bottom {
+	border-top:1px dotted #CCCCCC;
+	margin-top:10px;
+	padding-top:5px;
+}
+
+.pagination .prev_next_links .prev_link {
+	margin-right: 15px;
+}
+
+.facet_extended_list .prev_next_links .prev_page, .facet_extended_list .sort_options .az {
+  padding-right:10px;
+  margin-right:10px;
+  border-right:1px solid #CCCCCC;	
+}
+
+.facet_extended_list .prev_next_links .next_page, .facet_extended_list .sort_options .numeric {
+}
+
+.ui-state-active, .ui-widget-content .ui-state-active, .ui-widget-header .ui-state-active {  background: transparent;   }
+
+
+.ui-widget-header { border: 1px solid #4c84c6; background:#122D62;   color: #ffffff; font-weight: bold; }
