@@ -7,7 +7,10 @@ config.cache_classes = true
 # Full error reports are disabled and caching is turned on
 config.action_controller.consider_all_requests_local = false
 config.action_controller.perform_caching             = true
-config.action_view.cache_template_loading            = true
+config.action_view.debug_rjs                         = false
+
+# This line tells passenger we are serving under http://<server>/<app_name>/
+# config.action_controller.relative_url_root = "/ac2"
 
 # See everything in the log (default is :info)
 # config.log_level = :debug
@@ -26,3 +29,12 @@ config.action_view.cache_template_loading            = true
 
 # Enable threaded mode
 # config.threadsafe!
+
+config.action_mailer.delivery_method = :smtp
+config.action_mailer.smtp_settings = {
+  :address => "localhost",
+  :domain => "brahms.cul.columbia.edu",
+   :port => 25
+}
+
+Haml::Template::options[:ugly] = true

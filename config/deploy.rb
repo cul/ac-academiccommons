@@ -1,5 +1,5 @@
-set :default_stage, "taft_dev"
-set :stages, %w(taft_test taft_dev rhys_prod)
+set :default_stage, "passenger_dev"
+set :stages, %w(passenger_dev passenger_test passenger_prod)
 
 require 'capistrano/ext/multistage'
 default_run_options[:pty] = true

@@ -1,6 +1,5 @@
-production:
-    url: ***REMOVED***
 development:
+ 
     url: ***REMOVED***/
 taft_test:
     url: ***REMOVED***
@@ -8,4 +7,4 @@ taft_dev:
     url: ***REMOVED***
 rhys_prod:
     url: ***REMOVED***
-
+ 
