@@ -36,7 +36,7 @@
 <%#= render :partial=>'facets' %> 
 <h3>Helpful Links</h3>
  
-<div   class='box home-side'>
+<div class='box home-side'>
 
 <%= render :partial=>'home_accessory_links' %>
 </div>
@@ -52,12 +52,13 @@
  
 
 <h3>AC by the Numbers</h3>
-<div class='box home-side'  >
+<div class='box home-side'>
 			
 			<ul>
 			<li><strong><%= get_total_count() %></strong> items in Academic Commons.</li>
 			<li>Objects added in the last year:  <%= get_count_by_year() %></li> 
 			<li>Objects added in the last 30 days:  <%= get_count_by_month() %></li>
+			<li>Page Visits in April: 2,879</li>
 			</ul>   
 			
 			</div>

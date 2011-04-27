@@ -263,7 +263,10 @@ select#search_field.search_field {
 	 position: relative;
 	margin-left: 130px;
 }
-
+ #search-breadcrumbs #search.search{
+	margin-left: 40px;
+	margin-top: 20px;
+}
  
 
 div#breadcrumbs {
