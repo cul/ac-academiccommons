@@ -208,6 +208,12 @@ module CatalogHelper
         res = {}
         res[:title] = desc
         res[:id] = trim_fedora_uri_to_pid(uri) 
+          
+        # TEMP -- we want to ignore DC link for now, maybe forever
+        if(desc == "DC")
+          next
+        end  
+          
         block = desc == "DC" ? "DC" : "CONTENT"
         filename = res[:id].gsub(/\:/,"")
         filename += "_" + res[:title].downcase

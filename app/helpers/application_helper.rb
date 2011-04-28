@@ -15,6 +15,19 @@ module ApplicationHelper
   def relative_root
     Rails.configuration.action_controller[:relative_url_root] || ""
   end
+  
+  def render_document_heading
+    '<h2>' + document_type[0] + ':</h2>'+
+    '<h1>' + document_heading + '</h1>'+
+    '<h2 class="author_credit">' + first_name_then_last(document_author[0])  + '</h2>'
+  end
+  
+  def first_name_then_last(last_name_first)
+    if(last_name_first.index(","))
+      parts = last_name_first.split(",")
+      return parts[1].strip + " " + parts[0].strip
+    end
+  end
 
   # RSolr presumes one suggested word, this is a temporary fix
   def get_suggestions(spellcheck)
