@@ -98,12 +98,9 @@
 		<field name="genre_search" type="text" indexed="true" stored="true" multiValued="true"/>
 		<field name="abstract" type="string" indexed="true" stored="true"/>
 		<field name="handle" type="string" indexed="true" stored="true"/>
-		<field name="date" type="string" indexed="true" stored="true"/>
 		<field name="keyword_search" type="text" indexed="true" stored="true" multiValued="true"/>
 		<field name="author_search" type="text" indexed="true" stored="true" multiValued="true"/>
     <field name="author_id_uni" type="text" indexed="true" stored="true" multiValued="true"/>
-    <field name="author_id_naf" type="text" indexed="true" stored="true" multiValued="true"/>
-    <field name="author_id_repository" type="text" indexed="true" stored="true" multiValued="true"/>
     
 		<field name="title_search" type="text" indexed="true" stored="true"/>
 		<field name="title_display" type="string" indexed="true" stored="true"/>
@@ -136,7 +133,7 @@
             <field name="type_of_resource_facet" type="string" indexed="true" stored="true" multiValued="true" />
             <field name="media_type_facet" type="string" indexed="true" stored="true" multiValued="true" />
 
-  	<field name="affiliation_school" type="string" indexed="true" stored="true" multiValued="true" />
+  	<field name="affiliation_organization" type="string" indexed="true" stored="true" multiValued="true" />
 	<field name="affiliation_department" type="string" indexed="true" stored="true" multiValued="true" />
   
    <!-- Academic Commons Dynamic Fields -->
@@ -194,7 +191,7 @@
   <copyField source="subject_topic_facet" dest="subject_topic_unstem_search"/>
   
   <!-- sort fields -->
-  <copyField source="date" dest="pub_date_sort"/>
+  <copyField source="pub_date" dest="pub_date_sort"/>
   <copyField source="title_display" dest="title_sort"/>
   <copyField source="authors_display" dest="author_sort"/>
 
