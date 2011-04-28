@@ -5,36 +5,40 @@ class AdminController < ApplicationController
   layout "no_sidebar"
 
   def ingest
-    if params[:commit] == "Commit"
-      items, collections = [params[:items], params[:collections]].collect { |pids| pids.split(" ").collect { |pid| fedora_server.item(pid) }}
-      
-      solr_params = {:items => items, :format => "ac2", :collections => collections} 
 
-      solr_params[:fulltext] = params[:fulltext] == "1"
-      solr_params[:metadata] = params[:metadata] == "1"
-      solr_params[:overwrite] = params[:overwrite] == "1"
-      solr_params[:skip] = params[:skip] ? params[:skip].to_i : nil
-      solr_params[:process] = params[:process] ? params[:process].to_i : nil
-
-
-      @results = solr_server.ingest(solr_params)
-
-      if params[:overwrite] && params[:process]
-        params[:skip] = params[:skip].to_i + params[:process].to_i
-      end
-        
-      flash.now[:notice] = "Ingest successful."
-    end
-
-
+#    if params[:commit] == "Commit"
+#      items, collections = [params[:items], params[:collections]].collect { |pids| pids.split(" ").collect { |pid| fedora_server.item(pid) }}
+#      
+#      solr_params = {:items => items, :format => "ac2", :collections => collections} 
+#
+#      solr_params[:fulltext] = params[:fulltext] == "1"
+#      solr_params[:metadata] = params[:metadata] == "1"
+#      solr_params[:overwrite] = params[:overwrite] == "1"
+#      solr_params[:skip] = params[:skip] ? params[:skip].to_i : nil
+#      solr_params[:process] = params[:process] ? params[:process].to_i : nil
+#
+#
+#      @results = solr_server.ingest(solr_params)
+#
+#      if params[:overwrite] && params[:process]
+#        params[:skip] = params[:skip].to_i + params[:process].to_i
+#      end
+#        
+#      flash.now[:notice] = "Ingest successful."
+#    end
+#
+#
+#    
+#
+#    if params[:commit] == "Delete All"
+#      solr_server.delete_index
+#
+#      flash.now[:notice] = "Index deleted."
+#    end
     
-
-    if params[:commit] == "Delete All"
-      solr_server.delete_index
-
-      flash.now[:notice] = "Index deleted."
-    end
-
+    flash.now[:notice] = "Web Indexing Currently Disabled"
+  
+    
   end
 
 
