@@ -18,7 +18,8 @@ namespace :deploy do
 
   task :symlink_shared do
     run "ln -nfs #{deploy_to}shared/database.yml #{release_path}/config/database.yml"
-    run "ln -nfs #{deploy_to}shared/app_config.yml #{release_path}/config/app_config.yml"
+    run "ln -nfs #{deploy_to}shared/solr.yml #{release_path}/config/solr.yml"
+    run "ln -nfs #{deploy_to}shared/fedora.yml #{release_path}/config/fedora.yml"
   end
 
 end
