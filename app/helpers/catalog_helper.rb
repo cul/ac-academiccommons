@@ -174,10 +174,25 @@ module CatalogHelper
   end
 
   def thumbnail_for_resource(resource)
-    image_name = resource[:content_type]
-    image_name["/"] = "_"
-    image_name += ".png"
- 
+    extension = get_file_extension(resource[:filename])
+    thumbnail_folder_path = RAILS_ROOT + "/public/images/thumbnail_icons/"
+    if(!extension.nil? && !extension.empty?)
+      thumbnail_file_name = extension + ".png"
+    else
+      thumbnail_file_name = [:content_type]
+      thumbnail_file_name["/"] = "_"
+      thumbnail_file_name += ".png"
+    end
+    
+    if(!File.file?(thumbnail_folder_path + thumbnail_file_name))
+      thumbnail_file_name = "default.png"
+    end
+    
+    return thumbnail_file_name
+  end
+  
+  def get_file_extension(filename)
+    filename.to_s.split(".").last.strip
   end
 
   def base_id_for(doc)
