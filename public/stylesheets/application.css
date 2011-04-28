@@ -27,14 +27,14 @@ div.home-recent.first {
     -webkit-box-shadow: none;
      box-shadow:none;
 	text-align: right;
-	color: #9bcff9  ;
+	color: silver;
 	font: italic 3em/1em "Helvetica Neue", Arial, Helvetica, Geneva, sans-serif;
 	float: left;
 	width: 180px;
 	width: 180px;
 	height: 180px;
 	padding: 11px;
-	text-shadow: #34558b 2px 2px 2px;
+	text-shadow: #34558b 1px 1px 1px;
 }
 
 div#results-list-wrapper {
@@ -1840,6 +1840,7 @@ a.nav-link{
 #home-content {
 		background: rgba(255,255,255,.5);
 	margin-bottom: 1em;
+	margin-top: 1em;
 }
 
 #home-content-center {
