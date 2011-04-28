@@ -72,48 +72,35 @@ Blacklight.configure(:shared) do |config|
   # for human reading/writing, kind of like search_fields. Eg,
   # config[:facet] << {:field_name => "format", :label => "Format", :limit => 10}
   config[:facet] = {
-    :field_names => (facet_fields = [
-       "author_facet",
-       "genre_facet",
-       "keyword_facet",
-       "media_type_facet",
-       "type_of_resource_facet",
-      "format",
-      "pub_date",
-      "language_facet",
-      "lc_1letter_facet",
-      "subject",
-      "affiliation_department"
-    ]),
-    :labels => {
-      "author_facet"         => "Author",
-      "genre_facet"         => "Genre",
-      "keyword_facet"         => "Keyword",
-      "media_type_facet"         => "Media Type",
-      "type_of_resource_facet"         => "Type of Resource",
-      "format"              => "Format",
-      "pub_date"            => "Publication Year",
-      "subject" => "Subject",
-      "language_facet"      => "Language",
-      "lc_1letter_facet"    => "Call Number",
-      "affiliation_department" => "Department"
-    },
-    # Setting a limit will trigger Blacklight's 'more' facet values link.
-    # If left unset, then all facet values returned by solr will be displayed.
-    # nil key can be used for a default limit applying to all facets otherwise
-    # unspecified. 
-    # limit value is the actual number of items you want _displayed_,
-    # #solr_search_params will do the "add one" itself, if neccesary.
-    :limits => {
-     "author_facet"=>7,
-     "genre_facet"=>7,
-     "media_type_facet"=>7,
-      "subject" => 5,
-      "language_facet" => false,
-      "affiliation_department" => 5
+      :field_names => (facet_fields = [
+         "author_facet",
+         "affiliation_department",
+         "subject",
+         "genre_facet",
+         "pub_date"
+      ]),
+      :labels => {
+        "author_facet" => "Author",
+        "affiliation_department" => "Department",
+        "subject" => "Subject",
+        "genre_facet" => "Content Type",
+        "pub_date" => "Date"
+      },
+      # Setting a limit will trigger Blacklight's 'more' facet values link.
+      # If left unset, then all facet values returned by solr will be displayed.
+      # nil key can be used for a default limit applying to all facets otherwise
+      # unspecified.
+      # limit value is the actual number of items you want _displayed_,
+      # #solr_search_params will do the "add one" itself, if neccesary.
+      :limits => {
+       "author_facet"=>7,
+       "affiliation_department"=>7,
+       "subject"=>7,
+        "genre_facet" => 5,
+        "pub_date" => 5
+      }
+        
     }
-      
-  }
 
   # Have BL send all facet field names to Solr, which has been the default
   # previously. Simply remove these lines if you'd rather use Solr request
