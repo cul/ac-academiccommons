@@ -166,7 +166,6 @@ Blacklight.configure(:shared) do |config|
       "title_vern_display",
       "subtitle_display",
       "subtitle_vern_display",
-      "authors_display",
       "author_vern_display",
       "url_fulltext_display",
       "url_suppl_display",

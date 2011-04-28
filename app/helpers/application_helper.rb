@@ -19,7 +19,20 @@ module ApplicationHelper
   def render_document_heading
     '<h2>' + document_type[0] + ':</h2>'+
     '<h1>' + document_heading + '</h1>'+
-    '<h2 class="author_credit">' + first_name_then_last(document_author[0])  + '</h2>'
+    '<h2 class="author_credit">' + first_names_then_last(document_author[0])  + '</h2>'
+  end
+  
+  def first_names_then_last(last_names_first)
+    i = 0
+    html = ""
+    last_names_first.split(";").each do |last_name_first|
+      if(i > 0)
+        html << "; "
+      end
+      html << first_name_then_last(last_name_first.strip)
+      i += 1
+    end
+    return html
   end
   
   def first_name_then_last(last_name_first)
