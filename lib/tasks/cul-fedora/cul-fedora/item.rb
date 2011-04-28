@@ -245,7 +245,7 @@ module Cul
             if(departments.count > 0)
               departments = departments.uniq
               departments.each do |department|
-                add_field.call("affiliation_department", department)
+                add_field.call("affiliation_department", department.split(",").first.strip)
               end
             end
             
