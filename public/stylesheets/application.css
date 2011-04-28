@@ -196,7 +196,12 @@ a:link,  a:visited,   a:active {
 }
 
 h1.site_title {
-	 
+	
+}
+
+#header header h1.site_title a {
+	 width: 422px;
+	height: 80px;
 }
 header{
  
