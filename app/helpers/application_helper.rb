@@ -12,6 +12,9 @@ module ApplicationHelper
     'Academic Commons'
   end
 
+  def relative_root
+    Rails.configuration.action_controller[:relative_url_root] || ""
+  end
 
   # RSolr presumes one suggested word, this is a temporary fix
   def get_suggestions(spellcheck)
