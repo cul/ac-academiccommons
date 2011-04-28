@@ -7,12 +7,6 @@ elsif params[:id] == 'subjects'
 end
 
 %>
-
-<% sidebar_items << capture do %>
-  
-  <%#= render :partial=>'facets' %>
-
-<% end %>
-
+ 
 <%= render :partial=>params[:id] + "_list" %>
 

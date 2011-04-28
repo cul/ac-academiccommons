@@ -27,14 +27,14 @@ div.home-recent.first {
     -webkit-box-shadow: none;
      box-shadow:none;
 	text-align: right;
-	color: #78898f;
-	font: 3em/1.2em "Helvetica Neue", Arial, Helvetica, Geneva, sans-serif;
+	color: #9bcff9  ;
+	font: italic 3em/1em "Helvetica Neue", Arial, Helvetica, Geneva, sans-serif;
 	float: left;
 	width: 180px;
 	width: 180px;
 	height: 180px;
 	padding: 11px;
-
+	text-shadow: #34558b 2px 2px 2px;
 }
 
 div#results-list-wrapper {
@@ -75,9 +75,9 @@ li.home-recent {
 	width: 180px;
 	height: 180px;
 	padding: 11px;
-	border: 1px solid rgba(19,46,99,0.61);
+	border: 1px solid silver;
 	margin: 4px;
-	background: rgba(255,255,255,.5);
+	background: rgba(255,255,255,.75);
 	
 	  -moz-box-shadow: 3px 3px 3px rgba(0,0,0,.2);
   -webkit-box-shadow: 3px 3px 3px rgba(0,0,0,.2);
@@ -166,7 +166,7 @@ ul#recently-updated {
 
 #top-slug h2 {
 	text-transform: uppercase;
-	font: 1em/2em "Helvetica Neue", Arial, Helvetica, Geneva, sans-serif;
+	font-size: 1.2em;
 }
 
 
@@ -349,7 +349,7 @@ h1.content-title {
 }
 
 
-h2.content-title {
+h2.content-title, .browse-list h3 {
 	/*font: 2em Georgia, "Times New Roman", Times, serif;
 	
 	margin-top: .5em;
@@ -608,7 +608,7 @@ a.facet_deselect:hover{
 }
 
 a.facet_select{
-	background: url(../images/facet-toggle-ui.png) no-repeat -1px 20px;
+	/*background: url(../images/facet-toggle-ui.png) no-repeat -1px 20px;*/
 }
 
 #facets div ul li{
@@ -1527,7 +1527,6 @@ body {
 
 div.browse-list {
 	background: rgba(255,255,255,.5);
-	border-right: 1px solid silver;
 }
 
 div.browse-list a {
@@ -1828,13 +1827,76 @@ div.school.union{
 }
 
 #most-recent {
-		background: url('../images/bg-pattern-dots.gif');
-}
+	}
 
 a.nav-link{
 	display: block;
 	font-size: 1.25em;
 	font-weight: bold;
 	text-transform: uppercase;
+		text-shadow: #9bcff9 1px 1px 0;
 }
- 
+
+#home-content {
+		background: rgba(255,255,255,.5);
+	margin-bottom: 1em;
+}
+
+#home-content-center {
+	float:left; width:500px; margin-left:1em;
+	padding-top: 25px;
+}
+
+/* jQuery UI facet dialogs */
+.facet_extended_list {
+	text-align: left;
+}
+
+.facet_extended_list .facet_pagination {
+	text-align: right;
+}
+.facet_extended_list .facet_pagination .ui-state-active {
+	border:none;
+}
+.facet_extended_list .facet_pagination .prev_next_links {
+	float: left;
+}
+
+.facet_extended_list .top {
+	border-bottom:1px dotted #CCCCCC;
+	margin-bottom:10px;
+	padding-bottom:5px;
+}
+
+.facet_extended_list .bottom {
+	border-top:1px dotted #CCCCCC;
+	margin-top:10px;
+	padding-top:5px;
+}
+
+.pagination .prev_next_links .prev_link {
+	margin-right: 15px;
+}
+
+.facet_extended_list .prev_next_links .prev_page, .facet_extended_list .sort_options .az {
+  padding-right:10px;
+  margin-right:10px;
+  border-right:1px solid #CCCCCC;	
+}
+
+.facet_extended_list .prev_next_links .next_page, .facet_extended_list .sort_options .numeric {
+}
+
+.ui-state-active, .ui-widget-content .ui-state-active, .ui-widget-header .ui-state-active {  background: transparent;   }
+
+
+.ui-widget-header { border: 1px solid #4c84c6; background:#122D62;   color: #ffffff; font-weight: bold; }
+
+#browse h1.content-title a {
+	color: white;
+	
+}
+
+.browse-list h3 {
+	text-align: center;
+}
