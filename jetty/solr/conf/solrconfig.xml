@@ -72,7 +72,7 @@
           <str name="facet.field">language_facet</str>
           <str name="facet.field">pub_date</str>
 		  <str name="facet.field">subject</str>
-		  <str name="facet.field">affiliation_school</str>
+		  <str name="facet.field">affiliation_organization</str>
 		  <str name="facet.field">affiliation_department</str>
         </lst>
         <!-- query for single document to populate filter cache -->
@@ -97,7 +97,7 @@
           <str name="facet.field">media_type_facet</str>
           <str name="facet.field">type_of_resource_facet</str>
           <str name="facet.field">lc_1letter_facet</str>
-		  <str name="facet.field">affiliation_school</str>
+		  <str name="facet.field">affiliation_organization</str>
 		  <str name="facet.field">affiliation_department</str>
         </lst>
       </arr>
@@ -128,7 +128,7 @@
           <str name="facet.field">type_of_resource_facet</str>
           <str name="facet.field">lc_1letter_facet</str>
           <str name="facet.field">subject</str>
-		  <str name="facet.field">affiliation_school</str>
+		  <str name="facet.field">affiliation_organization</str>
 		  <str name="facet.field">affiliation_department</str>
         </lst>
         <!-- query for single document to populate filter cache -->
@@ -153,7 +153,7 @@
           <str name="facet.field">type_of_resource_facet</str>
           <str name="facet.field">lc_1letter_facet</str>
           <str name="facet.field">subject</str>
-		  <str name="facet.field">affiliation_school</str>
+		  <str name="facet.field">affiliation_organization</str>
 		  <str name="facet.field">affiliation_department</str>
         </lst>
       </arr>
@@ -239,8 +239,7 @@
         score,
         authors_display,
         author_vern_display, 
-        format, 
-        date,
+        format,
         keyword_facet,
         isbn_t, 
         language_facet, 
@@ -258,7 +257,7 @@
         url_fulltext_display,
         url_suppl_display,
         export_as_mla_citation_txt,
-		affiliation_school,
+		affiliation_organization,
 		affiliation_department
       </str>
      
@@ -277,7 +276,7 @@
       <str name="facet.field">media_type_facet</str>
       <str name="facet.field">type_of_resource_facet</str>
       <str name="facet.field">subject</str>
-	  <str name="facet.field">affiliation_school</str>
+	  <str name="facet.field">affiliation_organization</str>
 	  <str name="facet.field">affiliation_department</str>
       
       <str name="spellcheck">true</str>
@@ -322,7 +321,6 @@
         authors_display,
         author_vern_display, 
         format, 
-        date,
         keyword_facet,
         isbn_t, 
         language_facet, 
@@ -339,7 +337,7 @@
         subtitle_vern_display,
         url_fulltext_display,
         url_suppl_display,
-		affiliation_school,
+		affiliation_organization,
 		affiliation_department
       </str>
       
@@ -354,7 +352,7 @@
       <str name="facet.field">pub_date</str>
           <str name="facet.field">genre_facet</str>
       <str name="facet.field">subject</str>
-	  <str name="facet.field">affiliation_school</str>
+	  <str name="facet.field">affiliation_organization</str>
 	  <str name="facet.field">affiliation_department</str>
       
       <str name="spellcheck">true</str>
@@ -410,8 +408,7 @@
         score,
         authors_display,
         author_vern_display, 
-        format,	  
-        date,
+        format,
         keyword_facet,        
         isbn_t, 
         language_facet, 
@@ -428,7 +425,7 @@
         subtitle_vern_display,
         url_fulltext_display,
         url_suppl_display,
-		affiliation_school,
+		affiliation_organization,
 		affiliation_department
       </str>
       
@@ -443,7 +440,7 @@
       <str name="facet.field">pub_date</str>
           <str name="facet.field">genre_facet</str>
       <str name="facet.field">subject</str>
-	  <str name="facet.field">affiliation_school</str>
+	  <str name="facet.field">affiliation_organization</str>
 	  <str name="facet.field">affiliation_department</str>
       
       <str name="spellcheck">true</str>
@@ -491,8 +488,7 @@
         score,
         authors_display,
         author_vern_display, 
-        format, 
-        date,
+        format,
         keyword_facet,
         isbn_t, 
         language_facet, 
@@ -509,7 +505,7 @@
         subtitle_vern_display,
         url_fulltext_display,
         url_suppl_display,
-		affiliation_school,
+		affiliation_organization,
 		affiliation_department
       </str>
       
@@ -528,7 +524,7 @@
       <str name="facet.field">media_type_facet</str>
       <str name="facet.field">type_of_resource_facet</str>
       <str name="facet.field">subject</str>
-	  <str name="facet.field">affiliation_school</str>
+	  <str name="facet.field">affiliation_organization</str>
 	  <str name="facet.field">affiliation_department</str>
       
       <str name="spellcheck">true</str>

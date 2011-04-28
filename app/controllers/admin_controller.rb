@@ -30,8 +30,7 @@ class AdminController < ApplicationController
     
 
     if params[:commit] == "Delete All"
-      Blacklight.solr.delete_by_query("*:*")
-      Blacklight.solr.commit
+      solr_server.delete_index
 
       flash.now[:notice] = "Index deleted."
     end

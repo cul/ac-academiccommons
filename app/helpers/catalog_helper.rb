@@ -5,17 +5,17 @@ module CatalogHelper
   end
 
   def get_total_count
-    query_params = {:qt=>"standard", :q=>"timestamp:[* TO NOW]"}
+    query_params = {:qt=>"standard", :q=>"*:*"}
     return get_count(query_params)
   end
 
   def get_count_by_year
-    query_params = {:qt=>"standard", :q=>"timestamp:[NOW-1YEAR TO NOW]"}      
+    query_params = {:qt=>"standard", :q=>"record_creation_date:[NOW-1YEAR TO NOW]"}      
     return get_count(query_params)
   end
 
   def get_count_by_month
-    query_params = {:qt=>"standard", :q=>"timestamp:[NOW-1MONTH TO NOW]"}      
+    query_params = {:qt=>"standard", :q=>"record_creation_date:[NOW-1MONTH TO NOW]"}      
     return get_count(query_params)
   end
 
@@ -25,7 +25,7 @@ module CatalogHelper
   end
 
   def build_recent_updated_list()
-    query_params = {:q => "", :fl => "title_display, id, author_facet, author_id_uni, timestamp", :sort => "timestamp desc", :rows => 100}
+    query_params = {:q => "", :fl => "title_display, id, author_facet, record_creation_date", :sort => "record_creation_date desc", :start => 0, :rows => 100}
     included_authors = []
     results = []
     return build_distinct_authors_list(query_params, included_authors, results)
@@ -38,7 +38,7 @@ module CatalogHelper
       return results
     end
     items.sort! do  |x,y|     
-      y["timestamp"]<=>x["timestamp"]
+      y["record_creation_date"]<=>x["record_creation_date"]
     end
     items.each do |r|
       new = true
@@ -59,7 +59,7 @@ module CatalogHelper
       end
     end
     if(results.length < Blacklight.config[:max_most_recent])
-      query_params[:start] = start + 100
+      query_params[:start] = query_params[:start] + 100
       build_distinct_authors_list(query_params, included_authors, results)
     else
       return results
@@ -137,7 +137,7 @@ module CatalogHelper
     facet_fields = solr_results.facet_counts["facet_fields"]
     
     facet_fields.each do |key, value|
-      if(key != "affiliation_department" && key != "affiliation_school")
+      if(key != "affiliation_department" && key != "affiliation_organization")
         facet_field_values = []
         facet_field_value = {}
         value.each do |item|
