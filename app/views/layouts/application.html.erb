@@ -27,9 +27,9 @@
     <%= render_head_content %>
     
     <%= stylesheet_link_tag "blueprint/screen", :media => "screen,projection"  %>
-    <%#= stylesheet_link_tag "application", :media => "screen,projection" %>
+    <%= stylesheet_link_tag "application", :media => "screen,projection" %>
   
-   <link href="/stylesheets/application.css" media="screen,projection" rel="stylesheet" type="text/css" />
+  <!--  <link href="/stylesheets/application.css" media="screen,projection" rel="stylesheet" type="text/css" /> -->
   <!-- will revert link to native function when done editing stylesheets -->
         
     <% javascript_tag do -%>
@@ -117,16 +117,12 @@
  
 	
 	<% end %>
+    <%= yield %>
 	
-	
-	
-	
-		
-		<%= yield %>
 	</div>
           
  
-<footer class="span-24 append-bottom">
+	<footer class="span-24 append-bottom">
 	
 	<div id="footer"> 
 	
