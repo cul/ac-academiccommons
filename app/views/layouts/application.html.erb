@@ -17,8 +17,7 @@
 <!--  <link rel="shortcut icon" href="/favicon.ico"> -->
 
 <!--  <link rel="apple-touch-icon" href="/apple-touch-icon.png"> -->
-    
-  
+
 <link href="<%= url_for :controller=>'catalog',:action => 'opensearch', :format => 'xml', :only_path => false %>" title="<%= application_name%>" type="application/opensearchdescription+xml" rel="search"/>
     <%#= stylesheet_link_tag 'compiled/screen.css', :media => 'screen, projection' %>
     <%#= stylesheet_link_tag 'compiled/print.css', :media => "print" %>
@@ -28,7 +27,7 @@
     
     <%= stylesheet_link_tag "blueprint/screen", :media => "screen,projection"  %>
     <%#= stylesheet_link_tag "application", :media => "screen,projection" %>
-  
+   <link href="<%= relative_root %>/images/favicon-crown.png" media="screen,projection" rel="shortcut icon" type="text/css" />
    <link href="<%= relative_root %>/stylesheets/application.css" media="screen,projection" rel="stylesheet" type="text/css" />
   <!-- will revert link to native function when done editing stylesheets -->
         
