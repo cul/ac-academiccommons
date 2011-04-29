@@ -27,14 +27,14 @@ div.home-recent.first {
     -webkit-box-shadow: none;
      box-shadow:none;
 	text-align: right;
-	color: #bababa;
+	color: #888;
 	font: italic 3em/1em "Helvetica Neue", Arial, Helvetica, Geneva, sans-serif;
 	float: left;
 	width: 180px;
 	width: 180px;
 	height: 180px;
 	padding: 11px;
-	text-shadow: #747474 1px 1px 0;
+	text-shadow: #e0e0e0 1px 1px 0;
 }
 
 div#results-list-wrapper {
@@ -371,7 +371,7 @@ h2.content-title, .browse-list h3 {
     color: #333;
  
     
-    text-shadow: #d0d0d0 2px 2px 0;
+  
 	text-transform: uppercase;
 	letter-spacing: .2em;
 	 
