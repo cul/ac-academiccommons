@@ -22,8 +22,9 @@
         
                 
         
-           		 
-    		 <%- if page_location == "search_results" -%>
+         <!--
+  		 
+    		 <%#- if page_location == "search_results" -%>
     		 
     			
     		    <span id="split_button" style="display:none;">
@@ -42,9 +43,9 @@
 
   		<div class="drop_down" style="display:none;">
   			<ul>
-  				<%- search_fields.each do |key,value| -%>
-  				  <li class="<%= value %>"><a href=""><%= key %></a></li>
-  				<%- end -%>
+  				<#%- search_fields.each do |key,value| -%>
+  				  <li class="<%#= value %>"><a href=""><%#= key %></a></li>
+  				<#%- end -%>
   		  </ul>
   	  </div>
   	</span>
@@ -70,17 +71,18 @@
 </script>
 
     		 
-    		 <% end %>
+    		 <%# end %>
      		  		
+-->
     		  		
     		  		
-    		  		<% if page_location == "home" || page_location == "browse_view" %>
+    		  		<%# if page_location == "home" || page_location == "browse_view" %>
     		  		
     		  		
     		  		
-    		    <span id="split_button" style="display:none;">
+    	<span id="split_button" style="display:none;">
   	    <div class="button_set">
-  	    <button id="select">select</button>
+  	    <!-- <button id="select">select</button> -->
     	<button id="run">
     		
     			  Search
@@ -92,19 +94,21 @@
     		 
 
 
-  		<div class="drop_down" style="display:none;">
+  		<!--
+<div class="drop_down" style="display:none;">
   			<ul>
   				<%- search_fields.each do |key,value| -%>
   				  <li class="<%= value %>"><a href=""><%= key %></a></li>
   				<%- end -%>
   		  </ul>
   	  </div>
+-->
   	</span>
-<%= hidden_field_tag(:hidden_search_field,  localized_params[:search_field]) %>
+<%#= hidden_field_tag(:hidden_search_field,  localized_params[:search_field]) %>
 	
       
     
-      <hr/>
+   
     </div>
  
  
@@ -116,8 +120,9 @@
 		.click( function() {
 			$("#search form").trigger("submit");
 			return false;
-		})
-	.prev()
+		});
+	/*
+.prev()
 		.button( {
 			text: false,
 			icons: {
@@ -130,9 +135,10 @@
 		})
 	.parent()
 		.buttonset();
+*/
 	});
 </script>
  
- <%end%>
+ <%#end%>
 
 <% end %>

@@ -88,7 +88,7 @@ $('div.left-column ul').each(function(){
     function positionDialog(dialog) {
       dialog = $(dialog);
       
-      dialog.dialog("option", "height", $(window).height()-125);
+    /*   dialog.dialog("option", "height", $(window).height()-125); */
       dialog.dialog("option", "width", Math.max(  ($(window).width() /2), 45));
       dialog.dialog("option", "position", ['center', 75]);
       

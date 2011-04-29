@@ -18,6 +18,12 @@
 <%# this should be in a partial -%>
 <div id="document">
   <div id="doc_<%= @document[:id] %>">
+       <div class="documentFunctions">
+         <%= render :partial => 'show_tools' %>
+          <%= render :partial=>'bookmark_control', :locals=>{:document=>@document} %>
+          <%= render :partial=>'folder_control', :locals=>{:document=>@document, :display => "button"} %>
+        </div>
+  
     <%= render_document_heading %>
     <div class="document">
       <%= render_document_partial @document, :show %>

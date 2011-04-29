@@ -1,15 +1,8 @@
 <%# default partial to display solr document fields in catalog show view -%>
  
-<!--
-     <div class="documentFunctions">
-         <%#= render :partial => 'show_tools' %>
-          <%#= render :partial=>'bookmark_control', :locals=>{:document=>document} %>
-          <%#= render :partial=>'folder_control', :locals=>{:document=>document, :display => "button"} %>
-        </div>
--->
-<%= render :partial => "catalog/_show_partials/display_resources", :locals => {:document => document} %>
 
-<div style="clear:both;">
+
+<div class="clearfix">
   <dl class="defList">
     <% document_show_fields.each do |solr_fname| -%>
       <% if document[solr_fname] %>
@@ -35,6 +28,12 @@
 
   <%= render :partial => "catalog/_show_partials/statistics" %>
 
+<div class="item-column">
+
+<%= render :partial => "catalog/_show_partials/display_resources", :locals => {:document => document} %>
+
+</div>
+<div class="item-column">
 
   <h3> Metadata:</h3>
     <dl class="defList">
@@ -49,6 +48,8 @@
     <% end -%>
 
   </dl>
+  
+  </div>
     
 <!--   <div class="license">This work is licensed under a <%= link_to "Creative Commons License", "http://creativecommons.org/licenses/by-nc-sa/3.0/us/" %></div> -->
 </div>
