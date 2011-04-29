@@ -124,7 +124,7 @@ Blacklight.configure(:shared) do |config|
     ],
     :labels => {
       "authors_display"         => "Author(s):",
-      "date"                    => "Date:",
+      "pub_date"                    => "Date:",
       "subject"                 => "Subject:",
       "genre_facet"             => "Type:",
       "language_facet"          => "Language:",
