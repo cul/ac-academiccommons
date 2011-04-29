@@ -17,7 +17,7 @@ module ApplicationHelper
   end
   
   def render_document_heading
-    '<h2>' + document_type[0] + ':</h2>'+
+    '<h2>' + (document_type || []).first + ':</h2>'+
     '<h1>' + document_heading + '</h1>'+
     '<h2 class="author_credit">' + first_names_then_last(document_author[0])  + '</h2>'
   end
