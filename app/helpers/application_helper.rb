@@ -42,6 +42,10 @@ module ApplicationHelper
     end
   end
 
+  def clean_search_value(value)
+    value.gsub(" ", "+").gsub(",", "%2C")
+  end
+  
   # RSolr presumes one suggested word, this is a temporary fix
   def get_suggestions(spellcheck)
     words = []

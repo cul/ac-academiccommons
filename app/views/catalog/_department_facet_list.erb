@@ -23,9 +23,10 @@ subject_facets = department_facet_list['subject']
     
 <%=    
  
- 
+ puts params[:id].inspect
+   puts v[:name].inspect
 
-link_to(v[:name],   relative_root+'/?f%5Baffiliation_department%5D%5B%5D='+params[:id]+'&f%5Bauthor_facet%5D%5B%5D='+v[:name], :class=>"broswe_select")%>  <span class='item_count'> ( <%= format_num(v[:count]) %> )</span>  
+link_to(v[:name],   relative_root+'/?f[affiliation_department][]=' + clean_search_value(params[:id]) + '&f[author_facet][]=' + clean_search_value(v[:name]), :class=>"broswe_select")%>  <span class='item_count'> ( <%= format_num(v[:count]) %> )</span>  
 	       
   </li>
   
@@ -44,7 +45,7 @@ link_to(v[:name],   relative_root+'/?f%5Baffiliation_department%5D%5B%5D='+param
     
 <%=    
  
-link_to(v[:name],    relative_root+'/?f%5Baffiliation_department%5D%5B%5D='+params[:id]+'&f%5Bgenre_facet%5D%5B%5D='+v[:name], :class=>"broswe_select")%> <span class='item_count'> ( <%= format_num(v[:count])%>)</span> 
+link_to(v[:name],    relative_root+'/?f[affiliation_department][]=' + clean_search_value(params[:id]) + '&f[genre_facet][]=' + clean_search_value(v[:name]), :class=>"broswe_select")%> <span class='item_count'> ( <%= format_num(v[:count])%>)</span> 
  
   </li>
   
@@ -63,7 +64,7 @@ link_to(v[:name],    relative_root+'/?f%5Baffiliation_department%5D%5B%5D='+para
     
 <%=    
  
-link_to(v[:name],   relative_root + '/?f%5Baffiliation_department%5D%5B%5D='+params[:id]+'&f%5Bsubject%5D%5B%5D='+v[:name], :class=>"broswe_select")%> <span class='item_count'> (<%= format_num(v[:count]) %> )</span> 
+link_to(v[:name],   relative_root + '/?f[affiliation_department][]=' + clean_search_value(params[:id]) + '&f[subject][]=' + clean_search_value(v[:name]), :class=>"broswe_select")%> <span class='item_count'> (<%= format_num(v[:count]) %> )</span> 
  
   </li>
   

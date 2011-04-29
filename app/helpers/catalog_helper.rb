@@ -132,7 +132,7 @@ module CatalogHelper
  
   def get_department_facet_list(department)
     results = {}
-    query_params = {:q=>"", :'q.alt'=>"affiliation_department:" + department, :rows=>"0", "facet.limit"=>-1}
+    query_params = {:q=>"", :'fq'=>"affiliation_department:\"" + department + "\"", :rows=>"0", "facet.limit"=>-1}
     solr_results = Blacklight.solr.find(query_params)
     facet_fields = solr_results.facet_counts["facet_fields"]
     
@@ -157,7 +157,7 @@ module CatalogHelper
   
   def get_subjects_list
     results = []
-    query_params = {:q=>"", :rows=>"0"}
+    query_params = {:q=>"", :rows=>"0", "facet.limit"=>-1}
     solr_results = Blacklight.solr.find(query_params)
     subjects = solr_results.facet_counts["facet_fields"]["subject"]
     res = {}
