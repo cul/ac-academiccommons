@@ -113,7 +113,7 @@ Blacklight.configure(:shared) do |config|
   config[:index_fields] = {
     :field_names => [
       "authors_display",
-      "date",
+      "pub_date",
       "subject",
       "genre_facet",
       "language_facet",
