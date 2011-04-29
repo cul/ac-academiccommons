@@ -141,7 +141,7 @@ Blacklight.configure(:shared) do |config|
     :field_names => [
       "title_display",
       "authors_display",
-      "date",
+      "pub_date",
       "genre_facet",
       "handle",
       "book_journal_title",
@@ -180,7 +180,7 @@ Blacklight.configure(:shared) do |config|
     :labels => {
       "title_display"           => "Title:",
       "authors_display"          => "Author(s):",
-      "date"			 => "Date:",
+      "pub_date"			 => "Date:",
       "genre_facet"		 => "Type:",
       "handle"			  => "Handle:",
       "book_journal_title"	  => "Book/Journal Title:",

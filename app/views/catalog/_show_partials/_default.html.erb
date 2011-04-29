@@ -39,7 +39,9 @@
     <% get_metadata_list(document).each do |resource| -%>
       <dt><%= resource[:title] %></dt>
       <dd>
-      <%= link_to "View", resource[:show_url] if resource[:show_url] %> |
+ 
+      <%= link_to "View", resource[:show_url] if resource[:show_url] %> | 
+ 
       <%= link_to "Download", resource[:download_url] if resource[:download_url] %> 
       </dd>
     <% end -%>

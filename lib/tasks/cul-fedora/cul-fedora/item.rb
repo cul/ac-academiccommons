@@ -166,7 +166,7 @@ module Cul
             
             mods.css("name[@type='corporate']").each do |corp_name_node|
               if(!corp_name_node["ID"].nil? && corp_name_node["ID"].include?("originator"))
-                name_part = corp_name_node.at_css("namePart")
+                name_part = corp_name_node.at_css("namePart").text
                 if(name_part.include?(". "))
                   name_part_split = name_part.split(". ")
                   organizations.push(name_part_split[0].strip)
@@ -245,7 +245,7 @@ module Cul
             if(departments.count > 0)
               departments = departments.uniq
               departments.each do |department|
-                add_field.call("affiliation_department", department)
+                add_field.call("affiliation_department", department.to_s.sub(", Department of", "").strip)
               end
             end
             
