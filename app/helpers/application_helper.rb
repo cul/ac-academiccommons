@@ -17,9 +17,12 @@ module ApplicationHelper
   end
   
   def render_document_heading
-    '<h2>' + document_type[0] + ':</h2>'+
-    '<h1>' + document_heading + '</h1>'+
-    '<h2 class="author_credit">' + first_names_then_last(document_author[0])  + '</h2>'
+    heading = ""
+    if(!document_type.nil?)
+      heading += '<h2>' + document_type[0] + ':</h2>'
+    end
+    heading += '<h1>' + (document_heading || "") + '</h1>'
+    heading += '<h2 class="author_credit">' + first_names_then_last(document_author[0] || "")  + '</h2>'
   end
   
   def first_names_then_last(last_names_first)
