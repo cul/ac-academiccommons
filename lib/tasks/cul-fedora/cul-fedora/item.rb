@@ -103,7 +103,8 @@ module Cul
 
         get_fullname = lambda { |node| node.nil? ? nil : (node.css("namePart[@type='family']").collect(&:content) | node.css("namePart[@type='given']").collect(&:content)).join(", ") }
 
-        roles = ["Author","author","Creator","Thesis Advisor","Collector","Owner","Speaker","Seminar Chairman","Secretary","Rapporteur","Committee Member","Degree Grantor","Moderator","Editor","Interviewee","Interviewer","Organizer of Meeting","Originator","Teacher"]
+        roles = ["Author","Creator","Thesis Advisor","Collector","Owner","Speaker","Seminar Chairman","Secretary","Rapporteur","Committee Member","Degree Grantor","Moderator","Editor","Interviewee","Interviewer","Organizer of Meeting","Originator","Teacher"]
+	roles = roles.map { |role| role.downcase }
 
         organizations = []
         departments = []
@@ -141,7 +142,7 @@ module Cul
 
             all_names = []
             mods.css("name[@type='personal']").each do |name_node|
-              if name_node.css("role>roleTerm[@type='text']").collect(&:content).any? { |role| roles.include?(role) }
+              if name_node.css("role>roleTerm").collect(&:content).any? { |role| roles.include?(role) }
 
                 fullname = get_fullname.call(name_node)
 
