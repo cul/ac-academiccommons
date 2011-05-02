@@ -3,10 +3,8 @@ require File.expand_path(File.dirname(__FILE__) + '../../../config/initializers/
 
 namespace :ac do
   
-  require 'cul-fedora'
-  
   desc "Runs a re-index of particular item(s) and/or collection(s)"
-  task :reindex, [:environment, :collections, :items, :fulltext] do |t, args|
+  task :reindex, [:environment, :collections, :items, :fulltext] => :environment do |t, args|
     
     $stdout.puts "environment: " + (args[:environment] || "")
     $stdout.puts "collections: " + (args[:collections] || "")
