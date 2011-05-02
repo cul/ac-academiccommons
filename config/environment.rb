@@ -8,13 +8,12 @@ RELEASE_STAMP = '0.3.0'
 require File.join(File.dirname(__FILE__), 'boot')
 require File.join(File.dirname(__FILE__), '../vendor/plugins/blacklight/vendor/plugins/engines/boot')
 require "james_monkeys"
-require "gchart"
 
 Rails::Initializer.run do |config|
   config.plugin_paths += ["#{RAILS_ROOT}/vendor/plugins/blacklight/vendor/plugins"]
   config.gem 'authlogic', :version => '2.1.2'
   config.gem 'authlogic_wind', :version => '>= 0.4.0'
-  config.gem 'googlecharts', :lib => "gchart"
+  config.gem 'googlecharts'
   config.gem 'cul-fedora', :version => '>= 0.8.0'
   config.gem 'haml'
   config.gem 'compass', :version => '>= 0.10.5'
