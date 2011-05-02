@@ -1,9 +1,9 @@
 require File.expand_path(File.dirname(__FILE__) + '../../../lib/james_monkeys.rb')
 require File.expand_path(File.dirname(__FILE__) + '../../../config/initializers/load_configs.rb')
 
-require 'cul-fedora'
-
 namespace :ac do
+  
+  require 'cul-fedora'
   
   desc "Runs a re-index of particular item(s) and/or collection(s)"
   task :reindex, [:environment, :collections, :items, :fulltext] do |t, args|
