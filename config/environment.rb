@@ -11,6 +11,8 @@ require "james_monkeys"
 
 Rails::Initializer.run do |config|
   config.plugin_paths += ["#{RAILS_ROOT}/vendor/plugins/blacklight/vendor/plugins"]
+  config.gem "rsolr", :version => '=0.12.1'
+  config.gem "rsolr-ext", :version => '=0.12.1'
   config.gem 'authlogic', :version => '2.1.2'
   config.gem 'authlogic_wind', :version => '>= 0.4.0'
   config.gem 'googlecharts'
@@ -20,8 +22,6 @@ Rails::Initializer.run do |config|
   config.gem 'httpclient'
   config.gem 'nokogiri'
   config.gem 'net-ldap', :version => '>=0.1.1'
-  config.gem "rsolr", :version => '=0.12.1'
-  config.gem "rsolr-ext", :version => '=0.12.1'
   config.gem "json"
   
   # Settings in config/environments/* take precedence over those specified here.
