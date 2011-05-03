@@ -4,16 +4,16 @@ require File.expand_path(File.dirname(__FILE__) + '../../../config/initializers/
 namespace :ac do
   
   desc "Runs a re-index of particular item(s) and/or collection(s)"
-  task :reindex, [:environment, :collections, :items, :fulltext] => :environment do |t, args|
+  task :reindex, [:collections, :items, :fulltext] => :environment do |t, args|
     
-    $stdout.puts "environment: " + (args[:environment] || "")
+    $stdout.puts "environment: " + (RAILS_ENV || "")
     $stdout.puts "collections: " + (args[:collections] || "")
     $stdout.puts "items: " + (args[:items] || "")
     $stdout.puts "fulltext?: " + (args[:fulltext] || "")
     
     solr_configs = YAML::load(File.open("#{RAILS_ROOT}/config/solr.yml"))
     solr_config = {}
-    solr_config[:url] = solr_configs[args[:environment]]['url']
+    solr_config[:url] = solr_configs[RAILS_ENV]['url']
     
     fedora_server = Cul::Fedora::Server.new(FEDORA_CONFIG)
     solr_server = Cul::Fedora::Solr.new(solr_config)
