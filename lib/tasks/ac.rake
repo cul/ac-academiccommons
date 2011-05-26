@@ -4,7 +4,7 @@ require File.expand_path(File.dirname(__FILE__) + '../../../config/initializers/
 namespace :ac do
   
   desc "Runs a re-index of particular item(s) and/or collection(s)"
-  task :reindex, [:collections, :items, :fulltext] => :environment do |t, args|
+  task :reindex, [:collections, :items, :fulltext, :delete_removed] => :environment do |t, args|
     
     $stdout.puts "environment: " + (RAILS_ENV || "")
     $stdout.puts "collections: " + (args[:collections] || "")
@@ -34,7 +34,7 @@ namespace :ac do
     ignore = []
     ignore_file.each_line { |line| ignore.push line.strip }
 
-    solr_params = {:items => items, :format => "ac2", :collections => collections, :ignore => ignore, :fulltext => args[:fulltext] || false, :metadata => true, :overwrite => true, :skip => nil, :process => nil}
+    solr_params = {:items => items, :format => "ac2", :fedora_server => fedora_server, :collections => collections, :ignore => ignore, :fulltext => args[:fulltext] || false, :metadata => true, :delete_removed => args[:delete_removed] || true, :overwrite => true, :skip => nil, :process => nil}
     results = solr_server.ingest(solr_params)
     
     $stdout.puts results.inspect

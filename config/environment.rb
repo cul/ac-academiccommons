@@ -16,7 +16,7 @@ Rails::Initializer.run do |config|
   config.gem 'authlogic', :version => '2.1.2'
   config.gem 'authlogic_wind', :version => '>= 0.4.0'
   config.gem 'googlecharts'
-  config.gem 'cul-fedora', :version => '>= 0.8.0'
+  config.gem 'cul-fedora', :version => '>= 0.8.1'
   config.gem 'haml'
   config.gem 'compass', :version => '>= 0.10.5'
   config.gem 'httpclient'

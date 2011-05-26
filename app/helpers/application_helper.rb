@@ -44,10 +44,6 @@ module ApplicationHelper
       return parts[1].strip + " " + parts[0].strip
     end
   end
-
-  def clean_search_value(value)
-    value.gsub(" ", "+").gsub(",", "%2C")
-  end
   
   # RSolr presumes one suggested word, this is a temporary fix
   def get_suggestions(spellcheck)
@@ -122,7 +118,6 @@ def render_meta_as_links()
 
 
 end
-
 
  
   def page_location

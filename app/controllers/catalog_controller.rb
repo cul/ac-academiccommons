@@ -3,6 +3,7 @@ class CatalogController < ApplicationController
   unloadable
   # before_filter :require_user
   before_filter :redirect_browse
+  before_filter :url_decode_f
 
   
   def browse
@@ -26,6 +27,18 @@ class CatalogController < ApplicationController
       redirect_to :action => 'browse', :id => 'subjects'
     end
     
+  end
+  
+  def url_decode_f
+    if(params && params[:f])
+      params[:f].each do |name, value|
+        i = 0
+        value.each do |each_value|
+          params[:f][name][i] = @template.url_decode_resource(each_value)
+          i = i + 1
+        end
+      end
+    end
   end
   
   private

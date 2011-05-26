@@ -20,7 +20,7 @@
    <div class='span-7 browse-list'>
     <ul>
     <% group.each do |v| %>
-      <li> <%= link_to( v[:name], catalog_index_path()+'/browse/departments/'+v[:name] ) %> (<%= v[:count] %>)  </li>
+      <li> <%= link_to( v[:name], catalog_index_path()+'/browse/departments/' + url_encode_resource(v[:name]) ) %> (<%= v[:count] %>)  </li>
     <% end %>
     </ul>
     </div>

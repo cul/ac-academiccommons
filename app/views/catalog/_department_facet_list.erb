@@ -1,3 +1,5 @@
+<% params[:id] = url_decode_resource(params[:id]) %>
+
 <h1 class="content-title">Browsing: <%=  link_to('Departments',catalog_index_path()+'/browse/departments/')%> &raquo; <%= link_to(params[:id], catalog_index_path()+'/browse/departments/'+params[:id]) %></h1>
 
 <%
@@ -26,7 +28,7 @@ subject_facets = department_facet_list['subject']
  puts params[:id].inspect
    puts v[:name].inspect
 
-link_to(v[:name],   relative_root+'/?f[affiliation_department][]=' + clean_search_value(params[:id]) + '&f[author_facet][]=' + clean_search_value(v[:name]), :class=>"broswe_select")%>  <span class='item_count'> ( <%= format_num(v[:count]) %> )</span>  
+link_to(v[:name],   relative_root+'/?f[affiliation_department][]=' + url_encode_resource(params[:id]) + '&f[author_facet][]=' + url_encode_resource(v[:name]), :class=>"broswe_select")%>  <span class='item_count'> ( <%= format_num(v[:count]) %> )</span>  
 	       
   </li>
   
@@ -45,7 +47,7 @@ link_to(v[:name],   relative_root+'/?f[affiliation_department][]=' + clean_searc
     
 <%=    
  
-link_to(v[:name],    relative_root+'/?f[affiliation_department][]=' + clean_search_value(params[:id]) + '&f[genre_facet][]=' + clean_search_value(v[:name]), :class=>"broswe_select")%> <span class='item_count'> ( <%= format_num(v[:count])%>)</span> 
+link_to(v[:name],    relative_root+'/?f[affiliation_department][]=' + url_encode_resource(params[:id]) + '&f[genre_facet][]=' + url_encode_resource(v[:name]), :class=>"broswe_select")%> <span class='item_count'> ( <%= format_num(v[:count])%>)</span> 
  
   </li>
   
@@ -64,7 +66,7 @@ link_to(v[:name],    relative_root+'/?f[affiliation_department][]=' + clean_sear
     
 <%=    
  
-link_to(v[:name],   relative_root + '/?f[affiliation_department][]=' + clean_search_value(params[:id]) + '&f[subject][]=' + clean_search_value(v[:name]), :class=>"broswe_select")%> <span class='item_count'> (<%= format_num(v[:count]) %> )</span> 
+link_to(v[:name],   relative_root + '/?f[affiliation_department][]=' + url_encode_resource(params[:id]) + '&f[subject][]=' + url_encode_resource(v[:name]), :class=>"broswe_select")%> <span class='item_count'> (<%= format_num(v[:count]) %> )</span> 
  
   </li>
   

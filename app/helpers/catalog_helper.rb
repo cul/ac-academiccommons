@@ -31,6 +31,15 @@ module CatalogHelper
     return build_distinct_authors_list(query_params, included_authors, results)
   end
 
+  def url_encode_resource(name)
+    name = CGI::escape(name).gsub(/%2f/i, '%252F')
+  end
+  
+  def url_decode_resource(name)
+    name = name.gsub(/%252f/i, '%2F')
+    name = CGI::unescape(name)
+  end
+
   def build_distinct_authors_list(query_params, included_authors, results)
     updated = Blacklight.solr.find(query_params)
     items = updated["response"]["docs"]
@@ -248,4 +257,5 @@ module CatalogHelper
   def resolve_fedora_uri(uri)
     FEDORA_CONFIG[:riurl] + "/get" + uri.gsub(/info\:fedora/,"")
   end
+  
 end
