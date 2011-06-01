@@ -67,13 +67,14 @@ class AdminController < ApplicationController
 #      flash.now[:notice] = "Index deleted."
 #    end
 
-    if(params[:cancel])
+    if(!params[:cancel].nil?)
       # we just want to make sure that we're going to actually kill a pid that is an ac reindex
       if(`ps -p #{params[:cancel]}`.to_s.include?("ac:reindex"))
         get_pid_children(params[:cancel]).each do |child|
           `kill -9 #{child}`
         end
         `kill -9 #{params[:cancel]}`
+        File.delete("#{Rails.root}/tmp/#{params[:cancel]}.index.pid")
         flash.now[:notice] = "Ingest has been cancelled"
         end
     end
@@ -100,7 +101,7 @@ class AdminController < ApplicationController
       collections = params[:collections] ? params[:collections].sub(" ", ";") : ""
       items = params[:items] ? params[:items].sub(" ", ";") : ""
 
-      cmd = "rake ac:reindex[\"#{collections}\",\"#{items}\",#{params[:overwrite]},#{params[:metadata]},#{params[:fulltext] || 0},#{params[:delete_removed]}] RAILS_ENV=#{RAILS_ENV} 2>&1 >> #{Rails.root}/log/indexing/reindex_#{time_id}.log"
+      cmd = "rake ac:reindex[\"#{collections}\",\"#{items}\",#{params[:overwrite]},#{params[:metadata]},#{params[:fulltext]},#{params[:delete_removed]}] RAILS_ENV=#{RAILS_ENV} 2>&1 >> #{Rails.root}/log/indexing/reindex_#{time_id}.log"
       puts "Executing #{cmd}"
       @existing_ingest_pid = exec_background(cmd).to_s
       @existing_ingest_time_id = time_id.to_s
