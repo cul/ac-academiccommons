@@ -100,7 +100,7 @@ class AdminController < ApplicationController
       collections = params[:collections] ? params[:collections].sub(" ", ";") : ""
       items = params[:items] ? params[:items].sub(" ", ";") : ""
 
-      cmd = "rake ac:reindex[\"#{collections}\",\"#{items}\",#{params[:overwrite]},#{params[:metadata]},#{params[:fulltext] || 0},#{params[:delete_removed]}] 2>&1 >> #{Rails.root}/log/indexing/reindex_#{time_id}.log"
+      cmd = "rake ac:reindex[\"#{collections}\",\"#{items}\",#{params[:overwrite]},#{params[:metadata]},#{params[:fulltext] || 0},#{params[:delete_removed]}] RAILS_ENV=#{RAILS_ENV} 2>&1 >> #{Rails.root}/log/indexing/reindex_#{time_id}.log"
       puts "Executing #{cmd}"
       @existing_ingest_pid = exec_background(cmd).to_s
       @existing_ingest_time_id = time_id.to_s

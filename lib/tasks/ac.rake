@@ -54,12 +54,12 @@ namespace :ac do
     end
 
     solr_params = {:items => items, :format => "ac2", :fedora_server => fedora_server, :collections => collections, :fulltext => fulltext, :metadata => metadata, :delete_removed => delete_removed, :overwrite => overwrite, :ignore => ignore, :skip => nil, :process => nil}
-    #results = solr_server.ingest(solr_params)
+    results = solr_server.ingest(solr_params)
     
     # Let's just do a final commit to ensure everything gets pushed
     solr_server.rsolr.commit
     
-    #$stdout.puts results.inspect
+    $stdout.puts results.inspect
     
   end
   
