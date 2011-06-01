@@ -5,7 +5,7 @@ require 'capistrano/ext/multistage'
 default_run_options[:pty] = true
 
 set :scm, :git
-set :repository,  "git@github.com:tastyhat/cul-blacklight-ac2.git"
+set :repository,  "git@github.com:cul/cul-blacklight-ac2.git"
 set :application, "scv"
 set :use_sudo, false
 
