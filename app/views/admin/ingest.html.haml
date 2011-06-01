@@ -29,13 +29,12 @@
         = radio_button_tag :metadata, 0, params[:metadata] || false
         %label{:for => "metadata_0"} No
   
-      -#
-        .label Full-text index?
-        .value
-          = radio_button_tag :fulltext, 1, params[:fulltext] || false
-          %label{:for => "fulltext_1"} Yes
-          = radio_button_tag :fulltext, 0, params[:fulltext] || true
-          %label{:for => "fulltext_0"} No
+      .label Full-text index?
+      .value
+        = radio_button_tag :fulltext, 1, params[:fulltext] || false
+        %label{:for => "fulltext_1"} Yes
+        = radio_button_tag :fulltext, 0, params[:fulltext] || true
+        %label{:for => "fulltext_0"} No
         
       .label Delete any items removed from Fedora (includes ALL items, not just those restricted to your items or collections listed above)?
       .value
