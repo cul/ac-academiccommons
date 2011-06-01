@@ -1,69 +1,63 @@
-%h2 Ingest objects
-
-.split_form
-  - form_tag "ingest" do 
-
-    .label Items:
-    .value
-      = text_field_tag :items, params[:items]
-      (space delimited)
-    
-    .label Collections:
-    .value
-      = text_field_tag :collections, params[:collections]
-      (space delimited)
-
-    .label Overwrite existing?
-    .value
-      = check_box_tag :overwrite, 1, params[:overwrite]
-
-    .label Metadata?
-    .value
-      = check_box_tag :metadata, 1, params[:metadata] || "1"
-
-    .label Full-text index?
-    .value
-      = check_box_tag :fulltext, 1, params[:fulltext]
-
-    .label Skip
-    .value
-      skip
-      = text_field_tag :skip, params[:skip]
-      items before processing the first one
-
-    .label Process
-    .value
-      only the first
-      = text_field_tag :process, params[:process]
-      items
+%h2 Ingest/update data
 
 
-
-    .label
-    .value
-      = submit_tag "Commit"
-
-
-    .label
-    .value
-
-    .label Delete Index:
-    .value
-      = submit_tag "Delete All", :confirm => "This will delete the entire index. Are you sure you want to do this?"
-      %b This is irreversible.
-
-  -if @results
-    %hr
-    %h3 Ingest results:
-
+- if(@existing_ingest_pid.nil?)
+  .split_form
+    - form_tag "ingest" do 
   
-    - @results[:results].keys.each do |status|
-      .label= status.to_s.capitalize
-      .value= @results[:results][status].length
+      .label Items:
+      .value
+        = text_field_tag :items, params[:items]
+        (space delimited)
+      
+      .label Collections:
+      .value
+        = text_field_tag :collections, params[:collections]
+        (space delimited)
+  
+      .label Overwrite existing?
+      .value
+        = radio_button_tag :overwrite, 1, params[:overwrite] || true
+        %label{:for => "overwrite_1"} Yes
+        = radio_button_tag :overwrite, 0, params[:overwrite] || false
+        %label{:for => "overwrite_0"} No
+  
+      .label Metadata?
+      .value
+        = radio_button_tag :metadata, 1, params[:metadata] || true
+        %label{:for => "metadata_1"} Yes
+        = radio_button_tag :metadata, 0, params[:metadata] || false
+        %label{:for => "metadata_0"} No
+  
+      -#
+        .label Full-text index?
+        .value
+          = radio_button_tag :fulltext, 1, params[:fulltext] || false
+          %label{:for => "fulltext_1"} Yes
+          = radio_button_tag :fulltext, 0, params[:fulltext] || true
+          %label{:for => "fulltext_0"} No
+        
+      .label Delete any items removed from Fedora (includes ALL items, not just those restricted to your items or collections listed above)?
+      .value
+        = radio_button_tag :delete_removed, 1, params[:delete_removed] || false
+        %label{:for => "delete_removed_1"} Yes
+        = radio_button_tag :delete_removed, 0, params[:delete_removed] || true
+        %label{:for => "delete_removed_0"} No 
+  
+      .label
+      .value
+        = submit_tag "Commit"
 
 
-    .label Errors:
-    .value
-      - @results[:errors].each_pair do |pid, message|
-        .error #{pid} : #{message}
+- else
+
+  %h4 An ingest is running:
+  %div
+    = "PID: " + @existing_ingest_pid
+  %div
+    = "Timestamp ID: " + @existing_ingest_time_id
+  %p
+    %textarea{:style => "width:100%;", :id => "ingest_monitor_content", :name => relative_root + "/ingest_monitor/" + @existing_ingest_time_id}
+  %p
+    = link_to("Cancel Ingest", "?cancel=" + @existing_ingest_pid)
     

@@ -54,6 +54,30 @@ class ApplicationController < ActionController::Base
     redirect_to(session[:return_to] || default)
     session[:return_to] = nil
   end
+  
+  def exec_background(cmd)
+    pid = fork do
+      exec("#{cmd}")
+      exit! 127
+    end
+  end
+
+  def pid_exists?(pid)
+    result = `ps -p #{pid.to_s}`
+    result.include?(pid.to_s) && !result.include?('(sh)')
+  end
+  
+  def get_pid_children(pid)
+    children = []
+    result = `ps -o pid,ppid -ax`
+    result.to_s.strip.split(/\n/).each do |line|
+      existing_pid, ppid = line.strip.split
+      if(ppid == pid)
+        children << existing_pid
+      end
+    end
+    return children
+  end
 
   #def openlayers_base
   # @olbase ||= 'http://www.columbia.edu/cu/libraries/inside/projects/imaging/jsonp-openlayers'

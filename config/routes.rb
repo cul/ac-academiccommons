@@ -17,6 +17,8 @@ ActionController::Routing::Routes.draw do |map|
   map.wind_logout '/wind_logout', :controller => 'welcome', :action => 'logout'
   map.access_denied '/access_denied', :controller => 'welcome', :action => 'access_denied'
   
+  map.connect '/ingest_monitor/:id', :controller => 'ingest_monitor', :action => 'index'
+  
   map.with_options :controller => "statistics" do |stats|
     stats.search_statistics "/statistics/search_history", :action => "search_history"
   end

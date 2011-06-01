@@ -207,7 +207,43 @@ sc.removeClass("visible");
 	  });
 	 });
 
-
+$("#ingest_monitor_content").each
+(
+	function()
+	{
+		$(this).val("Please wait, we'll start monitoring the log file shortly...");
+		var log_monitor_resource = $(this).attr("name");
+		var wait = null;
+		var intervalId = setInterval
+		(
+			function()
+			{
+				if(wait == true) return;
+				wait = true;
+				$.ajax
+				({
+					type: "GET",
+					url: log_monitor_resource,
+					dataType: "json",
+					processData: true,					
+					success: function(data)
+					{
+						$("#ingest_monitor_content").val(data.log);
+						wait = false;
+						if(data.log.indexOf(':results') >= 0) clearInterval(intervalId);
+					},
+					error: function(data, text, error)
+					{
+						console.debug(text);
+						console.debug(error);
+						wait = false;
+					}
+				});
+			},
+			3000	
+		)
+	}
+)
     
     
 });
