@@ -55,9 +55,8 @@ class ApplicationController < ActionController::Base
     session[:return_to] = nil
   end
 
-  def ruby_pid_exists?(pid)
-    result = `ps -p #{pid}`.to_s
-    result.include?(pid) && !result.index(/\(ruby\)/i) && !result.index(/\[<defunct>\]/i)
+  def pid_exists?(pid)
+    `ps -p #{pid}`.include?(pid)
   end
 
   #def openlayers_base

@@ -114,6 +114,7 @@ class AdminController < ApplicationController
           :time_id => time_id
         })
       end
+      Process.detach(@existing_ingest_pid)
       @existing_ingest_time_id = time_id.to_s
     
       logger.info "Started ingest with PID: #{@existing_ingest_pid} (#{@existing_ingest_time_id})"
@@ -127,7 +128,7 @@ class AdminController < ApplicationController
   end
 
   def existing_ingest_time_id(pid)
-    if(ruby_pid_exists?(pid))
+    if(pid_exists?(pid))
       running_tmp_pid_file = File.open("#{Rails.root}/tmp/#{pid}.index.pid")
       return running_tmp_pid_file.gets
     end
