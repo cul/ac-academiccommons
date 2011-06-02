@@ -11,7 +11,7 @@ class AdminController < ApplicationController
       log = {}
       log[:filepath] = log_file_path
       log[:filename] = File.basename(log_file_path)
-      time_id = log[:filename].gsub(/reindex_/, '').gsub(/\.log/, '')
+      time_id = log[:filename].gsub(/\.log/, '')
       log[:time_id] = time_id.to_s
       log[:year] = time_id[0..3].to_i
       log[:month] = time_id[4..5].to_i
@@ -30,8 +30,8 @@ class AdminController < ApplicationController
   def download_ingest_log
     
     headers["Content-Type"] = "application/octet-stream"
-    headers["Content-Disposition"] = "attachment;filename=\"reindex_#{params[:id]}.log\""
-    render :text => File.open("#{Rails.root}/log/indexing/reindex_#{params[:id]}.log").read
+    headers["Content-Disposition"] = "attachment;filename=\"#{params[:id]}.log\""
+    render :text => File.open("#{Rails.root}/log/indexing/#{params[:id]}.log").read
     
   end
 
@@ -67,16 +67,18 @@ class AdminController < ApplicationController
 #      flash.now[:notice] = "Index deleted."
 #    end
 
-    if(!params[:cancel].nil?)
-      # we just want to make sure that we're going to actually kill a pid that is an ac reindex
-      if(`ps -p #{params[:cancel]}`.to_s.include?("ac:reindex"))
-        get_pid_children(params[:cancel]).each do |child|
-          `kill -9 #{child}`
-        end
-        `kill -9 #{params[:cancel]}`
+    if(params[:cancel])
+      existing_time_id = existing_ingest_time_id(params[:cancel])
+      if(existing_time_id)
+        Process.kill "KILL", params[:cancel].to_i
         File.delete("#{Rails.root}/tmp/#{params[:cancel]}.index.pid")
+        log_file = File.open("#{Rails.root}/log/indexing/#{existing_time_id}.log", "a")
+        log_file.write("CANCELLED")
+        log_file.close
         flash.now[:notice] = "Ingest has been cancelled"
-        end
+      else
+        flash.now[:notice] = "Oh, um, we can't find the process ID #{params[:cancel]}, so we can't cancel it.  It's probably my fault, so I'm really sorry about that."
+      end
     end
 
     # set time
@@ -97,32 +99,37 @@ class AdminController < ApplicationController
     end
     
     if(params[:commit] == "Commit" && @existing_ingest_time_id.nil? && !params[:cancel])
-      # build the rake parameters
+
       collections = params[:collections] ? params[:collections].sub(" ", ";") : ""
       items = params[:items] ? params[:items].sub(" ", ";") : ""
 
-      cmd = "rake ac:reindex[\"#{collections}\",\"#{items}\",#{params[:overwrite]},#{params[:metadata]},#{params[:fulltext]},#{params[:delete_removed]}] RAILS_ENV=#{RAILS_ENV} 2>&1 >> #{Rails.root}/log/indexing/reindex_#{time_id}.log"
-      puts "Executing #{cmd}"
-      @existing_ingest_pid = exec_background(cmd).to_s
+      @existing_ingest_pid = Process.fork do
+        ACIndexing::reindex({
+          :collections => collections,
+          :items => items,
+          :overwrite => params[:overwrite], 
+          :metadata => params[:metadata], 
+          :fulltext => params[:fulltext], 
+          :delete_removed => params[:delete_removed],
+          :time_id => time_id
+        })
+      end
       @existing_ingest_time_id = time_id.to_s
+    
+      logger.info "Started ingest with PID: #{@existing_ingest_pid} (#{@existing_ingest_time_id})"
     
       tmp_pid_file = File.new("#{Rails.root}/tmp/#{@existing_ingest_pid}.index.pid", "w+")
       tmp_pid_file.write(@existing_ingest_time_id)
       tmp_pid_file.close
+      
     end
     
   end
 
   def existing_ingest_time_id(pid)
-    result = {}
-    begin
-      if(pid_exists?(pid))
-        running_tmp_pid_file = File.open("#{Rails.root}/tmp/#{pid}.index.pid")
-        return running_tmp_pid_file.gets
-      end
-    rescue Exception => e
-      puts e.inspect
-      return nil
+    if(ruby_pid_exists?(pid))
+      running_tmp_pid_file = File.open("#{Rails.root}/tmp/#{pid}.index.pid")
+      return running_tmp_pid_file.gets
     end
   end
 

@@ -5,14 +5,14 @@
   .split_form
     - form_tag "ingest" do 
   
-      .label Items:
-      .value
-        = text_field_tag :items, params[:items]
-        (space delimited)
-      
       .label Collections:
       .value
         = text_field_tag :collections, params[:collections]
+        (space delimited)
+  
+      .label Items:
+      .value
+        = text_field_tag :items, params[:items]
         (space delimited)
   
       .label Overwrite existing?
@@ -52,11 +52,11 @@
 
   %h4 An ingest is running:
   %div
-    = "PID: " + @existing_ingest_pid
+    = "PID: " + @existing_ingest_pid.to_s
   %div
     = "Timestamp ID: " + @existing_ingest_time_id
   %p
     %textarea{:style => "width:100%;", :id => "ingest_monitor_content", :name => relative_root + "/ingest_monitor/" + @existing_ingest_time_id}
   %p
-    = link_to("Cancel Ingest", "?cancel=" + @existing_ingest_pid)
+    = link_to("Cancel Ingest", {:controller => "admin", :action => "ingest", :cancel => @existing_ingest_pid.to_s}, :id => "cancel_ingest_link")
     

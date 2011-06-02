@@ -16,7 +16,7 @@ Rails::Initializer.run do |config|
   config.gem 'authlogic', :version => '2.1.2'
   config.gem 'authlogic_wind', :version => '>= 0.4.0'
   config.gem 'googlecharts'
-  config.gem 'cul-fedora', :version => '>= 0.8.2'
+  config.gem 'cul-fedora', :version => '>= 0.8.3'
   config.gem 'haml'
   config.gem 'compass', :version => '>= 0.10.5'
   config.gem 'httpclient'
@@ -59,5 +59,7 @@ Rails::Initializer.run do |config|
   # config.i18n.default_locale = :de
   
  #  Haml::Template.options[:format] = :html5
+ 
+ config.logger = Logger.new(File.dirname(__FILE__) + "/../log/#{RAILS_ENV}.log", "daily")
 
 end

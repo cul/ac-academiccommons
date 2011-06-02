@@ -4,8 +4,8 @@ class IngestMonitorController < ApplicationController
     
     raise "You must include the log ID" unless params[:id]
     
-    log_path = "#{Rails.root}/log/indexing/reindex_#{params[:id]}.log"
-    raise "Can't find log file #{params[:id]}" unless FileTest.exists?(log_path)
+    log_path = "#{Rails.root}/log/indexing/#{params[:id]}.log"
+    raise "Can't find log file #{params[:id]}.log" unless FileTest.exists?(log_path)
     
     log_content = `tail #{log_path}`
     

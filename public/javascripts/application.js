@@ -230,7 +230,12 @@ $("#ingest_monitor_content").each
 					{
 						$("#ingest_monitor_content").val(data.log);
 						wait = false;
-						if(data.log.indexOf(':results') >= 0) clearInterval(intervalId);
+						if(data.log.indexOf(':results') >= 0) 
+						{
+							clearInterval(intervalId);
+							$("#cancel_ingest_link").attr("href", $("#cancel_ingest_link").attr("href").replace(/\?cancel=([0-9].*)/i, ""));
+							$("#cancel_ingest_link").html("Return to the Main Ingest Form");
+						}
 					},
 					error: function(data, text, error)
 					{
