@@ -20,7 +20,7 @@ class ApplicationController < ActionController::Base
   def require_user
     unless current_user
       store_location
-      redirect_to new_user_session_url
+      redirect_to login_path
       return false
     end
   end
@@ -32,7 +32,7 @@ class ApplicationController < ActionController::Base
       end
     else
       store_location
-      redirect_to new_user_session_url
+      redirect_to login_path
       return false
     end
   end

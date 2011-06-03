@@ -5,7 +5,7 @@ config/*.sphinx.conf
 config/s3_credentials.yml
 *~
 *.cache
-*.log
+log/*.log
 *.pid
 tmp/**/*
 .DS_Store
