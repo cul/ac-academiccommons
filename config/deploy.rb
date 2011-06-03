@@ -22,7 +22,11 @@ namespace :deploy do
     run "ln -nfs #{deploy_to}shared/fedora.yml #{release_path}/config/fedora.yml"
   end
 
+  task :create_shared_resources do
+    run "mkdir -p #{deploy_to}shared/log/ac-indexing"
+  end
+  
 end
 
 
-after 'deploy:update_code', 'deploy:symlink_shared'
+after 'deploy:update_code', 'deploy:symlink_shared', 'deploy:create_shared_resources'
