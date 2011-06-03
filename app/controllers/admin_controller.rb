@@ -111,7 +111,8 @@ class AdminController < ApplicationController
           :metadata => params[:metadata], 
           :fulltext => params[:fulltext], 
           :delete_removed => params[:delete_removed],
-          :time_id => time_id
+          :time_id => time_id,
+          :executed_by => current_user.login
         })
       end
       Process.detach(@existing_ingest_pid)

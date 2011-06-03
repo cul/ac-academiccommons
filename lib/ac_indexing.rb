@@ -13,6 +13,7 @@ class ACIndexing
     log_stdout = as_boolean(options.delete(:log_stdout))
     log_level = options.delete(:log_level) || Logger::INFO
     time_id = options.delete(:time_id) || Time.new.strftime("%Y%m%d-%H%M%S") 
+    executed_by = options.delete(:executed_by) || "UNKNOWN USER"
 
     if(log_stdout == true)
       logger = StdOutLogger.new(File.dirname(__FILE__) + "/../log/ac-indexing/#{time_id}.log", $stdout)
@@ -20,6 +21,8 @@ class ACIndexing
       logger = Logger.new(File.dirname(__FILE__) + "/../log/ac-indexing/#{time_id}.log")
     end
     logger.level = log_level
+
+    logger.info "This re-index executed by: #{executed_by}"
 
     logger.info "Collections: " + (collections || "(none)")
     logger.info "Items: " + (items || "(none)")

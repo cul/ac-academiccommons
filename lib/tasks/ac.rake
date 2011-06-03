@@ -13,7 +13,8 @@ namespace :ac do
         :metadata => args[:metadata] || 1, 
         :fulltext => args[:fulltext], 
         :delete_removed => args[:delete_removed],
-        :log_stdout => 1
+        :log_stdout => 1,
+        :executed_by => "rake"
     })
     
   end
