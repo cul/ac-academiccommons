@@ -8,7 +8,7 @@ config/s3_credentials.yml
 *.pid
 tmp/**/*
 log/*.log*
-log/indexing/*.log
+log/ac-indexing/*.log
 .DS_Store
 db/cstore/**
 db/sphinx/**

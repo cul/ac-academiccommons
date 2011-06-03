@@ -15,9 +15,9 @@ class ACIndexing
     time_id = options.delete(:time_id) || Time.new.strftime("%Y%m%d-%H%M%S") 
 
     if(log_stdout == true)
-      logger = StdOutLogger.new(File.dirname(__FILE__) + "/../log/indexing/#{time_id}.log", $stdout)
+      logger = StdOutLogger.new(File.dirname(__FILE__) + "/../log/ac-indexing/#{time_id}.log", $stdout)
     else
-      logger = Logger.new(File.dirname(__FILE__) + "/../log/indexing/#{time_id}.log")
+      logger = Logger.new(File.dirname(__FILE__) + "/../log/ac-indexing/#{time_id}.log")
     end
     logger.level = log_level
 

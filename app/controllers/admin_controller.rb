@@ -7,7 +7,7 @@ class AdminController < ApplicationController
   def ingest_history
     
     @logs = []
-    Dir.glob("#{Rails.root}/log/indexing/*.log") do |log_file_path|
+    Dir.glob("#{Rails.root}/log/ac-indexing/*.log") do |log_file_path|
       log = {}
       log[:filepath] = log_file_path
       log[:filename] = File.basename(log_file_path)
@@ -31,7 +31,7 @@ class AdminController < ApplicationController
     
     headers["Content-Type"] = "application/octet-stream"
     headers["Content-Disposition"] = "attachment;filename=\"#{params[:id]}.log\""
-    render :text => File.open("#{Rails.root}/log/indexing/#{params[:id]}.log").read
+    render :text => File.open("#{Rails.root}/log/ac-indexing/#{params[:id]}.log").read
     
   end
 
@@ -72,7 +72,7 @@ class AdminController < ApplicationController
       if(existing_time_id)
         Process.kill "KILL", params[:cancel].to_i
         File.delete("#{Rails.root}/tmp/#{params[:cancel]}.index.pid")
-        log_file = File.open("#{Rails.root}/log/indexing/#{existing_time_id}.log", "a")
+        log_file = File.open("#{Rails.root}/log/ac-indexing/#{existing_time_id}.log", "a")
         log_file.write("CANCELLED")
         log_file.close
         flash.now[:notice] = "Ingest has been cancelled"
