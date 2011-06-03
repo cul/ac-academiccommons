@@ -7,7 +7,7 @@ class AdminController < ApplicationController
   def ingest_history
     
     @logs = []
-    Dir.glob("#{Rails.root}/log/indexing/*") do |log_file_path|
+    Dir.glob("#{Rails.root}/log/indexing/*.log") do |log_file_path|
       log = {}
       log[:filepath] = log_file_path
       log[:filename] = File.basename(log_file_path)
