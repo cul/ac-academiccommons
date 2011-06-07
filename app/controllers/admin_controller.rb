@@ -109,7 +109,8 @@ class AdminController < ApplicationController
           :items => items,
           :overwrite => params[:overwrite], 
           :metadata => params[:metadata], 
-          :fulltext => params[:fulltext], 
+          # temporarily forced to disable fulltext :fulltext => params[:fulltext],
+          :fulltext => 0, 
           :delete_removed => params[:delete_removed],
           :time_id => time_id,
           :executed_by => current_user.login
