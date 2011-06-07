@@ -32,11 +32,11 @@ module CatalogHelper
   end
 
   def url_encode_resource(name)
-    name = CGI::escape(name).gsub(/%2f/i, '%252F')
+    name = CGI::escape(name).gsub(/%2f/i, '%252F').gsub(/\./, '%2E')
   end
   
   def url_decode_resource(name)
-    name = name.gsub(/%252f/i, '%2F')
+    name = name.gsub(/%252f/i, '%2F').gsub(/%2e/i, '.')
     name = CGI::unescape(name)
   end
 

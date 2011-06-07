@@ -12,7 +12,7 @@
           <% if(num_authors == 2)%>et al.<% end %>
           <% break if(num_authors == 2) %>
           <% if(num_authors > 0) %><%= "<br>" %><% end %>
-          <a href="?f[author_facet][]=<%= author %>"><%= author %></a>
+          <a href="?f[author_facet][]=<%= url_encode_resource(author) %>"><%= author %></a>
           <% num_authors += 1 %>
         <% end %>
      </p>
