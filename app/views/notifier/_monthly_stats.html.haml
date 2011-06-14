@@ -1,0 +1,22 @@
+%h3 Usage Statistics:
+- if @results.empty?
+  %table
+    %tr
+      %th{:width => "450px"} 
+      %th{:width => "50px"} Views
+      %th{:width => "50px"} Downloads
+      %td
+    - @results.each_with_index do |item, i|
+      - views =  @stats["View"][item["id"]] || 0
+      - downloads =  @stats["Download"][item["id"]] || 0
+      %tr
+        %td= link_to item["title_display"], catalog_path(item["id"])
+        %td= views
+        %td= downloads
+
+    %tr
+      %th Totals: 
+      %th= @totals["View"] || 0
+      %th= @totals["Download"] || 0
+- else
+  %h4 No views or downloads for your items during this time period.

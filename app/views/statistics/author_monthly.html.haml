@@ -6,14 +6,18 @@
     .label Author uni:
     .value= text_field_tag :author_id, params[:author_id]
 
+    .label Email Template:
+    .value
+      = select_tag :email_template, options_for_select(["Normal", "Initial"], params[:email_template] || "Normal")
+    
     .label Report month:
     .value
       = select_tag :month, options_for_select(Date::ABBR_MONTHNAMES, params[:month] || (Date.today - 1.months).strftime("%b"))
-      = select_tag :year, options_for_select((2010..Date.today.year), params[:year])
+      = select_tag :year, options_for_select((2011..Date.today.year), params[:year])
 
     .label Include zeroes?
     .value
-      = check_box_tag :include_zeroes, "true", params[:include_words]
+      = check_box_tag :include_zeroes, "true", params[:include_zeroes]
 
     .label 
     .value
@@ -23,23 +27,23 @@
     - if @results
       %hr 
 
-      #author_stats_results
-        .item
-          .title.th Title
-          .views.th Views
-          .downloads.th Downloads
+      %table#author_stats_results
+        %tr
+          %th Title
+          %th Views
+          %th Downloads
 
-        .item
-          .title 
+        %tr
+          %td 
             %b Total for #{params[:month]} #{params[:year]}
-          .views= @totals["View"] || 0
-          .downloads= @totals["Download"] || 0
+          %td= @totals["View"] || 0
+          %td= @totals["Download"] || 0
 
         - @results.each do |item|
-          .item
-            .title= link_to item["title_display"], catalog_path(item["id"])
-            .views= @stats["View"][item["id"]] || 0
-            .downloads= @stats["Download"][item["id"]] || 0
+          %tr
+            %td= link_to item["title_display"], catalog_path(item["id"])
+            %td= @stats["View"][item["id"]] || 0
+            %td= @stats["Download"][item["id"]] || 0
 
 
       .label

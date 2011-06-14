@@ -1,24 +1,18 @@
-%div These are the statistics for all Academic Commons items on which you are associated as an author for #{@date}. The top ten items, sorted by downloads, are listed.
+%div Dear Academic Commons Depositor,
 
+%div
+  Here are the updated monthly and lifetime use statistics for your deposits to 
+  #{link_to "Academic Commons", "http://academiccommons.columbia.edu"}, 
+  the digital repository of Columbia University and its affiliates.
 
-%table
-  %tr
-    %th{:width => "450px"} Title
-    %th{:width => "50px"} Views
-    %th{:width => "50px"} Downloads
-    %td
-  - @results.each_with_index do |item, i|
-    - break if i >=10
-    %tr
-      %td= link_to item["title_display"], catalog_path(item["id"])
-      %td= @stats["View"][item["id"]] || 0
-      %td= @stats["Download"][item["id"]] || 0
+%div Usage Statistics:
 
-  %tr
-    %th Totals: (may include items now shown)
-    %th= @totals["View"] || 0
-    %th= @totals["Download"] || 0
+= render :partial => "monthly_stats"
 
+%div
+  If you have new material for deposit—anything from published articles, to presentation slides, to performance video, to datasets, and beyond—please send it to us at 
+  #{mail_to "info@cdrs.columbia.edu"}
+  including basic descriptive information such as the title, the names of any collaborators, the URL or DOI for the published version, and if there is any special software required to view or otherwise make use of the file.  Remember: we use the information you provide to enhance the searchability of your work, increasing the number of times it is accessed and downloaded.
 
 %div 
   Questions about this email: contact

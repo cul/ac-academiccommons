@@ -27,6 +27,8 @@ class StatisticsController < ApplicationController
   end
 
   def all_author_monthlies
+    params[:email_template] ||= "Normal"
+
     ids = Blacklight.solr.find(:per_page => 100000, :page => 1, :fl => "author_id_uni")["response"]["docs"].collect { |f| f["author_id_uni"] }.flatten.compact.uniq - EmailPreference.find_all_by_monthly_opt_out(true).collect(&:author)
 
     alternate_emails = Hash[EmailPreference.find(:all, :conditions => "email is NOT NULL").collect { |ep| [ep.author, ep.email] }.flatten]
@@ -38,8 +40,14 @@ class StatisticsController < ApplicationController
         startdate = Date.parse(params[:month] + " " + params[:year])
 
         results, stats, totals  = get_monthly_author_stats(:startdate => startdate, :include_zeroes => false, :author_id => author_id)
-      
-        Notifier.deliver_author_monthly(author[:email], author_id, startdate, results, stats, totals)
+    
+        case params[:email_template]
+        when "Normal"
+          Notifier.deliver_author_monthly(author[:email], author_id, startdate, results, stats, totals)
+        else
+          Notifier.deliver_author_monthly_first(author[:email], author_id, startdate, results, stats, totals)
+
+        end  
       end
     end
   end
@@ -47,12 +55,19 @@ class StatisticsController < ApplicationController
   def author_monthly
 
 
-    if params[:commit].in?("View","Email")
+    if params[:commit].in?('View',"Email")
       startdate = Date.parse(params[:month] + " " + params[:year])
 
       @results, @stats, @totals = get_monthly_author_stats(:startdate => startdate, :include_zeroes => params[:include_zeroes], :author_id => params[:author_id])
       if params[:commit] == "Email"
         Notifier.deliver_author_monthly(params[:email_destination], params[:author_id], startdate, @results, @stats, @totals)
+        case params[:email_template]
+        when "Normal"
+          Notifier.deliver_author_monthly(params[:email_destination], params[:author_id], startdate, @results, @stats, @totals)
+        else
+          Notifier.deliver_author_monthly_first(params[:email_destination], params[:author_id], startdate, @results, @stats, @totals)
+
+        end  
       end
 
 
@@ -63,8 +78,8 @@ class StatisticsController < ApplicationController
 
 
   def search_history
-    @search_types = [["Item","id"],["UNI","author_id_uni"],["Genre","genre_search"]]
-    params[:event] ||= ["View"]
+    @search_types = [["Item",'id'],["UNI","author_id_uni"],["Genre","genre_search"]]
+    params[:event] ||= ['View']
 
     six_months_ago = Date.today - 6.months
     next_month = Date.today + 1.months
@@ -81,7 +96,7 @@ class StatisticsController < ApplicationController
       else
         @fq = params[:search_type] + ":" + params[:search_value].gsub(/:/,'\\:')
 
-        @ids = Blacklight.solr.find(:per_page => 100000, :sort => "title_display asc" , :fq => @fq, :fl => "id", :page => 1)["response"]["docs"].collect { |r| r["id"] }
+        @ids = Blacklight.solr.find(:per_page => 100000, :sort => "title_display asc" , :fq => @fq, :fl => 'id', :page => 1)["response"]["docs"].collect { |r| r['id'] }
 
         @results = Statistic.count_intervals(:identifier => @ids, :event => params[:event], :start_date => DateTime.parse(params[:start_date]), :end_date => DateTime.parse(params[:end_date]), :group => params[:group].downcase.to_sym)
         date_format = ("chart_" + params[:group]).downcase.to_sym
@@ -97,8 +112,8 @@ class StatisticsController < ApplicationController
         dates_top = []
         dates_bottom = []
 
-        legend_hash = { "View" => "Views", "Download" => "Downloads" }
-        colors_hash = { "View" => "0022FF", "Download" => "FF00CC" }
+        legend_hash = { 'View' => "Views", 'Download' => "Downloads" }
+        colors_hash = { 'View' => "0022FF", 'Download' => "FF00CC" }
 
         if formatted_dates.length > 15
           formatted_dates.each_with_index do |date, i|
@@ -146,20 +161,35 @@ class StatisticsController < ApplicationController
     author_id = options[:author_id]
     enddate = startdate + 1.month
 
-    events = ["View", "Download"]
     results = Blacklight.solr.find(:per_page => 100000, :sort => "title_display asc" , :fq => "author_id_uni:#{author_id}", :fl => "title_display,id", :page => 1)["response"]["docs"]
-    ids = results.collect { |r| r["id"] }
-    stats = {}
-    totals = {}
-    events.each do |event|
+    ids = results.collect { |r| r['id'] }
+    fedora_server = Cul::Fedora::Server.new(FEDORA_CONFIG)
+    download_ids = Hash.new { |h,k| h[k] = [] } 
+    ids.each do |doc_id|
+      download_ids[doc_id] |= fedora_server.item(doc_id).listMembers.collect(&:pid)
+      download_ids[doc_id] |=  fedora_server.item(doc_id).describedBy.collect(&:pid)
+    end
+    stats = Hash.new { |h,k| h[k] = Hash.new { |h,k| h[k] = 0 }}
+    totals = Hash.new { |h,k| h[k] = 0 }
 
-      stats[event] = Statistic.count(:group => "identifier", :conditions => ["event = ? and identifier IN (?) AND at_time BETWEEN ? and ?", event, ids,startdate, enddate])
-      totals[event] = stats[event].values.inject { |sum,x| sum ? sum+x : x}
+    stats['View'] = Statistic.count(:group => "identifier", :conditions => ["event = 'View' and identifier IN (?) AND at_time BETWEEN ? and ?", ids,startdate, enddate])
+    totals['View'] = stats['View'].values.sum
+
+    
+    stats_downloads = Statistic.count(:group => "identifier", :conditions => ["event = 'Download' and identifier IN (?) AND at_time BETWEEN ? and ?", download_ids.values.flatten,startdate, enddate])
+    download_ids.each_pair do |doc_id, downloads|
+
+      stats['Download'][doc_id] = downloads.collect { |download_id| stats_downloads[download_id] || 0 }.sum
     end
 
-    results.reject! { |r| !params[:include_zeroes] && !stats["View"][r["id"]] && !stats["Download"][r["id"]] }
+
+    totals['Download'] = stats_downloads.values.sum
+
+
+
+    results.reject! { |r| (stats['View'][r['id']] || 0) == 0 &&  (stats['Download'][r['id']] || 0) == 0 } unless params[:include_zeroes]
     results.sort! do |x,y|
-      result = (stats["Download"][y["id"]] || 0) <=> (stats["Download"][x["id"]] || 0) 
+      result = (stats['Download'][y['id']] || 0) <=> (stats['Download'][x['id']] || 0) 
       result = x["title_display"] <=> y["title_display"] if result == 0
       result
     end
