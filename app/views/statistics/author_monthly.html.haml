@@ -1,7 +1,7 @@
 %h3 Author Monthly Statistics
 .split_form
 
-  -form_tag "/statistics/author_monthly" do
+  -form_tag url_for(:controller => "statistics", :action => "author_monthly") do
 
     .label Author uni:
     .value= text_field_tag :author_id, params[:author_id]
