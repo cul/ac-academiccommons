@@ -18,10 +18,9 @@ config.action_mailer.raise_delivery_errors = true
 config.action_mailer.delivery_method = :smtp
 config.action_mailer.smtp_settings = {
   :address => "localhost",
-  :domain => "cockle.cc.columbia.edu",
+  :domain => "rowling.cc.columbia.edu",
   :port => 25
 }
-~          
 
 config.action_controller.relative_url_root = "/ac2_dev"
 
