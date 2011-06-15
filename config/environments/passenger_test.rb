@@ -39,4 +39,4 @@ config.action_mailer.smtp_settings = {
 
 Haml::Template::options[:ugly] = true
 
-BASE_PATH = "http://rhys.cul.columbia.edu/ac2_test"
+BASE_PATH = "rhys.cul.columbia.edu"
