@@ -60,7 +60,6 @@ class StatisticsController < ApplicationController
 
       @results, @stats, @totals = get_monthly_author_stats(:startdate => startdate, :include_zeroes => params[:include_zeroes], :author_id => params[:author_id])
       if params[:commit] == "Email"
-        Notifier.deliver_author_monthly(params[:email_destination], params[:author_id], startdate, @results, @stats, @totals)
         case params[:email_template]
         when "Normal"
           Notifier.deliver_author_monthly(params[:email_destination], params[:author_id], startdate, @results, @stats, @totals)
