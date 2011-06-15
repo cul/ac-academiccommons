@@ -8,7 +8,7 @@ class Notifier < ActionMailer::Base
     @results = results
     @date = date.strftime("%b %Y")
     recipients to_address
-    from "academic.commons@columbia.edu"
+    from "rhilliker@columbia.edu"
     subject "Academic Commons Monthly Download Report for #{@date}"
     content_type 'text/html'
 
@@ -21,7 +21,7 @@ class Notifier < ActionMailer::Base
     @results = results
     @date = date.strftime("%b %Y")
     recipients to_address
-    from "academic.commons@columbia.edu"
+    from "rhilliker@columbia.edu"
     subject "Academic Commons Monthly Download Report for #{@date}"
     content_type 'text/html'
 
