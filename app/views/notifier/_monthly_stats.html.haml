@@ -1,8 +1,13 @@
 %br
 
-%div Usage Statistics:
-- if @results.empty?
+%div 
+  Usage Statistics:
+- unless @results.empty?
   %table
+    -if lifetime
+      %tr
+        %td
+        %td{:colspan => 2, :align => "center"} ( This Month / Lifetime )
     %tr
       %td 
       %td 
@@ -12,16 +17,26 @@
       %td
     - @results.each_with_index do |item, i|
       - views =  @stats["View"][item["id"]] || 0
+      - lifetime_views = @stats["View Lifetime"][item["id"]] || 0
       - downloads =  @stats["Download"][item["id"]] || 0
+      - lifetime_downloads = @stats["Download Lifetime"][item["id"]] || 0
       %tr
         %td= link_to item["title_display"], catalog_path(item["id"])
-        %td= views
-        %td= downloads
-
+        %td
+          #{views}
+          #{"/ #{lifetime_views}" if lifetime}
+        %td
+          #{downloads}
+          #{"/ #{lifetime_downloads}" if lifetime}
     %tr
-      %th Totals: 
-      %th= @totals["View"] || 0
-      %th= @totals["Download"] || 0
+      %td 
+        %b Totals: 
+      %td
+        #{@totals["View"]}
+        #{"/ #{@totals["View Lifetime"]}" if lifetime}
+      %td
+        #{@totals["Download"]}
+        #{"/ #{@totals["Download Lifetime"]}" if lifetime}
 - else
   No views or downloads for your items during this time period.
 

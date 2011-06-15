@@ -172,8 +172,6 @@ class StatisticsController < ApplicationController
     totals = Hash.new { |h,k| h[k] = 0 }
 
     stats['View'] = Statistic.count(:group => "identifier", :conditions => ["event = 'View' and identifier IN (?) AND at_time BETWEEN ? and ?", ids,startdate, enddate])
-    totals['View'] = stats['View'].values.sum
-
     
     stats_downloads = Statistic.count(:group => "identifier", :conditions => ["event = 'Download' and identifier IN (?) AND at_time BETWEEN ? and ?", download_ids.values.flatten,startdate, enddate])
     download_ids.each_pair do |doc_id, downloads|
@@ -182,7 +180,15 @@ class StatisticsController < ApplicationController
     end
 
 
-    totals['Download'] = stats_downloads.values.sum
+    stats['View Lifetime'] = Statistic.count(:group => "identifier", :conditions => ["event = 'View' and identifier IN (?)", ids])
+    
+    stats_lifetime_downloads = Statistic.count(:group => "identifier", :conditions => ["event = 'Download' and identifier IN (?)" , download_ids.values.flatten])
+    download_ids.each_pair do |doc_id, downloads|
+
+      stats['Download Lifetime'][doc_id] = downloads.collect { |download_id| stats_lifetime_downloads[download_id] || 0 }.sum
+    end
+    stats.keys.each { |key| totals[key] = stats[key].values.sum }
+
 
 
 
