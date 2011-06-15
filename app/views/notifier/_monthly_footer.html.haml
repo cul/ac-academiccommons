@@ -6,4 +6,4 @@
 %br
 %div
   Wish to unsubscribe:
-  #{link_to("click here", :controller => :statistics, :action => :unsubscribe_monthly, :author_id => @author_id, :chk => @author_id.crypt("xZ"))} 
+  #{link_to("click here", url_for(:controller => :statistics, :action => :unsubscribe_monthly, :author_id => @author_id, :chk => @author_id.crypt("xZ")))} 
