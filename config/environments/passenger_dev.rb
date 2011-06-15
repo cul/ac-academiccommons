@@ -23,4 +23,4 @@ config.action_mailer.smtp_settings = {
 }
 
 config.action_controller.relative_url_root = "/ac2_dev"
-
+BASE_PATH = "http://rowling.cul.columbia.edu/ac2_dev"

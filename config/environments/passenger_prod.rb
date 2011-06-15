@@ -38,3 +38,4 @@ config.action_mailer.smtp_settings = {
 }
 
 Haml::Template::options[:ugly] = true
+BASE_PATH = "http://academiccommons.columbia.edu"

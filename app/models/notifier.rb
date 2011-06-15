@@ -1,7 +1,7 @@
 class Notifier < ActionMailer::Base
   
 
-  def author_monthly(to_address, author_id, date, results, stats, totals)
+  def author_monthly(to_address, author_id, date, results, stats, totals,request)
     @author_id = author_id
     @stats = stats
     @totals = totals
@@ -11,10 +11,11 @@ class Notifier < ActionMailer::Base
     from "rhilliker@columbia.edu"
     subject "Academic Commons Monthly Download Report for #{@date}"
     content_type 'text/html'
-
+    @request = request
   end
   
-  def author_monthly_first(to_address, author_id, date, results, stats, totals)
+  def author_monthly_first(to_address, author_id, date, results, stats, totals,request)
+    @request = request
     @author_id = author_id
     @stats = stats
     @totals = totals
