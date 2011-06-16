@@ -22,7 +22,7 @@
 
     .label 
     .value
-      = submit_tag "Send"
+      = submit_tag "Send", :confirm => "This will send most likely hundreds of emails. Are you sure?"
 
 
     = render :partial => "/debug_deliveries"
