@@ -60,6 +60,6 @@ Rails::Initializer.run do |config|
   
  #  Haml::Template.options[:format] = :html5
  
- config.logger = Logger.new("#{RAILS_ROOT}/log/#{RAILS_ENV}.log", 50, 1048576)
+  config.logger = Logger.new("#{RAILS_ROOT}/log/#{RAILS_ENV}.log", 50, 2048000)
 
 end

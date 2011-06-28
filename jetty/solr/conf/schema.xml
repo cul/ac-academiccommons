@@ -100,7 +100,7 @@
 		<field name="handle" type="string" indexed="true" stored="true"/>
 		<field name="keyword_search" type="text" indexed="true" stored="true" multiValued="true"/>
 		<field name="author_search" type="text" indexed="true" stored="true" multiValued="true"/>
-    <field name="author_id_uni" type="text" indexed="true" stored="true" multiValued="true"/>
+    <field name="author_id_uni" type="string" indexed="true" stored="true" multiValued="true"/>
     
 		<field name="title_search" type="text" indexed="true" stored="true"/>
 		<field name="title_display" type="string" indexed="true" stored="true"/>
