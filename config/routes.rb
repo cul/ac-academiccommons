@@ -23,12 +23,14 @@ ActionController::Routing::Routes.draw do |map|
     stats.search_statistics "/statistics/search_history", :action => "search_history"
   end
   
+  map.connect '/deposit', :controller => 'catalog', :action => 'deposit' 
+  
   map.connect ':controller/:action/:id'
   map.connect ':controller/:action/:id.:format'
   
   map.connect '/catalog/browse/departments/:id', :controller => 'catalog', :action => 'browse_department'
   map.connect '/catalog/browse/subjects/:id', :controller => 'catalog', :action => 'browse_subject'
-  
+ 
   map.connect '/item/:id', :controller => 'catalog', :action => 'show'
 
 end

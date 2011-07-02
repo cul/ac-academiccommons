@@ -1013,10 +1013,10 @@ h2#results_label, form.sort {
 	padding-left: .5;
 }
 
-textarea {
+/*textarea {
 	width: 30em;
 	height: 15em;
-}
+}*/
 
 .fieldWithErrors {
 	display: inline;
@@ -1108,7 +1108,7 @@ ul.tools li {
 	margin-bottom: 1em;
 }
 
-.error, .notice, .errorExplanation {
+/*.error, .notice, .errorExplanation {
 	background-color: lightyellow;
 	padding: 1em;
 	margin-bottom: 1em;
@@ -1121,7 +1121,7 @@ ul.tools li {
 
 .error, .errorExplanation {
 	color: #C30;
-}
+}*/
 
 .notice {
 	color: #060;
@@ -1914,3 +1914,58 @@ a.nav-link{
 .browse-list h3 {
 	text-align: center;
 }
+
+/*#content form p label {
+	display: block;
+	width: 76px;
+	float: left;
+	text-align: right;
+	margin-right: 1em;
+	
+}*/
+
+/*self deposit form*/
+
+input#accept {
+	width: 15px;
+	margin-left: 81px;
+}
+
+ 
+
+span.form-field-info {
+	width: 438px;
+	margin-left: 80px;
+	display: block;
+}
+
+form.self-deposit-form input, form.self-deposit-form textarea {
+	color: #383838;
+	width: 438px;
+	font: 1.3em "Helvetica Neue", Arial, Helvetica, Geneva, sans-serif;
+}
+
+form.self-deposit-form input#uni{
+	width: 150px;
+}
+
+textarea {
+	resize:vertical;
+}
+
+label {
+	float: left;
+	width: 75px;
+	text-align: right;
+	margin-right: 5px;
+}
+
+
+label.error {
+	float: right;
+	width: 100px;
+	text-align: left;
+}
+
+
+input[type=text], input[type=password], input.text, input.title, textarea, select {margin: 0;}
