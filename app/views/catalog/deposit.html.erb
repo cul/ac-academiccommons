@@ -1,0 +1,138 @@
+<% @page_title = "Deposit Your Research | " + application_name  %>
+
+<div class="page box">
+
+ 
+<p>
+Weclome to Academic Commons Self Deposit.
+</p>
+
+<p>You can use this application to deposit your work directly into the Academic Commons repository.</p>
+
+<p>
+Before you begin, please review the <a>Academic Commons Author Agreement</a>.
+</p>
+
+
+
+
+
+<% form_tag('#', :method=>'get', :multipart => true, :id=>'sd-form', :class=>'self-deposit-form') do %>
+
+ <div class="form-input">
+   
+   <%= label_tag 'url', "UNI"%>
+  <p>  <%= text_field_tag "uni", "", :size=>'10' %>
+ 
+ <span class="form-field-info">
+You must have  a <a href="http://www.columbia.edu/acis/accounts/">Columbia/CU affiliate UNI</a> to submit to AC using this form. If you are submitting on behalf of a CU-affiliated author, please use their UNI. If you were previously affiliated with Columbia and would like to submit work without a UNI, please contact us. 
+</span>
+
+ 
+ 
+ </p>
+ 
+ </div>
+ 
+
+ <div class="form-input">
+
+  <%= label_tag 'file', "Upload" %> 
+<p>   <%= file_field_tag "file", :class=>'required' %>
+
+<span class="form-field-info">
+Supported Formats: PDF DOC Mov
+</span>
+ </p>
+
+</div>
+
+
+
+ 
+  <div>
+ 
+ <div class="form-input">
+ 
+
+  <%= label_tag 'title' %> 
+<p>
+   <%= text_area_tag "title", "", :cols=>"60", :rows=>"3", :class=>'required' %>
+
+
+
+ </p>
+ </div>
+ 
+ 
+  <div class="form-input">
+    <%= label_tag 'author', 'Author(s)' %> 
+ <p>
+  <%= text_area_tag "author" ,"", :cols=>"60", :rows=>"3", :class=>'required' %> </p>
+</div>
+
+
+   <div class="form-input">
+  
+   
+    
+   <%= label_tag 'abstr', 'Abstract' %>
+   <p>
+   <%= text_area_tag "abstr", "", :cols=>"60", :rows=>"12", :class=>'required' %>
+ 
+ </p>
+ 
+ </div>
+ 
+ 
+    <div class="form-input">
+   
+   <%= label_tag 'url', "URL"%>
+  <p>  <%= text_field_tag "url" %>
+ </p>
+ 
+ </div>
+   <div class="form-input">
+      <%= label_tag 'doi_pmcid','DOI/PMCID' %>
+<p>   <%= text_field_tag "doi_pmcid" %>
+ </p>
+ </div>
+ 
+    <div class="form-input">
+   
+ <%= label_tag 'software', 
+ "NOTES	" %>
+  <p> 
+     <%= text_area_tag "software", "", :cols=>"60", :rows=>"12"  %>
+  
+   
+ </p>
+ </div>
+ 
+</div>
+
+ <p>
+  <%=  check_box_tag 'accept', :class=>'required' %>   I certify that I have read and understood the terms of the Author Agreement.
+ 
+ </p>
+
+<p>
+   <%= label_tag 'email', 'Your E-mail' %>
+   <%= text_field_tag "email", "",:class=>'required' %>
+</p>
+
+ 
+ <p>
+   <%= submit_tag 'Submit' %>
+ </p>
+<% end %>
+
+<script>
+
+
+</script>
+
+
+
+
+</div>

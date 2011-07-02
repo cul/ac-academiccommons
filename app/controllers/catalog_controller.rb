@@ -2,6 +2,7 @@ class CatalogController < ApplicationController
   before_filter :record_stats, :only => :show
   unloadable
   # before_filter :require_user
+ 
   before_filter :redirect_browse
   before_filter :url_decode_f
 
@@ -10,6 +11,8 @@ class CatalogController < ApplicationController
    
     render :layout => "catalog_browse"
   end
+  
+  
   
   def browse_department
  render :layout => "catalog_browse"
@@ -20,6 +23,8 @@ class CatalogController < ApplicationController
   def browse_subject
     index
   end
+  
+ 
   
   def redirect_browse
     
