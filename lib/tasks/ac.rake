@@ -19,4 +19,10 @@ namespace :ac do
     
   end
   
+  task :deleteindex => :environment do
+    
+    ACIndexing::deleteindex()
+    
+  end
+  
 end
