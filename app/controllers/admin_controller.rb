@@ -101,7 +101,7 @@ class AdminController < ApplicationController
     if(params[:commit] == "Commit" && @existing_ingest_time_id.nil? && !params[:cancel])
 
       collections = params[:collections] ? params[:collections].sub(" ", ";") : ""
-      items = params[:items] ? params[:items].sub(" ", ";") : ""
+      items = params[:items] ? params[:items].gsub(/ /, ";") : ""
 
       @existing_ingest_pid = Process.fork do
         ACIndexing::reindex({

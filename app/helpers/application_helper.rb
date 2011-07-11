@@ -42,6 +42,8 @@ module ApplicationHelper
     if(last_name_first.index(","))
       parts = last_name_first.split(",")
       return parts[1].strip + " " + parts[0].strip
+    else
+      return last_name_first
     end
   end
   
