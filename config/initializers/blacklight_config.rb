@@ -99,7 +99,8 @@ Blacklight.configure(:shared) do |config|
        "affiliation_department"=>7,
        "subject"=>7,
         "genre_facet" => 5,
-        "pub_date" => 5
+        "pub_date" => 5,
+        "series" => 5
       }
         
     }
