@@ -41,7 +41,11 @@ module ApplicationHelper
   def first_name_then_last(last_name_first)
     if(last_name_first.index(","))
       parts = last_name_first.split(",")
-      return parts[1].strip + " " + parts[0].strip
+      if parts.length > 1
+        return parts[1].strip + " " + parts[0].strip
+      else
+        return parts[0].strip
+      end
     else
       return last_name_first
     end
