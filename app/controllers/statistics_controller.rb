@@ -169,7 +169,6 @@ class StatisticsController < ApplicationController
     download_ids = Hash.new { |h,k| h[k] = [] } 
     ids.each do |doc_id|
       download_ids[doc_id] |= fedora_server.item(doc_id).listMembers.collect(&:pid)
-      download_ids[doc_id] |=  fedora_server.item(doc_id).describedBy.collect(&:pid)
     end
     stats = Hash.new { |h,k| h[k] = Hash.new { |h,k| h[k] = 0 }}
     totals = Hash.new { |h,k| h[k] = 0 }
