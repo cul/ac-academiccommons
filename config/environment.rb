@@ -23,6 +23,7 @@ Rails::Initializer.run do |config|
   config.gem 'nokogiri'
   config.gem 'net-ldap', :version => '>=0.1.1'
   config.gem "json"
+  config.gem "garb"
   
   # Settings in config/environments/* take precedence over those specified here.
   #
@@ -62,4 +63,9 @@ Rails::Initializer.run do |config|
  
   config.logger = Logger.new("#{RAILS_ROOT}/log/#{RAILS_ENV}.log", 50, 2048000)
 
+end
+
+module GoogleAnalytics
+  USERNAME = "***REMOVED***"
+  PASSWORD = "***REMOVED***"
 end
