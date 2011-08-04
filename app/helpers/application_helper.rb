@@ -121,7 +121,7 @@ module ApplicationHelper
     Garb::Session.login(GoogleAnalytics::USERNAME, GoogleAnalytics::PASSWORD)
     profile = Garb::Management::Profile.all.detect {|p| p.web_property_id == 'UA-10481105-1'}
     
-    ga_results = profile.pagevisits(:start_date => Date.today.ago(1.month).beginning_of_month, :end_date => Date.today.beginning_of_month)
+    ga_results = profile.pagevisits(:start_date => Date.today.ago(1.month).beginning_of_month, :end_date => Date.today.beginning_of_month.ago(1.day))
     ga_results.to_a[0].visits
     
   end
