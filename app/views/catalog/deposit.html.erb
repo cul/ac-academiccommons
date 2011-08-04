@@ -17,7 +17,7 @@ Before you begin, please review the <a>Academic Commons Author Agreement</a>.
 
 
 
-<% form_tag('#', :method=>'get', :multipart => true, :id=>'sd-form', :class=>'self-deposit-form') do %>
+<% form_tag({ :action=>'deposit'}, :method=>'post', :multipart => true, :id=>'sd-form', :class=>'self-deposit-form', :charset=>'utf-8') do %>
 
  <div class="form-input">
    
