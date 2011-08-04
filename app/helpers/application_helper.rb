@@ -111,6 +111,26 @@ module ApplicationHelper
     end
     render
   end
+  
+  def get_last_month_name
+    Date.today.ago(1.month).strftime("%B")
+  end
+  
+  def get_last_month_page_visits
+    
+    Garb::Session.login(GoogleAnalytics::USERNAME, GoogleAnalytics::PASSWORD)
+    profile = Garb::Management::Profile.all.detect {|p| p.web_property_id == 'UA-10481105-1'}
+    
+    ga_results = profile.pagevisits(:start_date => Date.today.ago(1.month).beginning_of_month, :end_date => Date.today.beginning_of_month.ago(1.day))
+    ga_results.to_a[0].visits
+    
+  end
+  
+end
+
+class Pagevisits
+  extend Garb::Model
+  metrics :visits
 end
 
 # jackson added this helper function from rails 3 to generate html5 search field type (rounded corners)
