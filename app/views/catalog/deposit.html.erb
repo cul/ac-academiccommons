@@ -1,74 +1,138 @@
 <% @page_title = "Deposit Your Research | " + application_name  %>
 
+<% extra_head_content << javascript_include_tag('jqModal.js') %>
+
+<% extra_head_content << javascript_include_tag('jquery.validate.min.js') %>
+
+<% extra_head_content << javascript_include_tag('self-deposit.js') %>
+
+
+ 
+
 <div class="page box">
+<h2>Academic Commons Self Deposit</h2>
+<div id="intro">
 
- 
-<p>
-Weclome to Academic Commons Self Deposit.
+<p>You can use this application to conveniently deposit your work directly into the Academic Commons repository.</p>
+
+
+<p>For more information, <a>see the self deposit FAQ.</a></p>
+
+<p>Click Start to Read and Accept the Author Rights Agreement.</p>
+
+
+
+<span id='start_button'>Start Here</span>
 </p>
-
-<p>You can use this application to deposit your work directly into the Academic Commons repository.</p>
-
-<p>
-Before you begin, please review the <a>Academic Commons Author Agreement</a>.
-</p>
-
-
-
-
-
-<% form_tag({ :action=>'deposit'}, :method=>'post', :multipart => true, :id=>'sd-form', :class=>'self-deposit-form', :charset=>'utf-8') do %>
-
- <div class="form-input">
-   
-   <%= label_tag 'url', "UNI"%>
-  <p>  <%= text_field_tag "uni", "", :size=>'10' %>
- 
- <span class="form-field-info">
-You must have  a <a href="http://www.columbia.edu/acis/accounts/">Columbia/CU affiliate UNI</a> to submit to AC using this form. If you are submitting on behalf of a CU-affiliated author, please use their UNI. If you were previously affiliated with Columbia and would like to submit work without a UNI, please contact us. 
-</span>
-
- 
- 
- </p>
- 
- </div>
- 
-
- <div class="form-input">
-
-  <%= label_tag 'file', "Upload" %> 
-<p>   <%= file_field_tag "file", :class=>'required' %>
-
-<span class="form-field-info">
-Supported Formats: PDF DOC Mov
-</span>
- </p>
 
 </div>
 
 
 
- 
-  <div>
- 
- <div class="form-input">
- 
 
-  <%= label_tag 'title' %> 
+<div id="progress-indicator" class="clearfix">
+<ul>
+<li class="done">1. Author Agreement</li>
+<li class="active">2. Depsitor Information</li>
+<li class="pending">3. Submission Details</li>
+</ul>
+
+
+</div>
+<div class="error" style="display:none;">
+<!-- <img src="images/warning.gif" alt="Warning!" width="24" height="24" style="float:left; margin: -5px 10px 0px 0px; " /> -->
+
+<span></span>.<br clear="all"/>
+
+</div>
+
+
+
+<% form_tag({ :action=>'deposit'}, :method=>'post', :multipart => true, :id=>'sd-form', :class=>'self-deposit-form', :charset=>'utf-8') do %>
+
+
+<div id="form-part-one" style="display:none">
+<div id="depositor-info">
+<h3>Depositor Information</h3>
+
+<br style="clear:both">
+
+<div class="form-input">
+   
+<%= label_tag 'uni', "UNI"%>
+
 <p>
-   <%= text_area_tag "title", "", :cols=>"60", :rows=>"3", :class=>'required' %>
 
+<%= text_field_tag "uni", "", :size=>'10' ,:class=>'required'  %>
+ 
+<span class="form-field-info">
+A <a href="http://www.columbia.edu/acis/accounts/">Columbia/CU affiliate UNI</a> is required to deposit work to AC using this application. If you are submitting on behalf of a CU-affiliated author, please use their UNI. If you were previously affiliated with Columbia and would like to submit work without a UNI, please contact us. 
+</span>
 
-
+ 
+ 
  </p>
- </div>
+  <p>
+   <%= label_tag 'name', 'Your Name' %>
+   <%= text_field_tag "name", "",:class=>'' %>
+</p>
  
- 
-  <div class="form-input">
-    <%= label_tag 'author', 'Author(s)' %> 
  <p>
-  <%= text_area_tag "author" ,"", :cols=>"60", :rows=>"3", :class=>'required' %> </p>
+   <%= label_tag 'email', 'Your E-mail' %>
+   <%= text_field_tag "email", "",:class=>'required email' %>
+</p>
+ 
+<p>
+
+<button id="continue-1"   >continue&#8230;</button>
+
+</p>
+
+</div>
+ 
+</div>
+
+<div id="submission-info"> 
+
+<h3>Submission Details</h3>
+
+<div class="form-input">
+
+<%= label_tag 'file', "File Upload" %> 
+
+<p>
+<%= file_field_tag "file", :class=>'required' %>
+<span class="form-field-info">
+</span>
+</p>
+
+</div> <!-- form-input -->
+<div>
+
+<div class="form-input">
+
+<%= label_tag 'title' %> 
+<p>
+<%= text_area_tag "title", "", :cols=>"60", :rows=>"3", :class=>'required' %>
+
+<span class="form-field-info">
+ 
+</span>
+
+</p>
+
+</div>
+ 
+<div class="form-input">
+<%= label_tag 'author', 'Author(s)' %> 
+
+<p>
+
+<%= text_area_tag "author" ,"", :cols=>"60", :rows=>"3", :class=>'required' %>
+  
+  <span class="form-field-info">
+ 
+</span> </p>
 </div>
 
 
@@ -79,47 +143,55 @@ Supported Formats: PDF DOC Mov
    <%= label_tag 'abstr', 'Abstract' %>
    <p>
    <%= text_area_tag "abstr", "", :cols=>"60", :rows=>"12", :class=>'required' %>
+ <span class="form-field-info">
  
- </p>
+</span>
+</p>
  
- </div>
- 
- 
-    <div class="form-input">
+</div>
+
+<div class="form-input">
    
    <%= label_tag 'url', "URL"%>
   <p>  <%= text_field_tag "url" %>
- </p>
+  <span class="form-field-info">
  
- </div>
-   <div class="form-input">
+</span>
+</p>
+ 
+</div>
+<div class="form-input">
+
       <%= label_tag 'doi_pmcid','DOI/PMCID' %>
 <p>   <%= text_field_tag "doi_pmcid" %>
- </p>
- </div>
+<span class="form-field-info">
  
-    <div class="form-input">
+</span>
+</p>
+
+</div>
+
+<div class="form-input">
    
  <%= label_tag 'software', 
- "NOTES	" %>
+ "Notes" %>
   <p> 
      <%= text_area_tag "software", "", :cols=>"60", :rows=>"12"  %>
   
-   
+   <span class="form-field-info">
+ 
+</span>
  </p>
  </div>
  
 </div>
 
  <p>
-  <%=  check_box_tag 'accept', :class=>'required' %>   I certify that I have read and understood the terms of the Author Agreement.
+  <%#=  check_box_tag 'accept', :class=>'required' %>  <!--  I certify that I have read and understood the terms of the Author Agreement. -->
  
  </p>
 
-<p>
-   <%= label_tag 'email', 'Your E-mail' %>
-   <%= text_field_tag "email", "",:class=>'required' %>
-</p>
+
 
  
  <p>
@@ -132,7 +204,19 @@ Supported Formats: PDF DOC Mov
 
 </script>
 
-
-
+</div>
+</div>
 
 </div>
+
+<!-- start modal agreement window -->
+
+<div id="ARA" class="jqmWindow">
+<div id="agreement_text"></div>
+<div id="modal_controls">
+<a href="/deposit" id="cancel-button">Cancel</a><a href=# id="agree-button" class="jqmClose">I Accept the Authors Agreement</a>
+
+</div>
+</div>
+
+<!-- end modal agreement window -->

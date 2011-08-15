@@ -26,65 +26,8 @@ $('div.left-column ul').each(function(){
 
 });
 
-$('#sd-form').validate();
-
-
- $('a.addAuthor').click(function(){
-                        // increment the counter
-                        
-
-                        // get the entire "Add" row --
-                        // "this" refers to the clicked element
-                        // and "parent" moves the selection up
-                        // to the parent node in the DOM
-                       var addRow = $(this).parent();
-                     
-console.log(this);
-                        // copy the entire row from the DOM
-                        // with "clone"
-                       var newRow = addRow.clone();
-                      
-                       $(this).html('<a href="" class="author-toggle remove">- remove author</a>');
-                     
-                        
-
-                        // set the values of the inputs
-                        // in the "Add" row to empty strings
-                        //  $('input', addRow).val('');
-                        // $('name', addRow).val('os' + newRowNum);
-
-                        // replace the HTML for the "Add" link 
-                        // with the new row number
-                        //  $('td:first-child', newRow).html('<input type="hidden" name="on' + newRowNum + 'value="Email Address ' + newRowNum + '>Recipient');
-
-                        // insert a remove link in the last cell
-                        // $('td:last-child', newRow).html('<a href="" class="remove">Remove<\/a>');
-
-                        // loop through the inputs in the new row
-                        // and update the ID and name attributes
-                      //  $('input', newRow).each(function(i){
-                      //          var newID = 'os' + newRowNum;
-                      //          $(this).attr('id',newID).attr('name',newID);
-                      //  });
-
-                        // insert the new row into the table
-                        // "before" the Add row
-                        addRow.after(newRow);
-
-                        // add the remove function to the new row
-                        $('a.remove', newRow).click(function(){
-                              $(this).parent().parent().remove();
-                                return false;                           
-                       });
-
-                        // prevent the default click
-                        return false;
-                });
-
-
-
-
-
+  
+ 
 
 
     // Replace input function
