@@ -65,7 +65,5 @@ Rails::Initializer.run do |config|
 
 end
 
-module GoogleAnalytics
-  USERNAME = "***REMOVED***"
-  PASSWORD = "***REMOVED***"
-end
+GOOGLE_USERNAME = "***REMOVED***"
+GOOGLE_PASSWORD = "***REMOVED***"
