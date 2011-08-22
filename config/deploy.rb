@@ -20,6 +20,7 @@ namespace :deploy do
     run "ln -nfs #{deploy_to}shared/database.yml #{release_path}/config/database.yml"
     run "ln -nfs #{deploy_to}shared/solr.yml #{release_path}/config/solr.yml"
     run "ln -nfs #{deploy_to}shared/fedora.yml #{release_path}/config/fedora.yml"
+    run "rm -rf #{release_path}/data/self-deposit-uploads"
     run "ln -nfs #{deploy_to}shared/self-deposit-uploads #{release_path}/data/self-deposit-uploads"
   end
 
