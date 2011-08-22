@@ -25,3 +25,6 @@ config.action_mailer.smtp_settings =
 
 config.action_controller.relative_url_root = "/ac2_dev"
 BASE_PATH = "rowling.cul.columbia.edu"
+
+NEW_DEPOSIT_RECIPIENTS = ["pbf2105@columbia.edu", "patrickforce@gmail.com"]
+MAIL_DELIVERER = "pbf2105@columbia.edu"
