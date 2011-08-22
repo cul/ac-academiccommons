@@ -1,0 +1,45 @@
+%div
+  %b Accepted Author Agreement:
+  = @accepted_agreement ? "&#x2713;" : ""
+%hr
+%div
+  %b UNI:
+  = @uni
+%hr
+%div
+  %b Name:
+  = @name
+%hr
+%div
+  %b E-mail:
+  = @email
+%hr
+%div 
+  %b Title:
+%div
+  = @title.gsub(/\r\n/s, '<br/>')
+%hr
+%div 
+  %b Authors:
+%div
+  = @authors.gsub(/\r\n/s, '<br/>')
+%hr
+%div 
+  %b Abstract or Description:
+%div
+  = @abstract.gsub(/\r\n/s, '<br/>')
+%hr
+%div 
+  %b URL:
+  = @url
+%hr
+%div 
+  %b DOI/PMCID:
+  = @doi_pmcid
+%hr
+%div 
+  %b Notes:
+%div
+  = @notes.gsub(/\r\n/s, '<br/>')
+%hr
+
