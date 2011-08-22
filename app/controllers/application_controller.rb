@@ -16,6 +16,9 @@ class ApplicationController < ActionController::Base
     @solr_server ||= Cul::Fedora::Solr.new(Blacklight.solr_config)
   end
 
+  def relative_root
+    Rails.configuration.action_controller[:relative_url_root] || ""
+  end
 
   def require_user
     unless current_user

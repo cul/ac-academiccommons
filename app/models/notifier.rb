@@ -26,8 +26,9 @@ class Notifier < ActionMailer::Base
     content_type 'text/html'
   end
   
-  def new_deposit(request)
+  def new_deposit(request, file_download_url)
     @accepted_agreement = (request[:acceptedAgreement] == "agree") ? true : false
+    @agreement_version = request["AC-agreement-version"]
     @uni = request[:uni]
     @name = request[:name]
     @email = request[:email]
@@ -37,6 +38,7 @@ class Notifier < ActionMailer::Base
     @url = request[:url]
     @doi_pmcid = request[:doi_pmcid]
     @notes = request[:software]    
+    @file_download_url = file_download_url
     recipients NEW_DEPOSIT_RECIPIENTS
     from MAIL_DELIVERER
     subject "New Academic Commons Deposit Request"
