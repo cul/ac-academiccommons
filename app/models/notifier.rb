@@ -1,5 +1,4 @@
 class Notifier < ActionMailer::Base
-  
 
   def author_monthly(to_address, author_id, date, results, stats, totals,request)
     @author_id = author_id
@@ -8,7 +7,7 @@ class Notifier < ActionMailer::Base
     @results = results
     @date = date.strftime("%b %Y")
     recipients to_address
-    from "rhilliker@columbia.edu"
+    from MAIL_DELIVERER
     subject "Academic Commons Monthly Download Report for #{@date}"
     content_type 'text/html'
     @request = request
@@ -22,9 +21,26 @@ class Notifier < ActionMailer::Base
     @results = results
     @date = date.strftime("%b %Y")
     recipients to_address
-    from "rhilliker@columbia.edu"
+    from MAIL_DELIVERER
     subject "Academic Commons Monthly Download Report for #{@date}"
     content_type 'text/html'
-
   end
+  
+  def new_deposit(request)
+    @accepted_agreement = (request[:acceptedAgreement] == "agree") ? true : false
+    @uni = request[:uni]
+    @name = request[:name]
+    @email = request[:email]
+    @title = request[:title]
+    @authors = request[:author]
+    @abstract = request[:abstr]
+    @url = request[:url]
+    @doi_pmcid = request[:doi_pmcid]
+    @notes = request[:software]    
+    recipients NEW_DEPOSIT_RECIPIENTS
+    from MAIL_DELIVERER
+    subject "New Academic Commons Deposit Request"
+    content_type 'text/html'
+  end
+  
 end
