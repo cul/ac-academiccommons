@@ -18,6 +18,8 @@ class User < ActiveRecord::Base
   end
 
   def set_personal_info_via_ldap
+    puts "-----------------------------"
+
     if wind_login
       entry = Net::LDAP.new({:host => "ldap.columbia.edu", :port => 389}).search(:base => "o=Columbia University, c=US", :filter => Net::LDAP::Filter.eq("uid", wind_login)) || []
       entry = entry.first
