@@ -11,6 +11,7 @@ tmp/*_visits
 log/*.log*
 log/ac-indexing/*.log
 .DS_Store
+data/uploads/*
 db/cstore/**
 db/sphinx/**
 doc/api
