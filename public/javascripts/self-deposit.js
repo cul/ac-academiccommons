@@ -93,14 +93,10 @@ $('#optionalFields').click(function(){
 	}); 
 	// these buttons all run the validation, overridden by specific targets above
 		$(".open4").click(function() {
-	  if (v.form()) {
-	   
-	 
-
-	  
-	   	    accordion.accordion("activate", 4);
-	    current = 4;
-	  }
+	  if (v.form()) {  
+	accordion.accordion("activate", 4);
+	current = 4;
+	}
 	});
 	
 		$(".open3").click(function() {
@@ -131,7 +127,7 @@ $('#optionalFields').click(function(){
 	});
 	
 	function previewForm(){
-	
+ 
 var file = 	$('#file').val();
 
 var temp = new Array();
@@ -146,12 +142,14 @@ $('#title-check').html($('#title').val());
 $('#author-check').html($('#author').val());
 $('#file-check').html(temp[temp.length-1]);
 $('#abstract-check').html($('#abstr').val());
-$('#doi-check').html($('#url').val());
-$('#url-check').html($('#doi_pmcid').val());
-$('#note-check').html($('#software').val());
-      
-       
- 	
-	}
+ 
+
+$('#url').val() != '' ? $('#url-check').html($('#url').val()) :$('#url-check').parent().hide();
+
+$('#doi_pmcid').val() != '' ? $('#doi-check').html($('#doi_pmcid').val()).parent().show() :$('#doi-check').parent().hide();
+
+$('#software').val() != '' ? $('#note-check').html($('#software').val()).parent().show() :$('#note-check').parent().hide();
+
+}
  
 });
