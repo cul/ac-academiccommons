@@ -10,13 +10,13 @@
 
 <div class="page box sd">
 
-<h2>Academic Commons Self Deposit</h2>
+<h2>Academic Commons Self-Deposit</h2>
 
 <div id="intro">
 
 <p>Current faculty, staff, and students of Columbia and its affiliates can use this application to deposit research materials in any digital format, including: articles, monographs, theses and dissertations, working papers, technical reports, conference papers and presentations, datasets, software code, images, video, and other multimedia creations.</p>
 
-<p>If you need to deposit a file larger than 100 MB, or if you are no longer affiliated with Columbia, but have materials that you wish to deposit, please contact us at <a href="mailto:info@cdrs.columbia.edu">info@cdrs.columbia.edu</a>. For more information, see the <a href="http://cdrs.columbia.edu/academiccommons/?page_id=156#depo" target=_blank>self deposit FAQ.</a></p>
+<p>If you need to deposit a file larger than 100 MB, or if you are no longer affiliated with Columbia but have materials that you wish to deposit, please contact us at <a href="mailto:info@cdrs.columbia.edu">info@cdrs.columbia.edu</a>. For more information, see the <a href="http://cdrs.columbia.edu/academiccommons/?page_id=156#depo" target=_blank>self deposit FAQ.</a></p>
 
 <p>Click Start to begin.</p>
 
@@ -103,14 +103,15 @@
  
 <p>
 <%= label_tag 'author', 'Author(s)' %> 
-<%= text_area_tag "author" ,"", :cols=>"60", :rows=>"3", :class=>'pageRequired' ,:title=>'Please enter the authors.'%>
+<%= text_area_tag "author" ,"", :cols=>"60", :rows=>"3", :class=>'pageRequired' ,:title=>'Please enter the author names.'%>
 <span class="form-field-info"></span>
 </p>
 
 <p>
 <%= label_tag 'abstr', 'Abstract or Description' %>
-<%= text_area_tag "abstr", "",   :class=>'pageRequired' , :title=>'To help show your research to relevant search queries, please provide an abstract or a brief description of the work being submitted.'  %>
-<span class="form-field-info"></span>
+<%= text_area_tag "abstr", "",   :class=>'pageRequired' , :title=>'Please provide a brief description of the work being submitted, which will help increase its visibility in search results.'  %>
+ 
+<span class="form-field-info">Use this field to provide a summary of the content of your deposit.  You may cut-and-paste an abstract from the deposit itself, or write your own.  Please be aware that the information you provide here helps us make your work easier to find through our search engine.</span>
 </p>
 
 </fieldset>
@@ -136,7 +137,13 @@
 <p>
 	<%= label_tag 'software', "Notes" %>
 	<%= text_area_tag "software", "", :cols=>"60", :rows=>"12"  %>
-	<span class="form-field-info"></span>
+	<span class="form-field-info">Use this field to tell us anything else about your deposit that might be of interest to users, such as: special software requirements for viewing it, the citation information for a piece that has been published elsewhere, etc.</span>
+	
+	
+ 
+
+	
+	
 </p>
  
 <div class="buttonWrapper"><input name="formBack0" type="button" class="open0 prevbutton" value="Back" alt="Back" title="Back" /> <input name="formNext2" type="button" class="open2 nextbutton" value="Continue" alt="Continue" title="Continue" /></div>
