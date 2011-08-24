@@ -16,7 +16,7 @@ class CreateDeposits < ActiveRecord::Migration
       t.timestamps
     end
 
-    add_index :deposits, [:uni, :name, :email, :title]
+    add_index :deposits, [:uni, :name, :email]
   end
 
   def self.down
