@@ -23,6 +23,10 @@ ActionController::Routing::Routes.draw do |map|
     stats.search_statistics "/statistics/search_history", :action => "search_history"
   end
   
+  map.deposits '/admin/deposits', :controller => 'admin', :action => 'deposits'
+  map.single_deposit '/admin/deposits/:id', :controller => 'admin', :action => 'show_deposit'
+  map.single_deposit_file '/admin/deposits/:id/file', :controller => 'admin', :action => 'download_deposit_file'
+  
   map.connect ':controller/:action/:id'
   map.connect ':controller/:action/:id.:format'
   

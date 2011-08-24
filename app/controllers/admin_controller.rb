@@ -1,4 +1,6 @@
 class AdminController < ApplicationController
+  include 
+  
   before_filter :require_admin 
   before_filter :add_jhtmlarea, :only => [:edit_home_page]
   
@@ -148,6 +150,33 @@ class AdminController < ApplicationController
 
     home_block = ContentBlock.find_by_title("Home Page")
     @home_block_data = home_block ? home_block.data : ""
+  end
+  
+  def deposits
+    
+    if(params[:archive])
+      deposit_to_archive = Deposit.find(params[:archive])
+      if(deposit_to_archive)
+        File.delete(RAILS_ROOT + "/" + deposit_to_archive.file_path)
+        deposit_to_archive.archived = 1
+        deposit_to_archive.save
+      end
+    end
+    @deposits = Deposit.find(:all, :conditions => {:archived => false}, :order => "created_at")
+    
+  end
+  
+  def show_deposit
+    
+    @deposit = Deposit.find(params[:id])
+    
+  end
+  
+  def download_deposit_file
+    
+    @deposit = Deposit.find(params[:id])
+    send_file RAILS_ROOT + "/" + @deposit.file_path
+    
   end
   
   private

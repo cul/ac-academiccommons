@@ -1,8 +1,8 @@
 %div
   %b Accepted Author Agreement
   %b
-    = " (v" + @agreement_version + "): "
-  = @accepted_agreement ? "&#x2713;" : ""
+    = " (" + @agreement_version + "): "
+  = (@agreement_version != "") ? "&#x2713;" : ""
 %hr
 %div
   %b UNI:
@@ -45,5 +45,7 @@
   = @notes.gsub(/\r\n/s, '<br/>')
 %hr
 %p
-  = "You can download the submitted document from <a href=\"" + @file_download_url + "\">" + @file_download_url + "</a>."
+  = "You can access the record for this deposit at <a href=\"" + @record_url + "\">" + @record_url + "</a>."
+%p
+  = "You can download the submitted document directly from <a href=\"" + @file_download_url + "\">" + @file_download_url + "</a>."
 

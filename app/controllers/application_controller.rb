@@ -4,6 +4,8 @@ require_dependency 'vendor/plugins/blacklight/app/controllers/application_contro
 
 class ApplicationController < ActionController::Base
   
+  before_filter :check_new_session
+  
   helper :all # include all helpers, all the time
 
   protected
@@ -18,6 +20,13 @@ class ApplicationController < ActionController::Base
 
   def relative_root
     Rails.configuration.action_controller[:relative_url_root] || ""
+  end
+
+  def check_new_session
+    if(params[:new_session])
+      current_user.set_personal_info_via_ldap
+      current_user.save
+    end
   end
 
   def require_user
@@ -53,8 +62,16 @@ class ApplicationController < ActionController::Base
     session[:return_to] = request.request_uri
   end
 
-  def redirect_back_or_default(default)
-    redirect_to(session[:return_to] || default)
+  def redirect_back_or_default(default, additional_params)
+    to_url = session[:return_to] || default
+    if(additional_params)
+      if(to_url.include?('?'))
+        to_url = to_url + "&" + additional_params
+      else
+        to_url = to_url + "?" + additional_params
+      end
+    end
+    redirect_to(to_url)
     session[:return_to] = nil
   end
 
