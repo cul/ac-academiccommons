@@ -15,8 +15,6 @@ class CreateDeposits < ActiveRecord::Migration
       t.boolean :archived, :default => false
       t.timestamps
     end
-
-    add_index :deposits, [:uni, :name, :email]
   end
 
   def self.down
