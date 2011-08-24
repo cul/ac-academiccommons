@@ -84,7 +84,7 @@
  
 <p>
    <%= label_tag 'email', 'E-mail' %>
-   <%= text_field_tag "email", "",:class=>'pageRequired email',:title=>'Please enter your email.' %>
+   <%= text_field_tag "email", (current_user ? current_user.email : ""),:class=>'pageRequired email',:title=>'Please enter your email.' %>
    <span class="form-field-info"></span>
 </p> 
 

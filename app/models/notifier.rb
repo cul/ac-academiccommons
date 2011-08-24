@@ -26,19 +26,19 @@ class Notifier < ActionMailer::Base
     content_type 'text/html'
   end
   
-  def new_deposit(request, file_download_url)
-    @accepted_agreement = (request[:acceptedAgreement] == "agree") ? true : false
-    @agreement_version = request["AC-agreement-version"]
-    @uni = request[:uni]
-    @name = request[:name]
-    @email = request[:email]
-    @title = request[:title]
-    @authors = request[:author]
-    @abstract = request[:abstr]
-    @url = request[:url]
-    @doi_pmcid = request[:doi_pmcid]
-    @notes = request[:software]    
-    @file_download_url = file_download_url
+  def new_deposit(root_url, deposit)
+    @agreement_version = deposit.agreement_version 
+    @uni = deposit.uni
+    @name = deposit.name
+    @email = deposit.email
+    @title = deposit.title
+    @authors = deposit.authors
+    @abstract = deposit.abstract
+    @url = deposit.url
+    @doi_pmcid = deposit.doi_pmcid
+    @notes = deposit.notes    
+    @record_url = root_url + "admin/deposits/" + deposit.id.to_s
+    @file_download_url = root_url + "admin/deposits/" + deposit.id.to_s + "/file"
     recipients NEW_DEPOSIT_RECIPIENTS
     from MAIL_DELIVERER
     subject "New Academic Commons Deposit Request"

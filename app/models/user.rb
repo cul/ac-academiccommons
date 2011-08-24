@@ -1,7 +1,8 @@
 require_dependency 'vendor/plugins/blacklight/app/models/user.rb'
 
 class User < ActiveRecord::Base
-  before_validation_on_create :set_personal_info_via_ldap
+  before_create :set_personal_info_via_ldap
+  after_initialize :set_personal_info_via_ldap
 
   named_scope :admins, :conditions => {:admin => true}
 
@@ -18,7 +19,6 @@ class User < ActiveRecord::Base
   end
 
   def set_personal_info_via_ldap
-    puts "-----------------------------"
 
     if wind_login
       entry = Net::LDAP.new({:host => "ldap.columbia.edu", :port => 389}).search(:base => "o=Columbia University, c=US", :filter => Net::LDAP::Filter.eq("uid", wind_login)) || []

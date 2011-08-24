@@ -17,7 +17,7 @@ class UserSessionsController < ApplicationController
     @user_session.save do |result|  
       if result  
         session[:return_to] = nil if session[:return_to].to_s.include?("logout")
-        redirect_back_or_default root_url  
+        redirect_back_or_default(root_url, "new_session=true")  
       else  
         flash[:error] = "Unsuccessfully logged in."
         redirect_to wind_logout_url
@@ -30,4 +30,5 @@ class UserSessionsController < ApplicationController
     current_user_session.destroy
     redirect_to wind_logout_url
   end
+  
 end

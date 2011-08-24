@@ -270,3 +270,11 @@ $("#ingest_monitor_content").each
     
     
 });
+
+function $$archiveDeposit(url)
+{
+	if(confirm("Archiving will delete the file associated with the record from the file system\n\nAre you sure you want to archive this record?"))
+	{
+		document.location = url
+	}
+}
