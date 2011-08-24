@@ -48,8 +48,6 @@ ActiveRecord::Schema.define(:version => 20110823100933) do
     t.datetime "updated_at"
   end
 
-  add_index "deposits", ["uni", "name", "email"], :name => "index_deposits_on_uni_and_name_and_email"
-
   create_table "email_preferences", :force => true do |t|
     t.string   "author",          :null => false
     t.boolean  "monthly_opt_out"
