@@ -35,3 +35,6 @@ config.action_mailer.delivery_method = :test
 Haml::Template::options[:ugly] = true
 
 BASE_PATH = "rhys.cul.columbia.edu"
+
+NEW_DEPOSIT_RECIPIENTS = ["rh2561@columbia.edu", "wla2103@columbia.edu", "pbf2105@columbia.edu"]
+MAIL_DELIVERER = "rh2561@columbia.edu"

@@ -45,4 +45,15 @@ class Notifier < ActionMailer::Base
     content_type 'text/html'
   end
   
+  def new_author_agreement(request)
+    @uni = request[:uni]
+    @name = request[:name]
+    @email = request[:email]
+    @agreement_version = request["AC-agreement-version"]
+    recipients NEW_DEPOSIT_RECIPIENTS
+    from MAIL_DELIVERER
+    subject "Academic Commons Author Agreement Accepted"
+    content_type 'text/html'
+  end
+  
 end

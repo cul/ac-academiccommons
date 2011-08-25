@@ -25,4 +25,10 @@ namespace :ac do
     
   end
   
+  task :getremoved => :environment do
+    
+    ACIndexing::getremoved()
+    
+  end
+  
 end

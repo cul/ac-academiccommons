@@ -1,0 +1,18 @@
+%div
+  %b Accepted Author Agreement
+  %b
+    = " (" + @agreement_version + "): "
+  = (@agreement_version != "") ? "&#x2713;" : ""
+%hr
+%div
+  %b UNI:
+  = @uni
+%hr
+%div
+  %b Name:
+  = @name
+%hr
+%div
+  %b E-mail:
+  = @email
+%hr

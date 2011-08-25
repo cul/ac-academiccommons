@@ -1,0 +1,23 @@
+<% @page_title = "Deposit Your Research | " + application_name  %>
+
+<% extra_head_content << javascript_include_tag('jquery.validate.min.js') %>
+<% extra_head_content << javascript_include_tag('jquery.replaceholder.min.js') %>
+<% extra_head_content << javascript_include_tag('self-deposit.js') %>
+
+<div class="page box sd">
+
+<h2>Academic Commons Author Agreement</h2>
+
+<% form_tag({ :action=>'submit_author_agreement'}, :method=>'post', :id=>'sd-form', :class=>'self-deposit-form', :charset=>'utf-8') do %>
+
+<%= render :partial => 'basic_depositor_info' %>
+
+<%= render :partial => 'author_agreement' %>
+
+<div class="buttonWrapper">
+	<input name="formNext1" type="submit" class="agree_only_submit nextbutton" value="Submit" alt="Submit" title="Submit" />
+</div>
+
+<% end %>
+
+</div>
