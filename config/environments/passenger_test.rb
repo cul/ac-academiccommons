@@ -27,17 +27,11 @@ config.action_controller.relative_url_root = "/ac2_test"
 # Disable delivery errors, bad email addresses will be ignored
 config.action_mailer.raise_delivery_errors = true
 config.action_mailer.delivery_method = :smtp
-config.action_mailer.smtp_settings = 
-{
+config.action_mailer.smtp_settings = {
   :address => "localhost",
   :domain => "rhys.cul.columbia.edu",
   :port => 25
 }
-
-# Enable threaded mode
-# config.threadsafe!
-
-config.action_mailer.delivery_method = :test
 
 Haml::Template::options[:ugly] = true
 
