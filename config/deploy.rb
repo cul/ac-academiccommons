@@ -26,6 +26,7 @@ namespace :deploy do
 
   task :create_shared_resources do
     run "mkdir -p #{deploy_to}shared/log/ac-indexing"
+    run "mkdir -p #{deploy_to}shared/self-deposit-uploads"
   end
   
 end
