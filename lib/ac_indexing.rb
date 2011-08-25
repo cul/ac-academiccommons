@@ -1,9 +1,9 @@
 require "stdout_logger"
 
 # used for local testing of cul-fedora gem (comment out for normal deployment)
-# require File.expand_path(File.dirname(__FILE__) + '../../lib/cul-fedora/item.rb')
-# require File.expand_path(File.dirname(__FILE__) + '../../lib/cul-fedora/server.rb')
-# require File.expand_path(File.dirname(__FILE__) + '../../lib/cul-fedora/solr.rb')
+require File.expand_path(File.dirname(__FILE__) + '../../lib/cul-fedora/item.rb')
+require File.expand_path(File.dirname(__FILE__) + '../../lib/cul-fedora/server.rb')
+require File.expand_path(File.dirname(__FILE__) + '../../lib/cul-fedora/solr.rb')
 
 class ACIndexing
   
@@ -12,6 +12,33 @@ class ACIndexing
     solr_config = SOLR_CONFIG
     solr_server = Cul::Fedora::Solr.new(solr_config)
     solr_server.delete_index()
+    
+  end
+  
+  def self.getremoved
+    
+    logger = Logger.new(STDOUT)
+    
+    fedora_config = FEDORA_CONFIG
+    fedora_config[:logger] = logger
+    fedora_server = Cul::Fedora::Server.new(fedora_config)
+    solr_config = SOLR_CONFIG
+    solr_config[:logger] = logger
+    solr_server = Cul::Fedora::Solr.new(solr_config)
+    
+    logger.info "Fedora: " + fedora_server.inspect
+    logger.info "Solr: " + solr_server.inspect
+    
+    ac_collection = fedora_server.item("collection:3")
+    members = ac_collection.listMembers
+    member_pids = []
+    members.each do |member|
+      member_pids << member.pid
+    end
+    
+    logger.info "Checking against " + member_pids.length.to_s + " items in Fedora..."
+    
+    logger.info solr_server.identify_removed(fedora_server, member_pids)
     
   end
   
