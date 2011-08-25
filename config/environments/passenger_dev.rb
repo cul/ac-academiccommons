@@ -14,8 +14,17 @@ config.action_view.debug_rjs                         = true
 config.action_controller.perform_caching             = true
 
 # Don't care if the mailer can't send
-config.action_mailer.raise_delivery_errors = false
-config.action_mailer.delivery_method = :test
+config.action_mailer.raise_delivery_errors = true
+config.action_mailer.delivery_method = :smtp
+config.action_mailer.smtp_settings = 
+{
+  :address => "localhost",
+  :domain => "rowling.cul.columbia.edu",
+  :port => 25
+}
 
 config.action_controller.relative_url_root = "/ac2_dev"
 BASE_PATH = "rowling.cul.columbia.edu"
+
+NEW_DEPOSIT_RECIPIENTS = ["pbf2105@columbia.edu", "patrickforce@gmail.com"]
+MAIL_DELIVERER = "pbf2105@columbia.edu"

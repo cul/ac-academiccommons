@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20101013130039) do
+ActiveRecord::Schema.define(:version => 20110823100933) do
 
   create_table "bookmarks", :force => true do |t|
     t.integer  "user_id",     :null => false
@@ -30,6 +30,25 @@ ActiveRecord::Schema.define(:version => 20101013130039) do
   end
 
   add_index "content_blocks", ["title"], :name => "index_content_blocks_on_title"
+
+  create_table "deposits", :force => true do |t|
+    t.string   "agreement_version",                    :null => false
+    t.string   "uni",                                  :null => false
+    t.string   "name",                                 :null => false
+    t.string   "email",                                :null => false
+    t.string   "file_path",                            :null => false
+    t.text     "title",                                :null => false
+    t.text     "authors",                              :null => false
+    t.text     "abstract",                             :null => false
+    t.string   "url"
+    t.string   "doi_pmcid"
+    t.text     "notes"
+    t.boolean  "archived",          :default => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "deposits", ["uni", "name", "email", "title"], :name => "index_deposits_on_uni_and_name_and_email_and_title"
 
   create_table "email_preferences", :force => true do |t|
     t.string   "author",          :null => false
