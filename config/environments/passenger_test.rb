@@ -30,7 +30,7 @@ config.action_mailer.delivery_method = :smtp
 config.action_mailer.smtp_settings = 
 {
   :address => "localhost",
-  :domain => "rowling.cul.columbia.edu",
+  :domain => "rhys.cul.columbia.edu",
   :port => 25
 }
 
