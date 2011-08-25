@@ -1,17 +1,19 @@
-<p>
-	<%= label_tag 'uni', "UNI"%>
-	<%= text_field_tag "uni", (current_user ? current_user.login : ""),:class=>'pageRequired required', :title=>'A Columbia/CU affiliate UNI is required to deposit work to AC using this application. If you are submitting on behalf of a CU-affiliated author, please use their UNI. If you were previously affiliated with Columbia and would like to submit work without a UNI, please contact us.'  %> 
-	<span class="form-field-info"></span>
-</p>
+<% if(include_uni) %>
+	<p>
+		<%= label_tag 'uni', "UNI"%>
+		<%= text_field_tag "uni", (current_user ? current_user.login : ""),:class=>required_class, :title=>'A Columbia/CU affiliate UNI is required to deposit work to AC using this application. If you are submitting on behalf of a CU-affiliated author, please use their UNI. If you were previously affiliated with Columbia and would like to submit work without a UNI, please contact us.'  %> 
+		<span class="form-field-info"></span>
+	</p>
+<% end %>
 
 <p>
    <%= label_tag 'name', 'Name' %>
-   <%= text_field_tag "name", (current_user ? current_user.to_s : ""),:class=>'pageRequired required' , :title=>'Please enter your name.' %>
+   <%= text_field_tag "name", (current_user ? current_user.to_s : ""),:class=>required_class , :title=>'Please enter your name.' %>
      <span class="form-field-info"></span>
 </p>
  
 <p>
    <%= label_tag 'email', 'E-mail' %>
-   <%= text_field_tag "email", (current_user ? current_user.email : ""),:class=>'pageRequired required email',:title=>'Please enter your email.' %>
+   <%= text_field_tag "email", (current_user ? current_user.email : ""),:class=>required_class,:title=>'Please enter your email.' %>
    <span class="form-field-info"></span>
 </p> 
