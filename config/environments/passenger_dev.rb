@@ -16,8 +16,7 @@ config.action_controller.perform_caching             = true
 # Don't care if the mailer can't send
 config.action_mailer.raise_delivery_errors = true
 config.action_mailer.delivery_method = :smtp
-config.action_mailer.smtp_settings = 
-{
+config.action_mailer.smtp_settings = {
   :address => "localhost",
   :domain => "rowling.cul.columbia.edu",
   :port => 25
