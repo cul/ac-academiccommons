@@ -34,11 +34,6 @@ config.action_mailer.smtp_settings =
   :port => 25
 }
 
-# Enable threaded mode
-# config.threadsafe!
-
-config.action_mailer.delivery_method = :test
-
 Haml::Template::options[:ugly] = true
 
 BASE_PATH = "rhys.cul.columbia.edu"
