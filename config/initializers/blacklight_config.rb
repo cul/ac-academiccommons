@@ -223,6 +223,13 @@ Blacklight.configure(:shared) do |config|
       "lc_callnum_display"      => "Call number:",
       "object_display"          => "In Fedora:",
       "isbn_t"                  => "ISBN:"
+    },
+    :linked => {
+      "author_facet" => "facet",
+      "genre_facet" => "facet",
+      "handle" => "url",
+      "subject" => "facet",
+      "series" => "facet"
     }
   }
 
