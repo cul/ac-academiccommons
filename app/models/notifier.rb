@@ -46,7 +46,6 @@ class Notifier < ActionMailer::Base
   end
   
   def new_author_agreement(request)
-    @uni = request[:uni]
     @name = request[:name]
     @email = request[:email]
     @agreement_version = request["AC-agreement-version"]

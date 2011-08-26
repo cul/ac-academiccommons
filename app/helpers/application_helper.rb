@@ -135,6 +135,21 @@ module ApplicationHelper
     
   end
   
+  def document_show_fields_linked
+    Blacklight.config[:show_fields][:linked]
+  end
+  
+  def document_render_field_value(field_name, value)
+    if(document_show_fields_linked[field_name])
+      if(document_show_fields_linked[field_name] == "facet")
+        value = '<a href="' + relative_root + '/catalog?f[' + field_name + '][]=' + value + '">' + value + '</a>'
+      elsif(document_show_fields_linked[field_name] == "url")
+        value = '<a href="' + value + '">' + value + '</a>'
+      end
+    end
+    return value
+  end
+  
 end
 
 # jackson added this helper function from rails 3 to generate html5 search field type (rounded corners)

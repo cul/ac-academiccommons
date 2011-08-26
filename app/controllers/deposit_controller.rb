@@ -31,7 +31,7 @@ class DepositController < ApplicationController
       Notifier.deliver_new_author_agreement(params)
     else
       flash[:notice] = "You must accept the author rights agreement."
-      redirect_to :action => "index"
+      redirect_to :action => "agreement_only"
     end
   end
   

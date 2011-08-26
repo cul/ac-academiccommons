@@ -10,9 +10,9 @@
 
 <% form_tag({ :action=>'submit_author_agreement'}, :method=>'post', :id=>'sd-form', :class=>'self-deposit-form', :charset=>'utf-8') do %>
 
-<%= render :partial => 'basic_depositor_info' %>
+<%= render :partial => 'basic_depositor_info', :locals => {:include_uni => false, :required_class => "pageRequired required" } %>
 
-<%= render :partial => 'author_agreement' %>
+<%= render :partial => 'author_agreement', :locals => {:required_class => "pageRequired required" } %>
 
 <div class="buttonWrapper">
 	<input name="formNext1" type="submit" class="agree_only_submit nextbutton" value="Submit" alt="Submit" title="Submit" />

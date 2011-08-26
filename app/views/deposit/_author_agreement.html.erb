@@ -6,7 +6,7 @@
 <p style="margin-left:80px">
 <span class="agreement-language"> I have Read and Accept the Author Agreement </span>
 	<%= label_tag 'chbx', ""%>
-	<%= check_box_tag 'acceptedAgreement', 'agree', false, :class => 'pageRequired required',:title => 'You must accept the Author Rights Agreement to continue.' %>
+	<%= check_box_tag 'acceptedAgreement', 'agree', false, :class => required_class, :title => 'You must accept the Author Rights Agreement to continue.' %>
 
 <span class="form-field-info"></span>
 </p>
