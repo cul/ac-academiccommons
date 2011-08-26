@@ -147,7 +147,7 @@ module ApplicationHelper
         value = '<a href="' + value + '">' + value + '</a>'
       end
     end
-    return value
+    return auto_link(value)
   end
   
 end
