@@ -1,5 +1,5 @@
 class DepositController < ApplicationController
-  
+    
   def submit
     
     if(params[:acceptedAgreement] == "agree")
