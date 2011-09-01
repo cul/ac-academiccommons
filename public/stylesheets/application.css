@@ -183,6 +183,7 @@ div.sd{
 
 div.sd h2{
 	font-size: 1.5em;
+	margin-bottom: 1em;
 	
 }
 
@@ -2054,7 +2055,7 @@ background
    /* fallback (Opera) */
     background: #008800;
     /* Mozilla: */
-    background: -moz-linear-gradient(left, #FFF, #CCC);
+    background: -moz-linear-gradient(left, #FFF, #EEE);
     /* Chrome, Safari:*/
     background: -webkit-gradient(linear,
                 left top, right top, from(#FFF), to(#EEE));
