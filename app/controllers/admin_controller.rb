@@ -157,7 +157,9 @@ class AdminController < ApplicationController
     if(params[:archive])
       deposit_to_archive = Deposit.find(params[:archive])
       if(deposit_to_archive)
-        File.delete(RAILS_ROOT + "/" + deposit_to_archive.file_path)
+        if(File.exists?(RAILS_ROOT + "/" + deposit_to_archive.file_path))
+          File.delete(RAILS_ROOT + "/" + deposit_to_archive.file_path)
+        end
         deposit_to_archive.archived = 1
         deposit_to_archive.save
       end
