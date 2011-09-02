@@ -1,4 +1,8 @@
-<div id="top-slug" class="span-17 last">
+
+<div class="span-17">
+
+
+ <div id="top-slug" class="span-17 last">
  <div class='box'>
 
 <h2>Welcome to Our New Site</h2>
@@ -7,16 +11,12 @@
  </div>
 </div>
 
-<div class="span-17">
-
-
 
  
 <div id='most-recent' class='box clearfix'>
 <%= render :partial=>"most_recent_updated.erb" %>
 </div>
 </div>
- 
     <div id="sidebar" class="span-7">
  
 
@@ -58,7 +58,7 @@
 			<li><strong><%= get_total_count() %></strong> items in Academic Commons.</li>
 			<li>Objects added in the last year: <strong><%= get_count_by_year() %></strong></li> 
 			<li>Objects added in the last 30 days:  <strong><%= get_count_by_month() %></strong></li>
-			<li>Page Visits in May: <strong>4,560</strong>
+			<li>Page Visits in <%= get_last_month_name() %>: <strong><%= get_last_month_page_visits() %></strong>
 			
 			</li>
 			</ul>   
@@ -71,7 +71,7 @@
 <div   class='box home-side'  >
 
 
-<p>Current faculty, staff, and students of Columbia and its affiliates are invited to <a href="http://cdrs.columbia.edu/cdrsmain/?page_id=1153">deposit</a> research materials  in any digital format, including: articles, monographs, theses and dissertations, working papers, technical reports, conference papers and presentations, datasets, images, video and other multimedia creations, and software code.
+<p>Current faculty, staff, and students of Columbia and its affiliates are invited to <a href="<%= relative_root %>/deposit">deposit</a> research materials  in any digital format, including: articles, monographs, theses and dissertations, working papers, technical reports, conference papers and presentations, datasets, images, video and other multimedia creations, and software code.
 </p>
 <p>
 To learn more about the benefits of depositing your work into Academic Commons, <a href="http://cdrs.columbia.edu/academiccommons/?page_id=156">visit our FAQ</a> or email <a href="mailto:rh2561@columbia.edu">Robert Hilliker, Digital Repository Manager</a>.</p>

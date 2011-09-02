@@ -4,7 +4,6 @@
 
 require "#{Blacklight.root}/app/helpers/application_helper.rb"
 
-
 module ApplicationHelper
 
 
@@ -111,6 +110,46 @@ module ApplicationHelper
     end
     render
   end
+  
+  def get_last_month_name
+    Date.today.ago(1.month).strftime("%B")
+  end
+  
+  def get_last_month_page_visits
+    
+    if(File.exists?("#{Rails.root}/tmp/#{get_last_month_name.downcase}_visits"))
+      file = File.open("#{Rails.root}/tmp/#{get_last_month_name.downcase}_visits", 'rb')
+      return file.read
+    else
+      require "lib/pagevisits.rb"
+      Garb::Session.login(GOOGLE_USERNAME, GOOGLE_PASSWORD)
+      profile = Garb::Management::Profile.all.detect {|p| p.web_property_id == 'UA-10481105-1'}
+      ga_results = profile.pagevisits(:start_date => Date.today.ago(1.month).beginning_of_month, :end_date => Date.today.beginning_of_month.ago(1.day))
+      visits = ga_results.to_a[0].visits
+      Dir.glob("#{Rails.root}/tmp/*_visits") do |visits_file|
+        File.delete(visits_file)
+      end
+      File.open("#{Rails.root}/tmp/#{get_last_month_name.downcase}_visits", 'w') { |file| file.write(visits) }
+      return visits
+    end
+    
+  end
+  
+  def document_show_fields_linked
+    Blacklight.config[:show_fields][:linked]
+  end
+  
+  def document_render_field_value(field_name, value)
+    if(document_show_fields_linked[field_name])
+      if(document_show_fields_linked[field_name] == "facet")
+        value = '<a href="' + relative_root + '/catalog?f[' + field_name + '][]=' + value + '">' + value + '</a>'
+      elsif(document_show_fields_linked[field_name] == "url")
+        value = '<a href="' + value + '">' + value + '</a>'
+      end
+    end
+    return auto_link(value)
+  end
+  
 end
 
 # jackson added this helper function from rails 3 to generate html5 search field type (rounded corners)

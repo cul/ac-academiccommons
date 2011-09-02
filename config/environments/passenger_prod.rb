@@ -39,3 +39,6 @@ config.action_mailer.smtp_settings = {
 
 Haml::Template::options[:ugly] = true
 BASE_PATH = "academiccommons.columbia.edu"
+
+NEW_DEPOSIT_RECIPIENTS = ["rh2561@columbia.edu", "wla2103@columbia.edu"]
+MAIL_DELIVERER = "rh2561@columbia.edu"

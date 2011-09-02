@@ -16,14 +16,14 @@
           <% if !document[solr_fname].empty?%>
             <dt><%= document_show_field_labels[solr_fname]%></dt><dd>
             <% document[solr_fname].each do |val| %>
-              <%= val %><%= "<br/>" unless val == document[solr_fname].last %>
+              <%= document_render_field_value(solr_fname, val) %><%= "<br/>" unless val == document[solr_fname].last %>
           <% end %>
           </dd>
         <% end %>
         <% else %>
         <% if !document[solr_fname].empty?%>
           <dt><%= document_show_field_labels[solr_fname]%></dt>
-          <dd><%= document[solr_fname] %></dd>
+          <dd><%= document_render_field_value(solr_fname, document[solr_fname]) %></dd>
         <% end -%>
         <% end -%>
       <% end -%>
