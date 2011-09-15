@@ -1,4 +1,4 @@
-CulBlacklightAc2::Application.configure do
+BlacklightDefault::Application.configure do
   # Settings specified here will take precedence over those in config/application.rb
 
   # The test environment is used exclusively to run your application's
@@ -7,7 +7,11 @@ CulBlacklightAc2::Application.configure do
   # and recreated between test runs.  Don't rely on the data there!
   config.cache_classes = true
 
-  # Log error messages when you accidentally call methods on nil.
+  # Configure static asset server for tests with Cache-Control for performance
+  config.serve_static_assets = true
+  config.static_cache_control = "public, max-age=3600"
+
+  # Log error messages when you accidentally call methods on nil
   config.whiny_nils = true
 
   # Show full error reports and disable caching
@@ -23,13 +27,7 @@ CulBlacklightAc2::Application.configure do
   # Tell Action Mailer not to deliver emails to the real world.
   # The :test delivery method accumulates sent emails in the
   # ActionMailer::Base.deliveries array.
-  config.action_mailer.raise_delivery_errors = true
-  config.action_mailer.delivery_method = :smtp
-  config.action_mailer.smtp_settings = {
-    :address => "localhost",
-    :domain => "rhys.cul.columbia.edu",
-    :port => 25
-  }
+  config.action_mailer.delivery_method = :test
 
   # Use SQL instead of Active Record's schema dumper when creating the test database.
   # This is necessary if your schema can't be completely dumped by the schema dumper,
@@ -38,11 +36,13 @@ CulBlacklightAc2::Application.configure do
 
   # Print deprecation notices to the stderr
   config.active_support.deprecation = :stderr
+
+  # Allow pass debug_assets=true as a query parameter to load pages with unpackaged assets
+  config.assets.allow_debugging = true
   
-  config.relative_root = '/ac2_test'
   config.analytics_enabled = false
   
-  config.mail_deposit_recipients = ["rh2561@columbia.edu", "wla2103@columbia.edu"]
-  config.mail_deliverer = "rh2561@columbia.edu"
+  config.mail_deposit_recipients = ["pbf2105@columbia.edu", "patrickforce@gmail.com"]
+  config.mail_deliverer = "pbf2105@columbia.edu"
   
 end

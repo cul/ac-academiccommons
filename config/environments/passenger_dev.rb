@@ -14,13 +14,26 @@ CulBlacklightAc2::Application.configure do
   config.action_view.debug_rjs             = true
   config.action_controller.perform_caching = false
 
-  # Don't care if the mailer can't send
-  config.action_mailer.raise_delivery_errors = false
+  # mailer
+  config.action_mailer.raise_delivery_errors = true
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.smtp_settings = {
+    :address => "localhost",
+    :domain => "rowling.cul.columbia.edu",
+    :port => 25
+  }
 
   # Print deprecation notices to the Rails logger
   config.active_support.deprecation = :log
 
   # Only use best-standards-support built into browsers
   config.action_dispatch.best_standards_support = :builtin
+  
+  config.relative_root = '/ac2_dev'
+  config.analytics_enabled = false
+  
+  config.mail_deposit_recipients = ["pbf2105@columbia.edu", "patrickforce@gmail.com"]
+  config.mail_deliverer = "pbf2105@columbia.edu"
+  
 end
 

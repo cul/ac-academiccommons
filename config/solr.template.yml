@@ -16,6 +16,10 @@ development:
   jetty_path: './jetty'
   url: http://127.0.0.1:8983/solr
   
+test:
+  jetty_path: './jetty'
+  url: http://127.0.0.1:8983/solr
+  
 # passenger_dev, passenger_test, and passenger_prod yml files are created manually in shared resource location
 # For reference, here are the config values for each remote instance:
 passenger_dev:

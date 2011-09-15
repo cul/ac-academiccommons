@@ -55,8 +55,6 @@ module CulBlacklightAc2
     
     config.analytics_username = "***REMOVED***"
     config.analytics_password = "***REMOVED***"
-    config.mail_deposit_recipients = ["pbf2105@columbia.edu", "patrickforce@gmail.com"]
-    config.mail_deliverer = "pbf2105@columbia.edu"
     
   end
 end
