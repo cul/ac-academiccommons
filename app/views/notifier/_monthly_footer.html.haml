@@ -1,9 +1,0 @@
-%br
-%br
-%div 
-  Questions about this email: contact
-  #{mail_to "rhilliker@columbia.edu"}
-%br
-%div
-  Wish to unsubscribe:
-  #{link_to("click here", url_for(:host => defined?(BASE_PATH) ? BASE_PATH : "localhost:3000",  :only_path => false, :controller => :statistics, :action => :unsubscribe_monthly, :author_id => @author_id, :chk => @author_id.crypt("xZ")))} 

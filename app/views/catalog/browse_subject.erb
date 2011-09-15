@@ -1,9 +1,0 @@
-<% @page_title = "Browse Subject - #{params[:id]} - #{application_name}" %>
-
-<% sidebar_items << capture do %>
-  
-  <%= render :partial=>'facets' %>
-
-<% end %>
-
-<%= render :partial=>'subject_facet_list' %>
