@@ -1,5 +1,8 @@
-class CatalogController < ApplicationController
+# -*- encoding : utf-8 -*-
+require 'blacklight/catalog'
 
-  unloadable
-  # before_filter :require_user
-end
+class CatalogController < ApplicationController  
+
+  include Blacklight::Catalog
+
+end 

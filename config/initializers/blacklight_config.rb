@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 # You can configure Blacklight from here. 
 #   
 #   Blacklight.configure(:environment) do |config| end
@@ -18,47 +19,18 @@
 
 Blacklight.configure(:shared) do |config|
 
-  # Set up and register the default SolrDocument Marc extension
-  SolrDocument.extension_parameters[:marc_source_field] = :marc_display
-  SolrDocument.extension_parameters[:marc_format_type] = :marc21
-  SolrDocument.use_extension( Blacklight::Solr::Document::Marc) do |document|
-    document.key?( :marc_display  )
-  end
-
-  
-  # default params for the SolrDocument.search method
-  SolrDocument.default_params[:search] = {
-    :qt=>:search,
-    :per_page => 10,
-    :facets => {:fields=>
-      ["format",
-        "language_facet",
-        "lc_1letter_facet",
-        "lc_alpha_facet",
-        "lc_b4cutter_facet",
-        "language_facet",
-        "pub_date",
-        "subject_era_facet",
-        "subject_geo_facet",
-        "subject_topic_facet"]
-    }  
+  config[:default_solr_params] = {
+    :qt => "search",
+    :per_page => 10 
   }
-  
-  # default params for the SolrDocument.find_by_id method
-  SolrDocument.default_params[:find_by_id] = {:qt => :document}
-  
-  
-  ##############################
-  
-  
-  config[:default_qt] = "search"
-  
-
+ 
   # solr field values given special treatment in the show (single result) view
   config[:show] = {
     :html_title => "title_display",
     :heading => "title_display",
-    :display_type => "format"
+    :display_type => "format",
+    :genre => "genre_facet",
+    :author => "author_display"
   }
 
   # solr fld values given special treatment in the index (search results) view
@@ -74,73 +46,67 @@ Blacklight.configure(:shared) do |config|
   # for human reading/writing, kind of like search_fields. Eg,
   # config[:facet] << {:field_name => "format", :label => "Format", :limit => 10}
   config[:facet] = {
-    :field_names => [
-      "format_h",
-      "collection_h",
-      "date_created_h",
-      "pub_date",
-      "subject_topic_facet",
-      "language_facet",
-      "descriptor",
-      "lc_1letter_facet",
-      "subject_geo_facet",
-      "subject_era_facet"
-    ],
+    :field_names => (facet_fields = [
+       "author_facet",
+       "department_facet",
+       "subject_facet",
+       "genre_facet",
+       "pub_date_facet",
+       "series_facet"
+    ]),
     :labels => {
-      "format_h"              => "Format",
-      "collection_h"              => "In Hierarchy",
-      "date_created_h"              => "Date Created",
-      "pub_date"            => "Publication Year",
-      "subject_topic_facet" => "Topic",
-      "descriptor"          => "Metadata Type",
-      "language_facet"      => "Language",
-      "lc_1letter_facet"    => "Call Number",
-      "subject_era_facet"   => "Era",
-      "subject_geo_facet"   => "Region"
+      "author_facet"      => "Author",
+      "department_facet"  => "Department",
+      "subject_facet"     => "Subject",
+      "genre_facet"       => "Content Type",
+      "pub_date_facet"    => "Date",
+      "series_facet"      => "Series"
     },
     # Setting a limit will trigger Blacklight's 'more' facet values link.
-    # If left unset, then all facet values returned by solr will be displayed.
-    # nil key can be used for a default limit applying to all facets otherwise
-    # unspecified. 
-    # limit value is the actual number of items you want _displayed_,
-    # #solr_search_params will do the "add one" itself, if neccesary.
+    # * If left unset, then all facet values returned by solr will be displayed.
+    # * If set to an integer, then "f.somefield.facet.limit" will be added to
+    # solr request, with actual solr request being +1 your configured limit --
+    # you configure the number of items you actually want _displayed_ in a page.    
+    # * If set to 'true', then no additional parameters will be sent to solr,
+    # but any 'sniffed' request limit parameters will be used for paging, with
+    # paging at requested limit -1. Can sniff from facet.limit or 
+    # f.specific_field.facet.limit solr request params. This 'true' config
+    # can be used if you set limits in :default_solr_params, or as defaults
+    # on the solr side in the request handler itself. Request handler defaults
+    # sniffing requires solr requests to be made with "echoParams=all", for
+    # app code to actually have it echo'd back to see it.     
     :limits => {
-      nil => 10,
-      "subject_facet" => 20
-    },
-    :hierarchy => {
-      "format_h" => true,
-      "date_created_h" => true,
-      "collection_h" => true
+       "author_facet"     => 7,
+       "department_facet" => 7,
+       "subject_facet"    => 7,
+       "genre_facet"      => 5,
+       "pub_date_facet"   => 5,
+       "series_facet"     => 5
     }
   }
+
+  # Have BL send all facet field names to Solr, which has been the default
+  # previously. Simply remove these lines if you'd rather use Solr request
+  # handler defaults, or have no facets.
+  config[:default_solr_params] ||= {}
+  config[:default_solr_params][:"facet.field"] = facet_fields
 
   # solr fields to be displayed in the index (search results) view
   #   The ordering of the field names is the order of the display 
   config[:index_fields] = {
     :field_names => [
-      "title_display",
-      "title_vern_display",
       "author_display",
-      "author_vern_display",
-      "format",
-      "language_facet",
-      "published_display",
-      "published_vern_display",
-      "object_display",
-      "lc_callnum_display"
+      "pub_date_facet",
+      "subject_facet",
+      "genre_facet",
+      "publisher"
     ],
     :labels => {
-      "title_display"           => "Title:",
-      "title_vern_display"      => "Title:",
-      "author_display"          => "Author:",
-      "author_vern_display"     => "Author:",
-      "format"                  => "Format:",
-      "language_facet"          => "Language:",
-      "published_display"       => "Published:",
-      "published_vern_display"  => "Published:",
-      "object_display"          => "In Fedora:",
-      "lc_callnum_display"      => "Call number:"
+      "author_display"          => "Author(s):",
+      "pub_date_facet"          => "Date:",
+      "subject_facet"           => "Subject:",
+      "genre_facet"             => "Type:",
+      "publisher"               => "Publisher:"
     }
   }
 
@@ -149,50 +115,126 @@ Blacklight.configure(:shared) do |config|
   config[:show_fields] = {
     :field_names => [
       "title_display",
-      "title_vern_display",
-      "subtitle_display",
-      "subtitle_vern_display",
-      "author_display",
-      "author_vern_display",
-      "format",
-      "url_fulltext_display",
-      "url_suppl_display",
-      "material_type_display",
-      "language_facet",
-      "published_display",
-      "published_vern_display",
-      "lc_callnum_display",
-      "object_display",
-      "isbn_t"
+      "author_facet",
+      "thesis_advisor",
+      "pub_date_facet",
+      "genre_facet",
+      "handle",
+      "series_facet",
+      "book_journal_title",
+      "media_type_facet",
+      "table_of_contents", 
+      "geographic_area_display", 
+      "book_author", 
+      "format", 
+      "notes", 
+      "publisher", 
+      "publisher_location", 
+      "abstract", 
+      "subject_facet",
+      "isbn",
+      "issn",
+      "doi"
     ],
     :labels => {
       "title_display"           => "Title:",
-      "title_vern_display"      => "Title:",
-      "subtitle_display"        => "Subtitle:",
-      "subtitle_vern_display"   => "Subtitle:",
-      "author_display"          => "Author:",
-      "author_vern_display"     => "Author:",
-      "format"                  => "Format:",
-      "url_fulltext_display"    => "URL:",
-      "url_suppl_display"       => "More Information:",
-      "material_type_display"   => "Physical description:",
-      "language_facet"          => "Language:",
-      "published_display"       => "Published:",
-      "published_vern_display"  => "Published:",
-      "lc_callnum_display"      => "Call number:",
-      "object_display"          => "In Fedora:",
-      "isbn_t"                  => "ISBN:"
+      "author_facet"            => "Author(s):",
+      "thesis_advisor"          => "Thesis Advisor(s):",
+      "pub_date_facet"          => "Date:",
+      "genre_facet"             => "Type:",
+      "handle"                  => "Handle:",
+      "series_facet"            => "Series:",
+      "book_journal_title"      => "Book/Journal Title:",
+      "media_type_facet"        => "Media Type:",
+      "table_of_contents"       => "Table of Contents:", 
+      "geographic_area_display" => "Geographic Area:", 
+      "book_author"             => "Book Author:", 
+      "format"                  => "Format:", 
+      "notes"                   => "Notes:", 
+      "publisher"               => "Publisher:", 
+      "publisher_location"      => "Publisher Location:", 
+      "abstract"                => "Abstract:", 
+      "subject_facet"           => "Subject(s):", 
+      "isbn"                    => "ISBN:",
+      "issn"                    => "ISSN:",
+      "doi"                     => "DOI:"
+    },
+    :linked => {
+      "author_facet"  => "facet",
+      "genre_facet"   => "facet",
+      "handle"        => "url",
+      "subject_facet" => "facet",
+      "series_facet"  => "facet"
     }
   }
 
 
   # "fielded" search configuration. Used by pulldown among other places.
   # For supported keys in hash, see rdoc for Blacklight::SearchFields
+  #
+  # Search fields will inherit the :qt solr request handler from
+  # config[:default_solr_parameters], OR can specify a different one
+  # with a :qt key/value. Below examples inherit, except for subject
+  # that specifies the same :qt as default for our own internal
+  # testing purposes.
+  #
+  # The :key is what will be used to identify this BL search field internally,
+  # as well as in URLs -- so changing it after deployment may break bookmarked
+  # urls.  A display label will be automatically calculated from the :key,
+  # or can be specified manually to be different. 
   config[:search_fields] ||= []
-  config[:search_fields] << {:display_label => 'All Fields', :qt => 'search'}
-  config[:search_fields] << {:display_label => 'Title', :qt => 'title_search'}
-  config[:search_fields] << {:display_label =>'Author', :qt => 'author_search'}
-  config[:search_fields] << {:display_label => 'Subject', :qt=> 'subject_search'}
+
+  # This one uses all the defaults set by the solr request handler. Which
+  # solr request handler? The one set in config[:default_solr_parameters][:qt],
+  # since we aren't specifying it otherwise. 
+  config[:search_fields] << {
+    :key => "all_fields",  
+    :display_label => 'All Fields'   
+  }
+
+  # Now we see how to over-ride Solr request handler defaults, in this
+  # case for a BL "search field", which is really a dismax aggregate
+  # of Solr search fields. 
+  config[:search_fields] << {
+    :key => 'title',     
+    # solr_parameters hash are sent to Solr as ordinary url query params. 
+    :solr_parameters => {
+      :"spellcheck.dictionary" => "title"
+    },
+    # :solr_local_parameters will be sent using Solr LocalParams
+    # syntax, as eg {! qf=$title_qf }. This is neccesary to use
+    # Solr parameter de-referencing like $title_qf.
+    # See: http://wiki.apache.org/solr/LocalParams
+    :solr_local_parameters => {
+      :qf => "$title_qf",
+      :pf => "$title_pf"
+    }
+  }
+  config[:search_fields] << {
+    :key =>'author',     
+    :solr_parameters => {
+      :"spellcheck.dictionary" => "author" 
+    },
+    :solr_local_parameters => {
+      :qf => "$author_qf",
+      :pf => "$author_pf"
+    }
+  }
+
+  # Specifying a :qt only to show it's possible, and so our internal automated
+  # tests can test it. In this case it's the same as 
+  # config[:default_solr_parameters][:qt], so isn't actually neccesary. 
+  config[:search_fields] << {
+    :key => 'subject', 
+    :qt=> 'search',
+    :solr_parameters => {
+      :"spellcheck.dictionary" => "subject"
+    },
+    :solr_local_parameters => {
+      :qf => "$subject_qf",
+      :pf => "$subject_pf"
+    }
+  }
   
   # "sort results by" select (pulldown)
   # label in pulldown is followed by the name of the SOLR field to sort by and
@@ -208,5 +250,13 @@ Blacklight.configure(:shared) do |config|
   # If there are more than this many search results, no spelling ("did you 
   # mean") suggestion is offered.
   config[:spell_max] = 5
+
+  # Add documents to the list of object formats that are supported for all objects.
+  # This parameter is a hash, identical to the Blacklight::Solr::Document#export_formats 
+  # output; keys are format short-names that can be exported. Hash includes:
+  #    :content-type => mime-content-type
+  config[:unapi] = {
+    'oai_dc_xml' => { :content_type => 'text/xml' } 
+  }
 end
 

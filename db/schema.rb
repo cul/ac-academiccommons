@@ -1,24 +1,24 @@
-# This file is auto-generated from the current state of the database. Instead of editing this file, 
-# please use the migrations feature of Active Record to incrementally modify your database, and
-# then regenerate this schema definition.
+# This file is auto-generated from the current state of the database. Instead
+# of editing this file, please use the migrations feature of Active Record to
+# incrementally modify your database, and then regenerate this schema definition.
 #
-# Note that this schema.rb definition is the authoritative source for your database schema. If you need
-# to create the application database on another system, you should be using db:schema:load, not running
-# all the migrations from scratch. The latter is a flawed and unsustainable approach (the more migrations
+# Note that this schema.rb definition is the authoritative source for your
+# database schema. If you need to create the application database on another
+# system, you should be using db:schema:load, not running all the migrations
+# from scratch. The latter is a flawed and unsustainable approach (the more migrations
 # you'll amass, the slower it'll run and the greater likelihood for issues).
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100701170542) do
+ActiveRecord::Schema.define(:version => 20110914202429) do
 
   create_table "bookmarks", :force => true do |t|
     t.integer  "user_id",     :null => false
-    t.text     "url"
     t.string   "document_id"
     t.string   "title"
-    t.text     "notes"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "user_type"
   end
 
   create_table "content_blocks", :force => true do |t|
@@ -30,6 +30,33 @@ ActiveRecord::Schema.define(:version => 20100701170542) do
   end
 
   add_index "content_blocks", ["title"], :name => "index_content_blocks_on_title"
+
+  create_table "deposits", :force => true do |t|
+    t.string   "agreement_version",                    :null => false
+    t.string   "uni",                                  :null => false
+    t.string   "name",                                 :null => false
+    t.string   "email",                                :null => false
+    t.string   "file_path",                            :null => false
+    t.text     "title",                                :null => false
+    t.text     "authors",                              :null => false
+    t.text     "abstract",                             :null => false
+    t.string   "url"
+    t.string   "doi_pmcid"
+    t.text     "notes"
+    t.boolean  "archived",          :default => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "email_preferences", :force => true do |t|
+    t.string   "author",          :null => false
+    t.boolean  "monthly_opt_out"
+    t.string   "email"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "email_preferences", ["author", "monthly_opt_out"], :name => "index_email_preferences_on_author_and_monthly_opt_out"
 
   create_table "reports", :force => true do |t|
     t.string   "name",         :null => false
@@ -49,6 +76,7 @@ ActiveRecord::Schema.define(:version => 20100701170542) do
     t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "user_type"
   end
 
   add_index "searches", ["user_id"], :name => "index_searches_on_user_id"
@@ -62,6 +90,21 @@ ActiveRecord::Schema.define(:version => 20100701170542) do
 
   add_index "sessions", ["session_id"], :name => "index_sessions_on_session_id"
   add_index "sessions", ["updated_at"], :name => "index_sessions_on_updated_at"
+
+  create_table "statistics", :force => true do |t|
+    t.string   "session_id"
+    t.string   "event",      :null => false
+    t.string   "ip_address"
+    t.string   "identifier"
+    t.string   "result"
+    t.datetime "at_time",    :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "statistics", ["at_time"], :name => "index_statistics_on_at_time"
+  add_index "statistics", ["event"], :name => "index_statistics_on_event"
+  add_index "statistics", ["identifier"], :name => "index_statistics_on_identifier"
 
   create_table "taggings", :force => true do |t|
     t.integer  "tag_id"

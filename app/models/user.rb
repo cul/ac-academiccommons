@@ -1,12 +1,16 @@
-require_dependency 'vendor/plugins/blacklight/app/models/user.rb'
-
 class User < ActiveRecord::Base
-  before_validation_on_create :set_personal_info_via_ldap
+# Connects this user object to Blacklights Bookmarks and Folders. 
+ include Blacklight::User
 
-  named_scope :admins, :conditions => {:admin => true}
+  before_create :set_personal_info_via_ldap
+  after_initialize :set_personal_info_via_ldap
 
   acts_as_authentic do |c|
     c.validate_password_field = false
+  end
+
+  def admins
+    where(:admin => true)
   end
 
   def to_s
@@ -31,4 +35,5 @@ class User < ActiveRecord::Base
 
     return self
   end
+  
 end
