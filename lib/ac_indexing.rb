@@ -1,15 +1,18 @@
 require "stdout_logger"
 
 # used for local testing of cul-fedora gem (comment out for normal deployment)
-# require File.expand_path(File.dirname(__FILE__) + '../../lib/cul-fedora/item.rb')
-# require File.expand_path(File.dirname(__FILE__) + '../../lib/cul-fedora/server.rb')
-# require File.expand_path(File.dirname(__FILE__) + '../../lib/cul-fedora/solr.rb')
+require File.expand_path(File.dirname(__FILE__) + '../../lib/cul-fedora/item.rb')
+require File.expand_path(File.dirname(__FILE__) + '../../lib/cul-fedora/server.rb')
+require File.expand_path(File.dirname(__FILE__) + '../../lib/cul-fedora/solr.rb')
 
 class ACIndexing
   
   def self.deleteindex
+
+    logger = Logger.new(STDOUT)
     
-    solr_config = SOLR_CONFIG
+    solr_config = Rails.application.config.solr
+    solr_config[:logger] = logger
     solr_server = Cul::Fedora::Solr.new(solr_config)
     solr_server.delete_index()
     
@@ -19,10 +22,10 @@ class ACIndexing
     
     logger = Logger.new(STDOUT)
     
-    fedora_config = FEDORA_CONFIG
+    fedora_config = Rails.application.config.fedora
     fedora_config[:logger] = logger
     fedora_server = Cul::Fedora::Server.new(fedora_config)
-    solr_config = SOLR_CONFIG
+    solr_config = Rails.application.config.solr
     solr_config[:logger] = logger
     solr_server = Cul::Fedora::Solr.new(solr_config)
     
@@ -46,6 +49,9 @@ class ACIndexing
     
     collections = options.delete(:collections)
     items = options.delete(:items)
+    # skip isn't being passed in to this function in any implementation, but it accepts an array of PIDs to ignore
+    # should we want to implement it anywhere at any time
+    skip = options.delete(:skip) || nil
     overwrite = as_boolean(options.delete(:overwrite))
     metadata = as_boolean(options.delete(:metadata))
     fulltext = as_boolean(options.delete(:fulltext))
@@ -72,11 +78,11 @@ class ACIndexing
     logger.info "Delete items removed from Fedora?: " + delete_removed.to_s
     logger.info "Logging to file and STDOUT?: " + log_stdout.to_s
     
-    fedora_config = FEDORA_CONFIG
+    fedora_config = Rails.application.config.fedora
     fedora_config[:logger] = logger
     fedora_server = Cul::Fedora::Server.new(fedora_config)
     
-    solr_config = SOLR_CONFIG
+    solr_config = Rails.application.config.solr
     solr_config[:logger] = logger
     solr_server = Cul::Fedora::Solr.new(solr_config)
     
@@ -94,7 +100,7 @@ class ACIndexing
     end
     
     ## TEMP -- need to set temporary array of items to ignore until we can actually "remove" them from Fedora
-    ignore_file = File.open(File.dirname(__FILE__) + "/tasks/ignore") or die "Unable to open ignore file..."
+    ignore_file = File.open(File.dirname(__FILE__) + "/ac_indexing_ignore") or die "Unable to open ignore file..."
     ignore = []
     ignore_file.each_line { |line| ignore.push line.strip }
     
@@ -110,7 +116,7 @@ class ACIndexing
       
     end
     
-    solr_params = {:items => items, :format => "ac2", :fedora_server => fedora_server, :collections => collections, :fulltext => fulltext, :metadata => metadata, :delete_removed => delete_removed, :overwrite => overwrite, :ignore => ignore, :skip => nil, :process => nil}
+    solr_params = {:collections => collections, :items => items, :format => "ac2", :fedora_server => fedora_server, :fulltext => fulltext, :metadata => metadata, :delete_removed => delete_removed, :overwrite => overwrite, :ignore => ignore, :skip => skip}
     results = solr_server.ingest(solr_params)
     
     # Let's just do a final commit to ensure everything gets pushed

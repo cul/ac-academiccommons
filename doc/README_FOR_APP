@@ -1,2 +1,12 @@
-Use this README file to introduce your application and point to useful places in the API for learning more.
-Run "rake doc:app" to generate API documentation for your models, controllers, helpers, and libraries.
+== Checking out a development instance of Academic Commons 2.0
+
+1. Clone the repository to a location of your choosing
+	git clone git@github.com:cul/cul-blacklight-ac2.git
+
+2. Checkout the current development branch
+	git checkout {branch}
+
+3. Create local config files from templates
+	cp config/database.template.yml config/database.yml
+	cp config/solr.template.yml config/solr.yml
+	cp config/fedora.template.yml config/fedora.yml

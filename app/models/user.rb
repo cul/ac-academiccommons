@@ -1,13 +1,16 @@
-require_dependency 'vendor/plugins/blacklight/app/models/user.rb'
-
 class User < ActiveRecord::Base
+# Connects this user object to Blacklights Bookmarks and Folders. 
+ include Blacklight::User
+
   before_create :set_personal_info_via_ldap
   after_initialize :set_personal_info_via_ldap
 
-  named_scope :admins, :conditions => {:admin => true}
-
   acts_as_authentic do |c|
     c.validate_password_field = false
+  end
+
+  def admins
+    where(:admin => true)
   end
 
   def to_s
@@ -19,7 +22,6 @@ class User < ActiveRecord::Base
   end
 
   def set_personal_info_via_ldap
-
     if wind_login
       entry = Net::LDAP.new({:host => "ldap.columbia.edu", :port => 389}).search(:base => "o=Columbia University, c=US", :filter => Net::LDAP::Filter.eq("uid", wind_login)) || []
       entry = entry.first
@@ -33,4 +35,5 @@ class User < ActiveRecord::Base
 
     return self
   end
+  
 end
