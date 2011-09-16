@@ -60,8 +60,34 @@ CulBlacklightAc2::Application.routes.draw do
   # Note: This route will make all actions in every controller accessible via GET requests.
   # match ':controller(/:action(/:id(.:format)))'
   
-  match 'login',          :to => 'application#login',       :as => 'new_user_session'
-  match 'wind_logout',    :to => 'application#logout',      :as => 'destroy_user_session'
+  resources :email_preferences, :reports
+  
+  match '/download/fedora_content/:download_method/:uri/:block/:filename', :to => 'download#fedora_content', :as => "fedora_content",
+    :block => /(DC|CONTENT|SOURCE)/,
+    :uri => /.+/, :filename => /.+/, :download_method => /(download|show|show_pretty)/
+  match '/access_denied', :to => 'application#access_denied', :as => 'access_denied'
+  
+  match '/ingest_monitor/:id', :to => 'ingest_monitor#index', :as => 'ingest_monitor'
+  
+  match '/statistics/search_history', :to => 'statistics#search_history', :as => 'search_statistics'
+  
+  match '/deposit', :to => 'deposit#index', :as => 'deposit'
+  
+  match '/admin/deposits/:id', :to => 'admin#show_deposit', :as => 'show_deposit'
+  
+  match ':controller/:action'
+  match ':controller/:action/:id'
+  match ':controller/:action/:id.:format'
+  
+  match '/catalog/browse/departments', :to => 'catalog#browse_department', :as => 'departments_browse'
+  match '/catalog/browse/subjects', :to => 'catalog#browse_subject', :as => 'subjects_browse'
+  match '/catalog/browse/departments/:id', :to => 'catalog#browse_department', :as => 'department_browse'
+  match '/catalog/browse/subjects/:id', :to => 'catalog#browse_subject', :as => 'subject_browse'
+  
+  match '/item/:id', :to => 'catalog#show', :as => 'catalog_item'
+  
+  match '/login',          :to => 'user_sessions#new',          :as => 'new_user_session'
+  match '/wind_logout',    :to => 'user_sessions#destroy',      :as => 'destroy_user_session'
   # match 'account',        :to => 'application#account',     :as => 'edit_user_registration'
   
 end

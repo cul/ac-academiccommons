@@ -8,14 +8,23 @@ module ApplicationHelper
     Rails.application.config.relative_root || ""
   end
   
-  # def render_document_heading
-  #  heading = ""
-  #  if(!document_type.nil?)
-  #    heading += '<h2>' + document_type[0] + ':</h2>'
-  #  end
-  #  heading += '<h1>' + (document_heading || "") + '</h1>'
-  #  heading += '<h2 class="author_credit">' + first_names_then_last(document_author[0] || "")  + '</h2>'
-  #end
+  def document_type
+    @document[Blacklight.config[:show][:genre]]
+  end
+  
+  def document_author
+    @document[Blacklight.config[:show][:author]]
+  end
+  
+  def render_document_heading
+    heading = ""
+    if(!document_type.nil?)
+      heading += '<h2>' + document_type.first + ':</h2>'
+    end
+    heading += '<h1>' + (document_heading.first || "") + '</h1>'
+    heading += '<h2 class="author_credit">' + first_names_then_last(document_author.first || "")  + '</h2>'
+    heading.html_safe
+  end
   
   def first_names_then_last(last_names_first)
     i = 0
@@ -27,19 +36,19 @@ module ApplicationHelper
       html << first_name_then_last(last_name_first.strip)
       i += 1
     end
-    return html
+    return html.html_safe
   end
   
   def first_name_then_last(last_name_first)
     if(last_name_first.index(","))
       parts = last_name_first.split(",")
       if parts.length > 1
-        return parts[1].strip + " " + parts[0].strip
+        return (parts[1].strip + " " + parts[0].strip).html_safe
       else
-        return parts[0].strip
+        return (parts[0].strip).html_safe
       end
     else
-      return last_name_first
+      return last_name_first.html_safe
     end
   end
   
@@ -72,39 +81,39 @@ module ApplicationHelper
   # first arg item is a facet value item from rsolr-ext.
   # options consist of:
   # :suppress_link => true # do not make it a link, used for an already selected value for instance
-  #def render_facet_value(facet_solr_field, item, options ={})
-   # puts item.inspect
-   #link_to_unless(options[:suppress_link], item.value, add_facet_params_and_redirect(facet_solr_field, item.value), :class=>"facet_select") + "<span class='item_count'> (" + format_num(item.hits) + ")</span>" + render_subfacets(facet_solr_field, item, options)
-  #end
+  def render_facet_value(facet_solr_field, item, options ={})
+    render = link_to_unless(options[:suppress_link], item.value, add_facet_params_and_redirect(facet_solr_field, item.value), :class=>"facet_select")
+    render = render + ("<span class='item_count'> (" + format_num(item.hits) + ")</span>").html_safe
+    render.html_safe
+  end
   
-  #def facet_list_limit
-  #  10
-  #end
+  def facet_list_limit
+    10
+  end
 
   # Standard display of a SELECTED facet value, no link, special span
   # with class, and 'remove' button.
- # def render_selected_facet_value(facet_solr_field, item)
-    
-   # link_to(item.label+"<span class='item_count'> (" + format_num(item.hits) + ")</span>" , remove_facet_params(facet_solr_field, item.value, params), :class=>"facet_deselect") +
-   # render_subfacets(facet_solr_field, item)
-    
-  #end
+  def render_selected_facet_value(facet_solr_field, item)
+    render = link_to((item.value + "<span class='item_count'> (" + format_num(item.hits) + ")</span>").html_safe, remove_facet_params(facet_solr_field, item.value, params), :class=>"facet_deselect") 
+    render = render + render_subfacets(facet_solr_field, item)
+    render.html_safe
+  end
   
-  #def render_subfacets(facet_solr_field, item, options ={})
-  #  render = ''
-  #  if (item.instance_variables.include? "@subfacets")
-  #    render = '<span class="toggle">[+/-]</span><ul>'
-  #    item.subfacets.each do |subfacet|
-  #      if facet_in_params?(facet_solr_field, subfacet.value)
-  #        render += '<li>' + render_selected_facet_value(facet_solr_field, subfacet) + '</li>'
-  #      else
-  #        render += '<li>' + render_facet_value(facet_solr_field, subfacet,options) + '</li>'
-  #      end
-  #    end
-  #    render += '</ul>'
-  #  end
-  #  render
-  #end
+  def render_subfacets(facet_solr_field, item, options ={})
+    render = ''
+    if (item.instance_variables.include? "@subfacets")
+      render = '<span class="toggle">[+/-]</span><ul>'
+      item.subfacets.each do |subfacet|
+        if facet_in_params?(facet_solr_field, subfacet.value)
+          render += '<li>' + render_selected_facet_value(facet_solr_field, subfacet) + '</li>'
+        else
+          render += '<li>' + render_facet_value(facet_solr_field, subfacet,options) + '</li>'
+        end
+      end
+      render += '</ul>'
+      end
+      render.html_safe
+  end
   
   def get_last_month_name
     Date.today.ago(1.month).strftime("%B")
@@ -142,7 +151,7 @@ module ApplicationHelper
         value = '<a href="' + value + '">' + value + '</a>'
       end
     end
-    return auto_link(value)
+    return auto_link(value).html_safe
   end
 
   # jackson added this helper function from rails 3 to generate html5 search field type (rounded corners)

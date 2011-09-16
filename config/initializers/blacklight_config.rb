@@ -251,6 +251,9 @@ Blacklight.configure(:shared) do |config|
   # mean") suggestion is offered.
   config[:spell_max] = 5
 
+  # For the most-recent list, this is the max number displayed
+  config[:max_most_recent] = 10
+
   # Add documents to the list of object formats that are supported for all objects.
   # This parameter is a hash, identical to the Blacklight::Solr::Document#export_formats 
   # output; keys are format short-names that can be exported. Hash includes:

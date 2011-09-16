@@ -24,6 +24,7 @@ CulBlacklightAc2::Application.configure do
   # Only use best-standards-support built into browsers
   config.action_dispatch.best_standards_support = :builtin
   
+  config.relative_root = ""
   config.analytics_enabled = false
   
   config.mail_deposit_recipients = ["pbf2105@columbia.edu", "patrickforce@gmail.com"]

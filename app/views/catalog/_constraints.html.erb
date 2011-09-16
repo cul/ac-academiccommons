@@ -1,0 +1,64 @@
+<% if  (params[:f].to_s.empty?) and (params[:q].to_s.empty?) %>
+<% render :nothing => true %>
+
+<%else-%>
+ 
+<%localized_params = params %>
+   
+ 
+
+		<%=link_to "Start&nbsp;over&thinsp;".html_safe, catalog_index_path, :id=>"startOverLink" %>
+ 
+  
+
+ 
+
+ <%= render :partial=>'/catalog/search_box' %> 
+ 
+
+<h2>Active Search Criteria:</h2>
+ <div id="breadcrumbs">
+  <ul class="breadcrumb query">
+     <h3>Keywords:</h3>
+		<%- if (!localized_params[:q].blank?) -%>
+		<%=render_constraint_element(search_field_label(localized_params),
+            localized_params[:q], 
+            :classes => ["query"], 
+            :remove => catalog_index_path(localized_params.merge(:q=>nil, :action=>'index')))%>
+
+			<%- else%>
+			<li class="appliedFilter empty query">All Content</li>
+			<%- end -%>
+          	              
+ </ul>
+ 
+ <br style="clear:both">
+    
+ <ul class="breadcrumb facet">
+    <h3>Limited to:</h3>
+		<%- if !localized_params[:f].to_s.empty? -%>
+		<%-  localized_params[:f].each_pair do |facet,values| %>
+		<%-    values.each do |val| %>
+		<%= render_constraint_element( facet_field_labels[facet],val, :remove => catalog_index_path(remove_facet_params(facet, val, localized_params)),:classes => ["filter"] )%> 
+		
+		  <%= " <span class='join'> + </span>" unless val == values.last %>
+			<%- end -%>
+			
+</ul>
+ 	<%- end -%>
+ 
+      <%- else -%>
+        <ul class="breadcrumb facet">
+          <li class="appliedFilter empty query">
+            Showing all search results.
+          </li>
+        </ul>
+      <%- end -%>
+       <br style="clear:both">
+      </div>
+      
+       
+
+
+
+<% end -%>
