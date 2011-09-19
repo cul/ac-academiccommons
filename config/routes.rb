@@ -75,6 +75,7 @@ CulBlacklightAc2::Application.routes.draw do
   
   match '/admin', :to => 'admin#index', :as => 'admin'
   match '/admin/deposits/:id', :to => 'admin#show_deposit', :as => 'show_deposit'
+  match '/admin/deposits/:id/file', :to => 'admin#download_deposit_file', :as => 'download_deposit_file'
   
   match ':controller/:action'
   match ':controller/:action/:id'
