@@ -54,6 +54,12 @@ GEM
       fssm (>= 0.2.7)
       sass (~> 3.1)
     crack (0.1.8)
+    cul-fedora (1.0.0)
+      activesupport
+      httpclient
+      nokogiri
+      rsolr (>= 0.12.1)
+      rsolr-ext (>= 0.12.1)
     erubis (2.6.6)
       abstract (>= 1.0.0)
     fssm (0.2.7)
@@ -122,6 +128,7 @@ DEPENDENCIES
   blacklight
   blacklight_advanced_search
   compass
+  cul-fedora (~> 1.0.0)
   garb
   googlecharts
   haml
