@@ -11,13 +11,16 @@
 	cp config/solr.template.yml config/solr.yml
 	cp config/fedora.template.yml config/fedora.yml
 
-4. Run rake db:migrate to create your local development DB
+4. Install any needed gems using Rails 3 Bundler
+	bundle install
 
-5. Start your local development solr instance
+5. Run rake db:migrate to create your local development DB
+
+6. Start your local development solr instance
 	cd jetty && java -jar start.jar
 
-6. Populate your Solr instance from Fedora
+7. Populate your Solr instance from Fedora
 	rake ac:reindex[collection:3]
 
-7. Start your local Rails app
+8. Start your local Rails app
 	rails server
