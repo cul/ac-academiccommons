@@ -1,4 +1,4 @@
-== Checking out a development instance of Academic Commons 2.0
+== Checking out and working with a local development instance of Academic Commons 2.0
 
 1. Clone the repository to a location of your choosing
 	git clone git@github.com:cul/cul-blacklight-ac2.git
@@ -10,3 +10,14 @@
 	cp config/database.template.yml config/database.yml
 	cp config/solr.template.yml config/solr.yml
 	cp config/fedora.template.yml config/fedora.yml
+
+4. Run rake db:migrate to create your local development DB
+
+5. Start your local development solr instance
+	cd jetty && java -jar start.jar
+
+6. Populate your Solr instance from Fedora
+	rake ac:reindex[collection:3]
+
+7. Start your local Rails app
+	rails server
