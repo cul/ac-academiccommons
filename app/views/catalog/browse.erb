@@ -1,0 +1,12 @@
+<% 
+
+if params[:id] == 'departments'
+  @page_title = "Browse Departments - #{application_name}"
+elsif params[:id] == 'subjects'
+  @page_title = "Browse Subjects - #{application_name}"
+end
+
+%>
+ 
+<%= render :partial=>params[:id] + "_list" %>
+
