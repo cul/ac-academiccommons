@@ -1,0 +1,46 @@
+<% if params[:q].blank? and params[:f].blank? and params[:search_field].blank? %>
+	<%# if there are no input/search related params, display the "home" partial -%>
+	<%= render 'home' %>
+<% else %>
+
+	<% @page_title = "Search Results | " + application_name  %>
+
+	<%#= FIXME: did_you_mean is disabled until rsolr-ext is fixed. see http://jira.projectblacklight.org/jira/browse/CODEBASE-241 %>
+	<%#= render :partial => 'did_you_mean' %>
+ 
+    <div id="results-list-wrapper">
+    
+    <div class="result-set-tools">
+
+    <%= render :partial=>'pagination' %>
+	<%= render :partial=>'sort_and_per_page' %>
+
+	</div>
+
+	<div class="results-set-list">
+ 	
+	
+	<%= render :partial=>'document_list' %>
+    </div>
+    
+     <div class="result-set-tools">
+
+    <%= render :partial=>'pagination' %>
+	 
+
+	</div>
+    
+  	</div>
+	
+	<% sidebar_items << capture do %>
+	
+	  <%= render :partial=>'facets' %>
+	
+	<% end %>
+
+	<%= render :partial=>'solr_request' %>
+	
+
+
+<% end %>
+

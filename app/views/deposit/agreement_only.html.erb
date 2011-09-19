@@ -1,0 +1,28 @@
+<% @page_title = "Deposit Your Research | " + application_name  %>
+
+<% extra_head_content << javascript_include_tag('jquery.validate.min.js') %>
+<% extra_head_content << javascript_include_tag('jquery.replaceholder.min.js') %>
+<% extra_head_content << javascript_include_tag('self-deposit.js') %>
+
+<div class="page box sd">
+
+<h2>Academic Commons Author Agreement</h2>
+
+<P>This form is for authors whose work is or will be made available in Academic Commons, but are not uploading the content themselves. If you would like to deposit your own content, please use our <a href="<%=relative_root%>/deposit">self-deposit form</a>.  If you want to know more about Academic Commons, please visit our <a href="http://cdrs.columbia.edu/academiccommons/">blog</a> or contact us at cdrs@info.columbia.edu.
+</P>
+
+<% form_tag({ :action=>'submit_author_agreement'}, :method=>'post', :id=>'sd-form', :class=>'self-deposit-form', :charset=>'utf-8') do %>
+<fieldset>
+
+<%= render :partial => 'author_agreement', :locals => {:required_class => "pageRequired required" } %>
+
+<%= render :partial => 'basic_depositor_info', :locals => {:include_uni => false, :required_class => "pageRequired required" } %>
+
+
+<div class="buttonWrapper">
+	<input name="formNext1" type="submit" class="agree_only_submit nextbutton" value="Submit" alt="Submit" title="Submit" />
+</div>
+</fieldset>
+<% end %>
+
+</div>

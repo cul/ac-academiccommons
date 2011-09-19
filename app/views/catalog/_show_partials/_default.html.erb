@@ -1,0 +1,52 @@
+<%# default partial to display solr document fields in catalog show view -%>
+ 
+<!--
+     <div class="documentFunctions">
+         <%#= render :partial => 'show_tools' %>
+        </div>
+-->
+<%= render :partial => "catalog/_show_partials/display_resources", :locals => {:document => document} %>
+
+<div style="clear:both;">
+  <dl class="defList">
+    <% document_show_fields.each do |solr_fname| -%>
+      <% if document[solr_fname] %>
+        <% if document[solr_fname].is_a?(Array)%>
+        <% document[solr_fname].delete_if{|x| x.empty? }%>
+          <% if !document[solr_fname].empty?%>
+            <dt><%= document_show_field_labels[solr_fname]%></dt><dd>
+            <% document[solr_fname].each do |val| %>
+              <%= document_render_field_value(solr_fname, val) %><%= "<br/>".html_safe unless val == document[solr_fname].last %>
+          <% end %>
+          </dd>
+        <% end %>
+        <% else %>
+        <% if !document[solr_fname].empty?%>
+          <dt><%= document_show_field_labels[solr_fname]%></dt>
+          <dd><%= document_render_field_value(solr_fname, document[solr_fname]) %></dd>
+        <% end -%>
+        <% end -%>
+      <% end -%>
+    <% end -%>
+
+  </dl>
+
+  <%= render :partial => "catalog/_show_partials/statistics" %>
+
+
+  <h3> Metadata:</h3>
+    <dl class="defList">
+    <% get_metadata_list(document).each do |resource| -%>
+      <dt><%= resource[:title] %></dt>
+      <dd>
+ 
+      <%= link_to "View", resource[:show_url] if resource[:show_url] %> | 
+ 
+      <%= link_to "Download", resource[:download_url] if resource[:download_url] %> 
+      </dd>
+    <% end -%>
+
+  </dl>
+    
+<!--   <div class="license">This work is licensed under a <%= link_to "Creative Commons License", "http://creativecommons.org/licenses/by-nc-sa/3.0/us/" %></div> -->
+</div>
