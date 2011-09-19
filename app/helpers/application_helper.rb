@@ -166,7 +166,7 @@ module ApplicationHelper
  
   def page_location
     if params[:controller] == "catalog"
-      if params[:action] == "index" and params[:q].to_s.blank? and params[:f].to_s.blank? and (params[:search_field].to_s.blank? or params[:search_field] != Blacklight.config[:advanced][:search_field])
+      if params[:action] == "index" and params[:q].to_s.blank? and params[:f].to_s.blank? and params[:search_field].to_s.blank?
         return "home"
       elsif params[:action] == "index"
         return "search_results"
