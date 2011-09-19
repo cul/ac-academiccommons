@@ -36,6 +36,12 @@ CulBlacklightAc2::Application.configure do
 
   # Disable delivery errors, bad email addresses will be ignored
   # config.action_mailer.raise_delivery_errors = false
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.smtp_settings = {
+    :address => "localhost",
+    :domain => "brahms.cul.columbia.edu",
+     :port => 25
+  }
 
   # Enable threaded mode
   # config.threadsafe!
@@ -46,4 +52,10 @@ CulBlacklightAc2::Application.configure do
 
   # Send deprecation notices to registered listeners
   config.active_support.deprecation = :notify
+  
+  config.analytics_enabled = true
+  
+  config.mail_deposit_recipients = ["rh2561@columbia.edu", "wla2103@columbia.edu"]
+  config.mail_deliverer = "rh2561@columbia.edu"
+  
 end

@@ -1,0 +1,389 @@
+/* @override 
+	http://localhost/~jackson/AC2/cul-blacklight-ac2/public/design/css/colors.css
+	http://dyn-iab-163-218.dyn.columbia.edu:3000/design/css/colors.css
+*/
+
+#page {
+	width: 990px;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 160px;
+
+	min-height: 800px;
+	padding: 10px;
+}
+
+ul#themer {
+	position: absolute;
+	right: 10px;
+	top: 50px;
+	list-style-type: none;
+	text-transform: uppercase;
+	color: white;
+}
+
+ul#themer li{
+	float: left;
+	 padding: 5px 10px;
+	border: 1px solid white;
+}
+
+#alpha div span.more {
+	text-align: left;
+	margin-left: 150px;
+	color: #642B54;
+}
+
+#fresh ul {
+	list-style-type: none;
+	padding-left: 10px;
+}
+
+#fresh ul li {
+	margin-bottom: 1em;
+}
+
+#alpha {
+	float: left;
+}
+
+#beta {
+	float: left;
+}
+
+#gamma {
+	float: right;
+}
+
+#alpha, #gamma {
+	width: 180px;
+}
+
+#beta {
+	width: 600px;
+	padding-right: 10px;
+	padding-left: 20px;
+}
+
+h3 {
+	font-size: 1.1em;
+	font-weight: normal;
+}
+
+.accordion h3 {
+	height: 20px;
+	padding: 5px 8px 1px;
+	margin: 0;
+	border-top: 1px solid #cccccc;
+	border-bottom: 1px solid #cccccc;
+
+
+	cursor: pointer;
+	text-transform: uppercase;
+}
+
+#facets .accordion ul {
+	list-style: none;
+	padding: 5px 10px;
+}
+
+.accordion {
+	border-left: 1px solid #cccccc;
+	border-right: 1px solid #cccccc;
+	border-bottom: 1px solid #CCCCCC;
+	margin: 0 0 30px 0;
+}
+
+.accordion h3 span.toggle {
+	background-image: url('../images/accordion-closed.png');
+}
+
+.accordion h3.facet_selected span.toggle {
+	background-image: url('../images/accordion-open.png');
+}
+
+.accordion h3, #availability h3 {
+	position: relative;
+}
+
+.accordion h3 span.toggle, #availability h3 span.toggle {
+	position: absolute;
+	right: 5px;
+	top: 7px;
+	height: 11px;
+	width: 11px;
+}
+
+body.a {
+	background-image: url(../images/blue-bar.png);
+	margin: 0;
+}
+
+body.a #page {
+	
+	background-color: #F5F5F5;
+	color: #333333;
+	
+}
+
+body.a #alpha a {
+	color: #49a9a8;
+	text-decoration: none;
+}
+
+body.a #fresh a {
+	color: #2d2a62;
+	text-decoration: none;
+	border-bottom: 1px dotted #b8d8ff;
+}
+
+body.a #fresh a:hover {
+	border-bottom: 1px dotted #336699;
+}
+
+body.a #alpha a:hover {
+	color: #642B54;
+	text-decoration: none;
+	border-bottom: 1px dotted #9E005D;
+}
+
+body.a .accordion li {
+	color: #808080;
+}
+
+body.a #beta h1 {
+	font-size: 1.5em;
+	color: #2D2A62;
+}
+
+body.a .accordion h3 {
+	
+	background-color: #eae9e9;
+	color: #336699;
+	font-size: 1.2em;
+	font-weight: bold;
+		background-image: url('../images/accordion-gradient.png');
+}
+
+body.a #gamma h1 {
+	color: #2D2A62;
+	font-size: 1.2em;
+	
+}
+
+body.b {
+	margin: 0;
+	background: url(../images/dark_blue_nogap.png) repeat-x;
+	background-color: #14132b;
+}
+
+body.b #page {
+	
+	background-color: #F5F5F5;
+	color: #333333;
+	
+}
+
+body.b #alpha a {
+	color: #336699;
+	text-decoration: none;
+}
+
+body.b #fresh a {
+	color: #2d2a62;
+	text-decoration: none;
+	border-bottom: 1px dotted #b8d8ff;
+}
+
+body.b #fresh {
+	background-color: #f9f9f9;
+}
+
+/* My Comment */
+
+body.b #fresh a:hover {
+	border-bottom: 1px solid #336699;
+}
+
+
+
+
+body.b #alpha a:hover {
+	
+	text-decoration: none;
+}
+
+body.b .accordion li {
+	color: #808080;
+	 
+}
+body.b .accordion li:hover {
+	background-color: #C9E5FF;
+	
+}
+
+body.b #beta h1 {
+	font-size: 1.5em;
+	color: #336699;
+}
+
+body.b .accordion h3 {
+	
+	background-color:#f5fbff;
+	color: #2D2A62;
+	font-size: 1.2em;
+	font-weight: bold;
+}
+
+body.b #gamma h1 {
+	color:white;
+	font-size: 1.2em;
+	background-color: #336699;
+	padding: .5em;
+	text-transform: uppercase;
+	
+}
+
+
+
+
+body.c {
+	margin: 0;
+	background: url(../images/twotone_bg.png) repeat-x;
+	background-color: #2d2a62;
+}
+
+body.c #page {
+	
+	background-color: #F5F5F5;
+	color: #333333;
+	
+}
+
+body.c #alpha a {
+	color: #336699;
+	text-decoration: none;
+}
+
+body.c #fresh a {
+	color: #2d2a62;
+	text-decoration: none;
+	border-bottom: 1px dotted #b8d8ff;
+}
+
+body.c #fresh {
+	background-color: #f9f9f9;
+}
+
+/* My Comment */
+
+body.c #fresh a:hover {
+	border-bottom: 1px solid #336699;
+}
+
+body.c #alpha a:hover {
+	
+	text-decoration: none;
+}
+
+body.c .accordion li {
+	color: #808080;
+	 
+}
+body.c .accordion li:hover {
+	background-color: #C9E5FF;
+	
+}
+
+body.c #beta h1 {
+	font-size: 1.5em;
+	color: #336699;
+}
+
+body.c .accordion h3 {
+	
+	background-color:#f5fbff;
+	color: #2D2A62;
+	font-size: 1.2em;
+	font-weight: bold;
+}
+
+body.c #gamma h1 {
+	background-color: #2D2A62;
+	color:white;
+	font-size: 1.2em;
+	padding: .5em;
+	
+}
+
+
+
+
+
+
+body.d {
+	margin: 0;
+	background: #555555 url(../images/new-light-blue-bar.png) repeat-x;
+}
+
+/* My Comment */
+
+
+body.d #page {
+	
+	background-color: #F5F5F5;
+	color: #333333;
+	
+}
+
+body.d #alpha a {
+	color: #49a9a8;
+	text-decoration: none;
+}
+
+body.d #fresh a {
+	color: #2d2a62;
+	text-decoration: none;
+	border-bottom: 1px dotted #b8d8ff;
+}
+
+body.d #fresh a:hover {
+	border-bottom: 1px dotted #336699;
+}
+
+body.d #alpha a:hover {
+	color: #642B54;
+	text-decoration: none;
+	border-bottom: 1px dotted #9E005D;
+}
+
+body.d .accordion li {
+	color: #808080;
+}
+
+body.d #beta h1 {
+	font-size: 1.5em;
+	color: #2D2A62;
+}
+
+body.d .accordion h3 {
+	
+	background-color: #eae9e9;
+	color: #336699;
+	font-size: 1.2em;
+	font-weight: bold;
+		background-image: url('../images/accordion-gradient.png');
+}
+
+body.d #gamma h1 {
+	color: #2D2A62;
+	font-size: 1.2em;
+	
+}
+
+
+body.e {
+	margin: 0;
+	background: url(../images/dark_blue_nogap.png) repeat-x;
+	background-color: #14132b;
+}

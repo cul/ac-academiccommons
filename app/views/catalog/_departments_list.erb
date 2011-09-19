@@ -1,0 +1,31 @@
+<h1 class="content-title">Browse Academic Commons Content</h1>
+<h2 class="content-title">by Institution</h2>
+<div class="span-1">&nbsp;</div>
+ 
+<a href="<%= relative_root %>/?f%5Baffiliation_organization%5D%5B%5D=Columbia%20University"><div class="span-6 school columbia"> </div></a>
+				  
+<a href="<%= relative_root %>/?f%5Baffiliation_organization%5D%5B%5D=Barnard%20College"><div class="span-5 school barnard"> </div> </a>
+				  
+<a href="<%= relative_root %>/?f%5Baffiliation_organization%5D%5B%5D=Teachers%20College"><div class="span-5 school teachers"> </div> </a>
+				 
+<a href="<%= relative_root %>/?f%5Baffiliation_organization%5D%5B%5D=Union%20Theological%20Seminary"><div class="span-6 school union last clearfix"> </div> </a>
+
+<h2 class="content-title">by Department</h2>
+ 
+
+ 
+<div  id='browse-box' class='span-22 prepend-2'>  
+
+<% get_departments_list.in_groups(3, fill_with=false) do |group| %>
+   <div class='span-7 browse-list'>
+    <ul>
+    <% group.each do |v| %>
+      <li> <%= link_to( v[:name], catalog_index_path()+'/browse/departments/' + url_encode_resource(v[:name]) ) %> (<%= v[:count] %>)  </li>
+    <% end %>
+    </ul>
+    </div>
+     
+<% end %>
+
+</div>
+ 

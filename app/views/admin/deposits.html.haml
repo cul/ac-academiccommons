@@ -1,0 +1,19 @@
+%h3 Self-Deposits
+%table
+  %thead
+    %tr
+      %th UNI
+      %th Title
+      %th Deposited on
+      %th Record
+      %th File
+      %th
+  %tbody
+    - @deposits.each do |deposit|
+      %tr
+        %td= deposit.uni
+        %td= deposit.title
+        %td= deposit.created_at
+        %td= ('<a href="' + relative_root + "/admin/deposits/" + deposit.id.to_s + '">View</a>').html_safe
+        %td= ('<a href="' + relative_root + "/admin/deposits/" + deposit.id.to_s + '/file">Download</a>').html_safe
+        %td= ('<a href="javascript:$$archiveDeposit(\'' + relative_root + "/admin/deposits?archive=" + deposit.id.to_s + '\');">Archive</a>').html_safe

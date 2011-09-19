@@ -1,0 +1,28 @@
+%h3 Send out all Author Monthlies
+.split_form
+
+  -form_tag url_for(:controller => "statistics", :action => "all_author_monthlies") do
+
+    .label Email Template:
+    .value
+      = select_tag :email_template, options_for_select(["Normal", "Initial"], params[:email_template] || "Normal")
+
+    .label Report month:
+    .value
+      = select_tag :month, options_for_select(Date::ABBR_MONTHNAMES, params[:month] || (Date.today - 1.months).strftime("%b"))
+      = select_tag :year, options_for_select((2011..Date.today.year), params[:year])
+
+    .label Include zeroes?
+    .value
+      = check_box_tag :include_zeroes, "true", params[:include_zeroes]
+    
+    .label Number of reports to send:
+    .value
+      = @authors.length
+
+    .label 
+    .value
+      = submit_tag "Send", :confirm => "This will send most likely hundreds of emails. Are you sure?"
+
+
+    = render :partial => "/debug_deliveries"

@@ -121,6 +121,7 @@
           <str name="facet.field">author_facet</str>
           <str name="facet.field">pub_date_facet</str>
           <str name="facet.field">genre_facet</str>
+          <str name="facet.field">subject_facet</str>
           <str name="facet.field">type_of_resource_facet</str>
           <str name="facet.field">organization_facet</str>
           <str name="facet.field">department_facet</str>
@@ -139,6 +140,7 @@
           <str name="facet.field">author_facet</str>
           <str name="facet.field">pub_date_facet</str>
           <str name="facet.field">genre_facet</str>
+          <str name="facet.field">subject_facet</str>
           <str name="facet.field">type_of_resource_facet</str>
           <str name="facet.field">organization_facet</str>
           <str name="facet.field">department_facet</str>
@@ -163,6 +165,7 @@
           <str name="facet.field">author_facet</str>
           <str name="facet.field">pub_date_facet</str>
           <str name="facet.field">genre_facet</str>
+          <str name="facet.field">subject_facet</str>
           <str name="facet.field">type_of_resource_facet</str>
           <str name="facet.field">organization_facet</str>
           <str name="facet.field">department_facet</str>
@@ -181,6 +184,7 @@
           <str name="facet.field">author_facet</str>
           <str name="facet.field">pub_date_facet</str>
           <str name="facet.field">genre_facet</str>
+          <str name="facet.field">subject_facet</str>
           <str name="facet.field">type_of_resource_facet</str>
           <str name="facet.field">organization_facet</str>
           <str name="facet.field">department_facet</str>
@@ -349,6 +353,7 @@
       <str name="facet.field">author_facet</str>
       <str name="facet.field">pub_date_facet</str>
       <str name="facet.field">genre_facet</str>
+      <str name="facet.field">subject_facet</str>
       <str name="facet.field">type_of_resource_facet</str>
       <str name="facet.field">organization_facet</str>
       <str name="facet.field">department_facet</str>
@@ -485,6 +490,7 @@
       <str name="facet.field">author_facet</str>
       <str name="facet.field">pub_date_facet</str>
       <str name="facet.field">genre_facet</str>
+      <str name="facet.field">subject_facet</str>
       <str name="facet.field">type_of_resource_facet</str>
       <str name="facet.field">organization_facet</str>
       <str name="facet.field">department_facet</str>
