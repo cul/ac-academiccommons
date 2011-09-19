@@ -42,6 +42,11 @@ GEM
       rsolr (~> 1.0)
       rsolr-ext (~> 1.0)
       unicode
+    blacklight_advanced_search (1.0.0)
+      blacklight
+      parslet
+      rails (~> 3.0)
+    blankslate (2.1.2.4)
     builder (2.1.2)
     chunky_png (1.2.4)
     compass (0.11.5)
@@ -71,6 +76,8 @@ GEM
     mime-types (1.16)
     net-ldap (0.2.2)
     nokogiri (1.5.0)
+    parslet (1.2.1)
+      blankslate (~> 2.0)
     polyglot (0.3.2)
     rack (1.2.3)
     rack-mount (0.6.14)
@@ -113,6 +120,7 @@ DEPENDENCIES
   authlogic
   authlogic_wind
   blacklight
+  blacklight_advanced_search
   compass
   garb
   googlecharts

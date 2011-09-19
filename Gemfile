@@ -31,6 +31,7 @@ gem 'sqlite3'
 # end
 
 gem 'blacklight'
+gem 'blacklight_advanced_search'
 gem 'authlogic'
 gem 'authlogic_wind'
 # gem 'cul-fedora'
