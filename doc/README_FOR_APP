@@ -1,5 +1,7 @@
 == Checking out and working with a local development instance of Academic Commons 2.0
 
+CURRENT RECOMMENDED VERSION OF RUBY: 1.8.7-p334
+
 1. Clone the repository to a location of your choosing
 	git clone git@github.com:cul/cul-blacklight-ac2.git
 
