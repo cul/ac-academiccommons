@@ -5,6 +5,7 @@ db/*.sqlite3
 db/cstore/**
 db/sphinx/**
 log/*.log
+log/*.log*
 tmp/**/*
 tmp/*_visits
 config/database.yml
