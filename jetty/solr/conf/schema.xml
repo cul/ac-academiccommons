@@ -321,6 +321,12 @@
   <solrQueryParser defaultOperator="OR"/>
 
   <!-- Copy Fields -->
+  
+  <copyField source="title_search" dest="title_t"/>
+  <copyField source="author_search" dest="author_t"/>
+  <copyField source="subject_search" dest="subject_t"/>
+  <copyField source="series_facet" dest="title_series_t"/>
+  
   <copyField source="ac.fulltext_*" dest="text"/>
   <copyField source="*_search" dest="text"/>
   <copyField source="abstract" dest="text"/>
@@ -336,7 +342,7 @@
   <copyField source="author_addl_t" dest="author_addl_unstem_search"/>
   <copyField source="subject_t" dest="subject_unstem_search"/>
   <copyField source="subject_addl_t" dest="subject_addl_unstem_search"/>
-  <copyField source="subject_topic_facet" dest="subject_topic_unstem_search"/>
+  <copyField source="subject_facet" dest="subject_topic_unstem_search"/>
   
   <!-- sort fields -->
   <copyField source="pub_date_facet" dest="pub_date_sort"/>
@@ -358,7 +364,7 @@
   <copyField source="author_t" dest="author_spell"/>
   <copyField source="author_addl_t" dest="author_spell"/>
   <!-- subject spell check; should match fields for subject request handler -->
-  <copyField source="subject_topic_facet" dest="subject_spell"/>
+  <copyField source="subject_facet" dest="subject_spell"/>
   <copyField source="subject_t" dest="subject_spell"/>
   <copyField source="subject_addl_t" dest="subject_spell"/>  
   
