@@ -54,7 +54,7 @@ GEM
       fssm (>= 0.2.7)
       sass (~> 3.1)
     crack (0.1.8)
-    cul-fedora (1.0.0)
+    cul-fedora (1.0.1)
       activesupport
       httpclient
       nokogiri
@@ -131,7 +131,7 @@ DEPENDENCIES
   blacklight
   blacklight_advanced_search
   compass
-  cul-fedora (~> 1.0.0)
+  cul-fedora (~> 1.0.1)
   garb
   googlecharts
   haml
