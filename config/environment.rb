@@ -16,14 +16,15 @@ Rails::Initializer.run do |config|
   config.gem 'authlogic', :version => '2.1.2'
   config.gem 'authlogic_wind', :version => '>= 0.4.0'
   config.gem 'googlecharts'
-  config.gem 'cul-fedora', :version => '>= 0.8.3'
+  config.gem 'cul-fedora', :version => '>= 0.8.6'
   config.gem 'haml'
   config.gem 'compass', :version => '>= 0.10.5'
   config.gem 'httpclient'
   config.gem 'nokogiri'
   config.gem 'net-ldap', :version => '>=0.1.1'
   config.gem "json"
-  
+  config.gem "garb" 
+ 
   # Settings in config/environments/* take precedence over those specified here.
   #
   # Application configuration should go into files in config/initializers
@@ -63,3 +64,6 @@ Rails::Initializer.run do |config|
   config.logger = Logger.new("#{RAILS_ROOT}/log/#{RAILS_ENV}.log", 50, 2048000)
 
 end
+
+GOOGLE_USERNAME = "***REMOVED***"
+GOOGLE_PASSWORD = "***REMOVED***"

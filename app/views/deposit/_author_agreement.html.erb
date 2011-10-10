@@ -1,0 +1,12 @@
+<input type="hidden" name="AC-agreement-version" id="AC-agreement-version"  value="1.0" />
+<legend>Read and Accept Author Agreement</legend>
+<iframe src="<%=relative_root%>/self-deposit/AC2_Author_Rights_Agreement.htm" width="90%" height="300px"> </iframe>
+ 
+<p> <span class="pdf-link"><a href="<%=relative_root%>/self-deposit/AuthorAgreementFormAC2.pdf" target="_blank" >Download PDF</a></span></p>
+<p style="margin-left:80px">
+<span class="agreement-language"> I have Read and Accept the Author Agreement </span>
+	<%= label_tag 'chbx', ""%>
+	<%= check_box_tag 'acceptedAgreement', 'agree', false, :class => required_class, :title => 'You must accept the Author Rights Agreement to continue.' %>
+
+<span class="form-field-info"></span>
+</p>

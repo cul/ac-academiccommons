@@ -77,14 +77,16 @@ Blacklight.configure(:shared) do |config|
          "affiliation_department",
          "subject",
          "genre_facet",
-         "pub_date"
+         "pub_date",
+         "series"
       ]),
       :labels => {
         "author_facet" => "Author",
         "affiliation_department" => "Department",
         "subject" => "Subject",
         "genre_facet" => "Content Type",
-        "pub_date" => "Date"
+        "pub_date" => "Date",
+        "series" => "Series"
       },
       # Setting a limit will trigger Blacklight's 'more' facet values link.
       # If left unset, then all facet values returned by solr will be displayed.
@@ -97,7 +99,8 @@ Blacklight.configure(:shared) do |config|
        "affiliation_department"=>7,
        "subject"=>7,
         "genre_facet" => 5,
-        "pub_date" => 5
+        "pub_date" => 5,
+        "series" => 5
       }
         
     }
@@ -140,10 +143,12 @@ Blacklight.configure(:shared) do |config|
   config[:show_fields] = {
     :field_names => [
       "title_display",
-      "authors_display",
+      "author_facet",
+      "thesis_advisor",
       "pub_date",
       "genre_facet",
       "handle",
+      "series",
       "book_journal_title",
       "volume",
       "issue",
@@ -179,10 +184,12 @@ Blacklight.configure(:shared) do |config|
     ],
     :labels => {
       "title_display"           => "Title:",
-      "authors_display"          => "Author(s):",
+      "author_facet"          => "Author(s):",
+      "thesis_advisor"          => "Thesis Advisor(s):",
       "pub_date"			 => "Date:",
       "genre_facet"		 => "Type:",
       "handle"			  => "Handle:",
+      "series"        => "Series:",
       "book_journal_title"	  => "Book/Journal Title:",
       "volume"        		  => "Volume:",
       "issue"        		  => "Issue:",

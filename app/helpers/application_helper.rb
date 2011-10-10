@@ -4,7 +4,6 @@
 
 require "#{Blacklight.root}/app/helpers/application_helper.rb"
 
-
 module ApplicationHelper
 
 
@@ -41,7 +40,13 @@ module ApplicationHelper
   def first_name_then_last(last_name_first)
     if(last_name_first.index(","))
       parts = last_name_first.split(",")
-      return parts[1].strip + " " + parts[0].strip
+      if parts.length > 1
+        return parts[1].strip + " " + parts[0].strip
+      else
+        return parts[0].strip
+      end
+    else
+      return last_name_first
     end
   end
   
@@ -105,6 +110,31 @@ module ApplicationHelper
     end
     render
   end
+  
+  def get_last_month_name
+    Date.today.ago(1.month).strftime("%B")
+  end
+  
+  def get_last_month_page_visits
+    
+    if(File.exists?("#{Rails.root}/tmp/#{get_last_month_name.downcase}_visits"))
+      file = File.open("#{Rails.root}/tmp/#{get_last_month_name.downcase}_visits", 'rb')
+      return file.read
+    else
+      require "lib/pagevisits.rb"
+      Garb::Session.login(GOOGLE_USERNAME, GOOGLE_PASSWORD)
+      profile = Garb::Management::Profile.all.detect {|p| p.web_property_id == 'UA-10481105-1'}
+      ga_results = profile.pagevisits(:start_date => Date.today.ago(1.month).beginning_of_month, :end_date => Date.today.beginning_of_month.ago(1.day))
+      visits = ga_results.to_a[0].visits
+      Dir.glob("#{Rails.root}/tmp/*_visits") do |visits_file|
+        File.delete(visits_file)
+      end
+      File.open("#{Rails.root}/tmp/#{get_last_month_name.downcase}_visits", 'w') { |file| file.write(visits) }
+      return visits
+    end
+    
+  end
+  
 end
 
 # jackson added this helper function from rails 3 to generate html5 search field type (rounded corners)

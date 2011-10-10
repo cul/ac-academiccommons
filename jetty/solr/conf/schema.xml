@@ -135,6 +135,9 @@
 
   	<field name="affiliation_organization" type="string" indexed="true" stored="true" multiValued="true" />
 	<field name="affiliation_department" type="string" indexed="true" stored="true" multiValued="true" />
+	
+	<field name="thesis_advisor" type="string" indexed="true" stored="true" multiValued="true" />
+	<field name="series" type="string" indexed="true" stored="true" multiValued="true" />
   
    <!-- Academic Commons Dynamic Fields -->
    <dynamicField name="ac.fulltext_*"  type="text"  indexed="true"  stored="false"/>
