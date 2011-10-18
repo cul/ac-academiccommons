@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 # You can configure Blacklight from here. 
 #   
 #   Blacklight.configure(:environment) do |config| end
@@ -18,45 +19,18 @@
 
 Blacklight.configure(:shared) do |config|
 
-  # Set up and register the default SolrDocument Marc extension
-  SolrDocument.extension_parameters[:marc_source_field] = :marc_display
-  SolrDocument.extension_parameters[:marc_format_type] = :marc21
-  SolrDocument.use_extension( Blacklight::Solr::Document::Marc) do |document|
-    document.key?( :marc_display  )
-  end
-
-  
-  # Semantic mappings of solr stored fields. Fields may be multi or
-  # single valued. See Blacklight::Solr::Document::ExtendableClassMethods#field_semantics
-  # and Blacklight::Solr::Document#to_semantic_values
-  SolrDocument.field_semantics.merge!(    
-    :title => "title_display",
-    :author => "author_display",
-    :language => "language_facet"  )
-        
-  
-  ##############################
-
   config[:default_solr_params] = {
     :qt => "search",
     :per_page => 10 
   }
-  
-  
-  ##############################
-  
-  
-  config[:default_qt] = "search"
-  
-
+ 
   # solr field values given special treatment in the show (single result) view
   config[:show] = {
     :html_title => "title_display",
     :heading => "title_display",
     :display_type => "format",
     :genre => "genre_facet",
-    :author => "authors_display"
-
+    :author => "author_display"
   }
 
   # solr fld values given special treatment in the index (search results) view
@@ -72,69 +46,67 @@ Blacklight.configure(:shared) do |config|
   # for human reading/writing, kind of like search_fields. Eg,
   # config[:facet] << {:field_name => "format", :label => "Format", :limit => 10}
   config[:facet] = {
-      :field_names => (facet_fields = [
-         "author_facet",
-         "affiliation_department",
-         "subject",
-         "genre_facet",
-         "pub_date",
-         "series"
-      ]),
-      :labels => {
-        "author_facet" => "Author",
-        "affiliation_department" => "Department",
-        "subject" => "Subject",
-        "genre_facet" => "Content Type",
-        "pub_date" => "Date",
-        "series" => "Series"
-      },
-      # Setting a limit will trigger Blacklight's 'more' facet values link.
-      # If left unset, then all facet values returned by solr will be displayed.
-      # nil key can be used for a default limit applying to all facets otherwise
-      # unspecified.
-      # limit value is the actual number of items you want _displayed_,
-      # #solr_search_params will do the "add one" itself, if neccesary.
-      :limits => {
-       "author_facet"=>7,
-       "affiliation_department"=>7,
-       "subject"=>7,
-        "genre_facet" => 5,
-        "pub_date" => 5,
-        "series" => 5
-      }
-        
+    :field_names => (facet_fields = [
+       "author_facet",
+       "department_facet",
+       "subject_facet",
+       "genre_facet",
+       "pub_date_facet",
+       "series_facet"
+    ]),
+    :labels => {
+      "author_facet"      => "Author",
+      "department_facet"  => "Department",
+      "subject_facet"     => "Subject",
+      "genre_facet"       => "Content Type",
+      "pub_date_facet"    => "Date",
+      "series_facet"      => "Series"
+    },
+    # Setting a limit will trigger Blacklight's 'more' facet values link.
+    # * If left unset, then all facet values returned by solr will be displayed.
+    # * If set to an integer, then "f.somefield.facet.limit" will be added to
+    # solr request, with actual solr request being +1 your configured limit --
+    # you configure the number of items you actually want _displayed_ in a page.    
+    # * If set to 'true', then no additional parameters will be sent to solr,
+    # but any 'sniffed' request limit parameters will be used for paging, with
+    # paging at requested limit -1. Can sniff from facet.limit or 
+    # f.specific_field.facet.limit solr request params. This 'true' config
+    # can be used if you set limits in :default_solr_params, or as defaults
+    # on the solr side in the request handler itself. Request handler defaults
+    # sniffing requires solr requests to be made with "echoParams=all", for
+    # app code to actually have it echo'd back to see it.     
+    :limits => {
+       "author_facet"     => 7,
+       "department_facet" => 7,
+       "subject_facet"    => 7,
+       "genre_facet"      => 5,
+       "pub_date_facet"   => 5,
+       "series_facet"     => 5
     }
+  }
 
   # Have BL send all facet field names to Solr, which has been the default
   # previously. Simply remove these lines if you'd rather use Solr request
   # handler defaults, or have no facets.
   config[:default_solr_params] ||= {}
   config[:default_solr_params][:"facet.field"] = facet_fields
-  
+
   # solr fields to be displayed in the index (search results) view
   #   The ordering of the field names is the order of the display 
   config[:index_fields] = {
     :field_names => [
-      "authors_display",
-      "pub_date",
-      "subject",
+      "author_display",
+      "pub_date_facet",
+      "subject_facet",
       "genre_facet",
-      "language_facet",
-      "published_display",
-      "published_vern_display",
-      "object_display",
-      "lc_callnum_display"
+      "publisher"
     ],
     :labels => {
-      "authors_display"         => "Author(s):",
-      "pub_date"                    => "Date:",
-      "subject"                 => "Subject:",
+      "author_display"          => "Author(s):",
+      "pub_date_facet"          => "Date:",
+      "subject_facet"           => "Subject:",
       "genre_facet"             => "Type:",
-      "language_facet"          => "Language:",
-      "published_display"       => "Published:",
-      "published_vern_display"  => "Published:",
-      "object_display"          => "In Fedora:",
-      "lc_callnum_display"      => "Call number:"
+      "publisher"               => "Publisher:"
     }
   }
 
@@ -145,84 +117,54 @@ Blacklight.configure(:shared) do |config|
       "title_display",
       "author_facet",
       "thesis_advisor",
-      "pub_date",
+      "pub_date_facet",
       "genre_facet",
       "handle",
-      "series",
+      "series_facet",
       "book_journal_title",
-      "volume",
-      "issue",
-      "pages",
       "media_type_facet",
-      "file_size",
       "table_of_contents", 
-      "geographic_area", 
+      "geographic_area_display", 
       "book_author", 
       "format", 
       "notes", 
       "publisher", 
       "publisher_location", 
       "abstract", 
-      "subject", 
-      "type_of_resource", 
+      "subject_facet",
       "isbn",
       "issn",
-      "doi",
-      "title_vern_display",
-      "subtitle_display",
-      "subtitle_vern_display",
-      "author_vern_display",
-      "url_fulltext_display",
-      "url_suppl_display",
-      "material_type_display",
-      "language_facet",
-      "published_display",
-      "published_vern_display",
-      "lc_callnum_display",
-      "object_display",
-      "isbn_t"
+      "doi"
     ],
     :labels => {
       "title_display"           => "Title:",
-      "author_facet"          => "Author(s):",
+      "author_facet"            => "Author(s):",
       "thesis_advisor"          => "Thesis Advisor(s):",
-      "pub_date"			 => "Date:",
-      "genre_facet"		 => "Type:",
-      "handle"			  => "Handle:",
-      "series"        => "Series:",
-      "book_journal_title"	  => "Book/Journal Title:",
-      "volume"        		  => "Volume:",
-      "issue"        		  => "Issue:",
-      "pages"        		  => "Pages:",
-      "media_type_facet"          => "Media Type:",
-      "file_size"        	  => "File Size:",
-      "table_of_contents"	  =>"Table of Contents:", 
-      "geographic_area"		  =>"Geographic Area:", 
-      "book_author"		  =>"Book Author:", 
-      "format"			  =>"Format:", 
-      "notes"			  =>"Notes:", 
-      "publisher"		  =>"Publisher:", 
-      "publisher_location"	  =>"Publisher Location:", 
-      "abstract"		  =>"Abstract:", 
-      "subject"			  =>"Subject(s):", 
-      "isbn"			  =>"ISBN:",
-      "issn"			  =>"ISSN:",
-      "doi"			  =>"DOI:",
-      "type_of_resource"	  => "Type of Resource:", 
-      "title_vern_display"      => "Title:",
-      "subtitle_display"        => "Subtitle:",
-      "subtitle_vern_display"   => "Subtitle:",
-      "authors_display"          => "Author:",
-      "author_vern_display"     => "Author:",
-      "url_fulltext_display"    => "URL:",
-      "url_suppl_display"       => "More Information:",
-      "material_type_display"   => "Physical description:",
-      "language_facet"          => "Language:",
-      "published_display"       => "Published:",
-      "published_vern_display"  => "Published:",
-      "lc_callnum_display"      => "Call number:",
-      "object_display"          => "In Fedora:",
-      "isbn_t"                  => "ISBN:"
+      "pub_date_facet"          => "Date:",
+      "genre_facet"             => "Type:",
+      "handle"                  => "Handle:",
+      "series_facet"            => "Series:",
+      "book_journal_title"      => "Book/Journal Title:",
+      "media_type_facet"        => "Media Type:",
+      "table_of_contents"       => "Table of Contents:", 
+      "geographic_area_display" => "Geographic Area:", 
+      "book_author"             => "Book Author:", 
+      "format"                  => "Format:", 
+      "notes"                   => "Notes:", 
+      "publisher"               => "Publisher:", 
+      "publisher_location"      => "Publisher Location:", 
+      "abstract"                => "Abstract:", 
+      "subject_facet"           => "Subject(s):", 
+      "isbn"                    => "ISBN:",
+      "issn"                    => "ISSN:",
+      "doi"                     => "DOI:"
+    },
+    :linked => {
+      "author_facet"  => "facet",
+      "genre_facet"   => "facet",
+      "handle"        => "url",
+      "subject_facet" => "facet",
+      "series_facet"  => "facet"
     }
   }
 
@@ -293,7 +235,6 @@ Blacklight.configure(:shared) do |config|
       :pf => "$subject_pf"
     }
   }
-
   
   # "sort results by" select (pulldown)
   # label in pulldown is followed by the name of the SOLR field to sort by and
@@ -309,9 +250,16 @@ Blacklight.configure(:shared) do |config|
   # If there are more than this many search results, no spelling ("did you 
   # mean") suggestion is offered.
   config[:spell_max] = 5
-    
+
   # For the most-recent list, this is the max number displayed
-  config[:max_most_recent] = 10  
-    
+  config[:max_most_recent] = 10
+
+  # Add documents to the list of object formats that are supported for all objects.
+  # This parameter is a hash, identical to the Blacklight::Solr::Document#export_formats 
+  # output; keys are format short-names that can be exported. Hash includes:
+  #    :content-type => mime-content-type
+  config[:unapi] = {
+    'oai_dc_xml' => { :content_type => 'text/xml' } 
+  }
 end
 

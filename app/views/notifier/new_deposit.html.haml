@@ -2,7 +2,7 @@
   %b Accepted Author Agreement
   %b
     = " (" + @agreement_version + "): "
-  = (@agreement_version != "") ? "&#x2713;" : ""
+  = (@agreement_version != "") ? "&#x2713;".html_safe : ""
 %hr
 %div
   %b UNI:
@@ -19,17 +19,17 @@
 %div 
   %b Title:
 %div
-  = @title.gsub(/\r\n/s, '<br/>')
+  = @title.gsub(/\r\n/s, '<br/>').html_safe
 %hr
 %div 
   %b Authors:
 %div
-  = @authors.gsub(/\r\n/s, '<br/>')
+  = @authors.gsub(/\r\n/s, '<br/>').html_safe
 %hr
 %div 
   %b Abstract or Description:
 %div
-  = @abstract.gsub(/\r\n/s, '<br/>')
+  = @abstract.gsub(/\r\n/s, '<br/>').html_safe
 %hr
 %div 
   %b URL:
@@ -42,7 +42,7 @@
 %div 
   %b Notes:
 %div
-  = @notes.gsub(/\r\n/s, '<br/>')
+  = @notes.gsub(/\r\n/s, '<br/>').html_safe
 %hr
 %p
   = "You can access the record for this deposit at <a href=\"" + @record_url + "\">" + @record_url + "</a>."

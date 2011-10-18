@@ -29,7 +29,7 @@ class StatisticsController < ApplicationController
   def all_author_monthlies
     params[:email_template] ||= "Normal"
 
-    ids = Blacklight.solr.find(:per_page => 100000, :page => 1, :fl => "author_id_uni")["response"]["docs"].collect { |f| f["author_id_uni"] }.flatten.compact.uniq - EmailPreference.find_all_by_monthly_opt_out(true).collect(&:author)
+    ids = Blacklight.solr.find(:per_page => 100000, :page => 1, :fl => "author_uni")["response"]["docs"].collect { |f| f["author_uni"] }.flatten.compact.uniq - EmailPreference.find_all_by_monthly_opt_out(true).collect(&:author)
 
     alternate_emails = Hash[EmailPreference.find(:all, :conditions => "email is NOT NULL").collect { |ep| [ep.author, ep.email] }.flatten]
     @authors = ids.collect { |id| {:id => id, :email => alternate_emails[id] || "#{id}@columbia.edu"}}
@@ -57,7 +57,6 @@ class StatisticsController < ApplicationController
 
   def author_monthly
 
-
     if params[:commit].in?('View',"Email")
       startdate = Date.parse(params[:month] + " " + params[:year])
 
@@ -71,24 +70,19 @@ class StatisticsController < ApplicationController
 
         end  
       end
-
-
     end
-
 
   end
 
 
   def search_history
-    @search_types = [["Item",'id'],["UNI","author_id_uni"],["Genre","genre_search"]]
+    @search_types = [["Item",'id'],["UNI","author_uni"],["Genre","genre_search"]]
     params[:event] ||= ['View']
 
     six_months_ago = Date.today - 6.months
     next_month = Date.today + 1.months
     params[:start_date] ||= Date.civil(six_months_ago.year, six_months_ago.month).to_formatted_s(:datepicker)
     params[:end_date] ||= (Date.civil(next_month.year, next_month.month) - 1.day).to_formatted_s(:datepicker)
-
-
 
     if params[:commit] == "View Statistics"
 
@@ -163,9 +157,9 @@ class StatisticsController < ApplicationController
     author_id = options[:author_id]
     enddate = startdate + 1.month
 
-    results = Blacklight.solr.find(:per_page => 100000, :sort => "title_display asc" , :fq => "author_id_uni:#{author_id}", :fl => "title_display,id", :page => 1)["response"]["docs"]
+    results = Blacklight.solr.find(:per_page => 100000, :sort => "title_display asc" , :fq => "author_uni:#{author_id}", :fl => "title_display,id", :page => 1)["response"]["docs"]
     ids = results.collect { |r| r['id'] }
-    fedora_server = Cul::Fedora::Server.new(FEDORA_CONFIG)
+    fedora_server = Cul::Fedora::Server.new(fedora_config)
     download_ids = Hash.new { |h,k| h[k] = [] } 
     ids.each do |doc_id|
       download_ids[doc_id] |= fedora_server.item(doc_id).listMembers.collect(&:pid)

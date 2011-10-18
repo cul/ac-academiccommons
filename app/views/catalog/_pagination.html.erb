@@ -3,8 +3,9 @@
 
 <div id="pagination" class="clearfix">
 
-<div class="prev_next_links"><%= will_paginate @response.docs, :page_links => false, :container => false %></div>
-  <%= will_paginate @response.docs, :next_label => '', :previous_label => '', :class => "page_links" %>
+<% if paginate_params(@response).num_pages > 1 %>
+      <%= paginate_rsolr_response @response, :outer_window => 2, :theme => 'cul-blacklight-ac2' %>
+<% end %>
 
 </div>
 </div>

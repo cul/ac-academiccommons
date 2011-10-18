@@ -8,6 +8,6 @@
     - resource_list.each_with_index do |resource, i|
       .resource{:class => "spot" + (i%3).to_s}
         .thumbnail= link_to image_tag(relative_root + "/images/thumbnail_icons/" + thumbnail_for_resource(resource)), resource[:download_path] if resource[:download_path]
-        .title= link_to auto_add_empty_spaces(resource[:filename]), resource[:download_path] if resource[:download_path] 
+        .title= link_to auto_add_empty_spaces(resource[:filename]).html_safe, resource[:download_path] if resource[:download_path] 
 
 

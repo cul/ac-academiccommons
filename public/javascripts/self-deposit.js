@@ -1,5 +1,5 @@
 $(document).ready(function(){
-$.fn.replaceholder();
+ 
 
 $('#start_button').click(function(){
 
@@ -10,31 +10,14 @@ $('#sd-form-wrap').show();
 
 });
 
- $("#optional-fields").hide();
-
-$('#optionalFields').click(function(){
-
-  if ($("#optionalFields").is(":checked"))
-        {
-            //show the hidden div
-            $("#optional-fields").show("fast");
-        }
-        else
-        {      
-            //otherwise, hide it 
-            $("#optional-fields").hide("fast");
-        }
-
-});
-
-
-	// add * to required field labels
-	$('label.required').append('&nbsp;<strong>*</strong>&nbsp;');
-
+ 
 	// accordion functions
+	
+		$('#sd-form-wrap').hide();
  	var accordion = $("#stepForm").accordion({animated:false, autoHeight: false}); 
 	
-	$('#sd-form-wrap').hide();
+
+	
 	var current = 0;
 	
 	$.validator.addMethod("pageRequired", function(value, element) {
@@ -54,7 +37,7 @@ $('#optionalFields').click(function(){
 		onblur: true,
 		errorElement:"span",
 		errorPlacement: function(error, element){
-	    element.next().append(error);
+	    element.parent().prepend(error);
        	},
        	
        	
@@ -82,31 +65,9 @@ $('#optionalFields').click(function(){
 		accordion.accordion("activate", 1);
 		current = 1;
 	}); 
-	$("#sf4 .prevbutton").click(function(){
-		accordion.accordion("activate", 2);
-		current = 2;
-	}); 
-	
-	$("#sf5 .prevbutton").click(function(){
-		accordion.accordion("activate", 3);
-		current = 3;
-	}); 
+ 
 	// these buttons all run the validation, overridden by specific targets above
-		$(".open4").click(function() {
-	  if (v.form()) {  
-	accordion.accordion("activate", 4);
-	current = 4;
-	}
-	});
-	
-		$(".open3").click(function() {
-	  if (v.form()) {
-	  
-	    accordion.accordion("activate", 3);
-	    current = 3;
-	  }
-	});
-	$(".open2").click(function() {
+			$(".open2").click(function() {
 	  if (v.form()) {
 	    previewForm();
 	    accordion.accordion("activate", 2);

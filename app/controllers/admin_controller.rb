@@ -1,6 +1,5 @@
 class AdminController < ApplicationController
-  include 
-  
+
   before_filter :require_admin 
   before_filter :add_jhtmlarea, :only => [:edit_home_page]
   
@@ -38,36 +37,6 @@ class AdminController < ApplicationController
   end
 
   def ingest
-
-#    if params[:commit] == "Commit"
-#      items, collections = [params[:items], params[:collections]].collect { |pids| pids.split(" ").collect { |pid| fedora_server.item(pid) }}
-#      
-#      solr_params = {:items => items, :format => "ac2", :collections => collections} 
-#
-#      solr_params[:fulltext] = params[:fulltext] == "1"
-#      solr_params[:metadata] = params[:metadata] == "1"
-#      solr_params[:overwrite] = params[:overwrite] == "1"
-#      solr_params[:skip] = params[:skip] ? params[:skip].to_i : nil
-#      solr_params[:process] = params[:process] ? params[:process].to_i : nil
-#
-#
-#      @results = solr_server.ingest(solr_params)
-#
-#      if params[:overwrite] && params[:process]
-#        params[:skip] = params[:skip].to_i + params[:process].to_i
-#      end
-#        
-#      flash.now[:notice] = "Ingest successful."
-#    end
-#
-#
-#    
-#
-#    if params[:commit] == "Delete All"
-#      solr_server.delete_index
-#
-#      flash.now[:notice] = "Index deleted."
-#    end
 
     if(params[:cancel])
       existing_time_id = existing_ingest_time_id(params[:cancel])
@@ -157,7 +126,9 @@ class AdminController < ApplicationController
     if(params[:archive])
       deposit_to_archive = Deposit.find(params[:archive])
       if(deposit_to_archive)
-        File.delete(RAILS_ROOT + "/" + deposit_to_archive.file_path)
+        if(File.exists?(RAILS_ROOT + "/" + deposit_to_archive.file_path))
+          File.delete(RAILS_ROOT + "/" + deposit_to_archive.file_path)
+        end
         deposit_to_archive.archived = 1
         deposit_to_archive.save
       end
@@ -167,23 +138,19 @@ class AdminController < ApplicationController
   end
   
   def show_deposit
-    
     @deposit = Deposit.find(params[:id])
-    
   end
   
   def download_deposit_file
-    
     @deposit = Deposit.find(params[:id])
     send_file RAILS_ROOT + "/" + @deposit.file_path
-    
   end
   
   private
 
   def add_jhtmlarea
-    
     javascript_includes << ["jHtmlArea-0.7.0.min", "jHtmlArea.ColorPickerMenu-0.7.0.min"]
     stylesheet_links << ["jHtmlArea", "jHtmlArea.ColorPickerMenu"]
   end
+  
 end

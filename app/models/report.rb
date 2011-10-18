@@ -12,9 +12,6 @@ class Report < ActiveRecord::Base
     return self
   end
 
-  
-  
-
   def data_hash
     begin
       JSON.parse(data.to_s)

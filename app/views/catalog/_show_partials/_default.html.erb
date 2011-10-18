@@ -5,8 +5,11 @@
          <%#= render :partial => 'show_tools' %>
         </div>
 -->
-<%= render :partial => "catalog/_show_partials/display_resources", :locals => {:document => document} %>
+<%#= render :partial => "catalog/_show_partials/display_resources", :locals => {:document => document} %>
 
+ 
+<div class="warning" style="
+border: 1px solid #37397e;margin: 10px 0px;padding:15px 10px 15px 50px;background-repeat: no-repeat;background-position: 10px center;color: #0e0063;background-color: #f6fefa;background-image: url('http://digital.lampdev.columbia.edu/ac/assets/images/Info.png');font-size: 1.15em;">Due to Scheduled Server Maintenance, Files in Academic Commons Will Be Unavailable for Downloading between 4 and 6 pm EST Today</div>
 <div style="clear:both;">
   <dl class="defList">
     <% document_show_fields.each do |solr_fname| -%>
@@ -16,14 +19,14 @@
           <% if !document[solr_fname].empty?%>
             <dt><%= document_show_field_labels[solr_fname]%></dt><dd>
             <% document[solr_fname].each do |val| %>
-              <%= val %><%= "<br/>" unless val == document[solr_fname].last %>
+              <%= document_render_field_value(solr_fname, val) %><%= "<br/>".html_safe unless val == document[solr_fname].last %>
           <% end %>
           </dd>
         <% end %>
         <% else %>
         <% if !document[solr_fname].empty?%>
           <dt><%= document_show_field_labels[solr_fname]%></dt>
-          <dd><%= document[solr_fname] %></dd>
+          <dd><%= document_render_field_value(solr_fname, document[solr_fname]) %></dd>
         <% end -%>
         <% end -%>
       <% end -%>

@@ -60,7 +60,7 @@
 
 <header> 
 		 	
-		<h1 class="site_title"><%= link_to application_name, root_path %><%= (params[:controller] == "catalog" and !params[:id]) ? "<span id='results_text'>Search Results</span>" : "" %></h1>
+		<h1 class="site_title"><%= link_to application_name, root_path %><%= (params[:controller] == "catalog" and !params[:id]) ? "<span id='results_text'>Search Results</span>".html_safe : "" %></h1>
 	
 </header>
 </div>
@@ -71,7 +71,7 @@
 	<%- if page_location == "home" || page_location == "browse_view" -%>
 
 	<div id="home-search" class="span-16 prepend-4">
-	    <%= render :partial=>'/catalog/search_form' %>
+	    <%= render :partial=>'/catalog/search_box' %>
 	</div>
 	
 	
@@ -96,7 +96,7 @@
    </div>
 		
 		
-	<%= sidebar_items.join('') %>
+	<%= sidebar_items.join('').html_safe %>
 	 
 
 	</div>
@@ -144,6 +144,7 @@
 </div>
 
 
+<%- if Rails.application.config.analytics_enabled == true -%>
 <script type="text/javascript">
 
   var _gaq = _gaq || [];
@@ -157,6 +158,7 @@
   })();
 
 </script>
+<% end %>
 </body>
   
 </html>
