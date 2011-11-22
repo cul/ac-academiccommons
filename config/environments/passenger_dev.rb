@@ -34,6 +34,7 @@ CulBlacklightAc2::Application.configure do
   
   config.mail_deposit_recipients = ["pbf2105@columbia.edu", "patrickforce@gmail.com"]
   config.mail_deliverer = "pbf2105@columbia.edu"
+  config.base_path = 'rowling.cul.columbia.edu'
   
 end
 
