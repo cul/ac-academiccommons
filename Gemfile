@@ -5,7 +5,7 @@ gem 'rails', '3.0.10'
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
-gem 'sqlite3'
+gem 'sqlite3', '1.3.3'
 
 # Use unicorn as the web server
 # gem 'unicorn'
@@ -35,7 +35,7 @@ gem 'blacklight'
 gem 'blacklight_advanced_search'
 gem 'authlogic'
 gem 'authlogic_wind'
-gem 'cul-fedora', '~> 1.0.0'
+gem 'cul-fedora', '~> 1.0.1'
 gem 'garb'
 gem 'googlecharts'
 gem 'haml'
