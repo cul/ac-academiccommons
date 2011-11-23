@@ -71,7 +71,11 @@ module CatalogHelper
   end
 
   def build_resource_list(document)
-    obj_display = (document["id"] || []).first
+  res_message = ""
+   obj_display = (document["id"] || []).first
+#catch any error and return a message that resources are unavailable
+#this prevents fedora server outages from making ac2 item page inaccessible
+begin
     results = []
     uri_prefix = "info:fedora/"
     hc = HTTPClient.new()
@@ -84,7 +88,7 @@ module CatalogHelper
 
     docs = {}
     urls.each_pair do |key, url|
-      docs[key] = Nokogiri::XML(hc.get_content(url))
+        docs[key] = Nokogiri::XML(hc.get_content(url))
     end
 
     domain = "#{fedora_config["riurl"]}"
@@ -109,7 +113,9 @@ module CatalogHelper
       
       results << res
     end
-
+   rescue 
+     results = []
+   end
     return results
   end
  
@@ -212,7 +218,10 @@ module CatalogHelper
   end
 
   def get_metadata_list(doc)
-
+  meta_message = ""
+#catch any error and return an error message that resources are unavailable
+#this prevents fedora server outages from making ac2 item page inaccessible
+begin
     hc = HTTPClient.new
     doc["object_display"] = [ "#{fedora_config["riurl"]}" + "/objects/" + doc["id"].first + "/methods" ]
     json = doc_json_method(doc, "/ldpd:sdef.Core/describedBy?format=json")["results"]
@@ -238,6 +247,10 @@ module CatalogHelper
         results << res
       end
     end
+    rescue 
+      results = []
+    end
+
     return results
   end
 
