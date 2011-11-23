@@ -7,9 +7,8 @@
 -->
 <%= render :partial => "catalog/_show_partials/display_resources", :locals => {:document => document} %>
 
- 
- <div style="clear:both;">
-  <dl class="defList">
+<div style="clear:both;">
+  <dl class="defList clearfix">
     <% document_show_fields.each do |solr_fname| -%>
       <% if document[solr_fname] %>
         <% if document[solr_fname].is_a?(Array)%>
@@ -34,10 +33,11 @@
 
   <%= render :partial => "catalog/_show_partials/statistics" %>
 
-
-  <h3> Metadata:</h3>
-    <dl class="defList">
-    <% get_metadata_list(document).each do |resource| -%>
+ <% metadata_list=get_metadata_list(document) -%> 
+  <h3> Metadata:</h3> 
+    <dl class="defList clearfix">
+ <% if metadata_list.length > 0 -%>
+     <% metadata_list.each do |resource| -%>
       <dt><%= resource[:title] %></dt>
       <dd>
  
@@ -46,8 +46,10 @@
       <%= link_to "Download", resource[:download_url] if resource[:download_url] %> 
       </dd>
     <% end -%>
-
-  </dl>
+    <% else -%>
+    <em>Additional metadata is currently unavailable for this item.</em>
+    <% end -%>
+ </dl>
     
 <!--   <div class="license">This work is licensed under a <%= link_to "Creative Commons License", "http://creativecommons.org/licenses/by-nc-sa/3.0/us/" %></div> -->
 </div>
