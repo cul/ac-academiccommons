@@ -1,15 +1,56 @@
-%div Dear Academic Commons Depositor,
-%br
-%div
-  Here are the updated monthly and lifetime use statistics for your deposits to 
-  #{link_to "Academic Commons", "http://academiccommons.columbia.edu"}, 
-  the digital repository of Columbia University and its affiliates.
+%h3 Author Monthly Statistics
+.split_form
 
-= render :partial => "monthly_stats", :locals => {:lifetime => true}
+  -form_tag url_for(:controller => "statistics", :action => "author_monthly") do
 
-%div
-  If you have new material for deposit—anything from published articles, to presentation slides, to performance video, to datasets, and beyond—please send it to us at 
-  #{mail_to "http://academiccommons.columbia.edu/deposit"}
-  including basic descriptive information such as the title, the names of any collaborators, the URL or DOI for the published version, and if there is any special software required to view or otherwise make use of the file.  Remember: we use the information you provide to enhance the searchability of your work, increasing the number of times it is accessed and downloaded.
+    .label Author uni:
+    .value= text_field_tag :author_id, params[:author_id]
 
-= render :partial => "monthly_footer"
+    .label Email Template:
+    .value
+      = select_tag :email_template, options_for_select(["Normal", "Initial"], params[:email_template] || "Normal")
+    
+    .label Report month:
+    .value
+      = select_tag :month, options_for_select(Date::ABBR_MONTHNAMES, params[:month] || (Date.today - 1.months).strftime("%b"))
+      = select_tag :year, options_for_select((2011..Date.today.year), params[:year])
+
+    .label Include zeroes?
+    .value
+      = check_box_tag :include_zeroes, "true", params[:include_zeroes]
+
+    .label 
+    .value
+      = submit_tag "View"
+
+    - if @results
+      %hr 
+
+      %table#author_stats_results
+        %tr
+          %th Title
+          %th Views
+          %th Downloads
+
+        %tr
+          %td 
+            %b Total for #{params[:month]} #{params[:year]}
+          %td= @totals["View"] || 0
+          %td= @totals["Download"] || 0
+
+        - @results.each do |item|
+          %tr
+            %td= link_to item["title_display"], catalog_path(item["id"])
+            %td= @stats["View"][item["id"][0]] || 0
+            %td= @stats["Download"][item["id"][0]] || 0
+
+
+      .label
+      .value
+
+      .label Email to:
+      .value
+        = text_field_tag :email_destination, params[:email_destination], :size => 40
+        = submit_tag "Email"
+
+      = render :partial => "/debug_deliveries"

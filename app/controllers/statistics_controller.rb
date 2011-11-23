@@ -56,7 +56,6 @@ class StatisticsController < ApplicationController
   end
 
   def author_monthly
-
     if params[:commit].in?('View',"Email")
       startdate = Date.parse(params[:month] + " " + params[:year])
 
@@ -153,22 +152,24 @@ class StatisticsController < ApplicationController
 
 
   def get_monthly_author_stats(options = {})
-    startdate = options[:startdate]
+  startdate = options[:startdate]
     author_id = options[:author_id]
     enddate = startdate + 1.month
 
     results = Blacklight.solr.find(:per_page => 100000, :sort => "title_display asc" , :fq => "author_uni:#{author_id}", :fl => "title_display,id", :page => 1)["response"]["docs"]
-    ids = results.collect { |r| r['id'] }
+    ids = results.collect { |r| r['id'].to_s.strip }
     fedora_server = Cul::Fedora::Server.new(fedora_config)
     download_ids = Hash.new { |h,k| h[k] = [] } 
     ids.each do |doc_id|
       download_ids[doc_id] |= fedora_server.item(doc_id).listMembers.collect(&:pid)
+#      download_ids[doc_id] |=  fedora_server.item(doc_id).describedBy.collect(&:pid)
     end
     stats = Hash.new { |h,k| h[k] = Hash.new { |h,k| h[k] = 0 }}
     totals = Hash.new { |h,k| h[k] = 0 }
 
+
     stats['View'] = Statistic.count(:group => "identifier", :conditions => ["event = 'View' and identifier IN (?) AND at_time BETWEEN ? and ?", ids,startdate, enddate])
-    
+
     stats_downloads = Statistic.count(:group => "identifier", :conditions => ["event = 'Download' and identifier IN (?) AND at_time BETWEEN ? and ?", download_ids.values.flatten,startdate, enddate])
     download_ids.each_pair do |doc_id, downloads|
 
@@ -177,7 +178,8 @@ class StatisticsController < ApplicationController
 
 
     stats['View Lifetime'] = Statistic.count(:group => "identifier", :conditions => ["event = 'View' and identifier IN (?)", ids])
-    
+
+
     stats_lifetime_downloads = Statistic.count(:group => "identifier", :conditions => ["event = 'Download' and identifier IN (?)" , download_ids.values.flatten])
     download_ids.each_pair do |doc_id, downloads|
 
@@ -186,9 +188,10 @@ class StatisticsController < ApplicationController
     stats.keys.each { |key| totals[key] = stats[key].values.sum }
 
 
+stats['View'] = convertOrderedHash(stats['View'])
+stats['View Lifetime'] = convertOrderedHash(stats['View Lifetime'])
 
-
-    results.reject! { |r| (stats['View'][r['id']] || 0) == 0 &&  (stats['Download'][r['id']] || 0) == 0 } unless params[:include_zeroes]
+    results.reject! { |r| (stats['View'][r['id'][0]] || 0) == 0 &&  (stats['Download'][r['id']] || 0) == 0 } unless params[:include_zeroes]
     results.sort! do |x,y|
       result = (stats['Download'][y['id']] || 0) <=> (stats['Download'][x['id']] || 0) 
       result = x["title_display"] <=> y["title_display"] if result == 0
@@ -198,6 +201,14 @@ class StatisticsController < ApplicationController
     return results, stats, totals
 
   end
+
+def convertOrderedHash(ohash)
+	a =  ohash.to_a
+	oh = {}
+	a.each{|x|  oh[x[0]] = x[1]} 
+	return oh
+end
+
 
   ##################
   # Config-lookup methods. Should be moved to a module of some kind, once
