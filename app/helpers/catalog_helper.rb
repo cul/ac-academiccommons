@@ -100,6 +100,7 @@ begin
     members = docs[:members].css("member").to_enum(:each_with_index).collect do |member, i|
       res = {}
       member_pid = member.attributes["uri"].value.sub(uri_prefix, "")
+
       res[:pid] = member_pid
       res[:filename] = Nokogiri::XML(hc.get_content("#{fedora_config["riurl"]}/" + "objects/" + member.attributes["uri"].value.sub(uri_prefix, "") + "/objectXML")).xpath("/foxml:digitalObject/foxml:objectProperties/foxml:property[@NAME='info:fedora/fedora-system:def/model#label']/@VALUE")      
       res[:download_path] = fedora_content_path(:download, res[:pid], 'CONTENT', res[:filename])
