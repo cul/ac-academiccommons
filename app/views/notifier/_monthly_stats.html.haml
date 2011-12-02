@@ -25,9 +25,9 @@
     -current_url = "#{current_url}#{Rails.application.config.relative_root}"
     - @results.each_with_index do |item, i|
       - views =  @stats["View"][item["id"][0]] || 0
-      - lifetime_views = @stats["View Lifetime"][item["id"]] || 0
+      - lifetime_views = @stats["View Lifetime"][item["id"][0]] || 0
       - downloads =  @stats["Download"][item["id"][0]] || 0
-      - lifetime_downloads = @stats["Download Lifetime"][item["id"]] || 0
+      - lifetime_downloads = @stats["Download Lifetime"][item["id"][0]] || 0
       %tr
         %td= link_to(item["title_display"], url_for(:host => current_url,  :only_path => false, :controller => :catalog, :action => :show, :id => item["id"])) 
         %td
