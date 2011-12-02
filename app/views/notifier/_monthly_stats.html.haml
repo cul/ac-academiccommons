@@ -22,6 +22,7 @@
           %b Downloads
 
     -current_url = (Rails.application.config.base_path != nil) ? Rails.application.config.base_path : "localhost:3000"
+    -current_url = "#{current_url}#{Rails.application.config.relative_root}"
     - @results.each_with_index do |item, i|
       - views =  @stats["View"][item["id"]] || 0
       - lifetime_views = @stats["View Lifetime"][item["id"]] || 0
