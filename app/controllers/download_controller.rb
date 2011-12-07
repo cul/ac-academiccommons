@@ -1,9 +1,10 @@
 class DownloadController < ApplicationController
+  
   after_filter :record_stats
   
   def fedora_content
       
-    url = FEDORA_CONFIG[:riurl] + "/get/" + params[:uri]+ "/" + params[:block]
+    url = fedora_config["riurl"] + "/get/" + params[:uri]+ "/" + params[:block]
 
     cl = HTTPClient.new
     h_cd = "filename=""#{CGI.escapeHTML(params[:filename].to_s)}"""
@@ -15,8 +16,7 @@ class DownloadController < ApplicationController
       h_cd = "attachment; " + h_cd 
     when "show_pretty"
       if h_ct.include?("xml")
-        
-        xsl = Nokogiri::XSLT(File.read(RAILS_ROOT + "/app/stylesheets/pretty-print.xsl"))
+        xsl = Nokogiri::XSLT(File.read(Rails.root.to_s + "/app/tools/pretty-print.xsl"))
         xml = Nokogiri(cl.get_content(url))
         text_result = xsl.apply_to(xml).to_s
       else
@@ -33,11 +33,8 @@ class DownloadController < ApplicationController
       headers["Content-Type"] = h_ct
 
       
-      render :status => 200, :text => Proc.new { |response, output|
-        cl.get_content(url) do |chunk|
-          output.write chunk
-        end
-      }
+      send_data(cl.get_content(url), :filename => CGI.escapeHTML(params[:filename].to_s), :type => h_ct)
+      
     end
   end
 
@@ -45,9 +42,8 @@ class DownloadController < ApplicationController
   
   def record_stats()
     Statistic.create!(:session_id => request.session_options[:id], :ip_address => request.env['HTTP_X_FORWARDED_FOR'] || request.remote_addr, :event => "Download", :identifier => params["uri"], :at_time => Time.now())
-
-    
   end
+  
 end
 
 

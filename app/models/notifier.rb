@@ -7,7 +7,7 @@ class Notifier < ActionMailer::Base
     @results = results
     @date = date.strftime("%b %Y")
     recipients to_address
-    from MAIL_DELIVERER
+    from Rails.application.config.mail_deliverer
     subject "Academic Commons Monthly Download Report for #{@date}"
     content_type 'text/html'
     @request = request
@@ -21,7 +21,7 @@ class Notifier < ActionMailer::Base
     @results = results
     @date = date.strftime("%b %Y")
     recipients to_address
-    from MAIL_DELIVERER
+    from Rails.application.config.mail_deliverer
     subject "Academic Commons Monthly Download Report for #{@date}"
     content_type 'text/html'
   end
@@ -39,8 +39,8 @@ class Notifier < ActionMailer::Base
     @notes = deposit.notes    
     @record_url = root_url + "admin/deposits/" + deposit.id.to_s
     @file_download_url = root_url + "admin/deposits/" + deposit.id.to_s + "/file"
-    recipients NEW_DEPOSIT_RECIPIENTS
-    from MAIL_DELIVERER
+    recipients Rails.application.config.mail_deposit_recipients
+    from Rails.application.config.mail_deliverer
     subject "New Academic Commons Deposit Request"
     content_type 'text/html'
   end
@@ -49,8 +49,8 @@ class Notifier < ActionMailer::Base
     @name = request[:name]
     @email = request[:email]
     @agreement_version = request["AC-agreement-version"]
-    recipients NEW_DEPOSIT_RECIPIENTS
-    from MAIL_DELIVERER
+    recipients Rails.application.config.mail_deposit_recipients
+    from Rails.application.config.mail_deliverer
     subject "Academic Commons Author Agreement Accepted"
     content_type 'text/html'
   end

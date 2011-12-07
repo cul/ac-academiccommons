@@ -7,7 +7,7 @@
     <ul>
  
     <% group.each do |v| %>
-      <li> <%= link_to(v[:name], catalog_index_path()+'?f%5Bsubject%5D%5B%5D=' + url_encode_resource(v[:name]) ) %> (<%= v[:count] %>)  </li>
+      <li> <%= link_to(v[:name], catalog_index_path()+'?f%5Bsubject_facet%5D%5B%5D=' + url_encode_resource(v[:name]) ) %> (<%= v[:count] %>)  </li>
     <% end %>
     </ul>
     </div>

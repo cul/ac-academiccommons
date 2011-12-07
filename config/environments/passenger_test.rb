@@ -1,41 +1,48 @@
-# Settings specified here will take precedence over those in config/environment.rb
+CulBlacklightAc2::Application.configure do
+  # Settings specified here will take precedence over those in config/application.rb
 
-# The production environment is meant for finished, "live" apps.
-# Code is not reloaded between requests
-config.cache_classes = true
+  # The test environment is used exclusively to run your application's
+  # test suite.  You never need to work with it otherwise.  Remember that
+  # your test database is "scratch space" for the test suite and is wiped
+  # and recreated between test runs.  Don't rely on the data there!
+  config.cache_classes = true
 
-# Full error reports are disabled and caching is turned on
-config.action_controller.consider_all_requests_local = false
-config.action_controller.perform_caching             = true
-config.action_view.debug_rjs                         = false
+  # Log error messages when you accidentally call methods on nil.
+  config.whiny_nils = true
 
-# This line tells passenger we are serving under http://<server>/<app_name>/
-config.action_controller.relative_url_root = "/ac2_test"
+  # Show full error reports and disable caching
+  config.consider_all_requests_local       = true
+  config.action_controller.perform_caching = false
 
-# See everything in the log (default is :info)
-# config.log_level = :debug
+  # Raise exceptions instead of rendering exception templates
+  config.action_dispatch.show_exceptions = false
 
-# Use a different logger for distributed setups
-# config.logger = SyslogLogger.new
+  # Disable request forgery protection in test environment
+  config.action_controller.allow_forgery_protection    = false
 
-# Use a different cache store in production
-# config.cache_store = :mem_cache_store
+  # Tell Action Mailer not to deliver emails to the real world.
+  # The :test delivery method accumulates sent emails in the
+  # ActionMailer::Base.deliveries array.
+  config.action_mailer.raise_delivery_errors = true
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.smtp_settings = {
+    :address => "localhost",
+    :domain => "rhys.cul.columbia.edu",
+    :port => 25
+  }
 
-# Enable serving of images, stylesheets, and javascripts from an asset server
-# config.action_controller.asset_host = "http://assets.example.com"
+  # Use SQL instead of Active Record's schema dumper when creating the test database.
+  # This is necessary if your schema can't be completely dumped by the schema dumper,
+  # like if you have constraints or database-specific column types
+  # config.active_record.schema_format = :sql
 
-# Disable delivery errors, bad email addresses will be ignored
-config.action_mailer.raise_delivery_errors = true
-config.action_mailer.delivery_method = :smtp
-config.action_mailer.smtp_settings = {
-  :address => "localhost",
-  :domain => "rhys.cul.columbia.edu",
-  :port => 25
-}
-
-Haml::Template::options[:ugly] = true
-
-BASE_PATH = "rhys.cul.columbia.edu"
-
-NEW_DEPOSIT_RECIPIENTS = ["rh2561@columbia.edu", "wla2103@columbia.edu", "pbf2105@columbia.edu"]
-MAIL_DELIVERER = "rh2561@columbia.edu"
+  # Print deprecation notices to the stderr
+  config.active_support.deprecation = :stderr
+  
+  config.relative_root = '/ac2_test'
+  config.analytics_enabled = false
+  
+  config.mail_deposit_recipients = ["rh2561@columbia.edu", "wla2103@columbia.edu"]
+  config.mail_deliverer = "rh2561@columbia.edu"
+  config.base_path = "rhys.cul.columbia.edu"
+end

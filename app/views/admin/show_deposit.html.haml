@@ -1,5 +1,5 @@
 %p
-  = '<a href="' + relative_root + '/admin/deposits">&laquo; Back to Self-deposits</a>'
+  = ('<a href="' + relative_root + '/admin/deposits">&laquo; Back to Self-deposits</a>').html_safe
 
 %h3
   = @deposit.title
@@ -24,16 +24,16 @@
       %td= @deposit.email
     %tr
       %td Title
-      %td= @deposit.title.gsub(/\r\n/, '<br/>')
+      %td= @deposit.title.gsub(/\r\n/, '<br/>').html_safe
     %tr
       %td Authors
-      %td= @deposit.authors.gsub(/\r\n/, '<br/>')
+      %td= @deposit.authors.gsub(/\r\n/, '<br/>').html_safe
     %tr
       %td File
-      %td= '<a href="' + relative_root + '/admin/deposits/' + @deposit.id.to_s + '/file">Download</a>'
+      %td= ('<a href="' + relative_root + '/admin/deposits/' + @deposit.id.to_s + '/file">Download</a>').html_safe
     %tr
       %td Abstract
-      %td= @deposit.abstract.gsub(/\r\n/, '<br/>')
+      %td= @deposit.abstract.gsub(/\r\n/, '<br/>').html_safe
     %tr
       %td URL
       %td= @deposit.url
@@ -42,4 +42,4 @@
       %td= @deposit.doi_pmcid
     %tr
       %td Notes
-      %td= @deposit.notes.gsub(/\r\n/, '<br/>')
+      %td= @deposit.notes.gsub(/\r\n/, '<br/>').html_safe

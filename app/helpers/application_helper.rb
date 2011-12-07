@@ -1,27 +1,29 @@
-#
-# Methods added to this helper will be available to all templates in the application.
-#
-
-require "#{Blacklight.root}/app/helpers/application_helper.rb"
-
 module ApplicationHelper
-
-
+  
   def application_name
     'Academic Commons'
   end
 
   def relative_root
-    Rails.configuration.action_controller[:relative_url_root] || ""
+    Rails.application.config.relative_root || ""
+  end
+  
+  def document_type
+    @document[Blacklight.config[:show][:genre]]
+  end
+  
+  def document_author
+    @document[Blacklight.config[:show][:author]]
   end
   
   def render_document_heading
     heading = ""
     if(!document_type.nil?)
-      heading += '<h2>' + document_type[0] + ':</h2>'
+      heading += '<h2>' + document_type.first + ':</h2>'
     end
-    heading += '<h1>' + (document_heading || "") + '</h1>'
-    heading += '<h2 class="author_credit">' + first_names_then_last(document_author[0] || "")  + '</h2>'
+    heading += '<h1>' + (document_heading.first || "") + '</h1>'
+    heading += '<h2 class="author_credit">' + first_names_then_last(document_author.first || "")  + '</h2>'
+    heading.html_safe
   end
   
   def first_names_then_last(last_names_first)
@@ -34,19 +36,19 @@ module ApplicationHelper
       html << first_name_then_last(last_name_first.strip)
       i += 1
     end
-    return html
+    return html.html_safe
   end
   
   def first_name_then_last(last_name_first)
     if(last_name_first.index(","))
       parts = last_name_first.split(",")
       if parts.length > 1
-        return parts[1].strip + " " + parts[0].strip
+        return (parts[1].strip + " " + parts[0].strip).html_safe
       else
-        return parts[0].strip
+        return (parts[0].strip).html_safe
       end
     else
-      return last_name_first
+      return last_name_first.html_safe
     end
   end
   
@@ -60,7 +62,7 @@ module ApplicationHelper
       term = suggestions[i]
       term_info = suggestions[i+1]
       origFreq = term_info['origFreq']
-  # termInfo['suggestion'] is an array of hashes with 'word' and 'freq' keys
+      # termInfo['suggestion'] is an array of hashes with 'word' and 'freq' keys
       term_info['suggestion'].each do |suggestion|
         if suggestion['freq'] > origFreq
           words << suggestion['word']
@@ -80,21 +82,23 @@ module ApplicationHelper
   # options consist of:
   # :suppress_link => true # do not make it a link, used for an already selected value for instance
   def render_facet_value(facet_solr_field, item, options ={})
-    link_to_unless(options[:suppress_link], item.label, add_facet_params_and_redirect(facet_solr_field, item.value), :class=>"facet_select") + "<span class='item_count'> (" + format_num(item.hits) + ")</span>" + render_subfacets(facet_solr_field, item, options)
+    render = link_to_unless(options[:suppress_link], item.value, add_facet_params_and_redirect(facet_solr_field, item.value), :class=>"facet_select")
+    render = render + ("<span class='item_count'> (" + format_num(item.hits) + ")</span>").html_safe
+    render.html_safe
   end
   
   def facet_list_limit
-   10
+    10
   end
 
   # Standard display of a SELECTED facet value, no link, special span
   # with class, and 'remove' button.
   def render_selected_facet_value(facet_solr_field, item)
-    
-   link_to(item.label+"<span class='item_count'> (" + format_num(item.hits) + ")</span>" , remove_facet_params(facet_solr_field, item.value, params), :class=>"facet_deselect") +
-
-    render_subfacets(facet_solr_field, item)
+    render = link_to((item.value + "<span class='item_count'> (" + format_num(item.hits) + ")</span>").html_safe, remove_facet_params(facet_solr_field, item.value, params), :class=>"facet_deselect") 
+    render = render + render_subfacets(facet_solr_field, item)
+    render.html_safe
   end
+  
   def render_subfacets(facet_solr_field, item, options ={})
     render = ''
     if (item.instance_variables.include? "@subfacets")
@@ -107,8 +111,8 @@ module ApplicationHelper
         end
       end
       render += '</ul>'
-    end
-    render
+      end
+      render.html_safe
   end
   
   def get_last_month_name
@@ -122,7 +126,11 @@ module ApplicationHelper
       return file.read
     else
       require "lib/pagevisits.rb"
+<<<<<<< HEAD
       Garb::Session.login(GOOGLE_USERNAME, GOOGLE_PASSWORD)
+=======
+      Garb::Session.login(Rails.application.config.analytics_username, Rails.application.config.analytics_password)
+>>>>>>> i2-sprint-2
       profile = Garb::Management::Profile.all.detect {|p| p.web_property_id == 'UA-10481105-1'}
       ga_results = profile.pagevisits(:start_date => Date.today.ago(1.month).beginning_of_month, :end_date => Date.today.beginning_of_month.ago(1.day))
       visits = ga_results.to_a[0].visits
@@ -147,8 +155,9 @@ module ApplicationHelper
         value = '<a href="' + value + '">' + value + '</a>'
       end
     end
-    return auto_link(value)
+    return auto_link(value).html_safe
   end
+<<<<<<< HEAD
   
 end
 
@@ -157,17 +166,22 @@ end
 def search_field_tag(name, value = nil, options = {})
          text_field_tag(name, value, options.stringify_keys.update("type" => "search"))
 end
+=======
+>>>>>>> i2-sprint-2
+
+  # jackson added this helper function from rails 3 to generate html5 search field type (rounded corners)
+  def search_field_tag(name, value = nil, options = {})
+    text_field_tag(name, value, options.stringify_keys.update("type" => "search"))
+  end
 
 
-def render_meta_as_links()
-
-
-end
+  def render_meta_as_links()
+  end
 
  
   def page_location
     if params[:controller] == "catalog"
-      if params[:action] == "index" and params[:q].to_s.blank? and params[:f].to_s.blank? and (params[:search_field].to_s.blank? or params[:search_field] != Blacklight.config[:advanced][:search_field])
+      if params[:action] == "index" and params[:q].to_s.blank? and params[:f].to_s.blank? and params[:search_field].to_s.blank?
         return "home"
       elsif params[:action] == "index"
         return "search_results"
@@ -184,3 +198,5 @@ end
       return "unknown"
     end
   end
+  
+end

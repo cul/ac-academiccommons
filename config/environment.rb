@@ -1,9 +1,10 @@
-# Be sure to restart your server when you modify this file
+# Load the rails application
+require File.expand_path('../application', __FILE__)
 
-# Specifies gem version of Rails to use when vendor/rails is not present
-RAILS_GEM_VERSION = '2.3.11' unless defined? RAILS_GEM_VERSION
-RELEASE_STAMP = '0.4.0'
+# Initialize the rails application
+CulBlacklightAc2::Application.initialize!
 
+<<<<<<< HEAD
 # Bootstrap the Rails environment, frameworks, and default configuration
 require File.join(File.dirname(__FILE__), 'boot')
 require File.join(File.dirname(__FILE__), '../vendor/plugins/blacklight/vendor/plugins/engines/boot')
@@ -67,3 +68,6 @@ end
 
 GOOGLE_USERNAME = "***REMOVED***"
 GOOGLE_PASSWORD = "***REMOVED***"
+=======
+require 'james_monkeys'
+>>>>>>> i2-sprint-2

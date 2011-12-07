@@ -2,10 +2,6 @@
 // This file is automatically included by javascript_include_tag :defaults
 
 
-$(function(){
-	var bl = new Blacklight();
-});
-
 $(document).ready(function() {
 
 $('div.left-column ul').each(function(){

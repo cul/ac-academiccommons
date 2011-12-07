@@ -5,8 +5,6 @@ class ReportsController < ApplicationController
     @category = params[:category]
     @report = Report.generate(@category)
     @new_report = Report.new(:category => @category, :user => current_user, :generated_on => Date.today)
-
-
   end
 
   def index

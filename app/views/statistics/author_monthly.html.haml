@@ -41,8 +41,8 @@
         - @results.each do |item|
           %tr
             %td= link_to item["title_display"], catalog_path(item["id"])
-            %td= @stats["View"][item["id"]] || 0
-            %td= @stats["Download"][item["id"]] || 0
+            %td= @stats["View"][item["id"][0]] || 0
+            %td= @stats["Download"][item["id"][0]] || 0
 
 
       .label

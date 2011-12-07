@@ -3,7 +3,7 @@
 <div id="page-count">
 
 <% if params[:action] == 'index' -%>
-<%= page_entries_info @response.docs, :entry_name=>'item' -%>
+<%= render_pagination_info @response, { :entry_name=>'item' } -%>
 <% else -%>
 <%= session[:search][:counter].to_i %> of <%= format_num(session[:search][:total]) %> items from your search.
 <% end -%>

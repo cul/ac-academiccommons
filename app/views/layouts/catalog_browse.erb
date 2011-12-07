@@ -76,7 +76,7 @@
 	<%- if page_location == "home" || page_location == "browse_view" -%>
 
 	<div id="home-search" class="span-16 prepend-4">
-	    <%= render :partial=>'/catalog/search_form' %>
+	    <%= render :partial=>'/catalog/search_box' %>
 	</div>
 	
 	
@@ -124,6 +124,7 @@
  
 </div>
 
+<%- if Rails.application.config.analytics_enabled == true -%>
 <script type="text/javascript">
 
   var _gaq = _gaq || [];
@@ -137,6 +138,7 @@
   })();
 
 </script>
+<% end %>
 </body>
   
 </html>
