@@ -71,9 +71,8 @@ module CatalogHelper
   end
 
   def build_resource_list(document)
-  res_message = ""
    obj_display = (document["id"] || []).first
-#catch any error and return a message that resources are unavailable
+#catch any error
 #this prevents fedora server outages from making ac2 item page inaccessible
 begin
     results = []
@@ -219,7 +218,6 @@ begin
   end
 
   def get_metadata_list(doc)
-  meta_message = ""
 #catch any error and return an error message that resources are unavailable
 #this prevents fedora server outages from making ac2 item page inaccessible
 begin
