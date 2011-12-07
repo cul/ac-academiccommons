@@ -126,11 +126,7 @@ module ApplicationHelper
       return file.read
     else
       require "lib/pagevisits.rb"
-<<<<<<< HEAD
-      Garb::Session.login(GOOGLE_USERNAME, GOOGLE_PASSWORD)
-=======
       Garb::Session.login(Rails.application.config.analytics_username, Rails.application.config.analytics_password)
->>>>>>> i2-sprint-2
       profile = Garb::Management::Profile.all.detect {|p| p.web_property_id == 'UA-10481105-1'}
       ga_results = profile.pagevisits(:start_date => Date.today.ago(1.month).beginning_of_month, :end_date => Date.today.beginning_of_month.ago(1.day))
       visits = ga_results.to_a[0].visits
@@ -157,17 +153,7 @@ module ApplicationHelper
     end
     return auto_link(value).html_safe
   end
-<<<<<<< HEAD
-  
-end
 
-# jackson added this helper function from rails 3 to generate html5 search field type (rounded corners)
-
-def search_field_tag(name, value = nil, options = {})
-         text_field_tag(name, value, options.stringify_keys.update("type" => "search"))
-end
-=======
->>>>>>> i2-sprint-2
 
   # jackson added this helper function from rails 3 to generate html5 search field type (rounded corners)
   def search_field_tag(name, value = nil, options = {})
