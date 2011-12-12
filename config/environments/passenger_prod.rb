@@ -53,6 +53,7 @@ CulBlacklightAc2::Application.configure do
   # Send deprecation notices to registered listeners
   config.active_support.deprecation = :notify
   
+  config.relative_root = ''
   config.analytics_enabled = true
   
   config.mail_deposit_recipients = ["rh2561@columbia.edu", "wla2103@columbia.edu"]
