@@ -1,4 +1,6 @@
 CulBlacklightAc2::Application.routes.draw do
+  get "info/about"
+
   Blacklight.add_routes(self)
 
   root :to => "catalog#index"
@@ -91,5 +93,8 @@ CulBlacklightAc2::Application.routes.draw do
   match '/login',          :to => 'user_sessions#new',          :as => 'new_user_session'
   match '/wind_logout',    :to => 'user_sessions#destroy',      :as => 'destroy_user_session'
   # match 'account',        :to => 'application#account',     :as => 'edit_user_registration'
+  
+  
+    match '/about', :to => 'info#about', :as => 'about'
   
 end

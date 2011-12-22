@@ -1,0 +1,76 @@
+<div id="about-text" class="box"><h2>About Academic Commons</h2>
+
+<p>Academic Commons is a freely accessible digital collection of research done at Columbia University or one of its affiliate institutions, including Barnard College, Teachers College, Union Theological Seminary, and Jewish Theological Seminary. It is a place where Columbia-affiliated students, faculty, staff and anyone participating in Columbia events or groups can archive the digital results of their research or scholarly works and share them with the world at large. Academic Commons is one of a suite of services provided by the Center for Digital Research and Scholarship (CDRS) at Columbia University Libraries and Information Services. 
+</p>
+<p>When you deposit in Academic Commons, your works should be in their final form. Each item you deposit will be backed up on the library's secure servers, cataloged to enhance its visibility, and will receive a permanent URL for use in citations. The team at CDRS <a href="http://twitter.com/#!/researchatcu">tweet</a> daily about interesting content from the work you send us, and <a href="http://cdrs.columbia.edu/cdrsmain/">blog</a> weekly about recent deposits. Best of all, Google Scholar and other search engines index Academic Commons, which hugely increases the visibility and potential impact of your research. 
+</p>
+<p>To learn more about how to use Academic Commons and for answers to your questions, please see our <a href="http://support.academiccommons.columbia.edu/knowledgebase">FAQ</a>.
+</p>
+
+</div>
+
+ <div id="sidebar" class="span-7">
+ 
+
+<% sidebar_items << capture do %>
+
+ 
+
+ <h3>Browse AC Content</h3>
+ 
+<div   class='box home-side'>
+    
+  <%= link_to "Departments", departments_browse_path, :class=>"nav-link" %>
+  <%= link_to "Subjects", subjects_browse_path, :class=>"nav-link" %>
+    
+</div>
+
+ 
+<h3>Helpful Links</h3>
+ 
+<div class='box home-side'>
+
+<%= render :partial=>'catalog/home_accessory_links' %>
+</div>
+
+
+
+
+
+
+  
+ 
+
+ 
+
+<h3>AC by the Numbers</h3>
+<div class='box home-side'>
+			
+			<ul>
+			<li><strong><%= get_total_count() %></strong> items in Academic Commons.</li>
+			<li>Objects added in the last year: <strong><%= get_count_by_year() %></strong></li> 
+			<li>Objects added in the last 30 days:  <strong><%= get_count_by_month() %></strong></li>
+			<li>Page Visits in <%= get_last_month_name() %>: <strong><%= get_last_month_page_visits() %></strong>
+			
+			</li>
+			</ul>   
+			
+			</div>
+
+ 
+ 
+ <h3>Deposit your Work in Academic Commons</h3>
+<div   class='box home-side'  >
+
+
+<p>Current faculty, staff, and students of Columbia and its affiliates are invited to <a href="<%= relative_root %>/deposit">deposit</a> research materials  in any digital format, including: articles, monographs, theses and dissertations, working papers, technical reports, conference papers and presentations, datasets, images, video and other multimedia creations, and software code.
+</p>
+<p>
+To learn more about the benefits of depositing your work into Academic Commons, <a href="http://support.academiccommons.columbia.edu/">visit our FAQ</a> or email <a href="mailto:rh2561@columbia.edu">Robert Hilliker, Digital Repository Manager</a>.</p>
+</div>
+
+ 
+
+ <% end %>
+ 
+ </div>

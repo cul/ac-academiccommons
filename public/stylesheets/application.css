@@ -160,10 +160,13 @@ ul#recently-updated {
 	font: 1.25em Georgia, "Times New Roman", Times, serif;
 }
 
-#top-slug, #home-content {
+#top-slug, #home-content  {
 	font: 1.25em/1.5em Georgia, "Times New Roman", Times, serif;
 }
 
+#about-text p{
+	margin-right: 100px;
+}
 div#intro {
 	padding-right: 120px;
 	margin-top: 20px;
