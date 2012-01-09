@@ -1835,11 +1835,12 @@ div.school{
 	 
 	background: rgba(255,255,255,.6);
  	height: 62px;
- 	float: left;
- 	min-width: 100px;
+  display: inline-block;
+  float: left;
+ 	min-width: 225px;
  	margin-left: 10px;
 	text-align: center;
-	margin-bottom: 1.5em;
+	margin-bottom: 10px;
 	
 	-moz-box-shadow: 1px 1px 1px #999;
 	-webkit-box-shadow: 1px 1px 1px #999;
@@ -1858,27 +1859,28 @@ div.school:hover{
 	border: 1px solid silver;
 }
 div.school.columbia{
-	background: url(../images/college-sprites.gif) 0 5px;
-	width: 227px;
+	background: url(../images/college-sprites.gif) -2px 5px;
+  margin-left: 125px;
 }
 
 div.school.barnard{
-	background: url(../images/college-sprites.gif) -239px 5px;
-	width: 190px;
+	background: url(../images/college-sprites.gif) -222px 5px;
+ 
 }
 div.school.teachers{
-	background: url(../images/college-sprites.gif) -462px 5px;
-	width: 139px;
+	background: url(../images/college-sprites.gif) -426px 5px;
+	width: 148px;
 }
 
 div.school.jts{
-	background: url(../images/college-sprites.gif) -913px 5px;
-	width: 158px;
+	background: url(../images/college-sprites.gif) -885px 5px;
+	width: 164px;
+	margin-left: 242px;
 }
 
 div.school.union{
-	background: url(../images/college-sprites.gif) -670px 5px;
-	width: 164px;
+	background: url(../images/college-sprites.gif) -640px 5px;
+	width: 170px;
 }
 #facets div h3  {
 	font-family: "Helvetica Neue", Arial, Helvetica, Geneva, sans-serif;
