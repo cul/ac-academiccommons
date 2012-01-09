@@ -1853,9 +1853,9 @@ div.school{
 div.school:hover{
 	 
  	
-	-moz-box-shadow: 3px 3px 3px #999;
-	-webkit-box-shadow: 3px 3px 3px #999;
-	box-shadow: 3px 3px 3px #999;
+	-moz-box-shadow: 0px 4px 5px #999;
+	-webkit-box-shadow: 0px 4px 5px #999;
+	box-shadow: 0px 4px 5px #999;
 	border: 1px solid silver;
 }
 div.school.columbia{
