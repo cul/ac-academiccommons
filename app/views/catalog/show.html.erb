@@ -14,6 +14,24 @@
 </div>
 <% sidebar_items << capture do %>
   <div class="back-to-search"><%= link_back_to_catalog %></div>
+  
+   <h3>Browse AC Content</h3>
+ 
+<div   class='box home-side'>
+    
+  <%= link_to "Departments", departments_browse_path, :class=>"nav-link" %>
+  <%= link_to "Subjects", subjects_browse_path, :class=>"nav-link" %>
+    
+</div>
+
+ 
+<h3>Helpful Links</h3>
+ 
+<div class='box home-side'>
+
+<%= render :partial=>'home_accessory_links' %>
+</div>
+  
 <% end %>
 <%# this should be in a partial -%>
 <div id="document">
@@ -29,6 +47,7 @@
   </div>
 </div>
 
+
 <%= render :partial=>'solr_request' %>
 
 
@@ -40,3 +59,4 @@
     -->
     <span class="Z3988" title="<%= @document.export_as_openurl_ctx_kev(document_partial_name(@document)) %>"></span>
   <% end %>
+</div>
