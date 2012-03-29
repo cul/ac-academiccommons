@@ -1,4 +1,9 @@
 require "open3"
+begin
+  require "active_support/core_ext/array/extract_options"
+rescue
+  require "activesupport"
+end
 
 module Cul
   module Fedora
@@ -40,6 +45,7 @@ module Cul
           request
           return true
         rescue Exception => e # we should really do some better checking of error type etc here
+	  logger.error "no object was found for fedora pid  #{pid}"
           logger.error e.message
           return false
         end
@@ -133,7 +139,7 @@ module Cul
 
         results = Hash.new { |h,k| h[k] = [] }
         normalize_space = lambda { |s| s.to_s.strip.gsub(/\s{2,}/," ") }
-        search_to_content = lambda { |x| x.kind_of?(Nokogiri::XML::Element) ? x.content : x.to_s }
+        search_to_content = lambda { |x| x.kind_of?(Nokogiri::XML::Element) ? x.content.strip : x.to_s.strip }
         add_field = lambda { |name, value| results[name] << search_to_content.call(value) }
 
         get_fullname = lambda { |node| node.nil? ? nil : (node.css("namePart[@type='family']").collect(&:content) | node.css("namePart[@type='given']").collect(&:content)).join(", ") }
