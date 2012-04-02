@@ -41,9 +41,10 @@ class DownloadController < ApplicationController
   private
   
   def record_stats()
-    Statistic.create!(:session_id => request.session_options[:id], :ip_address => request.env['HTTP_X_FORWARDED_FOR'] || request.remote_addr, :event => "Download", :identifier => params["uri"], :at_time => Time.now())
+    unless StatSupport::is_bot?(request.user_agent)
+      Statistic.create!(:session_id => request.session_options[:id], :ip_address => request.env['HTTP_X_FORWARDED_FOR'] || request.remote_addr, :event => "Download", :identifier => params["uri"], :at_time => Time.now())
+    end
   end
-  
 end
 
 
