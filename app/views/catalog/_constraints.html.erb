@@ -41,7 +41,7 @@
 		<%-    values.each do |val| %>
 		<%= render_constraint_element( facet_field_labels[facet],val, :remove => catalog_index_path(remove_facet_params(facet, val, localized_params)),:classes => ["filter"] )%> 
 		
-		  <%= " <span class='join'> + </span>" unless val == values.last %>
+		  <%= '<span class=\'join\'> + </span>'.html_safe unless val == values.last %>
 			<%- end -%>
 			
 </ul>
