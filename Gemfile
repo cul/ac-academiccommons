@@ -8,6 +8,7 @@ gem 'rails', '3.0.10'
 gem 'rsolr', '1.0.2'
 
 gem 'rake', '0.9.2'
+gem 'rack', '1.2.3'
 
 gem 'sqlite3', '1.3.3'
 
