@@ -1515,6 +1515,7 @@ div#page-count {
 		 
 		 
 		text-align: right;
+		width:300px
 }
 
 #page-options select{
@@ -2051,11 +2052,11 @@ textarea {
 
 label {
 	float: left;
-	width: 75px;
+	width: 150px;
 	text-align: right;
 	margin-right: 5px;
-	font-size: 1em;
-	padding-top: 7px;
+	/*font-size: 1em;*/
+	/*padding-top: 7px;*/
 }
 
  
