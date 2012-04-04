@@ -1,3 +1,9 @@
+begin
+  require "active_support/core_ext/array/extract_options"
+rescue
+  require "activesupport"
+end
+
 module Cul
   module Fedora
     class Solr
@@ -53,7 +59,7 @@ module Cul
             
             if(fedora_item_pids.nil?)
               if(!fedora_server.item(doc["id"]).exists?)
-                logger.info "Noting removed item " + doc["id"] + "..."
+		logger.info "Noting item removed from fedora:  " + doc["id"].to_s + "..."
                 removed << doc["id"].to_s
               end
             else
@@ -66,7 +72,7 @@ module Cul
           end
           
           start = start + rows
-          results = rsolr.select({:q => "", :fl => "id", :start => start, :rows => rows})
+          results = rsolr.get 'select', :params => {:q => "", :fl => "id", :start => start, :rows => rows}
         end
         return removed
       end

@@ -1,3 +1,9 @@
+begin
+  require "active_support/core_ext/array/extract_options"
+rescue
+  require "activesupport"
+end
+
 module Cul
   module Fedora
     class Server
