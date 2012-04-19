@@ -1,6 +1,6 @@
 class DownloadController < ApplicationController
   
-  after_filter :record_stats
+#  after_filter :record_stats
   
   def fedora_content
       
@@ -14,7 +14,12 @@ class DownloadController < ApplicationController
     case params[:download_method]
     when "download"
       h_cd = "attachment; " + h_cd 
-    when "show_pretty"
+      logger.info "META - VAL OF DATA PARAM IS #{params[:data]}"
+      if(params[:data] != "meta")
+         logger.info "META - CALLING RECORD STATS"
+         record_stats
+      end 
+   when "show_pretty"
       if h_ct.include?("xml")
         xsl = Nokogiri::XSLT(File.read(Rails.root.to_s + "/app/tools/pretty-print.xsl"))
         xml = Nokogiri(cl.get_content(url))
