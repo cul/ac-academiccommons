@@ -14,9 +14,7 @@ class DownloadController < ApplicationController
     case params[:download_method]
     when "download"
       h_cd = "attachment; " + h_cd 
-      logger.info "META - VAL OF DATA PARAM IS #{params[:data]}"
       if(params[:data] != "meta")
-         logger.info "META - CALLING RECORD STATS"
          record_stats
       end 
    when "show_pretty"
