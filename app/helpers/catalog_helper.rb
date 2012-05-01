@@ -72,36 +72,58 @@ module CatalogHelper
 
   def build_resource_list(document)
    obj_display = (document["id"] || []).first
-#catch any error
-#this prevents fedora server outages from making ac2 item page inaccessible
-begin
-    results = []
-    uri_prefix = "info:fedora/"
-    hc = HTTPClient.new()
-    hc.ssl_config.verify_mode = OpenSSL::SSL::VERIFY_NONE
-    fedora_url = "#{fedora_config["riurl"]}/get/"
+   results = []
+   uri_prefix = "info:fedora/"
+   hc = HTTPClient.new()
+   hc.ssl_config.verify_mode = OpenSSL::SSL::VERIFY_NONE
+   fedora_url = "#{fedora_config["riurl"]}/get/"
 
-    urls = {
+   urls = {
       :members => fedora_url + document["id"][0] +  "/ldpd:sdef.Aggregator/listMembers?max=&format=&start=",
-    }
+   }
 
-    docs = {}
-    urls.each_pair do |key, url|
-        docs[key] = Nokogiri::XML(hc.get_content(url))
-    end
+   docs = {}
+   urls.each_pair do |key, url|
+       docs[key] = Nokogiri::XML(hc.get_content(url))
+   end
 
-    domain = "#{fedora_config["riurl"]}"
-    user = "cdrs"
-    password = "***REMOVED***"
-    hc.set_auth(domain, user, password)
+   domain = "#{fedora_config["riurl"]}"
+   user = "cdrs"
+   password = "***REMOVED***"
+   hc.set_auth(domain, user, password)
 
 
-    members = docs[:members].css("member").to_enum(:each_with_index).collect do |member, i|
-      res = {}
-      member_pid = member.attributes["uri"].value.sub(uri_prefix, "")
+   members = docs[:members].css("member").to_enum(:each_with_index).collect do |member, i|
+
+     res = {}
+     member_pid = member.attributes["uri"].value.sub(uri_prefix, "")
+
+     #this catches failed attempts to contact the fedora server 
+     begin
+
+     #get the state of the object and if not active, skip
+     state = Nokogiri::XML(hc.get_content("#{fedora_config["riurl"]}/" + "objects/" + member.attributes["uri"].value.sub(uri_prefix, "") + "/objectXML")).xpath("/foxml:digitalObject/foxml:objectProperties/foxml:property[@NAME='info:fedora/fedora-system:def/model#state']/@VALUE")      
+
+     state_str = "#{state}"
+
+     if('active'.casecmp(state_str) != 0)
+       next
+      end
+
+      rescue
+       next
+      end      
 
       res[:pid] = member_pid
+
+      begin
+
       res[:filename] = Nokogiri::XML(hc.get_content("#{fedora_config["riurl"]}/" + "objects/" + member.attributes["uri"].value.sub(uri_prefix, "") + "/objectXML")).xpath("/foxml:digitalObject/foxml:objectProperties/foxml:property[@NAME='info:fedora/fedora-system:def/model#label']/@VALUE")      
+
+      rescue
+       next
+      end      
+
       res[:download_path] = fedora_content_path(:download, res[:pid], 'CONTENT', res[:filename])
       
       url = fedora_config["riurl"] + "/get/" + member_pid + "/" + 'CONTENT'
@@ -110,12 +132,10 @@ begin
       cl.ssl_config.verify_mode = OpenSSL::SSL::VERIFY_NONE
       h_ct = cl.head(url).header["Content-Type"].to_s
       res[:content_type] = h_ct
-      
+
       results << res
     end
-   rescue 
-     results = []
-   end
+
     return results
   end
  

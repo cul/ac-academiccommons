@@ -99,14 +99,16 @@ Blacklight.configure(:shared) do |config|
       "pub_date_facet",
       "subject_facet",
       "genre_facet",
-      "publisher"
+      "publisher",
+      "handle"
     ],
     :labels => {
       "author_display"          => "Author(s):",
       "pub_date_facet"          => "Date:",
       "subject_facet"           => "Subject:",
       "genre_facet"             => "Type:",
-      "publisher"               => "Publisher:"
+      "publisher"               => "Publisher:",
+      "handle"			=> "Permanent URL:"
     }
   }
 
