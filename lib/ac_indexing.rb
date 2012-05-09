@@ -2,7 +2,7 @@ require "stdout_logger"
 
 # used for local testing of cul-fedora gem (comment out for normal deployment)
  require File.expand_path(File.dirname(__FILE__) + '../../lib/cul-fedora/item.rb')
-# require File.expand_path(File.dirname(__FILE__) + '../../lib/cul-fedora/server.rb')
+ require File.expand_path(File.dirname(__FILE__) + '../../lib/cul-fedora/server.rb')
  require File.expand_path(File.dirname(__FILE__) + '../../lib/cul-fedora/solr.rb')
 
 class ACIndexing
