@@ -19,6 +19,13 @@ namespace :ac do
     
   end
   
+  task :deletepid, [:pid] => :environment do |t, args|
+
+    
+    ACIndexing::deletepid(args[:pid])
+    
+  end
+  
   task :deleteindex => :environment do
     
     ACIndexing::deleteindex()

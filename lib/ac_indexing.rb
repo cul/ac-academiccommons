@@ -1,9 +1,9 @@
 require "stdout_logger"
 
 # used for local testing of cul-fedora gem (comment out for normal deployment)
-# require File.expand_path(File.dirname(__FILE__) + '../../lib/cul-fedora/item.rb')
+ require File.expand_path(File.dirname(__FILE__) + '../../lib/cul-fedora/item.rb')
 # require File.expand_path(File.dirname(__FILE__) + '../../lib/cul-fedora/server.rb')
-# require File.expand_path(File.dirname(__FILE__) + '../../lib/cul-fedora/solr.rb')
+ require File.expand_path(File.dirname(__FILE__) + '../../lib/cul-fedora/solr.rb')
 
 class ACIndexing
   
@@ -17,6 +17,19 @@ class ACIndexing
     solr_server.delete_index()
     
   end
+  
+  def self.deletepid(pid)
+
+    logger = Logger.new(STDOUT)
+    
+    logger.info "delete: " + pid
+    
+    solr_config = Rails.application.config.solr
+    solr_config[:logger] = logger
+    solr_server = Cul::Fedora::Solr.new(solr_config)
+    solr_server.delete_index_pid(pid)
+    
+  end  
   
   def self.getremoved
     

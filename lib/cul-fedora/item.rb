@@ -253,7 +253,7 @@ module Cul
 
             add_field.call("abstract", mods.at_css("abstract"))
             add_field.call("handle", mods.at_css("identifier[@type='hdl']"))
-
+  
             mods.css("subject").each do |subject_node|
               if(subject_node.attributes.count == 0)
                 subject_node.css("topic").each do |topic_node|
@@ -278,6 +278,15 @@ module Cul
                 book_journal_title = book_journal_title.content + ": " + book_journal_subtitle.content.to_s if book_journal_subtitle
 
               end
+              
+             # added by ap2972 (Aleksey P)
+            logger.info "volume: " + related_host.at_css("part>detail[@type='volume']>number")             
+            
+            add_field.call("volume", related_host.at_css("part>detail[@type='volume']>number"))   
+            add_field.call("handle", related_host.at_css("part>detail[@type='volume']>number"))          
+            
+            logger.info "added field 'volume' = " + related_host.at_css("part>detail[@type='volume']>number")             
+              
 
               add_field.call("book_journal_title", book_journal_title)
 

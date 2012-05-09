@@ -33,6 +33,13 @@ module Cul
         rsolr.commit
       end
       
+      # added by ap2972(Aleksey P)
+      def delete_index_pid(pid)
+         rsolr.delete_by_id(pid)
+         rsolr.commit
+         logger.info "Deleting Solr index for: (" + pid + ") - success"
+      end
+      
       def delete_removed(fedora_server, fedora_item_pids = nil)
         
         removed = identify_removed(fedora_server)
