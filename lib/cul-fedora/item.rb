@@ -279,8 +279,10 @@ module Cul
 
               end
               
-              add_field.call("volume", related_host.at_css("part>detail[@type='volume']>number"))         
-              logger.info "added field 'volume' = " + related_host.at_css("part>detail[@type='volume']>number")             
+              if(volume = related_host.at_css("part>detail[@type='volume']>number"))
+                add_field.call("volume", volume)         
+                logger.info "added field 'volume' = " + volume            
+              end            
               
               add_field.call("book_journal_title", book_journal_title)
 
