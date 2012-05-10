@@ -144,7 +144,7 @@ module Cul
 
         get_fullname = lambda { |node| node.nil? ? nil : (node.css("namePart[@type='family']").collect(&:content) | node.css("namePart[@type='given']").collect(&:content)).join(", ") }
 
-        author_roles = ["author","creator","editor","speaker","moderator","interviewee","interviewer","contributor"]
+        author_roles = ["author","creator","speaker","moderator","interviewee","interviewer","contributor"]
         other_name_roles = ["thesis advisor"]
         corporate_author_roles = ["author"]
         corporate_department_roles = ["originator"]
