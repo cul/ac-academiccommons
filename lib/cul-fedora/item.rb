@@ -301,7 +301,7 @@ module Cul
             add_field.call("publisher", mods.at_css("relatedItem>originInfo>publisher"))
             add_field.call("publisher_location", mods.at_css("relatedItem > originInfo>place>placeTerm[@type='text']"))
             add_field.call("isbn", mods.at_css("relatedItem>identifier[@type='isbn']"))
-            add_field.call("doi", mods.at_css("identifier[@type='doi'][@displayLabel='Published version']"))
+            add_field.call("doi", mods.at_css("identifier[@type='doi']"))
 
             mods.css("physicalDescription>internetMediaType").each { |mt| add_field.call("media_type_facet", mt) }
 
