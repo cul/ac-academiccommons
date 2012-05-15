@@ -333,6 +333,8 @@
   <copyField source="*_search" dest="text"/>
   <copyField source="abstract" dest="text"/>
   <copyField source="table_of_contents" dest="text"/>
+  
+  <copyField source="part_number" dest="text"/>
 
   <!-- unstemmed fields -->
   <copyField source="title_t" dest="title_unstem_search"/>
