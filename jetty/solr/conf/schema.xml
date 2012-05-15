@@ -243,7 +243,14 @@
 
 	<!-- Academic Commons non-dynamic fields -->
 	<field name="pid" type="string" indexed="true" stored="true" required="true" />
+	
+	<field name="record_content_source" type="string" indexed="true" stored="true"/>
 	<field name="record_creation_date" type="date" indexed="true" stored="true"/>
+	<field name="record_change_date" type="date" indexed="true" stored="true"/>
+	<field name="record_identifier" type="string" indexed="true" stored="true"/>
+	<field name="record_language_of_catalog" type="string" indexed="true" stored="true"/>
+	
+
 	<field name="member_of" type="string" stored="true" indexed="true" multiValued="true"/>
 	<!-- TODO: This is a placeholder field to handle internal_h, which stores the hierarchical collection value. Will fix with Ben later -->
     <field name="internal_h" type="string" indexed="true" stored="true" multiValued="true"/>

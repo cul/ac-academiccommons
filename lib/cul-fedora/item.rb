@@ -128,6 +128,37 @@ module Cul
           []
         end
       end
+      
+      def recordInfoIndexing(mods, add_field)
+
+        if(record_content_source = mods.at_css("recordInfo>recordContentSource"))
+          add_field.call("record_content_source", record_content_source)
+        end
+
+        if(record_creation_date = mods.at_css("recordInfo>recordCreationDate"))
+          record_creation_date = DateTime.parse(record_creation_date.text.gsub("UTC", "").strip)
+          add_field.call("record_creation_date", record_creation_date.strftime("%Y-%m-%dT%H:%M:%SZ"))
+        end
+        
+        if(record_change_date = mods.at_css("recordInfo>recordChangeDate"))
+          record_change_date = DateTime.parse(record_change_date.text.gsub("UTC", "").strip)
+          add_field.call("record_change_date", record_change_date.strftime("%Y-%m-%dT%H:%M:%SZ"))
+        end
+
+        if(record_identifier = mods.at_css("recordInfo>recordIdentifier"))
+          add_field.call("record_identifier", record_identifier)
+        end
+        
+        if(record_language_of_catalog = mods.at_css("recordInfo>languageOfCataloging>languageTerm"))
+          add_field.call("record_language_of_catalog", record_language_of_catalog)
+        end       
+        
+        if(record_creation_date.nil? && !record_change_date.nil?)
+          add_field.call("record_creation_date", record_change_date.strftime("%Y-%m-%dT%H:%M:%SZ"))
+        end
+
+      end
+      
 
       def index_for_ac2(options = {})
         do_fulltext = options[:fulltext] || false
@@ -168,18 +199,11 @@ module Cul
               add_field.call("member_of", collection)
             end
 
-
+            recordInfoIndexing(mods, add_field)
 
             title = mods.css("titleInfo>title").first.text
             title_search = normalize_space.call(mods.css("titleInfo>nonSort,title").collect(&:content).join(" "))
-            record_creation_date = mods.at_css("recordInfo>recordCreationDate")
-            if(record_creation_date.nil?)
-              record_creation_date = mods.at_css("recordInfo>recordChangeDate")
-            end
-            if(!record_creation_date.nil? || !record_creation_date.empty?)
-              record_creation_date = DateTime.parse(record_creation_date.text.gsub("UTC", "").strip)
-              add_field.call("record_creation_date", record_creation_date.strftime("%Y-%m-%dT%H:%M:%SZ"))
-            end
+
             add_field.call("title_display", title)
             add_field.call("title_search", title_search)
 
@@ -281,7 +305,7 @@ module Cul
               
               if(volume = related_host.at_css("part>detail[@type='volume']>number"))
                 add_field.call("volume", volume)         
-                logger.info "added field 'volume' = " + volume            
+                # logger.info "added field 'volume' = " + volume            
               end            
               
               add_field.call("book_journal_title", book_journal_title)
