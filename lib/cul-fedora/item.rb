@@ -159,6 +159,11 @@ module Cul
 
       end
       
+      def locationIndexing(mods, add_field)
+        if(physicalLocation = mods.at_css("location>physicalLocation"))
+          add_field.call("physical_location", physicalLocation)
+        end
+      end
 
       def index_for_ac2(options = {})
         do_fulltext = options[:fulltext] || false
@@ -200,6 +205,7 @@ module Cul
             end
 
             recordInfoIndexing(mods, add_field)
+            locationIndexing(mods, add_field)
 
             title = mods.css("titleInfo>title").first.text
             title_search = normalize_space.call(mods.css("titleInfo>nonSort,title").collect(&:content).join(" "))
