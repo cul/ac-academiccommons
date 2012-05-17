@@ -128,6 +128,42 @@ module Cul
           []
         end
       end
+      
+      def recordInfoIndexing(mods, add_field)
+
+        if(record_content_source = mods.at_css("recordInfo>recordContentSource"))
+          add_field.call("record_content_source", record_content_source)
+        end
+
+        if(record_creation_date = mods.at_css("recordInfo>recordCreationDate"))
+          record_creation_date = DateTime.parse(record_creation_date.text.gsub("UTC", "").strip)
+          add_field.call("record_creation_date", record_creation_date.strftime("%Y-%m-%dT%H:%M:%SZ"))
+        end
+        
+        if(record_change_date = mods.at_css("recordInfo>recordChangeDate"))
+          record_change_date = DateTime.parse(record_change_date.text.gsub("UTC", "").strip)
+          add_field.call("record_change_date", record_change_date.strftime("%Y-%m-%dT%H:%M:%SZ"))
+        end
+
+        if(record_identifier = mods.at_css("recordInfo>recordIdentifier"))
+          add_field.call("record_identifier", record_identifier)
+        end
+        
+        if(record_language_of_catalog = mods.at_css("recordInfo>languageOfCataloging>languageTerm"))
+          add_field.call("record_language_of_catalog", record_language_of_catalog)
+        end       
+        
+        if(record_creation_date.nil? && !record_change_date.nil?)
+          add_field.call("record_creation_date", record_change_date.strftime("%Y-%m-%dT%H:%M:%SZ"))
+        end
+
+      end
+      
+      def locationIndexing(mods, add_field)
+        if(physicalLocation = mods.at_css("location>physicalLocation"))
+          add_field.call("physical_location", physicalLocation)
+        end
+      end
 
       def index_for_ac2(options = {})
         do_fulltext = options[:fulltext] || false
@@ -144,7 +180,7 @@ module Cul
 
         get_fullname = lambda { |node| node.nil? ? nil : (node.css("namePart[@type='family']").collect(&:content) | node.css("namePart[@type='given']").collect(&:content)).join(", ") }
 
-        author_roles = ["author","creator","editor","speaker","moderator","interviewee","interviewer","contributor"]
+        author_roles = ["author","creator","speaker","moderator","interviewee","interviewer","contributor"]
         other_name_roles = ["thesis advisor"]
         corporate_author_roles = ["author"]
         corporate_department_roles = ["originator"]
@@ -168,18 +204,12 @@ module Cul
               add_field.call("member_of", collection)
             end
 
-
+            recordInfoIndexing(mods, add_field)
+            locationIndexing(mods, add_field)
 
             title = mods.css("titleInfo>title").first.text
             title_search = normalize_space.call(mods.css("titleInfo>nonSort,title").collect(&:content).join(" "))
-            record_creation_date = mods.at_css("recordInfo>recordCreationDate")
-            if(record_creation_date.nil?)
-              record_creation_date = mods.at_css("recordInfo>recordChangeDate")
-            end
-            if(!record_creation_date.nil? || !record_creation_date.empty?)
-              record_creation_date = DateTime.parse(record_creation_date.text.gsub("UTC", "").strip)
-              add_field.call("record_creation_date", record_creation_date.strftime("%Y-%m-%dT%H:%M:%SZ"))
-            end
+
             add_field.call("title_display", title)
             add_field.call("title_search", title_search)
 
@@ -253,7 +283,7 @@ module Cul
 
             add_field.call("abstract", mods.at_css("abstract"))
             add_field.call("handle", mods.at_css("identifier[@type='hdl']"))
-
+  
             mods.css("subject").each do |subject_node|
               if(subject_node.attributes.count == 0)
                 subject_node.css("topic").each do |topic_node|
@@ -278,7 +308,12 @@ module Cul
                 book_journal_title = book_journal_title.content + ": " + book_journal_subtitle.content.to_s if book_journal_subtitle
 
               end
-
+              
+              if(volume = related_host.at_css("part>detail[@type='volume']>number"))
+                add_field.call("volume", volume)         
+                # logger.info "added field 'volume' = " + volume            
+              end            
+              
               add_field.call("book_journal_title", book_journal_title)
 
               add_field.call("book_author", get_fullname.call(related_host.at_css("name"))) 
@@ -296,7 +331,7 @@ module Cul
             add_field.call("publisher", mods.at_css("relatedItem>originInfo>publisher"))
             add_field.call("publisher_location", mods.at_css("relatedItem > originInfo>place>placeTerm[@type='text']"))
             add_field.call("isbn", mods.at_css("relatedItem>identifier[@type='isbn']"))
-            add_field.call("doi", mods.at_css("identifier[@type='doi'][@displayLabel='Published version']"))
+            add_field.call("doi", mods.at_css("identifier[@type='doi']"))
 
             mods.css("physicalDescription>internetMediaType").each { |mt| add_field.call("media_type_facet", mt) }
 

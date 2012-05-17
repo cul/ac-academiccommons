@@ -99,14 +99,16 @@ Blacklight.configure(:shared) do |config|
       "pub_date_facet",
       "subject_facet",
       "genre_facet",
-      "publisher"
+      "publisher",
+      "handle"
     ],
     :labels => {
       "author_display"          => "Author(s):",
       "pub_date_facet"          => "Date:",
       "subject_facet"           => "Subject:",
       "genre_facet"             => "Type:",
-      "publisher"               => "Publisher:"
+      "publisher"               => "Publisher:",
+      "handle"			=> "Permanent URL:"
     }
   }
 
@@ -119,6 +121,7 @@ Blacklight.configure(:shared) do |config|
       "thesis_advisor",
       "pub_date_facet",
       "genre_facet",
+      "volume",
       "handle",
       "series_facet",
       "part_number",
@@ -143,9 +146,10 @@ Blacklight.configure(:shared) do |config|
       "thesis_advisor"          => "Thesis Advisor(s):",
       "pub_date_facet"          => "Date:",
       "genre_facet"             => "Type:",
+      "volume"                  => "Volume:",
       "handle"                  => "Permanent URL:",
       "series_facet"            => "Series:",
-      "part_number"            => "Part Number:",
+      "part_number"             => "Part Number:",
       "book_journal_title"      => "Book/Journal Title:",
       "media_type_facet"        => "Media Type:",
       "table_of_contents"       => "Table of Contents:", 

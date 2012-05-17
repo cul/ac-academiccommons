@@ -40,10 +40,12 @@
      <% metadata_list.each do |resource| -%>
       <dt><%= resource[:title] %></dt>
       <dd>
- 
-      <%= link_to "View", resource[:show_url] if resource[:show_url] %> | 
- 
-      <%= link_to "Download", resource[:download_url] if resource[:download_url] %> 
+
+	<% show_url = "#{resource[:show_url]}?data=meta" -%>
+	<% download_url = "#{resource[:download_url]}?data=meta" -%>
+
+      <%= link_to "View", show_url if resource[:show_url] %> | 
+      <%= link_to "Download", download_url if resource[:download_url] %> 
       </dd>
     <% end -%>
     <% else -%>

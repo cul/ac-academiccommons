@@ -7,6 +7,9 @@ gem 'rails', '3.0.10'
 
 gem 'rsolr', '1.0.2'
 
+gem 'rake', '0.9.2'
+gem 'rack', '1.2.3'
+
 gem 'sqlite3', '1.3.3'
 
 # Use unicorn as the web server
@@ -23,7 +26,7 @@ gem 'sqlite3', '1.3.3'
 # gem 'bj'
 # gem 'nokogiri'
 gem 'sqlite3-ruby', :require => 'sqlite3'
-gem 'mysql'
+# gem 'mysql'
 # gem 'aws-s3', :require => 'aws/s3'
 
 # Bundle gems for the local environment. Make sure to
