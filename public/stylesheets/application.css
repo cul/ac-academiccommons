@@ -1464,6 +1464,10 @@ padding: .5em;
 	
 }
 
+a img#rssLink{display:block; float:right; margin-top: -10px;}
+
+
+
  a#startOverLink {
  
 	 
@@ -1474,8 +1478,7 @@ padding: .5em;
 	text-decoration: none;
 	color: #fff;
 	background: url(../images/start_over.gif) no-repeat center center;
-		border-bottom: none;*/
-		
+		border-bottom: none;*/		
  
  float: right;
  font-weight: bold;
