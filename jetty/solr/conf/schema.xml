@@ -284,6 +284,15 @@
     <field name="issn" type="string" indexed="true" stored="false" />
 	<field name="doi" type="string" indexed="true" stored="true" />
 	<field name="volume" type="string" indexed="true" stored="true"/>
+	<field name="language" type="string" indexed="true" stored="true"/>
+    <field name="dateIssued" type="string" indexed="true" stored="true"/>	
+    <field name="edition" type="string" indexed="true" stored="true"/>    
+	<field name="role" type="string" indexed="true" stored="true" multiValued="true"/>
+	<field name="issue" type="string" indexed="true" stored="true"/> 
+	<field name="start_page" type="string" indexed="true" stored="true"/> 
+	<field name="end_page" type="string" indexed="true" stored="true"/> 
+	<field name="uri" type="string" indexed="true" stored="true"/>
+	<field name="date" type="string" indexed="true" stored="true"/>
 	
   	<!-- pub_date sort uses new trie-based int fields, which are recommended for any int and are displayable, sortable, and range-query-able. In addition,
     we use 'tint' for faster range-queries. -->
