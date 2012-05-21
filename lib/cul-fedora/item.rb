@@ -164,6 +164,77 @@ module Cul
           add_field.call("physical_location", physicalLocation)
         end
       end
+      
+      def languageIndexing(mods, add_field)
+        if(language = mods.at_css("language>languageTerm"))
+          add_field.call("language", language)
+        end
+      end
+      
+      def originInfoIndexing(mods, add_field)       
+
+        if(publisher = mods.at_css("originInfo > publisher"))   
+          if(!publisher.nil? && publisher.text.length != 0)      
+            add_field.call("publisher", publisher)
+          end
+        end 
+        
+        if(location = mods.at_css("originInfo>place>placeTerm"))  
+          if(!location.nil? && location.text.length != 0)       
+            add_field.call("publisher_location", location)
+          end
+        end      
+
+        if(dateIssued = mods.at_css("originInfo>dateIssued"))   
+          if(!dateIssued.nil? && dateIssued.text.length != 0)      
+            add_field.call("dateIssued", dateIssued)
+          end
+        end  
+
+        if(edition = mods.at_css("originInfo>edition"))    
+          if(!edition.nil? && edition.text.length != 0)     
+            add_field.call("edition", edition)
+          end
+        end 
+        
+      end
+      
+      def roleIndexing(mods, add_field)
+        mods.css("role > roleTerm").each do |role|
+          if(!role.nil? && role.text.length != 0)     
+            add_field.call("role", role)
+          end
+        end
+      end
+      
+      def identifierIndexing(mods, add_field)
+      
+        if(isbn = mods.at_css("identifier[@type='isbn']"))   
+          if(!isbn.nil? && isbn.text.length != 0)      
+            add_field.call("isbn", isbn)
+          end
+        end 
+        
+        if(doi = mods.at_css("identifier[@type='doi']"))   
+          if(!doi.nil? && doi.text.length != 0)      
+            add_field.call("doi", doi)
+          end
+        end 
+        
+        if(uri = mods.at_css("identifier[@type='uri']"))   
+          if(!uri.nil? && uri.text.length != 0)      
+            add_field.call("uri", uri)
+          end
+        end 
+        
+        if(issn = mods.at_css("identifier[@type='issn']"))   
+          if(!issn.nil? && issn.text.length != 0)      
+            add_field.call("issn", issn)
+          end 
+        end
+
+      end
+      
 
       def index_for_ac2(options = {})
         do_fulltext = options[:fulltext] || false
@@ -206,6 +277,10 @@ module Cul
 
             recordInfoIndexing(mods, add_field)
             locationIndexing(mods, add_field)
+            languageIndexing(mods, add_field)
+            originInfoIndexing(mods, add_field)
+            roleIndexing(mods, add_field)
+            identifierIndexing(mods, add_field)
 
             title = mods.css("titleInfo>title").first.text
             title_search = normalize_space.call(mods.css("titleInfo>nonSort,title").collect(&:content).join(" "))
@@ -228,13 +303,11 @@ module Cul
                 end
                 add_field.call("author_search", fullname.downcase)
                 add_field.call("author_facet", fullname)
-
               elsif name_node.css("role>roleTerm").collect(&:content).any? { |role| other_name_roles.include?(role) }
 
                 note_org = true
                 first_role = name_node.at_css("role>roleTerm").text
                 add_field.call(first_role.gsub(/\s/, '_'), fullname)
-
               end
               
               if (note_org == true)
@@ -310,28 +383,41 @@ module Cul
               end
               
               if(volume = related_host.at_css("part>detail[@type='volume']>number"))
-                add_field.call("volume", volume)         
-                # logger.info "added field 'volume' = " + volume            
+                add_field.call("volume", volume)                 
+              end            
+              
+              if(issue = related_host.at_css("part>detail[@type='issue']>number"))
+                add_field.call("issue", issue)                 
+              end
+              
+              if(start_page = related_host.at_css("part > extent[@unit='page'] > start"))
+                add_field.call("start_page", start_page)               
+              end
+              
+              if(end_page = related_host.at_css("part > extent[@unit='page'] > end"))
+                add_field.call("end_page", end_page)                
+              end  
+              
+              if(date = related_host.at_css("part > date"))
+                add_field.call("date", date)            
               end            
               
               add_field.call("book_journal_title", book_journal_title)
 
               add_field.call("book_author", get_fullname.call(related_host.at_css("name"))) 
 
-              add_field.call("issn", related_host.at_css("identifier[@type='issn']"))
             end
             
             if(related_series = mods.at_css("relatedItem[@type='series']"))
-              if(related_series.has_attribute?("ID"))
+              #if(related_series.has_attribute?("ID"))
                 add_field.call("series_facet", related_series.at_css("titleInfo>title"))
-		add_field.call("part_number", related_series.at_css("titleInfo>partNumber"))
-              end
+                add_field.call("part_number", related_series.at_css("titleInfo>partNumber"))
+                
+                if(title = related_series.at_css("titleInfo>title"))
+                  logger.info "title: " + title
+                end
+              #end
             end
-
-            add_field.call("publisher", mods.at_css("relatedItem>originInfo>publisher"))
-            add_field.call("publisher_location", mods.at_css("relatedItem > originInfo>place>placeTerm[@type='text']"))
-            add_field.call("isbn", mods.at_css("relatedItem>identifier[@type='isbn']"))
-            add_field.call("doi", mods.at_css("identifier[@type='doi']"))
 
             mods.css("physicalDescription>internetMediaType").each { |mt| add_field.call("media_type_facet", mt) }
 
