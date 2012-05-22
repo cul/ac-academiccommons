@@ -307,6 +307,7 @@
   	<field name="organization_facet" type="string" indexed="true" stored="true" multiValued="true" />
 	<field name="department_facet" type="string" indexed="true" stored="true" multiValued="true" />
 	<field name="series_facet" type="string" indexed="true" stored="true" multiValued="true" />
+	<field name="non_cu_series_facet" type="string" indexed="true" stored="true" multiValued="true" />
 	
 	<!-- Roles (other than author) -->
 	<field name="thesis_advisor" type="string" indexed="true" stored="true" multiValued="true" />
