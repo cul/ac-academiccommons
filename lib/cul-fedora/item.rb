@@ -409,14 +409,12 @@ module Cul
             end
             
             if(related_series = mods.at_css("relatedItem[@type='series']"))
-              #if(related_series.has_attribute?("ID"))
+              if(related_series.has_attribute?("ID"))
                 add_field.call("series_facet", related_series.at_css("titleInfo>title"))
-                add_field.call("part_number", related_series.at_css("titleInfo>partNumber"))
-                
-                if(title = related_series.at_css("titleInfo>title"))
-                  logger.info "title: " + title
-                end
-              #end
+              else
+                add_field.call("non_cu_series_facet", related_series.at_css("titleInfo>title"))
+              end  
+              add_field.call("part_number", related_series.at_css("titleInfo>partNumber"))
             end
 
             mods.css("physicalDescription>internetMediaType").each { |mt| add_field.call("media_type_facet", mt) }
