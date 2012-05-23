@@ -187,7 +187,7 @@ module Cul
 
         if(dateIssued = mods.at_css("originInfo>dateIssued"))   
           if(!dateIssued.nil? && dateIssued.text.length != 0)      
-            add_field.call("dateIssued", dateIssued)
+            add_field.call("date_issued", dateIssued)
           end
         end  
 

@@ -285,7 +285,7 @@
 	<field name="doi" type="string" indexed="true" stored="true" />
 	<field name="volume" type="string" indexed="true" stored="true"/>
 	<field name="language" type="string" indexed="true" stored="true"/>
-    <field name="dateIssued" type="string" indexed="true" stored="true"/>	
+    <field name="date_issued" type="string" indexed="true" stored="true"/>	
     <field name="edition" type="string" indexed="true" stored="true"/>    
 	<field name="role" type="string" indexed="true" stored="true" multiValued="true"/>
 	<field name="issue" type="string" indexed="true" stored="true"/> 
