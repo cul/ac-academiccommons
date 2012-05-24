@@ -353,7 +353,20 @@
   <copyField source="table_of_contents" dest="text"/>
   
   <copyField source="part_number" dest="text"/>
-
+  <copyField source="issn" dest="text"/>
+  <copyField source="uri" dest="text"/>
+  <copyField source="doi" dest="text"/>
+  <copyField source="handle" dest="text"/>
+  <copyField source="notes" dest="text"/>
+  <copyField source="book_journal_title" dest="text"/>
+  <copyField source="book_author" dest="text"/>
+  <copyField source="publisher_location" dest="text"/>
+  <copyField source="publisher" dest="text"/>
+  <copyField source="series_facet" dest="text"/>
+  <copyField source="non_cu_series_facet" dest="text"/>
+  <copyField source="organization_facet" dest="text"/>
+  <copyField source="department_facet" dest="text"/>
+  
   <!-- unstemmed fields -->
   <copyField source="title_t" dest="title_unstem_search"/>
   <copyField source="subtitle_t" dest="subtitle_unstem_search"/>
