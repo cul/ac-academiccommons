@@ -2058,7 +2058,7 @@ textarea {
 	
 }
 
-label {
+form#sd-form label {
 	float: left;
     width: 110px;
  
@@ -2269,7 +2269,7 @@ span.pdf-link {
 }
 #about-text div.about-video {
 	float: right;
-	margin-right: 100px;
+	margin-right: 68px;
 		margin-left: 20px;
 }
 
@@ -2282,10 +2282,10 @@ background: rgba(255,255,255,.5);
 }
 
 #about-text h1 {
-	text-transform: uppercase;
 	color: #221d53;
 	font: 34px/36px "Helvetica Neue", Arial, Helvetica, Geneva, sans-serif;
 	margin-bottom: .5em;
+	text-transform: uppercase;
 }
 
 ul.how-to-videos li{
