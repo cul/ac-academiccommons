@@ -82,6 +82,7 @@ GEM
       treetop (~> 1.4.8)
     marc (0.4.4)
     mime-types (1.18)
+    mysql (2.8.1)
     net-ldap (0.3.1)
     nokogiri (1.5.0)
     parslet (1.3.0)
@@ -139,6 +140,7 @@ DEPENDENCIES
   haml
   httpclient
   json
+  mysql
   net-ldap
   nokogiri (= 1.5.0)
   rack (= 1.2.3)
