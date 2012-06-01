@@ -14,17 +14,17 @@
 <% 
 if(@document != nil)
 
-  solr_fields_hash = { title_display: "citation_title", 
-                       author_facet:"citation_author",
-                       date_issued:"citation_publication_date",
-                       book_journal_title:"citation_journal_title",
-                       volume: "citation_volume",
-                       issue:"citation_issue",
-                       start_page:"citation_firstpage",
-                       end_page:"citation_lastpage",   
-                       doi:"citation_doi",
-                       date:"citation_date",
-                       handle:"citation_abstract_html_url"
+  solr_fields_hash = { "title_display" => "citation_title", 
+                       "author_facet" => "citation_author",
+                       "date_issued" => "citation_publication_date",
+                       "book_journal_title" => "citation_journal_title",
+                       "volume" => "citation_volume",
+                       "issue" => "citation_issue",
+                       "start_page" => "citation_firstpage",
+                       "end_page" => "citation_lastpage",   
+                       "doi" => "citation_doi",
+                       "date" => "citation_date",
+                       "handle" => "citation_abstract_html_url"
                       } 
 
     solr_fields_hash.each_key do |solr_field| 
