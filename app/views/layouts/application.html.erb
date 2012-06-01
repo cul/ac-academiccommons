@@ -11,6 +11,43 @@
 <meta name="description" content="Academic Commons is Columbia University's digital repository for academic research and scholarship produced by the university community.">
 <meta name="bitly-verification" content="35191b8f3154"/>
 
+<% 
+if(@document != nil)
+
+  solr_fields_hash = { title_display: "citation_title", 
+                       author_facet:"citation_author",
+                       date_issued:"citation_publication_date",
+                       book_journal_title:"citation_journal_title",
+                       volume: "citation_volume",
+                       issue:"citation_issue",
+                       start_page:"citation_firstpage",
+                       end_page:"citation_lastpage",   
+                       doi:"citation_doi",
+                       date:"citation_date",
+                       handle:"citation_abstract_html_url"
+                      } 
+
+    solr_fields_hash.each_key do |solr_field| 
+        if(value = @document[solr_field.to_s])   
+            if(value.is_a?(Array)) 
+                if(!value.empty?)
+                     value.each do |val|
+%>
+<meta name="<%= solr_fields_hash[solr_field] %>" content="<%= val %>">
+<%      
+                    end
+                end
+            else
+%>
+<meta name="<%= solr_fields_hash[solr_field] %>" content="<%= value %>">
+<%                
+            end
+        end
+    end
+end    
+
+%>
+
 <!--  <meta name="author" content=""> -->
 
 <!-- <meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0;"> -->
