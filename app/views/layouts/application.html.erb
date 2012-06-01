@@ -12,7 +12,7 @@
 <meta name="bitly-verification" content="35191b8f3154"/>
 
 <% 
-if(@document != nil)
+if(@document != nil && @document.include?("title_display") && @document.include?("author_facet") && @document.include?("date"))
 
   solr_fields_hash = { "title_display" => "citation_title", 
                        "author_facet" => "citation_author",
