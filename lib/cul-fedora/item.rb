@@ -235,6 +235,13 @@ module Cul
 
       end
       
+      def locationUrlIndexing(mods, add_field)
+        if(locationUrl = mods.at_css("location > url"))   
+          if(!locationUrl.nil? && locationUrl.text.length != 0)      
+            add_field.call("url", locationUrl)
+          end 
+        end
+      end      
 
       def index_for_ac2(options = {})
         do_fulltext = options[:fulltext] || false
@@ -281,6 +288,7 @@ module Cul
             originInfoIndexing(mods, add_field)
             roleIndexing(mods, add_field)
             identifierIndexing(mods, add_field)
+            locationUrlIndexing(mods, add_field)
 
             title = mods.css("titleInfo>title").first.text
             title_search = normalize_space.call(mods.css("titleInfo>nonSort,title").collect(&:content).join(" "))
