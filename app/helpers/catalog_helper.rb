@@ -373,7 +373,7 @@ begin
       
       resource_list = build_resource_list(@document)
       resource_list.each do |resource|    
-           urls.push( "http://" + request.host_with_port + Rails.application.config.relative_root + resource[:download_path] ) 
+           urls.push( "http://" + request.host_with_port + resource[:download_path] ) 
        end
      end  
      return urls
