@@ -165,7 +165,7 @@ ul#recently-updated {
 }
 
 #about-text p{
-	margin-right: 100px;
+	margin-right: 50px;
 }
 div#intro {
 	padding-right: 120px;
@@ -2058,7 +2058,7 @@ textarea {
 	
 }
 
-label {
+form#sd-form label {
 	float: left;
     width: 110px;
  
@@ -2269,19 +2269,30 @@ span.pdf-link {
 }
 #about-text div.about-video {
 	float: right;
-	margin-right: 100px;
+	margin-right: 68px;
 		margin-left: 20px;
 }
 
 div#about-text {
-	margin-left: 10px;
+background: rgba(255,255,255,.5);
+ border: 1px solid white;
+ margin-bottom: .75em;
+ padding:12px;
+
+}
+
+#about-text h1 {
+	color: #221d53;
+	font: 34px/36px "Helvetica Neue", Arial, Helvetica, Geneva, sans-serif;
+	margin-bottom: .5em;
+	text-transform: uppercase;
 }
 
 ul.how-to-videos li{
 	margin-bottom: 1em;
-	margin-right: 100px;
 	border-bottom: 1px dotted #939494;
-	padding-bottom: 23px;
+	margin-right: 50px;
+	height: 124px;
 }
 
 ul.how-to-videos li a:hover h2{
@@ -2291,8 +2302,9 @@ ul.how-to-videos li a:hover h2{
 
 ul.how-to-videos li img {
 	float: left;
-	margin-top: 8px;
 	margin-right: 13px;
+	margin-bottom: 8px;
+	margin-top: 9px;
 }
 
 ul.how-to-videos li a:hover img {
