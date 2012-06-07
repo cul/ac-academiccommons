@@ -367,4 +367,16 @@ begin
     !params[:q].blank? or !params[:f].blank? or !params[:search_field].blank?
   end
   
+  def pdf_urls
+    urls = []
+    if(@document != nil)
+      
+      resource_list = build_resource_list(@document)
+      resource_list.each do |resource|    
+           urls.push( "http://" + request.host_with_port + Rails.application.config.relative_root + resource[:download_path] ) 
+       end
+     end  
+     return urls
+  end  
+  
 end
