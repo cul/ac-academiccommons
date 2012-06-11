@@ -8,13 +8,13 @@
 
 <title><%= h(@page_title || application_name) %></title>
 
-<meta name="description" content="Academic Commons is Columbia University's digital repository for academic research and scholarship produced by the university community.">
 <meta name="bitly-verification" content="35191b8f3154"/>
 
 <% 
 if(@document != nil && @document.include?("title_display") && @document.include?("author_facet") && @document.include?("date_issued"))
 
-  solr_fields_hash = { "title_display" => "citation_title", 
+  solr_fields_hash = { "abstract" => "description",
+                       "title_display" => "citation_title", 
                        "author_facet" => "citation_author",
                        "date_issued" => "citation_publication_date",
                        "book_journal_title" => "citation_journal_title",
