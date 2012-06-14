@@ -144,11 +144,7 @@ module ApplicationHelper
   end
   
   def document_render_field_value(field_name, value)
-    
-    logger.info  "field_name: " + field_name
-    logger.info  "value: " + value
-    
-    
+
     if(document_show_fields_linked[field_name])
       if(document_show_fields_linked[field_name] == "facet")
         value = '<a href="' + relative_root + '/catalog?f[' + field_name + '][]=' + value + '">' + value + '</a>'
