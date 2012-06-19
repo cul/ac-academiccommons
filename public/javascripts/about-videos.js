@@ -1,3 +1,5 @@
+$(document).ready(function() {
+
 $('.fancybox-media').fancybox({
 		openEffect  : 'elastic',
 		closeEffect : 'elastic',
@@ -7,4 +9,6 @@ $('.fancybox-media').fancybox({
 			media : {}
 		}
 	});
- 
+	
+	console.log('hello');
+ });
