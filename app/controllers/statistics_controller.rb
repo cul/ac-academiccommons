@@ -2,6 +2,7 @@ class StatisticsController < ApplicationController
   layout "no_sidebar"
   before_filter :require_admin, :except => [:unsubscribe_monthly]
   include Blacklight::SolrHelper
+  include StatisticsHelper
 
   def unsubscribe_monthly
     author_id = params[:author_id]
@@ -56,10 +57,13 @@ class StatisticsController < ApplicationController
   end
 
   def author_monthly
-    if params[:commit].in?('View',"Email")
+    if params[:commit].in?('View', "Email", "Download CSV report")
       startdate = Date.parse(params[:month] + " " + params[:year])
 
       @results, @stats, @totals = get_monthly_author_stats(:startdate => startdate, :include_zeroes => params[:include_zeroes], :author_id => params[:author_id])
+      
+      cvsReport(@results, @stats, @totals)
+      
       if params[:commit] == "Email"
         case params[:email_template]
         when "Normal"
@@ -69,10 +73,14 @@ class StatisticsController < ApplicationController
 
         end  
       end
+      
+      if params[:commit] == "Download CSV report"
+          send_data cvsReport(@results, @stats, @totals), :type=>"application/csv", :filename=>params[:author_id] + "_monthly_statistics.csv" 
+      end
+      
     end
 
   end
-
 
   def search_history
     @search_types = [["Item",'id'],["UNI","author_uni"],["Genre","genre_search"]]

@@ -52,5 +52,9 @@
       .value
         = text_field_tag :email_destination, params[:email_destination], :size => 40
         = submit_tag "Email"
+      
+      <br>
+      .value 
+        = submit_tag "Download CSV report"
 
       = render :partial => "/debug_deliveries"
