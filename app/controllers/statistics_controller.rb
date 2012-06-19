@@ -75,7 +75,7 @@ class StatisticsController < ApplicationController
       end
       
       if params[:commit] == "Download CSV report"
-          send_data cvsReport(@results, @stats, @totals), :type=>"application/csv", :filename=>"author_monthly_statistics.csv" 
+          send_data cvsReport(@results, @stats, @totals), :type=>"application/csv", :filename=>params[:author_id] + "_monthly_statistics.csv" 
       end
       
     end
