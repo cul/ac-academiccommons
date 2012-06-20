@@ -24,7 +24,10 @@ if(@document != nil && @document.include?("title_display") && @document.include?
                        "end_page" => "citation_lastpage",   
                        "doi" => "citation_doi",
                        "date" => "citation_date",
-                       "handle" => "citation_abstract_html_url"
+                       "handle" => "citation_handle_id",
+                       "issn" => "citation_issn",
+                       "publisher" => "citation_publisher",
+                       "subject_facet" => "citation_keywords" 
                       } 
 
     solr_fields_hash.each_key do |solr_field| 
@@ -44,9 +47,11 @@ if(@document != nil && @document.include?("title_display") && @document.include?
             end
         end
     end
-end    
+end
 
 %>
+
+<meta name="citation_abstract_html_url" content="<%= request.url %>">
 
 <%     pdf_urls.each do |url|     %> 
 <meta name="citation_pdf_url" content="<%= url %>">
