@@ -1,32 +1,43 @@
-%h3 Author Monthly Statistics
+%table
+  %tr
+    %td
+      %h3  Author Monthly Statistics
+
+
+
 .split_form
 
   -form_tag url_for(:controller => "statistics", :action => "author_monthly") do
 
-    .label Author uni:
-    .value= text_field_tag :author_id, params[:author_id]
+    %table
+      %tr
+        %td{:width=>"100px"}
+          .label Author uni/name:
+        %td
+          .value
+            = text_field_tag :author_id, params[:author_id]
+      %tr
+        %td
+          .label Report month:
+        %td
+          .value
+            = select_tag :month, options_for_select(Date::ABBR_MONTHNAMES, params[:month] || (Date.today - 1.months).strftime("%b"))
+            = select_tag :year, options_for_select((2011..Date.today.year), params[:year])
+      %tr
+        %td
+          .label Include zeroes?
+        %td
+          .value
+            = check_box_tag :include_zeroes, "true", params[:include_zeroes]
 
-    .label Email Template:
-    .value
-      = select_tag :email_template, options_for_select(["Normal", "Initial"], params[:email_template] || "Normal")
-    
-    .label Report month:
-    .value
-      = select_tag :month, options_for_select(Date::ABBR_MONTHNAMES, params[:month] || (Date.today - 1.months).strftime("%b"))
-      = select_tag :year, options_for_select((2011..Date.today.year), params[:year])
-
-    .label Include zeroes?
-    .value
-      = check_box_tag :include_zeroes, "true", params[:include_zeroes]
-
-    .label 
     .value
       = submit_tag "View"
+      
+    %br
 
     - if @results
-      %hr 
 
-      %table#author_stats_results
+      %table#author_stats_results{:style=>"border: 1px solid #aaa", :class=>"zebra"}
         %tr
           %th Title
           %th Views
@@ -45,16 +56,20 @@
             %td= @stats["Download"][item["id"][0]] || 0
 
 
-      .label
-      .value
-
-      .label Email to:
-      .value
-        = text_field_tag :email_destination, params[:email_destination], :size => 40
-        = submit_tag "Email"
+      %table
+        %tr
+          %td{:style=>"width: 100px"}
+            .label Email Template:
+            .value
+              = select_tag :email_template,  options_for_select(["Normal", "Initial"], params[:email_template] || "Normal"), :style=>"width: 90px" 
+            %td
+              .label Email to:
+              .value
+                = text_field_tag :email_destination, params[:email_destination], :size => 40
+                = submit_tag "Email"
       
-      <br>
       .value 
         = submit_tag "Download CSV report"
+      
 
       = render :partial => "/debug_deliveries"

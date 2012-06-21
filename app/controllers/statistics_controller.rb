@@ -57,25 +57,24 @@ class StatisticsController < ApplicationController
   end
 
   def author_monthly
+  
     if params[:commit].in?('View', "Email", "Download CSV report")
+    
       startdate = Date.parse(params[:month] + " " + params[:year])
 
-      @results, @stats, @totals = get_monthly_author_stats(:startdate => startdate, :include_zeroes => params[:include_zeroes], :author_id => params[:author_id])
-      
-      cvsReport(@results, @stats, @totals)
+      @results, @stats, @totals =  get_author_stats(:startdate => startdate, :include_zeroes => params[:include_zeroes], :author_id => params[:author_id])
       
       if params[:commit] == "Email"
         case params[:email_template]
         when "Normal"
-          Notifier.deliver_author_monthly(params[:email_destination], params[:author_id], startdate, @results, @stats, @totals,request)
-        else
-          Notifier.deliver_author_monthly_first(params[:email_destination], params[:author_id], startdate, @results, @stats, @totals,request)
-
+          Notifier.deliver_author_monthly(params[:email_destination], params[:author_id], startdate, @results, @stats, @totals, request)
+        else 
+          Notifier.deliver_author_monthly_first(params[:email_destination], params[:author_id], startdate, @results, @stats, @totals, request)
         end  
       end
       
       if params[:commit] == "Download CSV report"
-          send_data cvsReport(@results, @stats, @totals), :type=>"application/csv", :filename=>params[:author_id] + "_monthly_statistics.csv" 
+          send_data cvsReport, :type=>"application/csv", :filename=>params[:author_id] + "_monthly_statistics.csv" 
       end
       
     end
