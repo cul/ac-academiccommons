@@ -10,7 +10,7 @@ module StatisticsHelper
     results, stats, totals = get_author_stats(:startdate => startdate, :include_zeroes => params[:include_zeroes], :author_id => params[:author_id])
     
     
-    csv = "Author UNI/Name: " + params[:author_id].to_s + "\r\n"
+    csv = "Author UNI/Name: ," + params[:author_id].to_s + "\r\n"
     csv += CSV.generate_line(["Total for " + params[:month].to_s + " " + params[:year].to_s, 
                             "",
                             "",
