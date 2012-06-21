@@ -149,7 +149,7 @@ Blacklight.configure(:shared) do |config|
       "genre_facet"             => "Type:",
       "volume"                  => "Volume:",
       "handle"                  => "Permanent URL:",
-      "url"                     => "Watch Video:",
+      "url"                     => "Streaming URL:",
       "series_facet"            => "Series:",
       "part_number"             => "Part Number:",
       "book_journal_title"      => "Book/Journal Title:",

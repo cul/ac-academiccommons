@@ -1,7 +1,7 @@
 /* @override 
 	http://webdev.cdrs.columbia.edu:3000/stylesheets/application.css
 	http://localhost:3000/stylesheets/application.css
- 
+	http://dyn-iab-164-117.dyn.columbia.edu:3000/stylesheets/application.css
 */
 
 div#header.container {
@@ -2312,5 +2312,13 @@ ul.how-to-videos li a:hover img {
     -webkit-box-shadow: 2px 2px 5px rgba(0,0,0,.6);
     box-shadow:         2px 2px 5px rgba(0,0,0,.6);
 }
+
+/*over-ride zebra on tables, create optional zebra class*/
+
+
+tbody tr:nth-child(even) td, tbody tr.even td {background:transparent;}
+
+
+table.zebra tbody tr:nth-child(even) td, tbody tr.even td {background:#e5ecf9;}
 
  
