@@ -71,38 +71,41 @@ class StatisticsController < ApplicationController
 
   def author_monthly
   
-    startdate = Date.strptime(params[:from], '%m/%d/%Y')
-    enddate = Date.strptime(params[:to], '%m/%d/%Y')
-  
-    if params[:commit].in?('View', "Email")
+    if (!params[:from].nil? || !params[:to].nil?)
+
+      startdate = Date.strptime(params[:from], '%m/%d/%Y')
+      enddate = Date.strptime(params[:to], '%m/%d/%Y')
+     
     
-      @results, @stats, @totals =  get_author_stats(startdate, 
-                                                    enddate,
-                                                    params[:author_id],
-                                                    nil,
-                                                    params[:include_zeroes]
-                                                    )
+      if params[:commit].in?('View', "Email")
       
-      if params[:commit] == "Email"
-        case params[:email_template]
-        when "Normal"
-          Notifier.deliver_author_monthly(params[:email_destination], params[:author_id], startdate, @results, @stats, @totals, request)
-        else 
-          Notifier.deliver_author_monthly_first(params[:email_destination], params[:author_id], startdate, @results, @stats, @totals, request)
-        end  
+        @results, @stats, @totals =  get_author_stats(startdate, 
+                                                      enddate,
+                                                      params[:author_id],
+                                                      nil,
+                                                      params[:include_zeroes]
+                                                      )
+        
+        if params[:commit] == "Email"
+          case params[:email_template]
+          when "Normal"
+            Notifier.deliver_author_monthly(params[:email_destination], params[:author_id], startdate, @results, @stats, @totals, request)
+          else 
+            Notifier.deliver_author_monthly_first(params[:email_destination], params[:author_id], startdate, @results, @stats, @totals, request)
+          end  
+        end
+      end
+      
+      if params[:commit] == "Download CSV report"
+        csv_report = cvsReport( startdate,
+                                enddate,
+                                params[:author_id],
+                                params[:include_zeroes]
+                               )
+                                
+        send_data csv_report, :type=>"application/csv", :filename=>params[:author_id] + "_monthly_statistics.csv" 
       end
     end
-    
-    if params[:commit] == "Download CSV report"
-      csv_report = cvsReport( startdate,
-                              enddate,
-                              params[:author_id],
-                              params[:include_zeroes]
-                             )
-                              
-      send_data csv_report, :type=>"application/csv", :filename=>params[:author_id] + "_monthly_statistics.csv" 
-    end
-
   end
 
   def search_history
