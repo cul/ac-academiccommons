@@ -86,7 +86,7 @@ module StatisticsHelper
     line = []
     
     months_list.keys.each do |month|                       
-      line << (stats[prefix + month.to_s][id].nil? ? 0 : stats[month.to_s][id])
+      line << (stats[prefix + month.to_s][id].nil? ? 0 : stats[prefix + month.to_s][id])
     end    
     
     return line
