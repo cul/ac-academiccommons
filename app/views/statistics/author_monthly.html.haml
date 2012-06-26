@@ -1,3 +1,4 @@
+
 %table
   %tr
     %td
@@ -18,11 +19,15 @@
             = text_field_tag :author_id, params[:author_id]
       %tr
         %td
-          .label Report month:
+          .label Report from:
+        %td
+          = text_field_tag :from, params[:from]
+      %tr
+        %td
+          .label Report to:
         %td
           .value
-            = select_tag :month, options_for_select(Date::ABBR_MONTHNAMES, params[:month] || (Date.today - 1.months).strftime("%b"))
-            = select_tag :year, options_for_select((2011..Date.today.year), params[:year])
+            = text_field_tag :to, params[:to]
       %tr
         %td
           .label Include zeroes?
@@ -34,6 +39,7 @@
       = submit_tag "View"
       
     %br
+
 
     - if @results
 
@@ -70,6 +76,7 @@
       
       .value 
         = submit_tag "Download CSV report"
-      
 
       = render :partial => "/debug_deliveries"
+      
+      
