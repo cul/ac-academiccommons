@@ -98,25 +98,25 @@ class ApplicationController < ActionController::Base
   end
 
   def require_admin
-    if current_user
-      unless current_user.admin
-        redirect_to access_denied_url  
-      end
-    else
-      store_location
-      redirect_to new_user_session_path
-      return false
-    end
-    return false
+    # if current_user
+      # unless current_user.admin
+        # redirect_to access_denied_url  
+      # end
+    # else
+      # store_location
+      # redirect_to new_user_session_path
+      # return false
+    # end
+    # return false
   end
 
   def require_no_user
-    if current_user
-      store_location
-      flash[:notice] = "You must be logged out to access this page"
-      redirect_to root_url
-      return false
-    end
+    # if current_user
+      # store_location
+      # flash[:notice] = "You must be logged out to access this page"
+      # redirect_to root_url
+      # return false
+    # end
   end
   
   def user_session
