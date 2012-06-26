@@ -144,6 +144,7 @@ module ApplicationHelper
   end
   
   def document_render_field_value(field_name, value)
+
     if(document_show_fields_linked[field_name])
       if(document_show_fields_linked[field_name] == "facet")
         value = '<a href="' + relative_root + '/catalog?f[' + field_name + '][]=' + value + '">' + value + '</a>'
@@ -151,6 +152,11 @@ module ApplicationHelper
         value = '<a href="' + value + '">' + value + '</a>'
       end
     end
+    
+    if(field_name == "url")
+      value = '<a class="fancybox-media" href="' + value + '">' + value + '</a>'  
+    end
+      
     return auto_link(value).html_safe
   end
 

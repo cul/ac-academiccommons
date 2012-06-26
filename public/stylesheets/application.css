@@ -1,7 +1,7 @@
 /* @override 
 	http://webdev.cdrs.columbia.edu:3000/stylesheets/application.css
 	http://localhost:3000/stylesheets/application.css
- 
+	http://dyn-iab-164-117.dyn.columbia.edu:3000/stylesheets/application.css
 */
 
 div#header.container {
@@ -165,7 +165,7 @@ ul#recently-updated {
 }
 
 #about-text p{
-	margin-right: 100px;
+	margin-right: 50px;
 }
 div#intro {
 	padding-right: 120px;
@@ -1999,7 +1999,7 @@ span.form-field-info {
 
 form.self-deposit-form input, form.self-deposit-form textarea {
  
-	width: 438px; 
+	width: 400px; 
 	font: 1.4em "Helvetica Neue", Arial, Helvetica, Geneva, sans-serif; 
 	color: #444;
 	padding-left: 5px;
@@ -2018,6 +2018,14 @@ form.self-deposit-form input#uni{
 	width: 215px;
  
 
+}
+legend{
+	color: #919292;
+}
+
+form #abstr{
+	height: 200px;
+	width: 400px;
 }
 
 span.check-label {
@@ -2053,13 +2061,16 @@ textarea {
 	
 }
 
-label {
+form#sd-form label {
 	float: left;
-	width: 150px;
-	text-align: right;
+    width: 110px;
+ 
 	margin-right: 5px;
-	/*font-size: 1em;*/
-	/*padding-top: 7px;*/
+	font-weight: bold;
+	font-size: 12px;
+	text-align: right;
+	margin-top: 7px;
+	text-transform: uppercase;
 }
 
  
@@ -2076,11 +2087,11 @@ span.warning {
  
    margin-top: .25em;
 display: block;
-margin-left: 80px;
+margin-left: 115px;
  padding: 3px;
 color: #2c2f28;
 background-color: #fafeff;
-width: 438px;
+width: 400px;
 background
  
  
@@ -2097,9 +2108,11 @@ background
  
   }
 
+
+
 textarea.warning, input.warning{
-	border: 1px solid #3a71b8;
-	border-top-style: dotted;
+	border: 2px solid #3a71b8;
+ 
 }
 
 form#sd-form.self-deposit-form {
@@ -2257,10 +2270,58 @@ span.pdf-link {
 .nextbutton {
 	float: right;
 }
-
-form #abstr{
-	width: 440px;
-	height: 200px;
+#about-text div.about-video {
+	float: right;
+	margin-right: 68px;
+		margin-left: 20px;
 }
+
+div#about-text {
+background: rgba(255,255,255,.5);
+ border: 1px solid white;
+ margin-bottom: .75em;
+ padding:12px;
+
+}
+
+#about-text h1 {
+	color: #221d53;
+	font: 34px/36px "Helvetica Neue", Arial, Helvetica, Geneva, sans-serif;
+	margin-bottom: .5em;
+	text-transform: uppercase;
+}
+
+ul.how-to-videos li{
+	margin-bottom: 1em;
+	border-bottom: 1px dotted #939494;
+	margin-right: 50px;
+	height: 124px;
+}
+
+ul.how-to-videos li a:hover h2{
+	color: #280dac;
+	 
+}
+
+ul.how-to-videos li img {
+	float: left;
+	margin-right: 13px;
+	margin-bottom: 8px;
+	margin-top: 9px;
+}
+
+ul.how-to-videos li a:hover img {
+	-moz-box-shadow:    2px 2px 5px rgba(0,0,0,.6);
+    -webkit-box-shadow: 2px 2px 5px rgba(0,0,0,.6);
+    box-shadow:         2px 2px 5px rgba(0,0,0,.6);
+}
+
+/*over-ride zebra on tables, create optional zebra class*/
+
+
+tbody tr:nth-child(even) td, tbody tr.even td {background:transparent;}
+
+
+table.zebra tbody tr:nth-child(even) td, tbody tr.even td {background:#e5ecf9;}
 
  

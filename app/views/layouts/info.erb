@@ -9,10 +9,11 @@
 <title><%= h(@page_title || application_name) %></title>
 
 <meta name="description" content="Academic Commons is Columbia University's digital repository for academic research and scholarship produced by the university community.">
+<meta name="bitly-verification" content="35191b8f3154"/>
 
 <!--  <meta name="author" content=""> -->
 
-<meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0;">
+<!-- <meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0;"> -->
 
 <!--  <link rel="shortcut icon" href="/favicon.ico"> -->
 
@@ -58,9 +59,7 @@
 
 
 
-<header> 
-		 	
-		<h1 class="site_title"><%= link_to application_name, root_path %><%= (params[:controller] == "catalog" and !params[:id]) ? "<span id='results_text'>Search Results</span>" : "" %></h1>
+<header> <h1 class="site_title"><%= link_to application_name, root_path %><%= (params[:controller] == "catalog" and !params[:id]) ? "<span id='results_text'>Search Results</span>".html_safe : "" %></h1>
 	
 </header>
 </div>
@@ -89,11 +88,19 @@
 	
  
     
-    <div id="util_links" class='box'>
+    <div id="sidebar" class="span-7">
+    
+   <div id="util_links" class='box'>
 			<%= render :partial=>'/user_util_links' %>
    </div>
+		
+		
+	<%= sidebar_items.join('').html_safe %>
+	 
+
+	</div>
 	
-	<div id="content" class="box">
+	<div id="content" class="span-17 last">
 	
 	<%= render :partial=>'/flash_msg' %>
 
@@ -151,7 +158,6 @@
 
 </script>
 <% end %>
-
 </body>
   
 </html>

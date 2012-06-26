@@ -2,6 +2,19 @@ class StatisticsController < ApplicationController
   layout "no_sidebar"
   before_filter :require_admin, :except => [:unsubscribe_monthly]
   include Blacklight::SolrHelper
+  include StatisticsHelper
+
+
+  def default_html_head
+    # stylesheet_links << [ 'jquery/datepicker.css' ]
+    # stylesheet_links << [ 'jquery/jquery.ui.all.css' ]
+    # javascript_includes << ['jquery/jquery-1.7.2.js' ]
+    # javascript_includes << ['jquery/jquery.ui.core.js' ]
+    # javascript_includes << ['jquery/jquery.ui.datepicker.js' ]
+    # javascript_includes << ['jquery/jquery.ui.widget.js' ]
+# 
+    # javascript_includes << ['jquery/range.datepicker.js' ]
+  end
 
   def unsubscribe_monthly
     author_id = params[:author_id]
@@ -27,6 +40,7 @@ class StatisticsController < ApplicationController
   end
 
   def all_author_monthlies
+    
     params[:email_template] ||= "Normal"
 
     ids = Blacklight.solr.find(:per_page => 100000, :page => 1, :fl => "author_uni")["response"]["docs"].collect { |f| f["author_uni"] }.flatten.compact.uniq - EmailPreference.find_all_by_monthly_opt_out(true).collect(&:author)
@@ -56,23 +70,40 @@ class StatisticsController < ApplicationController
   end
 
   def author_monthly
-    if params[:commit].in?('View',"Email")
-      startdate = Date.parse(params[:month] + " " + params[:year])
-
-      @results, @stats, @totals = get_monthly_author_stats(:startdate => startdate, :include_zeroes => params[:include_zeroes], :author_id => params[:author_id])
+  
+    startdate = Date.strptime(params[:from], '%m/%d/%Y')
+    enddate = Date.strptime(params[:to], '%m/%d/%Y')
+  
+    if params[:commit].in?('View', "Email")
+    
+      @results, @stats, @totals =  get_author_stats(startdate, 
+                                                    enddate,
+                                                    params[:author_id],
+                                                    nil,
+                                                    params[:include_zeroes]
+                                                    )
+      
       if params[:commit] == "Email"
         case params[:email_template]
         when "Normal"
-          Notifier.deliver_author_monthly(params[:email_destination], params[:author_id], startdate, @results, @stats, @totals,request)
-        else
-          Notifier.deliver_author_monthly_first(params[:email_destination], params[:author_id], startdate, @results, @stats, @totals,request)
-
+          Notifier.deliver_author_monthly(params[:email_destination], params[:author_id], startdate, @results, @stats, @totals, request)
+        else 
+          Notifier.deliver_author_monthly_first(params[:email_destination], params[:author_id], startdate, @results, @stats, @totals, request)
         end  
       end
     end
+    
+    if params[:commit] == "Download CSV report"
+      csv_report = cvsReport( startdate,
+                              enddate,
+                              params[:author_id],
+                              params[:include_zeroes]
+                             )
+                              
+      send_data csv_report, :type=>"application/csv", :filename=>params[:author_id] + "_monthly_statistics.csv" 
+    end
 
   end
-
 
   def search_history
     @search_types = [["Item",'id'],["UNI","author_uni"],["Genre","genre_search"]]

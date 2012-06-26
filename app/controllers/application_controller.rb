@@ -69,7 +69,7 @@ class ApplicationController < ActionController::Base
     stylesheet_links << ['zooming_image', 'accordion', {:media=>'all'}]
     stylesheet_links << [ 'jquery/ui-lightness/jquery-ui-1.8.1.custom.css']
     stylesheet_links << [ 'handheld.css?v=1',{:media=>'handheld'}]
-    javascript_includes << ['modernizr-1.5.min.js','jquery-1.4.2.min.js', 'jquery-ui-1.8.1.custom.min.js', 'jquery.ui.selectmenu.js', 'application', 'uservoiceWidget.js' ]
+    javascript_includes << ['modernizr-1.5.min.js','jquery-1.7.2.min.js', 'jquery-ui-1.8.1.custom.min.js', 'jquery.ui.selectmenu.js', 'application', 'uservoiceWidget.js' ]
     javascript_includes << ['accordion']
   end
   
@@ -89,23 +89,25 @@ class ApplicationController < ActionController::Base
   end
   
   def require_user
-    unless current_user
-      store_location
-      redirect_to new_user_session_path
-      return false
-    end
+    # unless current_user
+      # store_location
+      # redirect_to new_user_session_path
+      # return false
+    # end
+    return false
   end
 
   def require_admin
-    if current_user
-      unless current_user.admin
-        redirect_to access_denied_url  
-      end
-    else
-      store_location
-      redirect_to new_user_session_path
-      return false
-    end
+    # if current_user
+      # unless current_user.admin
+        # redirect_to access_denied_url  
+      # end
+    # else
+      # store_location
+      # redirect_to new_user_session_path
+      # return false
+    # end
+    return false
   end
 
   def require_no_user
