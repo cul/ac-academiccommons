@@ -39,8 +39,7 @@ module StatisticsHelper
                                 "DOI", 
                                 "Reporting Period Total Views", 
                                 "Reporting Period Total Downloads"
-                               ].concat( months_list.values )
-                                .concat( months_list.values )   
+                               ].concat( months_list.values ).concat( months_list.values )   
                              ) + "\r\n"
 
     results.each do |item|
@@ -51,8 +50,7 @@ module StatisticsHelper
                               item["doi"],
                               stats["View"][item["id"][0]].nil? ? 0 : stats["View"][item["id"][0]],
                               stats["Download"][item["id"][0]].nil? ? 0 : stats["Download"][item["id"][0]]
-                              ].concat( make_month_line(stats, months_list, item["id"][0], VIEW ))
-                               .concat( make_month_line(stats, months_list, item["id"][0], DOWNLOAD))
+                              ].concat( make_month_line(stats, months_list, item["id"][0], VIEW )).concat( make_month_line(stats, months_list, item["id"][0], DOWNLOAD))
                               ) + "\r\n"
                      
     end
