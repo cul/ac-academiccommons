@@ -42,7 +42,7 @@ module StatisticsHelper
                                 "DOI", 
                                 "Reporting Period Total Views", 
                                 "Reporting Period Total Downloads"
-                               ].concat( months_list.values ).concat( months_list.values )   
+                               ].concat( make_month_line(months_list) ).concat( make_month_line(months_list) )   
                              ) + line_braker
 
     results.each do |item|
@@ -53,12 +53,10 @@ module StatisticsHelper
                               item["doi"],
                               stats["View"][item["id"][0]].nil? ? 0 : stats["View"][item["id"][0]],
                               stats["Download"][item["id"][0]].nil? ? 0 : stats["Download"][item["id"][0]]
-                              ].concat( make_month_line(stats, months_list, item["id"][0], VIEW )).concat( make_month_line(stats, months_list, item["id"][0], DOWNLOAD))
+                              ].concat( make_month_line_stats(stats, months_list, item["id"][0], VIEW )).concat( make_month_line_stats(stats, months_list, item["id"][0], DOWNLOAD))
                               ) + line_braker
                      
     end
-
-     make_months_header(months_list)
 
     return csv
   end
@@ -83,12 +81,22 @@ module StatisticsHelper
     return header
   end
 
+  def make_month_line(months_list)
+    
+    month_list = []
+    
+    months_list.each do |month|
+      month_list << month.strftime("%b-%Y")
+    end
+    
+    return month_list
+  end
 
-  def make_month_line(stats, months_list, id, prefix)
+  def make_month_line_stats(stats, months_list, id, prefix)
     
     line = []
     
-    months_list.keys.each do |month|                       
+    months_list.each do |month|                       
       line << (stats[prefix + month.to_s][id].nil? ? 0 : stats[prefix + month.to_s][id])
     end    
     
@@ -98,9 +106,9 @@ module StatisticsHelper
 
   def process_stats_by_month(stats, totals, ids, download_ids, startdate, enddate, months_list)
     
-    months_list.keys.each do |month|
+    months_list.each do |month|
       
-      contdition = month.to_s + "%"
+      contdition = month.strftime("%Y-%m") + "%"
 
       stats[VIEW + month.to_s] = Statistic.count(:group => "identifier", :conditions => ["event = 'View' and identifier IN (?) and at_time like ?", ids, contdition])
       stats[DOWNLOAD + month.to_s] = Statistic.count(:group => "identifier", :conditions => ["event = 'Download' and identifier IN (?) and at_time like ?", download_ids, contdition])
@@ -112,10 +120,12 @@ module StatisticsHelper
   
 
   def get_author_stats(startdate, enddate, author_id, months_list, include_zeroes)
+    
+    
 
     results = make_solar_request(author_id)
 
-    stats, totals, ids, download_ids = init_holders(results, startdate, enddate)
+    stats, totals, ids, download_ids = init_holders(results)
 
     process_stats(stats, totals, ids, download_ids, startdate, enddate)
     
@@ -136,7 +146,7 @@ module StatisticsHelper
   end
 
 
-  def init_holders(results, startdate, enddate)
+  def init_holders(results)
     
     ids = results.collect { |r| r['id'].to_s.strip }
     
@@ -157,6 +167,8 @@ module StatisticsHelper
   end
   
   def process_stats(stats, totals, ids, download_ids, startdate, enddate)
+    
+    enddate = enddate + 1.months
     
     stats['View'] = Statistic.count(:group => "identifier", :conditions => ["event = 'View' and identifier IN (?) AND at_time BETWEEN ? and ?", ids, startdate, enddate])
 
@@ -197,15 +209,24 @@ module StatisticsHelper
                                      :page => 1
                                    )["response"]["docs"]    
   end
-
+  
+  
   def make_months_list(startdate, enddate)
-    months = Hash.new
-
+    months = []
+    months_hash = Hash.new
+    
     (startdate..enddate).each do |date|
-      months.store(date.strftime("%Y-%m"), date.strftime("%b-%Y"))
+      
+      key = date.strftime("%Y-%m")
+      
+      if(!months_hash.has_key?(key))
+        months << date
+        months_hash.store(key, "")
+      end    
+      #months.store(date.strftime("%Y-%m"), date.strftime("%b-%Y"))
     end
     
-    return months
+    return months.reverse
   end
   
 end
