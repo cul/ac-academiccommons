@@ -5,11 +5,11 @@ module StatisticsHelper
   VIEW = 'view_'
   DOWNLOAD = 'download_'
    
-  def cvsReport(startdate, enddate, author, include_zeroes)
+  def cvsReport(startdate, enddate, author, include_zeroes, recent_first)
 
     line_braker = RUBY_VERSION < "1.9" ? "\r\n" : ""
 
-    months_list = make_months_list(startdate, enddate)
+    months_list = make_months_list(startdate, enddate, recent_first)
     results, stats, totals, download_ids = get_author_stats(startdate, enddate, author, months_list, include_zeroes)
 
     csv = "Author UNI/Name: ," + author.to_s + line_braker
@@ -235,7 +235,7 @@ module StatisticsHelper
   end
   
   
-  def make_months_list(startdate, enddate)
+  def make_months_list(startdate, enddate, recent_first)
     months = []
     months_hash = Hash.new
     
@@ -248,7 +248,12 @@ module StatisticsHelper
         months_hash.store(key, "")
       end    
     end    
-    return months.reverse
+    
+    if(recent_first)
+      return months.reverse
+    else
+      return months
+    end
   end
   
 end
