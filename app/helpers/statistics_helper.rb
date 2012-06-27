@@ -29,8 +29,7 @@ module StatisticsHelper
                                 "",
                                 "",
                                 "", 
-                                totals["View"].to_s, 
-                                totals["Download"].to_s
+                                totals["View"].to_s
                                ].concat(make_months_header("Views by Month", months_list))
                              ) + line_braker
                             
@@ -38,8 +37,7 @@ module StatisticsHelper
                                 "Content Type", 
                                 "Permanent URL",
                                 "DOI", 
-                                "Reporting Period Total Views", 
-                                "Reporting Period Total Downloads"
+                                "Reporting Period Total Views"
                                ].concat( make_month_line(months_list))   
                              ) + line_braker
 
@@ -49,8 +47,7 @@ module StatisticsHelper
                               item["genre_facet"],
                               item["handle"],
                               item["doi"],
-                              stats["View"][item["id"][0]].nil? ? 0 : stats["View"][item["id"][0]],
-                              stats["Download"][item["id"][0]].nil? ? 0 : stats["Download"][item["id"][0]]
+                              stats["View"][item["id"][0]].nil? ? 0 : stats["View"][item["id"][0]]
                               ].concat( make_month_line_stats(stats, months_list, item["id"][0], nil ))
                               ) + line_braker
                      
@@ -63,7 +60,6 @@ module StatisticsHelper
                                 "",
                                 "",
                                 "", 
-                                totals["View"].to_s, 
                                 totals["Download"].to_s
                                ].concat(make_months_header("Downloads by Month", months_list))
                              ) + line_braker
@@ -72,7 +68,6 @@ module StatisticsHelper
                                 "Content Type", 
                                 "Permanent URL",
                                 "DOI", 
-                                "Reporting Period Total Views", 
                                 "Reporting Period Total Downloads"
                                ].concat( make_month_line(months_list))   
                              ) + line_braker
@@ -83,7 +78,6 @@ module StatisticsHelper
                               item["genre_facet"],
                               item["handle"],
                               item["doi"],
-                              stats["View"][item["id"][0]].nil? ? 0 : stats["View"][item["id"][0]],
                               stats["Download"][item["id"][0]].nil? ? 0 : stats["Download"][item["id"][0]]
                               ].concat( make_month_line_stats(stats, months_list, item["id"][0], download_ids))
                               ) + line_braker
