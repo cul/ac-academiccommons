@@ -4,18 +4,6 @@ class StatisticsController < ApplicationController
   include Blacklight::SolrHelper
   include StatisticsHelper
 
-
-  def default_html_head
-    # stylesheet_links << [ 'jquery/datepicker.css' ]
-    # stylesheet_links << [ 'jquery/jquery.ui.all.css' ]
-    # javascript_includes << ['jquery/jquery-1.7.2.js' ]
-    # javascript_includes << ['jquery/jquery.ui.core.js' ]
-    # javascript_includes << ['jquery/jquery.ui.datepicker.js' ]
-    # javascript_includes << ['jquery/jquery.ui.widget.js' ]
-# 
-    # javascript_includes << ['jquery/range.datepicker.js' ]
-  end
-
   def unsubscribe_monthly
     author_id = params[:author_id]
 
@@ -71,12 +59,11 @@ class StatisticsController < ApplicationController
 
   def author_monthly
   
-    if (!params[:from].nil? || !params[:to].nil?)
-
-      startdate = Date.strptime(params[:from], '%m/%d/%Y')
-      enddate = Date.strptime(params[:to], '%m/%d/%Y')
+    if (!params[:month_from].nil? && !params[:month_to].nil? && !params[:year_from].nil? && !params[:year_to].nil?)
+      
+      startdate = Date.parse(params[:month_from] + " " + params[:year_from])
+      enddate = Date.parse(params[:month_to] + " " + params[:year_to])
      
-    
       if params[:commit].in?('View', "Email")
       
         @results, @stats, @totals =  get_author_stats(startdate, 

@@ -7,21 +7,24 @@ module StatisticsHelper
    
   def cvsReport(startdate, enddate, author, include_zeroes)
     
-    #  + "\r\n" after CSV.generate_line is only for ruby version 1.8.7, with version 1.9.3 it should be removed
+    #  + line_braker after CSV.generate_line is only for ruby version 1.8.7, with version 1.9.3 it should be removed
+
+    line_braker = RUBY_VERSION < "1.9" ? "\r\n" : ""
 
     months_list = make_months_list(startdate, enddate)
     results, stats, totals = get_author_stats(startdate, enddate, author, months_list, include_zeroes)
     #:startdate => startdate, :include_zeroes => params[:include_zeroes], :author_id => params[:author_id])
     
     
-    csv = "Author UNI/Name: ," + author.to_s + "\r\n"
+    csv = "Author UNI/Name: ," + author.to_s + line_braker
  
-    csv += CSV.generate_line( [ "Period covered by Report:" ]) + "\r\n"
-    csv += CSV.generate_line( [ startdate.strftime("%Y-%m-%d" ) + " to " + enddate.strftime("%Y-%m-%d") ]) + "\r\n"
-    csv += CSV.generate_line( [ "Date run:" ]) + "\r\n"
-    csv += CSV.generate_line( [ Time.new.strftime("%Y-%m-%d") ] ) + "\r\n"
-    csv += CSV.generate_line( [ "Report created by:" ]) + "\r\n"
-    csv += CSV.generate_line( [  current_user.to_s + " (" + current_user.login.to_s + ")" ]) + "\r\n"
+    csv += CSV.generate_line( [ "Period covered by Report" ]) + line_braker
+    csv += CSV.generate_line( [ "from:", "to:" ]) + line_braker
+    csv += CSV.generate_line( [ startdate.strftime("%b-%Y"),  enddate.strftime("%b-%Y") ]) + line_braker
+    csv += CSV.generate_line( [ "Date run:" ]) + line_braker
+    csv += CSV.generate_line( [ Time.new.strftime("%Y-%m-%d") ] ) + line_braker
+    csv += CSV.generate_line( [ "Report created by:" ]) + line_braker
+    csv += CSV.generate_line( [  current_user == nil ? "N/A" : (current_user.to_s + " (" + current_user.login.to_s + ")") ]) + line_braker
     
     
     csv += CSV.generate_line( [ "Total for period:", 
@@ -31,7 +34,7 @@ module StatisticsHelper
                                 totals["View"].to_s, 
                                 totals["Download"].to_s
                                ].concat(make_months_header(months_list))
-                             ) + "\r\n"
+                             ) + line_braker
                             
     csv += CSV.generate_line( [ "Title", 
                                 "Content Type", 
@@ -40,7 +43,7 @@ module StatisticsHelper
                                 "Reporting Period Total Views", 
                                 "Reporting Period Total Downloads"
                                ].concat( months_list.values ).concat( months_list.values )   
-                             ) + "\r\n"
+                             ) + line_braker
 
     results.each do |item|
 
@@ -51,7 +54,7 @@ module StatisticsHelper
                               stats["View"][item["id"][0]].nil? ? 0 : stats["View"][item["id"][0]],
                               stats["Download"][item["id"][0]].nil? ? 0 : stats["Download"][item["id"][0]]
                               ].concat( make_month_line(stats, months_list, item["id"][0], VIEW )).concat( make_month_line(stats, months_list, item["id"][0], DOWNLOAD))
-                              ) + "\r\n"
+                              ) + line_braker
                      
     end
 
