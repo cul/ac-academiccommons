@@ -6,16 +6,12 @@ module StatisticsHelper
   DOWNLOAD = 'download_'
    
   def cvsReport(startdate, enddate, author, include_zeroes)
-    
-    #  + line_braker after CSV.generate_line is only for ruby version 1.8.7, with version 1.9.3 it should be removed
 
     line_braker = RUBY_VERSION < "1.9" ? "\r\n" : ""
 
     months_list = make_months_list(startdate, enddate)
-    results, stats, totals = get_author_stats(startdate, enddate, author, months_list, include_zeroes)
-    #:startdate => startdate, :include_zeroes => params[:include_zeroes], :author_id => params[:author_id])
-    
-    
+    results, stats, totals, download_ids = get_author_stats(startdate, enddate, author, months_list, include_zeroes)
+
     csv = "Author UNI/Name: ," + author.to_s + line_braker
  
     csv += CSV.generate_line( [ "Period covered by Report" ]) + line_braker
@@ -26,6 +22,8 @@ module StatisticsHelper
     csv += CSV.generate_line( [ "Report created by:" ]) + line_braker
     csv += CSV.generate_line( [  current_user == nil ? "N/A" : (current_user.to_s + " (" + current_user.login.to_s + ")") ]) + line_braker
     
+    csv += CSV.generate_line( [ "" ]) + line_braker
+    csv += CSV.generate_line( [ "Views report:" ]) + line_braker
     
     csv += CSV.generate_line( [ "Total for period:", 
                                 "",
@@ -33,7 +31,7 @@ module StatisticsHelper
                                 "", 
                                 totals["View"].to_s, 
                                 totals["Download"].to_s
-                               ].concat(make_months_header(months_list))
+                               ].concat(make_months_header("Views by Month", months_list))
                              ) + line_braker
                             
     csv += CSV.generate_line( [ "Title", 
@@ -42,7 +40,7 @@ module StatisticsHelper
                                 "DOI", 
                                 "Reporting Period Total Views", 
                                 "Reporting Period Total Downloads"
-                               ].concat( make_month_line(months_list) ).concat( make_month_line(months_list) )   
+                               ].concat( make_month_line(months_list))   
                              ) + line_braker
 
     results.each do |item|
@@ -53,7 +51,41 @@ module StatisticsHelper
                               item["doi"],
                               stats["View"][item["id"][0]].nil? ? 0 : stats["View"][item["id"][0]],
                               stats["Download"][item["id"][0]].nil? ? 0 : stats["Download"][item["id"][0]]
-                              ].concat( make_month_line_stats(stats, months_list, item["id"][0], VIEW )).concat( make_month_line_stats(stats, months_list, item["id"][0], DOWNLOAD))
+                              ].concat( make_month_line_stats(stats, months_list, item["id"][0], nil ))
+                              ) + line_braker
+                     
+    end
+    
+    csv += CSV.generate_line( [ "" ]) + line_braker
+    csv += CSV.generate_line( [ "Downloads report:" ]) + line_braker
+    
+        csv += CSV.generate_line( [ "Total for period:", 
+                                "",
+                                "",
+                                "", 
+                                totals["View"].to_s, 
+                                totals["Download"].to_s
+                               ].concat(make_months_header("Downloads by Month", months_list))
+                             ) + line_braker
+                            
+    csv += CSV.generate_line( [ "Title", 
+                                "Content Type", 
+                                "Permanent URL",
+                                "DOI", 
+                                "Reporting Period Total Views", 
+                                "Reporting Period Total Downloads"
+                               ].concat( make_month_line(months_list))   
+                             ) + line_braker
+
+    results.each do |item|
+
+    csv += CSV.generate_line([item["title_display"],
+                              item["genre_facet"],
+                              item["handle"],
+                              item["doi"],
+                              stats["View"][item["id"][0]].nil? ? 0 : stats["View"][item["id"][0]],
+                              stats["Download"][item["id"][0]].nil? ? 0 : stats["Download"][item["id"][0]]
+                              ].concat( make_month_line_stats(stats, months_list, item["id"][0], download_ids))
                               ) + line_braker
                      
     end
@@ -62,22 +94,16 @@ module StatisticsHelper
   end
   
   
-  def make_months_header(months_list)
+  def make_months_header(first_item, months_list)
     
     header = []
-    
-    header << "Views by Month"
+
+    header << first_item
 
     months_list.size.downto(2) do
       header << ""
     end 
-    
-    header << "Downloads by Month"
-    
-    months_list.size.downto(2) do
-      header << ""
-    end 
-    
+
     return header
   end
 
@@ -92,14 +118,20 @@ module StatisticsHelper
     return month_list
   end
 
-  def make_month_line_stats(stats, months_list, id, prefix)
+  def make_month_line_stats(stats, months_list, id, download_ids)
     
     line = []
     
-    months_list.each do |month|                       
-      line << (stats[prefix + month.to_s][id].nil? ? 0 : stats[prefix + month.to_s][id])
-    end    
-    
+    months_list.each do |month|                   
+      
+      if(download_ids != nil)    
+        download_id = download_ids[id]       
+        line << (stats[DOWNLOAD + month.to_s][download_id.to_s].nil? ? 0 : stats[DOWNLOAD + month.to_s][download_id.to_s])
+      else
+        line << (stats[VIEW + month.to_s][id].nil? ? 0 : stats[VIEW + month.to_s][id])
+      end
+      
+    end      
     return line
   end
 
@@ -111,7 +143,7 @@ module StatisticsHelper
       contdition = month.strftime("%Y-%m") + "%"
 
       stats[VIEW + month.to_s] = Statistic.count(:group => "identifier", :conditions => ["event = 'View' and identifier IN (?) and at_time like ?", ids, contdition])
-      stats[DOWNLOAD + month.to_s] = Statistic.count(:group => "identifier", :conditions => ["event = 'Download' and identifier IN (?) and at_time like ?", download_ids, contdition])
+      stats[DOWNLOAD + month.to_s] = Statistic.count(:group => "identifier", :conditions => ["event = 'Download' and identifier IN (?) and at_time like ?", download_ids.values.flatten, contdition])
 
     end
 
@@ -120,8 +152,6 @@ module StatisticsHelper
   
 
   def get_author_stats(startdate, enddate, author_id, months_list, include_zeroes)
-    
-    
 
     results = make_solar_request(author_id)
 
@@ -141,7 +171,7 @@ module StatisticsHelper
       process_stats_by_month(stats, totals, ids, download_ids, startdate, enddate, months_list)     
     end   
 
-    return results, stats, totals
+    return results, stats, totals, download_ids
     
   end
 
@@ -156,7 +186,6 @@ module StatisticsHelper
     
     ids.each do |doc_id|
       download_ids[doc_id] |= fedora_server.item(doc_id).listMembers.collect(&:pid)
-#      download_ids[doc_id] |=  fedora_server.item(doc_id).describedBy.collect(&:pid)
     end
     
     stats = Hash.new { |h,k| h[k] = Hash.new { |h,k| h[k] = 0 }}
@@ -165,6 +194,7 @@ module StatisticsHelper
     return stats, totals, ids, download_ids
     
   end
+  
   
   def process_stats(stats, totals, ids, download_ids, startdate, enddate)
     
@@ -223,9 +253,7 @@ module StatisticsHelper
         months << date
         months_hash.store(key, "")
       end    
-      #months.store(date.strftime("%Y-%m"), date.strftime("%b-%Y"))
-    end
-    
+    end    
     return months.reverse
   end
   
