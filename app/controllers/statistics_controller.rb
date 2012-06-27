@@ -87,7 +87,8 @@ class StatisticsController < ApplicationController
         csv_report = cvsReport( startdate,
                                 enddate,
                                 params[:author_id],
-                                params[:include_zeroes]
+                                params[:include_zeroes],
+                                params[:recent_first]
                                )
                                 
         send_data csv_report, :type=>"application/csv", :filename=>params[:author_id] + "_monthly_statistics.csv" 

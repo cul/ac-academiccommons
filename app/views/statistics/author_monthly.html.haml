@@ -76,9 +76,13 @@
               .value
                 = text_field_tag :email_destination, params[:email_destination], :size => 40
                 = submit_tag "Email"
-      
+
       .value 
-        = submit_tag "Download CSV report"
+        = submit_tag "Download CSV report" 
+        &nbsp;&nbsp;
+        = check_box_tag :recent_first, "true", params[:recent_first]
+        Recent months first
+
 
       = render :partial => "/debug_deliveries"
       
