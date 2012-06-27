@@ -89,11 +89,11 @@ class ApplicationController < ActionController::Base
   end
   
   def require_user
-    # unless current_user
-      # store_location
-      # redirect_to new_user_session_path
-      # return false
-    # end
+    unless current_user
+      store_location
+      redirect_to new_user_session_path
+      return false
+    end
     return false
   end
 
@@ -107,16 +107,16 @@ class ApplicationController < ActionController::Base
       # redirect_to new_user_session_path
       # return false
     # end
-    return false
+    # return false
   end
 
   def require_no_user
-    if current_user
-      store_location
-      flash[:notice] = "You must be logged out to access this page"
-      redirect_to root_url
-      return false
-    end
+    # if current_user
+      # store_location
+      # flash[:notice] = "You must be logged out to access this page"
+      # redirect_to root_url
+      # return false
+    # end
   end
   
   def user_session

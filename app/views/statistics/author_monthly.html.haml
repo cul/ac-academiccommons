@@ -21,13 +21,16 @@
         %td
           .label Report from:
         %td
-          = text_field_tag :from, params[:from]
+          .value
+            = select_tag :month_from, options_for_select(Date::ABBR_MONTHNAMES, params[:month_from] || (Date.today - 1.months).strftime("%b"))
+            = select_tag :year_from, options_for_select((2011..Date.today.year), params[:year_from])
       %tr
         %td
           .label Report to:
         %td
           .value
-            = text_field_tag :to, params[:to]
+            = select_tag :month_to, options_for_select(Date::ABBR_MONTHNAMES, params[:month_to] || (Date.today - 1.months).strftime("%b"))
+            = select_tag :year_to, options_for_select((2011..Date.today.year), params[:year_to])
       %tr
         %td
           .label Include zeroes?
