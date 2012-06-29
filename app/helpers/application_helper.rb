@@ -169,6 +169,19 @@ module ApplicationHelper
 
   def render_meta_as_links()
   end
+  
+  def metaheader_fix_if_needed(name, content)
+  
+    if(name == "citation_author")
+      parts = content.split(",")
+      content = ""
+      parts.each do |part|
+        content += part + " "
+      end
+    end
+    
+    return content.strip!
+  end
 
  
   def page_location

@@ -36,13 +36,13 @@ if(@document != nil && @document.include?("title_display") && @document.include?
                 if(!value.empty?)
                      value.each do |val|
 %>
-<meta name="<%= solr_fields_hash[solr_field] %>" content="<%= val %>">
+<meta name="<%= solr_fields_hash[solr_field] %>" content="<%= metaheader_fix_if_needed(solr_fields_hash[solr_field], val) %>">
 <%      
                     end
                 end
             else
 %>
-<meta name="<%= solr_fields_hash[solr_field] %>" content="<%= value %>">
+<meta name="<%= solr_fields_hash[solr_field] %>" content="<%= metaheader_fix_if_needed(solr_fields_hash[solr_field], value) %>">
 <%                
             end
         end
