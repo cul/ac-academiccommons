@@ -176,11 +176,11 @@ module ApplicationHelper
       parts = content.split(",")
       content = ""
       parts.each do |part|
-        content += part + " "
+        content += part
       end
     end
     
-    return content.strip!
+    return content
   end
 
  
