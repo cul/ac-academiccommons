@@ -175,9 +175,10 @@ module ApplicationHelper
     if(name == "citation_author")
       parts = content.split(",")
       content = ""
-      parts.each do |part|
-        content += part
+      parts.reverse.each do |part|
+        content += part + " "
       end
+      content.strip!
     end
     
     return content
