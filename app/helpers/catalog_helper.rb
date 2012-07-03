@@ -202,7 +202,7 @@ module CatalogHelper
 
   def thumbnail_for_resource(resource)
     extension = get_file_extension(resource[:filename].to_s)
-    thumbnail_folder_path = Rails.root.to_s + "/public/images/thumbnail_icons/"
+    thumbnail_folder_path = Rails.root.to_s + "/app/assets/images/thumbnail_icons/"
     if(!extension.nil? && !extension.empty?)
       thumbnail_file_name = extension + ".png"
     else

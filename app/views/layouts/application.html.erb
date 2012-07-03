@@ -10,6 +10,24 @@
 
 <meta name="bitly-verification" content="35191b8f3154"/>
 
+<%= favicon_link_tag asset_path('favicon-crown.png', :media => "screen,projection", :rel => "shortcut icon", :type => "text/css") %>
+
+<%= stylesheet_link_tag "application", :media => "screen,projection", :rel => "stylesheet", :type => "text/css" %>
+<%= stylesheet_link_tag "blueprint/screen", :media => "screen,projection"  %>
+<!-- [if lt IE8] <%= stylesheet_link_tag "compiled/ie.css", :media => "screen, projection" %> -->
+
+<%= javascript_include_tag "application", "http://cdn.sublimevideo.net/js/3s7oes9q.js" %>
+
+<%= raw(render_head_content) %>
+
+<link href="<%= url_for :controller=>'catalog',:action => 'opensearch', :format => 'xml', :only_path => false %>" title="<%= application_name%>" type="application/opensearchdescription+xml" rel="search"/>
+
+  <!-- will revert link to native function when done editing stylesheets -->
+        
+    <% javascript_tag do -%>
+    <%= yield(:jstemplates) %> 
+    <% end -%>
+
 <% 
 if(@document != nil && @document.include?("title_display") && @document.include?("author_facet") && @document.include?("date_issued"))
 
@@ -52,31 +70,7 @@ end
 <meta name="citation_pdf_url" content="<%= url %>">
 <%     end     %>
 
-<!--  <meta name="author" content=""> -->
 
-<!-- <meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0;"> -->
-
-<!--  <link rel="shortcut icon" href="/favicon.ico"> -->
-
-<!--  <link rel="apple-touch-icon" href="/apple-touch-icon.png"> -->
-
-<link href="<%= url_for :controller=>'catalog',:action => 'opensearch', :format => 'xml', :only_path => false %>" title="<%= application_name%>" type="application/opensearchdescription+xml" rel="search"/>
-    <%#= stylesheet_link_tag 'compiled/screen.css', :media => 'screen, projection' %>
-    <%#= stylesheet_link_tag 'compiled/print.css', :media => "print" %>
-    <!-- [if lt IE8] <%= stylesheet_link_tag "compiled/ie.css", :media => "screen, projection" %> -->
-
-    <%= render_head_content %>
-    
-    <%= stylesheet_link_tag "blueprint/screen", :media => "screen,projection"  %>
-    <%#= stylesheet_link_tag "application", :media => "screen,projection" %>
-   <link href="<%= relative_root %>/images/favicon-crown.png" media="screen,projection" rel="shortcut icon" type="text/css" />
-   <link href="<%= relative_root %>/stylesheets/application.css" media="screen,projection" rel="stylesheet" type="text/css" />
-  <!-- will revert link to native function when done editing stylesheets -->
-        
-    <% javascript_tag do -%>
-    <%= yield(:jstemplates) %> 
-    <% end -%>
-  
 </head>
 
 

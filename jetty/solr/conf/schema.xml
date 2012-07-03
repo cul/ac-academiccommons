@@ -368,7 +368,9 @@
   <copyField source="series_facet" dest="text"/>
   <copyField source="non_cu_series_facet" dest="text"/>
   <copyField source="organization_facet" dest="text"/>
-  <copyField source="department_facet" dest="text"/>
+  <copyField source="department_facet" dest="text"/>  
+  <copyField source="language" dest="text"/>
+  <copyField source="type_of_resource_facet" dest="text"/>
   
   <copyField source="department_facet" dest="affiliation_department"/>
   

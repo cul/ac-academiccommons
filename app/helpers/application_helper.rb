@@ -1,3 +1,5 @@
+require 'rails_rinku'
+
 module ApplicationHelper
   
   def application_name
