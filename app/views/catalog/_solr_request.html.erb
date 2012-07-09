@@ -1,4 +1,4 @@
-<% unless RAILS_ENV=='production' %>
+<% unless ENV=='production'  %>
   <% @footer = capture do %>
     <div class="solrQuery"><%= URI.decode(@response.header.inspect) %></div>
   <% end %>
