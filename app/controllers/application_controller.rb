@@ -73,9 +73,9 @@ class ApplicationController < ActionController::Base
     javascript_includes << ['accordion']
   end
   
-  ##########################################
-  #### Application user-related methods ####
-  ##########################################
+  ############################################
+  ####  Application user-related methods  ####
+  ############################################
 
   def access_denied
     render :template => 'access_denied'
