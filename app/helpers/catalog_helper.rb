@@ -202,7 +202,7 @@ module CatalogHelper
 
   def thumbnail_for_resource(resource)
     extension = get_file_extension(resource[:filename].to_s)
-    thumbnail_folder_path = Rails.root.to_s + "/public/images/thumbnail_icons/"
+    thumbnail_folder_path = Rails.root.to_s + "/app/assets/images/thumbnail_icons/"
     if(!extension.nil? && !extension.empty?)
       thumbnail_file_name = extension + ".png"
     else
@@ -378,5 +378,19 @@ begin
      end  
      return urls
   end  
+  
+  def document_show_html_title
+    return document_heading.first || ""
+  end
+  
+  def render_document_heading
+    heading = ""
+    if(!document_type.nil?)
+      heading += '<h2>' + document_type.first + ':</h2>'
+    end
+    heading += '<h1>' + (document_heading.first || "") + '</h1>'
+    heading += '<h2 class="author_credit">' + first_names_then_last(document_author.first || "")  + '</h2>'
+    heading.html_safe
+  end    
   
 end

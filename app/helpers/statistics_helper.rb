@@ -5,11 +5,11 @@ module StatisticsHelper
   VIEW = 'view_'
   DOWNLOAD = 'download_'
    
-  def cvsReport(startdate, enddate, author, include_zeroes)
+  def cvsReport(startdate, enddate, author, include_zeroes, recent_first)
 
     line_braker = RUBY_VERSION < "1.9" ? "\r\n" : ""
 
-    months_list = make_months_list(startdate, enddate)
+    months_list = make_months_list(startdate, enddate, recent_first)
     results, stats, totals, download_ids = get_author_stats(startdate, enddate, author, months_list, include_zeroes)
 
     csv = "Author UNI/Name: ," + author.to_s + line_braker
@@ -29,8 +29,7 @@ module StatisticsHelper
                                 "",
                                 "",
                                 "", 
-                                totals["View"].to_s, 
-                                totals["Download"].to_s
+                                totals["View"].to_s
                                ].concat(make_months_header("Views by Month", months_list))
                              ) + line_braker
                             
@@ -38,8 +37,7 @@ module StatisticsHelper
                                 "Content Type", 
                                 "Permanent URL",
                                 "DOI", 
-                                "Reporting Period Total Views", 
-                                "Reporting Period Total Downloads"
+                                "Reporting Period Total Views"
                                ].concat( make_month_line(months_list))   
                              ) + line_braker
 
@@ -49,8 +47,7 @@ module StatisticsHelper
                               item["genre_facet"],
                               item["handle"],
                               item["doi"],
-                              stats["View"][item["id"][0]].nil? ? 0 : stats["View"][item["id"][0]],
-                              stats["Download"][item["id"][0]].nil? ? 0 : stats["Download"][item["id"][0]]
+                              stats["View"][item["id"][0]].nil? ? 0 : stats["View"][item["id"][0]]
                               ].concat( make_month_line_stats(stats, months_list, item["id"][0], nil ))
                               ) + line_braker
                      
@@ -63,7 +60,6 @@ module StatisticsHelper
                                 "",
                                 "",
                                 "", 
-                                totals["View"].to_s, 
                                 totals["Download"].to_s
                                ].concat(make_months_header("Downloads by Month", months_list))
                              ) + line_braker
@@ -72,7 +68,6 @@ module StatisticsHelper
                                 "Content Type", 
                                 "Permanent URL",
                                 "DOI", 
-                                "Reporting Period Total Views", 
                                 "Reporting Period Total Downloads"
                                ].concat( make_month_line(months_list))   
                              ) + line_braker
@@ -83,7 +78,6 @@ module StatisticsHelper
                               item["genre_facet"],
                               item["handle"],
                               item["doi"],
-                              stats["View"][item["id"][0]].nil? ? 0 : stats["View"][item["id"][0]],
                               stats["Download"][item["id"][0]].nil? ? 0 : stats["Download"][item["id"][0]]
                               ].concat( make_month_line_stats(stats, months_list, item["id"][0], download_ids))
                               ) + line_braker
@@ -241,7 +235,7 @@ module StatisticsHelper
   end
   
   
-  def make_months_list(startdate, enddate)
+  def make_months_list(startdate, enddate, recent_first)
     months = []
     months_hash = Hash.new
     
@@ -254,7 +248,12 @@ module StatisticsHelper
         months_hash.store(key, "")
       end    
     end    
-    return months.reverse
+    
+    if(recent_first)
+      return months.reverse
+    else
+      return months
+    end
   end
   
 end

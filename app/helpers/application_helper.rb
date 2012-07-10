@@ -1,3 +1,5 @@
+require 'rails_rinku'
+
 module ApplicationHelper
   
   def application_name
@@ -168,6 +170,20 @@ module ApplicationHelper
 
 
   def render_meta_as_links()
+  end
+  
+  def metaheader_fix_if_needed(name, content)
+  
+    if(name == "citation_author")
+      parts = content.split(",")
+      content = ""
+      parts.reverse.each do |part|
+        content += part + " "
+      end
+      content.strip!
+    end
+    
+    return content
   end
 
  

@@ -1,7 +1,7 @@
 /* @override 
 	http://webdev.cdrs.columbia.edu:3000/stylesheets/application.css
 	http://localhost:3000/stylesheets/application.css
-	http://dyn-iab-164-117.dyn.columbia.edu:3000/stylesheets/application.css
+ 
 */
 
 div#header.container {
@@ -9,7 +9,7 @@ div#header.container {
 	padding-right: 39px;
 	margin-top: .75em;
 
-	background: url(../images/main-header-background.jpg) no-repeat;
+	background: url(main-header-background.jpg) no-repeat;
 	
 	-moz-box-shadow: 1px 4px 8px #333;
 	-webkit-box-shadow: 1px 4px 8px #333;
@@ -88,7 +88,7 @@ li.home-recent {
 /* My Comment */
 
 div#home-deposit.box {
-		/*background: url(../images/alma-home-bg.png) no-repeat 28px;*/
+		/*background: url(alma-home-bg.png) no-repeat 28px;*/
 }
 
 
@@ -239,13 +239,13 @@ header{
 #search-left{
 	width: 92px;
 	height: 100px;
-	background: url(../images/bg-search-left.png) no-repeat;
+	background: url(bg-search-left.png) no-repeat;
 	float: left;
 }
 #search-right{
 		width: 100px;
 	height: 100px;
-	background: url(../images/bg-search-right.png) no-repeat;
+	background: url(bg-search-right.png) no-repeat;
 	float: left;
 }
 
@@ -303,7 +303,7 @@ div#breadcrumbs {
 }
 
 #home-search {
-	background: url(../images/home-search-bg.png) no-repeat 161px;
+	background: url(home-search-bg.png) no-repeat 161px;
 	padding-top: 30px;
 	padding-bottom: 30px;
 }
@@ -336,7 +336,7 @@ div#breadcrumbs {
 div#main.container {
   padding-left: 10px;
   padding-right: 10px;
-	background: url('../images/bg-grid-texture.gif');
+	background: url('bg-grid-texture.gif');
 	min-height: 600px;
 	-moz-box-shadow: 1px 4px 8px #333;
 	-webkit-box-shadow: 1px 4px 8px #333;
@@ -443,7 +443,7 @@ display: none;
 }
 
 div.back-to-search {
-	background: url(../images/back-to-search-bg.png) no-repeat;
+	background: url(back-to-search-bg.png) no-repeat;
 	height: 35px;
 	padding-top: 10px;
 	padding-left: 22px;
@@ -592,17 +592,17 @@ a.btnRemove.imgReplace {
 }
 
 /*li.facet_unselected {
-	background: url(../images/facet-toggle-ui.png) no-repeat 0 5px;
+	background: url(facet-toggle-ui.png) no-repeat 0 5px;
 }
 
 
 li.facet_selected {
-	background: url(../images/facet-toggle-ui.png) no-repeat -1px -16px;
+	background: url(facet-toggle-ui.png) no-repeat -1px -16px;
 	font-weight: bold;
 }
 
 li.facet_selected:hover {
-	background: url(../images/facet-toggle-ui.png) no-repeat -1px -36px;
+	background: url(facet-toggle-ui.png) no-repeat -1px -36px;
 }*/
 
 #facets li.more_facets_link {
@@ -628,7 +628,7 @@ ul.facet_extended_list li a {
 a.facet_deselect{
 	
 	padding-right: 18px;
-	background: url(../images/link-ui.png) no-repeat 100% 4px;
+	background: url(link-ui.png) no-repeat 100% 4px;
 	display: inline-block;
 	width: 94%;
 	font-weight: bold;
@@ -644,11 +644,11 @@ a.facet_deselect{
 
 a.facet_deselect:hover{
 	    color: white; 
-    background: url(../images/link-ui.png) no-repeat 100% -16px;
+    background: url(link-ui.png) no-repeat 100% -16px;
 }
 
 a.facet_select{
-	/*background: url(../images/facet-toggle-ui.png) no-repeat -1px 20px;*/
+	/*background: url(facet-toggle-ui.png) no-repeat -1px 20px;*/
 }
 
 #facets div ul li{
@@ -1336,7 +1336,7 @@ li.appliedFilter a{
     border-bottom: none;
    
 	padding-right: 18px;
-	background: url(../images/link-ui.png) no-repeat 100% 4px;
+	background: url(link-ui.png) no-repeat 100% 4px;
  
 }
 
@@ -1345,7 +1345,7 @@ li.appliedFilter a{
 li.appliedFilter a:hover{
  
     color: white; 
-    background: url(../images/link-ui.png) no-repeat 100% -16px;
+    background: url(link-ui.png) no-repeat 100% -16px;
 }
 
 
@@ -1414,7 +1414,7 @@ padding: .5em;
  	-moz-box-shadow: 3px 3px 3px #777;
     -webkit-box-shadow: 3px 3px 3px #777;
     box-shadow: 3px 1px 3px #777;
-	background: rgba(255,255,255,.7) url(../images/breadcrumb-bg.png) no-repeat;
+	background: rgba(255,255,255,.7) url(breadcrumb-bg.png) no-repeat;
 }
 
  .ui-selectable-helper { position: absolute; z-index: 100; border:1px dotted black; }
@@ -1435,7 +1435,7 @@ padding: .5em;
 	top: 0;
 	width: 32px;
 	height: 100%;
-	background: url(../images/remove.gif) no-repeat center center;
+	background: url(remove.gif) no-repeat center center;
 	border-left: 1px solid #d0daea;*/
 }
 
@@ -1477,9 +1477,9 @@ a img#rssLink{display:block; float:right; margin-top: -10px;}
 	line-height: 22px;
 	text-decoration: none;
 	color: #fff;
-	background: url(../images/start_over.gif) no-repeat center center;
-		border-bottom: none;*/		
- 
+	background: url(start_over.gif) no-repeat center center;
+		border-bottom: none;*/
+
  float: right;
  font-weight: bold;
  
@@ -1561,7 +1561,7 @@ div#crumbs {
 
 .appliedFilter .queryName, .appliedFilter .filterName {
 	 margin-left: .25em;
-	/*background: url(../images/separator.gif) no-repeat right center;*/
+	/*background: url(separator.gif) no-repeat right center;*/
 }
 
 
@@ -1632,7 +1632,7 @@ body.single-col #page {
 	margin-bottom: 0;
 	 
 	cursor: pointer;
-	background: url(../images/main-header-background.png) no-repeat -539px -23px;
+	background: url(main-header-background.png) no-repeat -539px -23px;
 	border-bottom: 1px solid #C9E5FF;
 	/*background: -moz-linear-gradient(top, #284585, #122D62);
 	background: -webkit-gradient(linear, left top, left bottom, from(#284585), to(#122D62));*/
@@ -1652,7 +1652,7 @@ body.single-col #page {
 	margin-bottom: 0;
 	 
 	cursor: pointer;
-	background: #122D62 url(../images/accordion-closed.png) no-repeat 98%;
+	background: #122D62 url(accordion-closed.png) no-repeat 98%;
 	border-bottom: 1px solid #C9E5FF;
 	/*background: -moz-linear-gradient(top, #284585, #122D62);
 	background: -webkit-gradient(linear, left top, left bottom, from(#284585), to(#122D62));*/
@@ -1690,7 +1690,7 @@ body.single-col #page {
 
 
 #facets .facet_selected{
-		background: #122D62 url(../images/accordion-open.png) no-repeat 98%;
+		background: #122D62 url(accordion-open.png) no-repeat 98%;
 }
 
 #facets h2 {
@@ -1707,19 +1707,19 @@ body.single-col #page {
 }
 
 #home-news ul{
-	list-style-image: url(../images/blue-check.png);
+	list-style-image: url(blue-check.png);
 	list-style-position: inside;
 }
  
 
 #facets h3:hover{
 	
-	background: #154784 url(../images/accordion-closed.png) no-repeat 98%;
+	background: #154784 url(accordion-closed.png) no-repeat 98%;
 	}
 	
 	
 	#facets h3.facet_selected:hover{
-		background: #154784 url(../images/accordion-open.png) no-repeat 98%;
+		background: #154784 url(accordion-open.png) no-repeat 98%;
 }
 
 
@@ -1776,7 +1776,7 @@ span.index_counter {
 }
 
 div#hd {
-	background: url(../images/main-header-background.png) -10px;
+	background: url(main-header-background.png) -10px;
 }
 
 a {
@@ -1863,27 +1863,27 @@ div.school:hover{
 	border: 1px solid silver;
 }
 div.school.columbia{
-	background: url(../images/college-sprites.gif) -2px 5px;
+	background: url(college-sprites.gif) -2px 5px;
   margin-left: 125px;
 }
 
 div.school.barnard{
-	background: url(../images/college-sprites.gif) -222px 5px;
+	background: url(college-sprites.gif) -222px 5px;
  
 }
 div.school.teachers{
-	background: url(../images/college-sprites.gif) -426px 5px;
+	background: url(college-sprites.gif) -426px 5px;
 	width: 148px;
 }
 
 div.school.jts{
-	background: url(../images/college-sprites.gif) -885px 5px;
+	background: url(college-sprites.gif) -885px 5px;
 	width: 164px;
 	margin-left: 242px;
 }
 
 div.school.union{
-	background: url(../images/college-sprites.gif) -640px 5px;
+	background: url(college-sprites.gif) -640px 5px;
 	width: 170px;
 }
 #facets div h3  {
@@ -2222,7 +2222,7 @@ h3.stepHeader {
 form.self-deposit-form input.submitbutton,form.self-deposit-form .nextbutton,form.self-deposit-form .prevbutton, #start_button{
  width: 150px;
 	height: 40px;
-	 background: url(../images/main-header-background.jpg) no-repeat -863px -53px;
+	 background: url(main-header-background.jpg) no-repeat -863px -53px;
 	padding: 4px;
 	border: 1px dotted #8b8f95;
 	cursor: pointer;
@@ -2250,7 +2250,7 @@ form.self-deposit-form input.submitbutton:active,form.self-deposit-form .nextbut
 form.self-deposit-form input.submitbutton:active,form.self-deposit-form .nextbutton:hover,form.self-deposit-form .prevbutton:hover, #start_button:hover{
 
  
-	 background: url(../images/main-header-background.jpg) no-repeat -863px -10px;
+	 background: url(main-header-background.jpg) no-repeat -863px -10px;
 border: 1px dotted #bfc4cc;
 
 	}
@@ -2315,13 +2315,5 @@ ul.how-to-videos li a:hover img {
     -webkit-box-shadow: 2px 2px 5px rgba(0,0,0,.6);
     box-shadow:         2px 2px 5px rgba(0,0,0,.6);
 }
-
-/*over-ride zebra on tables, create optional zebra class*/
-
-
-tbody tr:nth-child(even) td, tbody tr.even td {background:transparent;}
-
-
-table.zebra tbody tr:nth-child(even) td, tbody tr.even td {background:#e5ecf9;}
 
  
