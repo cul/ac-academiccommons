@@ -2,6 +2,11 @@
 // This file is automatically included by javascript_include_tag :defaults
 
 
+//= require jquery
+//= require jquery_ujs
+//= require_self
+//= require_tree .
+
 $(document).ready(function() {
 
 $('div.left-column ul').each(function(){
