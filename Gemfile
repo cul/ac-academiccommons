@@ -1,26 +1,20 @@
 source 'http://rubygems.org'
 
-#gem 'rails', '3.0.10'
-gem 'rails', '3.1.3'
 
-
-# Bundle edge Rails instead:
-# gem 'rails', :git => 'git://github.com/rails/rails.git'
-
-gem 'rsolr', '1.0.2'
-
-gem 'rake', '0.9.2'
-#gem 'rack', '1.2.3'
-gem 'rack', '1.3.5'
-
-#gem 'sqlite3', '1.3.3'
-gem 'sqlite3', '1.3.4'
+gem 'rails', '3.2.0'
+gem "rsolr",  :git =>"git@github.com:cul/rsolr.git"
+gem 'rake', '~> 0.9.2'
+gem 'rack', '1.4.0'
+gem 'sqlite3', '1.3.5'
+gem 'blacklight', '~> 3.2.0'
+gem 'actionpack', '3.2.0'
+gem 'railties', '3.2.0'
 
 # Gems used only for assets and not required
 # in production environments by default.
 group :assets do
-  gem 'sass-rails', " ~> 3.1.0"
-  gem 'coffee-rails', " ~> 3.1.0"
+  gem 'sass-rails', " ~> 3.2.0"
+  gem 'coffee-rails', " ~> 3.2.0"
   gem 'uglifier'
 end
 
@@ -41,7 +35,7 @@ gem 'rinku', '~> 1.2.2', :require => 'rails_rinku'
 # gem 'bj'
 # gem 'nokogiri'
 gem 'sqlite3-ruby', :require => 'sqlite3'
-  gem 'mysql'
+#  gem 'mysql'
 # gem 'aws-s3', :require => 'aws/s3'
 
 # Bundle gems for the local environment. Make sure to
@@ -51,7 +45,6 @@ gem 'sqlite3-ruby', :require => 'sqlite3'
 #   gem 'webrat'
 # end
 
-gem 'blacklight'
 gem 'blacklight_advanced_search'
 gem 'authlogic'
 gem 'authlogic_wind'
