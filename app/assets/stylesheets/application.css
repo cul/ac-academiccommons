@@ -4,6 +4,12 @@
  
 */
 
+/*
+*= require_self
+*= require_tree .
+*/
+
+
 div#header.container {
 	padding-left: 36px;
 	padding-right: 39px;
@@ -1464,6 +1470,10 @@ padding: .5em;
 	
 }
 
+a img#rssLink{display:block; float:right; margin-top: -10px;}
+
+
+
  a#startOverLink {
  
 	 
@@ -1475,8 +1485,7 @@ padding: .5em;
 	color: #fff;
 	background: url(start_over.gif) no-repeat center center;
 		border-bottom: none;*/
-		
- 
+
  float: right;
  font-weight: bold;
  
