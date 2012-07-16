@@ -14,9 +14,11 @@
 
 <meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0;">
 
+<%= favicon_link_tag asset_path('favicon-crown.png', :media => "screen,projection", :rel => "shortcut icon", :type => "text/css") %>
+<%= stylesheet_link_tag "blueprint/screen", :media => "screen,projection"  %>
 <%= stylesheet_link_tag "application" %>
 <%= javascript_include_tag "application", "http://cdn.sublimevideo.net/js/3s7oes9q.js" %>
-<%= favicon_link_tag asset_path('favicon-crown.png', :media => "screen,projection", :rel => "shortcut icon", :type => "text/css") %>
+
 
 
 <!--  <link rel="shortcut icon" href="/favicon.ico"> -->
@@ -31,10 +33,8 @@
 
     <%= render_head_content %>
     
-    <%= stylesheet_link_tag "blueprint/screen", :media => "screen,projection"  %>
-    <%#= stylesheet_link_tag "application", :media => "screen,projection" %>
     
-       <link href="<%= relative_root %>/stylesheets/application.css" media="screen,projection" rel="stylesheet" type="text/css" />
+    <%#= stylesheet_link_tag "application", :media => "screen,projection" %>
 
         
     <!-- will revert link to native function when done editing stylesheets -->
