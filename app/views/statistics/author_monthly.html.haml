@@ -8,7 +8,8 @@
 
 .split_form
 
-  %form{"accept-charset" => "UTF-8", :action => "/statistics/author_monthly", :method => "post"}
+
+  = form_tag url_for(:controller => "statistics", :action => "author_monthly") do
 
     %table
       %tr
