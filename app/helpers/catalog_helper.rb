@@ -347,7 +347,11 @@ begin
   # Look up search field user-displayable label
   # based on params[:qt] and configuration.
   def search_field_label(params)
-    h( Blacklight.label_for_search_field(params[:search_field]) )
+    if(params[:search_field].blank?)
+      h( "Keyword" )
+    else
+      h( Blacklight.label_for_search_field(params[:search_field]) )
+    end    
   end
 
   # Export to Refworks URL, called in _show_tools
