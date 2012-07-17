@@ -6,10 +6,10 @@ class Notifier < ActionMailer::Base
     @totals = totals
     @results = results
     @date = date.strftime("%b %Y")
-    recipients to_address
-    from Rails.application.config.mail_deliverer
-    subject "Academic Commons Monthly Download Report for #{@date}"
-    content_type 'text/html'
+    recipients = to_address
+    from = Rails.application.config.mail_deliverer
+    subject = "Academic Commons Monthly Download Report for #{@date}"
+    content_type = 'text/html'
     @request = request
   end
   
@@ -20,10 +20,10 @@ class Notifier < ActionMailer::Base
     @totals = totals
     @results = results
     @date = date.strftime("%b %Y")
-    recipients to_address
-    from Rails.application.config.mail_deliverer
-    subject "Academic Commons Monthly Download Report for #{@date}"
-    content_type 'text/html'
+    recipients = to_address
+    from = Rails.application.config.mail_deliverer
+    subject = "Academic Commons Monthly Download Report for #{@date}"
+    content_type = 'text/html'
   end
   
   def new_deposit(root_url, deposit)
@@ -39,20 +39,20 @@ class Notifier < ActionMailer::Base
     @notes = deposit.notes    
     @record_url = root_url + "admin/deposits/" + deposit.id.to_s
     @file_download_url = root_url + "admin/deposits/" + deposit.id.to_s + "/file"
-    recipients Rails.application.config.mail_deposit_recipients
-    from Rails.application.config.mail_deliverer
-    subject "New Academic Commons Deposit Request"
-    content_type 'text/html'
+    recipients = Rails.application.config.mail_deposit_recipients
+    from = Rails.application.config.mail_deliverer
+    subject = "New Academic Commons Deposit Request"
+    content_type = 'text/html'
   end
   
   def new_author_agreement(request)
     @name = request[:name]
     @email = request[:email]
     @agreement_version = request["AC-agreement-version"]
-    recipients Rails.application.config.mail_deposit_recipients
-    from Rails.application.config.mail_deliverer
-    subject "Academic Commons Author Agreement Accepted"
-    content_type 'text/html'
+    recipients = Rails.application.config.mail_deposit_recipients
+    from = Rails.application.config.mail_deliverer
+    subject = "Academic Commons Author Agreement Accepted"
+    content_type = 'text/html'
   end
   
 end
