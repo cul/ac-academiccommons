@@ -47,9 +47,9 @@ class StatisticsController < ApplicationController
     
           case params[:email_template]
           when "Normal"
-            Notifier.author_monthly(author[:email], author_id, startdate, results, stats, totals,request)
+            Notifier.author_monthly(author[:email], author_id, startdate, results, stats, totals,request).deliver
           else
-            Notifier.author_monthly_first(author[:email], author_id, startdate, results, stats, totals,request)
+            Notifier.author_monthly_first(author[:email], author_id, startdate, results, stats, totals,request).deliver
 
           end  
         end
@@ -76,9 +76,9 @@ class StatisticsController < ApplicationController
         if params[:commit] == "Email"
           case params[:email_template]
           when "Normal"
-            Notifier.author_monthly(params[:email_destination], params[:author_id], startdate, @results, @stats, @totals, request)
+            Notifier.author_monthly(params[:email_destination], params[:author_id], startdate, @results, @stats, @totals, request).deliver
           else 
-            Notifier.author_monthly_first(params[:email_destination], params[:author_id], startdate, @results, @stats, @totals, request)
+            Notifier.author_monthly_first(params[:email_destination], params[:author_id], startdate, @results, @stats, @totals, request).deliver
           end  
         end
       end
