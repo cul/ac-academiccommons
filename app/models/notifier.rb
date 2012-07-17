@@ -11,6 +11,8 @@ class Notifier < ActionMailer::Base
     subject = "Academic Commons Monthly Download Report for #{@date}"
     content_type = 'text/html'
     @request = request
+    
+    mail(:to => recipients, :from => from, :date => @date, :content_type => content_type) 
   end
   
   def author_monthly_first(to_address, author_id, date, results, stats, totals,request)
