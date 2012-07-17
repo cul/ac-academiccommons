@@ -1,9 +1,12 @@
 %h3 Statistics:
 
-= content_for :jstemplates do
-  $(function() { $(".datepicker").datepicker(); });
-
-%explanation Please select a date range to search over, and how to group the results:
+.content
+  :plain
+    <script type="text/javascript">
+    //<![CDATA[
+        $(function() { $(".datepicker").datepicker(); });
+    //]]>
+    </script> 
 
 = form_tag search_statistics_path do 
   %div
