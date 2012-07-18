@@ -12,7 +12,7 @@ class Notifier < ActionMailer::Base
     content_type = 'text/html'
     @request = request
 
-    mail(:to => recipients, :from => from, :subject => @subject, :content_type => content_type) 
+    mail(:to => recipients, :from => from, :subject => subject, :content_type => content_type) 
   end
   
   def author_monthly_first(to_address, author_id, date, results, stats, totals,request)
@@ -27,7 +27,7 @@ class Notifier < ActionMailer::Base
     subject = "Academic Commons Monthly Download Report for #{@date}"
     content_type = 'text/html'
     
-    mail(:to => recipients, :from => from, :subject => @subject, :content_type => content_type) 
+    mail(:to => recipients, :from => from, :subject => subject, :content_type => content_type) 
   end
   
   def new_deposit(root_url, deposit)
@@ -48,7 +48,7 @@ class Notifier < ActionMailer::Base
     subject = "New Academic Commons Deposit Request"
     content_type = 'text/html'
     
-    mail(:to => recipients, :from => from, :subject => @subject, :content_type => content_type) 
+    mail(:to => recipients, :from => from, :subject => subject, :content_type => content_type) 
   end
   
   def new_author_agreement(request)
@@ -60,7 +60,7 @@ class Notifier < ActionMailer::Base
     subject = "Academic Commons Author Agreement Accepted"
     content_type = 'text/html'
     
-    mail(:to => recipients, :from => from, :subject => @subject, :content_type => content_type) 
+    mail(:to => recipients, :from => from, :subject => subject, :content_type => content_type) 
   end
   
 end
