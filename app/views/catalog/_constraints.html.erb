@@ -8,15 +8,16 @@
  
 
 		<%=link_to "Start&nbsp;over&thinsp;".html_safe, catalog_index_path, :id=>"startOverLink" %>
- 
-  
 
- 
+<%- params[:sort]="record_creation_date desc"  -%>
 
  <%= render :partial=>'/catalog/search_box' %> 
  
 
-<h2>Active Search Criteria:</h2>
+<h2>Active Search Criteria: 
+
+
+</h2>
  <div id="breadcrumbs">
   <ul class="breadcrumb query">
      <h3>Keywords:</h3>
@@ -55,10 +56,16 @@
         </ul>
       <%- end -%>
        <br style="clear:both">
-      </div>
+
+
+<%= link_to image_tag("rss.gif", :border=>0, :id=>"rssLink"), params.merge(:format => :rss), :class => "feed_link" %>      
+
+
+
+     </div>
       
-       
-
-
 
 <% end -%>
+
+
+ 
