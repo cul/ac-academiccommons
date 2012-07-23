@@ -18,7 +18,7 @@ class DepositController < ApplicationController
         :doi_pmcid => params[:doi_pmcid],
         :notes => params[:software]
       )
-      Notifier.deliver_new_deposit(root_url, deposit)
+      Notifier.new_deposit(root_url, deposit).deliver
     else
       flash[:notice] = "You must accept the author rights agreement."
       redirect_to :action => "index"
@@ -28,7 +28,7 @@ class DepositController < ApplicationController
   
   def submit_author_agreement
     if(params[:acceptedAgreement] == "agree")
-      Notifier.deliver_new_author_agreement(params)
+      Notifier.new_author_agreement(params).deliver
     else
       flash[:notice] = "You must accept the author rights agreement."
       redirect_to :action => "agreement_only"
