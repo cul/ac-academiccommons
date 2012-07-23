@@ -2,7 +2,7 @@
 
 %h3 Save this report:
 
-- form_for @new_report do |f|
+= form_for @new_report do |f|
   Name: 
   = f.text_field :name
   = f.hidden_field :category
