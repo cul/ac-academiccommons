@@ -4,6 +4,7 @@ require 'blacklight/catalog'
 class CatalogController < ApplicationController  
 
   include Blacklight::Catalog
+  include CatalogHelper
   
   before_filter :record_stats, :only => :show
   unloadable
@@ -58,6 +59,12 @@ class CatalogController < ApplicationController
   def url_decode_resource(value)
     value = value.gsub(/%252f/i, '%2F').gsub(/%2e/i, '.')
     value = CGI::unescape(value)
+  end  
+  
+  def recent_rss
+    (@response, @document_list) = custom_results(:sort => "record_creation_date desc", :start => 0, :rows => params[:id].to_s) 
+    
+    render :template => 'catalog/index.rss.builder'
   end
   
   private
