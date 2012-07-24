@@ -61,8 +61,26 @@ class CatalogController < ApplicationController
     value = CGI::unescape(value)
   end  
   
-  def recent_rss
-    (@response, @document_list) = custom_results(:sort => "record_creation_date desc", :start => 0, :rows => params[:id].to_s) 
+  def index
+    
+     if (!params[:f].nil?) 
+       return super
+     end
+     
+      respond_to do |format|
+        format.html { super }
+        format.rss  { rss }
+       # format.atom { rss }
+      end
+  end
+  
+  def rss
+
+    q = (params[:q].nil?) ? "" : params[:q].to_s
+    sort = (params[:sort].nil?) ? "record_creation_date desc" : params[:sort].to_s
+    rows = (params[:rows].nil?) ? ((params[:id].nil?) ? "10" : params[:id].to_s) : params[:rows].to_s
+    
+    (@response, @document_list) = custom_results(:q => q, :sort => sort, :start => 0, :rows => rows) 
     
     render :template => 'catalog/index.rss.builder'
   end
