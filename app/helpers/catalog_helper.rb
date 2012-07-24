@@ -27,6 +27,14 @@ module CatalogHelper
     results = Blacklight.solr.find(query_params)
     return results["response"]["numFound"]
   end
+  
+  def custom_results(params)
+      
+    solr_response = force_to_utf8(Blacklight.solr.find(params))   
+    document_list = solr_response.docs.collect {|doc| SolrDocument.new(doc, solr_response)}  
+    return [solr_response, document_list]
+    
+  end  
 
   def build_recent_updated_list()
     query_params = {:q => "", :fl => "title_display, id, author_facet, record_creation_date", :sort => "record_creation_date desc", :start => 0, :rows => 100}
