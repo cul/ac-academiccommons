@@ -34,7 +34,7 @@ module CatalogHelper
     
     q = (params[:q].nil?) ? "" : params[:q].to_s
     sort = (params[:sort].nil?) ? "record_creation_date desc" : params[:sort].to_s
-    rows = (params[:rows].nil?) ? ((params[:id].nil?) ? blacklight_config.feed_rows : params[:id].to_s) : params[:rows].to_s
+    rows = (params[:rows].nil?) ? ((params[:id].nil?) ? "500" : params[:id].to_s) : params[:rows].to_s
       
     solr_response = force_to_utf8(Blacklight.solr.find(:q => q, :sort => sort, :start => 0, :rows => rows))   
     document_list = solr_response.docs.collect {|doc| SolrDocument.new(doc, solr_response)}  
