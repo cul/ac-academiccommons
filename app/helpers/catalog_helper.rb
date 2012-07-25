@@ -28,9 +28,13 @@ module CatalogHelper
     return results["response"]["numFound"]
   end
   
-  def custom_results(params)
+  def custom_results()
+    
+    q = (params[:q].nil?) ? "" : params[:q].to_s
+    sort = (params[:sort].nil?) ? "record_creation_date desc" : params[:sort].to_s
+    rows = (params[:rows].nil?) ? ((params[:id].nil?) ? "10" : params[:id].to_s) : params[:rows].to_s
       
-    solr_response = force_to_utf8(Blacklight.solr.find(params))   
+    solr_response = force_to_utf8(Blacklight.solr.find(:q => q, :sort => sort, :start => 0, :rows => rows))   
     document_list = solr_response.docs.collect {|doc| SolrDocument.new(doc, solr_response)}  
     return [solr_response, document_list]
     

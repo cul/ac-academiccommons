@@ -70,19 +70,18 @@ class CatalogController < ApplicationController
       respond_to do |format|
         format.html { super }
         format.rss  { rss }
-       # format.atom { rss }
+        format.atom { atom }
       end
   end
   
   def rss
-
-    q = (params[:q].nil?) ? "" : params[:q].to_s
-    sort = (params[:sort].nil?) ? "record_creation_date desc" : params[:sort].to_s
-    rows = (params[:rows].nil?) ? ((params[:id].nil?) ? "10" : params[:id].to_s) : params[:rows].to_s
-    
-    (@response, @document_list) = custom_results(:q => q, :sort => sort, :start => 0, :rows => rows) 
-    
+    (@response, @document_list) = custom_results() 
     render :template => 'catalog/index.rss.builder'
+  end
+  
+  def atom
+    (@response, @document_list) = custom_results() 
+    render :template => 'catalog/index.atom.builder'
   end
   
   private
