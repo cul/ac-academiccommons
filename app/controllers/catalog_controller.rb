@@ -4,6 +4,7 @@ require 'blacklight/catalog'
 class CatalogController < ApplicationController  
 
   include Blacklight::Catalog
+  include CatalogHelper
   
   before_filter :record_stats, :only => :show
   unloadable
@@ -59,6 +60,29 @@ class CatalogController < ApplicationController
     value = value.gsub(/%252f/i, '%2F').gsub(/%2e/i, '.')
     value = CGI::unescape(value)
   end
+  
+  def index
+    
+     if (!params[:f].nil?) 
+       return super
+     end
+     
+      respond_to do |format|
+        format.html { super }
+        format.rss  { rss }
+        format.atom { atom }
+      end
+  end
+  
+  def rss
+    (@response, @document_list) = custom_results() 
+    render :template => 'catalog/index.rss.builder'
+  end
+  
+  def atom
+    (@response, @document_list) = custom_results() 
+    render :template => 'catalog/index.atom.builder'
+  end  
   
   private
   

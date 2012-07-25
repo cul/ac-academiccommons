@@ -269,5 +269,8 @@ Blacklight.configure(:shared) do |config|
   config[:unapi] = {
     'oai_dc_xml' => { :content_type => 'text/xml' } 
   }
+  
+  config[:feed_rows] = "500"
+  
 end
 
