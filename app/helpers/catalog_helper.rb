@@ -30,12 +30,17 @@ module CatalogHelper
   
   def custom_results()
     
+    bench_start = Time.now
+    
     q = (params[:q].nil?) ? "" : params[:q].to_s
     sort = (params[:sort].nil?) ? "record_creation_date desc" : params[:sort].to_s
-    rows = (params[:rows].nil?) ? ((params[:id].nil?) ? "10" : params[:id].to_s) : params[:rows].to_s
+    rows = (params[:rows].nil?) ? ((params[:id].nil?) ? blacklight_config.feed_rows : params[:id].to_s) : params[:rows].to_s
       
     solr_response = force_to_utf8(Blacklight.solr.find(:q => q, :sort => sort, :start => 0, :rows => rows))   
     document_list = solr_response.docs.collect {|doc| SolrDocument.new(doc, solr_response)}  
+    
+    logger.info("Solr fetch: #{self.class}#custom_results (#{'%.1f' % ((Time.now.to_f - bench_start.to_f)*1000)}ms)")
+    
     return [solr_response, document_list]
     
   end  
