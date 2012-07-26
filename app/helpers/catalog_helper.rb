@@ -35,8 +35,9 @@ module CatalogHelper
     q = (params[:q].nil?) ? "" : params[:q].to_s
     sort = (params[:sort].nil?) ? "record_creation_date desc" : params[:sort].to_s
     rows = (params[:rows].nil?) ? ((params[:id].nil?) ? "500" : params[:id].to_s) : params[:rows].to_s
+    fl = "title_display, id, author_facet, author_display, record_creation_date, handle"  
       
-    solr_response = force_to_utf8(Blacklight.solr.find(:q => q, :sort => sort, :start => 0, :rows => rows))   
+    solr_response = force_to_utf8(Blacklight.solr.find(:q => q, :fl => fl, :sort => sort, :start => 0, :rows => rows))   
     document_list = solr_response.docs.collect {|doc| SolrDocument.new(doc, solr_response)}  
     
     logger.info("Solr fetch: #{self.class}#custom_results (#{'%.1f' % ((Time.now.to_f - bench_start.to_f)*1000)}ms)")
