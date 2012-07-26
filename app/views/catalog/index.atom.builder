@@ -69,6 +69,10 @@ xml.feed("xmlns" => "http://www.w3.org/2005/Atom",
         xml.handle { xml.name(doc[:handle]) }
       end
       
+      if doc[:record_creation_date]
+      	xml.record_creation_date{ xml.name(doc[:record_creation_date]) }
+      end
+      
       with_format("html") do
         xml.summary "type" => "html" do
 	            xml.text! render_document_partial(doc, :index)           
