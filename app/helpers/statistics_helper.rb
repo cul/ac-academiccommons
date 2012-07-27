@@ -2,15 +2,17 @@ require 'csv'
 
 module StatisticsHelper
   
+  include CatalogHelper
+  
   VIEW = 'view_'
   DOWNLOAD = 'download_'
    
-  def cvsReport(startdate, enddate, author, include_zeroes, recent_first)
+  def cvsReport(startdate, enddate, author, include_zeroes, recent_first, facet)
 
     line_braker = RUBY_VERSION < "1.9" ? "\r\n" : ""
 
     months_list = make_months_list(startdate, enddate, recent_first)
-    results, stats, totals, download_ids = get_author_stats(startdate, enddate, author, months_list, include_zeroes)
+    results, stats, totals, download_ids = get_author_stats(startdate, enddate, author, months_list, include_zeroes, facet)
 
     csv = "Author UNI/Name: ," + author.to_s + line_braker
  
@@ -145,9 +147,9 @@ module StatisticsHelper
 
   
 
-  def get_author_stats(startdate, enddate, author_id, months_list, include_zeroes)
+  def get_author_stats(startdate, enddate, query, months_list, include_zeroes, facet)
 
-    results = make_solar_request(author_id)
+    results = make_solar_request(facet, query)
 
     stats, totals, ids, download_ids = init_holders(results)
 
@@ -157,7 +159,9 @@ module StatisticsHelper
         
       results.sort! do |x,y|
         result = (stats['Download'][y['id']] || 0) <=> (stats['Download'][x['id']] || 0) 
-        result = x["title_display"] <=> y["title_display"] if result == 0
+        if(facet != "search") 
+          result = x["title_display"] <=> y["title_display"] if result == 0
+        end  
       result
     end
 
@@ -218,20 +222,24 @@ module StatisticsHelper
   end
 
 
-  def make_solar_request(author)
+  def make_solar_request(facet, query)
 
-    if(author =~ /^\S+\d+$/)
-          solr_query = "author_uni:#{author}"
-        else
-          solr_query = "author_facet:\"#{author}\""
-        end    
-    
-        return Blacklight.solr.find( :per_page => 100000, 
-                                     :sort => "title_display asc", 
-                                     :fq => solr_query,
-                                     :fl => "title_display,id,handle,doi,genre_facet", 
-                                     :page => 1
-                                   )["response"]["docs"]    
+    if(facet == "search")
+      facet_query = ""
+      q = query
+      sort = "record_creation_date desc"
+    else
+      facet_query = "#{facet}:\"#{query}\""
+      sort = "title_display asc"
+    end
+
+    return Blacklight.solr.find( :per_page => 100000, 
+                                 :sort => sort, 
+                                 :q => q,
+                                 :fq => facet_query,
+                                 :fl => "title_display,id,handle,doi,genre_facet", 
+                                 :page => 1
+                                )["response"]["docs"]    
   end
   
   
