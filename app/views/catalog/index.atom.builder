@@ -70,8 +70,8 @@ xml.feed("xmlns" => "http://www.w3.org/2005/Atom",
         xml.guid{ xml.name(doc[:handle]) }
       end
       
-      if doc[:record_creation_date]
-      	xml.pubDate{ xml.name(doc[:record_creation_date]) }
+      if doc[:pub_date]
+      	xml.pubDate{ xml.name(doc[:pub_date]) }
       end
       
       with_format("html") do
