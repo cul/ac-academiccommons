@@ -63,7 +63,7 @@ xml.feed("xmlns" => "http://www.w3.org/2005/Atom",
       
       
       if doc.to_semantic_values[:author][0]   
-        xml.tag!("dc:author", doc[:author_display] )
+        xml.tag!("dc:creator", doc[:author_display] )
       end
       
       if doc[:handle]   
