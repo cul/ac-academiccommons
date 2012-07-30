@@ -4,7 +4,8 @@ page_info = paginate_params(@response)
 xml.instruct!(:xml, :encoding => "UTF-8")
 
 xml.feed("xmlns" => "http://www.w3.org/2005/Atom",
-         "xmlns:opensearch"=>"http://a9.com/-/spec/opensearch/1.1/") do
+         "xmlns:opensearch"=>"http://a9.com/-/spec/opensearch/1.1/", 
+         "xmlns:dc"=>"http://purl.org/dc/elements/1.1") do
 
   xml.title   application_name + " Search Results"
   # an author is required, so we'll just use the app name
@@ -62,7 +63,7 @@ xml.feed("xmlns" => "http://www.w3.org/2005/Atom",
       
       
       if doc.to_semantic_values[:author][0]   
-        xml.author { xml.name(doc.to_semantic_values[:author][0]) }
+        xml.tag!("dc:creator", doc[:author_display] )
       end
       
       if doc[:handle]   
