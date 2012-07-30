@@ -13,7 +13,7 @@ xml.rss(:version=>"2.0", "xmlns:dc"=>"http://purl.org/dc/elements/1.1") {
         xml.link(catalog_url(doc[:id]))
         xml.tag!("dc:creator", doc[:author_display] )
 	    xml.guid(doc[:handle])
-	    xml.pubDate(doc[:record_creation_date])
+	    xml.pubDate(doc[:pub_date])
       end
     end
 

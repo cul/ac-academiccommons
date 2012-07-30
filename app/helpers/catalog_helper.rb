@@ -39,6 +39,10 @@ module CatalogHelper
       
     solr_response = force_to_utf8(Blacklight.solr.find(:q => q, :fl => fl, :sort => sort, :start => 0, :rows => rows))   
     document_list = solr_response.docs.collect {|doc| SolrDocument.new(doc, solr_response)}  
+
+    document_list.each do |doc|     
+     doc[:pub_date] = Time.parse('2012-07-12T10:58:27Z').to_s(:rfc822)
+    end
     
     logger.info("Solr fetch: #{self.class}#custom_results (#{'%.1f' % ((Time.now.to_f - bench_start.to_f)*1000)}ms)")
     

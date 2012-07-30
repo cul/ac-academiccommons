@@ -71,7 +71,7 @@ xml.feed("xmlns" => "http://www.w3.org/2005/Atom",
       end
       
       if doc[:record_creation_date]
-      	xml.pubDate{ xml.name(doc[:record_creation_date]) }
+      	xml.pubDate{ xml.name(doc[:pub_date]) }
       end
       
       with_format("html") do
