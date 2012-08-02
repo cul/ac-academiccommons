@@ -1,4 +1,4 @@
-<% if  (params[:f].to_s.empty?) and (params[:q].to_s.empty?) and (params[:search_field].to_s.empty?) %>
+<% if (params[:f].to_s.empty?) and (params[:q].to_s.empty?) and (params[:search_field].to_s.empty?) %>
 <% render :nothing => true %>
 
 <%else-%>
@@ -7,46 +7,46 @@
    
  
 
-		<%=link_to "Start&nbsp;over&thinsp;".html_safe, catalog_index_path, :id=>"startOverLink" %>
+<%=link_to "Start&nbsp;over&thinsp;".html_safe, catalog_index_path, :id=>"startOverLink" %>
 
-<%- params[:sort]="record_creation_date desc"  -%>
+<%- params[:sort]="record_creation_date desc" -%>
 
- <%= render :partial=>'/catalog/search_box' %> 
+ <%= render :partial=>'/catalog/search_box' %>
  
 
-<h2>Active Search Criteria: 
+<h2>Active Search Criteria:
 
 
 </h2>
  <div id="breadcrumbs">
   <ul class="breadcrumb query">
      <h3>Keywords:</h3>
-		<%- if (!localized_params[:q].blank?) -%>
-		<%=render_constraint_element(search_field_label(localized_params),
-            localized_params[:q], 
-            :classes => ["query"], 
+<%- if (!localized_params[:q].blank?) -%>
+<%=render_constraint_element(search_field_label(localized_params),
+            localized_params[:q],
+            :classes => ["query"],
             :remove => catalog_index_path(localized_params.merge(:q=>nil, :action=>'index')))%>
 
-			<%- else%>
-			<li class="appliedFilter empty query">All Content</li>
-			<%- end -%>
-          	              
+<%- else%>
+<li class="appliedFilter empty query">All Content</li>
+<%- end -%>
+          
  </ul>
  
  <br style="clear:both">
     
  <ul class="breadcrumb facet">
     <h3>Limited to:</h3>
-		<%- if !localized_params[:f].to_s.empty? -%>
-		<%-  localized_params[:f].each_pair do |facet,values| %>
-		<%-    values.each do |val| %>
-		<%= render_constraint_element( facet_field_labels[facet],val, :remove => catalog_index_path(remove_facet_params(facet, val, localized_params)),:classes => ["filter"] )%> 
-		
-		  <%= '<span class=\'join\'> + </span>'.html_safe unless val == values.last %>
-			<%- end -%>
-			
+<%- if !localized_params[:f].to_s.empty? -%>
+<%- localized_params[:f].each_pair do |facet,values| %>
+<%- values.each do |val| %>
+<%= render_constraint_element( facet_field_labels[facet],val, :remove => catalog_index_path(remove_facet_params(facet, val, localized_params)),:classes => ["filter"] )%>
+
+<%= '<span class=\'join\'> + </span>'.html_safe unless val == values.last %>
+<%- end -%>
+
 </ul>
- 	<%- end -%>
+  <%- end -%>
  
       <%- else -%>
         <ul class="breadcrumb facet">
@@ -58,7 +58,7 @@
        <br style="clear:both">
 
 
-<%= link_to image_tag("rss.gif", :border=>0, :id=>"rssLink"), params.merge(:format => :rss), :class => "feed_link" %>      
+<%= link_to image_tag("rss.gif", :border=>0, :id=>"rssLink"), params.merge(:format => :rss), :class => "feed_link" %>
 
 
 
@@ -66,6 +66,3 @@
       
 
 <% end -%>
-
-
- 
