@@ -11,9 +11,9 @@ xml.rss(:version=>"2.0", "xmlns:dc"=>"http://purl.org/dc/elements/1.1") {
       xml.item do
         xml.title( doc.to_semantic_values[:title][0] || doc[:id] )
         xml.link(catalog_url(doc[:id]))
-        xml.tag!("dc:author", doc[:author_display] )
-	    xml.handle(doc[:handle])
-	    xml.record_creation_date(doc[:record_creation_date])
+        xml.tag!("dc:creator", doc[:author_display] )
+	    xml.guid(doc[:handle])
+	    xml.pubDate(doc[:pub_date])
       end
     end
 
