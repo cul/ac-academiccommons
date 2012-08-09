@@ -59,4 +59,12 @@ CulBlacklightAc2::Application.configure do
   config.mail_deposit_recipients = ["rh2561@columbia.edu", "wla2103@columbia.edu"]
   config.mail_deliverer = "rh2561@columbia.edu"
   config.base_path = "academiccommons.columbia.edu"
+  
+  # Compress JavaScript and CSS
+  config.assets.compress = true  
+  # Don't fallback to assets pipeline
+  config.assets.compile = false
+  # Generate digests for assets URLs
+  config.assets.digest = true
+
 end

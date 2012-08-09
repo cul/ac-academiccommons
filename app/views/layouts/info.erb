@@ -8,8 +8,10 @@
 
 <title><%= h(@page_title || application_name) %></title>
 
-<meta name="description" content="Academic Commons is Columbia University's digital repository for academic research and scholarship produced by the university community.">
-<meta name="bitly-verification" content="35191b8f3154"/>
+<%= favicon_link_tag asset_path('favicon-crown.png', :media => "screen,projection", :rel => "shortcut icon", :type => "text/css") %>
+<%= stylesheet_link_tag "blueprint/screen", :media => "screen,projection"  %>
+<%= stylesheet_link_tag "application" %>
+<%= javascript_include_tag "application", "http://cdn.sublimevideo.net/js/3s7oes9q.js" %>
 
 <!--  <meta name="author" content=""> -->
 
@@ -25,11 +27,8 @@
     <!-- [if lt IE8] <%= stylesheet_link_tag "compiled/ie.css", :media => "screen, projection" %> -->
 
     <%= render_head_content %>
-    
-    <%= stylesheet_link_tag "blueprint/screen", :media => "screen,projection"  %>
-    <%#= stylesheet_link_tag "application", :media => "screen,projection" %>
-   <link href="<%= relative_root %>/images/favicon-crown.png" media="screen,projection" rel="shortcut icon" type="text/css" />
-   <link href="<%= relative_root %>/stylesheets/application.css" media="screen,projection" rel="stylesheet" type="text/css" />
+
+
   <!-- will revert link to native function when done editing stylesheets -->
         
     <% javascript_tag do -%>

@@ -1,10 +1,14 @@
-- content_for :jstemplates do
+.content
   :plain
-    $(function(){ $("textarea").htmlarea();});
+    <script type="text/javascript">
+    //<![CDATA[
+        $(function(){ $("textarea").htmlarea();});
+    //]]>
+    </script>
 
 %h3 Home Page Content:
 
-- form_tag "edit_home_page" do
+= form_tag "edit_home_page" do
   %div
     %div= text_area_tag "home_page_data", @home_block_data, :style => "width: 600px"
 

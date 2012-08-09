@@ -126,8 +126,8 @@ class AdminController < ApplicationController
     if(params[:archive])
       deposit_to_archive = Deposit.find(params[:archive])
       if(deposit_to_archive)
-        if(File.exists?(RAILS_ROOT + "/" + deposit_to_archive.file_path))
-          File.delete(RAILS_ROOT + "/" + deposit_to_archive.file_path)
+        if(File.exists?(Rails.root.to_s + "/" + deposit_to_archive.file_path))
+          File.delete(Rails.root.to_s + "/" + deposit_to_archive.file_path)
         end
         deposit_to_archive.archived = 1
         deposit_to_archive.save
@@ -143,7 +143,7 @@ class AdminController < ApplicationController
   
   def download_deposit_file
     @deposit = Deposit.find(params[:id])
-    send_file RAILS_ROOT + "/" + @deposit.file_path
+    send_file Rails.root.to_s + "/" + @deposit.file_path
   end
   
   private

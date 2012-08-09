@@ -2,6 +2,7 @@
 // This file is automatically included by javascript_include_tag :defaults
 
 
+
 $(document).ready(function() {
 
 $('div.left-column ul').each(function(){

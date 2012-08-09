@@ -27,6 +27,28 @@ module CatalogHelper
     results = Blacklight.solr.find(query_params)
     return results["response"]["numFound"]
   end
+  
+  def custom_results()
+    
+    bench_start = Time.now
+    
+    q = (params[:q].nil?) ? "" : params[:q].to_s
+    sort = (params[:sort].nil?) ? "record_creation_date desc" : params[:sort].to_s
+    rows = (params[:rows].nil?) ? ((params[:id].nil?) ? Blacklight.config[:feed_rows] : params[:id].to_s) : params[:rows].to_s
+    fl = "title_display, id, author_facet, author_display, record_creation_date, handle"
+      
+    solr_response = force_to_utf8(Blacklight.solr.find(:q => q, :fl => fl, :sort => sort, :start => 0, :rows => rows))   
+    document_list = solr_response.docs.collect {|doc| SolrDocument.new(doc, solr_response)}  
+
+    document_list.each do |doc|     
+     doc[:pub_date] = Time.parse(doc[:record_creation_date].to_s).to_s(:rfc822)
+    end
+    
+    logger.info("Solr fetch: #{self.class}#custom_results (#{'%.1f' % ((Time.now.to_f - bench_start.to_f)*1000)}ms)")
+    
+    return [solr_response, document_list]
+    
+  end  
 
   def build_recent_updated_list()
     query_params = {:q => "", :fl => "title_display, id, author_facet, record_creation_date", :sort => "record_creation_date desc", :start => 0, :rows => 100}
@@ -202,7 +224,7 @@ module CatalogHelper
 
   def thumbnail_for_resource(resource)
     extension = get_file_extension(resource[:filename].to_s)
-    thumbnail_folder_path = Rails.root.to_s + "/public/images/thumbnail_icons/"
+    thumbnail_folder_path = Rails.root.to_s + "/app/assets/images/thumbnail_icons/"
     if(!extension.nil? && !extension.empty?)
       thumbnail_file_name = extension + ".png"
     else
@@ -347,7 +369,11 @@ begin
   # Look up search field user-displayable label
   # based on params[:qt] and configuration.
   def search_field_label(params)
-    h( Blacklight.label_for_search_field(params[:search_field]) )
+    if(params[:search_field].blank?)
+      h( "Keyword" )
+    else
+      h( Blacklight.label_for_search_field(params[:search_field]) )
+    end    
   end
 
   # Export to Refworks URL, called in _show_tools
@@ -378,5 +404,5 @@ begin
      end  
      return urls
   end  
-  
+
 end

@@ -1,6 +1,6 @@
  
     <div id="search-mini" class="search">
-      <% form_tag catalog_index_path, :method => :get do %>
+      <%= form_tag catalog_index_path, :method => :get do %>
          
         <%= search_field_tag :q, params[:q], :class => "q" %>
         <%= label_tag(:search_field, " in ") %>
