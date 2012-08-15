@@ -60,11 +60,9 @@ CulBlacklightAc2::Application.configure do
   config.mail_deliverer = "rh2561@columbia.edu"
   config.base_path = "academiccommons.columbia.edu"
   
-  # Compress JavaScript and CSS
-  config.assets.compress = true  
-  # Don't fallback to assets pipeline
-  config.assets.compile = false
-  # Generate digests for assets URLs
-  config.assets.digest = true
+  # Configure static asset server for tests with Cache-Control for performance
+  config.serve_static_assets = true
+  config.static_cache_control = "public, max-age=3600"
+
 
 end

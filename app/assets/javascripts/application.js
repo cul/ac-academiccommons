@@ -5,6 +5,7 @@
 
 $(document).ready(function() {
 
+/*
 $('div.left-column ul').each(function(){
    var ul = $(this);
    // find all ul's that don't have any span descendants with a class of "selected"
@@ -22,6 +23,7 @@ $('div.left-column ul').each(function(){
     }
 
 });
+*/
 
   
  
