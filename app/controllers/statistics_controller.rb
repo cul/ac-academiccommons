@@ -70,7 +70,8 @@ class StatisticsController < ApplicationController
                                                       enddate,
                                                       params[:author_id],
                                                       nil,
-                                                      params[:include_zeroes]
+                                                      params[:include_zeroes],
+                                                      params[:facet]
                                                       )
         
         if params[:commit] == "Email"
@@ -88,7 +89,8 @@ class StatisticsController < ApplicationController
                                 enddate,
                                 params[:author_id],
                                 params[:include_zeroes],
-                                params[:recent_first]
+                                params[:recent_first],
+                                params[:facet]
                                )
                                 
         send_data csv_report, :type=>"application/csv", :filename=>params[:author_id] + "_monthly_statistics.csv" 
