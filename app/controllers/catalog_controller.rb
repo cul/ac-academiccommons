@@ -31,7 +31,7 @@ class CatalogController < ApplicationController
   def browse_subject
     index
   end
-  
+
   def redirect_browse
     
     if(params[:id].to_s == 'browse')
@@ -83,13 +83,16 @@ class CatalogController < ApplicationController
     (@response, @document_list) = custom_results() 
     render :template => 'catalog/index.atom.builder'
   end
-  
+
+
   private
   
   def record_stats()
+   unless request.user_agent.nil?
     unless StatSupport::is_bot?(request.user_agent)
       Statistic.create!(:session_id => request.session_options[:id], :ip_address => request.env['HTTP_X_FORWARDED_FOR'] || request.remote_addr, :event => "View", :identifier => params["id"], :at_time => Time.now())
     end
+   end
   end
 
 end 
