@@ -15,9 +15,15 @@
       %tr
         %td{:width=>"100px"}
           .label Author uni/name:
-        %td
+        %td{:width=>"100px"}
           .value
             = text_field_tag :author_id, params[:author_id]
+        %td{:width=>"20px"}
+          .label by:
+        %td  
+          .value
+            = select_tag :facet, options_for_select(["author_uni", "author_facet","department_facet", "genre_facet", "text", "search"], params[:facet])
+            
       %tr
         %td
           .label Report from:
@@ -46,21 +52,27 @@
 
 
     - if @results
+      -row_counter = 0
 
       %table#author_stats_results{:style=>"border: 1px solid #aaa", :class=>"zebra"}
         %tr
+          %th #
           %th Title
           %th Views
           %th Downloads
 
         %tr
           %td 
+          %td 
             %b Total for #{params[:month]} #{params[:year]}
           %td= @totals["View"] || 0
           %td= @totals["Download"] || 0
 
         - @results.each do |item|
+          - row_counter += 1
+
           %tr
+            %td= row_counter
             %td= link_to item["title_display"], catalog_path(item["id"])
             %td= @stats["View"][item["id"][0]] || 0
             %td= @stats["Download"][item["id"][0]] || 0

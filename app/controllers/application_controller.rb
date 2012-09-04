@@ -35,7 +35,7 @@ class ApplicationController < ActionController::Base
   end
 
   def store_location
-    session[:return_to] = request.request_uri
+    session[:return_to] = request.fullpath
   end
 
   def redirect_back_or_default(default, additional_params)
@@ -73,9 +73,9 @@ class ApplicationController < ActionController::Base
     javascript_includes << ['accordion']
   end
   
-  ##########################################
-  #### Application user-related methods ####
-  ##########################################
+  ############################################
+  ####  Application user-related methods  ####
+  ############################################
 
   def access_denied
     render :template => 'access_denied'

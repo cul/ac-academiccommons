@@ -11,7 +11,9 @@
 <P>This form is for authors whose work is or will be made available in Academic Commons, but are not uploading the content themselves. If you would like to deposit your own content, please use our <a href="<%=relative_root%>/deposit">self-deposit form</a>.  If you want to know more about Academic Commons, please visit our <a href="http://cdrs.columbia.edu/academiccommons/">blog</a> or contact us at cdrs@info.columbia.edu.
 </P>
 
-<% form_tag({ :action=>'submit_author_agreement'}, :method=>'post', :id=>'sd-form', :class=>'self-deposit-form', :charset=>'utf-8') do %>
+
+
+<%= form_tag({ :action=>'submit_author_agreement'}, :method=>'post', :id=>'sd-form', :class=>'self-deposit-form', :charset=>'utf-8') do %>
 <fieldset>
 
 <%= render :partial => 'author_agreement', :locals => {:required_class => "pageRequired required" } %>

@@ -81,12 +81,12 @@ Blacklight.configure(:shared) do |config|
     # sniffing requires solr requests to be made with "echoParams=all", for
     # app code to actually have it echo'd back to see it.     
     :limits => {
-       "author_facet"     => 7,
-       "department_facet" => 7,
-       "subject_facet"    => 7,
-       "genre_facet"      => 5,
-       "pub_date_facet"   => 5,
-       "series_facet"     => 5
+       "author_facet"     => 2,
+       "department_facet" => 2,
+       "subject_facet"    => 2,
+       "genre_facet"      => 2,
+       "pub_date_facet"   => 2,
+       "series_facet"     => 2
     }
   }
 
@@ -274,5 +274,8 @@ Blacklight.configure(:shared) do |config|
   config[:unapi] = {
     'oai_dc_xml' => { :content_type => 'text/xml' } 
   }
+  
+  config[:feed_rows] = "500"
+  
 end
 
