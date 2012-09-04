@@ -63,7 +63,8 @@ CulBlacklightAc2::Application.routes.draw do
   # match ':controller(/:action(/:id(.:format)))'
   
   resources :email_preferences, :reports
-  
+
+
   match '/download/fedora_content/:download_method/:uri/:block/:filename', :to => 'download#fedora_content', :as => "fedora_content",
     :block => /(DC|CONTENT|SOURCE)/,
     :uri => /.+/, :filename => /.+/, :download_method => /(download|show|show_pretty)/
@@ -87,6 +88,9 @@ CulBlacklightAc2::Application.routes.draw do
   match '/catalog/browse/subjects', :to => 'catalog#browse_subject', :as => 'subjects_browse'
   match '/catalog/browse/departments/:id', :to => 'catalog#browse_department', :as => 'department_browse'
   match '/catalog/browse/subjects/:id', :to => 'catalog#browse_subject', :as => 'subject_browse'
+  match '/sitemap.xml', :to => 'sitemap#index', :format => 'xml'
+  
+
   
   match '/item/:id', :to => 'catalog#show', :as => 'catalog_item'
   
@@ -96,5 +100,6 @@ CulBlacklightAc2::Application.routes.draw do
   
   
     match '/about', :to => 'info#about', :as => 'about'
-  
+
+ 
 end
