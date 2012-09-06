@@ -50,11 +50,11 @@ Blacklight.configure(:shared) do |config|
        "author_facet",
        "department_facet",
        "subject_facet",
-       "genre_facet",
-       "pub_date_facet",
        "series_facet",
+       "genre_facet",
+       "type_of_resource_facet",
        "language",
-       "type_of_resource_facet"
+       "pub_date_facet"
     ]),
     :labels => {
       "author_facet"      => "Author",
@@ -64,7 +64,7 @@ Blacklight.configure(:shared) do |config|
       "pub_date_facet"    => "Date",
       "series_facet"      => "Series",
       "language"          => "Language",
-      "type_of_resource_facet" => "Type of Resource"
+      "type_of_resource_facet" => "Resource Type"
       
     },
     # Setting a limit will trigger Blacklight's 'more' facet values link.
