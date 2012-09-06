@@ -8,10 +8,11 @@ include Blacklight::SolrHelper
 # params and modifies pub_date 
 
     q = ""
-    fl = "title_display, id, author_facet, author_display, record_creation_date, handle"
+    fl = "id, record_creation_date"
     sort = "record_creation_date desc"
 #this is the upper limit for a single sitemap, see sitemap.org
     rows = "50000"
+
 
     solr_response = force_to_utf8(Blacklight.solr.find(:q => q, :fl => fl, :sort => sort, :start => 0, :rows => rows))
     document_list = solr_response.docs.collect {|doc| SolrDocument.new(doc, solr_response)}
