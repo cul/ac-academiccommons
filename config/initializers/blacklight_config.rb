@@ -111,7 +111,7 @@ Blacklight.configure(:shared) do |config|
       "author_display"          => "Author(s):",
       "pub_date_facet"          => "Date:",
       "subject_facet"           => "Subject:",
-      "genre_facet"             => "Type:",
+      "genre_facet"             => "Content Type:",
       "publisher"               => "Publisher:",
       "handle"			=> "Permanent URL:"
     }
