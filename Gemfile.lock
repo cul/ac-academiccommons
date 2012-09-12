@@ -56,6 +56,10 @@ GEM
       blacklight (~> 3.2, >= 3.2.1)
       parslet
       rails (~> 3.0)
+    blacklight_oai_provider (0.1.0)
+      blacklight (~> 3.2)
+      oai
+      rails (~> 3.0)
     blankslate (2.1.2.4)
     builder (3.0.0)
     capybara (1.1.2)
@@ -100,6 +104,10 @@ GEM
     erubis (2.7.0)
     execjs (1.4.0)
       multi_json (~> 1.0)
+    faraday (0.8.4)
+      multipart-post (~> 1.1)
+    faraday_middleware (0.8.8)
+      faraday (>= 0.7.4, < 0.9)
     ffi (1.1.5)
     fssm (0.2.9)
     garb (0.9.1)
@@ -130,9 +138,14 @@ GEM
     marc (0.4.4)
     mime-types (1.19)
     multi_json (1.3.6)
+    multipart-post (1.1.5)
     mysql (2.8.1)
     net-ldap (0.3.1)
     nokogiri (1.5.0)
+    oai (0.2.1)
+      builder (>= 2.0.0)
+      faraday
+      faraday_middleware
     parslet (1.4.0)
       blankslate (~> 2.0)
     polyglot (0.3.3)
@@ -217,6 +230,7 @@ DEPENDENCIES
   authlogic_wind
   blacklight (~> 3.2.0)
   blacklight_advanced_search
+  blacklight_oai_provider
   coffee-rails (~> 3.2.0)
   compass
   cucumber-rails (= 1.2.1)
