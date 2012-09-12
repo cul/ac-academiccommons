@@ -33,7 +33,7 @@
     -->
   <!-- <lib dir="../../contrib/clustering/lib/downloads/" /> -->
   
-  <dataDir>${solr.data.dir:./solr/data}</dataDir>
+  <dataDir>${solr.data.dir:/opt/solr-1.5/ac2_test/data}</dataDir>
   
   <!-- index time configurations -->
   <indexDefaults>
@@ -327,8 +327,23 @@
       <float name="tie">0.01</float>
 
       <!-- NOT using marc_display because it is large and will slow things down for search results -->
-      <str name="fl">id,score,author_display,format,handle,record_creation_date,pub_date_facet,title_display,subject_facet,genre_facet,organization_facet,department_facet,series_facet,publisher</str>
-
+      <str name="fl">
+id, 
+score,
+author_display, 
+format, 
+handle,
+record_creation_date,
+pub_date_facet,
+title_display,
+subject_facet,
+genre_facet,
+organization_facet,
+department_facet,
+series_facet,
+publisher
+      </str>
+     
       <str name="facet">true</str>
       <str name="facet.mincount">1</str>
       <str name="facet.limit">10</str>
@@ -444,19 +459,19 @@
       
       <!-- NOT using marc_display because it is large and will slow things down for search results -->
       <str name="fl">
-        id,
-	score,
+        id, 
+        score,
         author_display, 
         format, 
-        handle, 
+        handle,
         pub_date_facet,
         title_display,
         subject_facet,
         genre_facet,
-	organization_facet,
-	department_facet,
-	series_facet,
-	publisher
+		organization_facet,
+		department_facet,
+		series_facet,
+		publisher
       </str>
       
       <str name="facet">true</str>
