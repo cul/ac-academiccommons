@@ -2,6 +2,8 @@
 class SolrDocument 
 
   include Blacklight::Solr::Document
+  SolrDocument.use_extension( BlacklightOaiProvider::SolrDocumentExtension )
+
   
   # The following shows how to setup this blacklight document to display marc documents
   extension_parameters[:marc_source_field] = :marc_display
@@ -28,4 +30,10 @@ class SolrDocument
                          :language => "language_facet",
                          :format => "format"
                          )
+
+
+  def record_creation_date
+    Time.parse get('record_creation_date')
+  end
+
 end

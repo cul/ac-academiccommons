@@ -59,4 +59,4 @@ gem 'compass'
 gem 'httpclient'
 gem 'nokogiri', '1.5.0'
 gem 'net-ldap'
-
+gem 'blacklight_oai_provider'
