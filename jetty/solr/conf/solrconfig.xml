@@ -33,7 +33,9 @@
     -->
   <!-- <lib dir="../../contrib/clustering/lib/downloads/" /> -->
   
-  <dataDir>${solr.data.dir:/opt/solr-1.5/ac2_test/data}</dataDir>
+
+  <dataDir>${solr.data.dir:./solr/data}</dataDir>
+
   
   <!-- index time configurations -->
   <indexDefaults>
