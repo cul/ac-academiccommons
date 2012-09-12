@@ -4,6 +4,8 @@ require 'blacklight/catalog'
 class CatalogController < ApplicationController  
 
   include Blacklight::Catalog
+  include BlacklightOaiProvider::ControllerExtension
+
   include CatalogHelper
   
   before_filter :record_stats, :only => :show

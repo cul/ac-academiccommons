@@ -105,7 +105,8 @@ Blacklight.configure(:shared) do |config|
       "subject_facet",
       "genre_facet",
       "publisher",
-      "handle"
+      "handle",
+      "record_creation_date"
     ],
     :labels => {
       "author_display"          => "Author(s):",
@@ -113,7 +114,8 @@ Blacklight.configure(:shared) do |config|
       "subject_facet"           => "Subject:",
       "genre_facet"             => "Type:",
       "publisher"               => "Publisher:",
-      "handle"			=> "Permanent URL:"
+      "handle"			=> "Permanent URL:",
+      "record_creation_date"	=> "record creation date"
     }
   }
 
@@ -144,7 +146,8 @@ Blacklight.configure(:shared) do |config|
       "subject_facet",
       "isbn",
       "issn",
-      "doi"
+      "doi",
+      "record_creation_date"
     ],
     :labels => {
       "title_display"           => "Title:",
@@ -170,7 +173,8 @@ Blacklight.configure(:shared) do |config|
       "subject_facet"           => "Subject(s):", 
       "isbn"                    => "ISBN:",
       "issn"                    => "ISSN:",
-      "doi"                     => "DOI:"
+      "doi"                     => "DOI:",
+      "record_creation_date"	=> "record creation date"
     },
     :linked => {
       "author_facet"  => "facet",
@@ -277,5 +281,20 @@ Blacklight.configure(:shared) do |config|
   
   config[:feed_rows] = "500"
   
+
+config[:oai] = {
+
+  :provider => {
+    :repository_name => 'academiccommons.columbia.edu',
+    :repository_url => 'http://localhost',
+    :record_prefix => '',
+    :admin_email => 'root@localhost'
+  },
+  :document => {
+    :timestamp => 'record_creation_date',
+    :limit => 25
+  }
+}
+
 end
 
