@@ -105,8 +105,7 @@ Blacklight.configure(:shared) do |config|
       "subject_facet",
       "genre_facet",
       "publisher",
-      "handle",
-      "record_creation_date"
+      "handle"
     ],
     :labels => {
       "author_display"          => "Author(s):",
@@ -114,8 +113,7 @@ Blacklight.configure(:shared) do |config|
       "subject_facet"           => "Subject:",
       "genre_facet"             => "Content Type:",
       "publisher"               => "Publisher:",
-      "handle"			=> "Permanent URL:",
-      "record_creation_date"	=> "record creation date"
+      "handle"			=> "Permanent URL:"
     }
   }
 
@@ -146,8 +144,7 @@ Blacklight.configure(:shared) do |config|
       "subject_facet",
       "isbn",
       "issn",
-      "doi",
-      "record_creation_date"
+      "doi"
     ],
     :labels => {
       "title_display"           => "Title:",
@@ -173,8 +170,7 @@ Blacklight.configure(:shared) do |config|
       "subject_facet"           => "Subject(s):", 
       "isbn"                    => "ISBN:",
       "issn"                    => "ISSN:",
-      "doi"                     => "DOI:",
-      "record_creation_date"	=> "record creation date"
+      "doi"                     => "DOI:"
     },
     :linked => {
       "author_facet"  => "facet",
