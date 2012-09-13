@@ -64,11 +64,9 @@ class CatalogController < ApplicationController
   end  
   
   def index
-    
-     if (!params[:f].nil?) 
-       return super
-     end
-     
+
+     (@response, @document_list) = custom_results()
+
       respond_to do |format|
         format.html { super }
         format.rss  { rss }
@@ -77,12 +75,10 @@ class CatalogController < ApplicationController
   end
   
   def rss
-    (@response, @document_list) = custom_results() 
     render :template => 'catalog/index.rss.builder'
   end
   
   def atom
-    (@response, @document_list) = custom_results() 
     render :template => 'catalog/index.atom.builder'
   end
 
