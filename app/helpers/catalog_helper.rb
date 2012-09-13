@@ -41,7 +41,7 @@ module CatalogHelper
     params[:rows] = (params[:rows].nil? || params[:rows].to_s == "") ? ((params[:id].nil?) ? Blacklight.config[:feed_rows] : params[:id].to_s) : params[:rows].to_s
     
     extra_params = {}
-    extra_params[:fl] = "title_display,id,author_facet,author_display,record_creation_date,handle"
+    extra_params[:fl] = "title_display,id,author_facet,author_display,record_creation_date,handle,abstract"
 
     if (params[:f].nil?) 
       solr_response = force_to_utf8(Blacklight.solr.find(params.merge(extra_params))) 
