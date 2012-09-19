@@ -9,7 +9,7 @@ xml.feed("xmlns" => "http://www.w3.org/2005/Atom",
 
   xml.title   application_name + " Search Results"
   # an author is required, so we'll just use the app name
-  xml.author { xml.name application_name }
+  #xml.author { xml.name application_name }
   
   xml.link    "rel" => "self", "href" => url_for(params.merge(:only_path => false))
   xml.link    "rel" => "alternate", "href" => url_for(params.merge(:only_path => false, :format => "html")), "type" => "text/html"
@@ -51,35 +51,32 @@ xml.feed("xmlns" => "http://www.w3.org/2005/Atom",
     xml.entry do
       xml.title   doc.to_semantic_values[:title][0] || doc.id
 
-      # updated is required, for now we'll just set it to now, sorry
-      xml.updated Time.now.strftime("%Y-%m-%dT%H:%M:%SZ")
+      #xml.updated Time.now.strftime("%Y-%m-%dT%H:%M:%SZ")
       
       xml.link    "rel" => "alternate", "type" => "text/html", "href" => catalog_url(doc)
-      # add other doc-specific formats, atom only lets us have one per
-      # content type, so the first one in the list wins.
+
       xml << render_link_rel_alternates(doc, :unique => true)      
       
-      xml.id      catalog_url(doc[:id])
+      if doc[:handle]   
+        xml.id(doc[:handle]) 
+      end
       
+      if doc.to_semantic_values[:author][0]   
+        xml.author { xml.name(doc.to_semantic_values[:author][0]) }
+      end
       
       if doc.to_semantic_values[:author][0]   
         xml.tag!("dc:creator", doc[:author_display] )
       end
-      
-      if doc[:handle]   
-        xml.guid{ xml.name(doc[:handle]) }
-      end
-      
+
       if doc[:record_creation_date]
-      	xml.pubDate{ xml.name(doc[:pub_date]) }
+      	xml.updated(doc[:record_creation_date] )
       end
       
-      with_format("html") do
-        xml.summary "type" => "html" do
-	            xml.text! render_document_partial(doc, :index)           
-        end
+      if doc[:abstract]
+      	xml.summary(doc[:abstract] )
       end
-      
+
       #If they asked for a format, give it to them. 
       if (params["content_format"] &&
           doc.export_formats[params["content_format"].to_sym])
