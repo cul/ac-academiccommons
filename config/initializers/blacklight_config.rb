@@ -285,7 +285,7 @@ config[:oai] = {
     :repository_url => 'http://academiccommons.columbia.edu/catalog/oai',
     :record_prefix => 'ac',
     :admin_email => 'info@cdrs.columbia.edu',
-    :deletion_support => 'permanent',
+    :deletion_support => 'persistent',
     :sample_id => '109660'
   },
   :document => {
