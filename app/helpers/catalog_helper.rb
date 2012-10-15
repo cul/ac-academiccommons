@@ -36,6 +36,7 @@ module CatalogHelper
       params[:id] = nil
     end
     
+    params[:page] = nil
     params[:q] = (params[:q].nil?) ? "" : params[:q].to_s
     params[:sort] = (params[:sort].nil?) ? "record_creation_date desc" : params[:sort].to_s
     params[:rows] = (params[:rows].nil? || params[:rows].to_s == "") ? ((params[:id].nil?) ? Blacklight.config[:feed_rows] : params[:id].to_s) : params[:rows].to_s
