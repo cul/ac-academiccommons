@@ -283,10 +283,10 @@ config[:oai] = {
   :provider => {
     :repository_name => 'Columbia University Academic Commons',
     :repository_url => 'http://academiccommons.columbia.edu/catalog/oai',
-    :record_prefix => 'ac',
+    :record_prefix => 'academiccommons.columbia.edu',
     :admin_email => 'info@cdrs.columbia.edu',
     :deletion_support => 'persistent',
-    :sample_id => '109660'
+    :sample_id => 'ac:109660'
   },
   :document => {
     :timestamp => 'record_creation_date',
