@@ -3,6 +3,7 @@
 
 <% extra_head_content << javascript_include_tag('jquery.validate.min.js') %>
 <% extra_head_content << javascript_include_tag('jquery.replaceholder.min.js') %>
+<% extra_head_content << javascript_include_tag('jquery.getUrlParam.js') %>
 <% extra_head_content << javascript_include_tag('self-deposit.js') %>
 
 
@@ -30,7 +31,7 @@
 
 <ul id="stepForm" class="ui-accordion-container">
 
-<li id="sf1"><a href='#' class="ui-accordion-link"> </a>
+<li id="sf1"><a href='#' class="ui-accordion-link"></a>
 
 <div>
 <h3>Step 1 of 3</h3>
@@ -137,7 +138,7 @@
 
 <div>
 
-<p>Review your information below and click the Submit button to send your work to AC.</p>
+<p>Review your information below and click the Submit button to submit your research to Academic Commons.</p>
  
 <p class="clearfix"><span class="check-label">Name:</span><span class="check-value" id="name-check"></span></p>
 <p><span class="check-label">UNI:</span><span class="check-value" id="uni-check"></span></p>
