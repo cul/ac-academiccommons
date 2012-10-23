@@ -1,6 +1,9 @@
 <% params[:id] = url_decode_resource(params[:id]) %>
 
-<h1 class="content-title">Browsing: <%=  link_to('Departments',catalog_index_path()+'/browse/departments/')%> &raquo; <%= link_to(params[:id], catalog_index_path()+'/browse/departments/'+params[:id]) %></h1>
+<h1 class="content-title">
+	Browsing: <%=  link_to('Departments',catalog_index_path()+'/browse/departments/')%> &raquo; <%= link_to(params[:id], catalog_index_path()+'/browse/departments/'+params[:id]) %>
+	<br><%= link_to image_tag("rss.gif", :border=>0, :id=>"rssLink"), root_path + 'catalog.rss/?f[department_facet][]=' + url_encode_resource(params[:id])%>
+</h1>
 
 <%
 

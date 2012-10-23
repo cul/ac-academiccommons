@@ -281,10 +281,12 @@ Blacklight.configure(:shared) do |config|
 config[:oai] = {
 
   :provider => {
-    :repository_name => 'academiccommons.columbia.edu',
-    :repository_url => 'http://localhost',
-    :record_prefix => '',
-    :admin_email => 'root@localhost'
+    :repository_name => 'Columbia University Academic Commons',
+    :repository_url => 'http://academiccommons.columbia.edu/catalog/oai',
+    :record_prefix => 'academiccommons.columbia.edu',
+    :admin_email => 'info@cdrs.columbia.edu',
+    :deletion_support => 'persistent',
+    :sample_id => 'ac:109660'
   },
   :document => {
     :timestamp => 'record_creation_date',
@@ -294,3 +296,4 @@ config[:oai] = {
 
 end
 
+	

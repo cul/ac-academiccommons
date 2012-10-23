@@ -32,12 +32,24 @@ module CatalogHelper
     
     bench_start = Time.now
     
-    q = (params[:q].nil?) ? "" : params[:q].to_s
-    sort = (params[:sort].nil?) ? "record_creation_date desc" : params[:sort].to_s
-    rows = (params[:rows].nil?) ? ((params[:id].nil?) ? Blacklight.config[:feed_rows] : params[:id].to_s) : params[:rows].to_s
-    fl = "title_display, id, author_facet, author_display, record_creation_date, handle"
-      
-    solr_response = force_to_utf8(Blacklight.solr.find(:q => q, :fl => fl, :sort => sort, :start => 0, :rows => rows))   
+    if (!params[:id].nil?) 
+      params[:id] = nil
+    end
+    
+    params[:page] = nil
+    params[:q] = (params[:q].nil?) ? "" : params[:q].to_s
+    params[:sort] = (params[:sort].nil?) ? "record_creation_date desc" : params[:sort].to_s
+    params[:rows] = (params[:rows].nil? || params[:rows].to_s == "") ? ((params[:id].nil?) ? Blacklight.config[:feed_rows] : params[:id].to_s) : params[:rows].to_s
+    
+    extra_params = {}
+    extra_params[:fl] = "title_display,id,author_facet,author_display,record_creation_date,handle,abstract"
+
+    if (params[:f].nil?) 
+      solr_response = force_to_utf8(Blacklight.solr.find(params.merge(extra_params))) 
+    else
+      solr_response = force_to_utf8(Blacklight.solr.find(self.solr_search_params(params).merge(extra_params)))
+    end
+
     document_list = solr_response.docs.collect {|doc| SolrDocument.new(doc, solr_response)}  
 
     document_list.each do |doc|     

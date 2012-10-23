@@ -26,14 +26,22 @@ class SolrDocument
   use_extension( Blacklight::Solr::Document::DublinCore)    
   field_semantics.merge!(    
                          :title => "title_display",
-                         :author => "author_display",
-                         :language => "language_facet",
-                         :format => "format"
+                         :author => "author_facet",
+                         :format => "format",
+			 :creator => "author_facet",
+			 :date => "date_issued",
+			 :type => "type_of_resource_facet",
+			 :publisher => "publisher",
+			 :subject => "subject_facet",
+			 :identifier => "handle",
+			 :description => "abstract",
+			 :language => "language"
                          )
 
 
   def record_creation_date
     Time.parse get('record_creation_date')
   end
+
 
 end

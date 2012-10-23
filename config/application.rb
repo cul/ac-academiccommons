@@ -68,6 +68,7 @@ module CulBlacklightAc2
     
     config.analytics_username = "***REMOVED***"
     config.analytics_password = "***REMOVED***"
+    config.analytics_id = "'UA-10481105-1'"
 
 # =============== new start =================== #    
     # Enable the asset pipeline

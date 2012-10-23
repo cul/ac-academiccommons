@@ -3,7 +3,7 @@
 
 
 
-$(document).ready(function() {
+jQuery(document).ready(function() {
 
 /*
 $('div.left-column ul').each(function(){

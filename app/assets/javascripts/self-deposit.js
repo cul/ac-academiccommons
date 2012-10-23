@@ -1,24 +1,39 @@
-$(document).ready(function(){
- 
+
+$(document).ready(function(){ 
+
+var accordion = $("#stepForm").accordion({animated:false, autoHeight: false}); 
+var current = 0;
 
 $('#start_button').click(function(){
 
 $('#intro').hide();
 $('#sd-form-wrap').show();
 
-
-
 });
 
- 
-	// accordion functions
-	
-		$('#sd-form-wrap').hide();
- 	var accordion = $("#stepForm").accordion({animated:false, autoHeight: false}); 
-	
 
+
+
+ 
+// accordion functions
 	
-	var current = 0;
+$('#sd-form-wrap').hide();
+
+if ($(document).getUrlParam("agreement")){
+
+
+$('#intro').hide();
+$('#sd-form-wrap').show();
+accordion.accordion("activate", 1);
+current = 1;
+
+$('input[name=acceptedAgreement]').attr('checked', true);
+
+
+}
+
+		
+
 	
 	$.validator.addMethod("pageRequired", function(value, element) {
 		var $element = $(element)
@@ -39,9 +54,6 @@ $('#sd-form-wrap').show();
 		errorPlacement: function(error, element){
 	    element.parent().prepend(error);
        	},
-       	
-       	
-
 		submitHandler: function(form) {
 			  form.submit();
 		}
@@ -87,14 +99,14 @@ $('#sd-form-wrap').show();
 	  }
 	});
 	
+	 
+	
 	function previewForm(){
  
 var file = 	$('#file').val();
 
 var temp = new Array();
 temp = file.split('\\');
-
- 
 	
 $('#name-check').html($('#name').val());
 $('#uni-check').html($('#uni').val());

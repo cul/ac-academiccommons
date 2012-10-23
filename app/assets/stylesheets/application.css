@@ -2220,7 +2220,7 @@ h3.stepHeader {
 	margin-bottom: 1em;
 }
 
-form.self-deposit-form input.submitbutton,form.self-deposit-form .nextbutton,form.self-deposit-form .prevbutton, #start_button{
+form.self-deposit-form input.submitbutton,form.self-deposit-form .nextbutton,form.self-deposit-form .prevbutton, #start_button, a.button{
  width: 150px;
 	height: 40px;
 	 background: url(main-header-background.jpg) no-repeat -863px -53px;
@@ -2229,7 +2229,7 @@ form.self-deposit-form input.submitbutton,form.self-deposit-form .nextbutton,for
 	cursor: pointer;
 	text-align: center;
 	color: white;
-	margin: 7px;
+
 		font: 1.4em "Helvetica Neue", Arial, Helvetica, Geneva, sans-serif;
 		
 		-moz-box-shadow: 3px 3px 3px rgba(0,0,0,.2);
@@ -2238,7 +2238,7 @@ form.self-deposit-form input.submitbutton,form.self-deposit-form .nextbutton,for
 
 }
 
-form.self-deposit-form input.submitbutton:active,form.self-deposit-form .nextbutton:active,form.self-deposit-form .prevbutton:active, #start_button:active{
+form.self-deposit-form input.submitbutton:active,form.self-deposit-form .nextbutton:active,form.self-deposit-form .prevbutton:active, #start_button:active, a.button{
 
     -moz-box-shadow: 1px 1px 1px rgba(0,0,0,.2);
     -webkit-box-shadow: 1px 1px 1px rgba(0,0,0,.2);
@@ -2248,17 +2248,21 @@ form.self-deposit-form input.submitbutton:active,form.self-deposit-form .nextbut
 
 	}
  
-form.self-deposit-form input.submitbutton:active,form.self-deposit-form .nextbutton:hover,form.self-deposit-form .prevbutton:hover, #start_button:hover{
+form.self-deposit-form input.submitbutton:active,form.self-deposit-form .nextbutton:hover,form.self-deposit-form .prevbutton:hover, #start_button:hover, a.button{
 
  
 	 background: url(main-header-background.jpg) no-repeat -863px -10px;
 border: 1px dotted #bfc4cc;
 
 	}
- 
+ a.button{
+	 font-weight: 300;
+	 padding-left: 15px;
+	 padding-right: 15px;
+ }
 
 #start_button {
- margin-left: 189px;
+/*  margin-left: 189px; */
  
  }
 
@@ -2317,4 +2321,19 @@ ul.how-to-videos li a:hover img {
     box-shadow:         2px 2px 5px rgba(0,0,0,.6);
 }
 
+a.ui-accordion-link{
+	
+	display: none;
+}
+
+div.sd h2{
+	
+	margin-left: 50px;
+}
+
+.sd-more{
+	
+	margin-top: 25px;
+	margin-bottom: 25px;
+}
  
