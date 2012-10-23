@@ -70,8 +70,8 @@ class CatalogController < ApplicationController
       if(f.name == 'type_of_resource_facet')
         puts "THIS IS THE THE THE FNAME #{f.name}"
         f.items.each {|item|
-          item.value = "Text"
-          puts "#{item.value}"
+          nitem = RSolr::Ext::Response::Facets::FacetItem.new("Text", item.hits)
+          puts "#{nitem.value}"
         }
       else
         puts "THIS IS OTHER OTHER FNAME #{f.name}"
