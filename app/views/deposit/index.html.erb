@@ -7,7 +7,53 @@
 <% extra_head_content << javascript_include_tag('self-deposit.js') %>
 
 
+ <% sidebar_items << capture do %>
+
  
+
+ <h3>Browse AC Content</h3>
+ 
+<div   class='box home-side'>
+    
+  <%= link_to "Departments", departments_browse_path, :class=>"nav-link" %>
+  <%= link_to "Subjects", subjects_browse_path, :class=>"nav-link" %>
+    
+</div>
+
+ 
+<h3>Helpful Links</h3>
+ 
+<div class='box home-side'>
+
+<%= render :partial=>'/catalog/home_accessory_links' %>
+</div>
+
+
+
+
+
+
+  
+ 
+
+ 
+
+<h3>AC by the Numbers</h3>
+<div class='box home-side'>
+			
+			<ul>
+			<li><strong><%= get_total_count() %></strong> items in Academic Commons.</li>
+			<li>Objects added in the last year: <strong><%= get_count_by_year() %></strong></li> 
+			<li>Objects added in the last 30 days:  <strong><%= get_count_by_month() %></strong></li>
+			<li>Page Visits in <%= get_last_month_name() %>: <strong><%= get_last_month_page_visits() %></strong>
+			
+			</li>
+			</ul>   
+			
+			</div>
+
+ <% end %>
+
 
 <div class="page box sd">
 
