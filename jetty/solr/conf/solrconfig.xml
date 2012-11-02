@@ -329,7 +329,7 @@
       <float name="tie">0.01</float>
 
       <!-- NOT using marc_display because it is large and will slow things down for search results -->
-      <str name="fl">id,score,author_display,author_facet,format,handle,record_creation_date,pub_date_facet,date_issued,title_display,subject_facet,genre_facet,organization_facet,department_facet,series_facet,publisher,type_of_resource_facet,abstract,notes,language</str>
+      <str name="fl">id,score,author_display,author_facet,format,handle,record_creation_date,pub_date_facet,date_issued,title_display,subject_facet,genre_facet,organization_facet,department_facet,series_facet,publisher,type_of_resource_facet,abstract,notes,language,type_of_resource_mods</str>
      
       <str name="facet">true</str>
       <str name="facet.mincount">1</str>

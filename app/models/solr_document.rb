@@ -30,7 +30,7 @@ class SolrDocument
                          :format => "format",
 			 :creator => "author_facet",
 			 :date => "date_issued",
-			 :type => "type_of_resource_facet",
+			 :type => "type_of_resource_mods",
 			 :publisher => "publisher",
 			 :subject => "subject_facet",
 			 :identifier => "handle",
