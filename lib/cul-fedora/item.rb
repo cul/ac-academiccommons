@@ -432,10 +432,8 @@ module Cul
 
             mods.css("typeOfResource").each { |tr| 
 		add_field.call("type_of_resource_mods", tr)
-		puts "THIS IS THE RESOURCE TYPE #{TR}"
 	        type = tr.text
 	    	if(resource_types.has_key?(type))
-		puts "IT MATCHED"
 		  type = resource_types[type]
 		end
 		add_field.call("type_of_resource_facet", type)
