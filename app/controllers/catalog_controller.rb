@@ -13,8 +13,7 @@ class CatalogController < ApplicationController
  
   before_filter :redirect_browse
   before_filter :url_decode_f
-  after_filter :display_custom_facet_values
-
+  
   helper_method :url_encode_resource, :url_decode_resource
   
   # displays values and pagination links for a single facet field
@@ -64,23 +63,6 @@ class CatalogController < ApplicationController
     value = CGI::unescape(value)
   end  
   
-  def display_custom_facet_values
-#   if(response.html?)
-    @response.facets.each {|f|
-      if(f.name == 'type_of_resource_facet')
-        puts "THIS IS THE THE THE FNAME #{f.name}"
-        f.items.each {|item|
-          nitem = RSolr::Ext::Response::Facets::FacetItem.new("Text", item.hits)
-          puts "#{nitem.value}"
-        }
-      else
-        puts "THIS IS OTHER OTHER FNAME #{f.name}"
-      end
-    }
-#   end
-  end
-
-
   def index
 
       respond_to do |format|
