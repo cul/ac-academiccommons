@@ -16,7 +16,7 @@
 
 <!-- [if lt IE8] <%= stylesheet_link_tag "compiled/ie.css", :media => "screen, projection" %> -->
 
-<%= javascript_include_tag "application", "http://cdn.sublimevideo.net/js/3s7oes9q.js" %>
+
 
 <%= raw(render_head_content) %>
 
@@ -27,7 +27,7 @@
     <% javascript_tag do -%>
     <%= yield(:jstemplates) %> 
     <% end -%>
-
+<%= javascript_include_tag "http://cdn.sublimevideo.net/js/3s7oes9q.js" %>
 <% 
 if(@document != nil && @document.include?("title_display") && @document.include?("author_facet") && @document.include?("date_issued"))
 

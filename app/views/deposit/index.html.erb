@@ -3,10 +3,57 @@
 
 <% extra_head_content << javascript_include_tag('jquery.validate.min.js') %>
 <% extra_head_content << javascript_include_tag('jquery.replaceholder.min.js') %>
+<% extra_head_content << javascript_include_tag('jquery.getUrlParam.js') %>
 <% extra_head_content << javascript_include_tag('self-deposit.js') %>
 
 
+ <% sidebar_items << capture do %>
+
  
+
+ <h3>Browse AC Content</h3>
+ 
+<div   class='box home-side'>
+    
+  <%= link_to "Departments", departments_browse_path, :class=>"nav-link" %>
+  <%= link_to "Subjects", subjects_browse_path, :class=>"nav-link" %>
+    
+</div>
+
+ 
+<h3>Helpful Links</h3>
+ 
+<div class='box home-side'>
+
+<%= render :partial=>'/catalog/home_accessory_links' %>
+</div>
+
+
+
+
+
+
+  
+ 
+
+ 
+
+<h3>AC by the Numbers</h3>
+<div class='box home-side'>
+			
+			<ul>
+			<li><strong><%= get_total_count() %></strong> items in Academic Commons.</li>
+			<li>Objects added in the last year: <strong><%= get_count_by_year() %></strong></li> 
+			<li>Objects added in the last 30 days:  <strong><%= get_count_by_month() %></strong></li>
+			<li>Page Visits in <%= get_last_month_name() %>: <strong><%= get_last_month_page_visits() %></strong>
+			
+			</li>
+			</ul>   
+			
+			</div>
+
+ <% end %>
+
 
 <div class="page box sd">
 
@@ -30,7 +77,7 @@
 
 <ul id="stepForm" class="ui-accordion-container">
 
-<li id="sf1"><a href='#' class="ui-accordion-link"> </a>
+<li id="sf1"><a href='#' class="ui-accordion-link"></a>
 
 <div>
 <h3>Step 1 of 3</h3>
@@ -137,7 +184,7 @@
 
 <div>
 
-<p>Review your information below and click the Submit button to send your work to AC.</p>
+<p>Review your information below and click the Submit button to submit your research to Academic Commons.</p>
  
 <p class="clearfix"><span class="check-label">Name:</span><span class="check-value" id="name-check"></span></p>
 <p><span class="check-label">UNI:</span><span class="check-value" id="uni-check"></span></p>
