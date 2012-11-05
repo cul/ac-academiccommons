@@ -30,7 +30,6 @@
 <a class="fancybox-media" href="http://www.youtube.com/watch?v=EHmu0ArJumo&hd=1&modestbranding=1" ><%= image_tag("about/search-video-icon.png") %><h2>Searching Our Collections</h2></a>This video demonstrates how to search <em>Academic Commons</em>  using our basic keyword search box and then use post-search limiters to refine your results to get exactly the content you are looking for, whether its Columbia University's latest dissertations or one of the classic papers in our Computer Science Technical Reports series.</li>
 
 
-
 <li>
 <a class="fancybox-media" href="http://www.youtube.com/watch?v=vkKrDklEQGo&hd=1&modestbranding=1" ><%= image_tag("about/deposit-video-icon.png") %><h2>Depositing Your Work</h2></a>This video demonstrates how Columbia-based researchers can deposit their work in <em>Academic Commons</em>, enhancing access to their research in the present and preserving it for the future.
 
@@ -41,76 +40,9 @@
 <a class="fancybox-media" href="http://www.youtube.com/watch?v=K6QSWAecpxo&hd=1&modestbranding=1"  ><%= image_tag("about/login-video-icon.png") %><h2>Using Login Features</h2></a>This video demonstrates how to make use of our special Login features, which currently include Saved Searches and Search History. These features make it easy for users to store the searches they routinely perform for future use.
 
 </li>
-
-
-
  
 </ul>
 
-
 </div>
 
- <div id="sidebar" class="span-7">
- 
-
-<% sidebar_items << capture do %>
-
- 
-
- <h3>Browse AC Content</h3>
- 
-<div   class='box home-side'>
-    
-  <%= link_to "Departments", departments_browse_path, :class=>"nav-link" %>
-  <%= link_to "Subjects", subjects_browse_path, :class=>"nav-link" %>
-    
-</div>
-
- 
-<h3>Helpful Links</h3>
- 
-<div class='box home-side'>
-
-<%= render :partial=>'catalog/home_accessory_links' %>
-</div>
-
-
-
-
-
-
-  
- 
-
- 
-
-<h3>AC by the Numbers</h3>
-<div class='box home-side'>
-			
-			<ul>
-			<li><strong><%= get_total_count() %></strong> items in <em>Academic Commons</em>.</li>
-			<li>Objects added in the last year: <strong><%= get_count_by_year() %></strong></li> 
-			<li>Objects added in the last 30 days:  <strong><%= get_count_by_month() %></strong></li>
-			<li>Visitors in <%= get_last_month_name() %>: <strong><%= get_last_month_page_visitors() %></strong></li>
-
-			</ul>   
-			
-			</div>
-
- 
- 
- <h3>Deposit your Work in <em>Academic Commons</em></h3>
-<div   class='box home-side'  >
-
-
-<p>Current faculty, staff, and students of Columbia and its affiliates are invited to <a href="<%= relative_root %>/deposit">deposit</a> research materials  in any digital format, including: articles, monographs, theses and dissertations, working papers, technical reports, conference papers and presentations, datasets, images, video and other multimedia creations, and software code.
-</p>
-<p>
-To learn more about the benefits of depositing your work into <em>Academic Commons</em>, <a href="http://support.academiccommons.columbia.edu/">visit our FAQ</a> or email <a href="mailto:rh2561@columbia.edu">Robert Hilliker, Digital Repository Manager</a>.</p>
-</div>
-
- 
-
- <% end %>
- 
- </div>
+<%= render :partial=>'sidebar_all.erb' %>

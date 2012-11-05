@@ -1,0 +1,13 @@
+
+
+<div id="sidebar" class="span-7">
+
+	<% sidebar_items << capture do %>
+	
+	    <%= render :partial=>'browse_content' %>
+	    <%= render :partial=>'helpful_links' %>
+		<%= render :partial=>'ac_by_numbers' %>
+	
+	<% end %>
+	 
+</div>
