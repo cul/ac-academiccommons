@@ -1,13 +1,4 @@
 GIT
-  remote: git://github.com/code4lib/ruby-oai.git
-  revision: 039ddf871cdc697bca7bd69bea788009a554b5a7
-  specs:
-    oai (0.2.1)
-      builder (>= 2.0.0)
-      faraday
-      faraday_middleware
-
-GIT
   remote: git@github.com:cul/rsolr.git
   revision: eed3b70de2b910cff03f37097895607f09a26229
   specs:
@@ -21,6 +12,14 @@ PATH
       blacklight (~> 3.2)
       oai
       rails (~> 3.0)
+
+PATH
+  remote: vendor/ruby-oai
+  specs:
+    oai (0.2.1)
+      builder (>= 2.0.0)
+      faraday
+      faraday_middleware
 
 GEM
   remote: http://rubygems.org/
