@@ -238,7 +238,7 @@ DEPENDENCIES
   authlogic_wind
   blacklight (~> 3.2.0)
   blacklight_advanced_search
-  blacklight_oai_provider!
+  blacklight_oai_provider (= 0.1.0)!
   coffee-rails (~> 3.2.0)
   compass
   cucumber-rails (= 1.2.1)
@@ -253,7 +253,7 @@ DEPENDENCIES
   mysql
   net-ldap
   nokogiri (= 1.5.0)
-  oai!
+  oai (= 0.2.1)!
   rack (= 1.4.0)
   rails (= 3.2.0)
   railties (= 3.2.0)
