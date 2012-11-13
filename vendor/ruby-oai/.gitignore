@@ -1,7 +1,0 @@
-/pkg/
-/doc/
-/coverage*
-/.yardoc/
-
-# Exclude Gemfile.lock (best practice for gems)
-Gemfile.lock
