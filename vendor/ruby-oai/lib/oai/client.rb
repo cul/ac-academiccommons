@@ -286,8 +286,8 @@ module OAI
       end
 
       # Convert date formated strings in dates.
-      #realopts[:from] = parse_date(realopts[:from]) if realopts[:from]
-      #realopts[:until] = parse_date(realopts[:until]) if realopts[:until]
+      realopts[:from] = parse_date(realopts[:from]) if realopts[:from]
+      realopts[:until] = parse_date(realopts[:until]) if realopts[:until]
 
       # check for any bad options
       unless (realopts.keys - OAI::Const::VERBS[verb]).empty?
