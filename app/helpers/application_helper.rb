@@ -156,7 +156,7 @@ module ApplicationHelper
     end
     
     if(field_name == "url")
-      value = '<a class="fancybox-media" href="' + value + '">' + value + '</a>'  
+      value = '<a class="fancybox-counter" href="' + value + '">' + value + '</a>'  
     end
       
     return auto_link(value).html_safe
