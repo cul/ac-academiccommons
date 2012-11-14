@@ -121,24 +121,58 @@ module ApplicationHelper
     Date.today.ago(1.month).strftime("%B")
   end
   
+  # def get_last_month_page_visits
+#     
+    # if(File.exists?("#{Rails.root}/tmp/#{get_last_month_name.downcase}_visits"))
+      # file = File.open("#{Rails.root}/tmp/#{get_last_month_name.downcase}_visits", 'rb')
+      # return file.read
+    # else
+      # require "#{Rails.root}/lib/pagevisits.rb"
+      # Garb::Session.login(Rails.application.config.analytics_username, Rails.application.config.analytics_password)
+      # profile = Garb::Management::Profile.all.detect {|p| p.web_property_id == 'UA-10481105-1'}
+      # ga_results = profile.pagevisits(:start_date => Date.today.ago(1.month).beginning_of_month, :end_date => Date.today.beginning_of_month.ago(1.day))
+      # visits = ga_results.to_a[0].visits
+      # Dir.glob("#{Rails.root}/tmp/*_visits") do |visits_file|
+        # File.delete(visits_file)
+      # end
+      # File.open("#{Rails.root}/tmp/#{get_last_month_name.downcase}_visits", 'w') { |file| file.write(visits) }
+      # return visits
+    # end
+#     
+  # end
+  
   def get_last_month_page_visits
+    return get_analytics("visits")
+  end
+  
+  def get_last_month_page_visitors
+    return get_analytics("visitors")
+  end
+  
+  def get_analytics(metrics)
     
-    if(File.exists?("#{Rails.root}/tmp/#{get_last_month_name.downcase}_visits"))
-      file = File.open("#{Rails.root}/tmp/#{get_last_month_name.downcase}_visits", 'rb')
+    if(File.exists?("#{Rails.root}/tmp/#{get_last_month_name.downcase}_" + metrics))
+      file = File.open("#{Rails.root}/tmp/#{get_last_month_name.downcase}_" + metrics, 'rb')
       return file.read
     else
+      
       require "#{Rails.root}/lib/pagevisits.rb"
       Garb::Session.login(Rails.application.config.analytics_username, Rails.application.config.analytics_password)
       profile = Garb::Management::Profile.all.detect {|p| p.web_property_id == 'UA-10481105-1'}
       ga_results = profile.pagevisits(:start_date => Date.today.ago(1.month).beginning_of_month, :end_date => Date.today.beginning_of_month.ago(1.day))
-      visits = ga_results.to_a[0].visits
-      Dir.glob("#{Rails.root}/tmp/*_visits") do |visits_file|
+      if(metrics == "visitors") 
+        visits = ga_results.to_a[0].visitors 
+      end
+      if(metrics == "visits") 
+         visits = ga_results.to_a[0].visits 
+      end
+      Dir.glob("#{Rails.root}/tmp/*_" + metrics) do |visits_file|
         File.delete(visits_file)
       end
-      File.open("#{Rails.root}/tmp/#{get_last_month_name.downcase}_visits", 'w') { |file| file.write(visits) }
+      File.open("#{Rails.root}/tmp/#{get_last_month_name.downcase}_" + metrics, 'w') { |file| file.write(visits) }
       return visits
-    end
-    
+      
+     end  
   end
   
   def document_show_fields_linked
