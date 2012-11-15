@@ -82,7 +82,6 @@ module OAI
     # use the `:parser` option when you construct your `OAI::Client`.
     #
     def initialize(base_url, options={})
-    puts "INITIALIZING CLIENT"
       @base = URI.parse base_url
       @debug = options.fetch(:debug, false)
       @parser = options.fetch(:parser, 'rexml')
@@ -219,7 +218,6 @@ module OAI
     end
 
     def build_uri(verb, opts)
-    puts "IN BUILD URI"
       opts = validate_options(verb, opts)
       uri = @base.clone
       uri.query = "verb=" << verb
@@ -288,7 +286,6 @@ module OAI
       end
 
       # Convert date formated strings in dates.
-puts "TIME TO PARSE THE DATE"
       realopts[:from] = parse_date(realopts[:from]) if realopts[:from]
       realopts[:until] = parse_date(realopts[:until]) if realopts[:until]
 

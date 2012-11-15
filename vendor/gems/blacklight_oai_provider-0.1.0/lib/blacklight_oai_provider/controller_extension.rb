@@ -27,3 +27,5 @@ module BlacklightOaiProvider::ControllerExtension
     @oai_provider ||= BlacklightOaiProvider::SolrDocumentProvider.new(self, oai_config)
   end
 end
+
+

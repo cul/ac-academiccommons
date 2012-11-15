@@ -8,6 +8,8 @@ module BlacklightOaiProvider
       defaults = { :timestamp => 'timestamp', :limit => 15} 
       @options = defaults.merge options
 
+
+
       @timestamp_field = @options[:timestamp]
       @limit = @options[:limit]
     end

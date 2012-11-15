@@ -6,7 +6,7 @@ GIT
       builder (>= 2.1.2)
 
 PATH
-  remote: vendor/blacklight_oai_provider-0.1.0
+  remote: vendor/gems/blacklight_oai_provider-0.1.0
   specs:
     blacklight_oai_provider (0.1.0)
       blacklight (~> 3.2)
@@ -14,7 +14,7 @@ PATH
       rails (~> 3.0)
 
 PATH
-  remote: vendor/ruby-oai
+  remote: vendor/gems/ruby-oai
   specs:
     oai (0.2.1)
       builder (>= 2.0.0)

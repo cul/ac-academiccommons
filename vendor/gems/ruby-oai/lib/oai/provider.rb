@@ -297,6 +297,9 @@ module OAI::Provider
     def process_request(params = {})
       begin
 
+puts "IN PROCESS REQUEST, these are the params"
+puts params
+
         # Allow the request to pass in a url
         self.class.url = params['url'] ? params.delete('url') : self.class.url
 
@@ -305,6 +308,8 @@ module OAI::Provider
         unless verb and OAI::Const::VERBS.keys.include?(verb)
           raise OAI::VerbException.new
         end
+
+	validate_options(params)
 
         send(methodize(verb), params)
 
@@ -322,6 +327,25 @@ module OAI::Provider
       verb.gsub(/[A-Z]/) {|m| "_#{m.downcase}"}.sub(/^\_/,'')
     end
 
+
+
+    def validate_options(opts = {})
+      # Convert date formated strings in dates.
+      parse_date(opts[:from]) if opts[:from]
+      parse_date(opts[:until]) if opts[:until]
+    end
+
+
+    def parse_date(value)
+      date = Date.strptime(value, "%Y-%m-%d")
+    rescue
+      raise OAI::ArgumentException.new
+    end
+
+
+    
+
   end
+
 
 end

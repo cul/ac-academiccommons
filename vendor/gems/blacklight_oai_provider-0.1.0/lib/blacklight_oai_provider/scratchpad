@@ -1,0 +1,48 @@
+    # Massage the standard OAI options to make them a bit more palatable.
+    def validate_options(opts = {})
+
+puts "validation opts..."
+puts opts
+#      raise OAI::VerbException.new unless Const::VERBS.keys.include?(verb)
+
+#      return {} if opts.nil?
+
+#      raise OAI::ArgumentException.new unless opts.respond_to?(:keys)
+
+      realopts = {}
+      # Internalize the hash
+      opts.keys.each do |key|
+        realopts[key.to_s.gsub(/([A-Z])/, '_\1').downcase.intern] = opts.delete(key)
+      end
+
+ #     return realopts if is_resumption?(realopts)
+
+      # add in a default metadataPrefix if none exists
+#      if(Const::VERBS[verb].include?(:metadata_prefix))
+#             realopts[:metadata_prefix] ||= 'oai_dc'
+#      end
+
+      # Convert date formated strings in dates.
+      realopts[:from] = parse_date(realopts[:from]) if realopts[:from]
+      realopts[:until] = parse_date(realopts[:until]) if realopts[:until]
+
+      # check for any bad options
+#      unless (realopts.keys - OAI::Const::VERBS[verb]).empty?
+#        raise OAI::ArgumentException.new
+#      end
+      realopts
+    end
+
+
+
+
+
+    def is_resumption?(opts)
+      if opts.keys.include?(:resumption_token)
+        return true if 1 == opts.keys.size
+        raise OAI::ArgumentException.new
+      end
+    end
+
+
+

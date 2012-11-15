@@ -5,4 +5,4 @@ require 'date'
 # can selectively load them.
 require 'oai/client'
 require 'oai/provider'
-puts "IN OAI RB"
+
