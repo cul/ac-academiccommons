@@ -82,6 +82,10 @@ class CatalogController < ApplicationController
     render :template => 'catalog/index.atom.builder'
   end
 
+  def streaming
+      logger.info "GDP GDP GDP revisions and unemployment claims"      
+  end
+
 
   private
   
