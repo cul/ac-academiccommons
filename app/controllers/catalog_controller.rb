@@ -8,7 +8,7 @@ class CatalogController < ApplicationController
 
   include CatalogHelper
   
-  before_filter :record_stats, :only => :show
+  before_filter :record_view_stats, :only => :show
   unloadable
  
   before_filter :redirect_browse
@@ -83,16 +83,21 @@ class CatalogController < ApplicationController
   end
 
   def streaming
-      logger.info "GDP GDP GDP revisions and unemployment claims"      
+      record_stats(params["id"], "Streaming")
+      render :nothing => true
   end
 
 
   private
+
+  def record_view_stats()
+      record_stats(params["id"], "View")
+  end
   
-  def record_stats()
+  def record_stats(id, event)
    unless request.user_agent.nil?
     unless StatSupport::is_bot?(request.user_agent)
-      Statistic.create!(:session_id => request.session_options[:id], :ip_address => request.env['HTTP_X_FORWARDED_FOR'] || request.remote_addr, :event => "View", :identifier => params["id"], :at_time => Time.now())
+      Statistic.create!(:session_id => request.session_options[:id], :ip_address => request.env['HTTP_X_FORWARDED_FOR'] || request.remote_addr, :event => event, :identifier => id, :at_time => Time.now())
     end
    end
   end
