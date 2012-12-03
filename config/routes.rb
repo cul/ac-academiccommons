@@ -88,8 +88,8 @@ CulBlacklightAc2::Application.routes.draw do
   match '/catalog/browse/subjects', :to => 'catalog#browse_subject', :as => 'subjects_browse'
   match '/catalog/browse/departments/:id', :to => 'catalog#browse_department', :as => 'department_browse'
   match '/catalog/browse/subjects/:id', :to => 'catalog#browse_subject', :as => 'subject_browse'
+  match '/catalog/streaming/:id', :to => 'catalog#streaming', :as => 'streaming'  
   match '/sitemap.xml', :to => 'sitemap#index', :format => 'xml'
-  
 
   
   match '/item/:id', :to => 'catalog#show', :as => 'catalog_item'
