@@ -27,7 +27,7 @@ $('.fancybox-media').fancybox({
 			 
 			var url = window.location.pathname;
 			var iuid = url.substring(url.lastIndexOf('/')+1);
-			var counterURL = '/stats/counter/'+iuid;
+			var counterURL = '/catalog/streaming/'+iuid;
 			$.ajax({url:counterURL});
 
 
