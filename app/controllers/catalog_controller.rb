@@ -83,6 +83,7 @@ class CatalogController < ApplicationController
   end
 
   def streaming
+  logger.info "RECORDING STREAMING EVENT"
       record_stats(params["id"], "Streaming")
       render :nothing => true
   end
