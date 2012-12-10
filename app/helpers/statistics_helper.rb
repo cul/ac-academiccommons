@@ -199,6 +199,7 @@ module StatisticsHelper
     enddate = enddate + 1.months
     
     stats['View'] = Statistic.count(:group => "identifier", :conditions => ["event = 'View' and identifier IN (?) AND at_time BETWEEN ? and ?", ids, startdate, enddate])
+    stats['Streaming'] = Statistic.count(:group => "identifier", :conditions => ["event = 'Streaming' and identifier IN (?) AND at_time BETWEEN ? and ?", ids, startdate, enddate])
 
     stats_downloads = Statistic.count(:group => "identifier", :conditions => ["event = 'Download' and identifier IN (?) AND at_time BETWEEN ? and ?", download_ids.values.flatten, startdate, enddate])
 
@@ -209,6 +210,8 @@ module StatisticsHelper
     stats['View'] = convertOrderedHash(stats['View'])
     
     stats['View Lifetime'] = Statistic.count(:group => "identifier", :conditions => ["event = 'View' and identifier IN (?)", ids])
+    stats['Streaming Lifetime'] = Statistic.count(:group => "identifier", :conditions => ["event = 'Streaming' and identifier IN (?)", ids])
+    
     stats_lifetime_downloads = Statistic.count(:group => "identifier", :conditions => ["event = 'Download' and identifier IN (?)" , download_ids.values.flatten])
     
     download_ids.each_pair do |doc_id, downloads|

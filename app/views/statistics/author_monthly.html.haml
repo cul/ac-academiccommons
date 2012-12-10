@@ -58,8 +58,9 @@
         %tr
           %th #
           %th Title
-          %th Views
-          %th Downloads
+          %th{:style=>"width: 70px;"} Views
+          %th{:style=>"width: 70px;"} Downloads
+          %th{:style=>"width: 70px;"} Streaming
 
         %tr
           %td 
@@ -67,6 +68,7 @@
             %b Total for #{params[:month]} #{params[:year]}
           %td= @totals["View"] || 0
           %td= @totals["Download"] || 0
+          %td= @totals["Streaming"] || 0
 
         - @results.each do |item|
           - row_counter += 1
@@ -76,6 +78,7 @@
             %td= link_to item["title_display"], catalog_path(item["id"])
             %td= @stats["View"][item["id"][0]] || 0
             %td= @stats["Download"][item["id"][0]] || 0
+            %td= @stats["Streaming"][item["id"][0]] || 0
 
 
       %table
