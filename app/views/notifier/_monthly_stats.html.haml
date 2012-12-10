@@ -7,19 +7,23 @@
     -if lifetime
       %tr
         %td
-        %td{:colspan => 2, :align => "center"} This Month 
-        %td{:colspan => 2, :align => "center"} Lifetime 
+        %td{:colspan => 3, :align => "center"} This Month 
+        %td{:colspan => 3, :align => "center"} Lifetime 
     %tr
       %td 
-      %td 
+      %td{:style=>"padding: 0px 5px 0px"} 
         %b Views
-      %td
+      %td{:style=>"padding: 0px 5px 0px"} 
         %b Downloads
+      %td{:style=>"padding: 0px 5px 0px"} 
+        %b Streaming        
       - if lifetime
-        %td 
+        %td{:style=>"padding: 0px 5px 0px"} 
           %b Views
-        %td
+        %td{:style=>"padding: 0px 5px 0px"}
           %b Downloads
+        %td{:style=>"padding: 0px 5px 0px"} 
+          %b Streaming  
 
     -current_url = (Rails.application.config.base_path != nil) ? Rails.application.config.base_path : "localhost:3000"
     -current_url = "#{current_url}#{Rails.application.config.relative_root}"
@@ -28,29 +32,39 @@
       - lifetime_views = @stats["View Lifetime"][item["id"][0]] || 0
       - downloads =  @stats["Download"][item["id"][0]] || 0
       - lifetime_downloads = @stats["Download Lifetime"][item["id"][0]] || 0
+      - streaming = @stats["Streaming"][item["id"][0]] || 0
+      - lifetime_streaming = @stats["Streaming Lifetime"][item["id"][0]] || 0
       %tr
         %td= link_to(item["title_display"], url_for(:host => current_url,  :only_path => false, :controller => :catalog, :action => :show, :id => item["id"])) 
-        %td
+        %td{:style=>"padding: 0px 5px 0px"}
           #{views}
-        %td
+        %td{:style=>"padding: 0px 5px 0px"}
           #{downloads}
+        %td{:style=>"padding: 0px 5px 0px"}
+          #{streaming}
         -if lifetime
-          %td
+          %td{:style=>"padding: 0px 5px 0px 20px"}
             #{lifetime_views}
-          %td
+          %td{:style=>"padding: 0px 5px 0px"}
             #{lifetime_downloads}
+          %td{:style=>"padding: 0px 5px 0px"}
+            #{lifetime_streaming}
     %tr
-      %td 
+      %td
         %b Totals: 
-      %td
-        #{@totals["View"]}
-      %td
-        #{@totals["Download"]}
+      %td{:style=>"padding: 0px 5px 0px"}
+        %b #{@totals["View"]}
+      %td{:style=>"padding: 0px 5px 0px"}
+        %b #{@totals["Download"]}
+      %td{:style=>"padding: 0px 5px 0px"}
+        %b #{@totals["Streaming"]} 
       - if lifetime
-        %td
-          #{@totals["View Lifetime"]}
-        %td
-          #{@totals["Download Lifetime"]}
+        %td{:style=>"padding: 0px 5px 0px 20px"}
+          %b #{@totals["View Lifetime"]}
+        %td{:style=>"padding: 0px 5px 0px"}
+          %b #{@totals["Download Lifetime"]}
+        %td{:style=>"padding: 0px 5px 0px"}
+          %b #{@totals["Streaming Lifetime"]}
 
   %br
 

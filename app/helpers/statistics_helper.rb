@@ -210,7 +210,7 @@ module StatisticsHelper
     stats['View'] = convertOrderedHash(stats['View'])
     
     stats['View Lifetime'] = Statistic.count(:group => "identifier", :conditions => ["event = 'View' and identifier IN (?)", ids])
-    stats['Streaming Lifetime'] = Statistic.count(:group => "identifier", :conditions => ["event = 'Streaming' and identifier IN (?)", ids])
+    stats['Streaming Lifetime'] = Statistic.count(:group => "identifier", :conditions => ["event = 'streaming' and identifier IN (?)", ids])
     
     stats_lifetime_downloads = Statistic.count(:group => "identifier", :conditions => ["event = 'Download' and identifier IN (?)" , download_ids.values.flatten])
     
