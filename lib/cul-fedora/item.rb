@@ -262,6 +262,9 @@ module Cul
         other_name_roles = ["thesis advisor"]
         corporate_author_roles = ["author"]
         corporate_department_roles = ["originator"]
+        resource_types = {'text' => 'Text', 'moving image' => 'Video', 'sound recording--nonmusical' => 'Audio', 'software, multimedia' => 'Datasets'}
+ 
+
 
         organizations = []
         departments = []
@@ -427,7 +430,15 @@ module Cul
 
             mods.css("physicalDescription>internetMediaType").each { |mt| add_field.call("media_type_facet", mt) }
 
-            mods.css("typeOfResource").each { |tr| add_field.call("type_of_resource_facet", tr)}
+            mods.css("typeOfResource").each { |tr| 
+		add_field.call("type_of_resource_mods", tr)
+	        type = tr.text
+	    	if(resource_types.has_key?(type))
+		  type = resource_types[type]
+		end
+		add_field.call("type_of_resource_facet", type)
+	    }
+
             mods.css("subject>geographic").each do |geo|
               add_field.call("geographic_area_display", geo)
               add_field.call("geographic_area_search", geo)
