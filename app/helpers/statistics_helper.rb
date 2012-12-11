@@ -24,8 +24,8 @@ module StatisticsHelper
     csv += CSV.generate_line( [  current_user == nil ? "N/A" : (current_user.to_s + " (" + current_user.login.to_s + ")") ]) + LINE_BRAKER
     
 
-    csv = makeCSVcategory("Views", "View", csv, results, stats, totals, months_list, download_ids)
-    csv = makeCSVcategory("Streams", "Streaming", csv, results, stats, totals, months_list, download_ids)
+    csv = makeCSVcategory("Views", "View", csv, results, stats, totals, months_list, nil)
+    csv = makeCSVcategory("Streams", "Streaming", csv, results, stats, totals, months_list, nil)
     csv = makeCSVcategory("Downloads", "Download", csv, results, stats, totals, months_list, download_ids)
 
     return csv
@@ -33,7 +33,7 @@ module StatisticsHelper
   
   
   
-  def makeCSVcategory(category, key, csv, results, stats, totals, months_list, download_ids)
+  def makeCSVcategory(category, key, csv, results, stats, totals, months_list, ids)
     
     csv += CSV.generate_line( [ "" ]) + LINE_BRAKER
     
@@ -62,7 +62,7 @@ module StatisticsHelper
                               item["handle"],
                               item["doi"],
                               stats[key][item["id"][0]].nil? ? 0 : stats[key][item["id"][0]]
-                              ].concat( make_month_line_stats(stats, months_list, item["id"][0], download_ids))
+                              ].concat( make_month_line_stats(stats, months_list, item["id"][0], ids))
                               ) + LINE_BRAKER  
     end
     
