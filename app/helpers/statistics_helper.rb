@@ -6,73 +6,54 @@ module StatisticsHelper
   
   VIEW = 'view_'
   DOWNLOAD = 'download_'
+  LINE_BRAKER = RUBY_VERSION < "1.9" ? "\r\n" : ""
    
   def cvsReport(startdate, enddate, author, include_zeroes, recent_first, facet)
-
-    line_braker = RUBY_VERSION < "1.9" ? "\r\n" : ""
 
     months_list = make_months_list(startdate, enddate, recent_first)
     results, stats, totals, download_ids = get_author_stats(startdate, enddate, author, months_list, include_zeroes, facet)
 
-    csv = "Author UNI/Name: ," + author.to_s + line_braker
+    csv = "Author UNI/Name: ," + author.to_s + LINE_BRAKER
  
-    csv += CSV.generate_line( [ "Period covered by Report" ]) + line_braker
-    csv += CSV.generate_line( [ "from:", "to:" ]) + line_braker
-    csv += CSV.generate_line( [ startdate.strftime("%b-%Y"),  enddate.strftime("%b-%Y") ]) + line_braker
-    csv += CSV.generate_line( [ "Date run:" ]) + line_braker
-    csv += CSV.generate_line( [ Time.new.strftime("%Y-%m-%d") ] ) + line_braker
-    csv += CSV.generate_line( [ "Report created by:" ]) + line_braker
-    csv += CSV.generate_line( [  current_user == nil ? "N/A" : (current_user.to_s + " (" + current_user.login.to_s + ")") ]) + line_braker
+    csv += CSV.generate_line( [ "Period covered by Report" ]) + LINE_BRAKER
+    csv += CSV.generate_line( [ "from:", "to:" ]) + LINE_BRAKER
+    csv += CSV.generate_line( [ startdate.strftime("%b-%Y"),  enddate.strftime("%b-%Y") ]) + LINE_BRAKER
+    csv += CSV.generate_line( [ "Date run:" ]) + LINE_BRAKER
+    csv += CSV.generate_line( [ Time.new.strftime("%Y-%m-%d") ] ) + LINE_BRAKER
+    csv += CSV.generate_line( [ "Report created by:" ]) + LINE_BRAKER
+    csv += CSV.generate_line( [  current_user == nil ? "N/A" : (current_user.to_s + " (" + current_user.login.to_s + ")") ]) + LINE_BRAKER
     
-    csv += CSV.generate_line( [ "" ]) + line_braker
-    csv += CSV.generate_line( [ "Views report:" ]) + line_braker
-    
-    csv += CSV.generate_line( [ "Total for period:", 
-                                "",
-                                "",
-                                "", 
-                                totals["View"].to_s
-                               ].concat(make_months_header("Views by Month", months_list))
-                             ) + line_braker
-                            
-    csv += CSV.generate_line( [ "Title", 
-                                "Content Type", 
-                                "Permanent URL",
-                                "DOI", 
-                                "Reporting Period Total Views"
-                               ].concat( make_month_line(months_list))   
-                             ) + line_braker
 
-    results.each do |item|
+    csv = makeCSVcategory("Views", "View", csv, results, stats, totals, months_list, download_ids)
+    csv = makeCSVcategory("Streams", "Streaming", csv, results, stats, totals, months_list, download_ids)
+    csv = makeCSVcategory("Downloads", "Download", csv, results, stats, totals, months_list, download_ids)
 
-    csv += CSV.generate_line([item["title_display"],
-                              item["genre_facet"],
-                              item["handle"],
-                              item["doi"],
-                              stats["View"][item["id"][0]].nil? ? 0 : stats["View"][item["id"][0]]
-                              ].concat( make_month_line_stats(stats, months_list, item["id"][0], nil ))
-                              ) + line_braker
-                     
-    end
+    return csv
+  end
+  
+  
+  
+  def makeCSVcategory(category, key, csv, results, stats, totals, months_list, download_ids)
     
-    csv += CSV.generate_line( [ "" ]) + line_braker
-    csv += CSV.generate_line( [ "Downloads report:" ]) + line_braker
+    csv += CSV.generate_line( [ "" ]) + LINE_BRAKER
+    
+    csv += CSV.generate_line( [ category + " report:" ]) + LINE_BRAKER
     
         csv += CSV.generate_line( [ "Total for period:", 
                                 "",
                                 "",
                                 "", 
                                 totals["Download"].to_s
-                               ].concat(make_months_header("Downloads by Month", months_list))
-                             ) + line_braker
+                               ].concat(make_months_header(category + " by Month", months_list))
+                             ) + LINE_BRAKER
                             
     csv += CSV.generate_line( [ "Title", 
                                 "Content Type", 
                                 "Permanent URL",
                                 "DOI", 
-                                "Reporting Period Total Downloads"
+                                "Reporting Period Total " + category
                                ].concat( make_month_line(months_list))   
-                             ) + line_braker
+                             ) + LINE_BRAKER
 
     results.each do |item|
 
@@ -80,14 +61,15 @@ module StatisticsHelper
                               item["genre_facet"],
                               item["handle"],
                               item["doi"],
-                              stats["Download"][item["id"][0]].nil? ? 0 : stats["Download"][item["id"][0]]
+                              stats[key][item["id"][0]].nil? ? 0 : stats[key][item["id"][0]]
                               ].concat( make_month_line_stats(stats, months_list, item["id"][0], download_ids))
-                              ) + line_braker
-                     
+                              ) + LINE_BRAKER  
     end
-
+    
     return csv
+    
   end
+  
   
   
   def make_months_header(first_item, months_list)
