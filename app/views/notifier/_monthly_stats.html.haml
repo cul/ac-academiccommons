@@ -14,16 +14,16 @@
       %td{:style=>"padding: 0px 10px 0px"} 
         %b Views
       %td{:style=>"padding: 0px 10px 0px"} 
-        %b Downloads
+        %b Streams 
       %td{:style=>"padding: 0px 10px 0px"} 
-        %b Streaming        
+        %b Downloads       
       - if lifetime
         %td{:style=>"padding: 0px 10px 0px 20px"} 
           %b Views
+        %td{:style=>"padding: 0px 10px 0px"} 
+          %b Streams 
         %td{:style=>"padding: 0px 10px 0px"}
           %b Downloads
-        %td{:style=>"padding: 0px 10px 0px"} 
-          %b Streaming  
 
     -current_url = (Rails.application.config.base_path != nil) ? Rails.application.config.base_path : "localhost:3000"
     -current_url = "#{current_url}#{Rails.application.config.relative_root}"
@@ -39,16 +39,16 @@
         %td{:style=>"padding: 0px 10px 0px"}
           #{views}
         %td{:style=>"padding: 0px 10px 0px"}
-          #{downloads}
-        %td{:style=>"padding: 0px 10px 0px"}
           #{streaming}
+        %td{:style=>"padding: 0px 10px 0px"}
+          #{downloads}
         -if lifetime
           %td{:style=>"padding: 0px 10px 0px 20px"}
             #{lifetime_views}
           %td{:style=>"padding: 0px 10px 0px"}
-            #{lifetime_downloads}
-          %td{:style=>"padding: 0px 10px 0px"}
             #{lifetime_streaming}
+          %td{:style=>"padding: 0px 10px 0px"}
+            #{lifetime_downloads}
     %tr
       %td
         %b Totals: 
