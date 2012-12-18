@@ -342,13 +342,16 @@ module OAI::Provider
 
       # require that request is for no earlier than earliest timestamp (an OAI v.2 requirement)
       #      earliest_timestamp = OAI::Provider::ActiveRecordWrapper.earliest
-      earliest_timestamp = self.class.model.earliest
-      edate = parse_date(earliest_timestamp)
-      fdate = parse_date(opts[:until])
-      if(fdate < edate)
+
+      if(opts[:until])
+        earliest_timestamp = self.class.model.earliest
+        edate = parse_date(earliest_timestamp)
+        fdate = parse_date(opts[:until])
+        if(fdate < edate)
             raise OAI::ArgumentException.new
-      end
- 
+        end
+      end 
+
      #a rudimentary check that the date strings submitted are the same granularity (an OAI v.2 requirement)
 
      if(opts[:from] && opts[:until])
