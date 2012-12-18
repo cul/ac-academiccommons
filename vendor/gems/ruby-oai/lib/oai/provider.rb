@@ -297,9 +297,6 @@ module OAI::Provider
     def process_request(params = {})
       begin
 
-puts "IN PROCESS REQUEST, these are the params"
-puts params
-
         # Allow the request to pass in a url
         self.class.url = params['url'] ? params.delete('url') : self.class.url
 
@@ -330,14 +327,45 @@ puts params
 
 
     def validate_options(opts = {})
+
+    #do not allow double quotes in identifier
+      if(opts[:identifier])
+	if(opts[:identifier].include? '"')
+	  raise OAI::ArgumentException.new
+	end
+      end
+
       # Convert date formated strings in dates.
       parse_date(opts[:from]) if opts[:from]
       parse_date(opts[:until]) if opts[:until]
+
+
+      # require that request is for no earlier than earliest timestamp (an OAI v.2 requirement)
+      #      earliest_timestamp = OAI::Provider::ActiveRecordWrapper.earliest
+      earliest_timestamp = self.class.model.earliest
+      edate = parse_date(earliest_timestamp)
+      fdate = parse_date(opts[:until])
+      if(fdate < edate)
+            raise OAI::ArgumentException.new
+      end
+ 
+     #a rudimentary check that the date strings submitted are the same granularity (an OAI v.2 requirement)
+
+     if(opts[:from] && opts[:until])
+          df_str = opts[:from]
+     	  du_str = opts[:until]
+
+	  if(df_str.length != du_str.length)
+               raise OAI::ArgumentException.new
+     	  end
+     end
+
     end
 
 
+    #change this to granularity specified in config
     def parse_date(value)
-      date = Date.strptime(value, "%Y-%m-%d")
+      return Date.strptime(value, "%Y-%m-%d")
     rescue
       raise OAI::ArgumentException.new
     end
