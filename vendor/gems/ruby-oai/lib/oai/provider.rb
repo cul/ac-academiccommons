@@ -345,10 +345,10 @@ module OAI::Provider
 
       if(opts[:until])
         earliest_timestamp = self.class.model.earliest
-        edate = parse_date(earliest_timestamp)
+        edate = parse_date(earliest_timestamp.to_s)
         fdate = parse_date(opts[:until])
         if(fdate < edate)
-            raise OAI::ArgumentException.new
+            raise OAI::NoMatchException.new
         end
       end 
 
