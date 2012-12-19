@@ -6,7 +6,7 @@ GIT
       builder (>= 2.1.2)
 
 PATH
-  remote: vendor/gems/oai-0.2.1
+  remote: vendor/gems/gems/oai-0.2.1
   specs:
     oai (0.2.1)
       builder (>= 2.0.0)
