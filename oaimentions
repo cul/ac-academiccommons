@@ -1,0 +1,15 @@
+./Gemfile:gem 'blacklight_oai_provider'
+./Gemfile:gem 'oai', '0.2.1', :path =>'vendor/gems/ruby-oai.0.2.1', :require => 'oai'
+./Gemfile.lock:  remote: vendor/gems/ruby-oai.0.2.1
+./Gemfile.lock:    oai (0.2.1)
+./Gemfile.lock:    blacklight_oai_provider (0.1.0)
+./Gemfile.lock:      oai
+./Gemfile.lock:  blacklight_oai_provider
+./Gemfile.lock:  oai (= 0.2.1)!
+./vendor/gems/ruby-oai.0.2.1/README.md:Normally the best way to install oai is as part of your `Gemfile`:
+./vendor/gems/ruby-oai.0.2.1/README.md:    gem 'oai'
+./vendor/gems/ruby-oai.0.2.1/README.md:    $ gem install oai
+./vendor/gems/ruby-oai.0.2.1/ruby-oai.gemspec:    s.name = 'oai'
+./vendor/gems/ruby-oai.0.2.1/ruby-oai.gemspec:    s.summary = 'A ruby library for working with the Open Archive Initiative Protocol for Metadata Harvesting (OAI-PMH)'
+./vendor/gems/ruby-oai.0.2.1/ruby-oai.gemspec:    s.autorequire = 'oai'
+./vendor/gems/ruby-oai.0.2.1/ruby-oai.gemspec:    s.executables = 'oai'
