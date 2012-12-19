@@ -262,7 +262,7 @@ module Cul
         other_name_roles = ["thesis advisor"]
         corporate_author_roles = ["author"]
         corporate_department_roles = ["originator"]
-        resource_types = {'text' => 'Text', 'moving image' => 'Video', 'sound recording--nonmusical' => 'Audio', 'software, multimedia' => 'Datasets'}
+        resource_types = {'text' => 'Text', 'moving image' => 'Video', 'sound recording--nonmusical' => 'Audio', 'software, multimedia' => 'Datasets', 'still image' => 'Image'}
  
 
 
