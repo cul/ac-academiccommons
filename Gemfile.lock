@@ -1,6 +1,6 @@
 GIT
   remote: git@github.com:cul/oai-new-valid.git
-  revision: fd3a5b815abf040a43aab9784e4e8b574f67ff3a
+  revision: 8bcdf11a9153055a93f30d9a73667fd800c97a1a
   specs:
     oai (0.2.1)
       builder (>= 2.0.0)
@@ -250,7 +250,7 @@ DEPENDENCIES
   mysql
   net-ldap
   nokogiri (= 1.5.0)
-  oai!
+  oai (= 0.2.1)!
   rack (= 1.4.0)
   rails (= 3.2.0)
   railties (= 3.2.0)
