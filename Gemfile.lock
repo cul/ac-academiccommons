@@ -1,14 +1,4 @@
 GIT
-  remote: git@github.com:cul/oai-new-valid.git
-  revision: 58e021e66ef1bbda43eb2a426612be5ed5c3d290
-  tag: 0.2.2
-  specs:
-    oai (0.2.2)
-      builder (>= 2.0.0)
-      faraday
-      faraday_middleware
-
-GIT
   remote: git@github.com:cul/rsolr.git
   revision: eed3b70de2b910cff03f37097895607f09a26229
   specs:
@@ -66,10 +56,6 @@ GEM
       blacklight (~> 3.2, >= 3.2.1)
       parslet
       rails (~> 3.0)
-    blacklight_oai_provider (0.1.0)
-      blacklight (~> 3.2)
-      oai
-      rails (~> 3.0)
     blankslate (2.1.2.4)
     builder (3.0.0)
     capybara (1.1.2)
@@ -114,10 +100,6 @@ GEM
     erubis (2.7.0)
     execjs (1.4.0)
       multi_json (~> 1.0)
-    faraday (0.8.4)
-      multipart-post (~> 1.1)
-    faraday_middleware (0.9.0)
-      faraday (>= 0.7.4, < 0.9)
     ffi (1.1.5)
     fssm (0.2.9)
     garb (0.9.1)
@@ -148,7 +130,6 @@ GEM
     marc (0.4.4)
     mime-types (1.19)
     multi_json (1.3.6)
-    multipart-post (1.1.5)
     mysql (2.8.1)
     net-ldap (0.3.1)
     nokogiri (1.5.0)
@@ -236,7 +217,6 @@ DEPENDENCIES
   authlogic_wind
   blacklight (~> 3.2.0)
   blacklight_advanced_search
-  blacklight_oai_provider
   coffee-rails (~> 3.2.0)
   compass
   cucumber-rails (= 1.2.1)
@@ -251,7 +231,6 @@ DEPENDENCIES
   mysql
   net-ldap
   nokogiri (= 1.5.0)
-  oai!
   rack (= 1.4.0)
   rails (= 3.2.0)
   railties (= 3.2.0)
