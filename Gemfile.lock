@@ -1,7 +1,7 @@
 GIT
   remote: git@github.com:cul/blacklight_oai_provider.git
-  revision: fe00e8aedac9b1ef047685ed36814cd596c26312
-  tag: 0.0.2
+  revision: caf5f985edfb1438df71c1ccbac19a3e15a11051
+  tag: 0.0.3
   specs:
     blacklight_oai_provider (0.1.0)
       blacklight (~> 3.2)
