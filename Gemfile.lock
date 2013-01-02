@@ -148,7 +148,7 @@ GEM
     mime-types (1.19)
     multi_json (1.5.0)
     multipart-post (1.1.5)
-    mysql (2.9.0)
+    mysql (2.8.1)
     net-ldap (0.3.1)
     nokogiri (1.5.0)
     parslet (1.5.0)
@@ -246,7 +246,7 @@ DEPENDENCIES
   httpclient
   jquery-rails
   json
-  mysql
+  mysql (= 2.8.1)
   net-ldap
   nokogiri (= 1.5.0)
   oai!
