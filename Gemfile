@@ -60,4 +60,4 @@ gem 'httpclient'
 gem 'nokogiri', '1.5.0'
 gem 'net-ldap'
 gem 'blacklight_oai_provider'
-gem "oai", :git =>"git@github.com:cul/oai-new-valid.git"
+gem "oai", :git =>"git@github.com:cul/oai-new-valid.git", :tag =>'0.2.2'
