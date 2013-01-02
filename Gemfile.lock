@@ -1,4 +1,13 @@
 GIT
+  remote: git@github.com:cul/blacklight_oai_provider.git
+  revision: ae8e7f5623b2c4e8295e92e0e8398e01fbdc9efd
+  specs:
+    blacklight_oai_provider (0.1.0)
+      blacklight (~> 3.2)
+      oai
+      rails (~> 3.0)
+
+GIT
   remote: git@github.com:cul/oai-new-valid.git
   revision: 58e021e66ef1bbda43eb2a426612be5ed5c3d290
   tag: 0.2.2
@@ -65,10 +74,6 @@ GEM
     blacklight_advanced_search (1.2.4)
       blacklight (~> 3.2, >= 3.2.1)
       parslet
-      rails (~> 3.0)
-    blacklight_oai_provider (0.1.0)
-      blacklight (~> 3.2)
-      oai
       rails (~> 3.0)
     blankslate (2.1.2.4)
     builder (3.0.4)
@@ -235,7 +240,7 @@ DEPENDENCIES
   authlogic_wind
   blacklight (~> 3.2.0)
   blacklight_advanced_search
-  blacklight_oai_provider
+  blacklight_oai_provider!
   coffee-rails (~> 3.2.0)
   compass
   cucumber-rails (= 1.2.1)
