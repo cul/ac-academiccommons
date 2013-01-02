@@ -59,5 +59,5 @@ gem 'compass'
 gem 'httpclient'
 gem 'nokogiri', '1.5.0'
 gem 'net-ldap'
-gem 'blacklight_oai_provider', :git =>"git@github.com:cul/blacklight_oai_provider.git"
+gem 'blacklight_oai_provider', :git =>"git@github.com:cul/blacklight_oai_provider.git", :tag =>'0.0.1'
 gem "oai", :git =>"git@github.com:cul/oai-new-valid.git", :tag =>'0.2.2'
