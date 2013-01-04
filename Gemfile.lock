@@ -9,10 +9,10 @@ GIT
 
 GIT
   remote: git@github.com:cul/oai-new-valid.git
-  revision: 58e021e66ef1bbda43eb2a426612be5ed5c3d290
-  tag: 0.2.2
+  revision: 972b495508811dfaa51a2f71bc406b3b37c376dd
+  tag: 0.2.3
   specs:
-    oai (0.2.2)
+    oai (0.2.1)
       builder (>= 2.0.0)
       faraday
       faraday_middleware
