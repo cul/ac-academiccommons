@@ -1,20 +1,21 @@
 source 'http://rubygems.org'
 
 
-gem 'rails', '3.2.0'
+gem 'rails', '3.2.11'
 gem "rsolr",  :git =>"git@github.com:cul/rsolr.git"
 gem 'rake', '~> 0.9.2'
 gem 'rack', '1.4.0'
 gem 'sqlite3', '1.3.5'
 gem 'blacklight', '~> 3.2.0'
-gem 'actionpack', '3.2.0'
-gem 'railties', '3.2.0'
+gem 'actionpack', '3.2.11'
+gem 'railties', '3.2.11'
+gem 'kaminari', '0.13.0'
 
 # Gems used only for assets and not required
 # in production environments by default.
 group :assets do
-  gem 'sass-rails', " ~> 3.2.0"
-  gem 'coffee-rails', " ~> 3.2.0"
+  gem 'sass-rails', " ~> 3.2.4"
+  gem 'coffee-rails', " ~> 3.2.2"
   gem 'uglifier'
 end
 
@@ -60,4 +61,4 @@ gem 'httpclient'
 gem 'nokogiri', '1.5.0'
 gem 'net-ldap'
 gem 'blacklight_oai_provider', :git =>"git@github.com:cul/blacklight_oai_provider.git", :tag =>'0.0.3'
-gem "oai", :git =>"git@github.com:cul/oai-new-valid.git", :tag =>'0.2.4'
+gem "oai", :git =>"git@github.com:cul/oai-new-valid.git", :tag =>'0.2.2'
