@@ -9,8 +9,7 @@ GIT
 
 GIT
   remote: git@github.com:cul/oai-new-valid.git
-  revision: c42c5952feecb03c9bfe7a93238ace9a6db5f9a6
-  tag: 0.2.4
+  revision: 85465522fe55a7f4e1f11bcf7572c8fc6bf4f05b
   specs:
     oai (0.2.1)
       builder (>= 2.0.0)
