@@ -1,0 +1,13 @@
+<h3>Related Content</h3>
+ 
+ 
+<div class='box home-side'>
+
+   <% related_links.each do |row|%>
+   
+      <a href="<%= row["handle"]%>"><%= row["title"]%></a>
+	   <br><br>
+   
+   <% end %>
+
+</div>
