@@ -1,4 +1,5 @@
 require 'cgi'
+require 'rsolr'
 
 module CatalogHelper
 
@@ -416,5 +417,20 @@ begin
      end  
      return urls
   end  
+  
+
+  def related_links
+    
+      cu_department = @document['originator_department'][0]
+      
+      rsolr = RSolr.connect :url => Rails.application.config.related_content_solr_url
+      search = rsolr.select :params => { :q => 'cu_department:"' + cu_department + '"', :qt => "document", :start => 0, :rows => 5, :sort => "date_ssued desc"}
+    
+      search = search["response"]
+      search = search["docs"]
+      
+      return search
+
+  end
 
 end

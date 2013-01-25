@@ -21,22 +21,9 @@
 <% sidebar_items << capture do %>
  <!--  <div class="back-to-search"><%#= link_back_to_catalog %></div>  back to search link removed per JIRA AC-360 -->
   
-   <h3>Browse AC Content</h3>
- 
-<div   class='box home-side'>
-    
-  <%= link_to "Departments", departments_browse_path, :class=>"nav-link" %>
-  <%= link_to "Subjects", subjects_browse_path, :class=>"nav-link" %>
-    
-</div>
-
- 
-<h3>Helpful Links</h3>
- 
-<div class='box home-side'>
-
-<%= render :partial=>'home_accessory_links' %>
-</div>
+<%= render :partial=>'application/browse_content' %>
+<%= render :partial=>'application/helpful_links' %>
+<%= render :partial=>'related_content' %>
   
 <% end %>
 <%# this should be in a partial -%>

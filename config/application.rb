@@ -69,6 +69,8 @@ module CulBlacklightAc2
     config.analytics_username = "***REMOVED***"
     config.analytics_password = "***REMOVED***"
     config.analytics_id = "'UA-10481105-1'"
+    
+    config.related_content_solr_url = "http://***REMOVED***:8080/solr-1.5/ac_plus"
 
 # =============== new start =================== #    
     # Enable the asset pipeline

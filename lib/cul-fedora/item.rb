@@ -199,12 +199,15 @@ module Cul
         
       end
       
-      def roleIndexing(mods, add_field)
+      def roleIndexing(mods, add_field)   
+        roles = []
         mods.css("role > roleTerm").each do |role|
           if(!role.nil? && role.text.length != 0)     
-            add_field.call("role", role)
+            roles << role.text
           end
         end
+        roles = roles.uniq
+        add_field.call("role", roles.join(";"))
       end
       
       def identifierIndexing(mods, add_field)
@@ -244,6 +247,8 @@ module Cul
       end      
 
       def index_for_ac2(options = {})
+        
+        
         do_fulltext = options[:fulltext] || false
         do_metadata = options[:metadata] || true
 
@@ -268,6 +273,7 @@ module Cul
 
         organizations = []
         departments = []
+        originator_department = ""
           
         begin
           collections = self.belongsTo
@@ -341,6 +347,7 @@ module Cul
                   name_part_split = name_part.split(". ")
                   organizations.push(name_part_split[0].strip)
                   departments.push(name_part_split[1].strip)
+                  originator_department = name_part_split[1].strip
                 end
               end
               if corp_name_node.css("role>roleTerm").collect(&:content).any? { |role| corporate_author_roles.include?(role) }
@@ -378,7 +385,7 @@ module Cul
               end
             end
 
-
+            add_field.call("originator_department", originator_department)  
             add_field.call("table_of_contents", mods.at_css("tableOfContents"))
 
             mods.css("note").each { |note| add_field.call("notes", note) }
@@ -456,9 +463,12 @@ module Cul
             
             if(departments.count > 0)
               departments = departments.uniq
+              departments_clean = []
+              
               departments.each do |department|
-                add_field.call("department_facet", department.to_s.sub(", Department of", "").strip)
+                departments_clean << department.to_s.sub(", Department of", "").strip
               end
+              add_field.call("department_facet", departments_clean.join(";"))
             end
             
           end

@@ -126,6 +126,7 @@ Blacklight.configure(:shared) do |config|
       "thesis_advisor",
       "pub_date_facet",
       "genre_facet",
+      "originator_department",
       "volume",
       "handle",
       "url",
@@ -145,6 +146,7 @@ Blacklight.configure(:shared) do |config|
       "isbn",
       "issn",
       "doi"
+      
     ],
     :labels => {
       "title_display"           => "Title:",
@@ -152,6 +154,7 @@ Blacklight.configure(:shared) do |config|
       "thesis_advisor"          => "Thesis Advisor(s):",
       "pub_date_facet"          => "Date:",
       "genre_facet"             => "Type:",
+      "originator_department"   => "Department",
       "volume"                  => "Volume:",
       "handle"                  => "Permanent URL:",
       "url"                     => "Streaming URL:",
