@@ -421,10 +421,15 @@ begin
 
   def related_links
     
+      if @document["genre_facet"][0] != "Dissertations" && @document["genre_facet"][0] != "Master's theses"
+        return []
+      end
+    
       cu_department = @document['originator_department'][0]
       
       rsolr = RSolr.connect :url => Rails.application.config.related_content_solr_url
-      search = rsolr.select :params => { :q => 'cu_department:"' + cu_department + '"', :qt => "document", :start => 0, :rows => 5, :sort => "date_ssued desc"}
+      list_size = Rails.application.config.related_content_show_size
+      search = rsolr.select :params => { :q => 'cu_department:"' + cu_department + '"', :qt => "document", :start => 0, :rows => list_size, :sort => "date_ssued desc"}
     
       search = search["response"]
       search = search["docs"]

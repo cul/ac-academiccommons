@@ -71,6 +71,8 @@ module CulBlacklightAc2
     config.analytics_id = "'UA-10481105-1'"
     
     config.related_content_solr_url = "http://***REMOVED***:8080/solr-1.5/ac_plus"
+    config.related_content_show_size = "3"
+    
 
 # =============== new start =================== #    
     # Enable the asset pipeline

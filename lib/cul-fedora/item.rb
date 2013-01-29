@@ -199,15 +199,12 @@ module Cul
         
       end
       
-      def roleIndexing(mods, add_field)   
-        roles = []
+      def roleIndexing(mods, add_field)
         mods.css("role > roleTerm").each do |role|
           if(!role.nil? && role.text.length != 0)     
-            roles << role.text
+            add_field.call("role", role)
           end
         end
-        roles = roles.uniq
-        add_field.call("role", roles.join(";"))
       end
       
       def identifierIndexing(mods, add_field)
@@ -247,8 +244,6 @@ module Cul
       end      
 
       def index_for_ac2(options = {})
-        
-        
         do_fulltext = options[:fulltext] || false
         do_metadata = options[:metadata] || true
 
@@ -463,12 +458,9 @@ module Cul
             
             if(departments.count > 0)
               departments = departments.uniq
-              departments_clean = []
-              
               departments.each do |department|
-                departments_clean << department.to_s.sub(", Department of", "").strip
+                add_field.call("department_facet", department.to_s.sub(", Department of", "").strip)
               end
-              add_field.call("department_facet", departments_clean.join(";"))
             end
             
           end

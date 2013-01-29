@@ -154,7 +154,7 @@ Blacklight.configure(:shared) do |config|
       "thesis_advisor"          => "Thesis Advisor(s):",
       "pub_date_facet"          => "Date:",
       "genre_facet"             => "Type:",
-      "originator_department"   => "Department",
+      "originator_department"   => "Department:",
       "volume"                  => "Volume:",
       "handle"                  => "Permanent URL:",
       "url"                     => "Streaming URL:",
