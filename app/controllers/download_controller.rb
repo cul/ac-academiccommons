@@ -5,19 +5,16 @@ class DownloadController < ApplicationController
   def fedora_content
       
     url = fedora_config["riurl"] + "/get/" + params[:uri]+ "/" + params[:block]
-
-    cl = HTTPClient.new
-    h_cd = "filename=""#{CGI.escapeHTML(params[:filename].to_s)}"""
-    h_ct = cl.head(url).header["Content-Type"].to_s
     text_result = nil
 
     case params[:download_method]
     when "download"
-      h_cd = "attachment; " + h_cd 
       if(params[:data] != "meta")
          record_stats
       end 
    when "show_pretty"
+      cl = HTTPClient.new
+      h_ct = cl.head(url).header["Content-Type"].to_s
       if h_ct.include?("xml")
         xsl = Nokogiri::XSLT(File.read(Rails.root.to_s + "/app/tools/pretty-print.xsl"))
         xml = Nokogiri(cl.get_content(url))
@@ -30,16 +27,19 @@ class DownloadController < ApplicationController
     if text_result
       headers["Content-Type"] = "text/plain"
       render :text => text_result
-    else
-        
-      headers["Content-Disposition"] = h_cd
-      headers["Content-Type"] = h_ct
-
-      
-      send_data(cl.get_content(url), :filename => CGI.escapeHTML(params[:filename].to_s), :type => h_ct)
-      
+    else  
+      headers['X-Accel-Redirect'] = x_accel_url(url, CGI.escapeHTML(params[:filename].to_s))
+      render :nothing => true
     end
   end
+
+
+  def x_accel_url(url, file_name = nil)
+    uri = "/repository_download/#{url.gsub('https://', '')}"
+    uri << "?#{file_name}" if file_name
+    return uri
+  end
+
 
   private
   
