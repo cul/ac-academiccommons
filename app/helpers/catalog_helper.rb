@@ -425,6 +425,10 @@ begin
         return []
       end
     
+      if @document['originator_department'] == nil
+        return []
+      end  
+    
       cu_department = @document['originator_department'][0]
       
       rsolr = RSolr.connect :url => Rails.application.config.related_content_solr_url
@@ -436,6 +440,10 @@ begin
       
       return search
 
+  end
+
+  def itemprop_attribute
+    Blacklight.config[:show_fields][:itemprops]
   end
 
 end

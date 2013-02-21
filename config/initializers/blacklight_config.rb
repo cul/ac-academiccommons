@@ -175,6 +175,15 @@ Blacklight.configure(:shared) do |config|
       "issn"                    => "ISSN:",
       "doi"                     => "DOI:"
     },
+    :itemprops => {
+      "title_display"           => "name",
+      "abstract"                => "description",
+      "subject_facet"           => "keywords",  
+      "author_facet"            => "creator",
+      "pub_date_facet"          => "datePublished",
+      "genre_facet"             => "genre",
+      "handle"                  => "url"
+    },   
     :linked => {
       "author_facet"  => "facet",
       "genre_facet"   => "facet",
