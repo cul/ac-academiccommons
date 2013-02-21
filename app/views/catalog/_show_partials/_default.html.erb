@@ -13,21 +13,26 @@
 	    <% document_show_fields.each do |solr_fname| -%>
 	      <% if document[solr_fname] %>
 	        <% if document[solr_fname].is_a?(Array)%>
-	         <% document[solr_fname].delete_if{|x| x.empty? }%>
-		        <dt>
-		          <%= document_show_field_labels[solr_fname]%>
-		        </dt>  
-		        <dd<% if itemprop_attribute[solr_fname] != nil %> itemprop="<%= itemprop_attribute[solr_fname] %>"<% end -%>>       
-		           	<% if !document[solr_fname].empty? %>
-				       <% document[solr_fname].each do |val| %>
-				          <%= document_render_field_value(solr_fname, val) %><%= "<br/>".html_safe unless val == document[solr_fname].last %>
-				       <% end %>
-			        <% end %>
-			        <% else %>
-			        <% if !document[solr_fname].empty?%>
-			          	<%= document_render_field_value(solr_fname, document[solr_fname]) %>
-			        <% end -%>
+	        <% document[solr_fname].delete_if{|x| x.empty? }%>
+	          <% if !document[solr_fname].empty?%>
+	            <dt>
+	            	<%= document_show_field_labels[solr_fname]%>
+	            </dt>
+	            <dd<% if itemprop_attribute[solr_fname] != nil %> itemprop="<%= itemprop_attribute[solr_fname] %>"<% end -%>>
+		           <% document[solr_fname].each do |val| %>
+		              <%= document_render_field_value(solr_fname, val) %><%= "<br/>".html_safe unless val == document[solr_fname].last %>
+		           <% end %>
 		        </dd>
+	        <% end %>
+	        <% else %>
+	        <% if !document[solr_fname].empty?%>
+	          <dt>
+	          	<%= document_show_field_labels[solr_fname]%>
+	          </dt>
+	          <dd<% if itemprop_attribute[solr_fname] != nil %> itemprop="<%= itemprop_attribute[solr_fname] %>"<% end -%>>
+	          	<%= document_render_field_value(solr_fname, document[solr_fname]) %>
+	          </dd>
+	        <% end -%>
 	        <% end -%>
 	      <% end -%>
 	    <% end -%>
