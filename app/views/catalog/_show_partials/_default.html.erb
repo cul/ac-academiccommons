@@ -7,7 +7,7 @@
 -->
 <%= render :partial => "catalog/_show_partials/display_resources", :locals => {:document => document} %>
 
-<div itemscope itemtype="http://schema.org/CreativeWork">
+<div itemscope itemtype="<%= itemscope_itemtype%>">
 	<div style="clear:both;">
 	  <dl class="defList clearfix">
 	    <% document_show_fields.each do |solr_fname| -%>

@@ -306,6 +306,39 @@ config[:oai] = {
   }
 }
 
+  config[:temscope] = {
+    :itemtypes => {
+      "Master's theses"              => "http://schema.org/CreativeWork",
+      "Undergraduate theses"         => "http://schema.org/CreativeWork",
+      "Book chapters"                => "http://schema.org/Book",
+      "Reviews"                      => "http://schema.org/CreativeWork",
+      "Interviews and roundtables"   => "http://schema.org/CreativeWork",
+      "Datasets"                     => "http://schema.org/CreativeWork",
+      "Fictional works"              => "http://schema.org/CreativeWork",
+      "Images"                       => "http://schema.org/ImageObject",
+      "Musical compositions"         => "http://schema.org/MusicRecording",
+      "Books"                        => "http://schema.org/Book",
+      "Abstracts"                    => "http://schema.org/CreativeWork",
+      "Working Paper"                => "http://schema.org/CreativeWork",
+      "Letters"                      => "http://schema.org/CreativeWork",
+      "Presentation"                 => "http://schema.org/CreativeWork",
+      "Article"                      => "http://schema.org/ScholarlyArticle",
+      "Conferences"                  => "http://schema.org/CreativeWork",
+      "article"                      => "http://schema.org/ScholarlyArticle",
+      "Unpublished papers"           => "http://schema.org/ScholarlyArticle",
+      "Technical Report"             => "http://schema.org/CreativeWork",
+      "Conference posters"           => "http://schema.org/CreativeWork",
+      "Promotional materials"        => "http://schema.org/CreativeWork",
+      "Programs"                     => "http://schema.org/CreativeWork",
+      "Journals"                     => "http://schema.org/CreativeWork",
+      "Preprint"                     => "http://schema.org/ScholarlyArticle",
+      "Papers"                       => "http://schema.org/ScholarlyArticle",
+      "Other"                        => "http://schema.org/CreativeWork",
+      "Notes"                        => "http://schema.org/CreativeWork",
+      "Conference proceedings"       => "http://schema.org/CreativeWork"
+    }
+  }
+
 end
 
 	

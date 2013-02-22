@@ -445,5 +445,16 @@ begin
   def itemprop_attribute
     Blacklight.config[:show_fields][:itemprops]
   end
+  
+  def itemscope_itemtype
+    #logger.info "+++++++++++++++++++++++++ type: " + @document["genre_facet"][0]
+    #logger.info "++++++++++++++++++++++++> type: " + Blacklight.config[:temscope][:itemtypes][@document["genre_facet"][0]]
+    url_from_map = Blacklight.config[:temscope][:itemtypes][@document["genre_facet"][0]]
+    if(url_from_map == nil)
+      return "http://schema.org/CreativeWork"
+    else
+      return url_from_map
+    end
+  end
 
 end
