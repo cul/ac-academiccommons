@@ -126,6 +126,7 @@ Blacklight.configure(:shared) do |config|
       "thesis_advisor",
       "pub_date_facet",
       "genre_facet",
+      "originator_department",
       "volume",
       "handle",
       "url",
@@ -145,6 +146,7 @@ Blacklight.configure(:shared) do |config|
       "isbn",
       "issn",
       "doi"
+      
     ],
     :labels => {
       "title_display"           => "Title:",
@@ -152,6 +154,7 @@ Blacklight.configure(:shared) do |config|
       "thesis_advisor"          => "Thesis Advisor(s):",
       "pub_date_facet"          => "Date:",
       "genre_facet"             => "Type:",
+      "originator_department"   => "Department:",
       "volume"                  => "Volume:",
       "handle"                  => "Permanent URL:",
       "url"                     => "Streaming URL:",
@@ -172,6 +175,15 @@ Blacklight.configure(:shared) do |config|
       "issn"                    => "ISSN:",
       "doi"                     => "DOI:"
     },
+    :itemprops => {
+      "title_display"           => "name",
+      "abstract"                => "description",
+      "subject_facet"           => "keywords",  
+      "author_facet"            => "creator",
+      "pub_date_facet"          => "datePublished",
+      "genre_facet"             => "genre",
+      "handle"                  => "url"
+    },   
     :linked => {
       "author_facet"  => "facet",
       "genre_facet"   => "facet",
@@ -293,6 +305,46 @@ config[:oai] = {
     :limit => 25
   }
 }
+
+  config[:temscope] = {
+    :itemtypes => {
+      "Articles"                     => "http://schema.org/ScholarlyArticle",
+      "Working Papers"               => "http://schema.org/ScholarlyArticle", 
+      "Technical reports"            => "http://schema.org/ScholarlyArticle", 
+      "Reports"                      => "http://schema.org/CreativeWork",
+      "Dissertations"                => "http://schema.org/CreativeWork",
+      "Blog posts"                   => "http://schema.org/BlogPosting",
+      "Presentations"                => "http://schema.org/CreativeWork",
+      "Master's theses"              => "http://schema.org/CreativeWork",
+      "Undergraduate theses"         => "http://schema.org/CreativeWork",     
+      "Book chapters"                => "http://schema.org/Book",
+      "Reviews"                      => "http://schema.org/CreativeWork",
+      "Interviews and roundtables"   => "http://schema.org/CreativeWork",   
+      "Datasets"                     => "http://schema.org/CreativeWork",
+      "Fictional works"              => "http://schema.org/CreativeWork",
+      "Images"                       => "http://schema.org/ImageObject",
+      "Musical compositions"         => "http://schema.org/CreativeWork",     
+      "Books"                        => "http://schema.org/Book",
+      "Abstracts"                    => "http://schema.org/CreativeWork",
+      "Working Paper"                => "http://schema.org/CreativeWork",
+      "Letters"                      => "http://schema.org/CreativeWork",
+      "Presentation"                 => "http://schema.org/CreativeWork",
+      "Article"                      => "http://schema.org/ScholarlyArticle",
+      "Conferences"                  => "http://schema.org/CreativeWork",
+      "article"                      => "http://schema.org/ScholarlyArticle",
+      "Unpublished papers"           => "http://schema.org/CreativeWork",
+      "Technical Report"             => "http://schema.org/ScholarlyArticle",
+      "Conference posters"           => "http://schema.org/CreativeWork",
+      "Promotional materials"        => "http://schema.org/CreativeWork",
+      "Programs"                     => "http://schema.org/CreativeWork",
+      "Journals"                     => "http://schema.org/CreativeWork",
+      "Preprint"                     => "http://schema.org/ScholarlyArticle",
+      "Papers"                       => "http://schema.org/ScholarlyArticle",
+      "Other"                        => "http://schema.org/CreativeWork",
+      "Notes"                        => "http://schema.org/CreativeWork",
+      "Conference proceedings"       => "http://schema.org/CreativeWork"
+    }
+  }
 
 end
 

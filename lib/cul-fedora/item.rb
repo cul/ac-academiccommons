@@ -268,6 +268,7 @@ module Cul
 
         organizations = []
         departments = []
+        originator_department = ""
           
         begin
           collections = self.belongsTo
@@ -341,6 +342,7 @@ module Cul
                   name_part_split = name_part.split(". ")
                   organizations.push(name_part_split[0].strip)
                   departments.push(name_part_split[1].strip)
+                  originator_department = name_part_split[1].strip
                 end
               end
               if corp_name_node.css("role>roleTerm").collect(&:content).any? { |role| corporate_author_roles.include?(role) }
@@ -378,7 +380,7 @@ module Cul
               end
             end
 
-
+            add_field.call("originator_department", originator_department)  
             add_field.call("table_of_contents", mods.at_css("tableOfContents"))
 
             mods.css("note").each { |note| add_field.call("notes", note) }
