@@ -8,10 +8,10 @@ module StatisticsHelper
   DOWNLOAD = 'download_'
   LINE_BRAKER = RUBY_VERSION < "1.9" ? "\r\n" : ""
    
-  def cvsReport(startdate, enddate, author, include_zeroes, recent_first, facet)
+  def cvsReport(startdate, enddate, author, include_zeroes, recent_first, facet, include_streaming_views)
 
     months_list = make_months_list(startdate, enddate, recent_first)
-    results, stats, totals, download_ids = get_author_stats(startdate, enddate, author, months_list, include_zeroes, facet)
+    results, stats, totals, download_ids = get_author_stats(startdate, enddate, author, months_list, include_zeroes, facet, include_streaming_views)
 
     csv = "Author UNI/Name: ," + author.to_s + LINE_BRAKER
  
@@ -25,7 +25,9 @@ module StatisticsHelper
     
 
     csv = makeCSVcategory("Views", "View", csv, results, stats, totals, months_list, nil)
-    csv = makeCSVcategory("Streams", "Streaming", csv, results, stats, totals, months_list, nil)
+    if(include_streaming_views)
+      csv = makeCSVcategory("Streams", "Streaming", csv, results, stats, totals, months_list, nil)
+    end  
     csv = makeCSVcategory("Downloads", "Download", csv, results, stats, totals, months_list, download_ids)
 
     return csv
@@ -43,7 +45,7 @@ module StatisticsHelper
                                 "",
                                 "",
                                 "", 
-                                totals["Download"].to_s
+                                totals[key].to_s
                                ].concat(make_months_header(category + " by Month", months_list))
                              ) + LINE_BRAKER
                             
@@ -90,7 +92,7 @@ module StatisticsHelper
     month_list = []
     
     months_list.each do |month|
-      month_list << month.strftime("%b-%Y")
+      month_list << month_str = month.strftime("%b-%Y")
     end
     
     return month_list
@@ -129,7 +131,7 @@ module StatisticsHelper
 
   
 
-  def get_author_stats(startdate, enddate, query, months_list, include_zeroes, facet)
+  def get_author_stats(startdate, enddate, query, months_list, include_zeroes, facet, include_streaming_views)
 
     results = make_solar_request(facet, query)
 

@@ -1,0 +1,113 @@
+
+
+
+%div 
+  %b Statistical Reporting
+
+.split_form
+  = form_tag url_for(:controller => "statistics", :action => "statistical_reporting") do
+
+    %div{:style => "padding: 5px 10px;"}
+	    
+      %div{:style => "display: table;"}
+      
+        %div{:style => "display: table-row;"}
+        %div{:style => "display: table-cell;", :class=>"table-cell"} Get Report for:    
+      
+        %div{:style => "display: table-row;"}
+        %div{:style => "display: table-cell;", :class=>"table-cell"}
+          .value
+            = text_field_tag :author_id, params[:author_id]
+        %div{:style => "display: table-cell;", :class=>"table-cell"}
+          .value
+            = select_tag :facet, options_for_select(["author_uni", "author_facet","department_facet", "genre_facet", "text", "search"], params[:facet])
+    
+        %div{:style => "display: table;"}
+        %div{:style => "display: table-row;"}
+        %div{:style => "display: table-cell;", :class=>"table-cell"}
+          .label Report from:
+        %div{:style => "display: table-cell;", :class=>"table-cell"}
+          .value
+            = select_tag :month_from, options_for_select(Date::ABBR_MONTHNAMES, params[:month_from] || (Date.today - 1.months).strftime("%b"))
+            = select_tag :year_from, options_for_select((2011..Date.today.year), params[:year_from])
+        %div{:style => "display: table-row;"}
+        %div{:style => "display: table-cell;", :class=>"table-cell"}
+          .label Report to:
+        %div{:style => "display: table-cell;", :class=>"table-cell"}
+          .value
+            = select_tag :month_to, options_for_select(Date::ABBR_MONTHNAMES, params[:month_to] || (Date.today - 1.months).strftime("%b"))
+            = select_tag :year_to, options_for_select((2011..Date.today.year), params[:year_to])
+
+        %div{:style => "display: table-row;"}
+        %div{:style => "display: table-cell;", :class=>"table-cell"}
+          .label Include zeroes?
+        %div{:style => "display: table-cell;", :class=>"table-cell"}
+          .value
+            = check_box_tag :include_zeroes, "true", params[:include_zeroes]
+
+        %div{:style => "display: table-row;"}
+        %div{:style => "display: table-cell;", :class=>"table-cell"}
+          .label Include streaming views? 
+        %div{:style => "display: table-cell;", :class=>"table-cell"}
+          .value
+            = check_box_tag :include_streaming_views, "true", params[:include_streaming_views]      
+            
+               
+      %div{:style => "padding: 15px 0px 0px;"}  
+        %div{:style => "display: table;"}
+          %div{:style => "display: table-row;"}
+          %div{:style => "display: table-cell; vertical-align: text-bottom;"} 
+            = submit_tag "View"
+
+          %div{:style => "display: table-cell; padding: 0px 0px 0px 60px; vertical-align: text-bottom;"}    
+            = submit_tag "Download CSV report"         
+          
+          %div{:style => "display: table-cell; padding: 0px 0px 0px 60px;"} 
+            = text_field_tag :email_destination, params[:email_destination], :size => 30, :value => "email to", :onFocus => "this.value=''"
+            = submit_tag ("Email", :id => "sendStatistics")
+          
+          
+
+- if @results
+  -row_counter = 0
+
+  %div{:style => "border: 1px solid #aaa; padding: 5px;"}
+    %div{:style => "display: table;"}
+
+      %div{:style => "display: table-row;"}
+ 
+      %div{:style => "display: table-cell;", :class => "result-cell-head"}
+      %div{:style => "display: table-cell; text-align: center;", :class => "result-cell"}Totals for #{params[:month_from]} #{params[:year_from]} - #{params[:month_to]} #{params[:year_to]} period: 
+      %div{:style => "display: table-cell; text-align: center;", :class => "result-cell"}= @totals["View"] || 0
+      -if params[:include_streaming_views]
+        %div{:style => "display: table-cell; text-align: center;", :class => "result-cell"}= @totals["Streaming"] || 0
+      %div{:style => "display: table-cell; text-align: center;", :class => "result-cell"}= @totals["Download"] || 0 
+
+      %div{:style => "display: table-row;"}
+
+      %div{:style => "display: table-cell;", :class => "result-cell"} #
+      %div{:style => "display: table-cell; text-align: center; width: 100%;", :class => "container clearfix"} Title
+      %div{:style => "display: table-cell;", :class => "result-cell"} Views
+      -if params[:include_streaming_views]
+        %div{:style => "display: table-cell;", :class => "result-cell"} Streams
+      %div{:style => "display: table-cell;", :class => "result-cell"} Downloads
+    
+      - @results.each do |item|
+        - row_counter += 1  
+      
+        %div{:style => "display: table-row;"}
+ 
+        %div{:style => "display: table-cell;", :class => "result-cell"}= row_counter
+        %div{:style => "display: table-cell;", :class => "result-cell"}= link_to item["title_display"], catalog_path(item["id"])
+        %div{:style => "display: table-cell; text-align: center;", :class => "result-cell"}= @stats["View"][item["id"][0]] || 0
+        -if params[:include_streaming_views]
+          %div{:style => "display: table-cell; text-align: center;", :class => "result-cell"}= @stats["Streaming"][item["id"][0]] || 0
+        %div{:style => "display: table-cell; text-align: center;", :class => "result-cell"}= @stats["Download"][item["id"][0]] || 0
+      
+      
+
+      
+      
+      
+
+

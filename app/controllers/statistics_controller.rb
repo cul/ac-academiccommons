@@ -1,5 +1,5 @@
 class StatisticsController < ApplicationController
-  layout "no_sidebar"
+  layout "application"
   before_filter :require_admin, :except => [:unsubscribe_monthly]
   include Blacklight::SolrHelper
   include StatisticsHelper
@@ -57,7 +57,12 @@ class StatisticsController < ApplicationController
     end
   end
 
-  def author_monthly
+ def author_monthly
+   statistical_reporting
+   render :template => 'statistics/statistical_reporting'
+ end
+ 
+ def statistical_reporting  
   
     if (!params[:month_from].nil? && !params[:month_to].nil? && !params[:year_from].nil? && !params[:year_to].nil?)
       
@@ -71,7 +76,8 @@ class StatisticsController < ApplicationController
                                                       params[:author_id],
                                                       nil,
                                                       params[:include_zeroes],
-                                                      params[:facet]
+                                                      params[:facet],
+                                                      params[:include_streaming_views]
                                                       )
         
         if params[:commit] == "Email"
@@ -90,7 +96,8 @@ class StatisticsController < ApplicationController
                                 params[:author_id],
                                 params[:include_zeroes],
                                 params[:recent_first],
-                                params[:facet]
+                                params[:facet],
+                                params[:include_streaming_views]
                                )
                                 
         send_data csv_report, :type=>"application/csv", :filename=>params[:author_id] + "_monthly_statistics.csv" 
