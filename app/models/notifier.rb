@@ -1,6 +1,6 @@
 class Notifier < ActionMailer::Base
 
-  def author_monthly(to_address, author_id, date, results, stats, totals,request)
+  def author_monthly(to_address, author_id, date, results, stats, totals, request, show_streams)
     @author_id = author_id
     @stats = stats
     @totals = totals
@@ -11,11 +11,12 @@ class Notifier < ActionMailer::Base
     subject = "Academic Commons Monthly Download Report for #{@date}"
     content_type = 'text/html'
     @request = request
+    @streams = show_streams
 
     mail(:to => recipients, :from => from, :subject => subject, :content_type => content_type) 
   end
   
-  def author_monthly_first(to_address, author_id, date, results, stats, totals,request)
+  def author_monthly_first(to_address, author_id, date, results, stats, totals, request, show_streams)
     @request = request
     @author_id = author_id
     @stats = stats
@@ -26,6 +27,7 @@ class Notifier < ActionMailer::Base
     from = Rails.application.config.mail_deliverer
     subject = "Academic Commons Monthly Download Report for #{@date}"
     content_type = 'text/html'
+    @streams = show_streams
     
     mail(:to => recipients, :from => from, :subject => subject, :content_type => content_type) 
   end

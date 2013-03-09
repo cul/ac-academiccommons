@@ -7,21 +7,23 @@
     -if lifetime
       %tr
         %td
-        %td{:colspan => 3, :align => "center"} This Month 
-        %td{:colspan => 3, :align => "center"} Lifetime 
+        %td{:colspan => 3, :align => "left"} This Month 
+        %td{:colspan => 3, :align => "left"} Lifetime 
     %tr
       %td 
       %td{:style=>"padding: 0px 10px 0px"} 
         %b Views
-      %td{:style=>"padding: 0px 10px 0px"} 
-        %b Streams 
+      - if @streams
+        %td{:style=>"padding: 0px 10px 0px"} 
+          %b Streams 
       %td{:style=>"padding: 0px 10px 0px"} 
         %b Downloads       
       - if lifetime
         %td{:style=>"padding: 0px 10px 0px 20px"} 
           %b Views
-        %td{:style=>"padding: 0px 10px 0px"} 
-          %b Streams 
+        - if @streams
+          %td{:style=>"padding: 0px 10px 0px"} 
+            %b Streams 
         %td{:style=>"padding: 0px 10px 0px"}
           %b Downloads
 
@@ -38,15 +40,17 @@
         %td= link_to(item["title_display"], url_for(:host => current_url,  :only_path => false, :controller => :catalog, :action => :show, :id => item["id"])) 
         %td{:style=>"padding: 0px 10px 0px"}
           #{views}
-        %td{:style=>"padding: 0px 10px 0px"}
-          #{streaming}
+        - if @streams
+          %td{:style=>"padding: 0px 10px 0px"}
+            #{streaming}
         %td{:style=>"padding: 0px 10px 0px"}
           #{downloads}
         -if lifetime
           %td{:style=>"padding: 0px 10px 0px 20px"}
             #{lifetime_views}
-          %td{:style=>"padding: 0px 10px 0px"}
-            #{lifetime_streaming}
+          - if @streams
+            %td{:style=>"padding: 0px 10px 0px"}
+              #{lifetime_streaming}
           %td{:style=>"padding: 0px 10px 0px"}
             #{lifetime_downloads}
     %tr
@@ -54,15 +58,17 @@
         %b Totals: 
       %td{:style=>"padding: 0px 10px 0px"}
         %b #{@totals["View"]}
-      %td{:style=>"padding: 0px 10px 0px"}
-        %b #{@totals["Streaming"]} 
+      - if @streams
+        %td{:style=>"padding: 0px 10px 0px"}
+          %b #{@totals["Streaming"]} 
       %td{:style=>"padding: 0px 10px 0px"}
         %b #{@totals["Download"]}
       - if lifetime
         %td{:style=>"padding: 0px 10px 0px 20px"}
           %b #{@totals["View Lifetime"]}
-        %td{:style=>"padding: 0px 10px 0px"}
-          %b #{@totals["Streaming Lifetime"]}
+        - if @streams
+          %td{:style=>"padding: 0px 10px 0px"}
+            %b #{@totals["Streaming Lifetime"]}
         %td{:style=>"padding: 0px 10px 0px"}
           %b #{@totals["Download Lifetime"]}
 
@@ -71,8 +77,9 @@
   %div
     %b Views 
     are the number of times someone has looked at the record for your item in Academic Commons.  
-  %div
-    %b Streams 
+  - if @streams
+    %div
+      %b Streams 
     are the number of times someone has looked at the deposited file on the Academic Commons site.
   %div
     %b Downloads 
