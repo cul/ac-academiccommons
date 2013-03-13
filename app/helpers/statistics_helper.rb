@@ -12,7 +12,7 @@ module StatisticsHelper
   def cvsReport(startdate, enddate, author, include_zeroes, recent_first, facet, include_streaming_views)
 
     months_list = make_months_list(startdate, enddate, recent_first)
-    results, stats, totals, download_ids = Download(startdate, enddate, author, months_list, include_zeroes, facet, include_streaming_views)
+    results, stats, totals, download_ids = get_author_stats(startdate, enddate, author, months_list, include_zeroes, facet, include_streaming_views)
 
     csv = "Author UNI/Name: ," + author.to_s + LINE_BRAKER
  
@@ -245,8 +245,6 @@ module StatisticsHelper
 
 
   def make_solar_request(facet, query)
-    
-    logger.info "==================== make_solar_request facet: " + facet
 
     if(facet == "search_query")
       

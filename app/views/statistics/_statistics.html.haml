@@ -86,12 +86,12 @@
 
       %div{:style => "display: table-row;"}
 
-      %div{:style => "display: table-cell;", :class => "result-cell"} #
-      %div{:style => "display: table-cell; text-align: center; width: 100%;", :class => "container clearfix"} Title
-      %div{:style => "display: table-cell;", :class => "result-cell"} Views
+      %div{:style => "display: table-cell;", :class => "result-cell-bold"} #
+      %div{:style => "display: table-cell; text-align: center; width: 100%;", :class => "result-cell-bold"} Title
+      %div{:style => "display: table-cell;", :class => "result-cell-bold"} Views
       -if params[:include_streaming_views]
-        %div{:style => "display: table-cell;", :class => "result-cell"} Streams
-      %div{:style => "display: table-cell;", :class => "result-cell"} Downloads
+        %div{:style => "display: table-cell;", :class => "result-cell-bold"} Streams
+      %div{:style => "display: table-cell;", :class => "result-cell-bold"} Downloads
     
       - @results.each do |item|
         - row_counter += 1  
