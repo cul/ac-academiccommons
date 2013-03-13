@@ -3,6 +3,7 @@ require 'csv'
 module StatisticsHelper
   
   include CatalogHelper
+  require 'uri'
   
   VIEW = 'view_'
   DOWNLOAD = 'download_'
@@ -11,7 +12,7 @@ module StatisticsHelper
   def cvsReport(startdate, enddate, author, include_zeroes, recent_first, facet, include_streaming_views)
 
     months_list = make_months_list(startdate, enddate, recent_first)
-    results, stats, totals, download_ids = get_author_stats(startdate, enddate, author, months_list, include_zeroes, facet, include_streaming_views)
+    results, stats, totals, download_ids = Download(startdate, enddate, author, months_list, include_zeroes, facet, include_streaming_views)
 
     csv = "Author UNI/Name: ," + author.to_s + LINE_BRAKER
  
@@ -207,17 +208,58 @@ module StatisticsHelper
     stats['View Lifetime'] = convertOrderedHash(stats['View Lifetime'])
     
   end
+  
+  
+  def parse_search_query(search_query)
+    
+    search_query = URI.unescape(search_query)
+    search_query = search_query.gsub(/\+/, ' ')
+    
+    params = Hash.new
+    
+    search_query = search_query[search_query.index("?") + 1, search_query.length]
+
+    search_query.split('&').each do |value|
+
+      key_value = value.split('=') 
+
+      if(key_value[0].start_with?("f[") )
+
+        if(params.has_key?("f"))
+          array = params["f"]
+        else
+          array = Array.new 
+        end
+
+        value = key_value[0].gsub(/f\[/, '').gsub(/\]\[\]/, '') + ":\"" + key_value[1] + "\""
+        array.push(value)
+        params.store("f", array)
+
+      else 
+        params.store(key_value[0], key_value[1])
+      end
+    end
+    
+    return params  
+  end
 
 
   def make_solar_request(facet, query)
+    
+    logger.info "==================== make_solar_request facet: " + facet
 
-    if(facet == "search")
-      facet_query = ""
-      q = query
-      sort = "record_creation_date desc"
+    if(facet == "search_query")
+      
+      params = parse_search_query(query)
+      facet_query = params["f"]
+      q = params["q"]
+      sort = params["sort"]
+
     else
+      
       facet_query = "#{facet}:\"#{query}\""
       sort = "title_display asc"
+      
     end
 
     return Blacklight.solr.find( :per_page => 100000, 

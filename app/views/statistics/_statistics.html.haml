@@ -2,7 +2,7 @@
 
 
 %div 
-  %b Statistical Reporting
+  %h2 Statistical Reporting
 
 .split_form
   = form_tag url_for(:controller => "statistics", :action => "statistical_reporting") do
@@ -18,10 +18,10 @@
         %div{:style => "display: table-row;"}
         %div{:style => "display: table-cell;", :class=>"table-cell"}
           .value
-            = text_field_tag :author_id, params[:author_id]
+            = text_field_tag :search_criteria, params[:search_criteria], :style => "width: 300px;"
         %div{:style => "display: table-cell;", :class=>"table-cell"}
           .value
-            = select_tag :facet, options_for_select(["author_uni", "author_facet","department_facet", "genre_facet", "text", "search"], params[:facet])
+            = select_tag :facet, options_for_select([["UNI", "author_uni"], ["Author Name", "author_facet"], ["Department", "department_facet"], ["Content Type", "genre_facet"], ["Keyword", "text"], ["Search by query", "search_query"]], params[:facet])
     
         %div{:style => "display: table;"}
         %div{:style => "display: table-row;"}

@@ -64,16 +64,27 @@ class StatisticsController < ApplicationController
  
  def statistical_reporting  
   
-    if (!params[:month_from].nil? && !params[:month_to].nil? && !params[:year_from].nil? && !params[:year_to].nil?)
+    # if (!params[:month_from].nil? && !params[:month_to].nil? && !params[:year_from].nil? && !params[:year_to].nil?)
+    if (params[:month_from].nil? || params[:month_to].nil? || params[:year_from].nil? || params[:year_to].nil?)
+      
+      params[:month_from] = "Apr"
+      params[:year_from] = "2011"
+      params[:month_to] = (Date.today - 1.months).strftime("%b")
+      params[:year_to] = (Date.today).strftime("%Y")
+      
+      params[:include_zeroes] = true
+      
+    end
+      
       
       startdate = Date.parse(params[:month_from] + " " + params[:year_from])
       enddate = Date.parse(params[:month_to] + " " + params[:year_to])
      
-      if params[:commit].in?('View', "Email")
+      if params[:commit].in?('View', "Email", "Get Usage Stats")
       
         @results, @stats, @totals =  get_author_stats(startdate, 
                                                       enddate,
-                                                      params[:author_id],
+                                                      params[:search_criteria],
                                                       nil,
                                                       params[:include_zeroes],
                                                       params[:facet],
@@ -83,9 +94,9 @@ class StatisticsController < ApplicationController
         if params[:commit] == "Email"
           case params[:email_template]
           when "Normal"
-            Notifier.author_monthly(params[:email_destination], params[:author_id], startdate, @results, @stats, @totals, request, params[:include_streaming_views]).deliver
+            Notifier.author_monthly(params[:email_destination], params[:search_criteria], startdate, @results, @stats, @totals, request, params[:include_streaming_views]).deliver
           else 
-            Notifier.author_monthly_first(params[:email_destination], params[:author_id], startdate, @results, @stats, @totals, request, params[:include_streaming_views]).deliver
+            Notifier.author_monthly_first(params[:email_destination], params[:search_criteria], startdate, @results, @stats, @totals, request, params[:include_streaming_views]).deliver
           end  
         end
       end
@@ -93,16 +104,17 @@ class StatisticsController < ApplicationController
       if params[:commit] == "Download CSV report"
         csv_report = cvsReport( startdate,
                                 enddate,
-                                params[:author_id],
+                                params[:search_criteria],
                                 params[:include_zeroes],
                                 params[:recent_first],
                                 params[:facet],
                                 params[:include_streaming_views]
                                )
                                 
-        send_data csv_report, :type=>"application/csv", :filename=>params[:author_id] + "_monthly_statistics.csv" 
-      end
-    end
+        send_data csv_report, :type=>"application/csv", :filename=>params[:search_criteria] + "_monthly_statistics.csv" 
+      end 
+    # end
+    
   end
 
   def search_history
