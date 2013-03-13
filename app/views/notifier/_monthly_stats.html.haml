@@ -8,12 +8,12 @@
       - if @streams
         %tr
           %td
-          %td{:colspan => 3, :align => "center"} This Month
+          %td{:colspan => 3, :align => "center"} "#{@start_date} - #{@end_date}"
           %td{:colspan => 3, :align => "center"} Lifetime
       - if !@streams
         %tr
           %td
-          %td{:colspan => 2, :align => "center"} This Month
+          %td{:colspan => 2, :align => "center"} "#{@start_date} - #{@end_date}"
           %td{:colspan => 2, :align => "center"} Lifetime
     %tr
       %td 

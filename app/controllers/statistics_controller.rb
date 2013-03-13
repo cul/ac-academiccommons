@@ -94,9 +94,9 @@ class StatisticsController < ApplicationController
         if params[:commit] == "Email"
           case params[:email_template]
           when "Normal"
-            Notifier.author_monthly(params[:email_destination], params[:search_criteria], startdate, @results, @stats, @totals, request, params[:include_streaming_views]).deliver
+            Notifier.author_monthly(params[:email_destination], params[:search_criteria], startdate, enddate, @results, @stats, @totals, request, params[:include_streaming_views]).deliver
           else 
-            Notifier.author_monthly_first(params[:email_destination], params[:search_criteria], startdate, @results, @stats, @totals, request, params[:include_streaming_views]).deliver
+            Notifier.author_monthly_first(params[:email_destination], params[:search_criteria], startdate, enddate, @results, @stats, @totals, request, params[:include_streaming_views]).deliver
           end  
         end
       end
