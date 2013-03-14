@@ -104,8 +104,18 @@
         -if params[:include_streaming_views]
           %div{:style => "display: table-cell; text-align: center;", :class => "result-cell"}= @stats["Streaming"][item["id"][0]] || 0
         %div{:style => "display: table-cell; text-align: center;", :class => "result-cell"}= @stats["Download"][item["id"][0]] || 0
-      
-      
+        
+- else
+
+  %div{:style => "height: 20px; border: 0px solid #aaa; text-align: center; padding: 15px 0px 0px 0px;"} 
+    -if @message == "first_message"
+      Sorry, that search didn't return any results. Would you like to try it as a keyword search?
+    -if @message == "second_message"
+      Sorry, that search didn't return any results. Perhaps you'd like to return to our 
+      =link_to "Homepage".html_safe, base_url
+      and start over   
+      =link_to "start over".html_safe, base_url
+      ?
 
       
       

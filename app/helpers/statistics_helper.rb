@@ -13,6 +13,11 @@ module StatisticsHelper
 
     months_list = make_months_list(startdate, enddate, recent_first)
     results, stats, totals, download_ids = get_author_stats(startdate, enddate, author, months_list, include_zeroes, facet, include_streaming_views)
+    
+    if (results.size == 0)    
+      setMessageAndVariables 
+      return
+    end
 
     csv = "Author UNI/Name: ," + author.to_s + LINE_BRAKER
  
@@ -290,5 +295,22 @@ module StatisticsHelper
       return months
     end
   end
+  
+  def base_url
+    return "http://" + Rails.application.config.base_path + Rails.application.config.relative_root
+  end
+  
+  def setMessageAndVariables 
+    @results = nil
+    @stats = nil
+    @totals = nil
+    if (params[:facet] != "text")
+      @message = "first_message"
+      params[:facet] = "text"
+    else
+      @message = "second_message"
+      params[:facet] = "text"
+    end    
+  end  
   
 end

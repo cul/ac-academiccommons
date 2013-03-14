@@ -64,7 +64,6 @@ class StatisticsController < ApplicationController
  
  def statistical_reporting  
   
-    # if (!params[:month_from].nil? && !params[:month_to].nil? && !params[:year_from].nil? && !params[:year_to].nil?)
     if (params[:month_from].nil? || params[:month_to].nil? || params[:year_from].nil? || params[:year_to].nil?)
       
       params[:month_from] = "Apr"
@@ -90,6 +89,10 @@ class StatisticsController < ApplicationController
                                                       params[:facet],
                                                       params[:include_streaming_views]
                                                       )
+        if (@results.size == 0)    
+          setMessageAndVariables 
+          return
+        end
         
         if params[:commit] == "Email"
           case params[:email_template]
@@ -110,11 +113,11 @@ class StatisticsController < ApplicationController
                                 params[:facet],
                                 params[:include_streaming_views]
                                )
-                                
-        send_data csv_report, :type=>"application/csv", :filename=>params[:search_criteria] + "_monthly_statistics.csv" 
+                               
+         if(csv_report != nil)
+           send_data csv_report, :type=>"application/csv", :filename=>params[:search_criteria] + "_monthly_statistics.csv" 
+         end                        
       end 
-    # end
-    
   end
 
   def search_history
