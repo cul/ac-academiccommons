@@ -62,6 +62,11 @@ class StatisticsController < ApplicationController
    render :template => 'statistics/statistical_reporting'
  end
  
+ def usage_reports
+   statistical_reporting
+   render :template => 'statistics/statistical_reporting'
+ end
+ 
  def statistical_reporting  
   
     if (params[:month_from].nil? || params[:month_to].nil? || params[:year_from].nil? || params[:year_to].nil?)
