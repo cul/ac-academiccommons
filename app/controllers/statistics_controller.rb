@@ -84,7 +84,7 @@ class StatisticsController < ApplicationController
       startdate = Date.parse(params[:month_from] + " " + params[:year_from])
       enddate = Date.parse(params[:month_to] + " " + params[:year_to])
      
-      if params[:commit].in?('View', "Email", "Get Usage Stats")
+      if params[:commit].in?('View', "Email", "Get Usage Stats", "keyword search")
       
         @results, @stats, @totals =  get_author_stats(startdate, 
                                                       enddate,
@@ -94,7 +94,7 @@ class StatisticsController < ApplicationController
                                                       params[:facet],
                                                       params[:include_streaming_views]
                                                       )
-        if (@results.size == 0)    
+        if (@results == nil || @results.size == 0)    
           setMessageAndVariables 
           return
         end

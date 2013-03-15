@@ -14,7 +14,7 @@ module StatisticsHelper
     months_list = make_months_list(startdate, enddate, recent_first)
     results, stats, totals, download_ids = get_author_stats(startdate, enddate, author, months_list, include_zeroes, facet, include_streaming_views)
     
-    if (results.size == 0)    
+    if (@results == nil || @results.size == 0)    
       setMessageAndVariables 
       return
     end
@@ -138,6 +138,10 @@ module StatisticsHelper
   
 
   def get_author_stats(startdate, enddate, query, months_list, include_zeroes, facet, include_streaming_views)
+    
+    if(query == nil || query.empty?)
+      return
+    end  
 
     results = make_solar_request(facet, query)
 

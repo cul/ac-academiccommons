@@ -67,12 +67,24 @@
             = text_field_tag :email_destination, params[:email_destination], :size => 30, :value => "email to", :onFocus => "this.value=''"
             = submit_tag ("Email", :id => "sendStatistics")
           
-          
+      - if @results == nil
+
+        %div{:style => "height: 20px; border: 0px solid #aaa; text-align: center; padding: 15px 0px 0px 0px;"} 
+          -if @message == "first_message"
+            Sorry, that search didn't return any results. Would you like to try it as a 
+            = submit_tag ("keyword search", :style => "border:none; padding:0; color: rgb(49, 78, 131); font: inherit; background: none;")
+            ?
+          -if @message == "second_message"
+            Sorry, that search didn't return any results. Perhaps you'd like to return to our 
+            =link_to ("Homepage".html_safe, base_url, :style => "color: rgb(49, 78, 131);")
+            and
+            =link_to ("start over".html_safe, base_url, :style => "color: rgb(49, 78, 131);")
+            ?         
 
 - if @results
   -row_counter = 0
 
-  %div{:style => "border: 1px solid #aaa; padding: 5px;"}
+  %div{:style => "border: 1px solid #aaa; padding: 5px; margin-top: 5px;"}
     %div{:style => "display: table;"}
 
       %div{:style => "display: table-row;"}
@@ -104,18 +116,8 @@
         -if params[:include_streaming_views]
           %div{:style => "display: table-cell; text-align: center;", :class => "result-cell"}= @stats["Streaming"][item["id"][0]] || 0
         %div{:style => "display: table-cell; text-align: center;", :class => "result-cell"}= @stats["Download"][item["id"][0]] || 0
-        
-- else
 
-  %div{:style => "height: 20px; border: 0px solid #aaa; text-align: center; padding: 15px 0px 0px 0px;"} 
-    -if @message == "first_message"
-      Sorry, that search didn't return any results. Would you like to try it as a keyword search?
-    -if @message == "second_message"
-      Sorry, that search didn't return any results. Perhaps you'd like to return to our 
-      =link_to "Homepage".html_safe, base_url
-      and
-      =link_to "start over".html_safe, base_url
-      ?
+
 
       
       
