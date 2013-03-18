@@ -68,22 +68,14 @@ class StatisticsController < ApplicationController
  end
  
  def statistical_reporting  
-  
-    if (params[:month_from].nil? || params[:month_to].nil? || params[:year_from].nil? || params[:year_to].nil?)
-      
-      params[:month_from] = "Apr"
-      params[:year_from] = "2011"
-      params[:month_to] = (Date.today - 1.months).strftime("%b")
-      params[:year_to] = (Date.today).strftime("%Y")
-      
-      params[:include_zeroes] = true
-      
-    end
-      
-      
+   
+      setDefaultParams(params)
+
       startdate = Date.parse(params[:month_from] + " " + params[:year_from])
       enddate = Date.parse(params[:month_to] + " " + params[:year_to])
-     
+      
+      logStatisticsUsage(startdate, enddate, params)
+
       if params[:commit].in?('View', "Email", "Get Usage Stats", "keyword search")
       
         @results, @stats, @totals =  get_author_stats(startdate, 

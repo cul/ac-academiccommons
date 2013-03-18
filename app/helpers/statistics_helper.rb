@@ -9,17 +9,21 @@ module StatisticsHelper
   DOWNLOAD = 'download_'
   LINE_BRAKER = RUBY_VERSION < "1.9" ? "\r\n" : ""
    
-  def cvsReport(startdate, enddate, author, include_zeroes, recent_first, facet, include_streaming_views)
+  def cvsReport(startdate, enddate, search_criteria, include_zeroes, recent_first, facet, include_streaming_views)
 
     months_list = make_months_list(startdate, enddate, recent_first)
-    results, stats, totals, download_ids = get_author_stats(startdate, enddate, author, months_list, include_zeroes, facet, include_streaming_views)
+    results, stats, totals, download_ids = get_author_stats(startdate, enddate, search_criteria, months_list, include_zeroes, facet, include_streaming_views)
     
-    if (@results == nil || @results.size == 0)    
+    if (results == nil || results.size == 0)    
       setMessageAndVariables 
       return
     end
 
-    csv = "Author UNI/Name: ," + author.to_s + LINE_BRAKER
+    if facet.in?('author_facet', 'author_uni')
+      csv = "Author UNI/Name: ," + search_criteria.to_s + LINE_BRAKER
+    else
+      csv = "Search criteria: ," + search_criteria.to_s + LINE_BRAKER
+    end
  
     csv += CSV.generate_line( [ "Period covered by Report" ]) + LINE_BRAKER
     csv += CSV.generate_line( [ "from:", "to:" ]) + LINE_BRAKER
@@ -316,5 +320,35 @@ module StatisticsHelper
       params[:facet] = "text"
     end    
   end  
+  
+  def logStatisticsUsage(startdate, enddate, params)
+    
+      eventlog = Eventlog.create(:event_name => 'statistics', :uid => current_user == nil ? "N/A" : (current_user.to_s + " (" + current_user.login.to_s + ")"), :ip => request.remote_ip, :session_id=> request.session_options[:id])    
+        
+      eventlog.logvalues.create(:param_name => "startdate", :value => startdate) 
+      eventlog.logvalues.create(:param_name => "enddate", :value => enddate)
+      eventlog.logvalues.create(:param_name => "commit", :value => params[:commit])
+      eventlog.logvalues.create(:param_name => "search_criteria", :value => params[:search_criteria])
+      eventlog.logvalues.create(:param_name => "include_zeroes", :value => params[:include_zeroes]  == nil ? "false" : "true" )
+      eventlog.logvalues.create(:param_name => "include_streaming_views", :value => params[:include_streaming_views] == nil ? "false" : "true" )
+      eventlog.logvalues.create(:param_name => "facet", :value => params[:facet])
+      eventlog.logvalues.create(:param_name => "email_to", :value => params[:email_destination] == "email to" ? "" : params[:email_destination] )
+    
+  end
+  
+  def setDefaultParams(params)
+    
+     if (params[:month_from].nil? || params[:month_to].nil? || params[:year_from].nil? || params[:year_to].nil?)
+      
+      params[:month_from] = "Apr"
+      params[:year_from] = "2011"
+      params[:month_to] = (Date.today - 1.months).strftime("%b")
+      params[:year_to] = (Date.today).strftime("%Y")
+      
+      params[:include_zeroes] = true
+      
+    end   
+    
+  end
   
 end
