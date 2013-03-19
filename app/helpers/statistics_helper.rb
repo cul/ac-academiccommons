@@ -323,16 +323,20 @@ module StatisticsHelper
   
   def logStatisticsUsage(startdate, enddate, params)
     
-      eventlog = Eventlog.create(:event_name => 'statistics', :uid => current_user == nil ? "N/A" : (current_user.to_s + " (" + current_user.login.to_s + ")"), :ip => request.remote_ip, :session_id=> request.session_options[:id])    
+      eventlog = Eventlog.create(:event_name => 'statistics', 
+                                 :user_name  => current_user == nil ? "N/A" : current_user.to_s, 
+                                 :uid        => current_user == nil ? "N/A" : current_user.login.to_s, 
+                                 :ip         => request.remote_ip, 
+                                 :session_id => request.session_options[:id])    
         
-      eventlog.logvalues.create(:param_name => "startdate", :value => startdate) 
-      eventlog.logvalues.create(:param_name => "enddate", :value => enddate)
+      eventlog.logvalues.create(:param_name => "startdate", :value => startdate.to_s) 
+      eventlog.logvalues.create(:param_name => "enddate", :value => enddate.to_s)
       eventlog.logvalues.create(:param_name => "commit", :value => params[:commit])
-      eventlog.logvalues.create(:param_name => "search_criteria", :value => params[:search_criteria])
-      eventlog.logvalues.create(:param_name => "include_zeroes", :value => params[:include_zeroes]  == nil ? "false" : "true" )
-      eventlog.logvalues.create(:param_name => "include_streaming_views", :value => params[:include_streaming_views] == nil ? "false" : "true" )
+      eventlog.logvalues.create(:param_name => "search_criteria", :value => params[:search_criteria] )
+      eventlog.logvalues.create(:param_name => "include_zeroes", :value => params[:include_zeroes] == nil ? "false" : "true")
+      eventlog.logvalues.create(:param_name => "include_streaming_views", :value => params[:include_streaming_views] == nil ? "false" : "true")
       eventlog.logvalues.create(:param_name => "facet", :value => params[:facet])
-      eventlog.logvalues.create(:param_name => "email_to", :value => params[:email_destination] == "email to" ? "" : params[:email_destination] )
+      eventlog.logvalues.create(:param_name => "email_to", :value => params[:email_destination] == "email to" ? "" : params[:email_destination])
     
   end
   
