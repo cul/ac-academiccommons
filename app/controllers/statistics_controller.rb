@@ -73,11 +73,10 @@ class StatisticsController < ApplicationController
 
       startdate = Date.parse(params[:month_from] + " " + params[:year_from])
       enddate = Date.parse(params[:month_to] + " " + params[:year_to])
-      
-      logStatisticsUsage(startdate, enddate, params)
 
       if params[:commit].in?('View', "Email", "Get Usage Stats", "keyword search")
       
+        logStatisticsUsage(startdate, enddate, params)
         @results, @stats, @totals =  get_author_stats(startdate, 
                                                       enddate,
                                                       params[:search_criteria],
@@ -102,6 +101,9 @@ class StatisticsController < ApplicationController
       end
       
       if params[:commit] == "Download CSV report"
+        
+        logStatisticsUsage(startdate, enddate, params)
+        
         csv_report = cvsReport( startdate,
                                 enddate,
                                 params[:search_criteria],
