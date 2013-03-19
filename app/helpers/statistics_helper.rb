@@ -279,7 +279,9 @@ module StatisticsHelper
       
     end
     
-    if facet_query != nil
+    if facet_query == nil && q == nil
+      return
+    else  
       return Blacklight.solr.find( :per_page => 100000, 
                                    :sort => sort, 
                                    :q => q,
