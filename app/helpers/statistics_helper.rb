@@ -148,6 +148,10 @@ module StatisticsHelper
     end  
 
     results = make_solar_request(facet, query)
+    
+    if results == nil
+      return
+    end
 
     stats, totals, ids, download_ids = init_holders(results)
 
@@ -230,7 +234,9 @@ module StatisticsHelper
     
     params = Hash.new
     
-    search_query = search_query[search_query.index("?") + 1, search_query.length]
+    if search_query.include? '?'
+      search_query = search_query[search_query.index("?") + 1, search_query.length]
+    end
 
     search_query.split('&').each do |value|
 
@@ -272,14 +278,16 @@ module StatisticsHelper
       sort = "title_display asc"
       
     end
-
-    return Blacklight.solr.find( :per_page => 100000, 
-                                 :sort => sort, 
-                                 :q => q,
-                                 :fq => facet_query,
-                                 :fl => "title_display,id,handle,doi,genre_facet", 
-                                 :page => 1
-                                )["response"]["docs"]    
+    
+    if facet_query != nil
+      return Blacklight.solr.find( :per_page => 100000, 
+                                   :sort => sort, 
+                                   :q => q,
+                                   :fq => facet_query,
+                                   :fl => "title_display,id,handle,doi,genre_facet", 
+                                   :page => 1
+                                  )["response"]["docs"]    
+    end                            
   end
   
   
@@ -336,7 +344,7 @@ module StatisticsHelper
       eventlog.logvalues.create(:param_name => "include_zeroes", :value => params[:include_zeroes] == nil ? "false" : "true")
       eventlog.logvalues.create(:param_name => "include_streaming_views", :value => params[:include_streaming_views] == nil ? "false" : "true")
       eventlog.logvalues.create(:param_name => "facet", :value => params[:facet])
-      eventlog.logvalues.create(:param_name => "email_to", :value => params[:email_destination] == "email to" ? "" : params[:email_destination])
+      eventlog.logvalues.create(:param_name => "email_to", :value => params[:email_destination] == "email to" ? nil : params[:email_destination])
     
   end
   
