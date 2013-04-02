@@ -4,6 +4,9 @@
   Questions about this email: contact
   #{mail_to "rhilliker@columbia.edu"}
 %br
+%div 
+  #{link_to 'Academic Commons Self Deposit', 'http://academiccommons.columbia.edu/deposit'}
+  #{mail_to "rhilliker@columbia.edu"}
 %div
   Wish to unsubscribe:
   #{link_to("click here", url_for(:host => (Rails.application.config.base_path != nil) ? Rails.application.config.base_path : "localhost:3000",  :only_path => false, :controller => :statistics, :action => :unsubscribe_monthly, :author_id => @author_id, :chk => @author_id.crypt("xZ")))} 
