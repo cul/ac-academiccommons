@@ -1,6 +1,7 @@
 class StatisticsController < ApplicationController
   layout "application"
-  before_filter :require_admin, :except => [:unsubscribe_monthly]
+  before_filter :require_user
+  before_filter :require_admin, :except => [:unsubscribe_monthly, :usage_reports]
   include Blacklight::SolrHelper
   include StatisticsHelper
 
