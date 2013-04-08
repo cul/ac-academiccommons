@@ -41,17 +41,24 @@ class StatisticsController < ApplicationController
       @authors.each do |author|
         author_id = author[:id]
         startdate = Date.parse(params[:month] + " " + params[:year])
+        enddate = Date.parse(params[:month] + " " + params[:year])
+        
+        @results, @stats, @totals =  get_author_stats(startdate, 
+                                                      enddate,
+                                                      author_id,
+                                                      nil,
+                                                      params[:include_zeroes],
+                                                      'author_uni',
+                                                      false
+                                                      )
 
-        results, stats, totals  = get_monthly_author_stats(:startdate => startdate, :include_zeroes => false, :author_id => author_id)
-
-        if totals.values.sum != 0 || params[:include_zeroes]
+        if @totals.values.sum != 0 || params[:include_zeroes]
     
           case params[:email_template]
           when "Normal"
-            Notifier.author_monthly(author[:email], author_id, startdate, results, stats, totals,request).deliver
-          else
-            Notifier.author_monthly_first(author[:email], author_id, startdate, results, stats, totals,request).deliver
-
+            Notifier.author_monthly(author[:email], author_id, startdate, enddate, @results, @stats, @totals, request, false).deliver
+          else 
+            Notifier.author_monthly_first(author[:email], author_id, startdate, enddate, @results, @stats, @totals, request, false).deliver
           end  
         end
       end
