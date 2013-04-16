@@ -4,6 +4,7 @@ require 'rsolr'
 module CatalogHelper
 
   include ApplicationHelper
+  #include Blacklight::CatalogHelperBehavior
 
   def auto_add_empty_spaces(text)
     text.to_s.gsub(/([^\s-]{5})([^\s-]{5})/,'\1&#x200B;\2')
@@ -40,7 +41,7 @@ module CatalogHelper
     params[:page] = nil
     params[:q] = (params[:q].nil?) ? "" : params[:q].to_s
     params[:sort] = (params[:sort].nil?) ? "record_creation_date desc" : params[:sort].to_s
-    params[:rows] = (params[:rows].nil? || params[:rows].to_s == "") ? ((params[:id].nil?) ? Blacklight.config[:feed_rows] : params[:id].to_s) : params[:rows].to_s
+    params[:rows] = (params[:rows].nil? || params[:rows].to_s == "") ? ((params[:id].nil?) ? blacklight_config[:feed_rows] : params[:id].to_s) : params[:rows].to_s
     
     extra_params = {}
     extra_params[:fl] = "title_display,id,author_facet,author_display,record_creation_date,handle,abstract"
@@ -71,6 +72,15 @@ module CatalogHelper
   end
 
   def build_distinct_authors_list(query_params, included_authors, results)
+  
+  # logger.info "========== xxx =============="
+  # logger.info  blacklight_config[:max_most_recent]
+  # logger.info  blacklight_config[:max_most_recent]
+  #   
+  # logger.info "blacklight version: " + Gem.loaded_specs["blacklight"].version.to_s
+  #   
+  # logger.info "========== end =============="
+  
     updated = Blacklight.solr.find(query_params)
     items = updated["response"]["docs"]
     if(items.empty?)
@@ -91,13 +101,13 @@ module CatalogHelper
         end
         if (new)
           results << r
-          if(results.length == Blacklight.config[:max_most_recent])
+          if(results.length == blacklight_config[:max_most_recent])
             return results
           end
         end
       end
     end
-    if(results.length < Blacklight.config[:max_most_recent])
+    if(results.length < blacklight_config[:max_most_recent])
       query_params[:start] = query_params[:start] + 100
       build_distinct_authors_list(query_params, included_authors, results)
     else
@@ -106,6 +116,11 @@ module CatalogHelper
   end
 
   def build_resource_list(document)
+    
+   # logger.info "============ start >> " 
+   # logger.info "============>> " + document["id"].to_s 
+   # logger.info "============ end >> "
+    
    obj_display = (document["id"] || []).first
    results = []
    uri_prefix = "info:fedora/"
@@ -170,6 +185,8 @@ module CatalogHelper
 
       results << res
     end
+    
+    #resource_list.length
 
     return results
   end
@@ -395,7 +412,7 @@ begin
   end
   
   def render_document_class(document = @document)
-   'blacklight-' + document.get(Blacklight.config[:index][:record_display_type]).parameterize rescue nil
+   'blacklight-' + document.get(blacklight_config[:index][:record_display_type]).parameterize rescue nil
   end
 
   def render_document_sidebar_partial(document = @document)
@@ -442,14 +459,15 @@ begin
 
   end
 
-  def itemprop_attribute
-    Blacklight.config[:show_fields][:itemprops]
+  def itemprop_attribute(name)
+    blacklight_config.show_fields[name][:itemprops]
   end
   
   def itemscope_itemtype
+    
     #logger.info "+++++++++++++++++++++++++ type: " + @document["genre_facet"][0]
-    #logger.info "++++++++++++++++++++++++> type: " + Blacklight.config[:temscope][:itemtypes][@document["genre_facet"][0]]
-    url_from_map = Blacklight.config[:temscope][:itemtypes][@document["genre_facet"][0]]
+    #logger.info "++++++++++++++++++++++++> type: " + blacklight_config[:temscope][:itemtypes][@document["genre_facet"][0]]
+    url_from_map = blacklight_config[:temscope][:itemtypes][@document["genre_facet"][0]]
     if(url_from_map == nil)
       return "http://schema.org/CreativeWork"
     else

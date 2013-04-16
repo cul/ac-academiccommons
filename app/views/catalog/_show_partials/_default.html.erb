@@ -5,20 +5,25 @@
          <%#= render :partial => 'show_tools' %>
         </div>
 -->
-<%= render :partial => "catalog/_show_partials/display_resources", :locals => {:document => document} %>
+<%#= render :partial => "catalog/_show_partials/display_resources", :locals => {:document => document} %>
 
 <div itemscope itemtype="<%= itemscope_itemtype%>">
 	<div style="clear:both;">
 	  <dl class="defList clearfix">
 	    <% document_show_fields.each do |solr_fname| -%>
+
+	    <% solr_fname = solr_fname[0]%>
+
 	      <% if document[solr_fname] %>
+	      
 	        <% if document[solr_fname].is_a?(Array)%>
+	        
 	        <% document[solr_fname].delete_if{|x| x.empty? }%>
 	          <% if !document[solr_fname].empty?%>
 	            <dt>
 	            	<%= document_show_field_labels[solr_fname]%>
 	            </dt>
-	            <dd<% if itemprop_attribute[solr_fname] != nil %> itemprop="<%= itemprop_attribute[solr_fname] %>"<% end -%>>
+	            <dd<% if itemprop_attribute(solr_fname) != nil %> itemprop="<%= itemprop_attribute(solr_fname) %>"<% end -%>>
 		           <% document[solr_fname].each do |val| %>
 		              <%= document_render_field_value(solr_fname, val) %><%= "<br/>".html_safe unless val == document[solr_fname].last %>
 		           <% end %>

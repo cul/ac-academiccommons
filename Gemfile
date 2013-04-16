@@ -1,14 +1,14 @@
 source 'http://rubygems.org'
 
 
-gem 'rails', '3.2.11'
+gem 'rails', '3.2.13'
 gem "rsolr",  :git =>"git@github.com:cul/rsolr.git"
 gem 'rake', '~> 0.9.2'
-gem 'rack', '1.4.0'
+gem 'rack', '1.4.5'
 gem 'sqlite3', '1.3.5'
-gem 'blacklight', '~> 3.2.0'
-gem 'actionpack', '3.2.11'
-gem 'railties', '3.2.11'
+gem 'blacklight', '~> 4.0'
+gem 'actionpack', '3.2.13'
+gem 'railties', '3.2.13'
 gem 'kaminari', '0.13.0'
 
 # Gems used only for assets and not required
@@ -36,7 +36,9 @@ gem 'rinku', '~> 1.2.2', :require => 'rails_rinku'
 # gem 'bj'
 # gem 'nokogiri'
 gem 'sqlite3-ruby', :require => 'sqlite3'
-  gem 'mysql', '2.8.1'
+#  gem 'mysql', '2.8.1'
+gem 'mysql', '2.8.1'
+
 # gem 'aws-s3', :require => 'aws/s3'
 
 # Bundle gems for the local environment. Make sure to
@@ -60,5 +62,11 @@ gem 'compass'
 gem 'httpclient'
 gem 'nokogiri', '1.5.0'
 gem 'net-ldap'
-gem 'blacklight_oai_provider', :git =>"git@github.com:cul/blacklight_oai_provider.git", :tag =>'0.0.3'
+
+#  !!!  gem 'blacklight_oai_provider', :git =>"git@github.com:cul/blacklight_oai_provider.git", :tag =>'0.0.3'
+gem 'blacklight_oai_provider'
+
 gem "oai", :git =>"git@github.com:cul/oai-new-valid.git"
+
+gem 'unicode'
+gem 'bootstrap-sass'
