@@ -1,5 +1,5 @@
 set :rails_env, "passenger_bl4_dev"
-set :application, "ac2_bl4"
+set :application, "ac2_bl4_dev"
 set :domain,      "bronte.cul.columbia.edu"
 set :deploy_to,   "/opt/passenger/#{application}/"
 set :user, "deployer"

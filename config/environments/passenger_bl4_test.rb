@@ -39,12 +39,12 @@ CulBlacklightAc2::Application.configure do
   # Print deprecation notices to the stderr
   config.active_support.deprecation = :stderr
   
-  config.relative_root = '/ac2_bl4'
+  config.relative_root = '/ac2_bl4_test'
   config.analytics_enabled = false
   
   config.mail_deposit_recipients = ["rh2561@columbia.edu", "bal35@columbia.edu"]
   config.mail_deliverer = "rh2561@columbia.edu"
-  config.base_path = "bronte.cul.columbia.edu"
+  config.base_path = "berlioz.cul.columbia.edu"
 
 
 
