@@ -1,4 +1,4 @@
-set :default_stage, "passenger_bl4"
+set :default_stage, "passenger_bl4_dev"
 set :stages, %w(passenger_dev passenger_test passenger_prod passenger_bl4_dev passenger_bl4_test)
 
 require 'capistrano/ext/multistage'
@@ -12,6 +12,9 @@ set :scm, :git
 set :repository,  "git@github.com:cul/cul-blacklight-ac2.git"
 set :application, "scv"
 set :use_sudo, false
+
+set :git_enable_submodules, 1
+set :deploy_via, :remote_cache
 
 namespace :deploy do
   desc "Restart Application"
