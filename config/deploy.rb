@@ -8,6 +8,15 @@ require 'date'
 
 default_run_options[:pty] = true
 
+
+set :branch do
+  default_tag = `git tag`.split("\n").last
+ 
+  tag = Capistrano::CLI.ui.ask "Tag to deploy (make sure to push the tag first): [#{default_tag}] "
+  tag = default_tag if tag.empty?
+  tag
+end
+
 set :scm, :git
 set :repository,  "git@github.com:cul/cul-blacklight-ac2.git"
 set :application, "scv"
@@ -17,6 +26,17 @@ set :git_enable_submodules, 1
 set :deploy_via, :remote_cache
 
 namespace :deploy do
+
+  desc "Add tag based on current version"
+  task :auto_tag, :roles => :app do
+    current_version = IO.read("VERSION").to_s.strip + Date.today.strftime("-%y%m%d")
+    tag = Capistrano::CLI.ui.ask "Tag to add: [#{current_version}] "
+    tag = current_version if tag.empty?
+ 
+    system("git tag -a #{tag} -m 'auto-tagged' && git push origin --tags")
+  end
+ 
+
   desc "Restart Application"
   task :restart, :roles => :app do
     run "mkdir -p #{current_path}/tmp/cookies"
