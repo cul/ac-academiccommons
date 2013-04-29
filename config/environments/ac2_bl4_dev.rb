@@ -39,14 +39,12 @@ CulBlacklightAc2::Application.configure do
   # Print deprecation notices to the stderr
   config.active_support.deprecation = :stderr
   
-  config.relative_root = '/ac2_bl4_dev'
+  config.relative_root = ""
   config.analytics_enabled = false
   
   config.mail_deposit_recipients = ["rh2561@columbia.edu", "bal35@columbia.edu"]
   config.mail_deliverer = "rh2561@columbia.edu"
   config.base_path = "bronte.cul.columbia.edu"
-
-
 
   # Configure static asset server for tests with Cache-Control for performance
   config.serve_static_assets = true
@@ -55,5 +53,7 @@ CulBlacklightAc2::Application.configure do
   # Allow pass debug_assets=true as a query parameter to load pages with unpackaged assets
   config.assets.allow_debugging = true
 
+  # Only use best-standards-support built into browsers
+  config.action_dispatch.best_standards_support = :builtin
 
 end

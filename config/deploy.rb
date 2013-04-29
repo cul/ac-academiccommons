@@ -10,30 +10,32 @@ default_run_options[:pty] = true
 
 
 set :branch do
-  default_tag = `git tag`.split("\n").last
+  default_tag = `git tag`.split("\n").first
  
   tag = Capistrano::CLI.ui.ask "Tag to deploy (make sure to push the tag first): [#{default_tag}] "
   tag = default_tag if tag.empty?
   tag
 end
 
+#set :application, "Academic Commons"
 set :scm, :git
 set :repository,  "git@github.com:cul/cul-blacklight-ac2.git"
-set :application, "scv"
 set :use_sudo, false
-
 set :git_enable_submodules, 1
 set :deploy_via, :remote_cache
+
 
 namespace :deploy do
 
   desc "Add tag based on current version"
   task :auto_tag, :roles => :app do
-    current_version = IO.read("VERSION").to_s.strip + Date.today.strftime("-%y%m%d")
+    #current_version = IO.read("VERSION").to_s.strip + DateTime.now.strftime("-%m%d%Y-%X")
+    current_version = IO.read("VERSION").to_s.strip + DateTime.now.strftime("-%m%d%y-%s")
+    #current_version = IO.read("VERSION").to_s.strip + Date.today.strftime("-%y%m%d")  # this is first impl
     tag = Capistrano::CLI.ui.ask "Tag to add: [#{current_version}] "
     tag = current_version if tag.empty?
  
-    system("git tag -a #{tag} -m 'auto-tagged' && git push origin --tags")
+    system("git tag -a #{tag} -m '#{application}' && git push origin --tags")
   end
  
 
