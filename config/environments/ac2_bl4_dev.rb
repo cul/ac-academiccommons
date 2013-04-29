@@ -60,6 +60,8 @@ CulBlacklightAc2::Application.configure do
   # Don't fallback to assets pipeline if a precompiled asset is missed
  # config.assets.compile = true
  
+ config.assets.precompile += %w( *.css *.js )
+ 
  # config.assets.precompile += %w( blueprint/screen.css 
  #                                 blueprint/print.css 
  #                                 application.css
