@@ -10,7 +10,7 @@ default_run_options[:pty] = true
 
 
 set :branch do
-  default_tag = `git tag`.split("\n").first
+  default_tag = `git tag`.split("\n").last
  
   tag = Capistrano::CLI.ui.ask "Tag to deploy (make sure to push the tag first): [#{default_tag}] "
   tag = default_tag if tag.empty?
