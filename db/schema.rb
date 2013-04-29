@@ -1,4 +1,3 @@
-# encoding: UTF-8
 # This file is auto-generated from the current state of the database. Instead
 # of editing this file, please use the migrations feature of Active Record to
 # incrementally modify your database, and then regenerate this schema definition.
@@ -17,8 +16,8 @@ ActiveRecord::Schema.define(:version => 20110914202429) do
     t.integer  "user_id",     :null => false
     t.string   "document_id"
     t.string   "title"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
     t.string   "user_type"
   end
 
@@ -26,8 +25,8 @@ ActiveRecord::Schema.define(:version => 20110914202429) do
     t.string   "title",      :null => false
     t.integer  "user_id",    :null => false
     t.text     "data"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
 
   add_index "content_blocks", ["title"], :name => "index_content_blocks_on_title"
@@ -45,16 +44,16 @@ ActiveRecord::Schema.define(:version => 20110914202429) do
     t.string   "doi_pmcid"
     t.text     "notes"
     t.boolean  "archived",          :default => false
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                           :null => false
+    t.datetime "updated_at",                           :null => false
   end
 
   create_table "email_preferences", :force => true do |t|
     t.string   "author",          :null => false
     t.boolean  "monthly_opt_out"
     t.string   "email"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",      :null => false
+    t.datetime "updated_at",      :null => false
   end
 
   add_index "email_preferences", ["author", "monthly_opt_out"], :name => "index_email_preferences_on_author_and_monthly_opt_out"
@@ -66,8 +65,8 @@ ActiveRecord::Schema.define(:version => 20110914202429) do
     t.integer  "user_id"
     t.text     "options"
     t.text     "data"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
   end
 
   add_index "reports", ["category"], :name => "index_reports_on_category"
@@ -75,8 +74,8 @@ ActiveRecord::Schema.define(:version => 20110914202429) do
   create_table "searches", :force => true do |t|
     t.text     "query_params"
     t.integer  "user_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
     t.string   "user_type"
   end
 
@@ -85,8 +84,8 @@ ActiveRecord::Schema.define(:version => 20110914202429) do
   create_table "sessions", :force => true do |t|
     t.string   "session_id", :null => false
     t.text     "data"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
 
   add_index "sessions", ["session_id"], :name => "index_sessions_on_session_id"
@@ -99,8 +98,8 @@ ActiveRecord::Schema.define(:version => 20110914202429) do
     t.string   "identifier"
     t.string   "result"
     t.datetime "at_time",    :null => false
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
 
   add_index "statistics", ["at_time"], :name => "index_statistics_on_at_time"
@@ -137,8 +136,8 @@ ActiveRecord::Schema.define(:version => 20110914202429) do
     t.datetime "current_login_at"
     t.string   "last_login_ip"
     t.string   "current_login_ip"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                       :null => false
+    t.datetime "updated_at",                       :null => false
   end
 
   add_index "users", ["last_request_at"], :name => "index_users_on_last_request_at"
