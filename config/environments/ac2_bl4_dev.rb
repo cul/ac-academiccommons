@@ -51,19 +51,21 @@ CulBlacklightAc2::Application.configure do
   config.static_cache_control = "public, max-age=3600"
 
   # Allow pass debug_assets=true as a query parameter to load pages with unpackaged assets
-  config.assets.allow_debugging = true
-   
-  config.serve_static_assets = false
+  config.assets.allow_debugging = true 
+  #config.serve_static_assets = false
 
   # Compress JavaScripts and CSS
-  config.assets.compress = false
+  #config.assets.compress = false
 
   # Don't fallback to assets pipeline if a precompiled asset is missed
   config.assets.compile = true
-  config.assets.precompile += %w( blueprint/screen.css blueprint/print.css )
+  config.assets.precompile += %w( blueprint/screen.css 
+                                  blueprint/print.css 
+                                  application.css
+                                  zooming_image.css
+                                  accordion.css)
   # Generate digests for assets URLs
   config.assets.digest = true
-
   config.assets.debug = true
 
   # Only use best-standards-support built into browsers
