@@ -35,7 +35,7 @@ namespace :deploy do
     tag = Capistrano::CLI.ui.ask "Tag to add: [#{current_version}] "
     tag = current_version if tag.empty?
  
-    system("git tag -a #{tag} -m '#{application}' && git push origin --tags")
+    system("git tag -a #{tag} -m '#{branch}' && git push origin --tags")
   end
  
 
