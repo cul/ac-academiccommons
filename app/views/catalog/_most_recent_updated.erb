@@ -5,7 +5,7 @@
   <% build_recent_updated_list.each do |recent_item| %>
   
     <li class="home-recent">
-      <%= link_to recent_item[:title_display], :controller=>"catalog", :action=>recent_item[:id] %>
+      <%= link_to recent_item[:title_display].first, :controller=>"catalog", :action=>recent_item[:id].first %>
       <p class="caption">
         <% num_authors = 0 %>
         <% recent_item[:author_facet].each do |author| %>

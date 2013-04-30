@@ -29,11 +29,11 @@ namespace :deploy do
 
   desc "Add tag based on current version"
   task :auto_tag, :roles => :app do
-    current_version = IO.read("VERSION").to_s.strip + Date.today.strftime("-%y%m%d")
+    current_version = IO.read("VERSION").to_s.strip + DateTime.now.strftime("-%m%d%y-%I%M%p")
     tag = Capistrano::CLI.ui.ask "Tag to add: [#{current_version}] "
     tag = current_version if tag.empty?
  
-    system("git tag -a #{tag} -m 'auto-tagged' && git push origin --tags")
+    system("git tag -a #{tag} -m '#{rails_env}' && git push origin --tags")
   end
  
 
