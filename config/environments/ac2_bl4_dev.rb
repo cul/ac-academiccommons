@@ -39,7 +39,7 @@ CulBlacklightAc2::Application.configure do
   # Print deprecation notices to the stderr
   config.active_support.deprecation = :stderr
   
-  config.relative_root = '/ac2_bl4_dev'
+  config.relative_root = ''
   config.analytics_enabled = false
   
   config.mail_deposit_recipients = ["rh2561@columbia.edu", "bal35@columbia.edu"]
