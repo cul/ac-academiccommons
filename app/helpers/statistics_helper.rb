@@ -282,13 +282,20 @@ module StatisticsHelper
     if facet_query == nil && q == nil
       return
     else  
-      return Blacklight.solr.find( :per_page => 100000, 
+      results = Blacklight.solr.find( :per_page => 100000, 
                                    :sort => sort, 
                                    :q => q,
                                    :fq => facet_query,
                                    :fl => "title_display,id,handle,doi,genre_facet", 
                                    :page => 1
                                   )["response"]["docs"]    
+      results.each do |item|  
+        item["title_display"] = item["title_display"].first
+       
+       #logger.info  results["title_display"]
+      end                          
+      return results  
+                            
     end                            
   end
   
