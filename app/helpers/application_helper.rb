@@ -23,8 +23,8 @@ module ApplicationHelper
     if(!document_type.nil?)
       heading += '<h2>' + document_type.first + ':</h2>'
     end
-    heading += '<h1>' + (document_heading.first || "") + '</h1>'
-    heading += '<h2 class="author_credit">' + first_names_then_last(document_author.first || "")  + '</h2>'
+    heading += '<h1>' + (document_heading || "") + '</h1>'
+    heading += '<h2 class="author_credit">' + first_names_then_last(document_author || "")  + '</h2>'
     heading.html_safe
   end
   
