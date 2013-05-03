@@ -109,7 +109,7 @@ module CatalogHelper
 
   def build_resource_list(document)
 
-   obj_display = (document["id"] || []).first
+   obj_display = (document["id"] || [])
    results = []
    uri_prefix = "info:fedora/"
    hc = HTTPClient.new()
@@ -263,7 +263,7 @@ module CatalogHelper
   end
 
   def base_id_for(doc)
-    doc["id"].first.gsub(/(\#.+|\@.+)/, "")
+    doc["id"].gsub(/(\#.+|\@.+)/, "")
   end
 
   def doc_object_method(doc, method)
@@ -282,7 +282,7 @@ module CatalogHelper
 #this prevents fedora server outages from making ac2 item page inaccessible
 begin
     hc = HTTPClient.new
-    doc["object_display"] = [ "#{fedora_config["riurl"]}" + "/objects/" + doc["id"].first + "/methods" ]
+    doc["object_display"] = [ "#{fedora_config["riurl"]}" + "/objects/" + doc["id"] + "/methods" ]
     json = doc_json_method(doc, "/ldpd:sdef.Core/describedBy?format=json")["results"]
     json << {"DC" => base_id_for(doc)}
     results = []
