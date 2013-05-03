@@ -73,14 +73,6 @@ module CatalogHelper
 
   def build_distinct_authors_list(query_params, included_authors, results)
   
-  # logger.info "========== xxx =============="
-  # logger.info  blacklight_config[:max_most_recent]
-  # logger.info  blacklight_config[:max_most_recent]
-  #   
-  # logger.info "blacklight version: " + Gem.loaded_specs["blacklight"].version.to_s
-  #   
-  # logger.info "========== end =============="
-  
     updated = Blacklight.solr.find(query_params)
     items = updated["response"]["docs"]
     if(items.empty?)
@@ -116,11 +108,7 @@ module CatalogHelper
   end
 
   def build_resource_list(document)
-    
-   # logger.info "============ start >> " 
-   # logger.info "============>> " + document["id"].to_s 
-   # logger.info "============ end >> "
-    
+
    obj_display = (document["id"] || []).first
    results = []
    uri_prefix = "info:fedora/"
@@ -129,7 +117,7 @@ module CatalogHelper
    fedora_url = "#{fedora_config["riurl"]}/get/"
 
    urls = {
-      :members => fedora_url + document["id"][0] +  "/ldpd:sdef.Aggregator/listMembers?max=&format=&start=",
+      :members => fedora_url + document["id"] +  "/ldpd:sdef.Aggregator/listMembers?max=&format=&start=",
    }
 
    docs = {}
@@ -464,9 +452,7 @@ begin
   end
   
   def itemscope_itemtype
-    
-    #logger.info "+++++++++++++++++++++++++ type: " + @document["genre_facet"][0]
-    #logger.info "++++++++++++++++++++++++> type: " + blacklight_config[:temscope][:itemtypes][@document["genre_facet"][0]]
+
     url_from_map = blacklight_config[:temscope][:itemtypes][@document["genre_facet"][0]]
     if(url_from_map == nil)
       return "http://schema.org/CreativeWork"

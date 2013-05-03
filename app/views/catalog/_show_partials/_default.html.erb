@@ -34,7 +34,7 @@
 	          <dt>
 	          	<%= document_show_field_labels[solr_fname]%>
 	          </dt>
-	          <dd<% if itemprop_attribute[solr_fname] != nil %> itemprop="<%= itemprop_attribute[solr_fname] %>"<% end -%>>
+	          <dd<% if itemprop_attribute(solr_fname) != nil %> itemprop="<%= itemprop_attribute(solr_fname) %>"<% end -%>>
 	          	<%= document_render_field_value(solr_fname, document[solr_fname]) %>
 	          </dd>
 	        <% end -%>

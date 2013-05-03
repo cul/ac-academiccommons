@@ -288,12 +288,7 @@ module StatisticsHelper
                                    :fq => facet_query,
                                    :fl => "title_display,id,handle,doi,genre_facet", 
                                    :page => 1
-                                  )["response"]["docs"]    
-      results.each do |item|  
-        item["title_display"] = item["title_display"].first
-       
-       #logger.info  results["title_display"]
-      end                          
+                                  )["response"]["docs"]                           
       return results  
                             
     end                            
