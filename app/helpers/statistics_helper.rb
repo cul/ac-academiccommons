@@ -70,7 +70,7 @@ module StatisticsHelper
     results.each do |item|
 
     csv += CSV.generate_line([item["title_display"],
-                              item["genre_facet"],
+                              item["genre_facet"].first,
                               item["handle"],
                               item["doi"],
                               stats[key][item["id"][0]].nil? ? 0 : stats[key][item["id"][0]]
