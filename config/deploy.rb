@@ -5,17 +5,7 @@ require 'capistrano/ext/multistage'
 require 'bundler/capistrano'
 require 'date'
 
-
 default_run_options[:pty] = true
-
-
-set :branch do
-  default_tag = `git tag`.split("\n").last
- 
-  tag = Capistrano::CLI.ui.ask "Tag to deploy (make sure to push the tag first): [#{default_tag}] "
-  tag = default_tag if tag.empty?
-  tag
-end
 
 set :scm, :git
 set :repository,  "git@github.com:cul/cul-blacklight-ac2.git"
@@ -25,18 +15,29 @@ set :use_sudo, false
 set :git_enable_submodules, 1
 set :deploy_via, :remote_cache
 
+set :branch do
+
+  tag = Capistrano::CLI.ui.ask "\nPlease, provide a tag name you want to deploy,\notherwise '#{default_branch}' branch will be deployed\nto #{domain}:#{deploy_to}current.\n: "
+  if !tag.empty?
+     tag
+  else
+     branch = default_branch
+  end
+
+end
+
 namespace :deploy do
 
   desc "Add tag based on current version"
   task :auto_tag, :roles => :app do
     current_version = IO.read("VERSION").to_s.strip + DateTime.now.strftime("-%m%d%y-%I%M%p")
-    tag = Capistrano::CLI.ui.ask "Tag to add: [#{current_version}] "
+
+    tag = Capistrano::CLI.ui.ask "Tag to add: [#{current_version}]}"
     tag = current_version if tag.empty?
  
-    system("git tag -a #{tag} -m '#{rails_env}' && git push origin --tags")
+    system("git tag -a #{tag} -m 'created from branch: #{branch}' && git push origin --tags")
   end
- 
-
+  
   desc "Restart Application"
   task :restart, :roles => :app do
     run "mkdir -p #{current_path}/tmp/cookies"
@@ -58,5 +59,8 @@ namespace :deploy do
   
 end
 
+after "deploy" do
+  run "echo #{branch} > #{deploy_to}shared/relesed_branch_tag.txt"
+end  
 
 after 'deploy:update_code', 'deploy:symlink_shared', 'deploy:create_shared_resources'
