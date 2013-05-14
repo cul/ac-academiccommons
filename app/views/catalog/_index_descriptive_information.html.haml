@@ -7,7 +7,7 @@
       %dt= index_field_labels[solr_fname]
       - if index_field_labels[solr_fname] == 'Permanent URL:'
         <dd>
-        %a{:href => document[solr_fname][0]} #{document[solr_fname][0]}
+        %a{:href => document[solr_fname]} #{document[solr_fname]}
         </dd>
       - else
         %dd= h(document[solr_fname].listify.join(", "))
