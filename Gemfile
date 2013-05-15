@@ -6,7 +6,7 @@ gem "rsolr",  :git =>"git@github.com:cul/rsolr.git"
 gem 'rake', '~> 0.9.2'
 gem 'rack', '1.4.5'
 gem 'sqlite3', '1.3.5'
-gem 'blacklight', '~> 4.0'
+gem 'blacklight', '~> 4.2'
 gem 'actionpack', '3.2.13'
 gem 'railties', '3.2.13'
 gem 'kaminari', '0.13.0'
