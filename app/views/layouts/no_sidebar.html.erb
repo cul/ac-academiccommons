@@ -95,7 +95,12 @@
 	
 	<div id="content" class="box">
 	
-	<%= render :partial=>'/flash_msg' %>
+	<%#= render :partial=>'/flash_msg' %>
+	
+	<% if flash[:notice] %>
+	<div class="ui-state-highlight ui-corner-all notice"> <%=flash[:notice]%> </div>
+	<br>
+	<% end %>
 
 
 	<%- if page_location == "search_results" -%>
