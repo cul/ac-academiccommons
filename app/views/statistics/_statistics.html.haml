@@ -112,10 +112,10 @@
  
         %div{:style => "display: table-cell;", :class => "result-cell"}= row_counter
         %div{:style => "display: table-cell;", :class => "result-cell"}= link_to item["title_display"], catalog_path(item["id"])
-        %div{:style => "display: table-cell; text-align: center;", :class => "result-cell"}= @stats["View"][item["id"][0]] || 0
+        %div{:style => "display: table-cell; text-align: center;", :class => "result-cell"}= @stats["View"][item["id"]] || 0
         -if params[:include_streaming_views]
-          %div{:style => "display: table-cell; text-align: center;", :class => "result-cell"}= @stats["Streaming"][item["id"][0]] || 0
-        %div{:style => "display: table-cell; text-align: center;", :class => "result-cell"}= @stats["Download"][item["id"][0]] || 0
+          %div{:style => "display: table-cell; text-align: center;", :class => "result-cell"}= @stats["Streaming"][item["id"]] || 0
+        %div{:style => "display: table-cell; text-align: center;", :class => "result-cell"}= @stats["Download"][item["id"]] || 0
 
 
 
