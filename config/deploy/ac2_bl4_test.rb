@@ -1,6 +1,6 @@
 set :rails_env, "ac2_bl4_test"
 set :application, "ac2_bl4_test"
-set :domain,      "bronte.cul.columbia.edu"
+set :domain,      "berlioz.cul.columbia.edu"
 set :deploy_to,   "/opt/passenger/#{application}/"
 set :user, "deployer"
 set :branch, @variables[:branch] || "ac2_bl4_test"
