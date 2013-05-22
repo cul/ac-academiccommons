@@ -61,6 +61,9 @@ end
 
 after "deploy" do
   run "echo #{branch} > #{deploy_to}shared/relesed_branch_tag.txt"
+  run "cp -r #{deploy_to}shared/cached-copy/app/assets/stylesheets/* #{deploy_to}shared/assets/"
+  run "cp -r #{deploy_to}shared/cached-copy/app/assets/images/* #{deploy_to}shared/assets/"
+  run "cp -r #{deploy_to}shared/cached-copy/app/assets/javascripts/* #{deploy_to}shared/assets/"
 end  
 
 after 'deploy:update_code', 'deploy:symlink_shared', 'deploy:create_shared_resources'
