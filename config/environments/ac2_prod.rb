@@ -53,7 +53,7 @@ CulBlacklightAc2::Application.configure do
   config.static_cache_control = "public, max-age=3600"
 
   # Allow pass debug_assets=true as a query parameter to load pages with unpackaged assets
-  config.assets.allow_debugging = true
+  #config.assets.allow_debugging = true
 
 
 end

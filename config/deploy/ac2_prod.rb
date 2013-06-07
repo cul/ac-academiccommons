@@ -1,5 +1,5 @@
 set :rails_env, "ac2_prod"
-set :application, "ac2_prod"
+set :application, "ac2"
 set :domain,      "bernstein.cul.columbia.edu"
 set :deploy_to,   "/opt/passenger/#{application}/"
 set :user, "deployer"
