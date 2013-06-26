@@ -42,8 +42,8 @@ CulBlacklightAc2::Application.configure do
   config.relative_root = ''
   config.analytics_enabled = false
   
-  config.mail_deposit_recipients = ["rh2561@columbia.edu", "bal35@columbia.edu"]
-  config.mail_deliverer = "rh2561@columbia.edu"
+  config.mail_deposit_recipients = ["cuac@libraries.cul.columbia.edu"]
+  config.mail_deliverer = "cuac@libraries.cul.columbia.edu"
   config.base_path = "berlioz.cul.columbia.edu"
 
 
