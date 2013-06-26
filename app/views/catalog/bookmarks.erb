@@ -3,7 +3,10 @@
 
 <h2>Improvements to Academic Commons</h2>
 
-<p>We have been making some changes to the Academic Commons website to make it both more powerful and easier to use.  Additional features will continue to be rolled out over the coming weeks.  For more about the changes, <a href="http://cdrs.columbia.edu/cdrsmain/?p=1558">please see our blog</a>.  And please, let us know what you think of the new site, or if you encounter any problems as you use it, at [info@cdrs.columbia.edu].</p>
+<p>We have been making some changes to the Academic Commons website to make it both more powerful and easier to use.  Additional features will continue to be rolled out over the coming weeks.  For more about the changes, <a href="http://cdrs.columbia.edu/cdrsmain/?p=1558">please see our blog</a>.  And please, 
+<%= mail_to("cuac@libraries.cul.columbia.edu", "let us know", :encode => :javascript)%>
+what you think of the new site, or if you encounter any problems as you use it.
+</p>
  </div>
 </div>
 
@@ -65,10 +68,10 @@
 
  
  
- <h3>Deposit your Work in Academic Commons</h3>
+<h3>Deposit your Work in Academic Commons</h3>
 <div   class='box home-side'  >Current faculty, staff, and students are invited to deposit research materials that are already in a digital format, including: articles, monographs, working papers, conference papers, images, datasets, multimedia creations, technical reports, preprints, software code, and theses.</p>
-<p>  To learn more about how to deposit your work into Academic Commons, please email 
-<%= mail_to("rh2561@columbia.edu", "Robert Hilliker, Digital Repository Manager.", :encode => :javascript)%></div>
+<p>  To learn more about how to deposit your work into Academic Commons, please email our
+<%= mail_to("cuac@libraries.cul.columbia.edu", "Digital Repository Manager.", :encode => :javascript)%></div>
 
  
 
