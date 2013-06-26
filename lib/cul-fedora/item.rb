@@ -262,9 +262,13 @@ module Cul
         other_name_roles = ["thesis advisor"]
         corporate_author_roles = ["author"]
         corporate_department_roles = ["originator"]
+        resource_types = {'text' => 'Text', 'moving image' => 'Video', 'sound recording--nonmusical' => 'Audio', 'software, multimedia' => 'Datasets', 'still image' => 'Image'}
+ 
+
 
         organizations = []
         departments = []
+        originator_department = ""
           
         begin
           collections = self.belongsTo
@@ -338,6 +342,7 @@ module Cul
                   name_part_split = name_part.split(". ")
                   organizations.push(name_part_split[0].strip)
                   departments.push(name_part_split[1].strip)
+                  originator_department = name_part_split[1].strip
                 end
               end
               if corp_name_node.css("role>roleTerm").collect(&:content).any? { |role| corporate_author_roles.include?(role) }
@@ -375,7 +380,7 @@ module Cul
               end
             end
 
-
+            add_field.call("originator_department", originator_department)  
             add_field.call("table_of_contents", mods.at_css("tableOfContents"))
 
             mods.css("note").each { |note| add_field.call("notes", note) }
@@ -427,7 +432,15 @@ module Cul
 
             mods.css("physicalDescription>internetMediaType").each { |mt| add_field.call("media_type_facet", mt) }
 
-            mods.css("typeOfResource").each { |tr| add_field.call("type_of_resource_facet", tr)}
+            mods.css("typeOfResource").each { |tr| 
+		add_field.call("type_of_resource_mods", tr)
+	        type = tr.text
+	    	if(resource_types.has_key?(type))
+		  type = resource_types[type]
+		end
+		add_field.call("type_of_resource_facet", type)
+	    }
+
             mods.css("subject>geographic").each do |geo|
               add_field.call("geographic_area_display", geo)
               add_field.call("geographic_area_search", geo)

@@ -11,11 +11,11 @@ module ApplicationHelper
   end
   
   def document_type
-    @document[Blacklight.config[:show][:genre]]
+    @document[CatalogController.blacklight_config[:show][:genre]]
   end
   
   def document_author
-    @document[Blacklight.config[:show][:author]]
+    @document[CatalogController.blacklight_config[:show][:author]]
   end
   
   def render_document_heading
@@ -23,8 +23,8 @@ module ApplicationHelper
     if(!document_type.nil?)
       heading += '<h2>' + document_type.first + ':</h2>'
     end
-    heading += '<h1>' + (document_heading.first || "") + '</h1>'
-    heading += '<h2 class="author_credit">' + first_names_then_last(document_author.first || "")  + '</h2>'
+    heading += '<h1>' + (document_heading || "") + '</h1>'
+    heading += '<h2 class="author_credit">' + first_names_then_last(document_author || "")  + '</h2>'
     heading.html_safe
   end
   
@@ -174,23 +174,23 @@ module ApplicationHelper
       
      end  
   end
-  
-  def document_show_fields_linked
-    Blacklight.config[:show_fields][:linked]
+
+  def document_show_fields_linked(name)   
+    CatalogController.blacklight_config.show_fields[name][:linked]
   end
   
   def document_render_field_value(field_name, value)
 
-    if(document_show_fields_linked[field_name])
-      if(document_show_fields_linked[field_name] == "facet")
+    if(document_show_fields_linked(field_name))
+      if(document_show_fields_linked(field_name) == "facet")
         value = '<a href="' + relative_root + '/catalog?f[' + field_name + '][]=' + value + '">' + value + '</a>'
-      elsif(document_show_fields_linked[field_name] == "url")
+      elsif(document_show_fields_linked(field_name) == "url")
         value = '<a href="' + value + '">' + value + '</a>'
       end
     end
     
     if(field_name == "url")
-      value = '<a class="fancybox-media" href="' + value + '">' + value + '</a>'  
+      value = '<a class="fancybox-counter" href="' + value + '">' + value + '</a>'  
     end
       
     return auto_link(value).html_safe

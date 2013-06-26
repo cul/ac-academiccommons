@@ -1,6 +1,13 @@
 <% if params[:q].blank? and params[:f].blank? and params[:search_field].blank? %>
 	<%# if there are no input/search related params, display the "home" partial -%>
-	<%= render 'home' %>
+
+	<div class="span-17">
+		<div id='most-recent' class='box clearfix'>
+			<%= render :partial=>"most_recent_updated.erb" %>
+		</div>
+	</div>
+
+	<%= render :partial=>'sidebar_all.erb' %>
 <% else %>
 
 	<% @page_title = "Search Results | " + application_name  %>

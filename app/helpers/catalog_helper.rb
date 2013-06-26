@@ -1,8 +1,10 @@
 require 'cgi'
+require 'rsolr'
 
 module CatalogHelper
 
   include ApplicationHelper
+  #include Blacklight::CatalogHelperBehavior
 
   def auto_add_empty_spaces(text)
     text.to_s.gsub(/([^\s-]{5})([^\s-]{5})/,'\1&#x200B;\2')
@@ -39,7 +41,7 @@ module CatalogHelper
     params[:page] = nil
     params[:q] = (params[:q].nil?) ? "" : params[:q].to_s
     params[:sort] = (params[:sort].nil?) ? "record_creation_date desc" : params[:sort].to_s
-    params[:rows] = (params[:rows].nil? || params[:rows].to_s == "") ? ((params[:id].nil?) ? Blacklight.config[:feed_rows] : params[:id].to_s) : params[:rows].to_s
+    params[:rows] = (params[:rows].nil? || params[:rows].to_s == "") ? ((params[:id].nil?) ? blacklight_config[:feed_rows] : params[:id].to_s) : params[:rows].to_s
     
     extra_params = {}
     extra_params[:fl] = "title_display,id,author_facet,author_display,record_creation_date,handle,abstract"
@@ -70,6 +72,7 @@ module CatalogHelper
   end
 
   def build_distinct_authors_list(query_params, included_authors, results)
+  
     updated = Blacklight.solr.find(query_params)
     items = updated["response"]["docs"]
     if(items.empty?)
@@ -90,13 +93,13 @@ module CatalogHelper
         end
         if (new)
           results << r
-          if(results.length == Blacklight.config[:max_most_recent])
+          if(results.length == blacklight_config[:max_most_recent])
             return results
           end
         end
       end
     end
-    if(results.length < Blacklight.config[:max_most_recent])
+    if(results.length < blacklight_config[:max_most_recent])
       query_params[:start] = query_params[:start] + 100
       build_distinct_authors_list(query_params, included_authors, results)
     else
@@ -105,7 +108,8 @@ module CatalogHelper
   end
 
   def build_resource_list(document)
-   obj_display = (document["id"] || []).first
+
+   obj_display = (document["id"] || [])
    results = []
    uri_prefix = "info:fedora/"
    hc = HTTPClient.new()
@@ -113,7 +117,7 @@ module CatalogHelper
    fedora_url = "#{fedora_config["riurl"]}/get/"
 
    urls = {
-      :members => fedora_url + document["id"][0] +  "/ldpd:sdef.Aggregator/listMembers?max=&format=&start=",
+      :members => fedora_url + document["id"] +  "/ldpd:sdef.Aggregator/listMembers?max=&format=&start=",
    }
 
    docs = {}
@@ -169,6 +173,8 @@ module CatalogHelper
 
       results << res
     end
+    
+    #resource_list.length
 
     return results
   end
@@ -257,7 +263,7 @@ module CatalogHelper
   end
 
   def base_id_for(doc)
-    doc["id"].first.gsub(/(\#.+|\@.+)/, "")
+    doc["id"].gsub(/(\#.+|\@.+)/, "")
   end
 
   def doc_object_method(doc, method)
@@ -276,7 +282,7 @@ module CatalogHelper
 #this prevents fedora server outages from making ac2 item page inaccessible
 begin
     hc = HTTPClient.new
-    doc["object_display"] = [ "#{fedora_config["riurl"]}" + "/objects/" + doc["id"].first + "/methods" ]
+    doc["object_display"] = [ "#{fedora_config["riurl"]}" + "/objects/" + doc["id"] + "/methods" ]
     json = doc_json_method(doc, "/ldpd:sdef.Core/describedBy?format=json")["results"]
     json << {"DC" => base_id_for(doc)}
     results = []
@@ -394,7 +400,7 @@ begin
   end
   
   def render_document_class(document = @document)
-   'blacklight-' + document.get(Blacklight.config[:index][:record_display_type]).parameterize rescue nil
+   'blacklight-' + document.get(blacklight_config[:index][:record_display_type]).parameterize rescue nil
   end
 
   def render_document_sidebar_partial(document = @document)
@@ -416,5 +422,43 @@ begin
      end  
      return urls
   end  
+  
+
+  def related_links
+    
+      if @document["genre_facet"][0] != "Dissertations" && @document["genre_facet"][0] != "Master's theses"
+        return []
+      end
+    
+      if @document['originator_department'] == nil
+        return []
+      end  
+    
+      cu_department = @document['originator_department'][0]
+      
+      rsolr = RSolr.connect :url => Rails.application.config.related_content_solr_url
+      list_size = Rails.application.config.related_content_show_size
+      search = rsolr.select :params => { :q => 'cu_department:"' + cu_department + '"', :qt => "document", :start => 0, :rows => list_size, :sort => "date_ssued desc"}
+    
+      search = search["response"]
+      search = search["docs"]
+      
+      return search
+
+  end
+
+  def itemprop_attribute(name)
+    blacklight_config.show_fields[name][:itemprops]
+  end
+  
+  def itemscope_itemtype
+
+    url_from_map = blacklight_config[:temscope][:itemtypes][@document["genre_facet"][0]]
+    if(url_from_map == nil)
+      return "http://schema.org/CreativeWork"
+    else
+      return url_from_map
+    end
+  end
 
 end

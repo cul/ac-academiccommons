@@ -4,6 +4,7 @@ set :domain,      "rowling.cul.columbia.edu"
 set :deploy_to,   "/opt/passenger/#{application}/"
 set :user, "deployer"
 set :branch, @variables[:branch] || "passenger_dev"
+set :default_branch, "passenger_dev"
 set :scm_passphrase, "Current user can full owner domains."
 
 role :app, domain

@@ -1,13 +1,17 @@
 %div Dear Academic Commons Depositor,
-%br
 %div
-  You are receiving this statistical report as part of a series of enhancements we have made to
-  #{link_to "Academic Commons", "http://academiccommons.columbia.edu"}, the digital repository of Columbia University and its affiliates.  Please note that, in the future, this report will include “lifetime” statistics for your deposited research, which report the total number of views and downloads since statistical reporting began on May 1st of this year.
+%p
+  In addition to your regular monthly usage statistics, we would like to invite you to a party to celebrate the deposit of our 10,000th item in Academic Commons.
+%p 
+  Where: Butler Library, Rooms 522 and 523 (#{link_to 'map', 'http://bit.ly/ButlerLib'})
 %br
-%div
-  If you haven’t yet had a chance, please visit our #{link_to "new website", "http://academiccommons.columbia.edu"} and tell us what you think. We’ve added some new features, such as a subject browse, and improved the searchability of our collections. Our new site also makes it possible to subscribe to search results using RSS feeds.  Let us know if there are any features you would like to see that aren’t there by sending an email to the Digital Repository Manager, #{mail_to "rhilliker@columbia.edu?subject=Academic Commons Feedback About Stats Report", "Robert Hilliker"}.
-  
+  When: Thursday, May 2nd, 5 to 7 pm
+%br
+  What: Food, drink, and a chance to win a Nook Simple Touch e-reader.
+%br
+%p
+  Please #{link_to 'rsvp', "http://bit.ly/AC10000"} so that we can be sure to lay in sufficient provisions for all! 
 
-= render :partial => "monthly_stats", :locals => {:lifetime => false }
+= render :partial => "monthly_stats", :locals => {:lifetime => true }
 
 = render :partial => "monthly_footer"

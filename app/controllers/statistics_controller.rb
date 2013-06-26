@@ -1,6 +1,7 @@
 class StatisticsController < ApplicationController
-  layout "no_sidebar"
-  before_filter :require_admin, :except => [:unsubscribe_monthly]
+  layout "application"
+  before_filter :require_user
+  before_filter :require_admin, :except => [:unsubscribe_monthly, :usage_reports]
   include Blacklight::SolrHelper
   include StatisticsHelper
 
@@ -40,62 +41,90 @@ class StatisticsController < ApplicationController
       @authors.each do |author|
         author_id = author[:id]
         startdate = Date.parse(params[:month] + " " + params[:year])
+        enddate = Date.parse(params[:month] + " " + params[:year])
+        
+        @results, @stats, @totals =  get_author_stats(startdate, 
+                                                      enddate,
+                                                      author_id,
+                                                      nil,
+                                                      params[:include_zeroes],
+                                                      'author_uni',
+                                                      false
+                                                      )
 
-        results, stats, totals  = get_monthly_author_stats(:startdate => startdate, :include_zeroes => false, :author_id => author_id)
-
-        if totals.values.sum != 0 || params[:include_zeroes]
+        if @totals.values.sum != 0 || params[:include_zeroes]
     
           case params[:email_template]
           when "Normal"
-            Notifier.author_monthly(author[:email], author_id, startdate, results, stats, totals,request).deliver
-          else
-            Notifier.author_monthly_first(author[:email], author_id, startdate, results, stats, totals,request).deliver
-
+            Notifier.author_monthly(author[:email], author_id, startdate, enddate, @results, @stats, @totals, request, false).deliver
+          else 
+            Notifier.author_monthly_first(author[:email], author_id, startdate, enddate, @results, @stats, @totals, request, false).deliver
           end  
         end
       end
     end
   end
 
-  def author_monthly
-  
-    if (!params[:month_from].nil? && !params[:month_to].nil? && !params[:year_from].nil? && !params[:year_to].nil?)
-      
+ def author_monthly
+   statistical_reporting
+   render :template => 'statistics/statistical_reporting'
+ end
+ 
+ def usage_reports
+   statistical_reporting
+   render :template => 'statistics/statistical_reporting'
+ end
+ 
+ def statistical_reporting  
+   
+      setDefaultParams(params)
+
       startdate = Date.parse(params[:month_from] + " " + params[:year_from])
       enddate = Date.parse(params[:month_to] + " " + params[:year_to])
-     
-      if params[:commit].in?('View', "Email")
+
+      if params[:commit].in?('View', "Email", "Get Usage Stats", "keyword search")
       
+        logStatisticsUsage(startdate, enddate, params)
         @results, @stats, @totals =  get_author_stats(startdate, 
                                                       enddate,
-                                                      params[:author_id],
+                                                      params[:search_criteria],
                                                       nil,
                                                       params[:include_zeroes],
-                                                      params[:facet]
+                                                      params[:facet],
+                                                      params[:include_streaming_views]
                                                       )
+        if (@results == nil || @results.size == 0)    
+          setMessageAndVariables 
+          return
+        end
         
         if params[:commit] == "Email"
           case params[:email_template]
           when "Normal"
-            Notifier.author_monthly(params[:email_destination], params[:author_id], startdate, @results, @stats, @totals, request).deliver
+            Notifier.author_monthly(params[:email_destination], params[:search_criteria], startdate, enddate, @results, @stats, @totals, request, params[:include_streaming_views]).deliver
           else 
-            Notifier.author_monthly_first(params[:email_destination], params[:author_id], startdate, @results, @stats, @totals, request).deliver
+            Notifier.author_monthly_first(params[:email_destination], params[:search_criteria], startdate, enddate, @results, @stats, @totals, request, params[:include_streaming_views]).deliver
           end  
         end
       end
       
       if params[:commit] == "Download CSV report"
+        
+        logStatisticsUsage(startdate, enddate, params)
+        
         csv_report = cvsReport( startdate,
                                 enddate,
-                                params[:author_id],
+                                params[:search_criteria],
                                 params[:include_zeroes],
                                 params[:recent_first],
-                                params[:facet]
+                                params[:facet],
+                                params[:include_streaming_views]
                                )
-                                
-        send_data csv_report, :type=>"application/csv", :filename=>params[:author_id] + "_monthly_statistics.csv" 
-      end
-    end
+                               
+         if(csv_report != nil)
+           send_data csv_report, :type=>"application/csv", :filename=>params[:search_criteria] + "_monthly_statistics.csv" 
+         end                        
+      end 
   end
 
   def search_history

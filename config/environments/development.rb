@@ -29,6 +29,7 @@ CulBlacklightAc2::Application.configure do
   
   config.mail_deposit_recipients = ["pbf2105@columbia.edu", "patrickforce@gmail.com"]
   config.mail_deliverer = "pbf2105@columbia.edu"
+  config.base_path = "localhost:3000"
   
 
 # Do not compress assets
@@ -36,6 +37,9 @@ CulBlacklightAc2::Application.configure do
 
   # Expands the lines which load the assets
   config.assets.debug = true
+
+  config.gem 'blacklight_oai_provider'
+  config.gem 'oai'
   
 end
 

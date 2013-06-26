@@ -65,7 +65,7 @@
 </header>
 </div>
 <div class="container clearfix" id="main" > 
-
+ 
 
 
 	<%- if page_location == "home" || page_location == "browse_view" -%>
@@ -95,7 +95,12 @@
 	
 	<div id="content" class="box">
 	
-	<%= render :partial=>'/flash_msg' %>
+	<%#= render :partial=>'/flash_msg' %>
+	
+	<% if flash[:notice] %>
+	<div class="ui-state-highlight ui-corner-all notice"> <%=flash[:notice]%> </div>
+	<br>
+	<% end %>
 
 
 	<%- if page_location == "search_results" -%>
@@ -121,6 +126,7 @@
 	
 	</div>
 
+    </footer>
 
 </div>  <!-- div#container -->    
  

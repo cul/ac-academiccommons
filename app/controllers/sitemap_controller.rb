@@ -20,7 +20,7 @@ include Blacklight::SolrHelper
     headers['Content-Type'] = 'application/xml'
     latest = document_list.first
 
-     	     if stale?(:etag => latest, :last_modified => Time.zone.parse(latest["record_creation_date"][0]).utc)
+     	     if stale?(:etag => latest, :last_modified => Time.zone.parse(latest["record_creation_date"]).utc)
 		 @docs = document_list
 	         @response = solr_response
 		 respond_to do |format| 

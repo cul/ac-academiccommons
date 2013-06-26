@@ -1,0 +1,28 @@
+
+<% if related_links.count > 0%>
+<h3>Related Content</h3>
+
+
+
+<div class='box home-side'>
+
+<div style="display: table;">
+	   <% related_links.each do |row|%>
+  <div style="display: table-row;">
+
+  	<div style="display: table-cell; vertical-align: top; padding: 0px 5px 12px 0px;">
+      <img src="<%= Rails.application.config.relative_root%>/assets/organization/oregon_state_university.png" width="35">
+  	</div>
+
+  	<div style="display: table-cell; vertical-align: top; padding: 0px 0px 12px 5px;">
+      <a href="<%= row["handle"]%>"><%= row["title"]%></a>
+  	</div>
+
+ </div>
+<% end %>
+</div>
+
+
+</div>
+
+<% end -%>

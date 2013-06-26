@@ -5,9 +5,12 @@
  
 <%localized_params = params %>
    
- 
+<%=link_to "Start Search Over".html_safe, catalog_index_path, :id=>"startOverLink" %>
 
-<%=link_to "Start&nbsp;over&thinsp;".html_safe, catalog_index_path, :id=>"startOverLink" %>
+<% if current_user %>
+	<%=link_to "Get Usage Stats".html_safe, relative_root + "/statistics/usage_reports?commit=Get Usage Stats&facet=search_query&search_criteria=" + CGI::escape(request.fullpath), :id=>"startOverLink" %>
+<% end %>
+
 
 <%- params[:sort]="record_creation_date desc" -%>
 

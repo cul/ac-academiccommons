@@ -1,4 +1,7 @@
 class UserSessionsController < ApplicationController
+  
+  require File.expand_path(File.dirname(__FILE__) + '../../../lib/authlogic_wind/session.rb')
+  
   unloadable
   before_filter :require_no_user, :only => [:new, :create]
   before_filter :require_user, :only => :destroy

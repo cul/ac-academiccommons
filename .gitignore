@@ -8,6 +8,7 @@ log/*.log
 log/*.log*
 tmp/**/*
 tmp/*_visits
+tmp/*_visitors
 config/database.yml
 config/solr.yml
 config/fedora.yml
