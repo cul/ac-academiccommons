@@ -73,8 +73,8 @@ module StatisticsHelper
                               item["genre_facet"].first,
                               item["handle"],
                               item["doi"],
-                              stats[key][item["id"][0]].nil? ? 0 : stats[key][item["id"][0]]
-                              ].concat( make_month_line_stats(stats, months_list, item["id"][0], ids))
+                              stats[key][item["id"]].nil? ? 0 : stats[key][item["id"]]
+                              ].concat( make_month_line_stats(stats, months_list, item["id"], ids))
                               ) + LINE_BRAKER  
     end
     
