@@ -27,8 +27,8 @@ CulBlacklightAc2::Application.configure do
   config.relative_root = ""
   config.analytics_enabled = false
   
-  config.mail_deposit_recipients = ["pbf2105@columbia.edu", "patrickforce@gmail.com"]
-  config.mail_deliverer = "pbf2105@columbia.edu"
+  config.mail_deposit_recipients = ["ap2972@columbia.edu", "cuac@libraries.cul.columbia.edu"]
+  config.mail_deliverer = "ap2972@columbia.edu"
   
 
 # Do not compress assets
