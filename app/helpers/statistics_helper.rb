@@ -116,7 +116,7 @@ module StatisticsHelper
       
       if(download_ids != nil)    
         download_id = download_ids[id]       
-        line << (stats[DOWNLOAD + month.to_s][download_id.to_s].nil? ? 0 : stats[DOWNLOAD + month.to_s][download_id.to_s])
+        line << (stats[DOWNLOAD + month.to_s][download_id[0]].nil? ? 0 : stats[DOWNLOAD + month.to_s][download_id[0]])
       else
         line << (stats[VIEW + month.to_s][id].nil? ? 0 : stats[VIEW + month.to_s][id])
       end
