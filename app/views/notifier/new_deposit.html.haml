@@ -19,12 +19,12 @@
 %div 
   %b Title:
 %div
-  = @title.gsub(/\r\n/s, '<br/>').html_safe
+  = @title
 %hr
 %div 
   %b Authors:
 %div
-  = @authors.gsub(/\r\n/s, '<br/>').html_safe
+  = @authors
 %hr
 %div 
   %b Abstract or Description:
@@ -42,7 +42,7 @@
 %div 
   %b Notes:
 %div
-  = @notes.gsub(/\r\n/s, '<br/>').html_safe
+  = @notes
 %hr
 %p
   = "You can access the record for this deposit at <a href=\"" + @record_url + "\">" + @record_url + "</a>."
