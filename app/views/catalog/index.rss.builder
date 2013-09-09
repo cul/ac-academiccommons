@@ -16,7 +16,7 @@ xml.rss(:version=>"2.0", "xmlns:dc"=>"http://purl.org/dc/elements/1.1", "xmlns:c
         	xml.link(catalog_url(doc[:id]))
         end
         if(doc[:author_display])
-        	xml.tag!("dc:creator", doc[:author_display] )
+        	xml.tag!("dc:creator", doc[:author_display])
         end
 	    if(doc[:handle])
 	    	xml.guid(doc[:handle])
@@ -28,16 +28,16 @@ xml.rss(:version=>"2.0", "xmlns:dc"=>"http://purl.org/dc/elements/1.1", "xmlns:c
 	    	xml.description(doc[:abstract])
 	    end
 	    if (doc[:subject_facet])
-        	xml.tag!("cu_global:subject", doc[:subject_facet] )
+        	xml.tag!("cu_global:subject", doc[:subject_facet].join(", "))
 	    end
 	    if (doc[:author_uni])
-        	xml.tag!("cu_global:id", doc[:author_uni] )
+        	xml.tag!("cu_global:uid", doc[:author_uni].join(", "))
 	    end
 	    if (doc[:department_facet])
-        	xml.tag!("cu_global:department", doc[:department_facet] )
+        	xml.tag!("cu_global:department", doc[:department_facet].join(", "))
 	    end
 	    if (doc[:genre_facet])
-        	xml.tag!("cu_global:content_type", doc[:genre_facet] )
+        	xml.tag!("cu_global:content_type", doc[:genre_facet].join(", "))
 	    end
       end
     end
