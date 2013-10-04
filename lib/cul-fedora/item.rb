@@ -208,6 +208,14 @@ module Cul
       end
       
       def identifierIndexing(mods, add_field)
+        
+        if(handle = mods.at_css("identifier[@type='CDRS doi']"))   
+          if(!handle.nil? && handle.text.length != 0)      
+            add_field.call("handle", handle)
+          else
+            add_field.call("handle", mods.at_css("identifier[@type='hdl']"))  
+          end
+        end         
       
         if(isbn = mods.at_css("identifier[@type='isbn']"))   
           if(!isbn.nil? && isbn.text.length != 0)      
@@ -368,7 +376,7 @@ module Cul
 
 
             add_field.call("abstract", mods.at_css("abstract"))
-            add_field.call("handle", mods.at_css("identifier[@type='hdl']"))
+            #add_field.call("handle", mods.at_css("identifier[@type='hdl']"))
   
             mods.css("subject").each do |subject_node|
               if(subject_node.attributes.count == 0)
