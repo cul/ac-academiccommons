@@ -16,7 +16,11 @@
 	    }
       </script>
     </div>
- 
+    
+	 <%if !alert_msg.empty? %>
+       <%= render :partial => "/catalog/alert_box.erb" %>
+	 <%end%> 
+	 
 </div>
 <% sidebar_items << capture do %>
  <!--  <div class="back-to-search"><%#= link_back_to_catalog %></div>  back to search link removed per JIRA AC-360 -->

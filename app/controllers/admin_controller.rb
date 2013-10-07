@@ -121,6 +121,21 @@ class AdminController < ApplicationController
     @home_block_data = home_block ? home_block.data : ""
   end
   
+  
+  def edit_alert_message
+    if params[:commit]   
+      if existing_block = ContentBlock.find_by_title("alert_message")
+        existing_block.update_attributes!(:user => current_user, :data => params[:alert_message])
+      else
+        ContentBlock.create!(:title => "alert_message", :user => current_user, :data => params[:alert_message])
+      end
+    end
+
+    alert_message_model = ContentBlock.find_by_title("alert_message")
+    @alert_message = alert_message_model ? alert_message_model.data : ""
+  end
+  
+  
   def deposits
     
     if(params[:archive])
