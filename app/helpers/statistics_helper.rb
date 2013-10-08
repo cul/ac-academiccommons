@@ -9,10 +9,10 @@ module StatisticsHelper
   DOWNLOAD = 'download_'
   LINE_BRAKER = RUBY_VERSION < "1.9" ? "\r\n" : ""
    
-  def cvsReport(startdate, enddate, search_criteria, include_zeroes, recent_first, facet, include_streaming_views)
+  def cvsReport(startdate, enddate, search_criteria, include_zeroes, recent_first, facet, include_streaming_views, order_by)
 
     months_list = make_months_list(startdate, enddate, recent_first)
-    results, stats, totals, download_ids = get_author_stats(startdate, enddate, search_criteria, months_list, include_zeroes, facet, include_streaming_views)
+    results, stats, totals, download_ids = get_author_stats(startdate, enddate, search_criteria, months_list, include_zeroes, facet, include_streaming_views, order_by)
     
     if (results == nil || results.size == 0)    
       setMessageAndVariables 

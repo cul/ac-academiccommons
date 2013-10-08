@@ -120,7 +120,8 @@ class StatisticsController < ApplicationController
                                 params[:include_zeroes],
                                 params[:recent_first],
                                 params[:facet],
-                                params[:include_streaming_views]
+                                params[:include_streaming_views],
+                                params[:order_by]
                                )
                                
          if(csv_report != nil)
