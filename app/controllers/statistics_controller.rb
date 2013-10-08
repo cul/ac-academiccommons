@@ -49,7 +49,8 @@ class StatisticsController < ApplicationController
                                                       nil,
                                                       params[:include_zeroes],
                                                       'author_uni',
-                                                      false
+                                                      false,
+                                                      params[:order_by]
                                                       )
 
         if @totals.values.sum != 0 || params[:include_zeroes]
@@ -91,7 +92,8 @@ class StatisticsController < ApplicationController
                                                       nil,
                                                       params[:include_zeroes],
                                                       params[:facet],
-                                                      params[:include_streaming_views]
+                                                      params[:include_streaming_views],
+                                                      params[:order_by]
                                                       )
         if (@results == nil || @results.size == 0)    
           setMessageAndVariables 
