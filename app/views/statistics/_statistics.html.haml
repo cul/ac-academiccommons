@@ -51,9 +51,15 @@
           .label Include streaming views? 
         %div{:style => "display: table-cell;", :class=>"table-cell"}
           .value
-            = check_box_tag :include_streaming_views, "true", params[:include_streaming_views]      
+            = check_box_tag :include_streaming_views, "true", params[:include_streaming_views]    
             
-               
+        %div{:style => "display: table-row;"}
+        %div{:style => "display: table-cell;", :class=>"table-cell"}
+          .label Order by: 
+        %div{:style => "display: table-cell;", :class=>"table-cell"}
+          .value
+            = select_tag :order_by, options_for_select([["Titles", "titles"], ["Views", "views"], ["Downloads", "downloads"]], params[:order_by])
+
       %div{:style => "padding: 15px 0px 0px;"}  
         %div{:style => "display: table;"}
           %div{:style => "display: table-row;"}

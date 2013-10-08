@@ -141,7 +141,7 @@ module StatisticsHelper
 
   
 
-  def get_author_stats(startdate, enddate, query, months_list, include_zeroes, facet, include_streaming_views)
+  def get_author_stats(startdate, enddate, query, months_list, include_zeroes, facet, include_streaming_views, order_by)
     
     if(query == nil || query.empty?)
       return
@@ -159,13 +159,19 @@ module StatisticsHelper
     
       results.reject! { |r| (stats['View'][r['id'][0]] || 0) == 0 &&  (stats['Download'][r['id']] || 0) == 0 } unless include_zeroes
         
-      results.sort! do |x,y|
-        result = (stats['Download'][y['id']] || 0) <=> (stats['Download'][x['id']] || 0) 
-        if(facet != "search") 
-          result = x["title_display"] <=> y["title_display"] if result == 0
-        end  
-      result
-    end
+
+      if(order_by != 'titles') 
+        results.sort! do |x,y|
+          if(order_by == 'downloads') 
+            result = (stats['Download'][y['id']] || 0) <=> (stats['Download'][x['id']] || 0) 
+          end  
+          if(order_by == 'views') 
+              result = (stats['View'][y['id']] || 0) <=> (stats['View'][x['id']] || 0) 
+          end         
+            result
+        end
+      end
+      
 
     if(months_list != nil)
       process_stats_by_month(stats, totals, ids, download_ids, startdate, enddate, months_list)     
