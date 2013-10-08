@@ -2,23 +2,46 @@
 .split_form
 
   = form_tag url_for(:controller => "statistics", :action => "all_author_monthlies") do
+  
+    %div{:style => "padding: 10px 0px;"}
+      
+      %div{:style => "display: table; width: ;"}  
 
-    .label Email Template:
-    .value
-      = select_tag :email_template, options_for_select(["Normal", "Initial"], params[:email_template] || "Normal")
-
-    .label Report month:
-    .value
-      = select_tag :month, options_for_select(Date::ABBR_MONTHNAMES, params[:month] || (Date.today - 1.months).strftime("%b"))
-      = select_tag :year, options_for_select((2011..Date.today.year), params[:year])
-
-    .label Include zeroes?
-    .value
-      = check_box_tag :include_zeroes, "true", params[:include_zeroes]
+        %div{:style => "display: table-row;"}
+        %div{:style => "display: table-cell;  padding: 2px 15px 2px 0px", :class=>"table-cell"}
+          .label Email Template:
+        %div{:style => "display: table-cell;", :class=>"table-cell"}    
+          .value
+            = select_tag :email_template, options_for_select(["Normal", "Initial"], params[:email_template] || "Normal")
     
-    .label Number of reports to send:
-    .value
-      = @authors.length
+        %div{:style => "display: table-row;"}
+        %div{:style => "display: table-cell; padding: 2px 15px 2px 0px", :class=>"table-cell"}
+          .label Report month:
+        %div{:style => "display: table-cell;", :class=>"table-cell"}      
+          .value
+            = select_tag :month, options_for_select(Date::ABBR_MONTHNAMES, params[:month] || (Date.today - 1.months).strftime("%b"))
+            = select_tag :year, options_for_select((2011..Date.today.year), params[:year])
+    
+        %div{:style => "display: table-row;"}
+        %div{:style => "display: table-cell; padding: 2px 15px 2px 0px", :class=>"table-cell"}
+          .label Include zeroes?
+        %div{:style => "display: table-cell;", :class=>"table-cell"}  
+          .value
+          = check_box_tag :include_zeroes, "true", params[:include_zeroes]
+          
+        %div{:style => "display: table-row;"}
+        %div{:style => "display: table-cell; padding: 2px 15px 2px 0px", :class=>"table-cell"}
+          .label Order by: 
+        %div{:style => "display: table-cell;", :class=>"table-cell"}
+          .value
+            = select_tag :order_by, options_for_select([["Titles", "titles"], ["Views", "views"], ["Downloads", "downloads"]], params[:order_by])      
+        
+        %div{:style => "display: table-row;"}
+        %div{:style => "display: table-cell; padding: 2px 15px 2px 0px", :class=>"table-cell"}    
+          .label Number of reports to send:
+        %div{:style => "display: table-cell;", :class=>"table-cell"}
+          .value
+            = @authors.length
 
     .label 
     .value

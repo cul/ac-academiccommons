@@ -160,7 +160,7 @@ module StatisticsHelper
       results.reject! { |r| (stats['View'][r['id'][0]] || 0) == 0 &&  (stats['Download'][r['id']] || 0) == 0 } unless include_zeroes
         
 
-      if(order_by != 'titles') 
+      if(order_by == 'views' || order_by == 'downloads') 
         results.sort! do |x,y|
           if(order_by == 'downloads') 
             result = (stats['Download'][y['id']] || 0) <=> (stats['Download'][x['id']] || 0) 
