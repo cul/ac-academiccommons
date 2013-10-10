@@ -3,7 +3,8 @@ class AdminController < ApplicationController
   before_filter :require_admin 
   before_filter :add_jhtmlarea, :only => [:edit_home_page]
   
-  layout "no_sidebar"
+  #layout "no_sidebar"
+  layout "application"
 
   def ingest_history
     
@@ -137,7 +138,7 @@ class AdminController < ApplicationController
   
   
   def deposits
-    
+
     if(params[:archive])
       deposit_to_archive = Deposit.find(params[:archive])
       if(deposit_to_archive)
