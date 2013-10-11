@@ -200,7 +200,7 @@ configure_blacklight do |config|
   config.add_show_field 'subject_facet',           :label => 'Subject(s):',         :itemprops => 'keywords',      :linked => 'facet' 
   config.add_show_field 'isbn',                    :label => 'ISBN:'
   config.add_show_field 'issn',                    :label => 'ISSN:'
-  config.add_show_field 'doi',                     :label => 'DOI:'
+  config.add_show_field 'doi',                     :label => 'Publisher DOI:'
 
 
     # "fielded" search configuration. Used by pulldown among other places.
