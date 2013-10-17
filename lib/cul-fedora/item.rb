@@ -215,6 +215,8 @@ module Cul
           else
             add_field.call("handle", mods.at_css("identifier[@type='hdl']"))  
           end
+        else
+          add_field.call("handle", mods.at_css("identifier[@type='hdl']"))            
         end         
       
         if(isbn = mods.at_css("identifier[@type='isbn']"))   
