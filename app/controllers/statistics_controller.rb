@@ -34,7 +34,16 @@ class StatisticsController < ApplicationController
 
     ids = Blacklight.solr.find(:per_page => 100000, :page => 1, :fl => "author_uni")["response"]["docs"].collect { |f| f["author_uni"] }.flatten.compact.uniq - EmailPreference.find_all_by_monthly_opt_out(true).collect(&:author)
 
-    alternate_emails = Hash[EmailPreference.find(:all, :conditions => "email is NOT NULL").collect { |ep| [ep.author, ep.email] }.flatten]
+    #alternate_emails = Hash[EmailPreference.find(:all, :conditions => "email is NOT NULL").collect { |ep| [ep.author, ep.email] }.flatten]
+    
+    emails = EmailPreference.find(:all, :conditions => "email is NOT NULL and monthly_opt_out is false").collect
+    
+    alternate_emails = Hash.new
+    
+    emails.each do |ep|
+      alternate_emails[ep.author] = ep.email;
+    end 
+    
     @authors = ids.collect { |id| {:id => id, :email => alternate_emails[id] || "#{id}@columbia.edu"}}
 
     if params[:commit] == "Send"
@@ -42,7 +51,7 @@ class StatisticsController < ApplicationController
         author_id = author[:id]
         startdate = Date.parse(params[:month] + " " + params[:year])
         enddate = Date.parse(params[:month] + " " + params[:year])
-        
+
         @results, @stats, @totals =  get_author_stats(startdate, 
                                                       enddate,
                                                       author_id,
