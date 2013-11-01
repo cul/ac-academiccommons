@@ -1,6 +1,6 @@
 class EmailPreferencesController < ApplicationController
   before_filter :require_admin
-  layout "no_sidebar"
+  layout "application"
 
   def index
     @email_preferences = EmailPreference.all
