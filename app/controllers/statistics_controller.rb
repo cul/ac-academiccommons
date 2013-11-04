@@ -47,11 +47,24 @@ class StatisticsController < ApplicationController
     @authors = ids.collect { |id| {:id => id, :email => alternate_emails[id] || "#{id}@columbia.edu"}}
 
     if params[:commit] == "Send"
-      @authors.each do |author|
+      
+      if params[:send_test] 
+        test_author = Hash.new
+        test_author[:id] = params[:test_users].to_s
+        test_author[:email] = alternate_emails[test_author[:id]]
+        
+        processed_authors = Array.new 
+        processed_authors.push(test_author)
+      else
+
+       processed_authors = @authors
+      end
+      
+      processed_authors.each do |author|
         author_id = author[:id]
         startdate = Date.parse(params[:month] + " " + params[:year])
         enddate = Date.parse(params[:month] + " " + params[:year])
-
+        
         @results, @stats, @totals =  get_author_stats(startdate, 
                                                       enddate,
                                                       author_id,
@@ -61,15 +74,21 @@ class StatisticsController < ApplicationController
                                                       false,
                                                       params[:order_by]
                                                       )
+                                                      
+        if(author[:email] == nil) 
+          flash[:notice] = "Can not send statistics to " + author[:id] + ". The alternate email not found." 
+        end                                                                                      
 
         if @totals.values.sum != 0 || params[:include_zeroes]
-    
+
           case params[:email_template]
           when "Normal"
+            
             Notifier.author_monthly(author[:email], author_id, startdate, enddate, @results, @stats, @totals, request, false).deliver
           else 
             Notifier.author_monthly_first(author[:email], author_id, startdate, enddate, @results, @stats, @totals, request, false).deliver
           end  
+          flash[:notice] = "Number of emails where sent: " + processed_authors.size.to_s
         end
       end
     end
