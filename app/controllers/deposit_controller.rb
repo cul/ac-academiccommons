@@ -28,6 +28,11 @@ class DepositController < ApplicationController
   
   def submit_author_agreement
     if(params[:acceptedAgreement] == "agree")
+      Agreement.create(
+        :agreement_version => params["AC-agreement-version"],
+        :name => params[:name],
+        :email => params[:email]
+	)
       Notifier.new_author_agreement(params).deliver
     else
       flash[:notice] = "You must accept the author rights agreement."

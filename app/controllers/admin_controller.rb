@@ -152,6 +152,15 @@ class AdminController < ApplicationController
     @deposits = Deposit.find(:all, :conditions => {:archived => false}, :order => "created_at")
     
   end
+
+  def agreements
+      @agreements = Agreement.find(:all)
+      respond_to do |format|
+         format.html
+         format.csv { send_data Agreement.to_csv }
+      end
+  end
+
   
   def show_deposit
     @deposit = Deposit.find(params[:id])
