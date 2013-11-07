@@ -7,6 +7,7 @@
 %table
   %thead
     %tr
+      %th UNI
       %th Name
       %th Email
       %th Signed on
@@ -14,6 +15,7 @@
   %tbody
     - @agreements.each do |agreement|
       %tr
+        %td= agreement.uni
         %td= agreement.name
         %td= agreement.email
         %td= agreement.created_at

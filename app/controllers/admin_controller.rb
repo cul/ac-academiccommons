@@ -1,6 +1,6 @@
 class AdminController < ApplicationController
 
-  before_filter :require_admin 
+#  before_filter :require_admin 
   before_filter :add_jhtmlarea, :only => [:edit_home_page]
   
   #layout "no_sidebar"

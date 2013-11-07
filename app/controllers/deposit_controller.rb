@@ -3,6 +3,12 @@ class DepositController < ApplicationController
   def submit
     
     if(params[:acceptedAgreement] == "agree")
+      Agreement.create(
+        :uni => params[:uni],
+        :agreement_version => params["AC-agreement-version"],
+        :name => params[:name],
+        :email => params[:email]
+	)
       uploaded_file = UploadedFile.save(params[:file], "data/self-deposit-uploads/#{params[:uni]}", params[:file].original_filename)
       file_path = "data/self-deposit-uploads/#{params[:uni]}/#{params[:file].original_filename}"
       deposit = Deposit.create(
