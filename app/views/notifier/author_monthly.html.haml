@@ -1,15 +1,15 @@
 %div Hi there Academic Commons user,
 %br
 %div
-  As you requested, here are the monthly and lifetime use statistics for the 
+  As you requested, here are monthly and lifetime use statistics for the following 
   #{link_to "Academic Commons", "http://academiccommons.columbia.edu"},
-  item you searched for. 
+  item(s).
 
 = render :partial => "monthly_stats", :locals => {:lifetime => true}
 
 %div
-  Academic Commons is the digital repository of Columbia University and its affiliates. If you are a current member of faculty, staff, or a students of Columbia and its affiliates and would like to deposit, you can do so by using our 
+  Academic Commons is the digital research repository of Columbia University and its affiliates. If you are a current member of the faculty or staff or a student at Columbia or one of its affiliates and would like to deposit, you can do so by using the  
   #{link_to "self-deposit form", "http://academiccommons.columbia.edu/deposit"}
-  on the Academic Commons website.
+  on the Academic Commons website. 
    
 = render :partial => "monthly_footer"
