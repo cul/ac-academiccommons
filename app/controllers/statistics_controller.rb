@@ -49,6 +49,12 @@ class StatisticsController < ApplicationController
     if params[:commit] == "Send"
       
       if params[:send_test] 
+        
+        if params[:test_users].nil? || params[:test_users].empty?
+          flash[:notice] = "Could not get statistics. The UNI must be provided!"
+        return
+        end  
+        
         test_author = Hash.new
         test_author[:id] = params[:test_users].to_s
         test_author[:email] = alternate_emails[test_author[:id]]
