@@ -48,4 +48,27 @@
       = submit_tag "Send", :confirm => "This will send most likely hundreds of emails. Are you sure?"
 
 
+    %div{:style => "padding: 10px 0px;"}
+      
+      %div{:style => "display: table; width: ;"}  
+
+        %div{:style => "display: table-row;"}
+        %div{:style => "display: table-cell; padding: 2px 15px 2px 0px", :class=>"table-cell"}    
+          .label test alternatre email:
+        %div{:style => "display: table-cell;", :class=>"table-cell"}
+          .value
+          = check_box_tag :send_test, "true", params[:send_test]
+          
+
+        %div{:style => "display: table-row;"}
+        %div{:style => "display: table-cell; padding: 2px 15px 2px 0px", :class=>"table-cell"}    
+          .label for user: &nbsp; 
+        %div{:style => "display: table-cell;", :class=>"table-cell"}
+          .value
+          = text_field_tag :test_users, params[:test_users]
+            
+            
+            
+            
+
     = render :partial => "/debug_deliveries"
