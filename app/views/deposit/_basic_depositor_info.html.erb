@@ -1,9 +1,18 @@
 <% if(include_uni) %>
 	<p>
-		<%= label_tag 'uni', "UNI"%>
-		<%= text_field_tag "uni", (current_user ? current_user.login : ""),:class=>required_class, :title=>'A Columbia/CU affiliate UNI is required to deposit work to AC using this application. If you are submitting on behalf of a CU-affiliated author, please use their UNI. If you were previously affiliated with Columbia and would like to submit work without a UNI, please contact us.'  %> 
-		<span class="form-field-info"></span>
-	</p>
+<p>
+	<%= label_tag 'uni', "UNI"%>
+	<%= text_field_tag "uni", nil %>
+	<span class="form-field-info"></span>
+</p>
+<p>
+	
+  <%= check_box_tag "uni", nil %> 
+  <span class="agreement-language">
+    I do not have a UNI.
+  </span>
+</p>
+
 <% end %>
 
 <p>

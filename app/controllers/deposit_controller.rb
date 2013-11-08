@@ -35,6 +35,7 @@ class DepositController < ApplicationController
   def submit_author_agreement
     if(params[:acceptedAgreement] == "agree")
       Agreement.create(
+        :uni => params[:uni],
         :agreement_version => params["AC-agreement-version"],
         :name => params[:name],
         :email => params[:email]
