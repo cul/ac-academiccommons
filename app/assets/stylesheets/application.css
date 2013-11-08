@@ -2009,7 +2009,7 @@ form.self-deposit-form input, form.self-deposit-form textarea {
 }
 
 
-form.self-deposit-form input#acceptedAgreement {
+form.self-deposit-form input#acceptedAgreement, form.self-deposit-form input#nouni {
 	 
  float: left;
  width: 18px;
