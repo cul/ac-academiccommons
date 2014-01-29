@@ -49,20 +49,8 @@ class StatisticsController < ApplicationController
     if params[:commit] == "Send"
       
       if params[:send_test] 
-        
-        if params[:test_users].nil? || params[:test_users].empty?
-          flash[:notice] = "Could not get statistics. The UNI must be provided!"
-        return
-        end  
-        
-        test_author = Hash.new
-        test_author[:id] = params[:test_users].to_s
-        test_author[:email] = alternate_emails[test_author[:id]]
-        
-        processed_authors = Array.new 
-        processed_authors.push(test_author)
+        processed_authors = getTestAuthors(alternate_emails)
       else
-
        processed_authors = @authors
       end
       
@@ -86,14 +74,7 @@ class StatisticsController < ApplicationController
         end                                                                                      
 
         if @totals.values.sum != 0 || params[:include_zeroes]
-
-          case params[:email_template]
-          when "Normal"
-            
-            Notifier.author_monthly(author[:email], author_id, startdate, enddate, @results, @stats, @totals, request, false).deliver
-          else 
-            Notifier.author_monthly_first(author[:email], author_id, startdate, enddate, @results, @stats, @totals, request, false).deliver
-          end  
+          sendEmail(author[:email], author_id, startdate, enddate, @results, @stats, @totals, request, false) 
           flash[:notice] = "Number of emails where sent: " + processed_authors.size.to_s
         end
       end
@@ -135,32 +116,13 @@ class StatisticsController < ApplicationController
         end
         
         if params[:commit] == "Email"
-          case params[:email_template]
-          when "Normal"
-            Notifier.author_monthly(params[:email_destination], params[:search_criteria], startdate, enddate, @results, @stats, @totals, request, params[:include_streaming_views]).deliver
-          else 
-            Notifier.author_monthly_first(params[:email_destination], params[:search_criteria], startdate, enddate, @results, @stats, @totals, request, params[:include_streaming_views]).deliver
-          end  
+          sendEmail(params[:email_destination], params[:search_criteria], startdate, enddate, @results, @stats, @totals, request, params[:include_streaming_views]) 
+          flash[:notice] = "The report for: " + params[:search_criteria] + " was sent to: " + params[:email_destination]
         end
       end
       
       if params[:commit] == "Download CSV report"
-        
-        logStatisticsUsage(startdate, enddate, params)
-        
-        csv_report = cvsReport( startdate,
-                                enddate,
-                                params[:search_criteria],
-                                params[:include_zeroes],
-                                params[:recent_first],
-                                params[:facet],
-                                params[:include_streaming_views],
-                                params[:order_by]
-                               )
-                               
-         if(csv_report != nil)
-           send_data csv_report, :type=>"application/csv", :filename=>params[:search_criteria] + "_monthly_statistics.csv" 
-         end                        
+        downloadCSVreport(startdate, enddate, params)              
       end 
   end
 

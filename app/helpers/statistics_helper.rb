@@ -369,8 +369,49 @@ module StatisticsHelper
       
       params[:include_zeroes] = true
       
-    end   
-    
+    end     
   end
   
-end
+  def getTestAuthors(alternate_emails)
+        if params[:test_users].nil? || params[:test_users].empty?
+          flash[:notice] = "Could not get statistics. The UNI must be provided!"
+        return
+        end  
+        
+        test_author = Hash.new
+        test_author[:id] = params[:test_users].to_s
+        test_author[:email] = alternate_emails[test_author[:id]]
+        
+        processed_authors = Array.new 
+        processed_authors.push(test_author)
+        return processed_authors
+  end      
+  
+  def sendEmail(recepient, author_id, startdate, enddate, results, stats, totals, request, include_streaming_views)
+    case params[:email_template]
+    when "Normal"
+      Notifier.author_monthly(recepient, author_id, startdate, enddate, results, stats, totals, request, include_streaming_views).deliver
+    else
+      Notifier.author_monthly_first(recepient, author_id, startdate, enddate, results, stats, totals, request, include_streaming_views).deliver
+    end
+  end
+  
+  def downloadCSVreport(startdate, enddate, params)
+        logStatisticsUsage(startdate, enddate, params)
+        
+        csv_report = cvsReport( startdate,
+                                enddate,
+                                params[:search_criteria],
+                                params[:include_zeroes],
+                                params[:recent_first],
+                                params[:facet],
+                                params[:include_streaming_views],
+                                params[:order_by]
+                               )
+                               
+         if(csv_report != nil)
+           send_data csv_report, :type=>"application/csv", :filename=>params[:search_criteria] + "_monthly_statistics.csv" 
+         end 
+  end
+  
+end # ------------------------------------------ #
