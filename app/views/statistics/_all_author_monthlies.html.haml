@@ -20,7 +20,7 @@
         %div{:style => "display: table-cell;", :class=>"table-cell"}      
           .value
             = select_tag :month, options_for_select(Date::ABBR_MONTHNAMES, params[:month] || (Date.today - 1.months).strftime("%b"))
-            = select_tag :year, options_for_select((2011..Date.today.year), params[:year])
+            = select_tag :year, options_for_select((2011..Date.today.year), params[:year] || Date.today.year)
     
         %div{:style => "display: table-row;"}
         %div{:style => "display: table-cell; padding: 2px 15px 2px 0px", :class=>"table-cell"}
