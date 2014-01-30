@@ -1,23 +1,18 @@
 class Notifier < ActionMailer::Base
+  
+  def statistics_by_search(to_address, author_id, start_date, end_date, results, stats, totals, request, show_streams)
+    statistics_report(to_address, author_id, start_date, end_date, results, stats, totals, request, show_streams) 
+  end
 
   def author_monthly(to_address, author_id, start_date, end_date, results, stats, totals, request, show_streams)
-    @author_id = author_id
-    @stats = stats
-    @totals = totals
-    @results = results
-    @start_date = start_date.strftime("%b %Y")
-    @end_date = end_date.strftime("%b %Y")
-    recipients = to_address
-    from = Rails.application.config.mail_deliverer
-    subject = "Academic Commons Monthly Download Report for #{@start_date} - #{@end_date}"
-    content_type = 'text/html'
-    @request = request
-    @streams = show_streams
-
-    mail(:to => recipients, :from => from, :subject => subject, :content_type => content_type) 
+    statistics_report(to_address, author_id, start_date, end_date, results, stats, totals, request, show_streams) 
   end
   
   def author_monthly_first(to_address, author_id, start_date, end_date, results, stats, totals, request, show_streams)
+    statistics_report(to_address, author_id, start_date, end_date, results, stats, totals, request, show_streams)
+  end
+  
+  def statistics_report(to_address, author_id, start_date, end_date, results, stats, totals, request, show_streams)
     @request = request
     @author_id = author_id
     @stats = stats
@@ -32,7 +27,9 @@ class Notifier < ActionMailer::Base
     @streams = show_streams
     
     mail(:to => recipients, :from => from, :subject => subject, :content_type => content_type) 
-  end
+    
+    logger.debug("Report sent for: " + author_id + " to: " + to_address)
+  end  
   
   def new_deposit(root_url, deposit)
     @agreement_version = deposit.agreement_version 

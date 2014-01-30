@@ -7,12 +7,12 @@
       
       %div{:style => "display: table; width: ;"}  
 
-        %div{:style => "display: table-row;"}
-        %div{:style => "display: table-cell;  padding: 2px 15px 2px 0px", :class=>"table-cell"}
-          .label Email Template:
-        %div{:style => "display: table-cell;", :class=>"table-cell"}    
-          .value
-            = select_tag :email_template, options_for_select(["Normal", "Initial"], params[:email_template] || "Normal")
+        -# %div{:style => "display: table-row;"}
+        -# %div{:style => "display: table-cell;  padding: 2px 15px 2px 0px", :class=>"table-cell"}
+          -# .label Email Template:
+        -# %div{:style => "display: table-cell;", :class=>"table-cell"}    
+          -# .value
+            -# = select_tag :email_template, options_for_select(["Normal", "Initial"], params[:email_template] || "Normal")
     
         %div{:style => "display: table-row;"}
         %div{:style => "display: table-cell; padding: 2px 15px 2px 0px", :class=>"table-cell"}
@@ -37,7 +37,7 @@
             = select_tag :order_by, options_for_select([["Titles", "titles"], ["Views", "views"], ["Downloads", "downloads"]], params[:order_by])      
         
         %div{:style => "display: table-row;"}
-        %div{:style => "display: table-cell; padding: 2px 15px 2px 0px", :class=>"table-cell"}    
+        %div{:style => "display: table-cell; padding: 12px 15px 2px 0px", :class=>"table-cell"}    
           .label Number of reports to send:
         %div{:style => "display: table-cell;", :class=>"table-cell"}
           .value
@@ -45,27 +45,33 @@
 
     .label 
     .value
-      = submit_tag "Send", :confirm => "This will send most likely hundreds of emails. Are you sure?"
+      = submit_tag "Send To Authors", :onclick => "return confirm('This will send most likely hundreds of emails. Are you sure?');"
 
+    %br
+    %hr
 
-    %div{:style => "padding: 10px 0px;"}
+   
+    %div{:style => "padding: 0px 0px;"}
       
       %div{:style => "display: table; width: ;"}  
 
         %div{:style => "display: table-row;"}
         %div{:style => "display: table-cell; padding: 2px 15px 2px 0px", :class=>"table-cell"}    
-          .label test alternatre email:
-        %div{:style => "display: table-cell;", :class=>"table-cell"}
-          .value
-          = check_box_tag :send_test, "true", params[:send_test]
+          = submit_tag "Test Alternatre Email For Person"
+        %div{:style => "display: table-cell; padding: 2px 15px 2px 0px", :class=>"table-cell"}
+          UNI: 
+        %div{:style => "display: table-cell; padding: 2px 15px 2px 0px", :class=>"table-cell"}
+          = text_field_tag :test_users, params[:test_users]
           
 
         %div{:style => "display: table-row;"}
-        %div{:style => "display: table-cell; padding: 2px 15px 2px 0px", :class=>"table-cell"}    
-          .label for user: &nbsp; 
-        %div{:style => "display: table-cell;", :class=>"table-cell"}
+        %div{:style => "display: table-cell; padding: 5px 15px 2px 0px", :class=>"table-cell"}    
+          = submit_tag "Send All Reports To One Email", :onclick => "return confirm('This will send most likely hundreds of emails. Are you sure?');"
+        %div{:style => "display: table-cell; padding: 5px 15px 2px 0px", :class=>"table-cell"}
+          Email: 
+        %div{:style => "display: table-cell;; padding: 5px 15px 2px 0px", :class=>"table-cell"}
           .value
-          = text_field_tag :test_users, params[:test_users]
+          = text_field_tag :designated_recipient, params[:designated_recipient]
             
             
             

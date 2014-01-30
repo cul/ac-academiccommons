@@ -375,7 +375,7 @@ module StatisticsHelper
   def getTestAuthors(alternate_emails)
         if params[:test_users].nil? || params[:test_users].empty?
           flash[:notice] = "Could not get statistics. The UNI must be provided!"
-        return
+        return Array.new 
         end  
         
         test_author = Hash.new
@@ -387,7 +387,7 @@ module StatisticsHelper
         return processed_authors
   end      
   
-  def sendEmail(recepient, author_id, startdate, enddate, results, stats, totals, request, include_streaming_views)
+  def sendReport(recepient, author_id, startdate, enddate, results, stats, totals, request, include_streaming_views)
     case params[:email_template]
     when "Normal"
       Notifier.author_monthly(recepient, author_id, startdate, enddate, results, stats, totals, request, include_streaming_views).deliver

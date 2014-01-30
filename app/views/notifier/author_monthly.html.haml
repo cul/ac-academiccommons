@@ -1,15 +1,15 @@
-%div Hi there Academic Commons user,
+%div Dear Academic Commons Depositor,
 %br
 %div
-  As you requested, here are monthly and lifetime use statistics for the following 
-  #{link_to "Academic Commons", "http://academiccommons.columbia.edu"}
-  item(s).
+  Here are the updated monthly and lifetime use statistics for your deposits to
+  #{link_to "Academic Commons", "http://academiccommons.columbia.edu"},
+  the digital repository of Columbia University and its affiliates.
 
 = render :partial => "monthly_stats", :locals => {:lifetime => true}
 
 %div
-  Academic Commons is the digital research repository of Columbia University and its affiliates. If you are a current member of the faculty or staff or a student at Columbia or one of its affiliates and would like to deposit, you can do so by using the  
-  #{link_to "self-deposit form", "http://academiccommons.columbia.edu/deposit"}
-  on the Academic Commons website. 
-   
+  If you have new material for deposit—anything from published articles, to presentation slides, to performance video, to datasets, and beyond—please send it to us at
+  #{link_to "http://academiccommons.columbia.edu/deposit", "http://academiccommons.columbia.edu/deposit"}
+  including basic descriptive information such as the title, the names of any collaborators, the URL or DOI for the published version, and if there is any special software required to view or otherwise make use of the file. Remember: we use the information you provide to enhance the searchability of your work, increasing the number of times it is accessed and downloaded.
+
 = render :partial => "monthly_footer"

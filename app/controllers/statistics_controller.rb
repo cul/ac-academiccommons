@@ -27,6 +27,7 @@ class StatisticsController < ApplicationController
 
     redirect_to root_url
   end
+  
 
   def all_author_monthlies
     
@@ -46,39 +47,65 @@ class StatisticsController < ApplicationController
     
     @authors = ids.collect { |id| {:id => id, :email => alternate_emails[id] || "#{id}@columbia.edu"}}
 
-    if params[:commit] == "Send"
-      
-      if params[:send_test] 
-        processed_authors = getTestAuthors(alternate_emails)
-      else
-       processed_authors = @authors
+    if params[:commit]
+
+      if params[:commit].in?("Send To Authors", "Send All Reports To One Email")
+        processed_authors = @authors
       end
+      
+      if params[:commit].in?("Test Alternatre Email For Person")
+        processed_authors = getTestAuthors(alternate_emails)
+        params[:designated_recipient] = nil
+      end
+      
+      sent_counter = 0
+      sent_exceptions = 0
       
       processed_authors.each do |author|
-        author_id = author[:id]
-        startdate = Date.parse(params[:month] + " " + params[:year])
-        enddate = Date.parse(params[:month] + " " + params[:year])
         
-        @results, @stats, @totals =  get_author_stats(startdate, 
-                                                      enddate,
-                                                      author_id,
-                                                      nil,
-                                                      params[:include_zeroes],
-                                                      'author_uni',
-                                                      false,
-                                                      params[:order_by]
-                                                      )
-                                                      
-        if(author[:email] == nil) 
-          flash[:notice] = "Can not send statistics to " + author[:id] + ". The alternate email not found." 
-        end                                                                                      
-
-        if @totals.values.sum != 0 || params[:include_zeroes]
-          sendEmail(author[:email], author_id, startdate, enddate, @results, @stats, @totals, request, false) 
-          flash[:notice] = "Number of emails where sent: " + processed_authors.size.to_s
-        end
-      end
-    end
+        begin
+          
+          author_id = author[:id]
+          startdate = Date.parse(params[:month] + " " + params[:year])
+          enddate = Date.parse(params[:month] + " " + params[:year])
+          
+          @results, @stats, @totals =  get_author_stats(startdate, 
+                                                        enddate,
+                                                        author_id,
+                                                        nil,
+                                                        params[:include_zeroes],
+                                                        'author_uni',
+                                                        false,
+                                                        params[:order_by]
+                                                        )
+                          
+          if(params[:designated_recipient])  
+            email = params[:designated_recipient]
+          else
+            email = author[:email]
+          end        
+                                                        
+          if(email == nil) 
+            raise "no email address found"
+          end                                                                                      
+  
+          if @totals.values.sum != 0 || params[:include_zeroes]
+            sent_counter = sent_counter + 1
+            logger.debug(sent_counter.to_s + " report prepered to be sent for: " + author_id + " to: " + author[:email])
+            sendReport(author[:email], author_id, startdate, enddate, @results, @stats, @totals, request, false) 
+          end   
+           
+        rescue Exception => e
+          logger.error("(All Authors Monthly Statistics) - There is some error for " + author_id + ", " + author[:email] + ", error: " + e.to_s)
+          sent_exceptions = sent_exceptions + 1             
+        end # begin
+        
+      end # processed_authors.each
+      
+      notice = "Number of emails where sent: " + sent_counter.to_s + ", errors: " + sent_exceptions.to_s
+      flash[:notice] = notice
+      logger.info(notice)
+    end # params[:commit].in?("Send")
   end
 
  def author_monthly
@@ -116,7 +143,7 @@ class StatisticsController < ApplicationController
         end
         
         if params[:commit] == "Email"
-          sendEmail(params[:email_destination], params[:search_criteria], startdate, enddate, @results, @stats, @totals, request, params[:include_streaming_views]) 
+          Notifier.statistics_by_search(params[:email_destination], params[:search_criteria], startdate, enddate, @results, @stats, @totals, request, params[:include_streaming_views]).deliver
           flash[:notice] = "The report for: " + params[:search_criteria] + " was sent to: " + params[:email_destination]
         end
       end
@@ -196,8 +223,6 @@ class StatisticsController < ApplicationController
         end
       end
     end
-
-
   end
 
   private

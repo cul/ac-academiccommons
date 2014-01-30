@@ -1,7 +1,7 @@
 %br
 
 %div 
-  Usage Statistics:
+  Usage Statistics for #{@author_id}:
 - unless @results.empty?
   %table
     -if lifetime
@@ -94,6 +94,8 @@
   %br
   
 - else
+  %br
   No views or downloads for your items during this time period.
+  %br
 
 %br
