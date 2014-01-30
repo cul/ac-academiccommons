@@ -57,7 +57,7 @@ class StatisticsController < ApplicationController
         processed_authors = @authors
       end
       
-      if params[:commit].in?("Test Alternatre Email For Person")
+      if params[:commit].in?("Test Alternate Email For Person")
         processed_authors = getTestAuthors(alternate_emails)
         params[:designated_recipient] = nil
       end
