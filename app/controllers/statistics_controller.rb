@@ -50,6 +50,10 @@ class StatisticsController < ApplicationController
     if params[:commit]
 
       if params[:commit].in?("Send To Authors", "Send All Reports To One Email")
+        if params[:commit].in?("Send All Reports To One Email") && params[:designated_recipient].empty?
+          flash[:notice] = "can not 'Send All Reports To One Email' when email is empty"
+          return
+        end
         processed_authors = @authors
       end
       
@@ -91,8 +95,8 @@ class StatisticsController < ApplicationController
   
           if @totals.values.sum != 0 || params[:include_zeroes]
             sent_counter = sent_counter + 1
-            logger.debug(sent_counter.to_s + " report prepered to be sent for: " + author_id + " to: " + author[:email])
-            sendReport(author[:email], author_id, startdate, enddate, @results, @stats, @totals, request, false) 
+            logger.debug(sent_counter.to_s + " report prepered to be sent for: " + author_id + " to: " + email)
+            Notifier.author_monthly(email, author_id, startdate, enddate, @results, @stats, @totals, request, false, params[:optional_note]).deliver
           end   
            
         rescue Exception => e

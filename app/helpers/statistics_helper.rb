@@ -387,10 +387,10 @@ module StatisticsHelper
         return processed_authors
   end      
   
-  def sendReport(recepient, author_id, startdate, enddate, results, stats, totals, request, include_streaming_views)
+  def sendReport(recepient, author_id, startdate, enddate, results, stats, totals, request, include_streaming_views, optional_note)
     case params[:email_template]
     when "Normal"
-      Notifier.author_monthly(recepient, author_id, startdate, enddate, results, stats, totals, request, include_streaming_views).deliver
+      Notifier.author_monthly(recepient, author_id, startdate, enddate, results, stats, totals, request, include_streaming_views, optional_note).deliver
     else
       Notifier.author_monthly_first(recepient, author_id, startdate, enddate, results, stats, totals, request, include_streaming_views).deliver
     end

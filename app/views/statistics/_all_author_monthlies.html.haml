@@ -42,10 +42,11 @@
         %div{:style => "display: table-cell;", :class=>"table-cell"}
           .value
             = @authors.length
-
-    .label 
-    .value
-      = submit_tag "Send To Authors", :onclick => "return confirm('This will send most likely hundreds of emails. Are you sure?');"
+            
+    %div= 'Optional note:'        
+    %div= text_area_tag "optional_note", @alert_message, :style => "width: 600px"     
+    %br   
+    %div= submit_tag "Send To Authors", :onclick => "return confirm('This will send most likely hundreds of emails. Are you sure?');"
 
     %br
     %hr

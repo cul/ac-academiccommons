@@ -1,5 +1,11 @@
 %div Dear Academic Commons Depositor,
 %br
+
+- if @optional_note.to_s.length > 0
+  %div
+    #{@optional_note}
+  %br  
+  
 %div
   Here are the updated monthly and lifetime use statistics for your deposits to
   #{link_to "Academic Commons", "http://academiccommons.columbia.edu"},

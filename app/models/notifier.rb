@@ -1,18 +1,18 @@
 class Notifier < ActionMailer::Base
   
   def statistics_by_search(to_address, author_id, start_date, end_date, results, stats, totals, request, show_streams)
-    statistics_report(to_address, author_id, start_date, end_date, results, stats, totals, request, show_streams) 
+    statistics_report(to_address, author_id, start_date, end_date, results, stats, totals, request, show_streams, nil) 
   end
 
-  def author_monthly(to_address, author_id, start_date, end_date, results, stats, totals, request, show_streams)
-    statistics_report(to_address, author_id, start_date, end_date, results, stats, totals, request, show_streams) 
+  def author_monthly(to_address, author_id, start_date, end_date, results, stats, totals, request, show_streams, optional_note)
+    statistics_report(to_address, author_id, start_date, end_date, results, stats, totals, request, show_streams, optional_note) 
   end
   
   def author_monthly_first(to_address, author_id, start_date, end_date, results, stats, totals, request, show_streams)
-    statistics_report(to_address, author_id, start_date, end_date, results, stats, totals, request, show_streams)
+    statistics_report(to_address, author_id, start_date, end_date, results, stats, totals, request, show_streams, nil)
   end
   
-  def statistics_report(to_address, author_id, start_date, end_date, results, stats, totals, request, show_streams)
+  def statistics_report(to_address, author_id, start_date, end_date, results, stats, totals, request, show_streams, optional_note)
     @request = request
     @author_id = author_id
     @stats = stats
@@ -25,6 +25,7 @@ class Notifier < ActionMailer::Base
     subject = "Academic Commons Monthly Download Report for #{@start_date} - #{@end_date}"
     content_type = 'text/html'
     @streams = show_streams
+    @optional_note = optional_note
     
     mail(:to => recipients, :from => from, :subject => subject, :content_type => content_type) 
     
