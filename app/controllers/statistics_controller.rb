@@ -91,7 +91,7 @@ class StatisticsController < ApplicationController
           return 
         end 
         processed_authors = makeTestAuthor(params[:one_report_uni].to_s, params[:one_report_email])
-        final_notice = "The monthly report for " + params[:test_users].to_s + " was sent to " + params[:one_report_email]
+        final_notice = "The monthly report for " + params[:one_report_uni].to_s + " was sent to " + params[:one_report_email]
       end
       
       Thread.new do
