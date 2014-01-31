@@ -125,7 +125,7 @@ class StatisticsController < ApplicationController
             if @totals.values.sum != 0 || params[:include_zeroes]
               sent_counter = sent_counter + 1
               logger.debug(sent_counter.to_s + " report prepered to be sent for: " + author_id + " to: " + email + ", " + Time.new.to_s)
-              #Notifier.author_monthly(email, author_id, startdate, enddate, @results, @stats, @totals, request, false, params[:optional_note]).deliver
+              Notifier.author_monthly(email, author_id, startdate, enddate, @results, @stats, @totals, request, false, params[:optional_note]).deliver
             end   
              
           rescue Exception => e
@@ -134,8 +134,7 @@ class StatisticsController < ApplicationController
           end # begin
           
         end # processed_authors.each
-        
-        
+
         notice = "Number of emails where sent: " + sent_counter.to_s + ", errors: " + sent_exceptions.to_s + ", " + Time.new.to_s
         logger.info(notice)
         
