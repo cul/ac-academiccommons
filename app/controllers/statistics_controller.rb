@@ -31,6 +31,11 @@ class StatisticsController < ApplicationController
 
   def all_author_monthlies
     
+    commit_button_all = "Send To Authors"
+    commit_button_all_to_single = "Send All Reports To Single Email"
+    commit_button_aternate = "Test Alternate Email For Person"
+    commit_button_one_to_one = "Send Report For Single Person"
+    
     params[:email_template] ||= "Normal"
 
     ids = Blacklight.solr.find(:per_page => 100000, :page => 1, :fl => "author_uni")["response"]["docs"].collect { |f| f["author_uni"] }.flatten.compact.uniq - EmailPreference.find_all_by_monthly_opt_out(true).collect(&:author)
@@ -49,68 +54,96 @@ class StatisticsController < ApplicationController
 
     if params[:commit]
 
-      if params[:commit].in?("Send To Authors", "Send All Reports To One Email")
-        if params[:commit].in?("Send All Reports To One Email") && params[:designated_recipient].empty?
-          flash[:notice] = "can not 'Send All Reports To One Email' when email is empty"
+      if params[:commit].in?(commit_button_all, commit_button_all_to_single)
+        if params[:commit].in?(commit_button_all_to_single) && params[:designated_recipient].empty?
+          flash[:notice] = "Can not 'Send All Reports To Single Email' - the destination email was not provided"
           return
         end
         processed_authors = @authors
+        final_notice = "All monthly reports processing was started."
+      else
+        params[:designated_recipient] = nil 
       end
       
-      if params[:commit].in?("Test Alternate Email For Person")
-        processed_authors = getTestAuthors(alternate_emails)
-        params[:designated_recipient] = nil
+      if params[:commit].in?(commit_button_aternate)
+        if params[:test_users].empty?
+          flash[:notice] = "Could not get statistics. The UNI must be provided!"
+          return 
+        end  
+        
+        email = alternate_emails[params[:test_users].to_s]
+        if email.nil? || email.empty?
+          flash[:notice] = "Could not get statistics for " + params[:test_users].to_s + ". The alternate email was not found!"
+          return
+        end
+        processed_authors = makeTestAuthor(params[:test_users].to_s, alternate_emails[params[:test_users].to_s])
+        final_notice = "The monthly report for " + params[:test_users].to_s + " was sent to " + alternate_emails[params[:test_users].to_s]
+      end
+         
+      if params[:commit].in?(commit_button_one_to_one )
+        if params[:one_report_uni].empty? || params[:one_report_email].empty?
+          flash[:notice] = "Could not get statistics. The UNI and Email must be provided!"
+          return 
+        end 
+        processed_authors = makeTestAuthor(params[:one_report_uni].to_s, params[:one_report_email])
+        final_notice = "The monthly report for " + params[:test_users].to_s + " was sent to " + params[:one_report_email]
       end
       
-      sent_counter = 0
-      sent_exceptions = 0
-      
-      processed_authors.each do |author|
+      Thread.new do
         
-        begin
-          
-          author_id = author[:id]
-          startdate = Date.parse(params[:month] + " " + params[:year])
-          enddate = Date.parse(params[:month] + " " + params[:year])
-          
-          @results, @stats, @totals =  get_author_stats(startdate, 
-                                                        enddate,
-                                                        author_id,
-                                                        nil,
-                                                        params[:include_zeroes],
-                                                        'author_uni',
-                                                        false,
-                                                        params[:order_by]
-                                                        )
-                          
-          if(params[:designated_recipient])  
-            email = params[:designated_recipient]
-          else
-            email = author[:email]
-          end        
-                                                        
-          if(email == nil) 
-            raise "no email address found"
-          end                                                                                      
-  
-          if @totals.values.sum != 0 || params[:include_zeroes]
-            sent_counter = sent_counter + 1
-            logger.debug(sent_counter.to_s + " report prepered to be sent for: " + author_id + " to: " + email)
-            Notifier.author_monthly(email, author_id, startdate, enddate, @results, @stats, @totals, request, false, params[:optional_note]).deliver
-          end   
-           
-        rescue Exception => e
-          logger.error("(All Authors Monthly Statistics) - There is some error for " + author_id + ", " + author[:email] + ", error: " + e.to_s)
-          sent_exceptions = sent_exceptions + 1             
-        end # begin
+        sent_counter = 0
+        sent_exceptions = 0
         
-      end # processed_authors.each
-      
-      notice = "Number of emails where sent: " + sent_counter.to_s + ", errors: " + sent_exceptions.to_s
-      flash[:notice] = notice
-      logger.info(notice)
+        processed_authors.each do |author|
+          
+          begin
+            
+            author_id = author[:id]
+            startdate = Date.parse(params[:month] + " " + params[:year])
+            enddate = Date.parse(params[:month] + " " + params[:year])
+            
+            @results, @stats, @totals =  get_author_stats(startdate, 
+                                                          enddate,
+                                                          author_id,
+                                                          nil,
+                                                          params[:include_zeroes],
+                                                          'author_uni',
+                                                          false,
+                                                          params[:order_by]
+                                                          )
+                            
+            if(params[:designated_recipient])  
+              email = params[:designated_recipient]
+            else
+              email = author[:email]
+            end        
+                                                          
+            if(email == nil) 
+              raise "no email address found"
+            end                                                                                      
+    
+            if @totals.values.sum != 0 || params[:include_zeroes]
+              sent_counter = sent_counter + 1
+              logger.debug(sent_counter.to_s + " report prepered to be sent for: " + author_id + " to: " + email + ", " + Time.new.to_s)
+              #Notifier.author_monthly(email, author_id, startdate, enddate, @results, @stats, @totals, request, false, params[:optional_note]).deliver
+            end   
+             
+          rescue Exception => e
+            logger.error("(All Authors Monthly Statistics) - There is some error for " + author_id + ", " + (author[:email] || "") + ", error: " + e.to_s + ", " + Time.new.to_s)
+            sent_exceptions = sent_exceptions + 1             
+          end # begin
+          
+        end # processed_authors.each
+        
+        
+        notice = "Number of emails where sent: " + sent_counter.to_s + ", errors: " + sent_exceptions.to_s + ", " + Time.new.to_s
+        logger.info(notice)
+        
+      end # thread
+      flash[:notice] = final_notice
     end # params[:commit].in?("Send")
-  end
+    
+  end # ========== all_author_monthlies ===================== #
 
  def author_monthly
    statistical_reporting

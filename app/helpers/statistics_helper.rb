@@ -372,16 +372,14 @@ module StatisticsHelper
     end     
   end
   
-  def getTestAuthors(alternate_emails)
-        if params[:test_users].nil? || params[:test_users].empty?
-          flash[:notice] = "Could not get statistics. The UNI must be provided!"
-        return Array.new 
-        end  
-        
+
+
+  def makeTestAuthor(author_id, email)  
+
         test_author = Hash.new
-        test_author[:id] = params[:test_users].to_s
-        test_author[:email] = alternate_emails[test_author[:id]]
-        
+        test_author[:id] = author_id
+        test_author[:email] = email     
+           
         processed_authors = Array.new 
         processed_authors.push(test_author)
         return processed_authors

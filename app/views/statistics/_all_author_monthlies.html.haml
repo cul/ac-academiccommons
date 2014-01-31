@@ -20,8 +20,11 @@
         %div{:style => "display: table-cell;", :class=>"table-cell"}      
           .value
             = select_tag :month, options_for_select(Date::ABBR_MONTHNAMES, params[:month] || (Date.today - 1.months).strftime("%b"))
-            = select_tag :year, options_for_select((2011..Date.today.year), params[:year] || Date.today.year)
-    
+            - if (Date.today - 1.months).strftime("%b") == 'Dec'
+              = select_tag :year, options_for_select((2011..Date.today.year), params[:year] || Date.today.year - 1)
+            -else
+              = select_tag :year, options_for_select((2011..Date.today.year), params[:year] || Date.today.year)
+              
         %div{:style => "display: table-row;"}
         %div{:style => "display: table-cell; padding: 2px 15px 2px 0px", :class=>"table-cell"}
           .label Include zeroes?
@@ -55,6 +58,18 @@
     %div{:style => "padding: 0px 0px;"}
       
       %div{:style => "display: table; width: ;"}  
+        
+        %div{:style => "display: table-row;"}
+        %div{:style => "display: table-cell; padding: 2px 15px 2px 0px", :class=>"table-cell"}    
+          = submit_tag "Send Report For Single Person"
+        %div{:style => "display: table-cell; padding: 2px 15px 2px 0px", :class=>"table-cell"}
+          UNI: 
+        %div{:style => "display: table-cell; padding: 2px 15px 2px 0px", :class=>"table-cell"}
+          = text_field_tag :one_report_uni, params[:one_report_uni]
+        %div{:style => "display: table-cell; padding: 2px 15px 2px 0px", :class=>"table-cell"}
+          Email: 
+        %div{:style => "display: table-cell; padding: 2px 15px 2px 0px", :class=>"table-cell"}
+          = text_field_tag :one_report_email, params[:one_report_email]
 
         %div{:style => "display: table-row;"}
         %div{:style => "display: table-cell; padding: 2px 15px 2px 0px", :class=>"table-cell"}    
@@ -67,7 +82,7 @@
 
         %div{:style => "display: table-row;"}
         %div{:style => "display: table-cell; padding: 5px 15px 2px 0px", :class=>"table-cell"}    
-          = submit_tag "Send All Reports To One Email", :onclick => "return confirm('This will send most likely hundreds of emails. Are you sure?');"
+          = submit_tag "Send All Reports To Single Email", :onclick => "return confirm('This will send most likely hundreds of emails. Are you sure?');"
         %div{:style => "display: table-cell; padding: 5px 15px 2px 0px", :class=>"table-cell"}
           Email: 
         %div{:style => "display: table-cell;; padding: 5px 15px 2px 0px", :class=>"table-cell"}
