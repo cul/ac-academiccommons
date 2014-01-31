@@ -54,13 +54,18 @@ class StatisticsController < ApplicationController
 
     if params[:commit]
 
-      if params[:commit].in?(commit_button_all, commit_button_all_to_single)
-        if params[:commit].in?(commit_button_all_to_single) && params[:designated_recipient].empty?
+      if params[:commit].in?(commit_button_all)
+        processed_authors = @authors
+        final_notice = "All monthly reports processing was started."
+      end
+
+      if params[:commit].in?(commit_button_all_to_single)
+        if params[:designated_recipient].empty?
           flash[:notice] = "Can not 'Send All Reports To Single Email' - the destination email was not provided"
           return
         end
         processed_authors = @authors
-        final_notice = "All monthly reports processing was started."
+        final_notice = "All monthly reports processing was started to be sent to " + params[:designated_recipient]
       else
         params[:designated_recipient] = nil 
       end
