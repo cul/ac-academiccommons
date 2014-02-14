@@ -1,9 +1,15 @@
-
-
 <script>
 
 
 // -------- Teachers College ---------------------
+$(document).ready(function(){
+  $.ajax({url: '/statistics/school_docs_size/?school=Teachers College',
+           success: function(data) {
+             $('#teachers-school-docs-size').html(data);
+           }
+  });
+});
+
 $(document).ready(function(){
   $.ajax({url: '/statistics/school_stats/?event=Download&school=Teachers College',
            success: function(data) {
@@ -33,6 +39,14 @@ $(document).ready(function(){
 
 // -------- Union Theological Seminary ---------------------
 $(document).ready(function(){
+  $.ajax({url: '/statistics/school_docs_size/?school=Union Theological Seminary',
+           success: function(data) {
+             $('#t-seminary-docs-size').html(data);
+           }
+  });
+});
+
+$(document).ready(function(){
   $.ajax({url: '/statistics/school_stats/?event=Download&school=Union Theological Seminary',
            success: function(data) {
              $('#t-seminary-downloads').html(data);
@@ -60,6 +74,14 @@ $(document).ready(function(){
 
 
 // -------- Jewish Theological Seminary ---------------------
+$(document).ready(function(){
+  $.ajax({url: '/statistics/school_docs_size/?school=Jewish Theological Seminary',
+           success: function(data) {
+             $('#j-seminary-docs-size').html(data);
+           }
+  });
+});
+
 $(document).ready(function(){
   $.ajax({url: '/statistics/school_stats/?event=Download&school=Jewish Theological Seminary',
            success: function(data) {
@@ -89,6 +111,14 @@ $(document).ready(function(){
 
 // -------- Barnard College ---------------------
 $(document).ready(function(){
+  $.ajax({url: '/statistics/school_docs_size/?school=Barnard College',
+           success: function(data) {
+             $('#barnard-college-docs-size').html(data);
+           }
+  });
+});
+
+$(document).ready(function(){
   $.ajax({url: '/statistics/school_stats/?event=Download&school=Barnard College',
            success: function(data) {
              $('#barnard-college-downloads').html(data);
@@ -116,6 +146,14 @@ $(document).ready(function(){
 
 
 // -------- Columbia University ---------------------
+$(document).ready(function(){
+  $.ajax({url: '/statistics/school_docs_size/?school=Columbia University',
+           success: function(data) {
+             $('#cu-docs-size').html(data);
+           }
+  });
+});
+
 $(document).ready(function(){
   $.ajax({url: '/statistics/school_stats/?event=Download&school=Columbia University',
            success: function(data) {
@@ -146,7 +184,7 @@ $(document).ready(function(){
 </script>
 
 <div style='float:left;'><h3>School Statistics</h3></div>
-<div style='float:left; padding: 10px 0 0 280px'> lifetime</div>
+<div style='float:left; padding: 10px 0 0 320px'> lifetime</div>
 
 <br style="clear:both"/>
 
@@ -160,8 +198,8 @@ $(document).ready(function(){
         <div class='table-cell' style='display: table-cell; float: left; '>
         	<div style='display: table; width: ;'>
         		<div style='display: table-row;'>
-					<div class='table-cell g_stat_cell_vspace' style='display: table-cell;'>
-						
+					<div class='table-cell g_stat_head_cell' style='display: table-cell;'>
+						    DOCS
 					</div>
 				 	<div class='table-cell g_stat_head_cell' style='display: table-cell;'>
 				            VIEWS
@@ -186,8 +224,8 @@ $(document).ready(function(){
         	<div style='display: table; width:;'>
         		<div style='display: table-row;'>
         			
-				 	<div class='table-cell g_stat_cell_vspace' style='display: table-cell;'>
-				            
+				 	<div id='cu-docs-size' class='table-cell g_stat_cell' style='display: table-cell;'>
+				            <img src="/assets/16px_on_transparent.gif" />
 					</div>
 					<div id='cu-views' class='table-cell g_stat_cell' style='display: table-cell;'>
 				            <img src="/assets/16px_on_transparent.gif" />
@@ -211,8 +249,8 @@ $(document).ready(function(){
         	<div style='display: table; width:;'>
         		<div style='display: table-row;'>
         			
-				 	<div class='table-cell g_stat_cell_vspace' style='display: table-cell;'>
-				            
+				 	<div id='barnard-college-docs-size' class='table-cell g_stat_cell' style='display: table-cell;'>
+				            <img src="/assets/16px_on_transparent.gif" />
 					</div>
 					<div id='barnard-college-views' class='table-cell g_stat_cell' style='display: table-cell;'>
 				           <img src="/assets/16px_on_transparent.gif" />
@@ -236,8 +274,8 @@ $(document).ready(function(){
         	<div style='display: table; width:;'>
         		<div style='display: table-row;'>
         			
-				 	<div class='table-cell g_stat_cell_vspace' style='display: table-cell;'>
-				        
+				 	<div id='teachers-school-docs-size' class='table-cell g_stat_cell' style='display: table-cell;'>
+				            <img src="/assets/16px_on_transparent.gif" />
 					</div>
 					<div id='teachers-school-views' class='table-cell g_stat_cell' style='display: table-cell;'>
 				            <img src="/assets/16px_on_transparent.gif" />
@@ -261,8 +299,8 @@ $(document).ready(function(){
         	<div style='display: table; width:;'>
         		<div style='display: table-row;'>
         			
-				 	<div class='table-cell g_stat_cell_vspace' style='display: table-cell;'>
-				            
+				 	<div id='j-seminary-docs-size' class='table-cell g_stat_cell' style='display: table-cell;'>
+				            <img src="/assets/16px_on_transparent.gif" />
 					</div>
 					<div id='j-seminary-views' class='table-cell g_stat_cell' style='display: table-cell;'>
 				            <img src="/assets/16px_on_transparent.gif" />
@@ -286,8 +324,8 @@ $(document).ready(function(){
         	<div style='display: table; width:;'>
         		<div style='display: table-row;'>
         			
-				 	<div class='table-cell g_stat_cell_vspace' style='display: table-cell;'>
-				      
+				 	<div id='t-seminary-docs-size' class='table-cell g_stat_cell' style='display: table-cell;'>
+				            <img src="/assets/16px_on_transparent.gif" />
 					</div>
 					<div id='t-seminary-views' class='table-cell g_stat_cell' style='display: table-cell;'>
 				            <img src="/assets/16px_on_transparent.gif" />

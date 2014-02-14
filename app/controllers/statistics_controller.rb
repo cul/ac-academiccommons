@@ -265,18 +265,24 @@ class StatisticsController < ApplicationController
       end
     end
   end
+  
+  def school_docs_size()
+    
+    school = params[:school]
+    
+    pids_by_institution = school_pids(school)
+    
+    respond_to do |format|
+      format.html { render :text => pids_by_institution.length.to_s }
+    end
+  end
 
   def school_stats()
     
     school = params[:school]
     event = params[:event]
     
-    pids_by_institution = Blacklight.solr.find(
-                          :qt=>"search", 
-                          :rows=>20000,
-                          :fq=>["{!raw f=organization_facet}" + school], 
-                          :"facet.field"=>["pid"], 
-                          )["response"]["docs"]  
+    pids_by_institution = school_pids(school)
                           
     pids = []
     pids_by_institution.each do |pid|
