@@ -130,7 +130,7 @@ class StatisticsController < ApplicationController
             if @totals.values.sum != 0 || params[:include_zeroes]
               sent_counter = sent_counter + 1
               logger.debug(sent_counter.to_s + " report prepered to be sent for: " + author_id + " to: " + email + ", " + Time.new.to_s)
-              Notifier.author_monthly(email, author_id, startdate, enddate, @results, @stats, @totals, request, false, params[:optional_note]).deliver
+              #Notifier.author_monthly(email, author_id, startdate, enddate, @results, @stats, @totals, request, false, params[:optional_note]).deliver
             end   
              
           rescue Exception => e
@@ -265,6 +265,36 @@ class StatisticsController < ApplicationController
       end
     end
   end
+
+  def school_stats()
+    
+    school = params[:school]
+    event = params[:event]
+    
+    pids_by_institution = Blacklight.solr.find(
+                          :qt=>"search", 
+                          :rows=>20000,
+                          :fq=>["{!raw f=organization_facet}" + school], 
+                          :"facet.field"=>["pid"], 
+                          )["response"]["docs"]  
+                          
+    pids = []
+    pids_by_institution.each do |pid|
+      pids.push(pid[:id])
+
+    end
+ 
+    count = Statistic.count(:conditions => ["identifier in (?) and event = '" + event + "'", pids]) 
+
+    respond_to do |format|
+      format.html { render :text => count.to_s }
+    end
+
+  end
+  
+  def generic_reports
+
+  end  
 
   private
 
