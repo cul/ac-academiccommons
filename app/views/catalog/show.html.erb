@@ -22,14 +22,19 @@
  
 
 <h2>Download</h2>
-  
+<div class="sidebar-content">
 <%=  render :partial => "catalog/_show_partials/display_resources", :locals => {:document => @document} %>
-
+</div>
 <h2>Share</h2>
+<div class="sidebar-content">
  <div class="documentFunctions">
          <%= render :partial => 'show_tools' %>
  </div>
- 
+</div>
+
+<hr>
+
+<h2>About Academic Commons</h2> 
 <!-- <h2>Cite</h2> -->
 
 <!-- <%= render :partial=>'application/helpful_links' %> -->
