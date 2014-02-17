@@ -9,36 +9,41 @@
  
 <%# this should be in a partial -%>
 <div>
-	<div>
-	  <script type="text/javascript">
-	    if(history.length > 1){
-	      document.write('<%= render 'previous_next_doc' -%>');
-	    }
-      </script>
-    </div>
-    
+ 
+ <%= render 'previous_next_doc' -%>     
 	 <%if !alert_msg.empty? %>
        <%= render :partial => "/catalog/alert_box.erb" %>
 	 <%end%> 
 	 
 </div>
-<% sidebar_items << capture do %>
- <!--  <div class="back-to-search"><%#= link_back_to_catalog %></div>  back to search link removed per JIRA AC-360 -->
+
+
+<% content_for :sidebar do %>
+ 
+
+<h2>Download</h2>
   
-<%= render :partial=>'application/browse_content' %>
-<%= render :partial=>'application/helpful_links' %>
-<%#= render :partial=>'related_content' %>
+<%=  render :partial => "catalog/_show_partials/display_resources", :locals => {:document => @document} %>
+
+<h2>Share</h2>
+ <div class="documentFunctions">
+         <%= render :partial => 'show_tools' %>
+ </div>
+ 
+<!-- <h2>Cite</h2> -->
+
+<!-- <%= render :partial=>'application/helpful_links' %> -->
+
+<!-- <%= render :partial=>'related_content' %> -->
   
 <% end %>
-<%# this should be in a partial -%>
+
+
 <div id="document">
-  <div id="doc_<%= @document[:id] %>">
-       <div class="documentFunctions">
-         <%= render :partial => 'show_tools' %>
-        </div>
-  
-    <%= render_document_heading %>
-    <div class="document">
+  <div id="doc_<%= @document[:id] %>" class=" <%= render_document_class %>">
+          
+
+    <div class="">
       <%#= render_document_partial @document, :show %>
       <%= render :partial => "catalog/_show_partials/default", :locals => {:document => @document}  %>
 

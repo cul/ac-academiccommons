@@ -20,15 +20,13 @@ module ApplicationHelper
   
   def render_document_heading
     heading = ""
-    if(!document_type.nil?)
-      heading += '<h2>' + document_type.first + ':</h2>'
-    end
-    heading += '<h1>' + (document_heading || "") + '</h1>'
-    heading += '<h2 class="author_credit">' + first_names_then_last(document_author || "")  + '</h2>'
+     heading += '<h1 class="document_title">' + (document_heading || "") + '</h1>'
+    heading += '<h2 class="author_name">' + first_names_then_last(document_author || "")  + '</h2>'
     heading.html_safe
   end
   
   def first_names_then_last(last_names_first)
+    
     i = 0
     html = ""
     last_names_first.split(";").each do |last_name_first|
@@ -45,14 +43,17 @@ module ApplicationHelper
     if(last_name_first.index(","))
       parts = last_name_first.split(",")
       if parts.length > 1
-        return (parts[1].strip + " " + parts[0].strip).html_safe
+        fl_name = (parts[1].strip + " " + parts[0].strip).html_safe
       else
-        return (parts[0].strip).html_safe
+        fl_name = (parts[0].strip).html_safe
       end
     else
-      return last_name_first.html_safe
+      fl_name = last_name_first.html_safe
     end
+    
+    raw('<a href="' + relative_root + '/catalog?f[author_facet][]=' + last_name_first + '">' + fl_name + '</a>')
   end
+  
   
   # RSolr presumes one suggested word, this is a temporary fix
   def get_suggestions(spellcheck)

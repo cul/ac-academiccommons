@@ -16,6 +16,7 @@ class CatalogController < ApplicationController
   
   helper_method :url_encode_resource, :url_decode_resource
   
+  layout "sidebar_right", only: [:show]
   # ----------------------------  
   
 
@@ -181,7 +182,7 @@ configure_blacklight do |config|
   config.add_show_field 'thesis_advisor',          :label => 'Thesis Advisor(s):'
   config.add_show_field 'pub_date_facet',          :label => 'Date:',              :itemprops => 'datePublished'
   config.add_show_field 'genre_facet',             :label => 'Type:',              :itemprops => 'genre',         :linked => 'facet'
-  config.add_show_field 'originator_department',   :label => 'Department:'
+  config.add_show_field 'originator_department',   :label => 'Department:'								, 		  :linked => 'facet'
   config.add_show_field 'volume',                  :label => 'Volume:'
   config.add_show_field 'handle',                  :label => 'Permanent URL:',     :itemprops => 'url',           :linked => 'url'
   config.add_show_field 'url',                     :label => 'Streaming URL:'

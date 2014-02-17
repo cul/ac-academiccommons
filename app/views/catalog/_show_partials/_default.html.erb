@@ -1,12 +1,5 @@
 <%# default partial to display solr document fields in catalog show view -%>
  
-<!--
-     <div class="documentFunctions">
-         <%#= render :partial => 'show_tools' %>
-        </div>
--->
-<%= render :partial => "catalog/_show_partials/display_resources", :locals => {:document => document} %>
-
 <div itemscope itemtype="<%= itemscope_itemtype%>">
 	<div style="clear:both;">
 	  <dl class="defList clearfix">
