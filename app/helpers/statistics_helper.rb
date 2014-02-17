@@ -412,4 +412,17 @@ module StatisticsHelper
          end 
   end
   
+  def school_pids(school)
+    
+    pids_by_institution = Blacklight.solr.find(
+                          :qt=>"search", 
+                          :rows=>20000,
+                          :fq=>["{!raw f=organization_facet}" + school], 
+                          :"facet.field"=>["pid"], 
+                          )["response"]["docs"] 
+                          
+    return pids_by_institution                       
+                          
+  end
+  
 end # ------------------------------------------ #
