@@ -1,7 +1,7 @@
 body {
 
 font-family: "Open Sans", "Helvetica Neue", sans-serif;
-}
+ }
 
 div#header.container {
 	padding-left: 36px;
@@ -140,7 +140,7 @@ ul#recently-updated {
 }
 
 #browse {
-		font-family: "Open Sans", Arial, Helvetica, Geneva, sans-serif;
+		font-family: "Open Sans", Helvetica, Geneva, sans-serif;
 		background:rgba(255,255,255,.5);
 		padding-bottom: 3em;
 		min-height: 425px;
@@ -158,7 +158,8 @@ ul#recently-updated {
 }
 
 #top-slug, #home-content  {
-	font: 1.25em/1.5em Georgia, "Times New Roman", Times, serif;
+	font: 1.25em/1.5em "Open Sans", Helvetica, Geneva, sans-serif;
+	color: #333;
 }
 
 #about-text p{
@@ -212,7 +213,7 @@ a:link,  a:visited,   a:active {
 }
 
  a:hover {
-	 
+	 color: #cd2c2e;
 }
 
 h1.site_title {
@@ -875,7 +876,7 @@ dl {
 
 dl.defList {
 	/*overflow: auto;*/
-	padding: 0.5em 0;
+/* 	padding: 0.5em 0; */
 }
 
 dl.defList dt {
@@ -2374,6 +2375,20 @@ div.sd h2{
 	
 	margin-top: 25px;
 	margin-bottom: 25px;
+}
+
+div.browse-list li {
+	
+	border-bottom: 1px dotted #bcbaba;
+	margin-top: 5px;
+	padding-bottom: 4px;
+	
+	
+}
+
+div.browse-list li:hover{
+	
+	background: rgba(255,255,255,.9);
 }
 
 
