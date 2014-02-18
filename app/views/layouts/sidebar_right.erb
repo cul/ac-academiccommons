@@ -14,8 +14,8 @@
 <%= favicon_link_tag asset_path('favicon-crown.png', :media => "screen,projection", :rel => "shortcut icon", :type => "text/css") %>
 <%= stylesheet_link_tag "blueprint/screen", :media => "screen,projection"  %>
 <%= stylesheet_link_tag "application", :media => "screen,projection", :rel => "stylesheet", :type => "text/css" %>
- <%= stylesheet_link_tag "http://fonts.googleapis.com/css?family=Open+Sans:400italic,400,300,600&subset=latin-ext,latin", :media => "screen,projection", :rel => "stylesheet", :type => "text/css" %>
-
+<%= stylesheet_link_tag "http://fonts.googleapis.com/css?family=Open+Sans:400italic,400,300,600&subset=latin-ext,latin", :media => "screen,projection", :rel => "stylesheet", :type => "text/css" %>
+<%= stylesheet_link_tag  'jquery.fancybox', :media => 'screen, projection' %>
  
 <!-- [if lt IE8] <%= stylesheet_link_tag "compiled/ie.css", :media => "screen, projection" %> -->
 
@@ -25,12 +25,22 @@
 
 <link href="<%= url_for :controller=>'catalog',:action => 'opensearch', :format => 'xml', :only_path => false %>" title="<%= application_name%>" type="application/opensearchdescription+xml" rel="search"/>
 
-  <!-- will revert link to native function when done editing stylesheets -->
         
     <% javascript_tag do -%>
     <%= yield(:jstemplates) %> 
     <% end -%>
 <%= javascript_include_tag "http://cdn.sublimevideo.net/js/3s7oes9q.js" %>
+
+<%= javascript_include_tag "waypoints.min.js" %>
+
+<%= javascript_include_tag "waypoints-sticky.min.js" %>
+
+<%= javascript_include_tag "item-page.js" %>
+
+<%=  javascript_include_tag 'fancyBox/source/jquery.fancybox.pack.js' %>
+
+<%= javascript_include_tag 'fancyBox/source/helpers/jquery.fancybox-media.js' %>
+
 <% 
 if(@document != nil && @document.include?("title_display") && @document.include?("author_facet") && @document.include?("date_issued"))
 
@@ -105,11 +115,12 @@ end
 
 <div class="container clearfix" id="main" > 
  
-<div class='row'>
+
 
 <div class="span-19 prepend-3 document-heading">
     <%= render_document_heading %>
 </div>
+<div class='row'>
 <div id="content" class="span-18">
 
 <%= render :partial=>'/flash_msg' %>
@@ -118,14 +129,14 @@ end
 
 </div> <!-- div#content -->
 
-<div id="sidebar" class="span-6 last">
-
+<div  class="span-6 last">
+<div id="sidebar">
 	<%= sidebar_items.join('').html_safe %>
 
 <%= yield :sidebar %>
 
 </div> <!-- div#sidebar -->
-
+</div>
 </div> <!-- div.row (main content area) -->
 
 <footer class="span-24">
@@ -139,6 +150,15 @@ end
 </footer>
 
 </div><!-- div#main -->    
+
+<div class="container"> 
+
+<div id="colophon" class="span-24 append-bottom">
+<p>Powered by the <a href="http://cdrs.columbia.edu/" target="_blank">Center for Digital Research and Scholarship</a> at <a href="http://www.columbia.edu/cu/lweb/" target="_blank">Columbia University Libraries/Information Services</a>.</p>
+
+</div>
+</div>
+
 
 <%- if Rails.application.config.analytics_enabled == true -%>
 <script type="text/javascript">
@@ -155,8 +175,15 @@ end
 
 </script>
 <% end %>
-&nbsp;
-<br>
+
+<script type="text/javascript">
+
+$('#sidebar').waypoint('sticky', {
+  offset: 30 // Apply "stuck" when element 30px from top
+});
+
+</script>
+
 </body>
   
 </html>

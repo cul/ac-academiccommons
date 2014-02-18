@@ -1,13 +1,5 @@
 <% @page_title = "#{document_show_html_title} - #{application_name}" %>
 <% extra_head_content << render_link_rel_alternates %>
-<% extra_head_content << stylesheet_link_tag( 'jquery.fancybox', :media => 'screen, projection' )   %>
-
-<% extra_head_content << javascript_include_tag('fancyBox/source/jquery.fancybox.pack.js') %>
-
-<% extra_head_content << javascript_include_tag('fancyBox/source/helpers/jquery.fancybox-media.js') %>
-<% extra_head_content << javascript_include_tag('about-videos.js') %>
- 
-<%# this should be in a partial -%>
 <div>
  
  <%= render 'previous_next_doc' -%>     
@@ -22,9 +14,11 @@
  
 
 <h2>Download</h2>
+ 
 <div class="sidebar-content">
 <%=  render :partial => "catalog/_show_partials/display_resources", :locals => {:document => @document} %>
 </div>
+ 
 <h2>Share</h2>
 <div class="sidebar-content">
  <div class="documentFunctions">
@@ -34,13 +28,13 @@
 
 <hr>
 
-<h2>About Academic Commons</h2> 
-<!-- <h2>Cite</h2> -->
+<h3>Academic Commons</h3> 
+<div class="sidebar-content">
+<a  class='nav-link'  href="<%= relative_root %>/about/">About</a>
+ 
+<a class='nav-link' href="javascript:UserVoice.showPopupWidget();" >FAQ/Ask a Question</a>   
 
-<!-- <%= render :partial=>'application/helpful_links' %> -->
-
-<!-- <%= render :partial=>'related_content' %> -->
-  
+</div>
 <% end %>
 
 

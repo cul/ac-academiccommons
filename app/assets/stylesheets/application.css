@@ -1073,7 +1073,7 @@ ul.tools {
 
 ul.tools li {
  
-	margin: 0 10px;
+/* 	margin: 0 10px; */
 }
 
 /* Lightbox */
@@ -1939,7 +1939,7 @@ div.school.union{
 #most-recent {
 	}
 
-a.nav-link{
+.title a, a.nav-link{
 	display: block;
 	font-size: 1.25em;
 	font-weight: bold;
@@ -2391,5 +2391,33 @@ div.browse-list li:hover{
 	background: rgba(255,255,255,.9);
 }
 
+#sidebar.stuck{
+	
+	position: fixed;
+	top: 30px;
+	width: 230px;
+}
+
+div.sidebar-content{
+	
+	padding: 10px;
+}
+
+div#document h3{
+	font-size: 2em;
+	margin-left: 148px;
+	margin-top: 50px;
+	color: #888;
+}
+
+div#document{
+	
+	padding-bottom: 50px;
+}
+
+#sidebar hr{
+	
+	margin-bottom: 75px;
+}
 
  
