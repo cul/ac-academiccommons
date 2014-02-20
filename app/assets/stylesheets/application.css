@@ -935,21 +935,18 @@ h1.document_title {
 	font-size: 2em;
 	font-family: "Open Sans", sans-serif;
 	font-weight: 300;
- 	text-indent: -36px;
+ 
  	line-height: 30px;
  	color: #888;
 
  	padding-right: 200px;
+ 	margin-bottom: 15px;
  	
   
  
  }
  
-h2.author_name:before{
-	
-	content: 'By: ';
-}
-
+ 
 h2.author_name a{
 	
 	white-space: nowrap;
@@ -2417,7 +2414,7 @@ div#document{
 
 #sidebar hr{
 	
-	margin-bottom: 75px;
+	margin-bottom: 50px;
 }
 
  
