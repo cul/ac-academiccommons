@@ -300,10 +300,10 @@ class StatisticsController < ApplicationController
                           
     pids = []
     pids_by_institution.each do |pid|
-      if(event == 'View')
-        final_pid = pid[:id]
-      else
+      if(event == 'Download')
         final_pid = pid[:id][0, 3] + (pid[:id][3, 8].to_i + 1).to_s
+      else
+        final_pid = pid[:id]
       end    
       pids.push(final_pid)      
     end
