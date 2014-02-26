@@ -461,4 +461,9 @@ begin
     end
   end
 
+  def render_document_class(document = @document)
+    'blacklight-' + document.get(blacklight_config.view_config(document_index_view_type_field).display_type_field).parameterize rescue nil
+  end
+
+
 end

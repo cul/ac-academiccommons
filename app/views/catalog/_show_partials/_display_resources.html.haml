@@ -1,6 +1,6 @@
 - resource_list = build_resource_list(document)
 
-  %h3 Downloads:
+ 
 
   - if resource_list.length > 0
 
@@ -8,8 +8,8 @@
     - resource_list.each_with_index do |resource, i|
       .resource{:class => "spot" + (i%3).to_s}
         .thumbnail= link_to image_tag("thumbnail_icons/" + thumbnail_for_resource(resource)), resource[:download_path] if resource[:download_path]
-        .title= link_to auto_add_empty_spaces(resource[:filename]).html_safe, resource[:download_path] if resource[:download_path]
+        .title= link_to get_file_extension(resource[:filename].to_s), resource[:download_path] if resource[:download_path]
 
   - else
 
-  .content <em>Downloadable resources are currently unavailable for this item.</em>
+  .content <em>Downloadable resources are currently unavailable for this items.</em>

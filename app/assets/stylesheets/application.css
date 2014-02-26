@@ -1,9 +1,7 @@
-/* @override 
-	http://webdev.cdrs.columbia.edu:3000/stylesheets/application.css
-	http://localhost:3000/stylesheets/application.css
- 
-*/
+body {
 
+font-family: "Open Sans", "Helvetica Neue", sans-serif;
+ }
 
 div#header.container {
 	padding-left: 36px;
@@ -27,7 +25,7 @@ div.home-recent.first {
      box-shadow:none;
 	text-align: right;
 	color: #888;
-	font: italic 3em/1em "Helvetica Neue", Arial, Helvetica, Geneva, sans-serif;
+	font: italic 3em/1em "Open Sans", Arial, Helvetica, Geneva, sans-serif;
 	float: left;
 	width: 180px;
 	width: 180px;
@@ -142,7 +140,7 @@ ul#recently-updated {
 }
 
 #browse {
-		font-family: "Helvetica Neue", Arial, Helvetica, Geneva, sans-serif;
+		font-family: "Open Sans", Helvetica, Geneva, sans-serif;
 		background:rgba(255,255,255,.5);
 		padding-bottom: 3em;
 		min-height: 425px;
@@ -151,16 +149,17 @@ ul#recently-updated {
 
 #home-recent h3  {
 	margin-bottom: 1em;
-	font-family: Georgia, "Times New Roman", Times, serif;
+/* 	font-family: Georgia, "Times New Roman", Times, serif; */
 	text-align: center;
 }
 
 #home-news strong {
-	font: 1.25em Georgia, "Times New Roman", Times, serif;
+	/* font: 1.25em Georgia, "Times New Roman", Times, serif; */
 }
 
 #top-slug, #home-content  {
-	font: 1.25em/1.5em Georgia, "Times New Roman", Times, serif;
+	font: 1.25em/1.5em "Open Sans", Helvetica, Geneva, sans-serif;
+	color: #333;
 }
 
 #about-text p{
@@ -175,7 +174,7 @@ div#intro {
 
 
 div.sd{
-		font: 14px/18px Georgia, "Times New Roman", Times, serif;
+		font: 14px/18px "Open Sans", "Helvetica Neue", Helvetica, sans-serif;
 }
 #top-slug h2{
 	text-transform: uppercase;
@@ -214,7 +213,7 @@ a:link,  a:visited,   a:active {
 }
 
  a:hover {
-	 
+	 color: #cd2c2e;
 }
 
 h1.site_title {
@@ -335,7 +334,7 @@ div#breadcrumbs {
 div#main.container {
   padding-left: 10px;
   padding-right: 10px;
-	background: url('bg-grid-texture.gif');
+	background: #eee;
 	min-height: 600px;
 	-moz-box-shadow: 1px 4px 8px #333;
 	-webkit-box-shadow: 1px 4px 8px #333;
@@ -373,7 +372,7 @@ h1.content-title {
 	text-transform: uppercase;
 	letter-spacing: .2em;
 	 
-		font: 1.3em "Helvetica Neue", Arial, Helvetica, Geneva, sans-serif;
+		font: 1.3em "Open Sans", Arial, Helvetica, Geneva, sans-serif;
 	margin-bottom: 1em;
 	
 
@@ -401,7 +400,7 @@ h2.content-title, .browse-list h3 {
 	text-transform: uppercase;
 	letter-spacing: .2em;
 	 
-		font: 1.3em "Helvetica Neue", Arial, Helvetica, Geneva, sans-serif;
+		font: 1.3em "Open Sans", Arial, Helvetica, Geneva, sans-serif;
  
 	
 
@@ -877,7 +876,7 @@ dl {
 
 dl.defList {
 	/*overflow: auto;*/
-	padding: 0.5em 0;
+/* 	padding: 0.5em 0; */
 }
 
 dl.defList dt {
@@ -896,54 +895,63 @@ dl.defList dd {
 	text-align: left;
 	margin: 0;
 	padding: 2px 0;
-	width: 450px;
+	width: 500px;
 	 
+}
+
+div#documents dl.defList dd{
+	
+	width: 400px;
 }
 
 /* Individual Result Listing */
 #document {
-	border: 1px solid #999;
-	margin-top: .5em;
-	margin-right: .5em;
-	padding: 2em;
-	background: rgba( 256, 256, 256, 0.5);
-	-moz-box-shadow: 3px 3px 3px #777;
-    -webkit-box-shadow: 3px 3px 3px #777;
-    box-shadow: 3px 1px 3px #777;
+ 
 
 }
 
-#document div.document{
-	border: none;
-	-moz-box-shadow:none;
-	-webkit-box-shadow:none;
-	box-shadow:none;
-	background: transparent;
-	padding: 0;
+ 
+div.document-heading{
 	
+ padding-left: 148px;
 }
-
-
-#document h1 {
-	
-	font-size: 1.5em;
-	font-weight: bold;
-	text-shadow: white 2px 2px 0;
+h1.document_title {
+	font-family: "Open Sans", sans-serif;
+	font-weight: 400;
+	font-size: 3em;
+	 
+	/* text-shadow: white 2px 2px 0; */
 	text-align: left;
 	white-space: normal;
-	direction: ltr;
-	margin-top: 1em;
-	margin-bottom: 1em;
+/* 	direction: ltr; */
+	margin-top: .5em;
+	margin-bottom: .25em;
+	line-height: 1.2;
 }
 
-#document h2{
+ h2.author_name{
 	/*border-top: 1px solid silver;
 	border-bottom: 1px solid silver;*/
-	font-size: 1.25em;
-	display: inline;
-	padding-top: 4px;
-	padding-bottom: 3px;
+	font-size: 2em;
+	font-family: "Open Sans", sans-serif;
+	font-weight: 300;
+ 
+ 	line-height: 30px;
+ 	color: #888;
+
+ 	padding-right: 200px;
+ 	margin-bottom: 15px;
+ 	
+  
+ 
+ }
+ 
+ 
+h2.author_name a{
+	
+	white-space: nowrap;
 }
+ 
 #marc_view {
 	padding: 5px;
 	text-align: left;
@@ -1057,12 +1065,12 @@ h2#results_label, form.sort {
 ul.tools {
 	margin: 0px;
 	padding: 0px;
-	text-align: right;
+ 
 }
 
 ul.tools li {
-	display: inline;
-	margin: 0 10px;
+ 
+/* 	margin: 0 10px; */
 }
 
 /* Lightbox */
@@ -1565,7 +1573,7 @@ div#crumbs {
 
 
 body {
-	background: #eee	
+	background: url('bg-grid-texture.gif');	
 }
 
 div.browse-list {
@@ -1624,7 +1632,7 @@ body.single-col #page {
 }
 
  
-#sidebar h3{
+#sidebar h3, #sidebar h2{
 	 
 	
 	padding: .5em .5em;
@@ -1787,7 +1795,7 @@ a {
  
 
 div.documentFunctions {
- text-align: right;
+ 
  margin-bottom: .5em;
 }
 
@@ -1917,7 +1925,7 @@ div.school.union{
 	width: 170px;
 }
 #facets div h3  {
-	font-family: "Helvetica Neue", Arial, Helvetica, Geneva, sans-serif;
+	font-family: "Open Sans", Arial, Helvetica, Geneva, sans-serif;
 }
 
 #colophon p{
@@ -1928,7 +1936,7 @@ div.school.union{
 #most-recent {
 	}
 
-a.nav-link{
+.title a, a.nav-link{
 	display: block;
 	font-size: 1.25em;
 	font-weight: bold;
@@ -2030,7 +2038,7 @@ span.form-field-info {
 form.self-deposit-form input, form.self-deposit-form textarea {
  
 	width: 400px; 
-	font: 1.4em "Helvetica Neue", Arial, Helvetica, Geneva, sans-serif; 
+	font: 1.4em "Open Sans", Arial, Helvetica, Geneva, sans-serif; 
 	color: #444;
 	padding-left: 5px;
 	padding-top: 4px;
@@ -2259,7 +2267,7 @@ form.self-deposit-form input.submitbutton,form.self-deposit-form .nextbutton,for
 	text-align: center;
 	color: white;
 
-		font: 1.4em "Helvetica Neue", Arial, Helvetica, Geneva, sans-serif;
+		font: 1.4em "Open Sans", Arial, Helvetica, Geneva, sans-serif;
 		
 		-moz-box-shadow: 3px 3px 3px rgba(0,0,0,.2);
   -webkit-box-shadow: 3px 3px 3px rgba(0,0,0,.2);
@@ -2320,7 +2328,7 @@ background: rgba(255,255,255,.5);
 
 #about-text h1 {
 	color: #221d53;
-	font: 34px/36px "Helvetica Neue", Arial, Helvetica, Geneva, sans-serif;
+	font: 34px/36px "Open Sans", Arial, Helvetica, Geneva, sans-serif;
 	margin-bottom: .5em;
 	text-transform: uppercase;
 }
@@ -2365,4 +2373,56 @@ div.sd h2{
 	margin-top: 25px;
 	margin-bottom: 25px;
 }
+
+div.browse-list li {
+	
+	border-bottom: 1px dotted #bcbaba;
+	margin-top: 5px;
+	padding-bottom: 4px;
+	
+	
+}
+
+div.browse-list li:hover{
+	
+	background: rgba(255,255,255,.9);
+}
+
+#sidebar.stuck{
+	
+	position: fixed;
+	top: 30px;
+	width: 230px;
+}
+
+div.sidebar-content{
+	
+	padding: 10px;
+}
+
+div#document h3{
+	font-size: 2em;
+	margin-left: 148px;
+	margin-top: 50px;
+	color: #888;
+}
+
+div#document{
+	
+	padding-bottom: 50px;
+}
+
+#sidebar hr{
+	
+	margin-bottom: 50px;
+}
+
+div.sidebar-content{
+	
+	background: rgba(255,255,255,.6);
+	margin-bottom: 1em;
+	border: 1px solid #b8b8b8;
+	border-top: none;
+}
+
  
