@@ -425,4 +425,9 @@ module StatisticsHelper
                           
   end
   
+  def get_school_docs_size(school)
+    query_params = {:qt=>"standard", :q=>'{!raw f=organization_facet}' + school}
+    return get_count(query_params)  
+  end
+  
 end # ------------------------------------------ #

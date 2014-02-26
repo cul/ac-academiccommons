@@ -4,6 +4,7 @@ class StatisticsController < ApplicationController
   before_filter :require_admin, :except => [:unsubscribe_monthly, :usage_reports, :statistical_reporting]
   include Blacklight::SolrHelper
   include StatisticsHelper
+  include CatalogHelper
 
   def unsubscribe_monthly
     author_id = params[:author_id]
@@ -268,17 +269,30 @@ class StatisticsController < ApplicationController
   
   def school_docs_size()
     
-    school = params[:school]
+    schools = params[:school]
     
-    pids_by_institution = school_pids(school)
-    
+    schools_arr = schools.split(',')
+
+    count = 0
+    schools_arr.each do |school|
+      count = count + get_school_docs_size(school)
+    end
+
     respond_to do |format|
-      format.html { render :text => pids_by_institution.length.to_s }
+      format.html { render :text => count.to_s }
+    end
+  end
+  
+  def stats_by_event()
+    event = params[:event]
+    count = Statistic.count(:conditions => ["event = '" + event + "'"]) 
+
+    respond_to do |format|
+      format.html { render :text => count.to_s }
     end
   end
 
-  def school_stats()
-    
+  def school_stats()  
     school = params[:school]
     event = params[:event]
     
@@ -286,8 +300,12 @@ class StatisticsController < ApplicationController
                           
     pids = []
     pids_by_institution.each do |pid|
-      pids.push(pid[:id])
-
+      if(event == 'View')
+        final_pid = pid[:id]
+      else
+        final_pid = pid[:id][0, 3] + (pid[:id][3, 8].to_i + 1).to_s
+      end    
+      pids.push(final_pid)      
     end
  
     count = Statistic.count(:conditions => ["identifier in (?) and event = '" + event + "'", pids]) 
@@ -295,12 +313,15 @@ class StatisticsController < ApplicationController
     respond_to do |format|
       format.html { render :text => count.to_s }
     end
-
   end
   
   def generic_reports
 
   end  
+  
+  def school_statistics
+
+  end 
 
   private
 
