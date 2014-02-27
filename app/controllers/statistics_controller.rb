@@ -291,6 +291,22 @@ class StatisticsController < ApplicationController
       format.html { render :text => count.to_s }
     end
   end
+  
+  def single_pid_stats
+    event = params[:event]
+    pid = params[:pid]
+
+
+    if(event == 'Download')
+      pid = pid[0, 3] + (pid[3, 8].to_i + 1).to_s
+    end    
+
+    count = Statistic.count(:conditions => ["identifier = ? and event = '" + event + "'", pid]) 
+
+    respond_to do |format|
+      format.html { render :text => count.to_s }
+    end
+  end
 
   def school_stats()  
     school = params[:school]
@@ -316,7 +332,12 @@ class StatisticsController < ApplicationController
   end
   
   def generic_reports
-
+    logger.info("============= generic_reports ==========")
+    
+    respond_to do |format|
+      format.html { render :text => 'zzz' }
+    end
+    
   end  
   
   def school_statistics
