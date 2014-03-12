@@ -461,4 +461,17 @@ begin
     end
   end
 
+
+    # override of blacklight method - when a request for /catalog/BAD_SOLR_ID is made, this method is executed...
+    def invalid_solr_id_error
+        flash[:notice] = params[:id]
+        params.delete(:id)
+        index
+        render "tombstone", :status => 404
+#        flash[:notice] = I18n.t('blacklight.search.errors.invalid_solr_id')
+#       params.delete(:id)
+#        index
+#        render "index", :status => 404
+    end
+
 end
