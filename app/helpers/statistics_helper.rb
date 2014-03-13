@@ -424,5 +424,72 @@ module StatisticsHelper
     return pids_by_institution                       
                           
   end
+
+  def get_school_docs_size(school)
+    query_params = {:qt=>"standard", :q=>'{!raw f=organization_facet}' + school}
+    return get_count(query_params)
+  end
   
+  # @@facets_list = Hash.new  
+  # def facet_items(facet)
+#     
+    # if(!@@facets_list.has_key?(facet) )
+      # @@facets_list.store(facet, make_facet_items(facet))
+      # logger.info("======= fasets init ====== ")
+    # end  
+# 
+    # return @@facets_list[facet]
+  # end
+  # def make_facet_items(facet)
+  def facet_items(facet)
+    
+    results = []
+    query_params = {:q=>"", :rows=>"0", "facet.limit"=>-1, :"facet.field"=>[facet]}
+    solr_results = Blacklight.solr.find(query_params)
+    subjects = solr_results.facet_counts["facet_fields"][facet]
+    
+    results << ["" ,""]
+    
+    res_item = {}
+    subjects.each do |item|
+
+      #if(item.to_s.match(/\A[+-]?\d+?(\.\d+)?\Z/) != nil)
+      if(item.kind_of? Integer)
+        res_item[:count] = item
+        
+        #logger.info("======= " +  res_item[:count].to_s + " == " + res_item[:name].to_s)
+        
+        results << [res_item[:name].to_s + " (" + res_item[:count].to_s  + ")", res_item[:name].to_s]
+        res_item = {}
+      else
+        res_item[:name] = item
+      end
+      
+    end  
+    
+    return results
+  end
+  
+  def statistic_categories
+    
+    return facet_items("department_facet")
+
+    # statistic_categories = [
+                            # ["", ""], 
+                            # ["Authors", "author_facet"], 
+                            # ["Pub Date", "pub_date_facet"],
+                            # ["Content Type", "genre_facet"],
+                            # ["Subject", "subject_facet"],
+                            # ["Type Of Resouce", "type_of_resource_facet"],
+                            # ["Media Type", "media_type_facet"],
+                            # ["Organization", "organization_facet"],
+                            # ["Department", "department_facet"],
+                            # ["Series", "series_facet"],
+                            # ["Non CU Series", "non_cu_series_facet"]
+                           # ]
+#     
+    # return statistic_categories
+    
+  end
+
 end # ------------------------------------------ #

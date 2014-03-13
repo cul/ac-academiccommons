@@ -4,6 +4,7 @@ class StatisticsController < ApplicationController
   before_filter :require_admin, :except => [:unsubscribe_monthly, :usage_reports, :statistical_reporting]
   include Blacklight::SolrHelper
   include StatisticsHelper
+  include CatalogHelper
 
   def unsubscribe_monthly
     author_id = params[:author_id]
@@ -268,17 +269,92 @@ class StatisticsController < ApplicationController
   
   def school_docs_size()
     
-    school = params[:school]
+    schools = params[:school]
     
-    pids_by_institution = school_pids(school)
-    
+    schools_arr = schools.split(',')
+
+    count = 0
+    schools_arr.each do |school|
+      count = count + get_school_docs_size(school)
+    end
+
     respond_to do |format|
-      format.html { render :text => pids_by_institution.length.to_s }
+      format.html { render :text => count.to_s }
+    end
+  end
+  
+  def stats_by_event()
+    event = params[:event]
+    count = Statistic.count(:conditions => ["event = '" + event + "'"]) 
+
+    respond_to do |format|
+      format.html { render :text => count.to_s }
+    end
+  end
+  
+  def facet_statistics
+    
+    query = params[:f]
+    
+    query.each do | param|
+      logger.info("======== query:  " + param[0].to_s + " == " + param[1].first.to_s )
+    end
+    
+    
+    # "/statistics/facet_statistics/?f[department_facet][]=American+Studies&f[genre_facet][]=Master's+theses",
+    
+    #query_params = {:q=>"", :rows=>"0", "facet.limit"=>-1, :"facet.field"=>[facet]}
+    
+    #result = Blacklight.solr.find(self.solr_search_params(params));
+    #result = Blacklight.solr.find(query_params);
+    
+    #query = params[:f]
+    
+    facets_query = Array.new
+    query.each do | param|
+      if(param[1][0] != nil && !param[1][0].to_s.empty? && param[1][0].to_s != 'undefined' )
+        facets_query.push("{!raw f=" + param[0].to_s + "}" + param[1][0].to_s)
+      end
+    end
+    
+    # query.each do | param|
+      # if(param[1] != nil && !param[1].to_s.empty? )
+        # facets_query.push("{!raw f=" + param[0].to_s + "}" + param[1].to_s)
+      # end
+    # end
+    logger.info("======== facets_query:  " + facets_query.size.to_s )
+    
+    
+    query_params = Hash.new 
+    query_params.store("qt", "search")
+    query_params.store("rows", 20000)
+    query_params.store("fq", facets_query)
+    query_params.store("facet.field", ["pid"])
+
+    pids_by_institution = Blacklight.solr.find(query_params)["response"]["docs"] 
+
+    respond_to do |format|
+      format.html { render :text => pids_by_institution.size.to_s}
+    end
+  end
+  
+  def single_pid_stats
+    event = params[:event]
+    pid = params[:pid]
+
+
+    if(event == 'Download')
+      pid = pid[0, 3] + (pid[3, 8].to_i + 1).to_s
+    end    
+
+    count = Statistic.count(:conditions => ["identifier = ? and event = '" + event + "'", pid]) 
+
+    respond_to do |format|
+      format.html { render :text => count.to_s }
     end
   end
 
-  def school_stats()
-    
+  def school_stats()  
     school = params[:school]
     event = params[:event]
     
@@ -286,8 +362,12 @@ class StatisticsController < ApplicationController
                           
     pids = []
     pids_by_institution.each do |pid|
-      pids.push(pid[:id])
-
+      if(event == 'Download')
+        final_pid = pid[:id][0, 3] + (pid[:id][3, 8].to_i + 1).to_s
+      else
+        final_pid = pid[:id]
+      end    
+      pids.push(final_pid)      
     end
  
     count = Statistic.count(:conditions => ["identifier in (?) and event = '" + event + "'", pids]) 
@@ -295,12 +375,15 @@ class StatisticsController < ApplicationController
     respond_to do |format|
       format.html { render :text => count.to_s }
     end
-
   end
   
-  def generic_reports
-
+  def generic_statistics
+    
   end  
+  
+  def school_statistics
+
+  end 
 
   private
 
@@ -357,10 +440,10 @@ stats['View Lifetime'] = convertOrderedHash(stats['View Lifetime'])
   end
 
 def convertOrderedHash(ohash)
-	a =  ohash.to_a
-	oh = {}
-	a.each{|x|  oh[x[0]] = x[1]} 
-	return oh
+  a =  ohash.to_a
+  oh = {}
+  a.each{|x|  oh[x[0]] = x[1]} 
+  return oh
 end
 
 
