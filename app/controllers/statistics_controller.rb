@@ -283,6 +283,7 @@ class StatisticsController < ApplicationController
     end
   end
   
+  
   def stats_by_event()
     event = params[:event]
     count = Statistic.count(:conditions => ["event = '" + event + "'"]) 
@@ -292,16 +293,62 @@ class StatisticsController < ApplicationController
     end
   end
   
+  
+  def docs_size_by_query_facets
+
+    query = params[:f]
+    
+    if( query == nil || query.empty? )
+      pids = []
+    else  
+      pids = getPidsByQueryFacets(query)
+    end
+
+    respond_to do |format|
+      format.html { render :text => pids.size.to_s}
+    end
+  end
+  
+  
+  def facetStatsByEvent
+    
+    query = params[:f]
+    event = params[:event]
+    
+    if( query == nil || query.empty? )
+      count = 0
+    else  
+      count = countPidsStatistic(getPidsByQueryFacets(query), event)
+    end
+
+    respond_to do |format|
+      format.html { render :text => count.to_s }
+    end
+  end
+  
+  
+  def single_pid_count
+    query_params = {:qt=>"standard", :q=>"pid:\"" + params[:pid] + "\""}
+    results = Blacklight.solr.find(query_params)
+    count = results["response"]["numFound"]
+
+    respond_to do |format|
+      format.html { render :text => count.to_s }
+    end
+  end  
+  
+  
   def single_pid_stats
     event = params[:event]
     pid = params[:pid]
 
+    pid_item = Hash.new
+    pid_item.store("id", pid)
 
-    if(event == 'Download')
-      pid = pid[0, 3] + (pid[3, 8].to_i + 1).to_s
-    end    
+    pids_collection = Array.new
+    pids_collection << Mash.new(pid_item)
 
-    count = Statistic.count(:conditions => ["identifier = ? and event = '" + event + "'", pid]) 
+    count = countPidsStatistic(pids_collection, event)
 
     respond_to do |format|
       format.html { render :text => count.to_s }
@@ -314,29 +361,14 @@ class StatisticsController < ApplicationController
     
     pids_by_institution = school_pids(school)
                           
-    pids = []
-    pids_by_institution.each do |pid|
-      if(event == 'Download')
-        final_pid = pid[:id][0, 3] + (pid[:id][3, 8].to_i + 1).to_s
-      else
-        final_pid = pid[:id]
-      end    
-      pids.push(final_pid)      
-    end
- 
-    count = Statistic.count(:conditions => ["identifier in (?) and event = '" + event + "'", pids]) 
+    count = countPidsStatistic(pids_by_institution, event)
 
     respond_to do |format|
       format.html { render :text => count.to_s }
     end
   end
   
-  def generic_reports
-    logger.info("============= generic_reports ==========")
-    
-    respond_to do |format|
-      format.html { render :text => 'zzz' }
-    end
+  def generic_statistics
     
   end  
   
@@ -399,10 +431,10 @@ stats['View Lifetime'] = convertOrderedHash(stats['View Lifetime'])
   end
 
 def convertOrderedHash(ohash)
-	a =  ohash.to_a
-	oh = {}
-	a.each{|x|  oh[x[0]] = x[1]} 
-	return oh
+  a =  ohash.to_a
+  oh = {}
+  a.each{|x|  oh[x[0]] = x[1]} 
+  return oh
 end
 
 

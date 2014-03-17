@@ -8,6 +8,10 @@ module StatisticsHelper
   VIEW = 'view_'
   DOWNLOAD = 'download_'
   LINE_BRAKER = RUBY_VERSION < "1.9" ? "\r\n" : ""
+  
+  VIEW_EVENT = 'View'
+  DOWNLOAD_EVENT = 'Download'
+  STREAM_EVENT = 'Streaming'
    
   def cvsReport(startdate, enddate, search_criteria, include_zeroes, recent_first, facet, include_streaming_views, order_by)
 
@@ -373,7 +377,6 @@ module StatisticsHelper
   end
   
 
-
   def makeTestAuthor(author_id, email)  
 
         test_author = Hash.new
@@ -384,6 +387,7 @@ module StatisticsHelper
         processed_authors.push(test_author)
         return processed_authors
   end      
+  
   
   def sendReport(recepient, author_id, startdate, enddate, results, stats, totals, request, include_streaming_views, optional_note)
     case params[:email_template]
@@ -424,10 +428,91 @@ module StatisticsHelper
     return pids_by_institution                       
                           
   end
-  
+
   def get_school_docs_size(school)
     query_params = {:qt=>"standard", :q=>'{!raw f=organization_facet}' + school}
-    return get_count(query_params)  
+    return get_count(query_params)
   end
   
+  # @@facets_list = Hash.new  
+  # def facet_items(facet)
+#     
+    # if(!@@facets_list.has_key?(facet) )
+      # @@facets_list.store(facet, make_facet_items(facet))
+      # logger.info("======= fasets init ====== ")
+    # end  
+# 
+    # return @@facets_list[facet]
+  # end
+  # def make_facet_items(facet)
+  def facet_items(facet)
+    
+    results = []
+    query_params = {:q=>"", :rows=>"0", "facet.limit"=>-1, :"facet.field"=>[facet]}
+    solr_results = Blacklight.solr.find(query_params)
+    subjects = solr_results.facet_counts["facet_fields"][facet]
+    
+    results << ["" ,""]
+    
+    res_item = {}
+    subjects.each do |item|
+
+      if(item.kind_of? Integer)
+        res_item[:count] = item
+        
+        #Rails.logger.debug("======= " +  res_item[:count].to_s + " == " + res_item[:name].to_s)
+        
+        results << [res_item[:name].to_s + " (" + res_item[:count].to_s  + ")", res_item[:name].to_s]
+        res_item = {}
+      else
+        res_item[:name] = item
+      end
+      
+    end  
+    
+    return results
+  end
+  
+  
+  def getPidsByQueryFacets(query)
+
+    solr_facets_query = Array.new
+    query.each do | param|
+      Rails.logger.debug(" facet parameters:  facet - " + param[0].to_s + ", facet item - " + param[1].first.to_s )
+      if(param[1][0] != nil && !param[1][0].to_s.empty? && param[1][0].to_s != 'undefined' )
+        solr_facets_query.push("{!raw f=" + param[0].to_s + "}" + param[1][0].to_s)
+      end
+    end
+    
+    Rails.logger.debug(" solr_facets_query size:  " + solr_facets_query.size.to_s )
+    
+    query_params = Hash.new 
+    query_params.store("qt", "search")
+    query_params.store("rows", 20000)
+    query_params.store("fq", solr_facets_query)
+    query_params.store("facet.field", ["pid"])
+
+    return  Blacklight.solr.find(query_params)["response"]["docs"] 
+  end
+  
+  
+  def countPidsStatistic(pids_collection, event)
+
+    pids = []
+    pids_collection.each do |pid|
+
+      if(event == DOWNLOAD_EVENT)
+        pids.push(pid[:id][0, 3] + (pid[:id][3, 8].to_i + 1).to_s)
+      else
+         pids.push(pid[:id])
+      end    
+   
+    end
+ 
+    count = Statistic.count(:conditions => ["identifier in (?) and event = '" + event + "'", pids]) 
+
+    return count
+  end
+  
+
 end # ------------------------------------------ #
