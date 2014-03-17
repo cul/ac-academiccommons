@@ -8,6 +8,10 @@ module StatisticsHelper
   VIEW = 'view_'
   DOWNLOAD = 'download_'
   LINE_BRAKER = RUBY_VERSION < "1.9" ? "\r\n" : ""
+  
+  VIEW_EVENT = 'View'
+  DOWNLOAD_EVENT = 'Download'
+  STREAM_EVENT = 'Streaming'
    
   def cvsReport(startdate, enddate, search_criteria, include_zeroes, recent_first, facet, include_streaming_views, order_by)
 
@@ -373,7 +377,6 @@ module StatisticsHelper
   end
   
 
-
   def makeTestAuthor(author_id, email)  
 
         test_author = Hash.new
@@ -384,6 +387,7 @@ module StatisticsHelper
         processed_authors.push(test_author)
         return processed_authors
   end      
+  
   
   def sendReport(recepient, author_id, startdate, enddate, results, stats, totals, request, include_streaming_views, optional_note)
     case params[:email_template]
@@ -453,11 +457,10 @@ module StatisticsHelper
     res_item = {}
     subjects.each do |item|
 
-      #if(item.to_s.match(/\A[+-]?\d+?(\.\d+)?\Z/) != nil)
       if(item.kind_of? Integer)
         res_item[:count] = item
         
-        #logger.info("======= " +  res_item[:count].to_s + " == " + res_item[:name].to_s)
+        #Rails.logger.debug("======= " +  res_item[:count].to_s + " == " + res_item[:name].to_s)
         
         results << [res_item[:name].to_s + " (" + res_item[:count].to_s  + ")", res_item[:name].to_s]
         res_item = {}
@@ -470,26 +473,46 @@ module StatisticsHelper
     return results
   end
   
-  def statistic_categories
-    
-    return facet_items("department_facet")
+  
+  def getPidsByQueryFacets(query)
 
-    # statistic_categories = [
-                            # ["", ""], 
-                            # ["Authors", "author_facet"], 
-                            # ["Pub Date", "pub_date_facet"],
-                            # ["Content Type", "genre_facet"],
-                            # ["Subject", "subject_facet"],
-                            # ["Type Of Resouce", "type_of_resource_facet"],
-                            # ["Media Type", "media_type_facet"],
-                            # ["Organization", "organization_facet"],
-                            # ["Department", "department_facet"],
-                            # ["Series", "series_facet"],
-                            # ["Non CU Series", "non_cu_series_facet"]
-                           # ]
-#     
-    # return statistic_categories
+    solr_facets_query = Array.new
+    query.each do | param|
+      Rails.logger.debug(" facet parameters:  facet - " + param[0].to_s + ", facet item - " + param[1].first.to_s )
+      if(param[1][0] != nil && !param[1][0].to_s.empty? && param[1][0].to_s != 'undefined' )
+        solr_facets_query.push("{!raw f=" + param[0].to_s + "}" + param[1][0].to_s)
+      end
+    end
     
+    Rails.logger.debug(" solr_facets_query size:  " + solr_facets_query.size.to_s )
+    
+    query_params = Hash.new 
+    query_params.store("qt", "search")
+    query_params.store("rows", 20000)
+    query_params.store("fq", solr_facets_query)
+    query_params.store("facet.field", ["pid"])
+
+    return  Blacklight.solr.find(query_params)["response"]["docs"] 
   end
+  
+  
+  def countPidsStatistic(pids_collection, event)
+
+    pids = []
+    pids_collection.each do |pid|
+
+      if(event == DOWNLOAD_EVENT)
+        pids.push(pid[:id][0, 3] + (pid[:id][3, 8].to_i + 1).to_s)
+      else
+         pids.push(pid[:id])
+      end    
+   
+    end
+ 
+    count = Statistic.count(:conditions => ["identifier in (?) and event = '" + event + "'", pids]) 
+
+    return count
+  end
+  
 
 end # ------------------------------------------ #
