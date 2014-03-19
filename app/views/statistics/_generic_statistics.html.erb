@@ -10,21 +10,40 @@
     series = facet_items('series_facet')
     non_cu_series = facet_items('non_cu_series_facet')
   %>
-  
+
     <style>
-      .facet_items {
+       .facet_items {
            width: 450px;
-        }
+       }
         
        .facet_name {
        		padding: 0 0 0 0;
        } 
        
        .facet_num {
-       	text-align: right;
-       	padding: 0 40px 0 0;
+       		text-align: right;
+       		padding: 0 40px 0 0;
        } 
+       
+    .facet_res_cell { 
+		font-weight: 500;
+		//padding: 10px 15px 15px 10px;  
+		//float: left;  
+		//border: 1px solid black;
+		width: 100px;
+		text-align: center;	
+	}       
+	
+	.facet_res_link {
+		min-width: 240px; 
+		padding: 0px 0px 0px 0px;
+		//border: 1px solid black;
+		text-align: center;
+        visibility:  hidden;
+	}
+	
     </style>  
+
 
 <div style='float:left;'><h3>Common Statistics</h3></div>
 
@@ -98,30 +117,44 @@
 	        </div>  
 		</div>
 		
-       <div style='display: table-row; width: 100%; height: 60px;'>
-        <div class='table-cell g_stat_head_cell' style='display: table-cell; min-width: 230px; padding: 20px 5px 15px 0px;'>
-            <a id="search_link" href="" style=" visibility: hidden;">search link</a>
-        </div>
+        <div style='display: table-row; width: 100%;'>
+	        <div class='table-cell' style='display: table-cell;'>
+				
+	        </div>   
+            <div id="resut_period" class='table-cell' style='display: table-cell; text-align: center; visibility: hidden; padding: 0 0 20px 0;'>
+				lifetime
+	        </div>  
+		</div>
+		
+	</div>	
+
+	<div style=' height: 30px'>
         <div class='table-cell' style='display: table-cell;  '>
         	<div style='display: table; width: ;'>
         		<div style='display: table-row;'>
-					<div id='facet-docs-size' class='table-cell g_stat_head_cell' style='display: table-cell;'>
-						    
-					</div>
-				 	<div id='facet-views-size' class='table-cell g_stat_head_cell' style='display: table-cell;'>
+        			
+			        <div class='table-cell facet_res_link' style='display: table-cell;'>
+			            <a id="search_link" href="">search link</a>
+			        </div>			
+        			
+					<div id='facet-docs-size' class='table-cell facet_res_cell' style='display: table-cell;'>
 
 					</div>
-					<div id='facet-downloads-size' class='table-cell g_stat_head_cell' style='display: table-cell;'>
+				 	<div id='facet-views-size' class='table-cell facet_res_cell' style='display: table-cell;'>
 
 					</div>
-					<div id='facet-streams-size' class='table-cell g_stat_head_cell' style='display: table-cell;'>
+					<div id='facet-downloads-size' class='table-cell facet_res_cell' style='display: table-cell;'>
+
+					</div>
+					<div id='facet-streams-size' class='table-cell facet_res_cell' style='display: table-cell;'>
 				           
 					</div>
 
 				</div>		            
 			</div>
 		</div>  
-      </div> 
+	</div>
+
 
     </div>
     
@@ -251,18 +284,36 @@
 
     </div>
 
-</div>
+
 
 
 <br style="clear:both"/>
 
 
+	<div style='display: table; width: 100%;'>
+      <div style='display: table-row; width: 100%;'>
+        <div class='table-cell' style='display: table-cell;'>
+			<input id="facet-statistics-button" type="submit" value=" get statistics: " onclick="get_facet_stats();">
+		</div>  
+		<div class='table-cell' style='display: table-cell;'>
+			lifetime <%= check_box_tag :lifetime, "true", params[:lifetime], :checked => "checked", :onchange => "datepickers();" %>
+		</div>
+		
+		<div id="date_from_div" class='table-cell' style='display: table-cell; visibility: hidden;'>
+			From: 
+			<%= select_tag 'month_from', options_for_select(months, params[:month_from]) %>
+			<%= select_tag 'year_from', options_for_select((2011..Date.today.year), params[:year_from]) %>
+		</div> 
+		<div id="date_to_div" class='table-cell' style='display: table-cell; visibility: hidden;'>
+			To: 
+			<%= select_tag 'month_to', options_for_select(months, params[:month_to] || (Date.today - 1.months).strftime("%b")) %>
+			<%= select_tag 'year_to', options_for_select((2011..Date.today.year), params[:year_to] || Date.today.year) %>
+		</div> 
+     </div>
+	</div>     
 
-	<div>
-		<input id="facet-statistics-button" type="submit" value=" get statistics: " onclick="get_facet_stats();">
-	</div>
-
-
+</div>	
+	
 <script>
 
     var in_process = false;
@@ -285,12 +336,48 @@
 	facets['non_cu_series'] = 'non_cu_series_facet';
 
 function hide_facet_results(){
+	
+	document.getElementById( "resut_period" ).style.visibility = 'hidden'; 
+	
 	document.getElementById( "search_link" ).style.visibility = 'hidden';
 	document.getElementById( "facet-docs-size" ).style.visibility = 'hidden';
     document.getElementById( "facet-views-size" ).style.visibility = 'hidden';
     document.getElementById( "facet-downloads-size" ).style.visibility = 'hidden';
     document.getElementById( "facet-streams-size" ).style.visibility = 'hidden';
 }
+
+function datepickers(){
+	
+	hide_facet_results();
+	
+	if(document.getElementById( "lifetime" ).checked == 1 ){
+		document.getElementById( "date_from_div" ).style.visibility = 'hidden';
+		document.getElementById( "date_to_div" ).style.visibility = 'hidden';
+	} else {
+		document.getElementById( "date_from_div" ).style.visibility = 'visible';
+		document.getElementById( "date_to_div" ).style.visibility = 'visible';
+	}
+
+}
+
+function get_date_params() {
+    var date_params = "";
+    
+    date_params = date_params + "&month_from=" +  document.getElementById( 'month_from' ).value;
+    date_params = date_params + "&year_from=" + document.getElementById( 'year_from' ).value;
+    date_params = date_params + "&month_to=" + document.getElementById( 'month_to' ).value;
+    date_params = date_params + "&year_to=" + document.getElementById( 'year_to' ).value;
+    
+    return date_params;
+   }
+
+function make_period_to_show() {
+
+    var from =  document.getElementById( 'month_from' ).value + ' ' + document.getElementById( 'year_from' ).value;
+    var to =  document.getElementById( 'month_to' ).value + ' ' + document.getElementById( 'year_to' ).value ;
+    
+    return from + " - " + to;
+   }  
 
 function get_facet_stats(){
 	
@@ -346,15 +433,25 @@ function get_facet_stats(){
 	if(department_facet_value) { search_params = search_params + "&f[" + facets['departments'] + "][]=" + department_facet_value}
 	if(series_facet_value) { search_params = search_params + "&f[" + facets['series'] + "][]=" + series_facet_value}
 	if(non_cu_series_facet_value) { search_params = search_params + "&f[" + facets['non_cu_series'] + "][]=" + non_cu_series_facet_value}
+
+
+	document.getElementById( "search_link" ).style.visibility ='visible';
+	document.getElementById( "search_link" ).href = '/?' + search_params;
 	
-	  
-	  document.getElementById( "search_link" ).style.visibility ='visible';
-	  document.getElementById( "search_link" ).href = '/?' + search_params;
+	if(document.getElementById( "lifetime" ).checked != 1 ){
+		search_params = search_params + get_date_params();
+		document.getElementById( "resut_period" ).innerHTML = make_period_to_show();
+		document.getElementById( "resut_period" ).style.visibility = 'visible'; 
+	} else {
+		document.getElementById( "resut_period" ).innerHTML = 'lifetime';
+		document.getElementById( "resut_period" ).style.visibility = 'visible'; 
+	}
+	
+
 
 	  $.ajax({url: "/statistics/docs_size_by_query_facets/?" + search_params + "",
            success: function(data) {
              $("#facet-docs-size").html(data);
-			 document.getElementById( "facet-docs-size" ).style.visibility = 'visible';
 	         docs_finished = true;
              makeFasetStatsButtonAvailable(docs_finished, views_finished, downloads_finished, streams_finished, facets);
            }
@@ -363,7 +460,6 @@ function get_facet_stats(){
 	  $.ajax({url: "/statistics/facetStatsByEvent/?" + search_params + "&event=View",
            success: function(data) {
              $("#facet-views-size").html(data);
-			 document.getElementById( "facet-views-size" ).style.visibility = 'visible';
 			 views_finished = true;
              makeFasetStatsButtonAvailable(docs_finished, views_finished, downloads_finished, streams_finished, facets);
            }
@@ -372,7 +468,6 @@ function get_facet_stats(){
 	  $.ajax({url: "/statistics/facetStatsByEvent/?" + search_params + "&event=Download",
            success: function(data) {
              $("#facet-downloads-size").html(data);
-			 document.getElementById( "facet-downloads-size" ).style.visibility = 'visible';
 			 downloads_finished = true;
 	         makeFasetStatsButtonAvailable(docs_finished, views_finished, downloads_finished, streams_finished, facets);
            }
@@ -381,7 +476,6 @@ function get_facet_stats(){
 	  $.ajax({url: "/statistics/facetStatsByEvent/?" + search_params + "&event=Streaming",
            success: function(data) {
              $("#facet-streams-size").html(data);
-			 document.getElementById( "facet-streams-size" ).style.visibility = 'visible';
 			 streams_finished = true;
 			 makeFasetStatsButtonAvailable(docs_finished, views_finished, downloads_finished, streams_finished, facets);
            }
