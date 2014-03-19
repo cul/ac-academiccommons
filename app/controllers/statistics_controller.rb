@@ -314,11 +314,17 @@ class StatisticsController < ApplicationController
     
     query = params[:f]
     event = params[:event]
-    
+
     if( query == nil || query.empty? )
       count = 0
     else  
-      count = countPidsStatistic(getPidsByQueryFacets(query), event)
+      if(params[:month_from] && params[:year_from] && params[:month_to] && params[:year_to] )
+        startdate = Date.parse(params[:month_from] + " " + params[:year_from])
+        enddate = Date.parse(params[:month_to] + " " + params[:year_to])
+        count = countPidsStatisticByDates(getPidsByQueryFacets(query), event, startdate, enddate)
+      else  
+        count = countPidsStatistic(getPidsByQueryFacets(query), event) 
+      end
     end
 
     respond_to do |format|

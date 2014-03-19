@@ -100,6 +100,12 @@ module StatisticsHelper
 
     return header
   end
+  
+  def months
+    months = Array.new(Date::ABBR_MONTHNAMES)
+    months.shift
+    return months
+  end
 
   def make_month_line(months_list)
     
@@ -495,9 +501,17 @@ module StatisticsHelper
     return  Blacklight.solr.find(query_params)["response"]["docs"] 
   end
   
-  
   def countPidsStatistic(pids_collection, event)
-
+    count = Statistic.count(:conditions => ["identifier in (?) and event = ?", correct_pids(pids_collection, event), event]) 
+    return count
+  end  
+ 
+  def countPidsStatisticByDates(pids_collection, event, startdate, enddate)
+    count = Statistic.count(:conditions => ["identifier in (?) and event = ? and at_time BETWEEN ? and ?", correct_pids(pids_collection, event), event, startdate, enddate]) 
+    return count
+  end  
+  
+  def correct_pids(pids_collection, event)
     pids = []
     pids_collection.each do |pid|
 
@@ -508,11 +522,7 @@ module StatisticsHelper
       end    
    
     end
- 
-    count = Statistic.count(:conditions => ["identifier in (?) and event = '" + event + "'", pids]) 
-
-    return count
+    return pids
   end
-  
 
 end # ------------------------------------------ #
