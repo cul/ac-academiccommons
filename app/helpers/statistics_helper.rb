@@ -12,7 +12,23 @@ module StatisticsHelper
   VIEW_EVENT = 'View'
   DOWNLOAD_EVENT = 'Download'
   STREAM_EVENT = 'Streaming'
-   
+  
+  FACET_NAMES = Hash.new
+  FACET_NAMES.store('author_facet', 'Author')
+  FACET_NAMES.store('pub_date_facet', 'Date')
+  FACET_NAMES.store('genre_facet', 'Content Type')
+  FACET_NAMES.store('subject_facet', 'Subject')
+  FACET_NAMES.store('type_of_resource_facet', 'Resource Type')
+  FACET_NAMES.store('media_type_facet', 'Media Type')
+  FACET_NAMES.store('organization_facet', 'Organization')
+  FACET_NAMES.store('department_facet', 'Department')
+  FACET_NAMES.store('series_facet', 'Series')
+  FACET_NAMES.store('non_cu_series_facet', 'Non CU Series')
+  
+  def facet_names
+    return FACET_NAMES
+  end
+
   def cvsReport(startdate, enddate, search_criteria, include_zeroes, recent_first, facet, include_streaming_views, order_by)
 
     months_list = make_months_list(startdate, enddate, recent_first)
@@ -500,17 +516,32 @@ module StatisticsHelper
 
     return  Blacklight.solr.find(query_params)["response"]["docs"] 
   end
+ 
   
   def countPidsStatistic(pids_collection, event)
     count = Statistic.count(:conditions => ["identifier in (?) and event = ?", correct_pids(pids_collection, event), event]) 
     return count
   end  
  
+ 
   def countPidsStatisticByDates(pids_collection, event, startdate, enddate)
     count = Statistic.count(:conditions => ["identifier in (?) and event = ? and at_time BETWEEN ? and ?", correct_pids(pids_collection, event), event, startdate, enddate]) 
     return count
   end  
   
+  def countDocsByEvent(pids_collection, event)
+    count = Statistic.count(:conditions => ["identifier in (?) and event = ? ", correct_pids(pids_collection, event), event], :group => 'identifier') 
+    return count
+  end  
+ 
+ 
+  def countDocsByEventAndDates(pids_collection, event, startdate, enddate)
+    count = Statistic.count(:conditions => ["identifier in (?) and event = ? and at_time BETWEEN ? and ? ", correct_pids(pids_collection, event), event, startdate, enddate], :group => 'identifier') 
+    return count
+  end    
+  
+
+
   def correct_pids(pids_collection, event)
     pids = []
     pids_collection.each do |pid|
@@ -524,5 +555,85 @@ module StatisticsHelper
     end
     return pids
   end
+  
+
+  def get_res_list()
+
+    query = params[:f]
+
+    if( query == nil || query.empty? )
+      return []
+    end
+    
+    docs = getPidsByQueryFacets(query)
+    
+    results = Array.new
+    
+    docs.each do |doc|
+      
+      item =  Hash.new
+      
+      if(params[:month_from] && params[:year_from] && params[:month_to] && params[:year_to] )
+       
+        startdate = Date.parse(params[:month_from] + " " + params[:year_from])
+        enddate = Date.parse(params[:month_to] + " " + params[:year_to])
+        
+        item.store('views', countPidsStatistic([doc], VIEW_EVENT, startdate, enddate))
+        item.store('dounloads', countPidsStatistic([doc], DOWNLOAD_EVENT, startdate, enddate))
+        item.store('streams', countPidsStatistic([doc], STREAM_EVENT, startdate, enddate))
+        item.store('doc', doc)
+        
+        results << item
+      else  
+        
+        item.store('views', countPidsStatistic([doc], VIEW_EVENT))
+        item.store('downloads', countPidsStatistic([doc], DOWNLOAD_EVENT))
+        item.store('streams', countPidsStatistic([doc], STREAM_EVENT))
+        item.store('doc', doc)
+        results << item
+      end      
+    end
+    
+    return results
+  end
+  
+  def get_docs_size_by_query_facets()
+    query = params[:f]
+    
+    if( query == nil || query.empty? )
+      pids = []
+    else  
+      pids = getPidsByQueryFacets(query)
+    end
+    
+    return pids
+  end
+  
+  def create_common_statistics_csv(get_res_list)
+    
+    count = 0
+    csv = '' 
+    csv += CSV.generate_line( [ '#', 'PID', 'TITLE', 'GENRE', 'VIEWS', 'DOWNLOADS', 'STREAMS', 'CREATION DATE', 'URL' ]) + LINE_BRAKER
+    
+    get_res_list.each do |item|
+      
+      count = count + 1
+      
+      csv += CSV.generate_line( [ 
+                                  count,
+                                  item['doc']['id'],
+                                  item['doc']['title_display'],
+                                  item['doc']['genre_facet'].first,
+                                  item['views'],
+                                  item['downloads'],
+                                  item['streams'],
+                                  Date.strptime(item['doc']['record_creation_date']).strftime('%m/%d/%Y'),
+                                  base_url + '/catalog/' + item['doc']['id']
+                                ]) + LINE_BRAKER
+    end
+    
+    return csv
+  end
+  
 
 end # ------------------------------------------ #

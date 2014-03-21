@@ -5,6 +5,8 @@ class StatisticsController < ApplicationController
   include Blacklight::SolrHelper
   include StatisticsHelper
   include CatalogHelper
+  require "csv"
+  
 
   def unsubscribe_monthly
     author_id = params[:author_id]
@@ -296,36 +298,37 @@ class StatisticsController < ApplicationController
   
   def docs_size_by_query_facets
 
-    query = params[:f]
-    
-    if( query == nil || query.empty? )
-      pids = []
-    else  
-      pids = getPidsByQueryFacets(query)
-    end
-
     respond_to do |format|
-      format.html { render :text => pids.size.to_s}
+      format.html { render :text => get_docs_size_by_query_facets().size.to_s}
     end
   end
-  
-  
+
+
   def facetStatsByEvent
     
     query = params[:f]
     event = params[:event]
 
     if( query == nil || query.empty? )
-      count = 0
+        downloads = 0 
+        docs = Hash.new
     else  
+      
+      pids_collection = getPidsByQueryFacets(query)
+      
       if(params[:month_from] && params[:year_from] && params[:month_to] && params[:year_to] )
         startdate = Date.parse(params[:month_from] + " " + params[:year_from])
         enddate = Date.parse(params[:month_to] + " " + params[:year_to])
-        count = countPidsStatisticByDates(getPidsByQueryFacets(query), event, startdate, enddate)
+        downloads = countPidsStatisticByDates(pids_collection, event, startdate, enddate)
+        docs = countDocsByEventAndDates(pids_collection, event, startdate, enddate)
       else  
-        count = countPidsStatistic(getPidsByQueryFacets(query), event) 
+        downloads = countPidsStatistic(pids_collection, event) 
+        docs = countDocsByEvent(pids_collection, event)
       end
+
     end
+    
+    count = docs.size.to_s + ' ( ' + downloads.to_s + ' )'
 
     respond_to do |format|
       format.html { render :text => count.to_s }
@@ -372,6 +375,22 @@ class StatisticsController < ApplicationController
     respond_to do |format|
       format.html { render :text => count.to_s }
     end
+  end
+  
+  def common_statistics_csv
+    
+    res_list = get_res_list
+    
+    create_common_statistics_csv(get_res_list)
+
+    if(res_list.size != 0)
+      
+      csv = create_common_statistics_csv(res_list)
+      
+      send_data csv, :type=>"application/csv", :filename => "common_statistics.csv" 
+    end 
+
+    
   end
   
   def generic_statistics
