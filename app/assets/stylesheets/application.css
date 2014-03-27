@@ -927,6 +927,8 @@ h1.document_title {
 	margin-top: .5em;
 	margin-bottom: .25em;
 	line-height: 1.2;
+	
+	text-transform: capitalize;
 }
 
  h2.author_name{
@@ -939,8 +941,9 @@ h1.document_title {
  	line-height: 30px;
  	color: #888;
 
- 	padding-right: 200px;
+ 
  	margin-bottom: 15px;
+ 	margin-left: 148px;
  	
   
  
@@ -951,7 +954,7 @@ h2.author_name a{
 	
 	white-space: nowrap;
 }
- 
+
 #marc_view {
 	padding: 5px;
 	text-align: left;
@@ -2425,4 +2428,31 @@ div.sidebar-content{
 	border-top: none;
 }
 
+div.header-utils #search{
+	
+	margin-top: -9px;
+}
+
+div.header-utils #search div.button_set{
+	
+width: 85px;
+
+}
+
+
+div.header-utils a{
+	
+	font-size: 14px;
+/* 	line-height: 30px; */
+}
+
+div.header-utils{
+	height: 30px;
+	
+	border-bottom: dotted 1px #aaa;
+}
  
+div.sticky-wrapper{
+	
+	margin-top: 6em;
+}
