@@ -7,7 +7,11 @@
        
     </style> 
 
-Found <%= get_docs_size_by_query_facets().size.to_s %> items for: <br>
+<%= get_docs_size_by_query_facets().size.to_s %> items found for [ <%= get_time_period %> ] period
+
+<br><br>
+FACETS:
+<br>
 
 <% params[:f].each do |key, value| %>
 

@@ -511,6 +511,8 @@ module StatisticsHelper
     query_params = Hash.new 
     query_params.store("qt", "search")
     query_params.store("rows", 20000)
+
+    
     query_params.store("fq", solr_facets_query)
     query_params.store("facet.field", ["pid"])
 
@@ -578,9 +580,9 @@ module StatisticsHelper
         startdate = Date.parse(params[:month_from] + " " + params[:year_from])
         enddate = Date.parse(params[:month_to] + " " + params[:year_to])
         
-        item.store('views', countPidsStatistic([doc], VIEW_EVENT, startdate, enddate))
-        item.store('dounloads', countPidsStatistic([doc], DOWNLOAD_EVENT, startdate, enddate))
-        item.store('streams', countPidsStatistic([doc], STREAM_EVENT, startdate, enddate))
+        item.store('views', countPidsStatisticByDates([doc], VIEW_EVENT, startdate, enddate))
+        item.store('downloads', countPidsStatisticByDates([doc], DOWNLOAD_EVENT, startdate, enddate))
+        item.store('streams', countPidsStatisticByDates([doc], STREAM_EVENT, startdate, enddate))
         item.store('doc', doc)
         
         results << item
@@ -609,10 +611,41 @@ module StatisticsHelper
     return pids
   end
   
+  def get_time_period
+    
+    if(params[:month_from] && params[:year_from] && params[:month_to] && params[:year_to] )
+       
+      startdate = Date.parse(params[:month_from] + " " + params[:year_from])
+      enddate = Date.parse(params[:month_to] + " " + params[:year_to])
+      
+      time_period = startdate.to_s + ' - ' + enddate.to_s
+    else
+      time_period = 'lifetime'  
+    end    
+    
+    return time_period
+  end
+  
   def create_common_statistics_csv(get_res_list)
     
     count = 0
-    csv = '' 
+    csv = ''
+    
+    csv += CSV.generate_line( [ 'time period: ', get_time_period, '', '', '', '', '', '', '' ]) + LINE_BRAKER
+    csv += CSV.generate_line( [ '', '', '', '', '', '', '', '', '' ]) + LINE_BRAKER
+    
+    query = params[:f]
+    views = get_facetStatsByEvent(query, VIEW_EVENT)
+    downloads = get_facetStatsByEvent(query, DOWNLOAD_EVENT)
+    streams = get_facetStatsByEvent(query, STREAM_EVENT)
+    
+    csv += CSV.generate_line( [ 'FACET', 'ITEM', '', '', '', '', '', '', '' ]) + LINE_BRAKER
+    query.each do |key, value| 
+        csv += CSV.generate_line( [ facet_names[key.to_s], value.first.to_s, '', '', '', '', '', '', '' ]) + LINE_BRAKER
+    end
+    csv += CSV.generate_line( [ '', '', '', '', '', '', '', '', '' ]) + LINE_BRAKER
+    
+    csv += CSV.generate_line( [ get_res_list.size.to_s, '', '', '', views, downloads, streams, '', '' ]) + LINE_BRAKER
     csv += CSV.generate_line( [ '#', 'PID', 'TITLE', 'GENRE', 'VIEWS', 'DOWNLOADS', 'STREAMS', 'CREATION DATE', 'URL' ]) + LINE_BRAKER
     
     get_res_list.each do |item|
@@ -633,6 +666,31 @@ module StatisticsHelper
     end
     
     return csv
+  end
+  
+  def get_facetStatsByEvent(query, event)
+    
+    if( query == nil || query.empty? )
+        downloads = 0 
+        docs = Hash.new
+    else  
+      
+      pids_collection = getPidsByQueryFacets(query)
+      
+      if(params[:month_from] && params[:year_from] && params[:month_to] && params[:year_to] )
+        startdate = Date.parse(params[:month_from] + " " + params[:year_from])
+        enddate = Date.parse(params[:month_to] + " " + params[:year_to])
+        count = countPidsStatisticByDates(pids_collection, event, startdate, enddate)
+        docs = countDocsByEventAndDates(pids_collection, event, startdate, enddate)
+      else  
+        count = countPidsStatistic(pids_collection, event) 
+        docs = countDocsByEvent(pids_collection, event)
+      end
+
+    end
+    
+    result = docs.size.to_s + ' ( ' + count.to_s + ' )'
+    return result   
   end
   
 
