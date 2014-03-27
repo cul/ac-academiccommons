@@ -1,0 +1,26 @@
+<% @page_title = "#{application_name}" %>
+<% extra_head_content << render_link_rel_alternates %>
+<% extra_head_content << stylesheet_link_tag( 'jquery.fancybox', :media => 'screen, projection' )   %>
+<% extra_head_content << javascript_include_tag('fancyBox/source/jquery.fancybox.pack.js') %>
+<% extra_head_content << javascript_include_tag('fancyBox/source/helpers/jquery.fancybox-media.js') %>
+<% extra_head_content << javascript_include_tag('about-videos.js') %>
+ 
+<% sidebar_items << capture do %>
+<%= render :partial=>'application/browse_content' %>
+<%= render :partial=>'application/helpful_links' %>
+<%#= render :partial=>'related_content' %>
+<% end %>
+
+
+<div id="document">
+This item has been removed from Columbia University's <a href="http://academiccommons.columbia.edu">Academic Commons</a>. It was removed for one of the following reasons:<p/><p/>
+- at the author's request.<br/>
+- at the request of the copyright holder (if other than the author).<br/>
+- duplicate item.<br/>
+
+    </div>
+  </div>
+</div>
+
+
+</div>

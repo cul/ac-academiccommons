@@ -1,5 +1,58 @@
 <script>
 
+function get_single_stats(){
+	
+	var pid = document.getElementById('single-pid').value;
+
+  $.ajax({url: '/statistics/single_pid_stats/?event=View&pid=' + pid,
+           success: function(data) {
+             $("#pid-views-size").html(data);
+           }
+  });
+  $.ajax({url: '/statistics/single_pid_stats/?event=Download&pid=' + pid,
+           success: function(data) {
+             $("#pid-downloads-size").html(data);
+           }
+  });  
+  $.ajax({url: '/statistics/single_pid_stats/?event=Streaming&pid=' + pid,
+           success: function(data) {
+             $("#pid-streams-size").html(data);
+           }
+  });  
+  
+}
+
+$(document).ready(function(){
+  $.ajax({url: '/statistics/stats_by_event/?event=View',
+           success: function(data) {
+             $('#all-views-size').html(data);
+           }
+  });
+});
+
+$(document).ready(function(){
+  $.ajax({url: '/statistics/stats_by_event/?event=Download',
+           success: function(data) {
+             $('#all-downloads-size').html(data);
+           }
+  });
+});
+
+$(document).ready(function(){
+  $.ajax({url: '/statistics/stats_by_event/?event=Streaming',
+           success: function(data) {
+             $('#all-streams-size').html(data);
+           }
+  });
+});
+
+$(document).ready(function(){
+  $.ajax({url: '/statistics/school_docs_size/?school=Teachers College,Union Theological Seminary,Jewish Theological Seminary,Barnard College,Columbia University',
+           success: function(data) {
+             $('#all-school-docs-size').html(data);
+           }
+  });
+});
 
 // -------- Teachers College ---------------------
 $(document).ready(function(){
@@ -184,7 +237,7 @@ $(document).ready(function(){
 </script>
 
 <div style='float:left;'><h3>School Statistics</h3></div>
-<div style='float:left; padding: 10px 0 0 320px'> lifetime</div>
+<div style='float:left; padding: 10px 0 0 322px'> lifetime</div>
 
 <br style="clear:both"/>
 
@@ -341,6 +394,66 @@ $(document).ready(function(){
 		</div>   
       </div>                     
         
+       <div style='display: table-row; width: 100%;'>
+        <div class='table-cell g_stat_head_cell' style='display: table-cell; min-width: 210px; padding: 20px 15px 15px 10px;'>
+        	TOTALS:
+        </div>
+        <div class='table-cell' style='display: table-cell; float: left; '>
+        	<div style='display: table; width: ;'>
+        		<div style='display: table-row;'>
+					<div id='all-school-docs-size' class='table-cell g_stat_head_cell' style='display: table-cell;'>
+						    <img src="/assets/16px_on_transparent.gif" />
+					</div>
+				 	<div id='all-views-size' class='table-cell g_stat_head_cell' style='display: table-cell;'>
+				            <img src="/assets/16px_on_transparent.gif" />
+					</div>
+					<div id='all-downloads-size' class='table-cell g_stat_head_cell' style='display: table-cell;'>
+				            <img src="/assets/16px_on_transparent.gif" />
+					</div>
+					<div id='all-streams-size' class='table-cell g_stat_head_cell' style='display: table-cell;'>
+				           <img src="/assets/16px_on_transparent.gif" />
+					</div>
+
+				</div>		            
+			</div>
+		</div>  
+      </div>         
+      
+      <hr>
+    
+       <div style='display: table-row; width: 100%;'>
+        <div class='table-cell g_stat_head_cell' style='display: table-cell; min-width: 230px; padding: 20px 5px 15px 0px;'>
+        	<nobr>
+        	PID: 
+        	&nbsp;
+        	<input type="text" name="pid" style="width:80px; text-align:center" id="single-pid">
+        	&nbsp;
+        	<input type="submit" value=" get statistics: " onclick="get_single_stats();">
+        	</nobr>
+        </div>
+        <div class='table-cell' style='display: table-cell; float: left; '>
+        	<div style='display: table; width: ;'>
+        		<div style='display: table-row;'>
+					<div id='pid-school-docs-size' class='table-cell g_stat_head_cell' style='display: table-cell;'>
+						    
+					</div>
+				 	<div id='pid-views-size' class='table-cell g_stat_head_cell' style='display: table-cell;'>
+				            
+					</div>
+					<div id='pid-downloads-size' class='table-cell g_stat_head_cell' style='display: table-cell;'>
+				            
+					</div>
+					<div id='pid-streams-size' class='table-cell g_stat_head_cell' style='display: table-cell;'>
+				           
+					</div>
+
+				</div>		            
+			</div>
+		</div>  
+      </div>  
+
+
+ 
     </div>
 </div>
 

@@ -4,6 +4,9 @@ class StatisticsController < ApplicationController
   before_filter :require_admin, :except => [:unsubscribe_monthly, :usage_reports, :statistical_reporting]
   include Blacklight::SolrHelper
   include StatisticsHelper
+  include CatalogHelper
+  require "csv"
+  
 
   def unsubscribe_monthly
     author_id = params[:author_id]
@@ -268,39 +271,135 @@ class StatisticsController < ApplicationController
   
   def school_docs_size()
     
-    school = params[:school]
+    schools = params[:school]
     
-    pids_by_institution = school_pids(school)
-    
+    schools_arr = schools.split(',')
+
+    count = 0
+    schools_arr.each do |school|
+      count = count + get_school_docs_size(school)
+    end
+
     respond_to do |format|
-      format.html { render :text => pids_by_institution.length.to_s }
+      format.html { render :text => count.to_s }
+    end
+  end
+  
+  
+  def stats_by_event()
+    event = params[:event]
+    count = Statistic.count(:conditions => ["event = '" + event + "'"]) 
+
+    respond_to do |format|
+      format.html { render :text => count.to_s }
+    end
+  end
+  
+  
+  def docs_size_by_query_facets
+
+    respond_to do |format|
+      format.html { render :text => get_docs_size_by_query_facets().size.to_s}
     end
   end
 
-  def school_stats()
+
+  def facetStatsByEvent
     
+    query = params[:f]
+    event = params[:event]
+
+    if( query == nil || query.empty? )
+        downloads = 0 
+        docs = Hash.new
+    else  
+      
+      pids_collection = getPidsByQueryFacets(query)
+      
+      if(params[:month_from] && params[:year_from] && params[:month_to] && params[:year_to] )
+        startdate = Date.parse(params[:month_from] + " " + params[:year_from])
+        enddate = Date.parse(params[:month_to] + " " + params[:year_to])
+        downloads = countPidsStatisticByDates(pids_collection, event, startdate, enddate)
+        docs = countDocsByEventAndDates(pids_collection, event, startdate, enddate)
+      else  
+        downloads = countPidsStatistic(pids_collection, event) 
+        docs = countDocsByEvent(pids_collection, event)
+      end
+
+    end
+    
+    count = docs.size.to_s + ' ( ' + downloads.to_s + ' )'
+
+    respond_to do |format|
+      format.html { render :text => count.to_s }
+    end
+  end
+  
+  
+  def single_pid_count
+    query_params = {:qt=>"standard", :q=>"pid:\"" + params[:pid] + "\""}
+    results = Blacklight.solr.find(query_params)
+    count = results["response"]["numFound"]
+
+    respond_to do |format|
+      format.html { render :text => count.to_s }
+    end
+  end  
+  
+  
+  def single_pid_stats
+    event = params[:event]
+    pid = params[:pid]
+
+    pid_item = Hash.new
+    pid_item.store("id", pid)
+
+    pids_collection = Array.new
+    pids_collection << Mash.new(pid_item)
+
+    count = countPidsStatistic(pids_collection, event)
+
+    respond_to do |format|
+      format.html { render :text => count.to_s }
+    end
+  end
+
+  def school_stats()  
     school = params[:school]
     event = params[:event]
     
     pids_by_institution = school_pids(school)
                           
-    pids = []
-    pids_by_institution.each do |pid|
-      pids.push(pid[:id])
-
-    end
- 
-    count = Statistic.count(:conditions => ["identifier in (?) and event = '" + event + "'", pids]) 
+    count = countPidsStatistic(pids_by_institution, event)
 
     respond_to do |format|
       format.html { render :text => count.to_s }
     end
-
   end
   
-  def generic_reports
+  def common_statistics_csv
+    
+    res_list = get_res_list
+    
+    create_common_statistics_csv(get_res_list)
 
+    if(res_list.size != 0)
+      
+      csv = create_common_statistics_csv(res_list)
+      
+      send_data csv, :type=>"application/csv", :filename => "common_statistics.csv" 
+    end 
+
+    
+  end
+  
+  def generic_statistics
+    
   end  
+  
+  def school_statistics
+
+  end 
 
   private
 
@@ -357,10 +456,10 @@ stats['View Lifetime'] = convertOrderedHash(stats['View Lifetime'])
   end
 
 def convertOrderedHash(ohash)
-	a =  ohash.to_a
-	oh = {}
-	a.each{|x|  oh[x[0]] = x[1]} 
-	return oh
+  a =  ohash.to_a
+  oh = {}
+  a.each{|x|  oh[x[0]] = x[1]} 
+  return oh
 end
 
 

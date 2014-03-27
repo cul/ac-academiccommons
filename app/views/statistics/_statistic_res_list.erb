@@ -1,0 +1,96 @@
+
+    <style>
+
+       .names {
+       		padding: 0 10px 0 0;
+       } 
+       
+    </style> 
+
+Found <%= get_docs_size_by_query_facets().size.to_s %> items for: <br>
+
+<% params[:f].each do |key, value| %>
+
+  <%= facet_names[key.to_s] + " = " + value.first.to_s %> <br>
+
+<% end %>
+<br>
+
+<hr>
+
+<% count = 0 %>
+
+<% get_res_list.each do |item| %>
+
+
+   
+	<div style=' height: ;'>
+        <div class='table-cell' style='display: table-cell;  '>
+        	<div style='display: table; width: ;'>
+        		
+        		<div style='display: table-row;'>
+					<div id='facet-docs-size' class='table-cell' style='display: table-cell;' title="">
+						<%  count = count + 1 %>
+						<%=  count %>
+					</div>
+					<div id='facet-docs-size' class='table-cell' style='display: table-cell;' title="">
+
+					</div>
+				</div>	
+        		
+        		<div style='display: table-row;'>
+					<div id='facet-docs-size' class='table-cell' style='display: table-cell;' title="">
+						Title:
+					</div>
+					<div id='facet-docs-size' class='table-cell' style='display: table-cell;' title="">
+						<a href="/catalog/<%= item['doc']['id'] %>">
+							<%= item['doc']['title_display'] %>
+						</a>	
+					</div>
+				</div>	
+				
+				<div style='display: table-row;'>
+					<div id='facet-docs-size' class='table-cell names' style='display: table-cell;' title="">
+						Genre:
+					</div>
+					<div id='facet-docs-size' class='table-cell names' style='display: table-cell;' title="">
+						<%= item['doc']['genre_facet'].first %>
+					</div>
+				</div>
+
+				<div style='display: table-row;'>
+					<div id='facet-docs-size' class='table-cell names' style='display: table-cell;' title="">
+						Created:
+					</div>
+					<div id='facet-docs-size' class='table-cell' style='display: table-cell;' title="">
+						<%= Date.strptime(item['doc']['record_creation_date']).strftime('%m/%d/%Y') %>
+					</div>
+				</div>
+				
+				<div style='display: table-row;'>
+					<div id='facet-docs-size' class='table-cell names' style='display: table-cell;' title="">
+						Statistics:
+					</div>
+					<div id='facet-docs-size' class='table-cell' style='display: table-cell;' title="">
+						views (<%= item['views'] %> ), 
+						downloads ( <%= item['downloads'] %> ), 
+						streams ( <%= item['streams'] %> )
+					</div>
+				</div>
+				
+					            
+			</div>
+		</div>  
+	</div>
+   	
+	
+<br>
+<hr>
+
+
+<% end %>
+
+
+
+
+
