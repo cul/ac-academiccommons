@@ -21,7 +21,7 @@ module ApplicationHelper
   def render_document_heading
     heading = ""
      heading += '<h1 class="document_title">' + (document_heading || "") + '</h1>'
-    heading += '<h2 class="author_name">' + first_names_then_last(document_author || "")  + '</h2>'
+#     heading += '<h2 class="author_name">' + first_names_then_last(document_author || "")  + '</h2>'
     heading.html_safe
   end
   

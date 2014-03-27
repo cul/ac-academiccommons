@@ -18,31 +18,5 @@ test:
   adapter: sqlite3
   database: db/test.sqlite3
   pool: 5
+
   timeout: 5000
-
-# passenger_dev, passenger_test, and passenger_prod yml files are created manually in shared resource location
-# For reference, here are the config values for each remote instance:
-passenger_dev:
-  adapter: mysql
-  host: ***REMOVED***
-  port: 3313
-  database: ***REMOVED***
-  username: ***REMOVED***
-  password: ***REMOVED***
-  
-passenger_test:
-  adapter: mysql
-  host: ***REMOVED***
-  port: 3313
-  database: ***REMOVED***
-  username: ***REMOVED***
-  password: ***REMOVED***
-
-passenger_prod:
-  adapter: mysql
-  host: ***REMOVED***
-  port: 3313
-  database: ***REMOVED***
-  username: ***REMOVED***
-  password: ***REMOVED***
-

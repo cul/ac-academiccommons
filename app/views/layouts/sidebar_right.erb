@@ -16,6 +16,10 @@
 <%= stylesheet_link_tag "application", :media => "screen,projection", :rel => "stylesheet", :type => "text/css" %>
 <%= stylesheet_link_tag "http://fonts.googleapis.com/css?family=Open+Sans:400italic,400,300,600&subset=latin-ext,latin", :media => "screen,projection", :rel => "stylesheet", :type => "text/css" %>
 <%= stylesheet_link_tag  'jquery.fancybox', :media => 'screen, projection' %>
+
+<%= stylesheet_link_tag  'font-awesome/css/font-awesome.min', :media => 'screen, projection' %>
+
+
  
 <!-- [if lt IE8] <%= stylesheet_link_tag "compiled/ie.css", :media => "screen, projection" %> -->
 
@@ -37,7 +41,7 @@
 
 <%= javascript_include_tag "item-page.js" %>
 
-<%=  javascript_include_tag 'fancyBox/source/jquery.fancybox.pack.js' %>
+<%= javascript_include_tag 'fancyBox/source/jquery.fancybox.pack.js' %>
 
 <%= javascript_include_tag 'fancyBox/source/helpers/jquery.fancybox-media.js' %>
 
@@ -113,7 +117,23 @@ end
 </header>
 </div>
 
-<div class="container clearfix" id="main" > 
+<div class="container clearfix" id="main" >
+<div class="header-utils">
+
+
+
+<div style="float:right;" class="float-right">
+
+ <%= render :partial=>'/catalog/search_box' %>
+ 
+</div>
+
+
+<%=  link_to(raw("<i class='fa fa-home'></i>&nbsp; Home"), root_path)  %> 
+
+  
+    
+    </div>
  
 
 
@@ -125,6 +145,8 @@ end
 
 <%= render :partial=>'/flash_msg' %>
 
+<h2 class="author_name"><%= first_names_then_last(document_author || "")  %></h2>
+
 <%= yield %>
 
 </div> <!-- div#content -->
@@ -134,7 +156,7 @@ end
 	<%= sidebar_items.join('').html_safe %>
 
 <%= yield :sidebar %>
-
+   <%= render :partial=>'browse_content' %>
 </div> <!-- div#sidebar -->
 </div>
 </div> <!-- div.row (main content area) -->
@@ -154,7 +176,7 @@ end
 <div class="container"> 
 
 <div id="colophon" class="span-24 append-bottom">
-<p>Powered by the <a href="http://cdrs.columbia.edu/" target="_blank">Center for Digital Research and Scholarship</a> at <a href="http://www.columbia.edu/cu/lweb/" target="_blank">Columbia University Libraries/Information Services</a>.</p>
+<p>In Partnership With the <a href="http://cdrs.columbia.edu/" target="_blank">Center for Digital Research and Scholarship</a> at <a href="http://www.columbia.edu/cu/lweb/" target="_blank">Columbia University Libraries/Information Services</a>.</p>
 
 </div>
 </div>
