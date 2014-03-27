@@ -631,22 +631,22 @@ module StatisticsHelper
     count = 0
     csv = ''
     
-    csv += CSV.generate_line( [ 'time period: ', get_time_period, '', '', '', '', '', '', '' ]) + LINE_BRAKER
-    csv += CSV.generate_line( [ '', '', '', '', '', '', '', '', '' ]) + LINE_BRAKER
+    csv += CSV.generate_line( [ 'time period: ', get_time_period, '', '', '', '', '', '' ]) + LINE_BRAKER
+    csv += CSV.generate_line( [ '', '', '', '', '', '', '', '']) + LINE_BRAKER
     
     query = params[:f]
     views = get_facetStatsByEvent(query, VIEW_EVENT)
     downloads = get_facetStatsByEvent(query, DOWNLOAD_EVENT)
     streams = get_facetStatsByEvent(query, STREAM_EVENT)
     
-    csv += CSV.generate_line( [ 'FACET', 'ITEM', '', '', '', '', '', '', '' ]) + LINE_BRAKER
+    csv += CSV.generate_line( [ 'FACET', 'ITEM', '', '', '', '', '', '']) + LINE_BRAKER
     query.each do |key, value| 
-        csv += CSV.generate_line( [ facet_names[key.to_s], value.first.to_s, '', '', '', '', '', '', '' ]) + LINE_BRAKER
+        csv += CSV.generate_line( [ facet_names[key.to_s], value.first.to_s, '', '', '', '', '', '']) + LINE_BRAKER
     end
-    csv += CSV.generate_line( [ '', '', '', '', '', '', '', '', '' ]) + LINE_BRAKER
+    csv += CSV.generate_line( [ '', '', '', '', '', '', '', '' ]) + LINE_BRAKER
     
     csv += CSV.generate_line( [ get_res_list.size.to_s, '', '', '', views, downloads, streams, '', '' ]) + LINE_BRAKER
-    csv += CSV.generate_line( [ '#', 'PID', 'TITLE', 'GENRE', 'VIEWS', 'DOWNLOADS', 'STREAMS', 'CREATION DATE', 'URL' ]) + LINE_BRAKER
+    csv += CSV.generate_line( [ '#', 'TITLE', 'GENRE', 'VIEWS', 'DOWNLOADS', 'STREAMS', 'CREATION DATE', 'HANDLE / DOI' ]) + LINE_BRAKER
     
     get_res_list.each do |item|
       
@@ -660,8 +660,7 @@ module StatisticsHelper
                                   item['views'],
                                   item['downloads'],
                                   item['streams'],
-                                  Date.strptime(item['doc']['record_creation_date']).strftime('%m/%d/%Y'),
-                                  base_url + '/catalog/' + item['doc']['id']
+                                  item['doc']['handle']
                                 ]) + LINE_BRAKER
     end
     
