@@ -618,9 +618,9 @@ module StatisticsHelper
       startdate = Date.parse(params[:month_from] + " " + params[:year_from])
       enddate = Date.parse(params[:month_to] + " " + params[:year_to])
       
-      time_period = startdate.to_s + ' - ' + enddate.to_s
+      time_period = startdate.strftime("%b %Y") + ' - ' + enddate.strftime("%b %Y")
     else
-      time_period = 'lifetime'  
+      time_period = 'Lifetime'  
     end    
     
     return time_period
@@ -646,7 +646,7 @@ module StatisticsHelper
     csv += CSV.generate_line( [ '', '', '', '', '', '', '', '' ]) + LINE_BRAKER
     
     csv += CSV.generate_line( [ get_res_list.size.to_s, '', '', '', views, downloads, streams, '', '' ]) + LINE_BRAKER
-    csv += CSV.generate_line( [ '#', 'TITLE', 'GENRE', 'VIEWS', 'DOWNLOADS', 'STREAMS', 'CREATION DATE', 'HANDLE / DOI' ]) + LINE_BRAKER
+    csv += CSV.generate_line( [ '#', 'TITLE', 'GENRE', 'VIEWS', 'DOWNLOADS', 'STREAMS', 'CREATION DATE', 'URL' ]) + LINE_BRAKER
     
     get_res_list.each do |item|
       
@@ -654,12 +654,12 @@ module StatisticsHelper
       
       csv += CSV.generate_line( [ 
                                   count,
-                                  item['doc']['id'],
                                   item['doc']['title_display'],
                                   item['doc']['genre_facet'].first,
                                   item['views'],
                                   item['downloads'],
                                   item['streams'],
+                                  Date.strptime(item['doc']['record_creation_date']).strftime('%m/%d/%Y'),
                                   item['doc']['handle']
                                 ]) + LINE_BRAKER
     end
