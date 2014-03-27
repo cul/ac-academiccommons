@@ -309,29 +309,10 @@ class StatisticsController < ApplicationController
     query = params[:f]
     event = params[:event]
 
-    if( query == nil || query.empty? )
-        downloads = 0 
-        docs = Hash.new
-    else  
-      
-      pids_collection = getPidsByQueryFacets(query)
-      
-      if(params[:month_from] && params[:year_from] && params[:month_to] && params[:year_to] )
-        startdate = Date.parse(params[:month_from] + " " + params[:year_from])
-        enddate = Date.parse(params[:month_to] + " " + params[:year_to])
-        downloads = countPidsStatisticByDates(pids_collection, event, startdate, enddate)
-        docs = countDocsByEventAndDates(pids_collection, event, startdate, enddate)
-      else  
-        downloads = countPidsStatistic(pids_collection, event) 
-        docs = countDocsByEvent(pids_collection, event)
-      end
-
-    end
-    
-    count = docs.size.to_s + ' ( ' + downloads.to_s + ' )'
+    result = get_facetStatsByEvent(query, event)
 
     respond_to do |format|
-      format.html { render :text => count.to_s }
+      format.html { render :text => result.to_s }
     end
   end
   
@@ -380,8 +361,6 @@ class StatisticsController < ApplicationController
   def common_statistics_csv
     
     res_list = get_res_list
-    
-    create_common_statistics_csv(get_res_list)
 
     if(res_list.size != 0)
       
@@ -400,6 +379,31 @@ class StatisticsController < ApplicationController
   def school_statistics
 
   end 
+  
+  def send_csv_report
+    
+     logger.info("=========== send_csv_report ============")
+#     
+    params.each do |key, value|
+        logger.info("pram: " + key + " = " + value.to_s)
+    end
+
+    recipients = params[:email_to]
+    from = params[:email_from]
+    subject = params[:email_subject]
+    message = params[:email_message]
+    
+    prepared_attachments = Hash.new
+    csv = create_common_statistics_csv(get_res_list)
+    prepared_attachments.store('statistics.csv', csv)
+    
+    Notifier.statistics_report_with_csv_attachment(recipients, from, subject, message, prepared_attachments).deliver
+
+    #render nothing: true    
+    render :text => 'sent' 
+
+    logger.info("===== +++ send_csv_report  finished  ++++ ============")
+  end   
 
   private
 
