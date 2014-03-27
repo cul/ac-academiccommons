@@ -156,7 +156,7 @@ end
 	<%= sidebar_items.join('').html_safe %>
 
 <%= yield :sidebar %>
-
+   <%= render :partial=>'browse_content' %>
 </div> <!-- div#sidebar -->
 </div>
 </div> <!-- div.row (main content area) -->
@@ -176,7 +176,7 @@ end
 <div class="container"> 
 
 <div id="colophon" class="span-24 append-bottom">
-<p>Powered by the <a href="http://cdrs.columbia.edu/" target="_blank">Center for Digital Research and Scholarship</a> at <a href="http://www.columbia.edu/cu/lweb/" target="_blank">Columbia University Libraries/Information Services</a>.</p>
+<p>In Partnership With the <a href="http://cdrs.columbia.edu/" target="_blank">Center for Digital Research and Scholarship</a> at <a href="http://www.columbia.edu/cu/lweb/" target="_blank">Columbia University Libraries/Information Services</a>.</p>
 
 </div>
 </div>
