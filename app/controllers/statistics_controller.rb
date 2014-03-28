@@ -309,7 +309,9 @@ class StatisticsController < ApplicationController
     query = params[:f]
     event = params[:event]
 
-    result = get_facetStatsByEvent(query, event)
+    stuts_result = get_facetStatsByEvent(query, event)
+    
+    result = stuts_result['docs_size'].to_s + ' ( ' + stuts_result['statistic'].to_s + ' )'
 
     respond_to do |format|
       format.html { render :text => result.to_s }

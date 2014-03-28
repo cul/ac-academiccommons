@@ -639,9 +639,9 @@ module StatisticsHelper
     csv += CSV.generate_line( [ '', '', '', '', '', '', '', '']) + LINE_BRAKER
     
     query = params[:f]
-    views = get_facetStatsByEvent(query, VIEW_EVENT)
-    downloads = get_facetStatsByEvent(query, DOWNLOAD_EVENT)
-    streams = get_facetStatsByEvent(query, STREAM_EVENT)
+    views_stats = get_facetStatsByEvent(query, VIEW_EVENT)
+    downloads_stats = get_facetStatsByEvent(query, DOWNLOAD_EVENT)
+    streams_stats = get_facetStatsByEvent(query, STREAM_EVENT)
     
     csv += CSV.generate_line( [ 'FACET', 'ITEM', '', '', '', '', '', '']) + LINE_BRAKER
     query.each do |key, value| 
@@ -649,7 +649,7 @@ module StatisticsHelper
     end
     csv += CSV.generate_line( [ '', '', '', '', '', '', '', '' ]) + LINE_BRAKER
     
-    csv += CSV.generate_line( [ res_list.size.to_s, '', '', '', views, downloads, streams, '', '' ]) + LINE_BRAKER
+    csv += CSV.generate_line( [ res_list.size.to_s, '', '', views_stats['statistic'].to_s, downloads_stats['statistic'].to_s, streams_stats['statistic'].to_s, '', '' ]) + LINE_BRAKER
     csv += CSV.generate_line( [ '#', 'TITLE', 'GENRE', 'VIEWS', 'DOWNLOADS', 'STREAMS', 'DEPOSIT DATE', 'HANDLE / DOI' ]) + LINE_BRAKER
     
     res_list.each do |item|
@@ -692,7 +692,11 @@ module StatisticsHelper
 
     end
     
-    result = docs.size.to_s + ' ( ' + count.to_s + ' )'
+    result = Hash.new
+    
+    result.store('docs_size', docs.size.to_s)
+    result.store('statistic', count.to_s)
+    
     return result   
   end
   
