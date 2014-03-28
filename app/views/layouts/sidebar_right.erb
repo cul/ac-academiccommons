@@ -152,11 +152,11 @@ end
 </div> <!-- div#content -->
 
 <div  class="span-6 last">
-<div id="sidebar">
+<div id="sidebar" class="clearfix">
 	<%= sidebar_items.join('').html_safe %>
 
 <%= yield :sidebar %>
-   <%= render :partial=>'browse_content' %>
+ 
 </div> <!-- div#sidebar -->
 </div>
 </div> <!-- div.row (main content area) -->

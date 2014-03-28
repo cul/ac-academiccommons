@@ -2416,8 +2416,9 @@ div#document{
 }
 
 #sidebar hr{
-	
-	margin-bottom: 50px;
+
+margin-top: 1.45em;
+	 
 }
 
 div.sidebar-content{
