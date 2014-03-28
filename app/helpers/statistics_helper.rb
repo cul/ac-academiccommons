@@ -305,7 +305,7 @@ module StatisticsHelper
       sort = params["sort"]
 
     else
-      
+
       facet_query = "#{facet}:\"#{query}\""
       sort = "title_display asc"
       
@@ -596,6 +596,10 @@ module StatisticsHelper
       end      
     end
     
+    results.sort! do |x,y|
+      x['doc']['title_display']<=> y['doc']['title_display']
+    end
+
     return results
   end
   
@@ -626,7 +630,7 @@ module StatisticsHelper
     return time_period
   end
   
-  def create_common_statistics_csv(get_res_list)
+  def create_common_statistics_csv(res_list)
     
     count = 0
     csv = ''
@@ -645,10 +649,10 @@ module StatisticsHelper
     end
     csv += CSV.generate_line( [ '', '', '', '', '', '', '', '' ]) + LINE_BRAKER
     
-    csv += CSV.generate_line( [ get_res_list.size.to_s, '', '', '', views, downloads, streams, '', '' ]) + LINE_BRAKER
-    csv += CSV.generate_line( [ '#', 'TITLE', 'GENRE', 'VIEWS', 'DOWNLOADS', 'STREAMS', 'CREATION DATE', 'URL' ]) + LINE_BRAKER
+    csv += CSV.generate_line( [ res_list.size.to_s, '', '', '', views, downloads, streams, '', '' ]) + LINE_BRAKER
+    csv += CSV.generate_line( [ '#', 'TITLE', 'GENRE', 'VIEWS', 'DOWNLOADS', 'STREAMS', 'DEPOSIT DATE', 'HANDLE / DOI' ]) + LINE_BRAKER
     
-    get_res_list.each do |item|
+    res_list.each do |item|
       
       count = count + 1
       
