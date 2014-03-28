@@ -65,4 +65,13 @@ class Notifier < ActionMailer::Base
     mail(:to => recipients, :from => from, :subject => subject, :content_type => content_type) 
   end
   
+  def statistics_report_with_csv_attachment(recipients, from, subject, message, prepared_attachments)
+
+   prepared_attachments.each do |file_name, content|
+    attachments.inline[file_name] = {mime_type: 'text/csv', content: content }
+   end
+
+    mail(:to => recipients, :from => from, :subject => subject, :body => message) 
+  end
+  
 end
