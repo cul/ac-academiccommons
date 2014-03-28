@@ -381,9 +381,7 @@ class StatisticsController < ApplicationController
   end 
   
   def send_csv_report
-    
-     logger.info("=========== send_csv_report ============")
-#     
+   
     params.each do |key, value|
         logger.info("pram: " + key + " = " + value.to_s)
     end
@@ -402,7 +400,6 @@ class StatisticsController < ApplicationController
     #render nothing: true    
     render :text => 'sent' 
 
-    logger.info("===== +++ send_csv_report  finished  ++++ ============")
   end   
 
   private
