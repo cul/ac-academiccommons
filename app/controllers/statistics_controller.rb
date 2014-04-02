@@ -89,6 +89,7 @@ class StatisticsController < ApplicationController
       end
          
       if params[:commit].in?(commit_button_one_to_one )
+
         if params[:one_report_uni].empty? || params[:one_report_email].empty?
           flash[:notice] = "Could not get statistics. The UNI and Email must be provided!"
           return 
@@ -133,7 +134,7 @@ class StatisticsController < ApplicationController
             if @totals.values.sum != 0 || params[:include_zeroes]
               sent_counter = sent_counter + 1
               logger.debug(sent_counter.to_s + " report prepered to be sent for: " + author_id + " to: " + email + ", " + Time.new.to_s)
-              #Notifier.author_monthly(email, author_id, startdate, enddate, @results, @stats, @totals, request, false, params[:optional_note]).deliver
+              Notifier.author_monthly(email, author_id, startdate, enddate, @results, @stats, @totals, request, false, params[:optional_note]).deliver
             end   
              
           rescue Exception => e
