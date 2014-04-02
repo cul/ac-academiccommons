@@ -135,17 +135,21 @@ end
     
     </div>
  
-
-
 <div class="span-19 prepend-3 document-heading">
+<%  if(@document != nil) %>
     <%= render_document_heading %>
+<% end %>
 </div>
 <div class='row'>
 <div id="content" class="span-18">
-
+<%  if(@document != nil) %>
 <%= render :partial=>'/flash_msg' %>
-
-<h2 class="author_name"><%= first_names_then_last(document_author || "")  %></h2>
+<% end %>
+<h2 class="author_name">
+<%  if(@document != nil) %>
+<%= first_names_then_last(document_author || "")  %>
+<% end %>
+</h2>
 
 <%= yield %>
 
