@@ -928,7 +928,7 @@ h1.document_title {
 	margin-bottom: .25em;
 	line-height: 1.2;
 	
-	text-transform: capitalize;
+/* 	text-transform: capitalize; */
 }
 
  h2.author_name{
