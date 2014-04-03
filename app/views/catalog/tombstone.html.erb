@@ -6,13 +6,26 @@
 <% extra_head_content << javascript_include_tag('about-videos.js') %>
  
 <% sidebar_items << capture do %>
-<%= render :partial=>'application/browse_content' %>
-<%= render :partial=>'application/helpful_links' %>
-<%#= render :partial=>'related_content' %>
+
+
+<h3>Helpful Links</h3> 
+<div class="sidebar-content">
+<a  class='nav-link'  href="<%= relative_root %>/about/">About</a>
+ 
+<a class='nav-link' href="javascript:UserVoice.showPopupWidget();" >FAQ/Ask a Question</a>   
+
+<hr>
+  <%= link_to "Browse Departments", departments_browse_path, :class=>"nav-link" %>
+  <%= link_to "Browse Subjects", subjects_browse_path, :class=>"nav-link" %>
+
+</div>
+
 <% end %>
 
 
-This item has been removed from Academic Commons. It may have been removed:<p/><p/>
-- at the request of author or copyright holder (if other than the author).<br/>
-- at the request of the originating department.<p/><p/>
-For more information about this item, contact Academic Commons administrators at: <a href='mailto:cuac@libraries.cul.columbia.edu'>cuac@libraries.cul.columbia.edu</a>.
+<p>This item has been removed from Academic Commons. It may have been removed:
+<ul>
+<li>at the request of author or copyright holder (if other than the author).</li> 
+<li>at the request of the originating department.</li>
+</ul> 
+For more information about this item, contact Academic Commons administrators at: <a href='mailto:cuac@libraries.cul.columbia.edu'>cuac@libraries.cul.columbia.edu</a>.</p>
