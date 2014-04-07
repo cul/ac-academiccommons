@@ -1,0 +1,26 @@
+
+<div class="deposit_field">
+   <label style="width: 150px;" for="name">Name</label>
+   <%= text_field_tag "name", (current_user ? current_user.to_s : ""),:class=>required_class , :title=>'Please enter your name.' %>
+</div>
+ 
+<div class="deposit_field">
+   <label style="width: 150px;" for="email">E-mail</label>
+   <%= text_field_tag "email", (current_user ? current_user.email : ""),:class=>required_class,:title=>'Please enter your email.' %>
+</div>
+
+<div class="deposit_field">
+	<label style="width: 150px;" for="uni">UNI</label>
+	<%= text_field_tag "uni", nil,:class=>required_class,:title=>'Please enter your UNI.' %>
+	<span class="form-field-info"></span>
+</div>
+
+<div class="deposit_field">
+   <label style="width: 150px;" for="thesis_advisor">Thesis Advisor</label>
+   <%= text_field_tag "thesis_advisor", nil, :class=>required_class,:title=>'Please enter your thesis advisor.' %>
+</div>
+
+<div class="deposit_field">
+   <label style="width: 150px;" for="department">Department</label>
+   <%= text_field_tag "department", nil,:class=>required_class,:title=>'Please enter your department.' %>
+</div>

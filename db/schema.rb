@@ -12,6 +12,17 @@
 # It's strongly recommended to check this file into your version control system.
 
 ActiveRecord::Schema.define(:version => 20131106195937) do
+  
+  create_table "student_agreements", :force => true do |t|
+    t.string   "uni"
+    t.string   "name"
+    t.string   "email"
+    t.integer  "years_embargo",     :null => false, :default => 0
+    t.string   "thesis_advisor"
+    t.string   "department"
+    t.datetime "created_at",        :null => false
+    t.datetime "updated_at",        :null => false
+  end  
 
   create_table "agreements", :force => true do |t|
     t.string   "uni"
