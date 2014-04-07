@@ -160,6 +160,14 @@ class AdminController < ApplicationController
          format.csv { send_data Agreement.to_csv }
       end
   end
+  
+  def student_agreements
+      @agreements = StudentAgreement.find(:all)
+      respond_to do |format|
+         format.html
+         format.csv { send_data StudentAgreement.to_csv }
+      end
+  end  
 
   
   def show_deposit

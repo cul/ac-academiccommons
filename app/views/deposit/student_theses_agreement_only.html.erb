@@ -1,0 +1,46 @@
+<% @page_title = "Deposit Your Research | " + application_name  %>
+
+
+<% extra_head_content << javascript_include_tag('jquery.validate.min.js') %>
+<% extra_head_content << javascript_include_tag('jquery.replaceholder.min.js') %>
+<% extra_head_content << javascript_include_tag('jquery.getUrlParam.js') %>
+<% extra_head_content << javascript_include_tag('self-deposit.js') %>
+
+<style>
+	span.warning{
+		margin-left: 155px;
+		border: 0px solid black;
+	}
+
+	.deposit_field{
+		padding:  0px 0px 10px 0px;
+		border: 0px solid black;
+	}	
+	
+</style>
+
+
+<div class="page box sd">
+
+<h2>Academic Commons Author Agreement</h2>
+
+<P>
+This form is for Columbia undergraduate and Master's students who are depositing a thesis in Academic Commons. If you have questions about the thesis deposit process, contact your department. If you want to know more about Academic Commons, please visit our  <a href="../deposit">self-deposit form</a>. If you want to know more about Academic Commons, please visit our <a href="http://support.academiccommons.columbia.edu/knowledgebase">FAQ</a> or contact us at cuac@libraries.cul.columbia.edu.	
+</P>
+
+
+
+<%= form_tag({ :action=>'submit_student_agreement'}, :method=>'post', :id=>'sd-form', :class=>'self-deposit-form', :charset=>'utf-8') do %>
+<fieldset>
+
+<%= render :partial => 'student_author_agreement', :locals => {:required_class => "pageRequired required" } %>
+
+<%= render :partial => 'student_info_fields', :locals => { :required_class => "pageRequired required" } %>
+
+<div class="buttonWrapper" style="padding:  10px 0 0 0;">
+	<input name="formNext1" type="submit" class="agree_only_submit nextbutton" value="Submit" alt="Submit" title="Submit" />
+</div>
+</fieldset>
+<% end %>
+
+</div>
