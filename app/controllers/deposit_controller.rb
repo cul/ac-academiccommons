@@ -70,7 +70,18 @@ class DepositController < ApplicationController
         :thesis_advisor => params[:thesis_advisor], 
         :department => params[:department])
         
-    Notifier.student_agreement(params[:uni], params[:name], params[:email], params[:thesis_advisor], params[:department],  params[:years_embargo]).deliver   
+        
+    #attachments = Hash.new
+    
+    attachment_path = Rails.root.to_s + "/public/self-deposit/ETDagreementtext.pdf"
+
+
+    #attachments.store('agreement.pdf', File.read(path))    
+    
+    logger.info("=================  path: " +  attachment_path )
+        
+        
+    Notifier.student_agreement(params[:uni], params[:name], params[:email], params[:thesis_advisor], params[:department],  params[:years_embargo], attachment_path).deliver   
 
     @message_1 = 'Student Agreement Accepted'
     @message_2 = 'Thank you for accepting our student agreement.'

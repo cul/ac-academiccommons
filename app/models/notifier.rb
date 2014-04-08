@@ -65,7 +65,7 @@ class Notifier < ActionMailer::Base
     mail(:to => recipients, :from => from, :subject => subject, :content_type => content_type) 
   end
   
-  def student_agreement(uni, name, email, advisor, department, empbargo)
+  def student_agreement(uni, name, email, advisor, department, empbargo, attachment_path)
     @uni = uni
     @name = name
     @email = email
@@ -76,9 +76,17 @@ class Notifier < ActionMailer::Base
     recipients = Rails.application.config.mail_deposit_recipients
     from = Rails.application.config.mail_deliverer
     subject = "Academic Commons Student Agreement Accepted"
-    content_type = 'text/html'
+    #content_type = 'text/html'
+    #content_type = 'multipart/mixed'
     
-    mail(:to => recipients, :from => from, :subject => subject, :content_type => content_type) 
+    # prepared_attachments.each do |file_name, content|
+      # attachments.inline[file_name] = {mime_type: 'application/pdf', content: content }
+    # end    
+    
+    attachments.inline['agreement.pdf'] = { mime_type: 'application/x-pdf',
+                                     #encoding: 'SpecialEncoding',
+                                     content: File.read(attachment_path) }
+    mail(:to => recipients, :from => from, :subject => subject) 
   end  
   
   def statistics_report_with_csv_attachment(recipients, from, subject, message, prepared_attachments)
@@ -89,5 +97,7 @@ class Notifier < ActionMailer::Base
 
     mail(:to => recipients, :from => from, :subject => subject, :body => message) 
   end
+  
+  
   
 end
