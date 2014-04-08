@@ -76,16 +76,9 @@ class Notifier < ActionMailer::Base
     recipients = Rails.application.config.mail_deposit_recipients
     from = Rails.application.config.mail_deliverer
     subject = "Academic Commons Student Agreement Accepted"
-    #content_type = 'text/html'
-    #content_type = 'multipart/mixed'
-    
-    # prepared_attachments.each do |file_name, content|
-      # attachments.inline[file_name] = {mime_type: 'application/pdf', content: content }
-    # end    
-    
+
     attachments.inline['agreement.pdf'] = { mime_type: 'application/x-pdf',
-                                     #encoding: 'SpecialEncoding',
-                                     content: File.read(attachment_path) }
+                                            content: File.read(attachment_path) }
     mail(:to => recipients, :from => from, :subject => subject) 
   end  
   
@@ -97,7 +90,5 @@ class Notifier < ActionMailer::Base
 
     mail(:to => recipients, :from => from, :subject => subject, :body => message) 
   end
-  
-  
-  
+
 end
