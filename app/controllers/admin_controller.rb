@@ -1,6 +1,6 @@
 class AdminController < ApplicationController
 
-  before_filter :require_admin 
+  before_filter :require_admin
   before_filter :add_jhtmlarea, :only => [:edit_home_page]
   
   #layout "no_sidebar"
@@ -90,7 +90,7 @@ class AdminController < ApplicationController
                               })
         
         if(params[:notify])
-          Notifier.reindexing_results(indexing_results.inspect[:errors].size.to_s, indexing_results.inspect[:indexed_count], @existing_ingest_time_id).deliver
+          Notifier.reindexing_results(indexing_results[:errors].size.to_s, indexing_results[:indexed_count].to_s, time_id).deliver
         end
         
       end
