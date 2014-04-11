@@ -74,19 +74,25 @@ class AdminController < ApplicationController
 
       collections = params[:collections] ? params[:collections].sub(" ", ";") : ""
       items = params[:items] ? params[:items].gsub(/ /, ";") : ""
-
+     
       @existing_ingest_pid = Process.fork do
-        ACIndexing::reindex({
-          :collections => collections,
-          :items => items,
-          :overwrite => params[:overwrite], 
-          :metadata => params[:metadata], 
-          # temporarily forced to disable fulltext :fulltext => params[:fulltext],
-          :fulltext => 0, 
-          :delete_removed => params[:delete_removed],
-          :time_id => time_id,
-          :executed_by => current_user.login
-        })
+        
+        indexing_results = ACIndexing::reindex({
+                                :collections => collections,
+                                :items => items,
+                                :overwrite => params[:overwrite], 
+                                :metadata => params[:metadata], 
+                                # temporarily forced to disable fulltext :fulltext => params[:fulltext],
+                                :fulltext => 0, 
+                                :delete_removed => params[:delete_removed],
+                                :time_id => time_id,
+                                :executed_by => current_user.login
+                              })
+        
+        if(params[:notify])
+          Notifier.reindexing_results(indexing_results.inspect[:errors].size.to_s, indexing_results.inspect[:indexed_count], @existing_ingest_time_id).deliver
+        end
+        
       end
       Process.detach(@existing_ingest_pid)
       @existing_ingest_time_id = time_id.to_s

@@ -1,0 +1,27 @@
+
+<style>
+	.box{
+		padding: 5px 0 0 0;
+	}
+</style>
+
+<div class="box">
+ 	Academic Commons - Daily Reindexing Report
+</div>
+<div class="box">
+	<a href="<%= 'http://' + Rails.application.config.base_path + Rails.application.config.relative_root + '/admin/download_ingest_log/' + @time_id  %>"><%= @existing_time %></a>
+</div>
+<div class="box">
+  	Errors: <%= @errors_count %>
+</div>
+<div class="box">
+  	Indexed: <%= @indexed_count %>
+</div>
+<div class="box"> 
+  	You can download full reindexing log from the following link:
+  	<a href="<%= 'http://' + Rails.application.config.base_path + Rails.application.config.relative_root + '/admin/download_ingest_log/' + @time_id  %>"><%=  @time_id + '.log' %></a>
+</div>
+
+<div class="box">
+  	<p>CDRS</p>
+</div>

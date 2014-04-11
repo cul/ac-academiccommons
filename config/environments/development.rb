@@ -27,7 +27,9 @@ CulBlacklightAc2::Application.configure do
   config.relative_root = ""
   config.analytics_enabled = false
   
-  config.mail_deposit_recipients = ["cuac@libraries.cul.columbia.edu", "ap2972@columbia.edu"]
+  config.indexing_report_recipients = ["ap2972@columbia.edu"]
+  config.mail_deposit_recipients = ["ap2972@columbia.edu"]
+  #config.mail_deposit_recipients = ["cuac@libraries.cul.columbia.edu", "ap2972@columbia.edu"]
   config.mail_deliverer = "ap2972@columbia.edu"
   config.base_path = "localhost:3000"
   
