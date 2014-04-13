@@ -101,6 +101,7 @@ module Cul
         skip = options.delete(:skip) || []
 
         indexed_count = 0
+        new_items = []
         
         logger.info "Preparing the items for indexing..."
         collections.each do |collection|
@@ -131,6 +132,7 @@ module Cul
           end
            
           if item_exists?(i)
+            new_items << i.pid
             unless overwrite == true
               results[:skipped] << i.pid
               next
@@ -162,7 +164,7 @@ module Cul
         logger.info "Committing changes to Solr..."
         rsolr.commit
 
-        return {:results => results, :errors => errors, :indexed_count => indexed_count}
+        return {:results => results, :errors => errors, :indexed_count => indexed_count, :new_items => new_items}
 
       end
 

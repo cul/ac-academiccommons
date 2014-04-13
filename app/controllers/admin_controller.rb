@@ -1,6 +1,6 @@
 class AdminController < ApplicationController
 
-  before_filter :require_admin
+  before_filter :require_admin, :except => [:ingest, :download_ingest_log]
   before_filter :add_jhtmlarea, :only => [:edit_home_page]
   
   #layout "no_sidebar"
@@ -38,6 +38,14 @@ class AdminController < ApplicationController
   end
 
   def ingest
+    
+    logger.info "====================== started ingest function ==="
+
+      params.each do |key, value|
+        logger.info "param: " + key + " - " + value
+      end
+    
+    
 
     if(params[:cancel])
       existing_time_id = existing_ingest_time_id(params[:cancel])
@@ -77,6 +85,8 @@ class AdminController < ApplicationController
      
       @existing_ingest_pid = Process.fork do
         
+        logger.info "====================== started indexing ==="
+        
         indexing_results = ACIndexing::reindex({
                                 :collections => collections,
                                 :items => items,
@@ -86,11 +96,12 @@ class AdminController < ApplicationController
                                 :fulltext => 0, 
                                 :delete_removed => params[:delete_removed],
                                 :time_id => time_id,
-                                :executed_by => current_user.login
+                                #:executed_by => params[:executed_by] || current_user.login
+                                :executed_by => 'xxx'
                               })
         
         if(params[:notify])
-          Notifier.reindexing_results(indexing_results[:errors].size.to_s, indexing_results[:indexed_count].to_s, time_id).deliver
+          Notifier.reindexing_results(indexing_results[:errors].size.to_s, indexing_results[:indexed_count].to_s, indexing_results[:new_items].size.to_s, time_id).deliver
         end
         
       end
@@ -102,6 +113,10 @@ class AdminController < ApplicationController
       tmp_pid_file = File.new("#{Rails.root}/tmp/#{@existing_ingest_pid}.index.pid", "w+")
       tmp_pid_file.write(@existing_ingest_time_id)
       tmp_pid_file.close
+      
+      if(params[:executed_by])
+        render nothing: true 
+      end  
       
     end
     

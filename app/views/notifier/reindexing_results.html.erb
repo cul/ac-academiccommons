@@ -17,6 +17,9 @@
 <div class="box">
   	Indexed: <%= @indexed_count %>
 </div>
+<div class="box">
+  	New Items: <%= @new_items_count %>
+</div>
 <div class="box"> 
   	You can download full reindexing log from the following link:
   	<a href="<%= 'http://' + Rails.application.config.base_path + Rails.application.config.relative_root + '/admin/download_ingest_log/' + @time_id  %>"><%=  @time_id + '.log' %></a>
