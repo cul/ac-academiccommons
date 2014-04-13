@@ -101,6 +101,7 @@ module Cul
         skip = options.delete(:skip) || []
 
         indexed_count = 0
+        items_not_in_solr = []
         new_items = []
         
         logger.info "Preparing the items for indexing..."
@@ -137,7 +138,7 @@ module Cul
               next
             end
           else
-            new_items << i.pid  
+            items_not_in_solr << i.pid  
           end    
 
           logger.info "Indexing " + i.pid + "..."
@@ -148,6 +149,9 @@ module Cul
 
           case result_hash[:status]
           when :success
+            if(items_not_in_solr.include? i.pid)
+              new_items << i.pid
+            end  
             begin
               rsolr.add(result_hash[:results])
               indexed_count += 1
