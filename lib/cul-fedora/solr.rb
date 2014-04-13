@@ -132,11 +132,12 @@ module Cul
           end
            
           if item_exists?(i)
-            new_items << i.pid
             unless overwrite == true
               results[:skipped] << i.pid
               next
             end
+          else
+            new_items << i.pid  
           end    
 
           logger.info "Indexing " + i.pid + "..."

@@ -91,7 +91,7 @@ class Notifier < ActionMailer::Base
     mail(:to => recipients, :from => from, :subject => subject, :body => message) 
   end
   
-  def reindexing_results( errors_count, indexed_count, new_items_count time_id )
+  def reindexing_results( errors_count, indexed_count, new_items_count, time_id )
 
       log = {}
       log[:time_id] = time_id.to_s
