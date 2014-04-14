@@ -149,12 +149,12 @@ module Cul
 
           case result_hash[:status]
           when :success
-            if(items_not_in_solr.include? i.pid)
-              new_items << i.pid
-            end  
             begin
               rsolr.add(result_hash[:results])
               indexed_count += 1
+              if(items_not_in_solr.include? i.pid)
+                new_items << i.pid
+              end  
             rescue Exception => e
               errors << i.pid
               logger.error e.message
