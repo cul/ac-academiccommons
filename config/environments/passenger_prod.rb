@@ -56,6 +56,7 @@ CulBlacklightAc2::Application.configure do
   config.relative_root = ''
   config.analytics_enabled = true
   
+  config.indexing_report_recipients = ["cuac@libraries.cul.columbia.edu"]
   config.mail_deposit_recipients = ["cuac@libraries.cul.columbia.edu"]
   config.mail_deliverer = "cuac@libraries.cul.columbia.edu"
   config.base_path = "academiccommons.columbia.edu"

@@ -96,8 +96,7 @@ class AdminController < ApplicationController
                                 :fulltext => 0, 
                                 :delete_removed => params[:delete_removed],
                                 :time_id => time_id,
-                                #:executed_by => params[:executed_by] || current_user.login
-                                :executed_by => 'xxx'
+                                :executed_by => params[:executed_by] || current_user.login
                               })
         
         if(params[:notify])
