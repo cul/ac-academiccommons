@@ -42,6 +42,9 @@ CulBlacklightAc2::Application.configure do
   config.relative_root = ''
   config.analytics_enabled = false
   
+  # in test env-t config.deposit_notification_bcc will be used instead of depositor's email
+  config.deposit_notification_bcc = ["cuac@libraries.cul.columbia.edu"]
+  
   config.indexing_report_recipients = ["cuac@libraries.cul.columbia.edu"]
   config.mail_deposit_recipients = ["cuac@libraries.cul.columbia.edu"]
   config.mail_deliverer = "cuac@libraries.cul.columbia.edu"
@@ -55,6 +58,7 @@ CulBlacklightAc2::Application.configure do
 
   # Allow pass debug_assets=true as a query parameter to load pages with unpackaged assets
   config.assets.allow_debugging = true
-
+  
+  config.prod_environment = false
 
 end

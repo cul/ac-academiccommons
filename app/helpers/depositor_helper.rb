@@ -1,30 +1,80 @@
-
+require "person_class"
+require "item_class"
 
 module DepositorHelper
   
   include SolrHelper
   include InfoHelper
   
-  def notifyDepositorsItemAdded(items)
+  
+  def notifyDepositorsItemAdded(pids)
     
-    items.each do | item |
+    depositors = prepareDepositorsToNotify(pids)
 
-      authorsUni = getAuthorsUni(item)
+    depositors.each do | depositor |
+      logger.debug "\n ============================"
+      logger.debug "=== uni: " + depositor.uni
+      logger.debug "=== email: " + depositor.email
+      logger.debug "=== full_name: " + depositor.full_name
 
-      authorsUni.each do | uni |
-        urserInfo = get_person_info(uni)
+      depositor.items_list.each do | item |
+        logger.debug "------ "
+        logger.debug "------ item.pid: " + item.pid
+        logger.debug "------ item.title: " + item.title
+        logger.debug "------ item.handle: " + item.handle
       end
       
-      
+      Notifier.depositor_first_time_indexed_notification(depositor).deliver
     end
+    
+  end
+  
+  
+  def prepareDepositorsToNotify(pids)
+    
+    depositors_to_notify = Hash.new
+    
+    pids.each do | pid |
+
+      item = getItem(pid)
+
+      item.authors_uni.each do | uni |
+        
+        if(!depositors_to_notify.key?(uni))     
+          depositor = getDepositor(uni)
+          depositors_to_notify.store(uni, depositor)
+        end  
+        
+        depositor = depositors_to_notify[uni]
+        depositor.items_list << item
+        
+      end
+    end
+    
+    logger.debug "====== depositors_to_notify.size: " + depositors_to_notify.size.to_s
+    
+    return depositors_to_notify.values
+  end
+  
+  def getDepositor(uni)
+    
+    person = get_person_info(uni)
+ 
+    (person.email == nil) ?  depositor_email = person.uni + "@columbia.edu" : depositor_email = person.email
+    (person.last_name == nil || person.first_name == nil) ? depositor_name = person.uni : depositor_name = person.first_name + ' ' + person.last_name
+        
+    person.email = depositor_email
+    person.full_name = depositor_name
+    
+    return person
   end
   
   def processIndexing(params)
 
-    logger.info "====================== started ingest function ==="
+   logger.debug "==== started ingest function ==="
 
       params.each do |key, value|
-        logger.info "param: " + key + " - " + value
+        logger.debug "param: " + key + " - " + value
       end
     
     
@@ -62,12 +112,12 @@ module DepositorHelper
     
     if(params[:commit] == "Commit" && @existing_ingest_time_id.nil? && !params[:cancel])
 
+      collections = params[:collections] ? params[:collections].sub(" ", ";") : ""
+      items = params[:items] ? params[:items].gsub(/ /, ";") : ""
+     
       @existing_ingest_pid = Process.fork do
-
-        logger.info "====================== started indexing ==="
         
-        collections = params[:collections] ? params[:collections].sub(" ", ";") : ""
-        items = params[:items] ? params[:items].gsub(/ /, ";") : ""
+        logger.debug "==== started indexing ==="
         
         indexing_results = ACIndexing::reindex({
                                 :collections => collections,
@@ -79,30 +129,28 @@ module DepositorHelper
                                 :delete_removed => params[:delete_removed],
                                 :time_id => time_id,
                                 :executed_by => params[:executed_by] || current_user.login
-                                #:executed_by => "xxx"
+                                #:executed_by => "test"
                               })
                               
-        logger.info "====================== finished indexing, starting notifications part ==="                      
+        logger.debug "===== finished indexing, starting notifications part ==="                      
         
         if(params[:notify])
           Notifier.reindexing_results(indexing_results[:errors].size.to_s, indexing_results[:indexed_count].to_s, indexing_results[:new_items].size.to_s, time_id).deliver
         end
         
-        #notifyDepositorsItemAdded(indexing_results[:new_items])
-        #notifyDepositorsItemAdded(indexing_results[:results][:success])
+        notifyDepositorsItemAdded(indexing_results[:new_items])
+        #notifyDepositorsItemAdded(indexing_results[:results][:success]) # this is for test
         
       end
-      
       Process.detach(@existing_ingest_pid)
-      
       @existing_ingest_time_id = time_id.to_s
     
-      logger.info "Started ingest with PID: #{@existing_ingest_pid} (#{@existing_ingest_time_id})"
+      logger.debug "Started ingest with PID: #{@existing_ingest_pid} (#{@existing_ingest_time_id})"
     
       tmp_pid_file = File.new("#{Rails.root}/tmp/#{@existing_ingest_pid}.index.pid", "w+")
       tmp_pid_file.write(@existing_ingest_time_id)
       tmp_pid_file.close
-
+      
     end
 
   end

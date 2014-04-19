@@ -47,11 +47,10 @@ class AdminController < ApplicationController
   def ingest
     
       processIndexing(params)
-    
+
       if(params[:executed_by])
         render nothing: true 
       end  
-    
   end
 
   def existing_ingest_time_id(pid)

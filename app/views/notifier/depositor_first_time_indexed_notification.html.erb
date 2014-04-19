@@ -1,0 +1,32 @@
+
+<style>
+	.box{
+		padding: 10px 0 0 0;
+	}
+</style>
+
+<table>
+
+<tr><td>Dear <%= @depositor.full_name %>,</td></tr>
+<tr><td class="box">
+	Thank you for your recent deposit to Academic Commons.<br>
+	Your works are now live on academiccommons.columbia.edu.
+</td></tr>	
+
+<tr><td style="padding: 10px 0 5px 0;">The permanent URLs for these items are:</td></tr>
+
+	<% @depositor.items_list.each do | item | %>
+	   <tr><td><a href="<%= item.handle %>"><%= item.title %></a> </td></tr>
+	<% end %>
+
+<tr><td class="box">
+Please use these URLs for linking on the web.<br>
+Thank you for contributing to Academic Commons.
+</td></tr>
+<tr><td class="box">CDRS</td></tr>
+
+</table>
+
+
+
+

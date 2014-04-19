@@ -56,6 +56,8 @@ CulBlacklightAc2::Application.configure do
   config.relative_root = ''
   config.analytics_enabled = true
   
+  config.deposit_notification_bcc = ["cuac@libraries.cul.columbia.edu"]
+  
   config.indexing_report_recipients = ["cuac@libraries.cul.columbia.edu"]
   config.mail_deposit_recipients = ["cuac@libraries.cul.columbia.edu"]
   config.mail_deliverer = "cuac@libraries.cul.columbia.edu"
@@ -65,5 +67,6 @@ CulBlacklightAc2::Application.configure do
   config.serve_static_assets = true
   config.static_cache_control = "public, max-age=3600"
 
-
+  config.prod_environment = true
+  
 end
