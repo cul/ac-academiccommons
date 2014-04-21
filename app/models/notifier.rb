@@ -122,7 +122,7 @@ class Notifier < ActionMailer::Base
   def depositor_first_time_indexed_notification(depositor)
     
     @depositor = depositor
-    subject = 'Academic Commons deposit(s) availability notification'
+    subject = 'Your submitted items are now available in Academic Commons'
     content_type = 'text/html'
     bcc = Rails.application.config.deposit_notification_bcc
     from = Rails.application.config.mail_deliverer
