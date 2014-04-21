@@ -130,9 +130,11 @@ class Notifier < ActionMailer::Base
 
     if(Rails.application.config.prod_environment)
       mail(:to => recipients, :bcc => bcc, :from => from, :subject => subject, :content_type => content_type)
+      logger.info "=== new Item notification was sent to : " + recipients.to_s + ", bcc: " + bcc.to_s
     else  
       subject = subject + ' - test'
       mail(:to => bcc, :from => from, :subject => subject, :content_type => content_type)
+      logger.info "=== new Item notification was sent to : " + bcc.to_s
     end  
   end
   
