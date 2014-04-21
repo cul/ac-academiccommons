@@ -12,16 +12,16 @@ module DepositorHelper
     depositors = prepareDepositorsToNotify(pids)
 
     depositors.each do | depositor |
-      logger.debug "\n ============================"
-      logger.debug "=== uni: " + depositor.uni
-      logger.debug "=== email: " + depositor.email
-      logger.debug "=== full_name: " + depositor.full_name
+      logger.info "\n ============ notifyDepositorsItemAdded ============="
+      logger.info "=== uni: " + depositor.uni
+      logger.info "=== email: " + depositor.email
+      logger.info "=== full_name: " + depositor.full_name
 
       depositor.items_list.each do | item |
-        logger.debug "------ "
-        logger.debug "------ item.pid: " + item.pid
-        logger.debug "------ item.title: " + item.title
-        logger.debug "------ item.handle: " + item.handle
+        logger.info "------ "
+        logger.info "------ item.pid: " + item.pid
+        logger.info "------ item.title: " + item.title
+        logger.info "------ item.handle: " + item.handle
       end
       
       Notifier.depositor_first_time_indexed_notification(depositor).deliver
@@ -51,7 +51,7 @@ module DepositorHelper
       end
     end
     
-    logger.debug "====== depositors_to_notify.size: " + depositors_to_notify.size.to_s
+    logger.info "====== depositors_to_notify.size: " + depositors_to_notify.size.to_s
     
     return depositors_to_notify.values
   end
@@ -71,10 +71,10 @@ module DepositorHelper
   
   def processIndexing(params)
 
-   logger.debug "==== started ingest function ==="
+   logger.info "==== started ingest function ==="
 
       params.each do |key, value|
-        logger.debug "param: " + key + " - " + value
+        logger.info "param: " + key + " - " + value
       end
     
     
@@ -117,7 +117,7 @@ module DepositorHelper
      
       @existing_ingest_pid = Process.fork do
         
-        logger.debug "==== started indexing ==="
+        logger.info "==== started indexing ==="
         
         indexing_results = ACIndexing::reindex({
                                 :collections => collections,
@@ -132,7 +132,7 @@ module DepositorHelper
                                 #:executed_by => "test"
                               })
                               
-        logger.debug "===== finished indexing, starting notifications part ==="                      
+        logger.info "===== finished indexing, starting notifications part ==="                      
         
         if(params[:notify])
           Notifier.reindexing_results(indexing_results[:errors].size.to_s, indexing_results[:indexed_count].to_s, indexing_results[:new_items].size.to_s, time_id).deliver
@@ -145,7 +145,7 @@ module DepositorHelper
       Process.detach(@existing_ingest_pid)
       @existing_ingest_time_id = time_id.to_s
     
-      logger.debug "Started ingest with PID: #{@existing_ingest_pid} (#{@existing_ingest_time_id})"
+      logger.info "Started ingest with PID: #{@existing_ingest_pid} (#{@existing_ingest_time_id})"
     
       tmp_pid_file = File.new("#{Rails.root}/tmp/#{@existing_ingest_pid}.index.pid", "w+")
       tmp_pid_file.write(@existing_ingest_time_id)
