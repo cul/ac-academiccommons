@@ -7,6 +7,7 @@ class StatisticsController < ApplicationController
   include CatalogHelper
   require "csv"
   
+  @@sendAuthorsReportsProcessing = false
 
   def unsubscribe_monthly
     author_id = params[:author_id]
@@ -31,6 +32,10 @@ class StatisticsController < ApplicationController
     redirect_to root_url
   end
   
+  def reset_processing_status_to_false
+    @@sendAuthorsReportsProcessing = false
+    render nothing: true 
+  end
 
   def all_author_monthlies
     
@@ -69,6 +74,7 @@ class StatisticsController < ApplicationController
         end
         processed_authors = @authors
         final_notice = "All monthly reports processing was started to be sent to " + params[:designated_recipient]
+        designated_recipient = params[:designated_recipient]
       else
         params[:designated_recipient] = nil 
       end
@@ -76,12 +82,14 @@ class StatisticsController < ApplicationController
       if params[:commit].in?(commit_button_aternate)
         if params[:test_users].empty?
           flash[:notice] = "Could not get statistics. The UNI must be provided!"
+          clean_params(params)
           return 
         end  
         
         email = alternate_emails[params[:test_users].to_s]
         if email.nil? || email.empty?
           flash[:notice] = "Could not get statistics for " + params[:test_users].to_s + ". The alternate email was not found!"
+          clean_params(params)
           return
         end
         processed_authors = makeTestAuthor(params[:test_users].to_s, alternate_emails[params[:test_users].to_s])
@@ -98,57 +106,20 @@ class StatisticsController < ApplicationController
         final_notice = "The monthly report for " + params[:one_report_uni].to_s + " was sent to " + params[:one_report_email]
       end
       
-      Thread.new do
-        
-        sent_counter = 0
-        sent_exceptions = 0
-        
-        processed_authors.each do |author|
-          
-          begin
-            
-            author_id = author[:id]
-            startdate = Date.parse(params[:month] + " " + params[:year])
-            enddate = Date.parse(params[:month] + " " + params[:year])
-            
-            @results, @stats, @totals =  get_author_stats(startdate, 
-                                                          enddate,
-                                                          author_id,
-                                                          nil,
-                                                          params[:include_zeroes],
-                                                          'author_uni',
-                                                          false,
-                                                          params[:order_by]
-                                                          )
-                            
-            if(params[:designated_recipient])  
-              email = params[:designated_recipient]
-            else
-              email = author[:email]
-            end        
-                                                          
-            if(email == nil) 
-              raise "no email address found"
-            end                                                                                      
-    
-            if @totals.values.sum != 0 || params[:include_zeroes]
-              sent_counter = sent_counter + 1
-              logger.debug(sent_counter.to_s + " report prepered to be sent for: " + author_id + " to: " + email + ", " + Time.new.to_s)
-              Notifier.author_monthly(email, author_id, startdate, enddate, @results, @stats, @totals, request, false, params[:optional_note]).deliver
-            end   
-             
-          rescue Exception => e
-            logger.error("(All Authors Monthly Statistics) - There is some error for " + author_id + ", " + (author[:email] || "") + ", error: " + e.to_s + ", " + Time.new.to_s)
-            sent_exceptions = sent_exceptions + 1             
-          end # begin
-          
-        end # processed_authors.each
+      #@@sendAuthorsReportsProcessing = false
+      
+      if(!@@sendAuthorsReportsProcessing)
+        sendAuthorsReports(processed_authors, designated_recipient)
+      else
+        final_notice = "The process is already running." 
+      end
+      
+      logger.info "============= final_notice: " + final_notice
 
-        notice = "Number of emails where sent: " + sent_counter.to_s + ", errors: " + sent_exceptions.to_s + ", " + Time.new.to_s
-        logger.info(notice)
-        
-      end # thread
       flash[:notice] = final_notice
+
+      clean_params(params)
+      
     end # params[:commit].in?("Send")
     
   end # ========== all_author_monthlies ===================== #

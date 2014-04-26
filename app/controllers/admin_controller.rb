@@ -1,43 +1,13 @@
 class AdminController < ApplicationController
   
   include DepositorHelper
+  include InfoHelper
 
-  before_filter :require_admin, :except => [:ingest_by_cron, :download_ingest_log]
+  before_filter :require_admin, :except => [:ingest_by_cron]
   before_filter :add_jhtmlarea, :only => [:edit_home_page]
   
   #layout "no_sidebar"
   layout "application"
-
-  def ingest_history
-    
-    @logs = []
-    Dir.glob("#{Rails.root}/log/ac-indexing/*.log") do |log_file_path|
-      log = {}
-      log[:filepath] = log_file_path
-      log[:filename] = File.basename(log_file_path)
-      time_id = log[:filename].gsub(/\.log/, '')
-      log[:time_id] = time_id.to_s
-      log[:year] = time_id[0..3].to_i
-      log[:month] = time_id[4..5].to_i
-      log[:day] = time_id[6..7].to_i
-      log[:hour] = time_id[9..10].to_i
-      log[:minute] = time_id[11..12].to_i
-      log[:second] = time_id[13..14].to_i
-      log[:time] = Time.mktime(log[:year], log[:month], log[:day], log[:hour], log[:minute], log[:second]).strftime("%B %e, %Y %r")
-      @logs << log 
-    end
-    
-    @logs.reverse!
-    
-  end
-
-  def download_ingest_log
-    
-    headers["Content-Type"] = "application/octet-stream"
-    headers["Content-Disposition"] = "attachment;filename=\"#{params[:id]}.log\""
-    render :text => File.open("#{Rails.root}/log/ac-indexing/#{params[:id]}.log").read
-    
-  end
   
   def ingest_by_cron
     processIndexing(params)

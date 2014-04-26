@@ -27,6 +27,20 @@ module InfoHelper
       person.first_name = first_name
         
       return person
-  end   
+  end  
+   
+  def getReadableTimeSpent(start_time)
+    return timeReadableFormat(getSecondsSpent(start_time))
+  end
+  
+  def timeReadableFormat(seconds)
+    return Time.at(seconds).utc.strftime("%H hours, %M minutes, %S seconds")
+  end
+  
+  def getSecondsSpent(start_time)
+    finish_time = Time.new
+    seconds_spent = finish_time - start_time
+    return seconds_spent
+  end 
   
 end # ==================================================== #

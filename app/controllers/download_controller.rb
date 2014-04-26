@@ -1,6 +1,15 @@
 class DownloadController < ApplicationController
   
 #  after_filter :record_stats
+
+  include InfoHelper
+  include LogsHelper
+
+  def download_log    
+    headers["Content-Type"] = "application/octet-stream"
+    headers["Content-Disposition"] = "attachment;filename=\"#{params[:id]}.log\""
+    render :text => getLogContent(params[:log_folder], params[:id])
+  end
   
   def fedora_content
       
