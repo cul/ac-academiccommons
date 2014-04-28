@@ -102,8 +102,7 @@ class StatisticsController < ApplicationController
       end
       
       if(!isMonthlyReportsInProcess)
-        final_notice = "Started test."
-        #sendAuthorsReports(processed_authors, designated_recipient)
+        sendAuthorsReports(processed_authors, designated_recipient)
       else
         final_notice = "The process is already running." 
       end
