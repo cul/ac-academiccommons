@@ -31,4 +31,11 @@ module LogsHelper
     return File.open("#{Rails.root}/log/#{log_folder}/#{log_id}.log").read
   end
   
+  def isMonthlyReportsInProcess
+    Dir.glob("#{Rails.root}/log/monthly_reports/*.tmp") do |log_file_path|
+      return true
+    end
+      return false
+  end
+  
 end # ==================================================== #

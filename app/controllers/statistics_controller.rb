@@ -5,9 +5,9 @@ class StatisticsController < ApplicationController
   include Blacklight::SolrHelper
   include StatisticsHelper
   include CatalogHelper
+  include LogsHelper
   require "csv"
-  
-  @@sendAuthorsReportsProcessing = false
+
 
   def unsubscribe_monthly
     author_id = params[:author_id]
@@ -30,11 +30,6 @@ class StatisticsController < ApplicationController
     end
 
     redirect_to root_url
-  end
-  
-  def reset_processing_status_to_false
-    @@sendAuthorsReportsProcessing = false
-    render nothing: true 
   end
 
   def all_author_monthlies
@@ -106,10 +101,9 @@ class StatisticsController < ApplicationController
         final_notice = "The monthly report for " + params[:one_report_uni].to_s + " was sent to " + params[:one_report_email]
       end
       
-      #@@sendAuthorsReportsProcessing = false
-      
-      if(!@@sendAuthorsReportsProcessing)
-        sendAuthorsReports(processed_authors, designated_recipient)
+      if(!isMonthlyReportsInProcess)
+        final_notice = "Started test."
+        #sendAuthorsReports(processed_authors, designated_recipient)
       else
         final_notice = "The process is already running." 
       end

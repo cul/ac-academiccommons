@@ -707,8 +707,6 @@ module StatisticsHelper
 
       Thread.new do
         
-        @@sendAuthorsReportsProcessing = true
-        
         start_time = Time.new
         time_id = start_time.strftime("%Y%m%d-%H%M%S")
         logger = Logger.new(Rails.root.to_s + "/log/monthly_reports/#{time_id}.tmp")
@@ -781,8 +779,6 @@ module StatisticsHelper
         logger.info "\nTime spent: " + getReadableTimeSpent(start_time)    
 
         File.rename(Rails.root.to_s + "/log/monthly_reports/#{time_id}.tmp", Rails.root.to_s + "/log/monthly_reports/#{time_id}.log")  
-        
-        @@sendAuthorsReportsProcessing = false
         
       end # thread
     

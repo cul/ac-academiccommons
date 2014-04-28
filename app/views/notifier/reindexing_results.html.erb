@@ -9,7 +9,7 @@
  	Academic Commons - Daily Reindexing Report
 </div>
 <div class="box">
-	<a href="<%= 'http://' + Rails.application.config.base_path + Rails.application.config.relative_root + '/admin/download_ingest_log/' + @time_id  %>"><%= @existing_time %></a>
+	<a href="<%= 'http://' + Rails.application.config.base_path + Rails.application.config.relative_root + '/download/download_log/' + @time_id + '?log_folder=ac-indexing'  %>"><%= @existing_time %></a>
 </div>
 <div class="box">
   	Errors: <%= @errors_count %>
@@ -22,7 +22,7 @@
 </div>
 <div class="box"> 
   	You can download full reindexing log from the following link:
-  	<a href="<%= 'http://' + Rails.application.config.base_path + Rails.application.config.relative_root + '/admin/download_ingest_log/' + @time_id  %>"><%=  @time_id + '.log' %></a>
+  	<a href="<%= 'http://' + Rails.application.config.base_path + Rails.application.config.relative_root + '/download/download_log/' + @time_id + '?log_folder=ac-indexing'  %>"><%=  @time_id + '.log' %></a>
 </div>
 
 <div class="box">
