@@ -752,7 +752,7 @@ module StatisticsHelper
               if(params[:do_not_send_email])
                 test_msg = ' (this is test - email was not sent)'
               else  
-                #Notifier.author_monthly(email, author_id, startdate, enddate, @results, @stats, @totals, request, false, params[:optional_note]).deliver
+                Notifier.author_monthly(email, author_id, startdate, enddate, @results, @stats, @totals, request, false, params[:optional_note]).deliver
                 test_msg = ''
               end
      
