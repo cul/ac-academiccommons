@@ -138,7 +138,7 @@ module DepositorHelper
           Notifier.reindexing_results(indexing_results[:errors].size.to_s, indexing_results[:indexed_count].to_s, indexing_results[:new_items].size.to_s, time_id).deliver
         end
         
-        #notifyDepositorsItemAdded(indexing_results[:new_items])
+        notifyDepositorsItemAdded(indexing_results[:new_items])
         #notifyDepositorsItemAdded(indexing_results[:results][:success]) # this is for test
         
       end
