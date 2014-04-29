@@ -7,7 +7,13 @@
 
 <table>
 
-<tr><td>Dear <%= @depositor.full_name %>,</td></tr>
+<tr><td>
+	<%if(@depositor.full_name == nil)%>
+		Dear author [<%= @depositor.uni %>],
+	<% else %>
+		Dear <%= @depositor.full_name %>,
+	<% end %>
+</td></tr>
 <tr><td class="box">
 	Your recent deposit to Academic Commons is now live on academiccommons.columbia.edu. 
 </td></tr>	

@@ -15,7 +15,12 @@ module DepositorHelper
       logger.info "\n ============ notifyDepositorsItemAdded ============="
       logger.info "=== uni: " + depositor.uni
       logger.info "=== email: " + depositor.email
-      logger.info "=== full_name: " + depositor.full_name
+      if(depositor.full_name == nil)
+        logger.info "=== full_name: "
+      else
+        logger.info "=== full_name: " + depositor.full_name
+      end    
+      
 
       depositor.items_list.each do | item |
         logger.info "------ "
@@ -61,7 +66,14 @@ module DepositorHelper
     person = get_person_info(uni)
  
     (person.email == nil) ?  depositor_email = person.uni + "@columbia.edu" : depositor_email = person.email
-    (person.last_name == nil || person.first_name == nil) ? depositor_name = person.uni : depositor_name = person.first_name + ' ' + person.last_name
+    if (person.last_name == nil || person.first_name == nil) 
+       logger.info "==== uni: " + person.uni  + " was not found in LDAP ===" 
+       depositor_name = nil 
+    else 
+      depositor_name = person.first_name + ' ' + person.last_name
+      
+      logger.info "name: " + depositor_name + " was found in LDAP"
+    end 
         
     person.email = depositor_email
     person.full_name = depositor_name
