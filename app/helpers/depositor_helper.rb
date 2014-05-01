@@ -40,10 +40,21 @@ module DepositorHelper
     depositors_to_notify = Hash.new
     
     pids.each do | pid |
+      
+      logger.info "=== process depositors for pid: " + pid
 
       item = getItem(pid)
+      
+      logger.info "=== item created for pid: " + pid
+       
+      logger.debug "=== item.pid: " + item.pid
+      logger.debug "=== item.title: " + item.title
+      logger.debug "=== item.handle: " + item.handle
+      logger.debug "=== item.authors_uni: " + item.authors_uni.size.to_s
 
       item.authors_uni.each do | uni |
+        
+        logger.info "=== process uni: " + uni +" depositor for pid: " + pid
         
         if(!depositors_to_notify.key?(uni))     
           depositor = getDepositor(uni)
@@ -53,6 +64,7 @@ module DepositorHelper
         depositor = depositors_to_notify[uni]
         depositor.items_list << item
         
+        logger.info "=== process uni: " + uni +" depositor for pid: " + pid + " === finished"
       end
     end
     

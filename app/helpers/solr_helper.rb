@@ -15,7 +15,8 @@ module SolrHelper
       item.pid = result.first[:id]
       item.title = result.first[:title_display]
       item.handle = result.first[:handle]
-      item.authors_uni = result.first[:author_uni]
+
+      item.authors_uni = result.first[:author_uni] || []
 
     return item
   end    
