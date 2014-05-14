@@ -147,6 +147,8 @@ module Cul
 
         if(record_identifier = mods.at_css("recordInfo>recordIdentifier"))
           add_field.call("record_identifier", record_identifier)
+          
+          logger.info "============== xxx ======== record_identifier: " + record_identifier 
         end
         
         if(record_language_of_catalog = mods.at_css("recordInfo>languageOfCataloging>languageTerm"))
@@ -272,7 +274,7 @@ module Cul
         other_name_roles = ["thesis advisor"]
         corporate_author_roles = ["author"]
         corporate_department_roles = ["originator"]
-        resource_types = {'text' => 'Text', 'moving image' => 'Video', 'sound recording--nonmusical' => 'Audio', 'software, multimedia' => 'Datasets', 'still image' => 'Image'}
+        resource_types = {'text' => 'Text', 'moving image' => 'Video', 'sound recording--nonmusical' => 'Audio', 'software, multimedia' => 'software', 'still image' => 'Image'}
  
 
 
