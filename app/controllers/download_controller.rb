@@ -34,10 +34,16 @@ class DownloadController < ApplicationController
     end
 
     if text_result
-      headers["Content-Type"] = "text/plain"
-      render :text => text_result
+      if params[:xml]
+        headers["Content-Type"] = "text/xml"
+        render :xml => text_result
+      else
+        headers["Content-Type"] = "text/plain"
+        render :text => text_result        
+      end  
+      
     else  
-      headers['X-Accel-Redirect'] = x_accel_url(url, CGI.escapeHTML(params[:filename].to_s))
+      headers['X-Accel-Redirect'] = x_accel_url(url)
       render :nothing => true
     end
   end
@@ -46,6 +52,9 @@ class DownloadController < ApplicationController
   def x_accel_url(url, file_name = nil)
     uri = "/repository_download/#{url.gsub('https://', '')}"
     uri << "?#{file_name}" if file_name
+    
+     logger.info "=========== " + url
+    
     return uri
   end
 

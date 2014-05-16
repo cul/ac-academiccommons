@@ -50,7 +50,7 @@
 		<% show_url = "#{resource[:show_url]}?data=meta" -%>
 		<% download_url = "#{resource[:download_url]}?data=meta" -%>
 	
-	      <%= link_to "View", show_url if resource[:show_url] %>
+	      <%= link_to "text", show_url if resource[:show_url] %> | <%= link_to "xml", show_url + "&xml=true" if resource[:show_url] %>
  
 	      </dd>
 	    <% end -%>
