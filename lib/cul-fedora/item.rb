@@ -323,6 +323,17 @@ module Cul
                 if(!name_node["ID"].nil?)
                   add_field.call("author_uni", name_node["ID"])
                 end
+                
+                author_affiliations = []
+                
+                name_node.css("affiliation").each do |affiliation_node|
+                  author_affiliations.push(affiliation_node.text)
+                end
+                
+                uni = name_node["ID"] == nil ? '' : name_node["ID"]
+                
+                add_field.call("author_info", fullname + " : " + uni + " : " + author_affiliations.join("; "))
+                
                 add_field.call("author_search", fullname.downcase)
                 add_field.call("author_facet", fullname)
               elsif name_node.css("role>roleTerm").collect(&:content).any? { |role| other_name_roles.include?(role) }
