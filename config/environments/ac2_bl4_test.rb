@@ -43,11 +43,16 @@ CulBlacklightAc2::Application.configure do
   config.analytics_enabled = false
   
   # in test env-t config.deposit_notification_bcc will be used instead of depositor's email
-  config.deposit_notification_bcc = ["cuac@libraries.cul.columbia.edu"]
+  # config.deposit_notification_bcc = ["cuac@libraries.cul.columbia.edu"]
+  # config.indexing_report_recipients = ["cuac@libraries.cul.columbia.edu"]
+  # config.mail_deposit_recipients = ["cuac@libraries.cul.columbia.edu"]
+  # config.mail_deliverer = "cuac@libraries.cul.columbia.edu"
   
-  config.indexing_report_recipients = ["cuac@libraries.cul.columbia.edu"]
-  config.mail_deposit_recipients = ["cuac@libraries.cul.columbia.edu"]
-  config.mail_deliverer = "cuac@libraries.cul.columbia.edu"
+  config.deposit_notification_bcc = ["ap2972@columbia.edu"]
+  config.indexing_report_recipients = ["ap2972@columbia.edu"]
+  config.mail_deposit_recipients = ["ap2972@columbia.edu"]
+  config.mail_deliverer = "ap2972@columbia.edu"  
+  
   config.base_path = "berlioz.cul.columbia.edu"
 
 
