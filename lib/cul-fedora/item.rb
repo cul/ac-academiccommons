@@ -257,19 +257,20 @@ module Cul
 
         Rails.application.config.fedora
 
-        if(free_to_read_start_date = mods.at_css("free_to_read")['start_date'])   
-
-          if(!free_to_read_start_date.nil? && free_to_read_start_date.length != 0)   
-             add_field.call("free_to_read_start_date", free_to_read_start_date)
-             process_resource_activation(free_to_read_start_date, @pid)
-          end 
+        if(free_to_read_start_date = mods.at_css("free_to_read"))
+          if(free_to_read_start_date = mods.at_css("free_to_read")['start_date'])   
+            if(!free_to_read_start_date.nil? && free_to_read_start_date.length != 0)   
+               add_field.call("free_to_read_start_date", free_to_read_start_date)
+               process_resource_activation(free_to_read_start_date, @pid)
+            end 
+          end
         end
       end   
       
       def process_resource_activation(free_to_read_start_date, aggregator_pid)
 
         begin
-          
+                  
           if(!check_if_free_to_read(free_to_read_start_date))
             return
           end  
@@ -576,8 +577,12 @@ module Cul
               end
 
               File.delete(resource_file_name)
-
+            
+            
+            
             end
+
+
 
           end
 
@@ -591,6 +596,8 @@ module Cul
         return {:status => status, :error_message => error_message, :results => results}
 
       end
+
+
 
       def to_s
         @pid
