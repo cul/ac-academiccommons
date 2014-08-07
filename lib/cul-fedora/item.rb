@@ -333,7 +333,7 @@ module Cul
         get_fullname = lambda { |node| node.nil? ? nil : (node.css("namePart[@type='family']").collect(&:content) | node.css("namePart[@type='given']").collect(&:content)).join(", ") }
 
         author_roles = ["author","creator","speaker","moderator","interviewee","interviewer","contributor"]
-        other_name_roles = ["thesis advisor"]
+        advisor_roles = ["thesis advisor"]
         corporate_author_roles = ["author"]
         corporate_department_roles = ["originator"]
         resource_types = {'text' => 'Text', 'moving image' => 'Video', 'sound recording--nonmusical' => 'Audio', 'software, multimedia' => 'software', 'still image' => 'Image'}
@@ -399,11 +399,14 @@ module Cul
                 
                 add_field.call("author_search", fullname.downcase)
                 add_field.call("author_facet", fullname)
-              elsif name_node.css("role>roleTerm").collect(&:content).any? { |role| other_name_roles.include?(role) }
+              elsif name_node.css("role>roleTerm").collect(&:content).any? { |role| advisor_roles.include?(role) }
 
                 note_org = true
                 first_role = name_node.at_css("role>roleTerm").text
                 add_field.call(first_role.gsub(/\s/, '_'), fullname)
+                
+                add_field.call("advisor_uni", name_node["ID"])
+
               end
               
               if (note_org == true)

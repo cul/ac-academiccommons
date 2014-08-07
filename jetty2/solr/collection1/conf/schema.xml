@@ -91,6 +91,7 @@
 	
 	<field name="author_display" type="text_general" indexed="true" stored="true"/>
 	<field name="author_uni" type="string" indexed="true" stored="true" multiValued="true"/>
+	<field name="advisor_uni" type="string" indexed="true" stored="true" multiValued="true"/>
 	<field name="author_search" type="text_general" indexed="true" stored="true" multiValued="true"/>
 	
 	<field name="genre_search" type="text_general" indexed="true" stored="true" multiValued="true"/>
