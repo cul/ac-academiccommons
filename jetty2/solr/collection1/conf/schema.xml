@@ -93,6 +93,7 @@
 	<field name="author_uni" type="string" indexed="true" stored="true" multiValued="true"/>
 	<field name="advisor_uni" type="string" indexed="true" stored="true" multiValued="true"/>
 	<field name="author_search" type="text_general" indexed="true" stored="true" multiValued="true"/>
+	<field name="advisor_search" type="text_general" indexed="true" stored="true" multiValued="true"/>
 	
 	<field name="genre_search" type="text_general" indexed="true" stored="true" multiValued="true"/>
 	<field name="keyword_display" type="text_general" indexed="true" stored="true"/>
@@ -1109,6 +1110,7 @@
 
   <copyField source="title_search" dest="title_t"/>
   <copyField source="author_search" dest="author_t"/>
+  <copyField source="advisor_search" dest="advisor_t"/>
   <copyField source="subject_search" dest="subject_t"/>
   <copyField source="series_facet" dest="title_series_t"/>
   
@@ -1145,6 +1147,7 @@
   <copyField source="title_added_entry_t" dest="title_added_entry_unstem_search"/>
   <copyField source="title_series_t" dest="title_series_unstem_search"/>
   <copyField source="author_t" dest="author_unstem_search"/>
+  <copyField source="advisor_t" dest="advisor_unstem_search"/>
   <copyField source="author_addl_t" dest="author_addl_unstem_search"/>
   <copyField source="subject_t" dest="subject_unstem_search"/>
   <copyField source="subject_addl_t" dest="subject_addl_unstem_search"/>
@@ -1168,6 +1171,7 @@
   <copyField source="title_series_t" dest="title_spell"/>
   <!-- author spell check; should match fields for author request handler -->
   <copyField source="author_t" dest="author_spell"/>
+  <copyField source="advisor_t" dest="advisor_spell"/>
   <copyField source="author_addl_t" dest="author_spell"/>
   <!-- subject spell check; should match fields for subject request handler -->
   <copyField source="subject_facet" dest="subject_spell"/>
@@ -1181,6 +1185,7 @@
   <copyField source="title_added_entry_t" dest="opensearch_display"/>
   <copyField source="title_series_t" dest="opensearch_display"/>
   <copyField source="author_t" dest="opensearch_display"/>
+  <copyField source="advisor_t" dest="opensearch_display"/>
   <copyField source="author_addl_t" dest="opensearch_display"/>
   <copyField source="subject_topic_facet" dest="opensearch_display"/>
   <copyField source="subject_t" dest="opensearch_display"/>

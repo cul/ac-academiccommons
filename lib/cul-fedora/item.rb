@@ -379,30 +379,35 @@ module Cul
               fullname = get_fullname.call(name_node)
               note_org = false
               
-              all_author_names << fullname
-              uni = name_node["ID"] == nil ? '' : name_node["ID"]
-              author_affiliations = []
-              add_field.call("author_info", fullname + " : " + uni + " : " + author_affiliations.join("; "))
-              add_field.call("author_search", fullname.downcase)
-
               if name_node.css("role>roleTerm").collect(&:content).any? { |role| author_roles.include?(role) }
 
                 note_org = true
-                add_field.call("author_facet", fullname)
-                
+                all_author_names << fullname
                 if(!name_node["ID"].nil?)
                   add_field.call("author_uni", name_node["ID"])
                 end
-
+                
+                author_affiliations = []
+                
                 name_node.css("affiliation").each do |affiliation_node|
                   author_affiliations.push(affiliation_node.text)
                 end
                 
+                uni = name_node["ID"] == nil ? '' : name_node["ID"]
+                
+                add_field.call("author_info", fullname + " : " + uni + " : " + author_affiliations.join("; "))
+                
+                add_field.call("author_search", fullname.downcase)
+                add_field.call("author_facet", fullname)
+                
               elsif name_node.css("role>roleTerm").collect(&:content).any? { |role| advisor_roles.include?(role) }
+
                 note_org = true
                 first_role = name_node.at_css("role>roleTerm").text
                 add_field.call(first_role.gsub(/\s/, '_'), fullname)
+                
                 add_field.call("advisor_uni", name_node["ID"])
+                add_field.call("advisor_search", fullname.downcase)
               end
               
               if (note_org == true)
@@ -576,12 +581,8 @@ module Cul
               end
 
               File.delete(resource_file_name)
-            
-            
-            
+
             end
-
-
 
           end
 
@@ -595,8 +596,6 @@ module Cul
         return {:status => status, :error_message => error_message, :results => results}
 
       end
-
-
 
       def to_s
         @pid
