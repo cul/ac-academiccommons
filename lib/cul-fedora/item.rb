@@ -384,11 +384,11 @@ module Cul
               author_affiliations = []
               add_field.call("author_info", fullname + " : " + uni + " : " + author_affiliations.join("; "))
               add_field.call("author_search", fullname.downcase)
-              add_field.call("author_facet", fullname)
-              
+
               if name_node.css("role>roleTerm").collect(&:content).any? { |role| author_roles.include?(role) }
 
                 note_org = true
+                add_field.call("author_facet", fullname)
                 
                 if(!name_node["ID"].nil?)
                   add_field.call("author_uni", name_node["ID"])
