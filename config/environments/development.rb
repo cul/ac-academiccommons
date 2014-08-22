@@ -27,18 +27,14 @@ CulBlacklightAc2::Application.configure do
   config.relative_root = ""
   config.analytics_enabled = false
   
-  #   !!!
-  #   this part should not be commited to git
-  #   this it for my local testing only - Aleksey      !!!
-  # 
-  
+  # this is example of smtp config for local testig via columbian lionmail
   config.action_mailer.raise_delivery_errors = true
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
     :address => "smtp.gmail.com",
     :domain => "columbia.edu",
-    :user_name => 'ap2972@columbia.edu',
-    :password => 'm#xCK9NR',
+    :user_name => 'you_uni@columbia.edu',
+    :password => 'your_device_password',
     :authentication => :login,
     :port => 587,
     :enable_starttls_auto => true
