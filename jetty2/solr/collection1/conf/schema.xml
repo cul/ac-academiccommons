@@ -91,7 +91,9 @@
 	
 	<field name="author_display" type="text_general" indexed="true" stored="true"/>
 	<field name="author_uni" type="string" indexed="true" stored="true" multiValued="true"/>
+	<field name="advisor_uni" type="string" indexed="true" stored="true" multiValued="true"/>
 	<field name="author_search" type="text_general" indexed="true" stored="true" multiValued="true"/>
+	<field name="advisor_search" type="text_general" indexed="true" stored="true" multiValued="true"/>
 	
 	<field name="genre_search" type="text_general" indexed="true" stored="true" multiValued="true"/>
 	<field name="keyword_display" type="text_general" indexed="true" stored="true"/>
@@ -127,7 +129,8 @@
 	<field name="affiliation_department" type="string" indexed="true" stored="true" multiValued="true"/>
 	<field name="type_of_resource_mods" type="string" indexed="true" stored="true" multiValued="true" />
 	<field name="originator_department" type="string" indexed="true" stored="true"/>
-
+    <field name="free_to_read_start_date" type="string" indexed="true" stored="true"/>
+    
   	<!-- pub_date sort uses new trie-based int fields, which are recommended for any int and are displayable, sortable, and range-query-able. In addition,
     we use 'tint' for faster range-queries. -->
     <field name="pub_date_sort" type="tint" indexed="true" stored="true" multiValued="false"/>
@@ -142,7 +145,7 @@
 	<field name="department_facet" type="string" indexed="true" stored="true" multiValued="true" />
 	<field name="series_facet" type="string" indexed="true" stored="true" multiValued="true" />
 	<field name="non_cu_series_facet" type="string" indexed="true" stored="true" multiValued="true" />
-	
+	<field name="author_info" type="string" indexed="true" stored="true" multiValued="true" />
 	
 	
 	
@@ -1107,6 +1110,7 @@
 
   <copyField source="title_search" dest="title_t"/>
   <copyField source="author_search" dest="author_t"/>
+  <copyField source="advisor_search" dest="advisor_t"/>
   <copyField source="subject_search" dest="subject_t"/>
   <copyField source="series_facet" dest="title_series_t"/>
   
@@ -1132,6 +1136,7 @@
   <copyField source="department_facet" dest="text"/>  
   <copyField source="language" dest="text"/>
   <copyField source="type_of_resource_facet" dest="text"/>
+  <copyField source="free_to_read_start_date" dest="text"/> 
   
   <copyField source="department_facet" dest="affiliation_department"/>
   
@@ -1142,6 +1147,7 @@
   <copyField source="title_added_entry_t" dest="title_added_entry_unstem_search"/>
   <copyField source="title_series_t" dest="title_series_unstem_search"/>
   <copyField source="author_t" dest="author_unstem_search"/>
+  <copyField source="advisor_t" dest="advisor_unstem_search"/>
   <copyField source="author_addl_t" dest="author_addl_unstem_search"/>
   <copyField source="subject_t" dest="subject_unstem_search"/>
   <copyField source="subject_addl_t" dest="subject_addl_unstem_search"/>
@@ -1165,6 +1171,7 @@
   <copyField source="title_series_t" dest="title_spell"/>
   <!-- author spell check; should match fields for author request handler -->
   <copyField source="author_t" dest="author_spell"/>
+  <copyField source="advisor_t" dest="advisor_spell"/>
   <copyField source="author_addl_t" dest="author_spell"/>
   <!-- subject spell check; should match fields for subject request handler -->
   <copyField source="subject_facet" dest="subject_spell"/>
@@ -1178,6 +1185,7 @@
   <copyField source="title_added_entry_t" dest="opensearch_display"/>
   <copyField source="title_series_t" dest="opensearch_display"/>
   <copyField source="author_t" dest="opensearch_display"/>
+  <copyField source="advisor_t" dest="opensearch_display"/>
   <copyField source="author_addl_t" dest="opensearch_display"/>
   <copyField source="subject_topic_facet" dest="opensearch_display"/>
   <copyField source="subject_t" dest="opensearch_display"/>

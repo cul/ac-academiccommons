@@ -45,7 +45,7 @@ module Cul
           request
           return true
         rescue Exception => e # we should really do some better checking of error type etc here
-	  logger.error "no object was found for fedora pid  #{pid}"
+    logger.error "no object was found for fedora pid  #{pid}"
           logger.error e.message
           return false
         end
@@ -221,7 +221,7 @@ module Cul
       
         if(isbn = mods.at_css("identifier[@type='isbn']"))   
           if(!isbn.nil? && isbn.text.length != 0)      
-            add_field.call("isbn", isbn)
+            add_field.call("isbn", isbn) 
           end
         end 
         
@@ -251,7 +251,72 @@ module Cul
             add_field.call("url", locationUrl)
           end 
         end
-      end      
+      end   
+      
+      def embargo_release_date_indexing(mods, add_field)
+
+        Rails.application.config.fedora
+
+        if(free_to_read_start_date = mods.at_css("free_to_read"))
+          if(free_to_read_start_date = mods.at_css("free_to_read")['start_date'])   
+            if(!free_to_read_start_date.nil? && free_to_read_start_date.length != 0)   
+               add_field.call("free_to_read_start_date", free_to_read_start_date)
+               process_resource_activation(free_to_read_start_date, @pid)
+            end 
+          end
+        end
+      end   
+      
+      def process_resource_activation(free_to_read_start_date, aggregator_pid)
+
+        begin
+                  
+          if(!check_if_free_to_read(free_to_read_start_date))
+            return
+          end  
+          
+          resource_pid = get_resource_pid(aggregator_pid) 
+
+          if(check_if_resouce_is_available(resource_pid))
+            return
+          end  
+          
+          make_resource_active(resource_pid)
+          
+          logger.info "=== " + resource_pid + " is activated, as part of aggregator: " + aggregator_pid
+          
+        rescue Exception => e
+          logger.error "=== process_resource() error ==="
+          logger.error e.message
+        end        
+        
+      end
+      
+      def check_if_free_to_read(free_to_read_start_date)
+        embargo_release_date = Date.strptime(free_to_read_start_date, '%Y-%m-%d')
+        current_date = Date.strptime(Time.now.strftime('%Y-%m-%d'), '%Y-%m-%d')
+        return current_date > embargo_release_date
+      end
+      
+      def get_resource_pid(aggregator_pid) 
+        aggregator_members_url = Rails.application.config.fedora['open_url'] + '/objects/' + aggregator_pid + '/methods/ldpd:sdef.Aggregator/listMembers?format=sparql&max=1&start=0'
+        response = Net::HTTP.get_response(URI(aggregator_members_url))
+        contentXML = Nokogiri::XML(response.body.to_s)
+        member_node = contentXML.css("member")
+        resourse_pid = member_node.first['uri']
+        return resourse_pid.sub('info:fedora/', '')
+      end
+      
+      def check_if_resouce_is_available(resourse_pid)
+        fedora_resourse_url = Rails.application.config.fedora['open_url'] + '/objects/' + resourse_pid
+        response = Net::HTTP.get_response(URI(fedora_resourse_url))
+        return response.code == '200'
+      end
+
+      def make_resource_active(resource_pid)
+        change_resourse_state_url = Rails.application.config.fedora['pid_state_changer_url'] + '?pid=' + resource_pid + '&repository_id=2&state=A'
+        Net::HTTP.get_response(URI(change_resourse_state_url))
+      end
 
       def index_for_ac2(options = {})
         do_fulltext = options[:fulltext] || false
@@ -259,7 +324,6 @@ module Cul
 
         status = :success
         error_message = ""
-
 
         results = Hash.new { |h,k| h[k] = [] }
         normalize_space = lambda { |s| s.to_s.strip.gsub(/\s{2,}/," ") }
@@ -269,13 +333,11 @@ module Cul
         get_fullname = lambda { |node| node.nil? ? nil : (node.css("namePart[@type='family']").collect(&:content) | node.css("namePart[@type='given']").collect(&:content)).join(", ") }
 
         author_roles = ["author","creator","speaker","moderator","interviewee","interviewer","contributor"]
-        other_name_roles = ["thesis advisor"]
+        advisor_roles = ["thesis advisor"]
         corporate_author_roles = ["author"]
         corporate_department_roles = ["originator"]
-        resource_types = {'text' => 'Text', 'moving image' => 'Video', 'sound recording--nonmusical' => 'Audio', 'software, multimedia' => 'Datasets', 'still image' => 'Image'}
+        resource_types = {'text' => 'Text', 'moving image' => 'Video', 'sound recording--nonmusical' => 'Audio', 'software, multimedia' => 'software', 'still image' => 'Image'}
  
-
-
         organizations = []
         departments = []
         originator_department = ""
@@ -303,6 +365,7 @@ module Cul
             roleIndexing(mods, add_field)
             identifierIndexing(mods, add_field)
             locationUrlIndexing(mods, add_field)
+            embargo_release_date_indexing(mods, add_field)
 
             title = mods.css("titleInfo>title").first.text
             title_search = normalize_space.call(mods.css("titleInfo>nonSort,title").collect(&:content).join(" "))
@@ -323,13 +386,28 @@ module Cul
                 if(!name_node["ID"].nil?)
                   add_field.call("author_uni", name_node["ID"])
                 end
+                
+                author_affiliations = []
+                
+                name_node.css("affiliation").each do |affiliation_node|
+                  author_affiliations.push(affiliation_node.text)
+                end
+                
+                uni = name_node["ID"] == nil ? '' : name_node["ID"]
+                
+                add_field.call("author_info", fullname + " : " + uni + " : " + author_affiliations.join("; "))
+                
                 add_field.call("author_search", fullname.downcase)
                 add_field.call("author_facet", fullname)
-              elsif name_node.css("role>roleTerm").collect(&:content).any? { |role| other_name_roles.include?(role) }
+                
+              elsif name_node.css("role>roleTerm").collect(&:content).any? { |role| advisor_roles.include?(role) }
 
                 note_org = true
                 first_role = name_node.at_css("role>roleTerm").text
                 add_field.call(first_role.gsub(/\s/, '_'), fullname)
+                
+                add_field.call("advisor_uni", name_node["ID"])
+                add_field.call("advisor_search", fullname.downcase)
               end
               
               if (note_org == true)
@@ -375,7 +453,6 @@ module Cul
               add_field.call("genre_facet", genre_node)
               add_field.call("genre_search", genre_node)
             end
-
 
             add_field.call("abstract", mods.at_css("abstract"))
             #add_field.call("handle", mods.at_css("identifier[@type='hdl']"))
@@ -443,13 +520,13 @@ module Cul
             mods.css("physicalDescription>internetMediaType").each { |mt| add_field.call("media_type_facet", mt) }
 
             mods.css("typeOfResource").each { |tr| 
-		add_field.call("type_of_resource_mods", tr)
-	        type = tr.text
-	    	if(resource_types.has_key?(type))
-		  type = resource_types[type]
-		end
-		add_field.call("type_of_resource_facet", type)
-	    }
+    add_field.call("type_of_resource_mods", tr)
+          type = tr.text
+        if(resource_types.has_key?(type))
+      type = resource_types[type]
+    end
+    add_field.call("type_of_resource_facet", type)
+      }
 
             mods.css("subject>geographic").each do |geo|
               add_field.call("geographic_area_display", geo)
@@ -504,12 +581,8 @@ module Cul
               end
 
               File.delete(resource_file_name)
-            
-            
-            
+
             end
-
-
 
           end
 
@@ -523,8 +596,6 @@ module Cul
         return {:status => status, :error_message => error_message, :results => results}
 
       end
-
-
 
       def to_s
         @pid

@@ -620,6 +620,7 @@
           <str name="facet.field">organization_facet</str>
           <str name="facet.field">department_facet</str>
           <str name="facet.field">series_facet</str>
+          <str name="facet.field">author_info</str>
         </lst>
         <!-- query for single document to populate filter cache -->
         <lst>
@@ -639,6 +640,7 @@
           <str name="facet.field">organization_facet</str>
           <str name="facet.field">department_facet</str>
           <str name="facet.field">series_facet</str>
+          <str name="facet.field">author_info</str>
         </lst>
       </arr>
     </listener>
@@ -661,6 +663,7 @@
           <str name="facet.field">organization_facet</str>
           <str name="facet.field">department_facet</str>
           <str name="facet.field">series_facet</str>
+          <str name="facet.field">author_info</str>
         </lst>
         <!-- query for single document to populate filter cache -->
         <lst>
@@ -680,6 +683,7 @@
           <str name="facet.field">organization_facet</str>
           <str name="facet.field">department_facet</str>
           <str name="facet.field">series_facet</str>
+          <str name="facet.field">author_info</str>
         </lst>
       </arr>
     </listener>
@@ -912,7 +916,7 @@
       <float name="tie">0.01</float>
 
       <!-- NOT using marc_display because it is large and will slow things down for search results -->
-      <str name="fl">id,score,author_display,author_facet,format,handle,record_creation_date,pub_date_facet,date_issued,title_display,subject_facet,genre_facet,organization_facet,department_facet,series_facet,publisher,type_of_resource_facet,abstract,notes,language,type_of_resource_mods</str>
+      <str name="fl">id,score,author_display,author_facet,format,handle,record_creation_date,pub_date_facet,date_issued,title_display,subject_facet,genre_facet,organization_facet,department_facet,series_facet,author_info,publisher,type_of_resource_facet,abstract,notes,language,type_of_resource_mods</str>
      
       <str name="facet">true</str>
       <str name="facet.mincount">1</str>
@@ -926,6 +930,7 @@
       <str name="facet.field">organization_facet</str>
       <str name="facet.field">department_facet</str>
       <str name="facet.field">series_facet</str>
+      <str name="facet.field">author_info</str>
       
       <str name="spellcheck">true</str>
       <str name="spellcheck.dictionary">default</str>
@@ -1029,7 +1034,7 @@
       <str name="pf_keyword">text^10</str>
       
       <!-- NOT using marc_display because it is large and will slow things down for search results -->
-      <str name="fl">id,score,author_display,format,handle,pub_date_facet,title_display,subject_facet,genre_facet,organization_facet,department_facet,series_facet,publisher</str>
+      <str name="fl">id,score,author_display,format,handle,pub_date_facet,title_display,subject_facet,genre_facet,organization_facet,department_facet,series_facet,author_info,publisher</str>
 
       <str name="facet">true</str>
       <str name="facet.mincount">1</str>
@@ -1043,6 +1048,8 @@
       <str name="facet.field">organization_facet</str>
       <str name="facet.field">department_facet</str>
       <str name="facet.field">series_facet</str>
+      <str name="facet.field">author_info</str>
+      
       
       <str name="spellcheck">true</str>
       <str name="spellcheck.dictionary">subject</str>

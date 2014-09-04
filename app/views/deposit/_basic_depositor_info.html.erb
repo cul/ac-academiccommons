@@ -1,20 +1,3 @@
-<% if(include_uni) %>
-	<p>
-<p>
-	<%= label_tag 'uni', "UNI"%>
-	<%= text_field_tag "uni", nil %>
-	<span class="form-field-info"></span>
-</p>
-<p>
-	
-  <%= label_tag 'nouni', ""%>
-  <%= check_box_tag 'nouni', 'n/a' %> 
-  <span class="agreement-language">
-    I do not have a UNI.
-  </span>
-</p>
-
-<% end %>
 
 <p>
    <%= label_tag 'name', 'Name' %>
@@ -27,3 +10,35 @@
    <%= text_field_tag "email", (current_user ? current_user.email : ""),:class=>required_class,:title=>'Please enter your email.' %>
    <span class="form-field-info"></span>
 </p> 
+
+<% if(include_uni) %>
+<div style="border: 0px solid black; padding:  0px 0px 20px 0px;">
+	
+    <div style='display: table; width: 100%;'>
+      <div style='display: table-row; width: 100%;'>
+        <div  style='display: table-cell; border: 0px solid black;'>
+
+			<nobr>
+				<%= label_tag 'uni', "UNI"%>
+				<input id="uni" name="uni" type="text" style="width: 160px" title="xxxx">
+				<span class="form-field-info"></span>
+			</nobr>
+
+        </div>
+        <div  style='display: table-cell; border: 0px solid black; text-align: left; width: 240px; vertical-align:middle'>
+
+			<nobr>
+			  <%= check_box_tag 'nouni', 'n/a' %> 
+			  <span class="agreement-language">
+			    I do not have a UNI.
+			  </span>
+			</nobr>
+
+        </div>
+      </div>
+    </div>  
+    
+</div>
+
+
+<% end %>

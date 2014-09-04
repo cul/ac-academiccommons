@@ -27,7 +27,31 @@ CulBlacklightAc2::Application.configure do
   config.relative_root = ""
   config.analytics_enabled = false
   
-  config.mail_deposit_recipients = ["cuac@libraries.cul.columbia.edu", "ap2972@columbia.edu"]
+  #   !!!
+  #   this part should not be commited to git
+  #   this it for my local testing only - Aleksey      !!!
+  # 
+  
+  config.action_mailer.raise_delivery_errors = true
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.smtp_settings = {
+    :address => "smtp.gmail.com",
+    :domain => "columbia.edu",
+    :user_name => 'ap2972@columbia.edu',
+    :password => 'm#xCK9NR',
+    :authentication => :login,
+    :port => 587,
+    :enable_starttls_auto => true
+  }
+
+  ################################################## !!!
+  
+  #config.deposit_notification_bcc = ["cuac@libraries.cul.columbia.edu"]
+  config.deposit_notification_bcc = ["ap2972@columbia.edu"]
+  config.indexing_report_recipients = ["ap2972@columbia.edu"]
+  
+  #config.mail_deposit_recipients = ["cuac@libraries.cul.columbia.edu", "ap2972@columbia.edu"]
+  config.mail_deposit_recipients = ["ap2972@columbia.edu", "ap2972@columbia.edu"]
   config.mail_deliverer = "ap2972@columbia.edu"
   config.base_path = "localhost:3000"
   
@@ -41,5 +65,6 @@ CulBlacklightAc2::Application.configure do
   config.gem 'blacklight_oai_provider'
   config.gem 'oai'
   
+  config.prod_environment = false
 end
 

@@ -60,6 +60,8 @@ class ACIndexing
   
   def self.reindex(options = {})
     
+    start_time = Time.new
+    
     collections = options.delete(:collections)
     items = options.delete(:items)
     # skip isn't being passed in to this function in any implementation, but it accepts an array of PIDs to ignore
@@ -137,6 +139,13 @@ class ACIndexing
     
     logger.info "FINISHED WITH THE FOLLOWING RESULTS:"
     logger.info results.inspect
+
+    finish_time = Time.new
+    
+    seconds_spent = finish_time - start_time
+    readble_time_spent = Time.at(seconds_spent).utc.strftime("%H hours, %M minutes, %S seconds")
+    
+    logger.info "Time spent: " + readble_time_spent
 
     return results
     

@@ -101,6 +101,8 @@ module Cul
         skip = options.delete(:skip) || []
 
         indexed_count = 0
+        items_not_in_solr = []
+        new_items = []
         
         logger.info "Preparing the items for indexing..."
         collections.each do |collection|
@@ -135,6 +137,8 @@ module Cul
               results[:skipped] << i.pid
               next
             end
+          else
+            items_not_in_solr << i.pid  
           end    
 
           logger.info "Indexing " + i.pid + "..."
@@ -148,6 +152,9 @@ module Cul
             begin
               rsolr.add(result_hash[:results])
               indexed_count += 1
+              if(items_not_in_solr.include? i.pid)
+                new_items << i.pid
+              end  
             rescue Exception => e
               errors << i.pid
               logger.error e.message
@@ -162,7 +169,7 @@ module Cul
         logger.info "Committing changes to Solr..."
         rsolr.commit
 
-        return {:results => results, :errors => errors, :indexed_count => indexed_count}
+        return {:results => results, :errors => errors, :indexed_count => indexed_count, :new_items => new_items}
 
       end
 

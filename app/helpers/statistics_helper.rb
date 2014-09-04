@@ -3,6 +3,8 @@ require 'csv'
 module StatisticsHelper
   
   include CatalogHelper
+  include InfoHelper
+  include LogsHelper
   require 'uri'
   
   VIEW = 'view_'
@@ -699,6 +701,95 @@ module StatisticsHelper
     
     return result   
   end
-  
+
+  def sendAuthorsReports(processed_authors, designated_recipient)
+    
+
+      Thread.new do
+        
+        start_time = Time.new
+        time_id = start_time.strftime("%Y%m%d-%H%M%S")
+        logger = Logger.new(Rails.root.to_s + "/log/monthly_reports/#{time_id}.tmp")
+        
+        logger.info "\n=== All Authors Monthly Reports ==="
+        
+        logger.info "\nStarted at: " + start_time.strftime("%Y-%m-%d %H:%M") + "\n"
+        
+        sent_counter = 0
+        skipped_counter = 0
+        sent_exceptions = 0
+        
+        processed_authors.each do |author|
+          
+          begin
+            
+            author_id = author[:id]
+            startdate = Date.parse(params[:month] + " " + params[:year])
+            enddate = Date.parse(params[:month] + " " + params[:year])
+            
+            @results, @stats, @totals =  get_author_stats(startdate, 
+                                                          enddate,
+                                                          author_id,
+                                                          nil,
+                                                          params[:include_zeroes],
+                                                          'author_uni',
+                                                          false,
+                                                          params[:order_by]
+                                                          )
+                            
+            if(designated_recipient)  
+              email = designated_recipient
+            else
+              email = author[:email]
+            end        
+                                                          
+            if(email == nil) 
+              raise "no email address found"
+            end                                                                                      
+    
+            if @totals.values.sum != 0 || params[:include_zeroes]
+              sent_counter = sent_counter + 1
+              if(params[:do_not_send_email])
+                test_msg = ' (this is test - email was not sent)'
+              else  
+                Notifier.author_monthly(email, author_id, startdate, enddate, @results, @stats, @totals, request, false, params[:optional_note]).deliver
+                test_msg = ''
+              end
+     
+              logger.info "report for '" + author_id + "' was sent to " + email + " at " + Time.new.strftime("%Y-%m-%d %H:%M") + test_msg
+            else
+              skipped_counter = skipped_counter + 1
+              logger.info "report for '" + author_id + "' was skipped"
+            end   
+             
+          rescue Exception => e
+            logger.info("(All Authors Monthly Statistics) - There is some error for " + author_id + ", " + (author[:email] || "") + ", error: " + e.to_s + ", " + Time.new.to_s)
+            sent_exceptions = sent_exceptions + 1             
+          end # begin
+          
+        end # processed_authors.each
+
+        finish_time = Time.new
+        logger.info "\nNumber of emails\n sent: " + sent_counter.to_s + ",\n skipped: " + skipped_counter.to_s +  ",\n errors: " + sent_exceptions.to_s
+        logger.info "\nFinished at: " + finish_time.strftime("%Y-%m-%d %H:%M")
+
+        seconds_spent = finish_time - start_time
+        readble_time_spent = Time.at(seconds_spent).utc.strftime("%H hours, %M minutes, %S seconds")
+        
+        logger.info "\nTime spent: " + getReadableTimeSpent(start_time)    
+
+        File.rename(Rails.root.to_s + "/log/monthly_reports/#{time_id}.tmp", Rails.root.to_s + "/log/monthly_reports/#{time_id}.log")  
+        
+      end # thread
+    
+  end # sendAuthorsReports 
+
+
+  def clean_params(params)
+      params[:one_report_uni] = nil
+      params[:test_users] = nil
+      params[:designated_recipient] = nil
+      params[:one_report_email] = nil
+  end
 
 end # ------------------------------------------ #

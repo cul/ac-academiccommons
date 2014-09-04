@@ -1,0 +1,45 @@
+
+<style>
+	.box{
+		padding: 10px 0 0 0;
+	}
+</style>
+
+<table>
+
+<tr><td>
+	<%if(@depositor.full_name == nil)%>
+		Dear author [<%= @depositor.uni %>],
+	<% else %>
+		Dear <%= @depositor.full_name %>,
+	<% end %>
+</td></tr>
+<tr><td class="box">
+	Your recent deposit to Academic Commons is now live on academiccommons.columbia.edu. 
+</td></tr>	
+
+<tr><td style="padding: 10px 0 5px 0;">The permanent URLs for the newly posted items are:</td></tr>
+
+	<% @depositor.items_list.each do | item | %>
+	   <tr><td style="padding: 5px 0 0 0;"><%= item.title %></td></tr>
+	   <tr><td style="padding: 0 0 5px 0;"><a href="<%= item.handle %>"><%= item.handle %></a> </td></tr>
+	<% end %>
+
+<tr><td class="box">
+Please use these URLs when linking on the web or citing your work.<br>
+Thank you for contributing to Academic Commons. If you have any questions about your deposit, you can reach us by replying to this email.
+</td></tr>
+<tr><td class="box">
+	
+Sincerely,<br>
+The Academic Commons Team,<br>
+<a href="http://cdrs.columbia.edu">Center for Digital Research and Scholarship</a><br>
+Columbia University Libraries / Information Services 	
+	
+</td></tr>
+
+</table>
+
+
+
+
