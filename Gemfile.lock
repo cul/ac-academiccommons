@@ -1,11 +1,10 @@
 GIT
-  remote: git@github.com:cbeer/blacklight_oai_provider.git
-  revision: 4c5a40db163e627ecb4e478847486ff4cff7db9a
+  remote: git@github.com:cul/blacklight_oai_provider.git
+  revision: ed93402a831afc3cdbc03b5c196f5f33a1b9fab3
   specs:
-    blacklight_oai_provider (0.1.1)
-      blacklight (>= 3.0)
-      oai
-      rails (>= 3.0)
+    blacklight_oai_provider (0.2.0)
+      blacklight (>= 4.2.2)
+      rails (>= 3.2.13)
 
 GIT
   remote: git@github.com:cul/oai-new-valid.git
@@ -229,7 +228,7 @@ DEPENDENCIES
   authlogic_wind
   blacklight (~> 4.0)
   blacklight_advanced_search
-  blacklight_oai_provider!
+  blacklight_oai_provider (>= 0.2.0)!
   bootstrap-sass
   coffee-rails (~> 3.2.2)
   compass
