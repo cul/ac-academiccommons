@@ -1,16 +1,16 @@
 GIT
   remote: git@github.com:cul/blacklight_oai_provider.git
-  revision: ed93402a831afc3cdbc03b5c196f5f33a1b9fab3
+  revision: 09cf738f584809e3daca34ebe2fbab76eb243008
   specs:
-    blacklight_oai_provider (0.2.0)
+    blacklight_oai_provider (0.2.1)
       blacklight (>= 4.2.2)
       rails (>= 3.2.13)
 
 GIT
   remote: git@github.com:cul/oai-new-valid.git
-  revision: 85465522fe55a7f4e1f11bcf7572c8fc6bf4f05b
+  revision: b7bc1f04bd96f4f221af5109ea3f50aada64fc42
   specs:
-    oai (0.2.1)
+    oai (0.2.4)
       builder (>= 2.0.0)
       faraday
       faraday_middleware
@@ -115,10 +115,10 @@ GEM
     erubis (2.7.0)
     execjs (1.4.0)
       multi_json (~> 1.0)
-    faraday (0.8.7)
-      multipart-post (~> 1.1)
-    faraday_middleware (0.9.0)
-      faraday (>= 0.7.4, < 0.9)
+    faraday (0.9.0)
+      multipart-post (>= 1.2, < 3)
+    faraday_middleware (0.9.1)
+      faraday (>= 0.7.4, < 0.10)
     fssm (0.2.10)
     garb (0.9.1)
       activesupport (>= 2.2.0)
@@ -146,7 +146,7 @@ GEM
     mime-types (1.23)
     multi_json (1.7.7)
     multi_test (0.0.1)
-    multipart-post (1.2.0)
+    multipart-post (2.0.0)
     mysql (2.8.1)
     net-ldap (0.3.1)
     nokogiri (1.5.0)
@@ -228,7 +228,7 @@ DEPENDENCIES
   authlogic_wind
   blacklight (~> 4.0)
   blacklight_advanced_search
-  blacklight_oai_provider (>= 0.2.0)!
+  blacklight_oai_provider (>= 0.2.1)!
   bootstrap-sass
   coffee-rails (~> 3.2.2)
   compass
@@ -245,7 +245,7 @@ DEPENDENCIES
   mysql (= 2.8.1)
   net-ldap
   nokogiri (= 1.5.0)
-  oai!
+  oai (>= 0.2.4)!
   rack (= 1.4.5)
   rails (= 3.2.13)
   railties (= 3.2.13)
