@@ -1,4 +1,12 @@
 GIT
+  remote: git@github.com:cul/blacklight_oai_provider.git
+  revision: 09cf738f584809e3daca34ebe2fbab76eb243008
+  specs:
+    blacklight_oai_provider (0.2.1)
+      blacklight (>= 4.2.2)
+      rails (>= 3.2.13)
+
+GIT
   remote: git@github.com:cul/oai-new-valid.git
   revision: b7bc1f04bd96f4f221af5109ea3f50aada64fc42
   specs:
@@ -13,13 +21,6 @@ GIT
   specs:
     rsolr (1.0.8)
       builder (>= 2.1.2)
-
-PATH
-  remote: /Users/jd2148/rails_projects/blacklight_oai_provider
-  specs:
-    blacklight_oai_provider (0.2.1)
-      blacklight (>= 4.2.2)
-      rails (>= 3.2.13)
 
 GEM
   remote: http://rubygems.org/
