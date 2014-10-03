@@ -148,8 +148,7 @@ module DepositorHelper
                                 :items => items,
                                 :overwrite => params[:overwrite], 
                                 :metadata => params[:metadata], 
-                                # temporarily forced to disable fulltext :fulltext => params[:fulltext],
-                                :fulltext => 0, 
+                                :fulltext => params[:fulltext],
                                 :delete_removed => params[:delete_removed],
                                 :time_id => time_id,
                                 :executed_by => params[:executed_by] || current_user.login
