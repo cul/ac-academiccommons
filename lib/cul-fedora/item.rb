@@ -582,7 +582,7 @@ module Cul
                     tika_result = []
                     tika_result = stdout.readlines
                     
-                    add_field.call("ac.fulltext_0", tika_result)
+                    add_field.call("ac.fulltext_#{i}", tika_result)
 
                     File.delete(resource_file)
                  end
