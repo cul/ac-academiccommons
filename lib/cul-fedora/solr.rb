@@ -150,7 +150,10 @@ module Cul
           case result_hash[:status]
           when :success
             begin
+              
               rsolr.add(result_hash[:results])
+              rsolr.commit
+              
               indexed_count += 1
               if(items_not_in_solr.include? i.pid)
                 new_items << i.pid

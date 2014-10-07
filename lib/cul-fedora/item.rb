@@ -562,31 +562,16 @@ module Cul
              listMembers.each_with_index do |member, i|
     
                 begin
-    
-                resource_file = Rails.application.config.indexing['temp_directory'] + member.pid.sub(':', "_")
-                
-                Rails.logger.debug "======= fulltext resource file: " + resource_file
-    
-                download_command = "curl " +  Rails.application.config.fedora['riurl'] + "/objects/#{member.pid}/datastreams/CONTENT/content > " + resource_file
-                
-                Rails.logger.debug "======= fulltext download_command === " + download_command 
-                
-                Open3.popen3(download_command)
+                  
+                resource_file = Rails.application.config.fedora['riurl'] + "/objects/#{member.pid}/datastreams/CONTENT/content"
+                Rails.logger.debug "======= fulltext resource_file === " + resource_file 
                 
                 text_extract_command = "java -jar " + Rails.application.config.indexing['text_extractor_jar_file'] + " -t #{resource_file}"
+                Rails.logger.debug "======= fulltext text_extract_command === " + text_extract_command 
                 
-                Rails.logger.debug "======= fulltext text_extract_command === " + text_extract_command
-                
-                Open3.popen3(text_extract_command) do |stdin, stdout, stderr|
-    
-                    tika_result = []
-                    tika_result = stdout.readlines
-                    
-                    add_field.call("ac.fulltext_#{i}", tika_result)
+                tika_result = `#{text_extract_command}`
+                add_field.call("ac.fulltext_#{i}", tika_result)
 
-                    File.delete(resource_file)
-                 end
-                 
                 rescue Exception => e
                   status = :error
                   error_message += e.message

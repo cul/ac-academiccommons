@@ -135,7 +135,7 @@ class ACIndexing
     results = solr_server.ingest(solr_params)
     
     # Let's just do a final commit to ensure everything gets pushed
-    solr_server.rsolr.commit
+    #solr_server.rsolr.commit
     
     logger.info "FINISHED WITH THE FOLLOWING RESULTS:"
     logger.info results.inspect
