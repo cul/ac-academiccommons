@@ -7,22 +7,17 @@
 <% extra_head_content << javascript_include_tag('about-videos.js') %>
 
 
-<div id="about-text"  > 
-<h1>Columbia University&apos;s <br/>Research Repository</h1>
-
-
-
-<p>
-	Academic Commons
-	 is a freely accessible digital collection of research and scholarship produced at 
-	 <a href="http://www.columbia.edu/">Columbia University</a> or one of its affiliate institutions 
-	 (<a href="http://barnard.edu/">Barnard College</a>, 
-	   <a href="http://www.tc.columbia.edu/">Teachers College</a>, 
-	   <a href="http://www.utsnyc.edu/">Union Theological Seminary</a>, 
-	   and <a href="http://www.jtsa.edu/">Jewish Theological Seminary</a>). 
-        The mission of Academic Commons is to collect and preserve the digital outputs of research and scholarship produced at Columbia and its affiliate institutions and present them to a global audience.
-
 <style>
+
+  #about-title {
+	color: #221d53;
+	font: "Open Sans", Arial, Helvetica, Geneva, sans-serif;
+	font-size: x-large;
+	font-weight: bold;
+	margin-bottom: .5em;
+	text-transform: uppercase;
+  }
+		
   #list_box {
   	padding: 0 0 0 30px;
   }
@@ -42,16 +37,33 @@
 
 </style>
 
+<div id="about-text"  > 
+
+<div id="about-title">Columbia University&apos;s Research Repository</div>
+
+
+
+<p>
+	Academic Commons
+	 is a freely accessible digital collection of research and scholarship produced at 
+	 <a href="http://www.columbia.edu/">Columbia University</a> or one of its affiliate institutions 
+	 (<a href="http://barnard.edu/">Barnard College</a>, 
+	   <a href="http://www.tc.columbia.edu/">Teachers College</a>, 
+	   <a href="http://www.utsnyc.edu/">Union Theological Seminary</a>, 
+	   and <a href="http://www.jtsa.edu/">Jewish Theological Seminary</a>). 
+        The mission of Academic Commons is to collect and preserve the digital outputs of research and scholarship produced at Columbia and its affiliate institutions and present them to a global audience.
+
+
 <div style="padding: 0 40px 0 0;">
 	
 	<div id="section">
 		Works in Academic Commons are:
 		<div id="list_box"> 
 			<ul style="list-style-type:disc">
-			  <li>assigned a permanent URL so they can always be found.</li>
-			  <li>easily discoverable via search engines.</li>
 			  <li>freely accessible online.</li>
-			  <li>regularly backed up.</li>    
+			  <li>regularly backed up.</li>
+			  <li>easily discoverable via search engines.</li>
+			  <li>assigned a permanent URL so they can always be found.</li>    
 			</ul>
 		</div>
 	</div>	
@@ -60,7 +72,8 @@
 		<div id="subhead_1">Deposit Your Research and Scholarship</div>
 		<div id="section_box">
         	If you are a current student, faculty member, or staff member OR an alumnus, former faculty member, or former staff member of Columbia or one of its affiliate institutions, we invite you to deposit outputs of research and scholarship that you created while on campus.</br></br>
-        	<h3><a href="http://academiccommons.columbia.edu/deposit">Academic Commons self-deposit form</a></h3>
+        	<h4><a href="http://academiccommons.columbia.edu/deposit">Academic Commons self-deposit form</a></h4>
+
         </div>	
 	</div>
 		
@@ -89,24 +102,37 @@
 			<div>
 			Academic Commons supports deposit of digitally formatted content such as:
 			</div>
-			<div id="list_box"> 
-				<ul style="list-style-type:disc">
-				  <li>Articles</li>
-				  <li>Blog posts</li>
-				  <li>Conference papers</li>
-				  <li>Datasets</li>
-				  <li>Dissertations</li>
-				  <li>Fictional works</li>
-				  <li>Monographs</li>
-				  <li>Multimedia creations</li>
-				  <li>Pre- and post-prints</li>
-				  <li>Technical reports</li>
-				  <li>Theses</li>
-				  <li>Working papers</li>
-				</ul>
+			
+			<div style="display:table; padding: 6px 0 0 0;">
+				<div style="display:table-row;">
+					<div id="list_box" style="display:table-cell; padding: 0 0 0 30px;">
+						<ul style="list-style-type:disc">
+						  <li>Articles</li>
+						  <li>Blog posts</li>
+						  <li>Conference papers</li>
+						  <li>Datasets</li>
+						  <li>Dissertations</li>
+						  <li>Fictional works</li>
+						  <li>Monographs</li>
+						</ul>
+					</div>
+					<div style="display:table-cell;">
+						<ul id="list_box" style="list-style-type:disc; padding: 0 0 0 60px;">
+						  
+						  <li>Multimedia creations</li>
+						  <li>Pre- and post-prints</li>
+						  <li>Presentation Slides</li>
+						  <li>Technical reports</li>
+						  <li>Theses</li>
+						  <li>Working papers</li>
+						</ul>
+					</div>
+				</div>
 			</div>
+
 		</div>	
 	</div>	
+	
 	
 	<div id="section">
 		<div id="subhead_2">CV Reviews</div>
