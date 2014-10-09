@@ -90,6 +90,9 @@ module Cul
           end
           return items
         rescue Exception => e
+          
+          Rails.logger.info "======= tika listMembers error: " + e.message
+          
           logger.error e.message
           []
         end
@@ -551,44 +554,38 @@ module Cul
             end
             
           end
-
-
-          if do_fulltext 
-            listMembers.each_with_index do |member, i|
-              tika_directory = File.expand_path(File.join(File.expand_path(File.dirname(__FILE__)), "..", "tika"))
-
-              resource_file_name = File.join(tika_directory, "scratch", Time.now.to_i.to_s + "_" + rand(10000000).to_s)
-              tika_jar = File.join(tika_directory, "tika-0.3.jar")
-
-              File.open(resource_file_name, "w") { |f| f.puts(member.datastream("CONTENT")) }
-
-
-              tika_result = []
-              tika_error = []
-
-              Open3.popen3("java -jar #{tika_jar} -t #{resource_file_name}") do |stdin, stdout, stderr|
-                tika_result = stdout.readlines
-                tika_error = stderr.readlines
-              end
-
-              unless tika_error.empty?
-                status = :error
-                error_message += tika_error.join("\n")
-              else
-
-
+          
+          if(do_fulltext) ## ===   fulltext_processing === does not work correctly if move it to separate method
+            
+            Rails.logger.debug "======= fulltext started === "
+              
+             listMembers.each_with_index do |member, i|
+    
+                begin
+                  
+                resource_file = Rails.application.config.fedora['riurl'] + "/objects/#{member.pid}/datastreams/CONTENT/content"
+                Rails.logger.debug "======= fulltext resource_file === " + resource_file 
+                
+                text_extract_command = "java -jar " + Rails.application.config.indexing['text_extractor_jar_file'] + " -t #{resource_file}"
+                Rails.logger.debug "======= fulltext text_extract_command === " + text_extract_command 
+                
+                tika_result = `#{text_extract_command}`
                 add_field.call("ac.fulltext_#{i}", tika_result)
-              end
 
-              File.delete(resource_file_name)
-
-            end
-
-          end
+                rescue Exception => e
+                  status = :error
+                  error_message += e.message
+                  Rails.logger.debug "======= fulltext indexing error: " + e.message
+                end
+                
+                 Rails.logger.debug "======= fulltext finished === "
+              end            
+          end   ##========================  fulltext_processing end ======================== #
 
         rescue Exception => e
           status = :error
           error_message += e.message
+          Rails.logger.info "=== indexing error: " + e.message
         end
 
         status = :invalid_format  if results.empty?

@@ -58,11 +58,18 @@ module CulBlacklightAc2
       solr_config_settings = ERB.new(IO.read(solr_config_file)).result
       config.solr = YAML::load(solr_config_settings)[Rails.env.to_s]
     end
+    
     fedora_config_file = File.expand_path('../fedora.yml', __FILE__)
     if File.exists? fedora_config_file
       fedora_config_settings = ERB.new(IO.read(fedora_config_file)).result
       config.fedora = YAML::load(fedora_config_settings)[Rails.env.to_s]
     end
+    
+    indexing_config_file = File.expand_path('../indexing.yml', __FILE__)
+    if File.exists? indexing_config_file
+      indexing_config_settings = ERB.new(IO.read(indexing_config_file)).result
+      config.indexing = YAML::load(indexing_config_settings)[Rails.env.to_s]
+    end    
     
     config.logger = Logger.new("#{Rails.root}/log/#{Rails.env}.log", 50, 2048000)
     

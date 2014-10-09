@@ -453,7 +453,7 @@ begin
   
   def itemscope_itemtype
 
-    url_from_map = blacklight_config[:temscope][:itemtypes][@document["genre_facet"][0]]
+    url_from_map = blacklight_config[:temscope][:itemtypes][@document["genre_facet"]]
     if(url_from_map == nil)
       return "http://schema.org/CreativeWork"
     else
