@@ -1,8 +1,8 @@
 GIT
   remote: git@github.com:cul/blacklight_oai_provider.git
-  revision: 09cf738f584809e3daca34ebe2fbab76eb243008
+  revision: 44889663cf4da5df8eb8e49b61ed5478f1fe80f8
   specs:
-    blacklight_oai_provider (0.2.1)
+    blacklight_oai_provider (0.2.2)
       blacklight (>= 4.2.2)
       rails (>= 3.2.13)
 
@@ -228,7 +228,7 @@ DEPENDENCIES
   authlogic_wind
   blacklight (~> 4.0)
   blacklight_advanced_search
-  blacklight_oai_provider (>= 0.2.1)!
+  blacklight_oai_provider (>= 0.2.2)!
   bootstrap-sass
   coffee-rails (~> 3.2.2)
   compass
