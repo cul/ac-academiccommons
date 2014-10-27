@@ -1939,13 +1939,15 @@ div.school.union{
 #most-recent {
 	}
 
-.title a, a.nav-link{
+a.nav-link{
 	display: block;
-	font-size: 1.25em;
+	font-size: 1em;
 	font-weight: bold;
 	text-transform: uppercase;
-	 
+	max-width: 100%;
+	
 }
+
 
 #home-content {
 		background: rgba(255,255,255,.5);
@@ -2456,4 +2458,13 @@ div.header-utils{
 div.sticky-wrapper{
 	
 	margin-top: 6em;
+}
+.sidebar-content.downloads{
+	max-height: 100px;
+	overflow: scroll;
+}
+div.title{
+	width: 200px;
+	text-overflow: ellipsis;
+	overflow: hidden;
 }

@@ -11,18 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131106195937) do
-  
-  create_table "student_agreements", :force => true do |t|
-    t.string   "uni"
-    t.string   "name"
-    t.string   "email"
-    t.integer  "years_embargo",     :null => false, :default => 0
-    t.string   "thesis_advisor"
-    t.string   "department"
-    t.datetime "created_at",        :null => false
-    t.datetime "updated_at",        :null => false
-  end  
+ActiveRecord::Schema.define(:version => 20141106195937) do
 
   create_table "agreements", :force => true do |t|
     t.string   "uni"
@@ -141,6 +130,17 @@ ActiveRecord::Schema.define(:version => 20131106195937) do
   add_index "statistics", ["at_time"], :name => "index_statistics_on_at_time"
   add_index "statistics", ["event"], :name => "index_statistics_on_event"
   add_index "statistics", ["identifier"], :name => "index_statistics_on_identifier"
+
+  create_table "student_agreements", :force => true do |t|
+    t.string   "uni"
+    t.string   "name"
+    t.string   "email"
+    t.string   "years_embargo"
+    t.string   "thesis_advisor"
+    t.string   "department"
+    t.datetime "created_at",     :null => false
+    t.datetime "updated_at",     :null => false
+  end
 
   create_table "taggings", :force => true do |t|
     t.integer  "tag_id"
