@@ -7,40 +7,57 @@
 <% extra_head_content << javascript_include_tag('about-videos.js') %>
 
 
+<style>
+
+  #about-title {
+	color: #221d53;
+	font: "Open Sans", Arial, Helvetica, Geneva, sans-serif;
+	font-size: x-large;
+	font-weight: bold;
+	margin-bottom: .5em;
+	text-transform: uppercase;
+  }
+		
+  #list_box {
+  	padding: 0 0 0 30px;
+  }
+  #section {
+  	padding: 0 0 0px 0;
+  } 
+  #section_box {
+  	padding: 0 0 0 0px;
+  }  
+  #subhead_1{
+  	font-size: large;
+  	font-weight: bold;
+  	padding: 10px 0 0 0;
+  }
+  #subhead_2{
+  	font-weight: bold;
+  	padding: 10px 0 0 0; 
+  }
+  body p, ul, li, #subhead_2, #subhead_1, #section_box, #section{
+  	font-size: 13px;
+  }
+
+</style>
+
 <div id="about-text"  > 
-<h1>Columbia University&apos;s <br/>Research Repository</h1>
+
+<div id="about-title">Columbia University&apos;s Research Repository</div>
 
 
 
 <p>
-	<em>Academic Commons</em> 
+	Academic Commons
 	 is a freely accessible digital collection of research and scholarship produced at 
 	 <a href="http://www.columbia.edu/">Columbia University</a> or one of its affiliate institutions 
 	 (<a href="http://barnard.edu/">Barnard College</a>, 
 	   <a href="http://www.tc.columbia.edu/">Teachers College</a>, 
 	   <a href="http://www.utsnyc.edu/">Union Theological Seminary</a>, 
 	   and <a href="http://www.jtsa.edu/">Jewish Theological Seminary</a>). 
-	   The mission of Academic Commons is to collect and store the digital outputs of research and scholarship produced at Columbia and its affiliate institutions and present them to the broadest possible audience. 
+        The mission of Academic Commons is to collect and preserve the digital outputs of research and scholarship produced at Columbia and its affiliate institutions and present them to a global audience.
 
-
-<style>
-  #list_box {
-  	padding: 0 0 0 30px;
-  }
-  #section {
-  	padding: 0 0 10px 0;
-  } 
-  #section_box {
-  	padding: 0 0 0 20px;
-  }  
-  #subhead_1{
-  	font-weight: bold;
-  }
-  #subhead_2{
-  	
-  }
-
-</style>
 
 <div style="padding: 0 40px 0 0;">
 	
@@ -48,41 +65,79 @@
 		Works in Academic Commons are:
 		<div id="list_box"> 
 			<ul style="list-style-type:disc">
-			  <li>assigned a permanent URL so they can always be found.</li>
-			  <li>easily discoverable via search engines.</li>
 			  <li>freely accessible online.</li>
-			  <li>regularly backed up.</li>    
+			  <li>regularly backed up.</li>
+			  <li>easily discoverable via search engines.</li>
+			  <li>assigned a permanent URL so they can always be found.</li>    
 			</ul>
 		</div>
 	</div>	
 	
 	<div id="section">
-		<div id="subhead_1">Eligible Contributors</div>
-		<div>You must be affiliated with Columbia or one of its affiliate institutions as:</div>
-		<div id="list_box"> 
-			<ul style="list-style-type:disc">
-			  <li>a current student, faculty member, or staff member,</li>
-			  <li>an alumnus, former faculty member, or former staff member.</li>
-			</ul>
-		</div>
-	You can deposit outputs of research and scholarship that you create while at Columbia or one of its affiliate institutions. 	
+		<div id="subhead_1">Deposit Your Research and Scholarship</div>
+		<div id="section_box">
+        	If you are a current student, faculty member, or staff member, OR an alumnus, former faculty member, or former staff member of Columbia or one of its affiliate institutions, we invite you to contribute to Academic Commons. You can deposit outputs of research and scholarship you created while at Columbia.</br></br>
+        	<h4><a href="http://academiccommons.columbia.edu/deposit">Academic Commons self-deposit form</a></h4>
+
+        </div>	
 	</div>
 		
 	
 	
 	<div id="section">
-		<div>
-		Academic Commons contributors:
-		</div>
-		<div id="list_box"> 
-			<ul style="list-style-type:disc">
-			  <li>receive monthly usage statistics for their items in the repository.</li>
-			  <li>provide colleagues around the world with easy access to their work.</li>
-			  <li>create automatic feeds from the repository to their website.</li>
-			  <li>fulfill some funder public access requirements.</li>    
-			</ul>
-		</div>
+		<div id="section_box">
+			<div>
+			As an Academic Commons contributor, you can:
+			</div>
+			<div id="list_box"> 
+				<ul style="list-style-type:disc">
+				  <li>receive monthly usage statistics for your items in the repository.</li>
+				  <li>provide colleagues around the world with easy access to your work.</li>
+				  <li>create automatic feeds from the repository to your website.</li>
+				  <li>fulfill some funder public access requirements.</li>    
+				</ul>
+			</div>
+		</div>	
 	</div>
+
+	
+	<div id="section">
+		<div id="subhead_2">Eligible Content</div>
+		<div id="section_box">
+			<div>
+			Academic Commons supports deposit of digitally formatted content such as:
+			</div>
+			
+			<div style="display:table; padding: 6px 0 0 0;">
+				<div style="display:table-row;">
+					<div id="list_box" style="display:table-cell; padding: 0 0 0 30px;">
+						<ul style="list-style-type:disc">
+						  <li>Articles</li>
+						  <li>Blog posts</li>
+						  <li>Conference papers</li>
+						  <li>Datasets</li>
+						  <li>Dissertations</li>
+						  <li>Fictional works</li>
+						  <li>Monographs</li>
+						</ul>
+					</div>
+					<div style="display:table-cell;">
+						<ul id="list_box" style="list-style-type:disc; padding: 0 0 0 60px;">
+						  
+						  <li>Multimedia creations</li>
+						  <li>Pre- and post-prints</li>
+						  <li>Presentation slides</li>
+						  <li>Technical reports</li>
+						  <li>Theses</li>
+						  <li>Working papers</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+
+		</div>	
+	</div>	
+	
 	
 	<div id="section">
 		<div id="subhead_2">CV Reviews</div>
@@ -99,32 +154,12 @@
 			Items created for Columbia events or Columbia-based groups may be eligible for deposit in Academic Commons, even if the creator is not a Columbia affiliate. Contact us for more information.
 		</div>
 	</div>	
-	
-	<div id="section">
-		<div id="subhead_1">Eligible Content</div>
-		<div>
-		Academic Commons supports deposit of digitally formatted content such as:
-		</div>
-		<div id="list_box"> 
-			<ul style="list-style-type:disc">
-			  <li>Articles</li>
-			  <li>Conference papers</li>
-			  <li>Datasets</li>
-			  <li>Dissertations</li>
-			  <li>Monographs</li>
-			  <li>Multimedia creations</li>
-			  <li>Pre- and post-prints</li>
-			  <li>Technical reports</li>
-			  <li>Theses</li>
-			  <li>Working papers</li>
-			</ul>
-		</div>
-	</div>	
+		
 
 	<div id="section">
 		<div id="subhead_1">Who We Are</div>
 		<div id="section_box">
-		Academic Commons is an initiative of the <a href="http://scholcomm.columbia.edu"> Scholarly Communication Program </a> (SCP) at the <a href="http://cdrs.columbia.edu/cdrsmain/"> Center for Digital Research and Scholarship </a> (CDRS). Visit our websites to learn more about our work with students, faculty, and staff to increase the impact and utility of research and scholarship produced at Columbia and its affiliate institutions.	
+		Academic Commons is an initiative of the <a href="http://scholcomm.columbia.edu"> Scholarly Communication Program </a>at the <a href="http://cdrs.columbia.edu/cdrsmain/"> Center for Digital Research and Scholarship</a>, which is part of <a href="http://library.columbia.edu/">Columbia University Libraries/Information Services</a>. Visit our websites to learn more about our work with students, faculty, and staff to increase the impact and utility of research and scholarship produced at Columbia and its affiliate institutions.	
 		</div>
 	</div>	
 
