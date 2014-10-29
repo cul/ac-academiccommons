@@ -1,9 +1,9 @@
 <% resource_list = build_resource_list(document) %>
 
-  <% if resource_list.length > 0 %>
+
 
 <div id="show_resources">
-
+  <% if resource_list.length > 0 %>
  
    
     <% resource_list.each_with_index do |resource, i| %>
@@ -15,7 +15,7 @@
         <!--  <div class="title"><%= link_to get_file_extension(resource[:filename].to_s), resource[:download_path] if resource[:download_path]  %> </div>  --> 
 
          <div class="title"><%= link_to resource[:filename], resource[:download_path] if resource[:download_path]  %> </div>   
-<% end %>
+	<% end %>
   <% else %>
 
 <div class="content"><em>Downloadable resources are currently unavailable for this item.</em></div>
