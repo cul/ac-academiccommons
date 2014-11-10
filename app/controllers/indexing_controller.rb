@@ -2,7 +2,45 @@ class IndexingController < ApplicationController
   
   include DepositorHelper
   
+  
   def push_indexing_results
+    
+    start_time = Time.new
+    time_id = start_time.strftime("%Y%m%d-%H%M%S")
+    logger = Logger.new(Rails.root.to_s + "/log/ac-indexing/#{time_id}.log")
+    
+    
+    logger.info ''
+    logger.info '                     started - ' + (params[:started] == nil ? '' :  params[:started])
+    logger.info '                    finished - ' + (params[:finished] == nil ? '' :  params[:finished])
+    logger.info '                  time spent - ' + (params[:time_spent] == nil ? '' :  params[:time_spent])
+    logger.info ''
+    logger.info '               all processed - '  + params[:all_processed]
+    logger.info ''
+    logger.info '                 new indexed - ' + params[:new_indexed]
+    logger.info '                   reindexed - ' + params[:reindexed]
+    logger.info ''
+    logger.info '               new embargoed - ' + params[:embargo_new]
+    logger.info '         embargoed reindexed - ' + params[:embargo_reindexed]
+    logger.info '      new embargoed released - ' + params[:embargo_new_released]
+    logger.info 'embargoed released reindexed - ' + params[:embargo_released_reindexed]
+    logger.info ''
+    logger.info '                      failed - ' + params[:failed]
+    logger.info ''
+
+    
+    if(new_indexed.size > 0)
+      notifyDepositorsItemAdded(new_indexed)
+    end
+    
+    if(embargo_new_released.size > 0)
+      notifyDepositorsItemAdded(embargo_new_released)
+    end
+
+    render nothing: true 
+  end  
+  
+  def short_push_indexing_results
     
     start_time = Time.new
     time_id = start_time.strftime("%Y%m%d-%H%M%S")
