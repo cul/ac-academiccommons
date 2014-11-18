@@ -138,5 +138,24 @@ class Notifier < ActionMailer::Base
     end  
   end
   
+  def depositor_embargoed_notification(depositor)
+    
+    @depositor = depositor
+    subject = 'Your submitted items are now available in Academic Commons'
+    content_type = 'text/html'
+    bcc = Rails.application.config.deposit_notification_bcc
+    from = Rails.application.config.mail_deliverer
+    recipients = depositor.email
+
+    if(Rails.application.config.prod_environment)
+      mail(:to => recipients, :bcc => bcc, :from => from, :subject => subject, :content_type => content_type)
+      logger.info "=== new Item notification was sent to : " + recipients.to_s + ", bcc: " + bcc.to_s
+    else  
+      subject = subject + ' - test'
+      mail(:to => bcc, :from => from, :subject => subject, :content_type => content_type)
+      logger.info "=== new Item notification was sent to : " + bcc.to_s
+    end  
+  end  
+  
 
 end

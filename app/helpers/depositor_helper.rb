@@ -7,6 +7,33 @@ module DepositorHelper
   include InfoHelper
   
   
+  def notifyDepositorsEmbargoedItemAdded(pids)
+    
+    depositors = prepareDepositorsToNotify(pids)
+
+    depositors.each do | depositor |
+      logger.info "\n ============ notifyDepositorsEmbargoedItemAdded ============="
+      logger.info "=== uni: " + depositor.uni
+      logger.info "=== email: " + depositor.email
+      if(depositor.full_name == nil)
+        logger.info "=== full_name: "
+      else
+        logger.info "=== full_name: " + depositor.full_name
+      end    
+      
+
+      depositor.items_list.each do | item |
+        logger.info "------ "
+        logger.info "------ item.pid: " + item.pid
+        logger.info "------ item.title: " + item.title
+        logger.info "------ item.handle: " + item.handle
+      end
+      
+      Notifier.depositor_embargoed_notification(depositor).deliver
+    end    
+    
+  end
+  
   def notifyDepositorsItemAdded(pids)
     
     depositors = prepareDepositorsToNotify(pids)
@@ -54,7 +81,7 @@ module DepositorHelper
 
       item.authors_uni.each do | uni |
         
-        logger.info "=== process uni: " + uni +" depositor for pid: " + pid
+        logger.info "=== process uni: " + uni.to_s + " depositor for pid: " + pid
         
         if(!depositors_to_notify.key?(uni))     
           depositor = getDepositor(uni)
@@ -151,8 +178,8 @@ module DepositorHelper
                                 :fulltext => params[:fulltext],
                                 :delete_removed => params[:delete_removed],
                                 :time_id => time_id,
-                                :executed_by => params[:executed_by] || current_user.login
-                                #:executed_by => "test"
+                                #:executed_by => params[:executed_by] || current_user.login
+                                :executed_by => "test"
                               })
                               
         logger.info "===== finished indexing, starting notifications part ==="                      
