@@ -4,6 +4,7 @@ class DownloadController < ApplicationController
 
   include InfoHelper
   include LogsHelper
+  include DownloadHelper
 
   def download_log    
     headers["Content-Type"] = "application/octet-stream"
@@ -14,6 +15,14 @@ class DownloadController < ApplicationController
   def fedora_content
       
     url = fedora_config["riurl"] + "/get/" + params[:uri]+ "/" + params[:block]
+    
+    cl = HTTPClient.new
+
+    if(cl.get(url).code != 200)
+      render :nothing => true, :status => 404
+      return
+    end  
+
     text_result = nil
 
     case params[:download_method]
@@ -22,7 +31,6 @@ class DownloadController < ApplicationController
          record_stats
       end 
    when "show_pretty"
-      cl = HTTPClient.new
       h_ct = cl.head(url).header["Content-Type"].to_s
       if h_ct.include?("xml")
         xsl = Nokogiri::XSLT(File.read(Rails.root.to_s + "/app/tools/pretty-print.xsl"))
@@ -57,6 +65,7 @@ class DownloadController < ApplicationController
     
     return uri
   end
+
 
 
   private
