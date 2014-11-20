@@ -16,7 +16,12 @@ module SolrHelper
       item.title = result.first[:title_display]
       item.handle = result.first[:handle]
       item.free_to_read_start_date = result.first[:free_to_read_start_date]
-      item.authors_uni = result.first[:author_uni].first.split(', ') || []
+      
+      if(result.first[:author_uni] == nil)
+        item.authors_uni = [] # this is duplicated in else
+      else
+        item.authors_uni = result.first[:author_uni] || []
+      end  
       
     return item
   end    
