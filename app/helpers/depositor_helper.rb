@@ -178,8 +178,8 @@ module DepositorHelper
                                 :fulltext => params[:fulltext],
                                 :delete_removed => params[:delete_removed],
                                 :time_id => time_id,
-                                #:executed_by => params[:executed_by] || current_user.login
-                                :executed_by => "test"
+                                :executed_by => params[:executed_by] || current_user.login
+                                #:executed_by => "test"
                               })
                               
         logger.info "===== finished indexing, starting notifications part ==="                      
