@@ -1,0 +1,178 @@
+
+<style>
+	.key_cell {
+		text-align: right;
+	}
+	
+	.middle_delimiter {
+		padding: 2px 5px 2px 5px;
+	}
+	
+	.rows_delimiter {
+		padding: 8px;
+	}
+</style>
+<div style='padding: 10px 0 0 0;'> 
+	Academic Commons - Daily Reindexing Summary Report 
+</div>
+
+<div style='display: table; width: ; padding: 20px 5px 0 5px;'>
+
+	<div style='display: table-row;'>
+		<div  class='key_cell' style='display: table-cell;' title="">
+			started
+		</div>
+		<div  class='middle_delimiter' style='display: table-cell;' title="">
+			-
+		</div>
+		<div  class='table-cell' style='display: table-cell;' title="">
+			<%=  (@params[:started] == nil ? '' :  @params[:started])%>
+		</div>
+	</div>
+
+	<div style='display: table-row;'>
+		<div  class='key_cell' style='display: table-cell;' title="">
+			finished
+		</div>
+		<div  class='middle_delimiter' style='display: table-cell;' title="">
+			-
+		</div>
+		<div  class='table-cell' style='display: table-cell;' title="">
+			<%=  (@params[:finished] == nil ? '' :  @params[:finished])%>
+		</div>
+	</div>
+	
+	<div style='display: table-row;'>
+		<div  class='key_cell' style='display: table-cell;' title="">
+			time spent
+		</div>
+		<div  class='middle_delimiter' style='display: table-cell;' title="">
+			-
+		</div>
+		<div  class='table-cell' style='display: table-cell;' title="">
+			<%=  (@params[:time_spent] == nil ? '' :  @params[:time_spent])%>
+		</div>
+	</div>	
+	
+	<div style='display: table-row;'>
+		<div  class='rows_delimiter' style='display: table-cell;' title=""> </div>
+	</div>	
+	
+	<div style='display: table-row;'>
+		<div  class='key_cell' style='display: table-cell;' title="">
+			all processed
+		</div>
+		<div  class='middle_delimiter' style='display: table-cell;' title="">
+			-
+		</div>
+		<div  class='table-cell' style='display: table-cell;' title="">
+			<%=  @params[:all_processed]%>
+		</div>
+	</div>
+	
+	<div style='display: table-row;'>
+		<div  class='rows_delimiter' style='display: table-cell;' title=""> </div>
+	</div>		
+	
+	<div style='display: table-row;'>
+		<div  class='key_cell' style='display: table-cell;' title="">
+			new indexed
+		</div>
+		<div  class='middle_delimiter' style='display: table-cell;' title="">
+			-
+		</div>
+		<div  class='table-cell' style='display: table-cell;' title="">
+			<%=  @new_indexed.size.to_s + ' (' + (@params[:new_indexed] == nil ? '' :  @params[:new_indexed]) + ')'%>
+		</div>
+	</div>
+	
+	<div style='display: table-row;'>
+		<div  class='key_cell' style='display: table-cell;' title="">
+			reindexed
+		</div>
+		<div  class='middle_delimiter' style='display: table-cell;' title="">
+			-
+		</div>
+		<div  class='table-cell' style='display: table-cell;' title="">
+			<%=  @params[:reindexed]%>
+		</div>
+	</div>
+	
+	<div style='display: table-row;'>
+		<div  class='rows_delimiter' style='display: table-cell;' title=""> </div>
+	</div>		
+	
+	<div style='display: table-row;'>
+		<div  class='key_cell' style='display: table-cell;' title="">
+			new embargoed
+		</div>
+		<div  class='middle_delimiter' style='display: table-cell;' title="">
+			-
+		</div>
+		<div  class='table-cell' style='display: table-cell;' title="">
+			<%=  @new_embargoed.size.to_s + ' (' + (@params[:embargo_new] == nil ? '' :  @params[:embargo_new]) + ')'%>
+		</div>
+	</div>
+	
+	<div style='display: table-row;'>
+		<div  class='key_cell' style='display: table-cell;' title="">
+			embargoed reindexed
+		</div>
+		<div  class='middle_delimiter' style='display: table-cell;' title="">
+			-
+		</div>
+		<div  class='table-cell' style='display: table-cell;' title="">
+			<%= @params[:embargo_reindexed]%>
+		</div>
+	</div>
+	
+	<div style='display: table-row;'>
+		<div  class='key_cell' style='display: table-cell;' title="">
+			new embargoed released
+		</div>
+		<div  class='middle_delimiter' style='display: table-cell;' title="">
+			-
+		</div>
+		<div  class='table-cell' style='display: table-cell;' title="">
+			<%=  @embargo_new_released.size.to_s + ' (' + (@params[:embargo_new_released] == nil ? '' :  @params[:embargo_new_released]) + ')'%>
+		</div>
+	</div>
+	
+	<div style='display: table-row;'>
+		<div  class='key_cell' style='display: table-cell;' title="">
+			embargoed released reindexed
+		</div>
+		<div  class='middle_delimiter' style='display: table-cell;' title="">
+			-
+		</div>
+		<div  class='table-cell' style='display: table-cell;' title="">
+			<%= @params[:embargo_released_reindexed]%>
+		</div>
+	</div>
+	
+	<div style='display: table-row;'>
+		<div  class='rows_delimiter' style='display: table-cell;' title=""> </div>
+	</div>		
+	
+	<div style='display: table-row;'>
+		<div  class='key_cell' style='display: table-cell;' title="">
+			failed
+		</div>
+		<div  class='middle_delimiter' style='display: table-cell;' title="">
+			-
+		</div>
+		<div  class='table-cell' style='display: table-cell;' title="">
+			<%= @params[:failed]%>
+		</div>
+	</div>
+
+</div>
+
+<div style='padding: 20px 0 0 0;'> 
+  	You can download this reindexing log from the following link:
+  	<a href="<%= 'http://' + Rails.application.config.base_path + Rails.application.config.relative_root + '/download/download_log/' + @time_id + '?log_folder=ac-indexing'  %>"><%=  @time_id + '.log' %></a>
+</div>
+
+<div>
+  	<p>CDRS</p>
+</div>

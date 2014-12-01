@@ -42,6 +42,8 @@ class IndexingController < ApplicationController
     if(new_embargoed.size > 0)
       notifyDepositorsEmbargoedItemAdded(new_embargoed)
     end  
+    
+    Notifier.reindexing_summary(params, time_id).deliver
 
     render nothing: true 
   end  

@@ -119,6 +119,23 @@ class Notifier < ActionMailer::Base
   end
   
   
+  def reindexing_summary(params, time_id)  
+    
+      recipients = Rails.application.config.indexing_report_recipients
+      from = Rails.application.config.mail_deliverer
+      subject = "Academic Commons - Daily Reindexing Summary Report"
+      content_type = 'text/html'
+      
+      @params = params
+      @new_indexed = params[:new_indexed] == nil ? [] : params[:new_indexed].split(',')
+      @new_embargoed = params[:embargo_new] == nil ? [] : params[:embargo_new].split(',')
+      @embargo_new_released = params[:embargo_new_released] == nil ? [] : params[:embargo_new_released].split(',')
+      @time_id = time_id
+
+      mail(:to => recipients, :from => from, :subject => subject, :content_type => content_type) 
+  end
+  
+  
   def depositor_first_time_indexed_notification(depositor)
     
     @depositor = depositor
