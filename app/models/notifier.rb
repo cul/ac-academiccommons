@@ -130,6 +130,7 @@ class Notifier < ActionMailer::Base
       @new_indexed = params[:new_indexed] == nil ? [] : params[:new_indexed].split(',')
       @new_embargoed = params[:embargo_new] == nil ? [] : params[:embargo_new].split(',')
       @embargo_new_released = params[:embargo_new_released] == nil ? [] : params[:embargo_new_released].split(',')
+      @failed = params[:failed] == nil ? [] : params[:failed].split(',')
       @time_id = time_id
 
       mail(:to => recipients, :from => from, :subject => subject, :content_type => content_type) 

@@ -162,14 +162,14 @@
 			-
 		</div>
 		<div  class='table-cell' style='display: table-cell;' title="">
-			<%= @params[:failed]%>
+			<%=  @failed.size.to_s + ' (' + (@params[:failed] == nil ? '' :  @params[:failed]) + ')'%>
 		</div>
 	</div>
 
 </div>
 
 <div style='padding: 20px 0 0 0;'> 
-  	You can download this reindexing log from the following link:
+  	You can download full reindexing log from the following link:
   	<a href="<%= 'http://' + Rails.application.config.base_path + Rails.application.config.relative_root + '/download/download_log/' + @time_id + '?log_folder=ac-indexing'  %>"><%=  @time_id + '.log' %></a>
 </div>
 
