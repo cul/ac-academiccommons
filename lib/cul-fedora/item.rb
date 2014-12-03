@@ -141,6 +141,9 @@ module Cul
         if(record_creation_date = mods.at_css("recordInfo>recordCreationDate"))
           record_creation_date = DateTime.parse(record_creation_date.text.gsub("UTC", "").strip)
           add_field.call("record_creation_date", record_creation_date.strftime("%Y-%m-%dT%H:%M:%SZ"))
+          
+          Rails.logger.info "====== record_creation_date: " + record_creation_date.strftime("%Y-%m-%dT%H:%M:%SZ")
+
         end
         
         if(record_change_date = mods.at_css("recordInfo>recordChangeDate"))
@@ -158,6 +161,8 @@ module Cul
         
         if(record_creation_date.nil? && !record_change_date.nil?)
           add_field.call("record_creation_date", record_change_date.strftime("%Y-%m-%dT%H:%M:%SZ"))
+          
+          logger.info "====== record_creation_date: " + record_change_date.strftime("%Y-%m-%dT%H:%M:%SZ")
         end
 
       end
@@ -322,7 +327,9 @@ module Cul
       end
 
       def index_for_ac2(options = {})
-        do_fulltext = options[:fulltext] || false
+        #do_fulltext = options[:fulltext] || false
+        do_fulltext = false
+        
         do_metadata = options[:metadata] || true
 
         status = :success
@@ -555,32 +562,32 @@ module Cul
             
           end
           
-          if(do_fulltext) ## ===   fulltext_processing === does not work correctly if move it to separate method
-            
-            Rails.logger.debug "======= fulltext started === "
-              
-             listMembers.each_with_index do |member, i|
-    
-                begin
-                  
-                resource_file = Rails.application.config.fedora['riurl'] + "/objects/#{member.pid}/datastreams/CONTENT/content"
-                Rails.logger.debug "======= fulltext resource_file === " + resource_file 
-                
-                text_extract_command = "java -jar " + Rails.application.config.indexing['text_extractor_jar_file'] + " -t #{resource_file}"
-                Rails.logger.debug "======= fulltext text_extract_command === " + text_extract_command 
-                
-                tika_result = `#{text_extract_command}`
-                add_field.call("ac.fulltext_#{i}", tika_result)
-
-                rescue Exception => e
-                  status = :error
-                  error_message += e.message
-                  Rails.logger.debug "======= fulltext indexing error: " + e.message
-                end
-                
-                 Rails.logger.debug "======= fulltext finished === "
-              end            
-          end   ##========================  fulltext_processing end ======================== #
+          # if(do_fulltext) ## ===   fulltext_processing === does not work correctly if move it to separate method
+#             
+            # Rails.logger.debug "======= fulltext started === "
+#               
+             # listMembers.each_with_index do |member, i|
+#     
+                # begin
+#                   
+                # resource_file = Rails.application.config.fedora['riurl'] + "/objects/#{member.pid}/datastreams/CONTENT/content"
+                # Rails.logger.debug "======= fulltext resource_file === " + resource_file 
+#                 
+                # text_extract_command = "java -jar " + Rails.application.config.indexing['text_extractor_jar_file'] + " -t #{resource_file}"
+                # Rails.logger.debug "======= fulltext text_extract_command === " + text_extract_command 
+#                 
+                # tika_result = `#{text_extract_command}`
+                # add_field.call("ac.fulltext_#{i}", tika_result)
+# 
+                # rescue Exception => e
+                  # status = :error
+                  # error_message += e.message
+                  # Rails.logger.debug "======= fulltext indexing error: " + e.message
+                # end
+#                 
+                 # Rails.logger.debug "======= fulltext finished === "
+              # end            
+          # end   ##========================  fulltext_processing end ======================== #
 
         rescue Exception => e
           status = :error
