@@ -65,5 +65,7 @@ CulBlacklightAc2::Application.configure do
   config.assets.allow_debugging = true
   
   config.prod_environment = false
+  
+  config.threadsafe!
 
 end

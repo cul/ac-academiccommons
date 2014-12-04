@@ -7,6 +7,7 @@ class CatalogController < ApplicationController
   include BlacklightOaiProvider::ControllerExtension
 
   include CatalogHelper
+  include StatisticsHelper
   
   before_filter :record_view_stats, :only => :show
   unloadable
@@ -436,7 +437,7 @@ end
   
   def record_stats(id, event)
    unless request.user_agent.nil?
-    unless StatSupport::is_bot?(request.user_agent)
+    unless is_bot?(request.user_agent)
       Statistic.create!(:session_id => request.session_options[:id], :ip_address => request.env['HTTP_X_FORWARDED_FOR'] || request.remote_addr, :event => event, :identifier => id, :at_time => Time.now())
     end
    end

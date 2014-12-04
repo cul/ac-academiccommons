@@ -33,8 +33,8 @@ CulBlacklightAc2::Application.configure do
   config.action_mailer.smtp_settings = {
     :address => "smtp.gmail.com",
     :domain => "columbia.edu",
-    :user_name => 'you_uni@columbia.edu',
-    :password => 'your_device_password',
+    :user_name => 'ap2972@columbia.edu',
+    :password => 'QX2c#CG5',
     :authentication => :login,
     :port => 587,
     :enable_starttls_auto => true
@@ -62,5 +62,7 @@ CulBlacklightAc2::Application.configure do
   config.gem 'oai'
   
   config.prod_environment = false
+  
+  config.threadsafe!
 end
 
