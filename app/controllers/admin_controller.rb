@@ -3,16 +3,17 @@ class AdminController < ApplicationController
   include DepositorHelper
   include InfoHelper
 
-  before_filter :require_admin, :except => [:ingest_by_cron]
+  #before_filter :require_admin, :except => [:ingest_by_cron]
+  before_filter :require_admin
   before_filter :add_jhtmlarea, :only => [:edit_home_page]
   
   #layout "no_sidebar"
   layout "application"
   
-  def ingest_by_cron
-    processIndexing(params)
-    render nothing: true 
-  end
+  # def ingest_by_cron
+    # processIndexing(params)
+    # render nothing: true 
+  # end
 
   def ingest
     
