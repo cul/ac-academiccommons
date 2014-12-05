@@ -1,11 +1,11 @@
 require "person_class"
 require "item_class"
+require "ac_indexing"
 
 module DepositorHelper
   
   include SolrHelper
   include InfoHelper
-  
   
   def notifyDepositorsEmbargoedItemAdded(pids)
     
