@@ -1,16 +1,16 @@
 GIT
   remote: git@github.com:cul/blacklight_oai_provider.git
-  revision: 44889663cf4da5df8eb8e49b61ed5478f1fe80f8
+  revision: c220d2a5847558b70b79c5f866c369fb1c02bc7e
   specs:
-    blacklight_oai_provider (0.2.2)
+    blacklight_oai_provider (0.2.3)
       blacklight (>= 4.2.2)
       rails (>= 3.2.13)
 
 GIT
   remote: git@github.com:cul/oai-new-valid.git
-  revision: b7bc1f04bd96f4f221af5109ea3f50aada64fc42
+  revision: 415ed87c2a9a644180e12ed16beef4d66a7bbe48
   specs:
-    oai (0.2.4)
+    oai (0.2.5)
       builder (>= 2.0.0)
       faraday
       faraday_middleware
@@ -242,7 +242,7 @@ DEPENDENCIES
   authlogic_wind
   blacklight (~> 4.0)
   blacklight_advanced_search
-  blacklight_oai_provider (>= 0.2.2)!
+  blacklight_oai_provider (>= 0.2.3)!
   bootstrap-sass
   capistrano
   coffee-rails (~> 3.2.2)
@@ -260,7 +260,7 @@ DEPENDENCIES
   mysql (= 2.8.1)
   net-ldap
   nokogiri (= 1.5.0)
-  oai (>= 0.2.4)!
+  oai (>= 0.2.5)!
   rack (= 1.4.5)
   rails (= 3.2.13)
   railties (= 3.2.13)
