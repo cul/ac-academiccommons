@@ -63,7 +63,7 @@ gem 'httpclient'
 gem 'nokogiri', '1.5.0'
 gem 'net-ldap'
 
-gem 'blacklight_oai_provider', '>=0.2.3', :git =>"git@github.com:cul/blacklight_oai_provider.git"
+gem 'blacklight_oai_provider', '>=0.2.4', :git =>"git@github.com:cul/blacklight_oai_provider.git"
 gem "oai", '>=0.2.5', :git =>"git@github.com:cul/oai-new-valid.git"
 
 gem 'unicode'
