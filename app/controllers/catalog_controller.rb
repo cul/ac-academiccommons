@@ -179,6 +179,7 @@ configure_blacklight do |config|
   # }
   
   config.add_show_field 'title_display',           :label => 'Title:',             :itemprops => 'name'
+  config.add_show_field 'free_to_read_start_date', :label => 'Embargoed until:'
   config.add_show_field 'author_facet',            :label => 'Author(s):',         :itemprops => 'creator',       :linked => 'facet'
   config.add_show_field 'thesis_advisor',          :label => 'Thesis Advisor(s):'
   config.add_show_field 'pub_date_facet',          :label => 'Date:',              :itemprops => 'datePublished'
@@ -203,6 +204,9 @@ configure_blacklight do |config|
   config.add_show_field 'isbn',                    :label => 'ISBN:'
   config.add_show_field 'issn',                    :label => 'ISSN:'
   config.add_show_field 'doi',                     :label => 'Publisher DOI:'
+
+  
+  
 
 
     # "fielded" search configuration. Used by pulldown among other places.
