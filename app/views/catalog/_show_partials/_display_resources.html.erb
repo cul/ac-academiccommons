@@ -16,10 +16,20 @@
 
          <div class="title"><%= link_to resource[:filename], resource[:download_path] if resource[:download_path]  %> </div>   
 	<% end %>
+  <% elsif (@document[:free_to_read_start_date] && Time.now.strftime("%Y-%m-%d") < @document[:free_to_read_start_date]) %>
+	  
+	  <div class="content">
+	  	<em>
+	  		<%= "This item is currently under embargo. It will be available starting #{@document[:free_to_read_start_date]}"%>
+	  	</em>
+	  </div>
+	  
   <% else %>
 
-<div class="content"><em>Downloadable resources are currently unavailable for this item.</em></div>
-
+	<div class="content">
+		<em>Downloadable resources are currently unavailable for this item.</em>
+	</div>
+  
  
 <% end %>
 </div> 
