@@ -71,8 +71,8 @@ module CulBlacklightAc2
       config.indexing = YAML::load(indexing_config_settings)[Rails.env.to_s]
     end    
     
-    #config.logger = Logger.new("#{Rails.root}/log/#{Rails.env}.log", 50, 2048000)
-    config.logger = Logger.new("#{Rails.root}/log/#{Rails.env}.log", 'daily')
+    config.logger = Logger.new("#{Rails.root}/log/#{Rails.env}.log", 50, 2048000)
+    #config.logger = Logger.new("#{Rails.root}/log/#{Rails.env}.log", 'daily')
 
     config.analytics_username = "***REMOVED***"
     config.analytics_password = "***REMOVED***"
