@@ -1,10 +1,24 @@
 require 'cgi'
 require 'rsolr'
+require 'json'
 
 module CatalogHelper
 
   include ApplicationHelper
   #include Blacklight::CatalogHelperBehavior
+
+  ACTIVE_CHILDREN_RI_QUERY =
+  'select $member $type $label
+   subquery( select $dctype $title from <#ri> where $member <dc:type> $dctype and $member <dc:title> $title order by $dctype )
+   from <#ri> where ($member <http://purl.oclc.org/NET/CUL/memberOf> <info:fedora/#{pid}>)
+   and ($member <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> $type)
+   and ($member <fedora-model:label> $label)
+   and ($member <fedora-model:state> <fedora-model:Active>) order by $member'.gsub("\n",' ')
+
+  DESCRIBED_BY_RI_QUERY =
+  'select $description from <#ri> where
+   $description <http://purl.oclc.org/NET/CUL/metadataFor> <info:fedora/#{pid}>
+   order by $description limit 10 offset 0'.gsub("\n",' ')
 
   def auto_add_empty_spaces(text)
     text.to_s.gsub(/([^\s-]{5})([^\s-]{5})/,'\1&#x200B;\2')
@@ -112,69 +126,32 @@ module CatalogHelper
    obj_display = (document["id"] || [])
    results = []
    uri_prefix = "info:fedora/"
-   hc = HTTPClient.new()
-   hc.ssl_config.verify_mode = OpenSSL::SSL::VERIFY_NONE
-   fedora_url = "#{fedora_config["riurl"]}/objects/"
+   hc = get_http_client
 
-   urls = {
-      :members => fedora_url + document["id"] +  "/methods/ldpd:sdef.Aggregator/listMembers?max=&format=&start=",
-   }
+   docs = []
 
-   docs = {}
-   urls.each_pair do |key, url|
-       docs[key] = Nokogiri::XML(hc.get_content(url))
-   end
-
-   domain = "#{fedora_config["riurl"]}"
-   user = "cdrs"
-   password = "***REMOVED***"
-   hc.set_auth(domain, user, password)
-
-
-   members = docs[:members].css("member").to_enum(:each_with_index).collect do |member, i|
+   ri_url = "#{fedora_config["riurl"]}/risearch"
+   opts = itql_query_opts(ACTIVE_CHILDREN_RI_QUERY.gsub('#{pid}',document['id']))
+   res = hc.post(ri_url,opts)
+   body = res.body
+   docs = JSON.parse(body)["results"]
+   docs.each_with_index.collect do |member, i|
 
      res = {}
-     member_pid = member.attributes["uri"].value.sub(uri_prefix, "")
+     member_pid = member["member"].sub(uri_prefix, "")
 
-     #this catches failed attempts to contact the fedora server 
-     begin
+     res[:pid] = member_pid
+     res[:filename] = member['label']
 
-     #get the state of the object and if not active, skip
-     state = Nokogiri::XML(hc.get_content("#{fedora_config["riurl"]}/" + "objects/" + member.attributes["uri"].value.sub(uri_prefix, "") + "/objectXML")).xpath("/foxml:digitalObject/foxml:objectProperties/foxml:property[@NAME='info:fedora/fedora-system:def/model#state']/@VALUE")      
-
-     state_str = "#{state}"
-
-     if('active'.casecmp(state_str) != 0)
-       next
-      end
-
-      rescue
-       next
-      end      
-
-      res[:pid] = member_pid
-
-      begin
-
-      res[:filename] = Nokogiri::XML(hc.get_content("#{fedora_config["riurl"]}/" + "objects/" + member.attributes["uri"].value.sub(uri_prefix, "") + "/objectXML")).xpath("/foxml:digitalObject/foxml:objectProperties/foxml:property[@NAME='info:fedora/fedora-system:def/model#label']/@VALUE")      
-
-      rescue
-       next
-      end      
-
-      res[:download_path] = fedora_content_path(:download, res[:pid], 'CONTENT', res[:filename])
+     res[:download_path] = fedora_content_path(:download, res[:pid], 'CONTENT', res[:filename])
       
-      url = fedora_config["riurl"] + "/get/" + member_pid + "/" + 'CONTENT'
+     url = fedora_config["riurl"] + "/get/" + member_pid + "/" + 'CONTENT'
 
-      cl = HTTPClient.new
-      cl.ssl_config.verify_mode = OpenSSL::SSL::VERIFY_NONE
-      h_ct = cl.head(url).header["Content-Type"].to_s
-      res[:content_type] = h_ct
+     h_ct = hc.head(url).header["Content-Type"].to_s
+     res[:content_type] = h_ct
 
-      results << res
+     results << res
     end
-    
-    #resource_list.length
 
     return results
   end
@@ -281,9 +258,15 @@ module CatalogHelper
 #catch any error and return an error message that resources are unavailable
 #this prevents fedora server outages from making ac2 item page inaccessible
 begin
-    hc = HTTPClient.new
-    doc["object_display"] = [ "#{fedora_config["riurl"]}" + "/objects/" + doc["id"] + "/methods" ]
-    json = doc_json_method(doc, "/ldpd:sdef.Core/describedBy?format=json")["results"]
+   doc["object_display"] = [ "#{fedora_config["riurl"]}" + "/objects/" + doc["id"] + "/methods" ]
+
+   ri_url = "#{fedora_config["riurl"]}/risearch"
+   opts = itql_query_opts(DESCRIBED_BY_RI_QUERY.gsub('#{pid}',doc['id']))
+   hc = get_http_client
+   res = hc.post(ri_url,opts)
+   body = res.body
+   json = JSON.parse(body)["results"]
+
     json << {"DC" => base_id_for(doc)}
     results = []
     json.each do  |meta_hash|
@@ -313,6 +296,25 @@ begin
     return results
   end
 
+  def get_http_client
+   hc = HTTPClient.new(:force_basic_auth => true)
+   hc.ssl_config.verify_mode = OpenSSL::SSL::VERIFY_NONE
+   domain = "#{fedora_config["riurl"]}"
+   user = "cdrs"
+   password = "***REMOVED***"
+   hc.set_auth(domain, user, password)
+   hc
+  end
+  def itql_query_opts(query)
+   {
+    'type'=>'tuples',
+    'lang'=>'itql',
+    'format'=> 'json',
+    'limit' => '',
+    'dt' => 'checked',
+    'query' => query
+   }
+  end
   def trim_fedora_uri_to_pid(uri)
     uri.gsub(/info\:fedora\//,"")
   end
