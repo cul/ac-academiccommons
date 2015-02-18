@@ -62,7 +62,7 @@ module CatalogHelper
     
     return [solr_response, document_list]
     
-  end  
+  end
 
   def build_recent_updated_list()
     query_params = {:q => "", :fl => "title_display, id, author_facet, record_creation_date", :sort => "record_creation_date desc", :start => 0, :rows => 100}
@@ -114,10 +114,10 @@ module CatalogHelper
    uri_prefix = "info:fedora/"
    hc = HTTPClient.new()
    hc.ssl_config.verify_mode = OpenSSL::SSL::VERIFY_NONE
-   fedora_url = "#{fedora_config["riurl"]}/get/"
+   fedora_url = "#{fedora_config["riurl"]}/objects/"
 
    urls = {
-      :members => fedora_url + document["id"] +  "/ldpd:sdef.Aggregator/listMembers?max=&format=&start=",
+      :members => fedora_url + document["id"] +  "/methods/ldpd:sdef.Aggregator/listMembers?max=&format=&start=",
    }
 
    docs = {}
