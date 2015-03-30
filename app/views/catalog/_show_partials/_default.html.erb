@@ -36,7 +36,6 @@
 	    <% end -%>
 	
 	  </dl>
-	
 	  <%= render :partial => "catalog/_show_partials/statistics" %>
 	
 	 <% metadata_list=get_metadata_list(document) -%> 
@@ -57,6 +56,13 @@
 	    <% else -%>
 	    <em>Additional metadata is currently unavailable for this item.</em>
 	    <% end -%>
+	    <dt>Suggested Citation:</dt>
+	 	<dd>
+		 	<%= first_names_then_last_suggested_citation(document_author || "") %>, 
+			<%= document_render_field_value("pub_date_facet", document["pub_date_facet"][0]) %>,
+			<%= document_render_field_value("title_display", document["title_display"]) %>, Columbia University Academic Commons, 
+			<%= document_render_field_value("handle", document["handle"]) %>
+		</dd>
 	 </dl>
 	    
 	<!--   <div class="license">This work is licensed under a <%= link_to "Creative Commons License", "http://creativecommons.org/licenses/by-nc-sa/3.0/us/" %></div> -->
