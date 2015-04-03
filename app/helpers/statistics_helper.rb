@@ -170,7 +170,7 @@ module StatisticsHelper
   
 
   def get_author_stats(startdate, enddate, query, months_list, include_zeroes, facet, include_streaming_views, order_by)
-    
+    logger.info "AAMTESTING: in get author stats for "+query
     if(query == nil || query.empty?)
       return
     end  
@@ -231,7 +231,7 @@ module StatisticsHelper
   
   
   def process_stats(stats, totals, ids, download_ids, startdate, enddate)
-    
+    logger.info "AAMTESTING: in process stats for ids "    
     enddate = enddate + 1.months
     
     stats['View'] = Statistic.count(:group => "identifier", :conditions => ["event = 'View' and identifier IN (?) AND at_time BETWEEN ? and ?", ids, startdate, enddate])
@@ -298,7 +298,7 @@ module StatisticsHelper
 
 
   def make_solar_request(facet, query)
-
+    logger.info "AAMTESTING: in make solar request for query "+query
     if(facet == "search_query")
       
       params = parse_search_query(query)
