@@ -38,6 +38,20 @@ module ApplicationHelper
     end
     return html.html_safe
   end
+
+  def first_names_then_last_suggested_citation(last_names_first)
+    
+    i = 0
+    html = ""
+    last_names_first.split(";").each do |last_name_first|
+      if(i > 0)
+        html << ", "
+      end
+      html << first_name_then_last(last_name_first.strip)
+      i += 1
+    end
+    return html.html_safe
+  end
   
   def first_name_then_last(last_name_first)
     if(last_name_first.index(","))
