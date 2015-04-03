@@ -23,7 +23,7 @@ class Notifier < ActionMailer::Base
     recipients = to_address
     from = Rails.application.config.mail_deliverer
 
-    logger.debug("AAMTESTING: in notifier statistics report - recipients " +recipients + " - from -  " +from + " - author id - " +author_id + " END AAMTESTING  ")
+    logger.debug("AAMTESTING: in notifier statistics report - recipients " +recipients.to_s + " - from -  " +from + " - author id - " +author_id + " END AAMTESTING  ")
 
     subject = "Academic Commons Monthly Download Report for #{@start_date} - #{@end_date}"
     content_type = 'text/html'

@@ -231,7 +231,7 @@ module StatisticsHelper
   
   
   def process_stats(stats, totals, ids, download_ids, startdate, enddate)
-    logger.info "AAMTESTING: in process stats for ids "+ids    
+    logger.info "AAMTESTING: in process stats for ids "    
     enddate = enddate + 1.months
     
     stats['View'] = Statistic.count(:group => "identifier", :conditions => ["event = 'View' and identifier IN (?) AND at_time BETWEEN ? and ?", ids, startdate, enddate])
