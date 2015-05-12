@@ -20,7 +20,7 @@ group :assets do
 end
 
 gem 'jquery-rails'
-gem 'rinku', '~> 1.2.2', :require => 'rails_rinku'
+gem 'rinku', '~> 1.3.0', :require => 'rails_rinku'
 
 # Use unicorn as the web server
 # gem 'unicorn'
@@ -59,7 +59,7 @@ gem 'googlecharts'
 gem 'haml', '~> 3.1.7'
 gem 'json'
 gem 'compass'
-gem 'httpclient'
+gem 'httpclient','~>2.6'
 gem 'nokogiri', '1.5.0'
 gem 'net-ldap'
 
