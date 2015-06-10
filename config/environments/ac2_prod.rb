@@ -59,6 +59,8 @@ CulBlacklightAc2::Application.configure do
   #config.assets.allow_debugging = true
 
   config.prod_environment = true
+
+  config.log_level = :error
   
   config.threadsafe!
   
