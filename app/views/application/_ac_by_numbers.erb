@@ -5,7 +5,10 @@
 			<li><strong><%= get_total_count() %></strong> items in Academic Commons.</li>
 			<li>Objects added in the last year: <strong><%= get_count_by_year() %></strong></li> 
 			<li>Objects added in the last 30 days:  <strong><%= get_count_by_month() %></strong></li>
-			<li>Visitors in <%= get_last_month_name() %>: <strong><%= get_last_month_page_visitors() %></strong></li>
+                        <% if false %>
+			   <%# waiting upgrade to oauth2 - see get_last_month_page_visitors in application_helper.rb  %>
+			  <li>Visitors in <%= get_last_month_name() %>: <strong><%= get_last_month_page_visitors() %></strong></li>
+                        <% end %>
 			
 			</ul>   
 			

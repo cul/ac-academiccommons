@@ -137,7 +137,7 @@ module ApplicationHelper
   end
   
   # def get_last_month_page_visits
-#     
+#     needs to be upgraded to oauth2
     # if(File.exists?("#{Rails.root}/tmp/#{get_last_month_name.downcase}_visits"))
       # file = File.open("#{Rails.root}/tmp/#{get_last_month_name.downcase}_visits", 'rb')
       # return file.read
