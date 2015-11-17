@@ -1,0 +1,95 @@
+<%= form_for @message, :url => contact_path do |form| %>
+  <fieldset class="fields">
+    <div>
+      <p>This form is for reporting copyright infringements under section 512 of the DMCA in Columbia University’s research repository, Academic Commons (with root URL http://academiccommons.columbia.edu). The agent to receive complaints for Academic Commons is Kathryn Pope and can be reached at cuac@library.columbia.edu
+      </p>
+      <p>
+      *Required
+      </p>
+    </div>
+    <div class="field">
+      <%= form.label :first_name %>
+      <%= form.text_field :first_name %>
+    </div>
+
+    <div class="field">
+      <%= form.label :last_name %>
+      <%= form.text_field :last_name %>
+    </div>
+    
+    <div class="field">
+      <%= form.label :email %>
+      <%= form.text_field :email %>
+    </div>
+    
+    <div class="field">
+      <%= form.label "Intellectual Property Owner (if not you)" %>
+      <%= form.text_field :intl_prop %>
+    </div>
+    
+    <div class="field">
+      <%= form.label "Nationality of Intellectual Property Owner" %>
+      <%= form.text_field :ntl_intl_prop %>
+    </div>
+
+    <div class="field">
+      <%= form.label "What is the type of your copyrighted work (text, image, database, code, etc.)?" %>
+      <%= form.text_field :kind %>
+    </div>
+
+    <div class="field">
+      <%= form.label "Is your work available online? If so, please provide the specific URL where your work can be viewed." %>
+      <%= form.text_field :url %>
+    </div>
+
+    <div class="field">
+      <%= form.label "Where is your work being infringed? Please provide the specific infringing URL." %>
+      <%= form.text_field :infringe_url %>
+    </div>
+
+    <div class="field">
+      <%= form.label "Please provide any additional information that would help us understand your work and why you are claiming infringement." %>
+      <%= form.text_area :comments %>
+    </div>
+
+    <div>
+      <p>*Required Statements</p>
+
+      <p>Please check the box next to each statement below to indicate that you agree.</p>
+    </div>
+
+    <div class="field">
+      <%= form.label "By typing my name below (electronic signature), I represent that I have a good faith belief that the use of the material named in this complaint is not authorized by the intellectual property owner, its agent, or the law (e.g. it is not fair use). " %>
+      <%= form.check_box :check_one %>
+    </div>
+    
+    <div class="field">
+      <%= form.label "I represent that the information I have entered in this complaint is accurate, and under penalty of perjury, that I am authorized to act on behalf of the owner of an exclusive right that is allegedly infringed." %>
+      <%= form.check_box :check_two %>
+    </div>
+
+    <br>
+
+    <div class="field">
+      <%= form.label "As applicable under 17 U.S.C 512(f), I acknowledge that I may be subject to liability for damages if I knowingly materially misrepresent that the material or activity named in this complaint is infringing." %>
+      <%= form.check_box :check_three %>
+    </div>
+
+    <br>
+
+    <div>
+      <p>I understand that the information submitted in this complaint may be shared with third parties, including, if applicable, the authors or creators of the material about which I am filing this complaint. </p>
+    </div>
+
+    <div class="field">
+      <%= form.label "Signature (type your name to provide your electronic signature)" %>
+      <%= form.text_field :signature %>
+    </div>
+
+
+  </fieldset>
+  
+  <fieldset class="actions">
+    <%= form.submit "Send" %>
+  </fieldset>
+<% end %>
