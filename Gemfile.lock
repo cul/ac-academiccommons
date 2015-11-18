@@ -149,6 +149,9 @@ GEM
     mail (2.5.4)
       mime-types (~> 1.16)
       treetop (~> 1.4.8)
+    mail_form (1.5.1)
+      actionmailer (>= 3.2, < 5)
+      activemodel (>= 3.2, < 5)
     marc (0.5.1)
     mime-types (1.23)
     multi_json (1.7.7)
@@ -257,6 +260,7 @@ DEPENDENCIES
   jquery-rails
   json
   kaminari (= 0.13.0)
+  mail_form
   mysql (= 2.8.1)
   net-ldap
   nokogiri (= 1.5.0)

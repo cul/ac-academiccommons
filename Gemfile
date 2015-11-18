@@ -68,3 +68,5 @@ gem "oai", '>=0.2.5', :git =>"git@github.com:cul/oai-new-valid.git"
 
 gem 'unicode'
 gem 'bootstrap-sass'
+
+gem 'mail_form'
