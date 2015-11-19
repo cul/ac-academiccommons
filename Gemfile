@@ -48,6 +48,7 @@ gem 'mysql', '2.8.1'
   gem 'cucumber-rails', '1.2.1', :require => false
   gem 'database_cleaner', '0.7.0'
   gem 'rspec-rails'
+  gem 'pry'
  end
 
 gem 'blacklight_advanced_search'

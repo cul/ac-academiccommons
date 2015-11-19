@@ -1,0 +1,40 @@
+<h4 style="text-decoration:underline"><%= message.subject %></h4>
+
+First Name: <%= @resource.first_name %>
+
+Last Name: <%= @resource.last_name %>
+
+Email: <%= @resource.email %>
+
+Intellectual Property owner: <%= @resource.intl_prop %>
+
+Nationality of Intellectual Property Owner: <%= @resource.ntl_intl_prop %>
+
+Type of work: <%= @resource.kind %>
+
+Online URL: <%= @resource.url %>
+
+Where work is being infringed: <%= @resource.infringe_url %>
+
+Additional Info: <%= @resource.comments %>
+
+Checkbox One: <%= @resource.check_one %>
+
+Checkbox Two: <%= @resource.check_two %>
+
+Checkbox Three: <%= @resource.check_three %>
+
+Signature: <%= @resource.signature %>
+
+<% @resource.class.mail_appendable.each do |attribute|
+    value = @resource.request.send(attribute)
+    value = if value.is_a?(Hash) && !value.empty?
+      list = value.to_a.map{ |k,v| content_tag(:li, h("#{k}: #{v.inspect}")) }.join("\n")
+      content_tag(:ul, raw(list), :style => "list-style:none;")
+    elsif value.is_a?(String)
+      value
+    else
+      value.inspect
+    end
+  end%>
+

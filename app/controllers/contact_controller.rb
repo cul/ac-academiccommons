@@ -5,8 +5,9 @@ class ContactController < ApplicationController
 
   def create
     @message = Message.new(params[:message])
-    
+    binding.pry
     if @message.valid?
+      @message.request = request
       @message.deliver
       redirect_to(root_path, :notice => "Message was successfully sent.")
     else
