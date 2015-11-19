@@ -8,42 +8,44 @@
       </p>
     </div>
     <div class="field">
-      <%= form.label :first_name %>
+      <%= form.label nil, "*First Name" %>
       <%= form.text_field :first_name %>
     </div>
 
     <div class="field">
-      <%= form.label :last_name %>
+      <%= form.label nil, "*Last Name" %>
       <%= form.text_field :last_name %>
     </div>
     
     <div class="field">
-      <%= form.label :email %>
+      <%= form.label nil, "*Email Address" %>
       <%= form.text_field :email %>
     </div>
     
     <div class="field">
-      <%= form.label "Intellectual Property Owner (if not you)" %>
+      <%= form.label nil, "*Intellectual Property Owner (if not you)" %>
       <%= form.text_field :intl_prop %>
     </div>
-    
+
     <div class="field">
       <%= form.label "Nationality of Intellectual Property Owner" %>
       <%= form.text_field :ntl_intl_prop %>
     </div>
 
+    <p>Describe your intellectual property:</p>
+
     <div class="field">
-      <%= form.label "What is the type of your copyrighted work (text, image, database, code, etc.)?" %>
+      <%= form.label nil, "*What is the type of your copyrighted work (text, image, database, code, etc.)?" %>
       <%= form.text_field :kind %>
     </div>
 
     <div class="field">
-      <%= form.label "Is your work available online? If so, please provide the specific URL where your work can be viewed." %>
+      <%= form.label  nil, "*Is your work available online? If so, please provide the specific URL where your work can be viewed." %>
       <%= form.text_field :url %>
     </div>
 
     <div class="field">
-      <%= form.label "Where is your work being infringed? Please provide the specific infringing URL." %>
+      <%= form.label nil, "*Where is your work being infringed? Please provide the specific infringing URL." %>
       <%= form.text_field :infringe_url %>
     </div>
 
@@ -53,7 +55,7 @@
     </div>
 
     <div class="field">
-      <%= form.label "Attach evidence for your claim (e.g. scanned version of copyright ownership, transfer, etc.)." %>
+      <%= form.label nil, "*Attach evidence for your claim (e.g. scanned version of copyright ownership, transfer, etc.)." %>
       <%= form.file_field :evidence %>
     </div>
 
@@ -87,7 +89,7 @@
     </div>
 
     <div class="field">
-      <%= form.label "Signature (type your name to provide your electronic signature)" %>
+      <%= form.label nil, "*Signature (type your name to provide your electronic signature)" %>
       <%= form.text_field :signature %>
     </div>
 
