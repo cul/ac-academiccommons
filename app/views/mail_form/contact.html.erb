@@ -1,30 +1,30 @@
 <h4 style="text-decoration:underline"><%= message.subject %></h4>
 
-First Name: <%= @resource.first_name %>
+First Name: <%= @resource.first_name %><br>
 
-Last Name: <%= @resource.last_name %>
+Last Name: <%= @resource.last_name %><br>
 
-Email: <%= @resource.email %>
+Email: <%= @resource.email %><br>
 
-Intellectual Property owner: <%= @resource.intl_prop %>
+Intellectual Property owner: <%= @resource.intl_prop %><br>
 
-Nationality of Intellectual Property Owner: <%= @resource.ntl_intl_prop %>
+Nationality of Intellectual Property Owner: <%= @resource.ntl_intl_prop %><br>
 
-Type of work: <%= @resource.kind %>
+Type of work: <%= @resource.kind %><br>
 
-Online URL: <%= @resource.url %>
+Online URL: <%= @resource.url %><br>
 
-Where work is being infringed: <%= @resource.infringe_url %>
+Where work is being infringed: <%= @resource.infringe_url %><br>
 
-Additional Info: <%= @resource.comments %>
+Additional Info: <%= @resource.comments %><br>
 
-Checkbox One: <%= @resource.check_one %>
+Checkbox One: <%= @resource.check_one %><br>
 
-Checkbox Two: <%= @resource.check_two %>
+Checkbox Two: <%= @resource.check_two %><br>
 
-Checkbox Three: <%= @resource.check_three %>
+Checkbox Three: <%= @resource.check_three %><br>
 
-Signature: <%= @resource.signature %>
+Signature: <%= @resource.signature %><br>
 
 <% @resource.class.mail_appendable.each do |attribute|
     value = @resource.request.send(attribute)

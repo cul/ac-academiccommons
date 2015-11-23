@@ -1,4 +1,5 @@
 <%= form_for @message, :url => contact_path, multipart: true do |form| %>
+  <p id="notice"><%= flash[:notice] %></p>
   <fieldset class="fields">
     <div>
       <p>This form is for reporting copyright infringements under section 512 of the DMCA in Columbia University’s research repository, Academic Commons (with root URL http://academiccommons.columbia.edu). The agent to receive complaints for Academic Commons is Kathryn Pope and can be reached at cuac@library.columbia.edu
@@ -30,7 +31,7 @@
     <div class="field">
       <%= form.label "Nationality of Intellectual Property Owner" %>
       <%= form.text_field :ntl_intl_prop %>
-    </div>
+    </div><br>
 
     <p>Describe your intellectual property:</p>
 
@@ -50,7 +51,7 @@
     </div>
 
     <div class="field">
-      <%= form.label "Please provide any additional information that would help us understand your work and why you are claiming infringement." %>
+      <%= form.label "Please provide any additional information that would help us understand your work and why you are claiming infringement." %><br>
       <%= form.text_area :comments %>
     </div>
 
@@ -58,28 +59,27 @@
       <%= form.label nil, "*Attach evidence for your claim (e.g. scanned version of copyright ownership, transfer, etc.)." %>
       <%= form.file_field :evidence %>
     </div>
-
+    <br>
     <div>
       <p>*Required Statements</p>
 
       <p>Please check the box next to each statement below to indicate that you agree.</p>
     </div>
 
-    <div class="field">
-      <%= form.label "By typing my name below (electronic signature), I represent that I have a good faith belief that the use of the material named in this complaint is not authorized by the intellectual property owner, its agent, or the law (e.g. it is not fair use). " %>
+    <div class="field" style="display:inline-block;">
       <%= form.check_box :check_one %>
+      <label class="checkbox inline">By typing my name below (electronic signature), I represent that I have a good faith belief that the use of the material named in this complaint is not authorized by the intellectual property owner, its agent, or the law( e.g. it is not fair use.).</label>
     </div>
     
-    <div class="field">
-      <%= form.label "I represent that the information I have entered in this complaint is accurate, and under penalty of perjury, that I am authorized to act on behalf of the owner of an exclusive right that is allegedly infringed." %>
+    <div class="field" style="display:inline-block;">
       <%= form.check_box :check_two %>
+      <%= form.label "I represent that the information I have entered in this complaint is accurate, and under penalty of perjury, that I am authorized to act on behalf of the owner of an exclusive right that is allegedly infringed.", :class => "checkbox inline" %>
     </div>
 
-    <br>
 
-    <div class="field">
-      <%= form.label "As applicable under 17 U.S.C 512(f), I acknowledge that I may be subject to liability for damages if I knowingly materially misrepresent that the material or activity named in this complaint is infringing." %>
+    <div class="field" style="display:inline-block;">
       <%= form.check_box :check_three %>
+      <%= form.label "As applicable under 17 U.S.C 512(f), I acknowledge that I may be subject to liability for damages if I knowingly materially misrepresent that the material or activity named in this complaint is infringing.", :class => "checkbox inline"%>
     </div>
 
     <br>

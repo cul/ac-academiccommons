@@ -5,12 +5,16 @@ class ContactController < ApplicationController
 
   def create
     @message = Message.new(params[:message])
-    if @message.valid?
+    if @message.valid? && @message.content_check
       @message.request = request
       @message.deliver
-      redirect_to(root_path, :notice => "Message was successfully sent.")
+      flash[:notice] = "Your message has been sent."
+      redirect_to root_path 
+    elsif @message.valid? && !@message.content_check
+      flash[:notice] = "Please insert a valid attachment."
+      render :new
     else
-      flash.now.alert = "Please fill all fields."
+      flash[:notice] = "Please fill out all fields"
       render :new
     end
   end

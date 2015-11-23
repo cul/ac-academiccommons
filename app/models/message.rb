@@ -32,6 +32,15 @@ class Message < MailForm::Base
     }
   end
 
+  def content_check
+    c_type = self.evidence.content_type
+    if c_type == "application/pdf" || c_type == "image/png" || c_type == "image/jpg" || c_type == "image/jpeg"
+      return true
+    else
+      return false
+    end
+  end
+
 
 
 end
