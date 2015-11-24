@@ -18,13 +18,15 @@ Where work is being infringed: <%= @resource.infringe_url %><br>
 
 Additional Info: <%= @resource.comments %><br>
 
-By typing my name below (electronic signature), I represent that I have a good faith belief that the use of the material named in this complaint is not authorized by the intellectual property owner, its agent, or the law( e.g. it is not fair use.).: <%= @resource.check_one %><br>
+By typing my name below (electronic signature), I represent that I have a good faith belief that the use of the material named in this complaint is not authorized by the intellectual property owner, its agent, or the law( e.g. it is not fair use.).: <%= @resource.check_one %><br><br>
 
-I represent that the information I have entered in this complaint is accurate, and under penalty of perjury, that I am authorized to act on behalf of the owner of an exclusive right that is allegedly infringed.: <%= @resource.check_two %><br>
+I represent that the information I have entered in this complaint is accurate, and under penalty of perjury, that I am authorized to act on behalf of the owner of an exclusive right that is allegedly infringed.: <%= @resource.check_two %><br><br>
 
-As applicable under 17 U.S.C 512(f), I acknowledge that I may be subject to liability for damages if I knowingly materially misrepresent that the material or activity named in this complaint is infringing.: <%= @resource.check_three %><br>
+As applicable under 17 U.S.C 512(f), I acknowledge that I may be subject to liability for damages if I knowingly materially misrepresent that the material or activity named in this complaint is infringing.: <%= @resource.check_three %><br><br>
 
 Signature: <%= @resource.signature %><br>
+
+<p>*For checkboxes, a value of 1 = checked, and a value of 0 = not checked.</p>
 
 <% @resource.class.mail_appendable.each do |attribute|
     value = @resource.request.send(attribute)

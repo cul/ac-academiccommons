@@ -8,13 +8,13 @@ class ContactController < ApplicationController
     if @message.valid? && @message.content_check
       @message.request = request
       @message.deliver
-      flash[:notice] = "Your message has been sent."
+      flash[:success] = "Your message has been sent."
       redirect_to root_path 
     elsif @message.valid? && !@message.content_check
-      flash[:notice] = "Please insert a valid attachment."
+      flash[:error] = "Please insert a valid attachment."
       render :new
     else
-      flash[:notice] = "Please fill out all fields"
+      flash[:error] = "Please fill out all fields"
       render :new
     end
   end
