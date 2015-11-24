@@ -1,5 +1,5 @@
 <%= form_for @message, :url => contact_path, multipart: true do |form| %>
-  <p id="notice"><%= flash[:notice] %></p>
+  <p id="notice"><%= flash[:error] %></p>
   <fieldset class="fields">
     <div>
       <p>This form is for reporting copyright infringements under section 512 of the DMCA in Columbia University’s research repository, <a href="/">Academic Commons</a> (with root URL http://academiccommons.columbia.edu). The agent to receive complaints for Academic Commons is Kathryn Pope and can be reached at <a href="mailto:cuac@library.columbia.edu">cuac@library.columbia.edu</a>
