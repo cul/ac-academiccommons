@@ -27,7 +27,7 @@ class Message < MailForm::Base
    def headers
     {
       :subject => "DMCA Takedown Form",
-      :to => "Megan.Oneill38@gmail.com",
+      :to => "DMCAtakedown@libraries.cul.columbia.edu",
       :from => %("#{last_name}, #{first_name}" <#{email}>)
     }
   end
