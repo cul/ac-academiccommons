@@ -10,7 +10,7 @@ class Message < MailForm::Base
 
 
 
-  validates :email, :first_name, :last_name, :intl_prop, :kind, :url, :infringe_url, :evidence, :signature, :presence => true
+  validates :email, :first_name, :last_name, :intl_prop, :kind, :url, :infringe_url, :evidence, :signature, :check_one, :check_two, :check_three, :presence => true
   validates :email, :format => { :with => %r{.+@.+\..+} }, :allow_blank => false
 
   
