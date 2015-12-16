@@ -1,4 +1,4 @@
-class ContactController < ApplicationController
+class DmcaController < ApplicationController
   def new
     @message = Message.new
   end
@@ -9,7 +9,7 @@ class ContactController < ApplicationController
       @message.request = request
       @message.deliver
       flash[:success] = "Your message has been sent."
-      redirect_to root_path 
+      redirect_to(:action => :index) 
     elsif @message.valid? && !@message.content_check
       flash[:error] = "Please insert a valid attachment."
       render :new
@@ -18,4 +18,10 @@ class ContactController < ApplicationController
       render :new
     end
   end
+
+  def index
+    
+  end
+
+
 end
