@@ -66,7 +66,7 @@ CulBlacklightAc2::Application.routes.draw do
   # post '/contact', to: 'contact#create', as: 'dmca'
   # get '/contact', to: 'contact#index', as: 'dmca/received'
 
-  resources :dmca
+  resources :dmcas
 
 
 

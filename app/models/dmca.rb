@@ -1,4 +1,4 @@
-class Message < MailForm::Base
+class Dmca < MailForm::Base
 
   include ActiveModel::Validations
   include ActiveModel::Conversion
@@ -15,6 +15,7 @@ class Message < MailForm::Base
 
   
   def initialize(attributes = {})
+    binding.pry
     attributes.each do |name, value|
       send("#{name}=", value)
     end
@@ -27,12 +28,14 @@ class Message < MailForm::Base
    def headers
     {
       :subject => "DMCA Takedown Form",
-      :to => "DMCAtakedown@libraries.cul.columbia.edu",
+      # :to => "DMCAtakedown@libraries.cul.columbia.edu",
+      :to => "Megan.Oneill38@gmail.com",
       :from => %("#{last_name}, #{first_name}" <#{email}>)
     }
   end
 
   def content_check
+    binding.pry
     c_type = self.evidence.content_type
     if c_type == "application/pdf" || c_type == "image/png" || c_type == "image/jpg" || c_type == "image/jpeg"
       return true

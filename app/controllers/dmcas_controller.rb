@@ -1,16 +1,17 @@
-class DmcaController < ApplicationController
+class DmcasController < ApplicationController
   def new
-    @message = Message.new
+    @dmca = Dmca.new
   end
 
   def create
-    @message = Message.new(params[:message])
-    if @message.valid? && @message.content_check
-      @message.request = request
-      @message.deliver
+    @dmca = Dmca.new(params[:dmca])
+    binding.pry
+    if @dmca.valid? && @dmca.content_check
+      @dmca.request = request
+      @dmca.deliver
       flash[:success] = "Your message has been sent."
       redirect_to(:action => :index) 
-    elsif @message.valid? && !@message.content_check
+    elsif @dmca.valid? && !@dmca.content_check
       flash[:error] = "Please insert a valid attachment."
       render :new
     else
