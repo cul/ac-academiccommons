@@ -5,7 +5,6 @@ class DmcasController < ApplicationController
 
   def create
     @dmca = Dmca.new(params[:dmca])
-    binding.pry
     if @dmca.valid? && @dmca.content_check
       @dmca.request = request
       @dmca.deliver

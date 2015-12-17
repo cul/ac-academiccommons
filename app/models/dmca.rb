@@ -15,7 +15,6 @@ class Dmca < MailForm::Base
 
   
   def initialize(attributes = {})
-    binding.pry
     attributes.each do |name, value|
       send("#{name}=", value)
     end
@@ -28,14 +27,12 @@ class Dmca < MailForm::Base
    def headers
     {
       :subject => "DMCA Takedown Form",
-      # :to => "DMCAtakedown@libraries.cul.columbia.edu",
-      :to => "Megan.Oneill38@gmail.com",
+      :to => "DMCAtakedown@libraries.cul.columbia.edu",
       :from => %("#{last_name}, #{first_name}" <#{email}>)
     }
   end
 
   def content_check
-    binding.pry
     c_type = self.evidence.content_type
     if c_type == "application/pdf" || c_type == "image/png" || c_type == "image/jpg" || c_type == "image/jpeg"
       return true
