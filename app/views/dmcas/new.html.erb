@@ -2,7 +2,7 @@
   <p id="notice"><%= flash[:error] %></p>
   <fieldset class="fields">
     <div>
-      <p>This form is for reporting copyright infringements under section 512 of the DMCA in Columbia University’s research repository, <a href="/">Academic Commons</a> (with root URL http://academiccommons.columbia.edu). The agent to receive complaints for Academic Commons is Kathryn Pope and can be reached at <a href="mailto:ac@columbia.edu">cuac@library.columbia.edu</a>
+      <p>This form is for reporting copyright infringements under section 512 of the DMCA in Columbia University’s research repository, <a href="/">Academic Commons</a> (with root URL http://academiccommons.columbia.edu). The agent to receive complaints for Academic Commons is Kathryn Pope and can be reached at <a href="mailto:ac@columbia.edu">AC@columbia.edu</a>
       </p>
       <p>
       *Required
@@ -51,7 +51,7 @@
     </div>
 
     <div class="field">
-      <%= form.label "Please provide any additional information that would help us understand your work and why you are claiming infringement." %><br>
+      <%= form.label nil, "Please provide any additional information that would help us understand your work and why you are claiming infringement." %><br>
       <%= form.text_area :comments %>
     </div>
 
@@ -61,7 +61,7 @@
     </div>
     <br>
     <div>
-      <p>*Required Statements</p>
+      <h3>Required Statements</h3>
 
       <p>Please check the box next to each statement below to indicate that you agree.</p>
     </div>
