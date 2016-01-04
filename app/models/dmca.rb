@@ -27,7 +27,7 @@ class Dmca < MailForm::Base
    def headers
     {
       :subject => "DMCA Takedown Form",
-      :to => "DMCAtakedown@libraries.cul.columbia.edu",
+      :to => "DMCAtakedown@library.columbia.edu",
       :from => %("#{last_name}, #{first_name}" <#{email}>)
     }
   end

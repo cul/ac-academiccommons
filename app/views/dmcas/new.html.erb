@@ -11,22 +11,22 @@
     <div class="field">
       <%= form.label nil, "*First Name" %>
       <%= form.text_field :first_name %>
-    </div>
+    </div><br>
 
     <div class="field">
       <%= form.label nil, "*Last Name" %>
       <%= form.text_field :last_name %>
-    </div>
+    </div><br>
     
     <div class="field">
       <%= form.label nil, "*Email Address" %>
       <%= form.text_field :email %>
-    </div>
+    </div><br>
     
     <div class="field">
       <%= form.label nil, "*Intellectual Property Owner (if not you)" %>
       <%= form.text_field :intl_prop %>
-    </div>
+    </div><br>
 
     <div class="field">
       <%= form.label "Nationality of Intellectual Property Owner" %>
@@ -38,22 +38,22 @@
     <div class="field">
       <%= form.label nil, "*What is the type of your copyrighted work (text, image, database, code, etc.)?" %>
       <%= form.text_field :kind %>
-    </div>
+    </div><br>
 
     <div class="field">
       <%= form.label  nil, "*Is your work available online? If so, please provide the specific URL where your work can be viewed." %>
       <%= form.text_field :url %>
-    </div>
+    </div><br>
 
     <div class="field">
       <%= form.label nil, "*Where is your work being infringed? Please provide the specific infringing URL." %>
       <%= form.text_field :infringe_url %>
-    </div>
+    </div><br>
 
     <div class="field">
       <%= form.label nil, "Please provide any additional information that would help us understand your work and why you are claiming infringement." %><br>
       <%= form.text_area :comments %>
-    </div>
+    </div><br>
 
     <div class="field">
       <%= form.label nil, "*Attach evidence for your claim (e.g. scanned version of copyright ownership, transfer, etc.)." %>
@@ -101,6 +101,6 @@
   </fieldset>
   
   <fieldset class="actions">
-    <%= form.submit "Send" %>
+    <%= form.submit "Submit Form" %>
   </fieldset>
 <% end %>
