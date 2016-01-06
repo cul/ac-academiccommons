@@ -4,13 +4,13 @@ class Dmca < MailForm::Base
   include ActiveModel::Conversion
   extend ActiveModel::Naming
 
-  attr_accessor :first_name, :last_name, :email, :subject, :intl_prop, :ntl_intl_prop, :kind, :url, :infringe_url, :comments, :signature, :check_one, :check_two, :check_three, :evidence
+  attr_accessor :first_name, :last_name, :email, :subject, :intl_prop, :ntl_intl_prop, :kind, :url, :infringe_url, :comments, :signature, :check_one, :check_two, :check_three, :check_four, :evidence
   attributes :evidence, :attachment => true
   attributes :nickname,   :captcha => true
 
 
 
-  validates :email, :first_name, :last_name, :intl_prop, :kind, :url, :infringe_url, :evidence, :signature, :check_one, :check_two, :check_three, :presence => true
+  validates :email, :first_name, :last_name, :kind, :url, :infringe_url, :evidence, :signature, :check_one, :check_two, :check_three, :check_four, :presence => true
   validates :email, :format => { :with => %r{.+@.+\..+} }, :allow_blank => false
 
   
