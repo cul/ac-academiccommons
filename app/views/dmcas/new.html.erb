@@ -1,25 +1,26 @@
+<h2>Copyright Complaint Form</h2>
 <%= form_for @dmca, multipart: true do |form| %>
   <p id="notice"><%= flash[:error] %></p>
   <fieldset class="fields">
     <div>
-      <p>This form is for reporting copyright infringements under section 512 of the DMCA in Columbia University’s research repository, <a href="/">Academic Commons</a> (with root URL http://academiccommons.columbia.edu). The agent to receive complaints for Academic Commons is Kathryn Pope and can be reached at <a href="mailto:ac@columbia.edu">AC@columbia.edu</a>
+      <p>This form is for reporting copyright infringements under section 512 of the DMCA in Columbia University’s research repository, <a href="/">Academic Commons</a> (with root URL http://academiccommons.columbia.edu).The agent to receive complaints for Academic Commons is Kathryn Pope, who can be reached at <a href="mailto:ac@columbia.edu">AC@columbia.edu</a>.
       </p>
       <p>
         Fields marked with an asterisk are required.      
       </p>
     </div>
     <div class="field">
-      <%= form.label nil, "*First Name" %>
+      <label><strong>*</strong>First Name</label>
       <%= form.text_field :first_name %>
     </div><br>
 
     <div class="field">
-      <%= form.label nil, "*Last Name" %>
+      <label><strong>*</strong>Last Name</label>
       <%= form.text_field :last_name %>
     </div><br>
     
     <div class="field">
-      <%= form.label nil, "*Email Address" %>
+      <label><strong>*</strong>Email Address</label>
       <%= form.text_field :email %>
     </div><br>
     
@@ -33,20 +34,20 @@
       <%= form.text_field :ntl_intl_prop %>
     </div><br>
 
-    <p>Describe your intellectual property:</p>
+    <strong><p>Describe your intellectual property:</p></strong>
 
     <div class="field">
-      <%= form.label nil, "*What is the type of your copyrighted work (text, image, database, code, etc.)?" %>
+      <label><strong>*</strong>What is the type of your copyrighted work (text, image, database, code, etc.)?</label>
       <%= form.text_field :kind %>
     </div><br>
 
     <div class="field">
-      <%= form.label  nil, "*Is your work available online? If so, please provide the specific URL where your work can be viewed." %>
+      <label><strong>*</strong>Is your work available online? If so, please provide the specific URL where your work can be viewed.</label>
       <%= form.text_field :url %>
     </div><br>
 
     <div class="field">
-      <%= form.label nil, "*Where is your work being infringed? Please provide the specific infringing URL." %>
+      <label><strong>*</strong>Where is your work being infringed? Please provide the specific infringing URL.</label>
       <%= form.text_field :infringe_url %>
     </div><br>
 
@@ -56,19 +57,19 @@
     </div><br>
 
     <div class="field">
-      <%= form.label nil, "*Attach evidence for your claim (e.g. scanned version of copyright ownership, transfer, etc.)." %>
+      <label><strong>*</strong>Attach evidence for your claim (e.g. scanned version of copyright ownership, transfer, etc.).</label>
       <%= form.file_field :evidence %>
     </div>
     <br>
     <div>
 
-      <p>*Check the box next to each statement below to indicate that you agree.</p>
+      <strong><p>*Check the box next to each statement below to indicate that you agree.</p></strong>
 
     </div>
 
     <div class="field" style="display:inline-block;">
       <%= form.check_box :check_one %>
-      <label class="checkbox inline">By typing my name below (electronic signature), I represent that I have a good faith belief that the use of the material named in this complaint is not authorized by the intellectual property owner, its agent, or the law( e.g. it is not fair use.).</label>
+      <label class="checkbox inline">By typing my name below (electronic signature), I represent that I have a good faith belief that the use of the material named in this complaint is not authorized by the intellectual property owner, its agent, or the law (e.g. it is not fair use).</label>
     </div>
     
     <div class="field" style="display:inline-block;">
@@ -90,7 +91,7 @@
     <br>
     <br>
     <div class="field">
-      <%= form.label nil, "*Signature (type your name to provide your electronic signature)" %>
+      <label><strong>*</strong>Signature (type your name to provide your electronic signature)</label>
       <%= form.text_field :signature %>
     </div>
 
