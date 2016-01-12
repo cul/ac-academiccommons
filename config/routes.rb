@@ -67,9 +67,9 @@ CulBlacklightAc2::Application.routes.draw do
   # get '/contact', to: 'contact#index', as: 'dmca/received'
 
   # resources :dmcas, path: "dmca"
-  get '/copyright_complaint_form', to: 'dmcas#new', as: 'dmcas'
-  post '/copyright_complaint_form', to: 'dmcas#create', as: 'dmcas'
-  get '/copyright_complaint_received', to: 'dmcas#index'
+  get '/copyright_infringement_notice', to: 'dmcas#new', as: 'dmcas'
+  post '/copyright_infringement_notice', to: 'dmcas#create', as: 'dmcas'
+  get '/notice_received', to: 'dmcas#index'
 
 
   resources :email_preferences, :reports
