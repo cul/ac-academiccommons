@@ -95,7 +95,7 @@ module AuthlogicWind
             self.attempted_record = record
 
             if !attempted_record
-              errors.add_to_base("Could not find user in our database.")
+	      errors[:base] << "Could not find user in our database."
             end
 
           else
@@ -107,11 +107,11 @@ module AuthlogicWind
                   self.attempted_record = klass.new(:login => uni, :wind_login => uni)
                   self.attempted_record.reset_persistence_token
                 else
-                  errors.add_to_base("Could not find UNI #{uni} in our database")
+		  errors[:base] << "Could not find UNI #{uni} in our database."
                 end
               end
             else
-              errors.add_to_base("WIND Ticket did not verify properly.")
+		errors[:base] << "WIND Ticket did not verify properly."
             end  
           end
           
@@ -168,15 +168,14 @@ module AuthlogicWind
         def generate_verified_login
 
           if (ticketid = wind_controller.params[:ticketid])
-            url = "/validate?ticketid=#{ticketid}"
-        		h = Net::HTTP.new("wind.columbia.edu", 443)
-        		h.use_ssl = true
-        		resp = h.get(url, {})
-
-        		data = resp.body
-
-        		uni = data.split[1] unless data[0,2] == "no"
-        		return uni
+                uri = URI.parse("https://#{wind_host}/validate?ticketid=#{ticketid}")
+                http = Net::HTTP.new(uri.host, uri.port)
+                http.use_ssl = true
+		request = Net::HTTP::Get.new(uri.request_uri)
+		req_obj = http.request(request)
+                data = req_obj.body
+                uni = data.split[1] unless data[0,2] == "no"
+                return uni
           else
             nil
           end
