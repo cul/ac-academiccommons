@@ -1,4 +1,5 @@
 require "stdout_logger"
+require 'csv'
 
 # used for local testing of cul-fedora gem (comment out for normal deployment)
  require File.expand_path(File.dirname(__FILE__) + '../../lib/cul-fedora/item.rb')
@@ -6,6 +7,41 @@ require "stdout_logger"
  require File.expand_path(File.dirname(__FILE__) + '../../lib/cul-fedora/solr.rb')
 
 class ACIndexing
+  
+  def self.getitems
+    # Two files right now for logging the record identifiers and the records with errors( the pids are logged for those)
+    file = File.open("some_file_path", "w")
+    file_errors = File.open("some_error_file_path", "w")
+
+    fedora_config = Rails.application.config.fedora
+    fedora_server = Cul::Fedora::Server.new(fedora_config)
+
+    ac_collection = fedora_server.item("collection:3")
+    members = ac_collection.listMembers
+
+    # The majority of below comes from lib/cul-fedora/item.rb around line 357 
+    # All the if statments are a sloppy way of getting around the rake task choking on different resources
+    members.each do |member|
+          meta = member.describedBy.first
+          if meta
+            meta = Nokogiri::XML(meta.datastream("CONTENT"))
+          end
+
+          if meta
+            mods = meta.at_css("mods")
+          end
+
+          if(mods && record_identifier = mods.at_css("recordInfo>recordIdentifier"))
+            file.puts(record_identifier)
+          else
+            file_errors.puts(member.pid)
+          end
+
+    end
+
+    file.close
+    file_errors.close
+  end
   
   def self.deleteindex
 

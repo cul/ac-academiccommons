@@ -37,5 +37,11 @@ namespace :ac do
     ACIndexing::getremoved()
     
   end
+
+  task :getitems=> :environment do
+    
+    ACIndexing::getitems()
+    
+  end
   
 end
