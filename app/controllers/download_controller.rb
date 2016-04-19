@@ -19,7 +19,7 @@ class DownloadController < ApplicationController
     
     cl = HTTPClient.new
 
-    if(cl.get(url).code != 200)
+    if(cl.head(url).status != 200)
       render :nothing => true, :status => 404
       return
     end  
