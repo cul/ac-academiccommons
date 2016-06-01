@@ -1,31 +1,35 @@
 class SitemapController < ApplicationController
 
-include Blacklight::SolrHelper
+  include Blacklight::SolrHelper
 
-      def index
+  def index
 
-#refactor: this solr call is very similar to the one in catalog_helper custom_results() - but that relies on 
-# params and modifies pub_date 
+    # refactor: this solr call is very similar to the one in
+    # catalog_helper custom_results() - but that relies on params
+    # and modifies pub_date
 
     q = ""
     fl = "id, record_creation_date"
     sort = "record_creation_date desc"
-#this is the upper limit for a single sitemap, see sitemap.org
+    # this is the upper limit for a single sitemap, see sitemap.org
     rows = "50000"
 
 
     solr_response = force_to_utf8(Blacklight.solr.find(:q => q, :fl => fl, :sort => sort, :start => 0, :rows => rows))
     document_list = solr_response.docs.collect {|doc| SolrDocument.new(doc, solr_response)}
 
-    headers['Content-Type'] = 'application/xml'
     latest = document_list.first
 
-     	     if stale?(:etag => latest, :last_modified => Time.zone.parse(latest["record_creation_date"]).utc)
-		 @docs = document_list
-	         @response = solr_response
-		 respond_to do |format| 
-	    	   format.xml { render :layout => false, :template => 'sitemap/map', :formats => :xml, :handlers => :builder and return}
-	         end
-	      end
-     end
+    if stale?(:etag => latest, :last_modified => Time.zone.parse(latest["record_creation_date"]).utc)
+      @docs = document_list
+      @response = solr_response
+      headers['Content-Type'] = 'application/xml'
+      headers['Last-Modified-Date'] = Time.zone.parse(latest["record_creation_date"]).utc.httpdate
+      respond_to do |format|
+        format.xml do
+          render :layout => false, :template => 'sitemap/map', :formats => :xml, :handlers => :builder
+        end
+      end
+    end
+  end
 end
