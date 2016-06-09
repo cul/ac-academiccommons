@@ -80,7 +80,7 @@ CulBlacklightAc2::Application.routes.draw do
     :uri => /.+/, :filename => /.+/, :download_method => /(download|show|show_pretty)/
   match '/access_denied', :to => 'application#access_denied', :as => 'access_denied'
   
-  match '/ingest_monitor/:id', :to => 'ingest_monitor#index', :as => 'ingest_monitor'
+  match '/ingest_monitor/:id', :to => 'ingest_monitor#show', :as => 'ingest_monitor'
   
   match '/statistics/search_history', :to => 'statistics#search_history', :as => 'search_statistics'
   

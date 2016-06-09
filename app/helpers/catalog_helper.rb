@@ -154,6 +154,9 @@ module CatalogHelper
     end
 
     return results
+  rescue StandardError => e
+    Rails.logger.error e.message
+    return []
   end
  
   def get_departments_list
