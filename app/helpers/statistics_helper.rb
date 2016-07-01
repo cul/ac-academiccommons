@@ -705,8 +705,6 @@ module StatisticsHelper
   def sendAuthorsReports(processed_authors, designated_recipient)
     
 
-      Thread.new do
-        
         start_time = Time.new
         time_id = start_time.strftime("%Y%m%d-%H%M%S")
         logger = Logger.new(Rails.root.to_s + "/log/monthly_reports/#{time_id}.tmp")
@@ -780,8 +778,6 @@ module StatisticsHelper
 
         File.rename(Rails.root.to_s + "/log/monthly_reports/#{time_id}.tmp", Rails.root.to_s + "/log/monthly_reports/#{time_id}.log")  
         
-      end # thread
-    
   end # sendAuthorsReports 
 
 
