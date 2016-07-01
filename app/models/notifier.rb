@@ -22,15 +22,15 @@ class Notifier < ActionMailer::Base
     @end_date = end_date.strftime("%b %Y")
     recipients = to_address
     from = Rails.application.config.mail_deliverer
+    full_from = "\"Academic Commons\" <#{from}>"
 
-    logger.debug("AAMTESTING: in notifier statistics report - recipients " +recipients.to_s + " - from -  " +from + " - author id - " +author_id + " END AAMTESTING  ")
 
     subject = "Academic Commons Monthly Download Report for #{@start_date} - #{@end_date}"
     content_type = 'text/html'
     @streams = show_streams
     @optional_note = optional_note
     
-    mail(:to => recipients, :from => from, :subject => subject, :content_type => content_type) 
+    mail(:to => recipients, :from => full_from, :subject => subject, :content_type => content_type) 
     
     logger.debug("Report sent for: " + author_id + " to: " + to_address)
   end  
