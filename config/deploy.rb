@@ -1,72 +1,77 @@
-set :default_stage, "ac2_bl4_dev"
-set :stages, %w(passenger_dev passenger_test passenger_prod ac2_bl4_dev ac2_bl4_test ac2_prod)
+lock '3.5.0'
 
-require 'capistrano/ext/multistage'
-require 'bundler/capistrano'
-require 'date'
 
-default_run_options[:pty] = true
+set :department, 'cdrs'
+set :instance, fetch(:department)
+set :application, 'ac'
+set :repo_name, "#{fetch(:department)}-#{fetch(:application)}"
+set :deploy_name, "#{fetch(:application)}_#{fetch(:stage)}"
+# used to run rake db:migrate, etc
+# Default value for :rails_env is fetch(:stage)
+set :rails_env, fetch(:deploy_name)
+# use the rvm wrapper
+set :rvm_ruby_version, fetch(:deploy_name)
 
-set :scm, :git
-set :repository,  "git@github.com:cul/cul-blacklight-ac2.git"
-set :application, "scv"
-set :use_sudo, false
+set :repo_url,  "git@github.com:cul/#{fetch(:repo_name)}.git"
 
-set :git_enable_submodules, 1
-set :deploy_via, :remote_cache
+set :remote_user, "#{fetch(:instance)}serv"
 
-set :branch do
 
-  tag = Capistrano::CLI.ui.ask "\nPlease, provide a tag name you want to deploy,\notherwise '#{default_branch}' branch will be deployed\nto #{domain}:#{deploy_to}current.\n: "
-  if !tag.empty?
-     tag
-  else
-     branch = default_branch
-  end
+# Default deploy_to directory is /var/www/:application
+# set :deploy_to, '/var/www/my_app_name'
+set :deploy_to,   "/opt/passenger/#{fetch(:instance)}/#{fetch(:deploy_name)}"
 
-end
+
+#set :scm, :git
+
+# Default value for :format is :pretty
+# set :format, :pretty
+
+# Default value for :log_level is :debug
+# set :log_level, :debug
+set :log_level, :info
+
+# Default value for linked_dirs is []
+set :linked_dirs, fetch(:linked_dirs, []).push('log','tmp/pids')
+
+# Default value for keep_releases is 5
+set :keep_releases, 3
+
+set :passenger_restart_with_touch, true
+
+
+
+set :linked_files, fetch(:linked_files, []).push(
+  "config/database.yml",
+  "config/solr.yml",
+  "config/fedora.yml",
+)
+
+
 
 namespace :deploy do
-
-  desc "Add tag based on current version"
-  task :auto_tag, :roles => :app do
-    current_version = IO.read("VERSION").to_s.strip + DateTime.now.strftime("-%m%d%y-%I%M%p")
-
-    tag = Capistrano::CLI.ui.ask "Tag to add: [#{current_version}]}"
-    tag = current_version if tag.empty?
- 
-    system("git tag -a #{tag} -m 'created from branch: #{branch}' && git push origin --tags")
-  end
-  
-  desc "Restart Application"
-  task :restart, :roles => :app do
-    run "mkdir -p #{current_path}/tmp/cookies"
-    run "touch #{current_path}/tmp/restart.txt"
+  desc "Report the environment"
+  task :report do
+    run_locally do
+      puts "cap called with stage = \"#{fetch(:stage,'none')}\""
+      puts "cap would deploy to = \"#{fetch(:deploy_to,'none')}\""
+      puts "cap would install from #{fetch(:repo_url)}"
+      puts "cap would install in Rails env #{fetch(:rails_env)}"
+    end
   end
 
-  task :symlink_shared do
-    run "ln -nfs #{deploy_to}shared/database.yml #{release_path}/config/database.yml"
-    run "ln -nfs #{deploy_to}shared/solr.yml #{release_path}/config/solr.yml"
-    run "ln -nfs #{deploy_to}shared/fedora.yml #{release_path}/config/fedora.yml"
-    run "ln -nfs #{deploy_to}shared/indexing.yml #{release_path}/config/indexing.yml"
-    run "rm -rf #{release_path}/data/self-deposit-uploads"
-    run "ln -nfs #{deploy_to}shared/self-deposit-uploads #{release_path}/data/self-deposit-uploads"
-    
-    run "ln -nfs #{deploy_to}shared/robots.txt #{release_path}/public/robots.txt"
+  desc "Add tag based on current version from VERSION file"
+  task :auto_tag do
+    current_version = "v#{IO.read("VERSION").strip}/#{DateTime.now.strftime("%Y%m%d")}"
+                      
+    ask(:tag, current_version)
+    tag = fetch(:tag)
+
+    system("git tag -a #{tag} -m 'auto-tagged' && git push origin --tags")
   end
 
-  task :create_shared_resources do
-    run "mkdir -p #{deploy_to}shared/log/ac-indexing"
-    run "mkdir -p #{deploy_to}shared/self-deposit-uploads"
-  end
-  
+#  after :restart, :clear_cache do
+#    on roles(:web), in: :groups, limit: 3, wait: 10 do
+#    end
+#  end
 end
-
-after "deploy" do
-  run "echo #{branch} > #{deploy_to}shared/relesed_branch_tag.txt"
-  run "cp -r #{deploy_to}shared/cached-copy/app/assets/stylesheets/* #{deploy_to}shared/assets/"
-  run "cp -r #{deploy_to}shared/cached-copy/app/assets/images/* #{deploy_to}shared/assets/"
-  run "cp -r #{deploy_to}shared/cached-copy/app/assets/javascripts/* #{deploy_to}shared/assets/"
-end  
-
-after 'deploy:update_code', 'deploy:symlink_shared', 'deploy:create_shared_resources'
