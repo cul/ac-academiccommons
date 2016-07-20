@@ -1,4 +1,4 @@
-lock '3.5.0'
+lock '3.1.0'
 
 
 set :department, 'cdrs'
