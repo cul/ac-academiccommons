@@ -1,4 +1,4 @@
-CulBlacklightAc2::Application.configure do
+AcademicCommons::Application.configure do
   # Settings specified here will take precedence over those in config/application.rb
 
   # The test environment is used exclusively to run your application's
@@ -12,7 +12,7 @@ CulBlacklightAc2::Application.configure do
 
   # Show full error reports and disable caching
   config.consider_all_requests_local       = true
-  config.action_controller.perform_caching = false
+  config.action_controller.perform_caching = true
 
   # Raise exceptions instead of rendering exception templates
   config.action_dispatch.show_exceptions = false
@@ -27,7 +27,7 @@ CulBlacklightAc2::Application.configure do
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
     :address => "localhost",
-    :domain => "bronte.cul.columbia.edu",
+    :domain => "cdrs-nginx-test1.cul.columbia.edu",
     :port => 25
   }
 
@@ -42,9 +42,18 @@ CulBlacklightAc2::Application.configure do
   config.relative_root = ''
   config.analytics_enabled = false
   
-  config.mail_deposit_recipients = ["cuac@libraries.cul.columbia.edu"]
-  config.mail_deliverer = "cuac@libraries.cul.columbia.edu"
-  config.base_path = "bronte.cul.columbia.edu"
+  # in test env-t config.deposit_notification_bcc will be used instead of depositor's email
+  # config.deposit_notification_bcc = ["cuac@libraries.cul.columbia.edu"]
+  # config.indexing_report_recipients = ["cuac@libraries.cul.columbia.edu"]
+  # config.mail_deposit_recipients = ["cuac@libraries.cul.columbia.edu"]
+  # config.mail_deliverer = "cuac@libraries.cul.columbia.edu"
+  
+  config.deposit_notification_bcc = ["ac@columbia.edu"]
+  config.indexing_report_recipients = ["ac@columbia.edu"]
+  config.mail_deposit_recipients = ["ac@columbia.edu"]
+  config.mail_deliverer = "ac@columbia.edu"  
+  
+  config.base_path = "academiccommons.columbia.edu"
 
 
 
@@ -54,7 +63,9 @@ CulBlacklightAc2::Application.configure do
 
   # Allow pass debug_assets=true as a query parameter to load pages with unpackaged assets
   config.assets.allow_debugging = true
-
+  
   config.prod_environment = false
   
+  config.threadsafe!
+
 end

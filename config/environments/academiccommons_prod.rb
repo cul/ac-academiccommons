@@ -1,4 +1,4 @@
-CulBlacklightAc2::Application.configure do
+AcademicCommons::Application.configure do
   # Settings specified here will take precedence over those in config/application.rb
 
   # The test environment is used exclusively to run your application's
@@ -27,7 +27,7 @@ CulBlacklightAc2::Application.configure do
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
     :address => "localhost",
-    :domain => "bernstein.cul.columbia.edu",
+    :domain => "cdrs-nginx-prod1.cul.columbia.edu",
     :port => 25
   }
 
@@ -47,7 +47,7 @@ CulBlacklightAc2::Application.configure do
   config.indexing_report_recipients = ["cuac@libraries.cul.columbia.edu"]
   config.mail_deposit_recipients = ["cuac@libraries.cul.columbia.edu"]
   config.mail_deliverer = "cuac@libraries.cul.columbia.edu"
-  config.base_path = "bernstein.cul.columbia.edu"
+  config.base_path = "cdrs-nginx-prod1.cul.columbia.edu"
 
 
 

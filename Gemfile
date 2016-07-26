@@ -5,7 +5,7 @@ gem 'rails', '3.2.13'
 gem "rsolr",  :git =>"git@github.com:cul/rsolr.git"
 gem 'rake', '~> 10.0.0'
 gem 'rack', '1.4.5'
-gem 'sqlite3', '1.3.5'
+gem 'sqlite3', '>= 1.3.5'
 gem 'blacklight', '~> 4.0'
 gem 'actionpack', '3.2.13'
 gem 'railties', '3.2.13'
@@ -34,7 +34,7 @@ gem 'rinku', '~> 1.3.0', :require => 'rails_rinku'
 # gem 'nokogiri'
 gem 'sqlite3-ruby', :require => 'sqlite3'
 #  gem 'mysql', '2.8.1'
-gem 'mysql', '2.8.1'
+gem 'mysql', '>= 2.8.1'
 
 # gem 'aws-s3', :require => 'aws/s3'
 
