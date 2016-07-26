@@ -3,7 +3,7 @@ lock '3.4.0'
 
 set :department, 'cdrs'
 set :instance, fetch(:department)
-set :application, 'ac'
+set :application, 'academiccommons'
 set :repo_name, "#{fetch(:department)}-#{fetch(:application)}"
 set :deploy_name, "#{fetch(:application)}_#{fetch(:stage)}"
 # used to run rake db:migrate, etc
