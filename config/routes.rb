@@ -1,4 +1,4 @@
-CulBlacklightAc2::Application.routes.draw do
+AcademicCommons::Application.routes.draw do
   get "info/about"
 
   Blacklight.add_routes(self)

@@ -1,7 +1,7 @@
 lock '3.4.0'
 
 
-set :department, 'cdrs'
+set :department, 'ac'
 set :instance, fetch(:department)
 set :application, 'academiccommons'
 set :repo_name, "#{fetch(:department)}-#{fetch(:application)}"
