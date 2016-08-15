@@ -30,11 +30,11 @@
     <!-- [if lt IE8] <%= stylesheet_link_tag "compiled/ie.css", :media => "screen, projection" %> -->
 
     <%= render_head_content %>
-   
+
     <% javascript_tag do -%>
-    <%= yield(:jstemplates) %> 
+    <%= yield(:jstemplates) %>
     <% end -%>
-  
+
 </head>
 
 
@@ -43,7 +43,7 @@
 <!--[if IE 7 ]>    <body class="ie7" onload="$('input#q').focus();"> <![endif]-->
 <!--[if IE 8 ]>    <body class="ie8" onload="$('input#q').focus();"> <![endif]-->
 <!--[if IE 9 ]>    <body class="ie9" onload="$('input#q').focus();"> <![endif]-->
-<!--[if (gt IE 9)|!(IE)]><!--> <body onload="$('input#q').focus();"> <!--<![endif]--> 
+<!--[if (gt IE 9)|!(IE)]><!--> <body onload="$('input#q').focus();"> <!--<![endif]-->
 <% else %>
 <!--[if lt IE 7 ]> <body class="ie6"> <![endif]-->
 <!--[if IE 7 ]>    <body class="ie7"> <![endif]-->
@@ -51,21 +51,21 @@
 <!--[if IE 9 ]>    <body class="ie9"> <![endif]-->
 <!--[if (gt IE 9)|!(IE)]><!--> <body> <!--<![endif]-->
 <% end %>
-  
-  
+
+
 <div  class="container" id="header">
- 
 
 
 
-<header> 
-		 	
+
+<header>
+
 		<h1 class="site_title"><%= link_to application_name, root_path %><%= (params[:controller] == "catalog" and !params[:id]) ? "<span id='results_text'>Search Results</span>" : "" %></h1>
-	
+
 </header>
 </div>
-<div class="container clearfix" id="main" > 
- 
+<div class="container clearfix" id="main" >
+
 
 
 	<%- if page_location == "home" || page_location == "browse_view" -%>
@@ -73,30 +73,30 @@
 	<div id="home-search" class="span-16 prepend-4">
 	    <%= render :partial=>'/catalog/search_box' %>
 	</div>
-	
-	
-	 
-	
+
+
+
+
 		<% end %>
-	    
- 
-	
+
+
+
 	<%- if page_location == "home" -%>
-	  
+
 	<%= render :partial=>'/catalog/home_text' %>
-	
+
 	<% end %>
-	
- 
-    
+
+
+
     <div id="util_links" class='box'>
 			<%= render :partial=>'/user_util_links' %>
    </div>
-	
+
 	<div id="content" class="box">
-	
+
 	<%#= render :partial=>'/flash_msg' %>
-	
+
 	<% if flash[:notice] %>
 	<div class="ui-state-highlight ui-corner-all notice"> <%=flash[:notice]%> </div>
 	<br>
@@ -106,34 +106,34 @@
 	<%- if page_location == "search_results" -%>
 
 	<div id = "search-breadcrumbs">
-	
+
 	<%= render :partial=>'/catalog/constraints' %>
-	
-	</div> 
- 
-	
+
+	</div>
+
+
 	<% end %>
     <%= yield %>
-	
+
 	</div>
-          
- 
+
+
 	<footer class="span-24 append-bottom">
-	
-	<div id="footer"> 
-	
+
+	<div id="footer">
+
 		<%= @footer %>
-	
+
 	</div>
 
     </footer>
 
-</div>  <!-- div#container -->    
- 
+</div>  <!-- div#container -->
 
 
 
- <div class="container"> 
+
+ <div class="container">
 
 <div id="colophon" class="span-24 append-bottom">
 <%= render :partial=>'layouts/footer_line' %>
@@ -142,23 +142,24 @@
 
 
 <%- if Rails.application.config.analytics_enabled == true -%>
-<script type="text/javascript"> 
+<script type="text/javascript">
 
-  var _gaq = _gaq || []; 
-  _gaq.push(['_setAccount', 'UA-10481105-1']); 
-  _gaq.push(['_trackPageview'], 
-['aggregate._setAccount', 'UA-7973988-3'], 
-['aggregate._trackPageview'] 
-); 
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-10481105-1']);
+  _gaq.push(['_trackPageview'],
+['aggregate._setAccount', 'UA-7973988-3'],
+['aggregate._trackPageview']
+);
 
-  (function() { 
-    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true; 
-    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js'; 
-    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s); 
-  })(); 
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
 
 </script> <% end %>
 
+<%= render :partial=>'layouts/cul-banner' %>
+
 </body>
-  
 </html>

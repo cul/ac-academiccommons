@@ -9,7 +9,7 @@
 <title><%= h(@page_title || application_name) %></title>
 
 <meta name="bitly-verification" content="35191b8f3154"/>
- 
+
 
 <%= favicon_link_tag asset_path('favicon-crown.png', :media => "screen,projection", :rel => "shortcut icon", :type => "text/css") %>
 <%= stylesheet_link_tag "blueprint/screen", :media => "screen,projection"  %>
@@ -20,7 +20,7 @@
 <%= stylesheet_link_tag  'font-awesome/css/font-awesome.min', :media => 'screen, projection' %>
 
 
- 
+
 <!-- [if lt IE8] <%= stylesheet_link_tag "compiled/ie.css", :media => "screen, projection" %> -->
 
 
@@ -29,9 +29,9 @@
 
 <link href="<%= url_for :controller=>'catalog',:action => 'opensearch', :format => 'xml', :only_path => false %>" title="<%= application_name%>" type="application/opensearchdescription+xml" rel="search"/>
 
-        
+
     <% javascript_tag do -%>
-    <%= yield(:jstemplates) %> 
+    <%= yield(:jstemplates) %>
     <% end -%>
 <%= javascript_include_tag "http://cdn.sublimevideo.net/js/3s7oes9q.js" %>
 
@@ -45,40 +45,40 @@
 
 <%= javascript_include_tag 'fancyBox/source/helpers/jquery.fancybox-media.js' %>
 
-<% 
+<%
 if(@document != nil && @document.include?("title_display") && @document.include?("author_facet") && @document.include?("date_issued"))
 
   solr_fields_hash = { "abstract" => "description",
-                       "title_display" => "citation_title", 
+                       "title_display" => "citation_title",
                        "author_facet" => "citation_author",
                        "date_issued" => "citation_publication_date",
                        "book_journal_title" => "citation_journal_title",
                        "volume" => "citation_volume",
                        "issue" => "citation_issue",
                        "start_page" => "citation_firstpage",
-                       "end_page" => "citation_lastpage",   
+                       "end_page" => "citation_lastpage",
                        "doi" => "citation_doi",
                        "date" => "citation_date",
                        "handle" => "citation_handle_id",
                        "issn" => "citation_issn",
                        "publisher" => "citation_publisher",
-                       "subject_facet" => "citation_keywords" 
-                      } 
+                       "subject_facet" => "citation_keywords"
+                      }
 
-    solr_fields_hash.each_key do |solr_field| 
-        if(value = @document[solr_field.to_s])   
-            if(value.is_a?(Array)) 
+    solr_fields_hash.each_key do |solr_field|
+        if(value = @document[solr_field.to_s])
+            if(value.is_a?(Array))
                 if(!value.empty?)
                      value.each do |val|
 %>
 <meta name="<%= solr_fields_hash[solr_field] %>" content="<%= metaheader_fix_if_needed(solr_fields_hash[solr_field], val) %>">
-<%      
+<%
                     end
                 end
             else
 %>
 <meta name="<%= solr_fields_hash[solr_field] %>" content="<%= metaheader_fix_if_needed(solr_fields_hash[solr_field], value) %>">
-<%                
+<%
             end
         end
     end
@@ -88,7 +88,7 @@ end
 
 <meta name="citation_abstract_html_url" content="<%= request.url %>">
 
-<%     pdf_urls.each do |url|     %> 
+<%     pdf_urls.each do |url|     %>
 <meta name="citation_pdf_url" content="<%= url %>">
 <%     end     %>
 
@@ -101,7 +101,7 @@ end
 <!--[if IE 7 ]>    <body class="ie7" onload="$('input#q').focus();"> <![endif]-->
 <!--[if IE 8 ]>    <body class="ie8" onload="$('input#q').focus();"> <![endif]-->
 <!--[if IE 9 ]>    <body class="ie9" onload="$('input#q').focus();"> <![endif]-->
-<!--[if (gt IE 9)|!(IE)]><!--> <body onload="$('input#q').focus();"> <!--<![endif]--> 
+<!--[if (gt IE 9)|!(IE)]><!--> <body onload="$('input#q').focus();"> <!--<![endif]-->
 <% else %>
 <!--[if lt IE 7 ]> <body class="ie6"> <![endif]-->
 <!--[if IE 7 ]>    <body class="ie7"> <![endif]-->
@@ -109,11 +109,11 @@ end
 <!--[if IE 9 ]>    <body class="ie9"> <![endif]-->
 <!--[if (gt IE 9)|!(IE)]><!--> <body> <!--<![endif]-->
 <% end %>
-  
-  
+
+
 <div  class="container" id="header">
-<header> 
-<h1 class="site_title"><%= link_to application_name, root_path %><%= (params[:controller] == "catalog" and !params[:id]) ? "<span id='results_text'>Search Results</span>".html_safe : "" %></h1>	
+<header>
+<h1 class="site_title"><%= link_to application_name, root_path %><%= (params[:controller] == "catalog" and !params[:id]) ? "<span id='results_text'>Search Results</span>".html_safe : "" %></h1>
 </header>
 </div>
 
@@ -125,16 +125,16 @@ end
 <div style="float:right;" class="float-right">
 
  <%= render :partial=>'/catalog/search_box' %>
- 
+
 </div>
 
 
-<%=  link_to(raw("<i class='fa fa-home'></i>&nbsp; Home"), root_path)  %> 
+<%=  link_to(raw("<i class='fa fa-home'></i>&nbsp; Home"), root_path)  %>
 
-  
-    
+
+
     </div>
- 
+
 <div class="span-19 prepend-3 document-heading">
 <%  if(@document != nil) %>
     <%= render_document_heading %>
@@ -162,14 +162,14 @@ end
 	<%= sidebar_items.join('').html_safe %>
 
 <%= yield :sidebar %>
- 
+
 </div> <!-- div#sidebar -->
 </div>
 </div> <!-- div.row (main content area) -->
 
 <footer class="span-24">
 
-<div id="footer"> 
+<div id="footer">
 
 <%= @footer %>
 
@@ -177,9 +177,9 @@ end
 
 </footer>
 
-</div><!-- div#main -->    
+</div><!-- div#main -->
 
-<div class="container"> 
+<div class="container">
 
 <div id="colophon" class="span-24 append-bottom">
 <%= render :partial=>'layouts/footer_line' %>
@@ -188,20 +188,20 @@ end
 
 
 <%- if Rails.application.config.analytics_enabled == true -%>
-<script type="text/javascript"> 
+<script type="text/javascript">
 
-  var _gaq = _gaq || []; 
-  _gaq.push(['_setAccount', 'UA-10481105-1']); 
-  _gaq.push(['_trackPageview'], 
-['aggregate._setAccount', 'UA-7973988-3'], 
-['aggregate._trackPageview'] 
-); 
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-10481105-1']);
+  _gaq.push(['_trackPageview'],
+['aggregate._setAccount', 'UA-7973988-3'],
+['aggregate._trackPageview']
+);
 
-  (function() { 
-    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true; 
-    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js'; 
-    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s); 
-  })(); 
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
 
 </script> <% end %>
 
@@ -213,6 +213,7 @@ $('#sidebar').waypoint('sticky', {
 
 </script>
 
+<%= render :partial=>'layouts/cul-banner' %>
+
 </body>
-  
 </html>
