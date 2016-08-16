@@ -7,9 +7,7 @@ div#header.container {
 	padding-left: 36px;
 	padding-right: 39px;
 	margin-top: .75em;
-
 	background: url(main-header-background.jpg) no-repeat;
-
 	-moz-box-shadow: 1px 4px 8px #333;
 	-webkit-box-shadow: 1px 4px 8px #333;
 	box-shadow: 1px 4px 8px #333;
@@ -1639,7 +1637,7 @@ body.single-col #page {
 	margin-bottom: 0;
 
 	cursor: pointer;
-	background: url(main-header-background.png) no-repeat -539px -23px;
+	background: #002D63;
 	border-bottom: 1px solid #C9E5FF;
 	/*background: -moz-linear-gradient(top, #284585, #122D62);
 	background: -webkit-gradient(linear, left top, left bottom, from(#284585), to(#122D62));*/
@@ -2262,7 +2260,7 @@ h3.stepHeader {
 form.self-deposit-form input.submitbutton,form.self-deposit-form .nextbutton,form.self-deposit-form .prevbutton, #start_button, a.button{
  width: 150px;
 	height: 40px;
-	 background: url(main-header-background.jpg) no-repeat -863px -53px;
+	background: #002D63;
 	padding: 4px;
 	border: 1px dotted #8b8f95;
 	cursor: pointer;
@@ -2290,7 +2288,7 @@ form.self-deposit-form input.submitbutton:active,form.self-deposit-form .nextbut
 form.self-deposit-form input.submitbutton:active,form.self-deposit-form .nextbutton:hover,form.self-deposit-form .prevbutton:hover, #start_button:hover, a.button{
 
 
-	 background: url(main-header-background.jpg) no-repeat -863px -10px;
+	 background: #002D63;
 border: 1px dotted #bfc4cc;
 
 	}
