@@ -5,7 +5,7 @@ delete :rvm_ruby_version
 set :rails_env, "passenger_prod"
 set :application, "ac2"
 set :remote_user, "deployer"
-server 'bernstein.cul.columbia.edu', user: fetch(:remote_user), roles: %w(app db web)
+server 'bronte.cul.columbia.edu', user: fetch(:remote_user), roles: %w(app db web)
 # override deploy_to
 set :deploy_to,   "/opt/passenger/#{fetch(:application)}/"
 ask :branch, proc { `git tag --sort=version:refname`.split("\n").last }
