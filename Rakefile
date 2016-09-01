@@ -4,4 +4,4 @@
 require File.expand_path('../config/application', __FILE__)
 require 'rake'
 
-CulBlacklightAc2::Application.load_tasks
+AcademicCommons::Application.load_tasks
