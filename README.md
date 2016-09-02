@@ -1,6 +1,8 @@
+# Academic Commons 2.0
+
 ## Checking out and working with a local development instance of Academic Commons 2.0
 
-CURRENT RECOMMENDED VERSION OF RUBY: 1.8.7-p334
+CURRENT RECOMMENDED VERSION OF RUBY: 1.8.7-p334 (currently running 1.9.3p551 on dev vm)
 
 1. Clone the repository to a location of your choosing
    ```
@@ -24,7 +26,8 @@ CURRENT RECOMMENDED VERSION OF RUBY: 1.8.7-p334
    bundle install
    ```
 
-5. Run `rake db:migrate` to create your local development DB
+5. Run `rake db:migrate` to create your local development DB. 
+**Note: Migration currently throws errors**
 
 6. Start your local development solr instance
    ```
@@ -35,6 +38,7 @@ CURRENT RECOMMENDED VERSION OF RUBY: 1.8.7-p334
    ```
    rake ac:reindex[collection:3]
    ```
+   **Note: This doesn't seem to work, but I have a feeling it has to do with the parameters.**
 
 8. Start your local Rails app
    ```
