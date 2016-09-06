@@ -26,8 +26,7 @@ CURRENT RECOMMENDED VERSION OF RUBY: 1.8.7-p334 (currently running 1.9.3p551 on 
    bundle install
    ```
 
-5. Run `rake db:migrate` to create your local development DB. 
-**Note: Migration currently throws errors**
+5. Run `rake db:schema:load` to create your local development DB. Running `rake db:migrate` does not work because models previously used no longer exist.
 
 6. Start your local development solr instance
    ```
