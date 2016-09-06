@@ -12,7 +12,7 @@
 
 <%= favicon_link_tag asset_path('favicon-crown.png', :media => "screen,projection", :rel => "shortcut icon", :type => "text/css") %>
 
-<%= stylesheet_link_tag "http://fonts.googleapis.com/css?family=Open+Sans:400italic,400,300,600&subset=latin-ext,latin", :media => "screen,projection", :rel => "stylesheet", :type => "text/css" %>
+<%= stylesheet_link_tag "//fonts.googleapis.com/css?family=Open+Sans:400italic,400,300,600&subset=latin-ext,latin", :media => "screen,projection", :rel => "stylesheet", :type => "text/css" %>
 <%= stylesheet_link_tag "blueprint/screen", :media => "screen,projection"  %>
 <%= stylesheet_link_tag "application", :media => "screen,projection", :rel => "stylesheet", :type => "text/css" %>
 
@@ -29,7 +29,6 @@
     <% javascript_tag do -%>
     <%= yield(:jstemplates) %>
     <% end -%>
-<%= javascript_include_tag "http://cdn.sublimevideo.net/js/3s7oes9q.js" %>
 <%
 if(@document != nil && @document.include?("title_display") && @document.include?("author_facet") && @document.include?("date_issued"))
 
