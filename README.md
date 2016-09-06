@@ -30,7 +30,7 @@ CURRENT RECOMMENDED VERSION OF RUBY: 1.8.7-p334 (currently running 1.9.3p551 on 
 
 6. Start your local development solr instance
    ```
-   cd jetty2 && java -jar start.jar
+   cd jetty && java -jar start.jar
    ```
 
 7. Populate your Solr instance from Fedora
