@@ -34,13 +34,14 @@ AcademicCommons::Application.configure do
   # Enable serving of images, stylesheets, and javascripts from an asset server
   # config.action_controller.asset_host = "http://assets.example.com"
 
-  # Disable delivery errors, bad email addresses will be ignored
-  # config.action_mailer.raise_delivery_errors = false
+  # Tell Action Mailer not to deliver emails to the real world.
+  # The :test delivery method accumulates sent emails in the
+  # ActionMailer::Base.deliveries array.
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
-    :address => "localhost",
-    :domain => "brahms.cul.columbia.edu",
-     :port => 25
+    :address => "***REMOVED***",
+    :domain => "***REMOVED***",
+    :port => 25
   }
 
   # Enable threaded mode
@@ -52,21 +53,21 @@ AcademicCommons::Application.configure do
 
   # Send deprecation notices to registered listeners
   config.active_support.deprecation = :notify
-  
+
   config.relative_root = ''
   config.analytics_enabled = true
-  
+
   config.deposit_notification_bcc = ["cuac@libraries.cul.columbia.edu"]
-  
+
   config.indexing_report_recipients = ["cuac@libraries.cul.columbia.edu", "ap2972@columbia.edu"]
   config.mail_deposit_recipients = ["cuac@libraries.cul.columbia.edu"]
   config.mail_deliverer = "cuac@libraries.cul.columbia.edu"
   config.base_path = "academiccommons.columbia.edu"
-  
+
   # Configure static asset server for tests with Cache-Control for performance
   config.serve_static_assets = true
   config.static_cache_control = "public, max-age=3600"
 
   config.prod_environment = true
-  
+
 end
