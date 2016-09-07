@@ -15,7 +15,7 @@ require "capistrano/deploy"
 #   https://github.com/capistrano/rails
 #   https://github.com/capistrano/passenger
 #
-unless [:bronte, :ac2_prod].include? ARGV[0].to_sym
+unless [:bronte, :bernstein].include? ARGV[0].to_sym
   require 'capistrano/rvm'
 end
 
