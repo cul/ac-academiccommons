@@ -6,7 +6,7 @@ CURRENT RECOMMENDED VERSION OF RUBY: 1.8.7-p334 (currently running 1.9.3p551 on 
 
 1. Clone the repository to a location of your choosing
    ```
-   git clone git@github.com:cul/cul-blacklight-ac2.git
+   git clone git@github.com:cul/ac-academiccommons.git
    ```
 
 2. Checkout the current development branch
