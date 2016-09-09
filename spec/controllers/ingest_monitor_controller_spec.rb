@@ -6,7 +6,7 @@ describe IngestMonitorController, :type => :controller do
     allow(@non_admin).to receive(:admin).and_return(false)
   end
   [:show].each do |action|
-    describe action do
+    describe action.to_s do # rspec wants a String here
       context "without being logged in" do
         before do
           allow(controller).to receive(:current_user).and_return(nil)

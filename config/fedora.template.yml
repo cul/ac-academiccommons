@@ -1,20 +1,8 @@
 # Copy this file to config/fedora.yml
 
 development:
-  riurl: ***REMOVED***
+  riurl: http://localhost:8983/fedora
   riquery: "select $member from <#ri> where walk ($obj <cul:memberOf> <fedora:%s> and $member <cul:memberOf> $obj) and $member <rdf:type> <cul:Aggregator>"
 test:
-  riurl: ***REMOVED***
-  riquery: "select $member from <#ri> where walk ($obj <cul:memberOf> <fedora:%s> and $member <cul:memberOf> $obj) and $member <rdf:type> <cul:Aggregator>"
-
-# passenger_dev, passenger_test, and passenger_prod yml files are created manually in shared resource location
-# For reference, here are the config values for each remote instance:
-passenger_dev:
-  riurl: ***REMOVED***
-  riquery: "select $member from <#ri> where walk ($obj <cul:memberOf> <fedora:%s> and $member <cul:memberOf> $obj) and $member <rdf:type> <cul:Aggregator>"
-passenger_test:
-  riurl: ***REMOVED***
-  riquery: "select $member from <#ri> where walk ($obj <cul:memberOf> <fedora:%s> and $member <cul:memberOf> $obj) and $member <rdf:type> <cul:Aggregator>"
-passenger_prod:
-  riurl: ***REMOVED***
+  riurl: http://localhost:8983/fedora
   riquery: "select $member from <#ri> where walk ($obj <cul:memberOf> <fedora:%s> and $member <cul:memberOf> $obj) and $member <rdf:type> <cul:Aggregator>"

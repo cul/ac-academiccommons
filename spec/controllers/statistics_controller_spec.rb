@@ -10,7 +10,7 @@ describe StatisticsController, :type => :controller do
    :single_pid_count, :single_pid_stats, :school_stats, :stats_by_event,
    :docs_size_by_query_facets, :facetStatsByEvent, :common_statistics_csv,
    :generic_statistics, :school_statistics, :send_csv_report].each do |action|
-    describe action do
+    describe action.to_s do # rspec wants a String here
       context "without being logged in" do
         before do
           allow(controller).to receive(:current_user).and_return(nil)
@@ -60,7 +60,7 @@ describe StatisticsController, :type => :controller do
 
   # require_user
   [:usage_reports, :statistical_reporting].each do |action|
-    describe action do
+    describe action.to_s do # rspec wants a String here
       context "without being logged in" do
         before do
           allow(controller).to receive(:current_user).and_return(nil)

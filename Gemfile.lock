@@ -52,6 +52,7 @@ GEM
     activesupport (3.2.13)
       i18n (= 0.6.1)
       multi_json (~> 1.0)
+    addressable (2.4.0)
     arel (3.0.3)
     authlogic (3.4.6)
       activerecord (>= 3.2)
@@ -91,6 +92,15 @@ GEM
     capistrano-rvm (0.1.2)
       capistrano (~> 3.0)
       sshkit (~> 1.2)
+    capybara (2.8.1)
+      addressable
+      mime-types (>= 1.16)
+      nokogiri (>= 1.3.3)
+      rack (>= 1.0.0)
+      rack-test (>= 0.5.4)
+      xpath (~> 2.0)
+    childprocess (0.5.9)
+      ffi (~> 1.0, >= 1.0.11)
     chunky_png (1.3.6)
     coffee-rails (3.2.2)
       coffee-script (>= 2.2.0)
@@ -142,6 +152,12 @@ GEM
     hike (1.2.3)
     httpclient (2.8.0)
     i18n (0.6.1)
+    jettywrapper (2.0.3)
+      activesupport (>= 3.0.0)
+      childprocess
+      i18n
+      logger
+      rubyzip
     journey (1.0.4)
     jquery-rails (3.1.4)
       railties (>= 3.0, < 5.0)
@@ -151,6 +167,7 @@ GEM
       actionpack (>= 3.0.0)
       activesupport (>= 3.0.0)
       railties (>= 3.0.0)
+    logger (1.2.8)
     mail (2.5.4)
       mime-types (~> 1.16)
       treetop (~> 1.4.8)
@@ -223,6 +240,7 @@ GEM
       rspec-mocks (~> 3.5.0)
       rspec-support (~> 3.5.0)
     rspec-support (3.5.0)
+    rubyzip (1.2.0)
     sass (3.4.22)
     sass-rails (3.2.6)
       railties (~> 3.2.0)
@@ -255,6 +273,8 @@ GEM
       unf_ext
     unf_ext (0.0.7.2)
     unicode (0.4.4.2)
+    xpath (2.0.0)
+      nokogiri (~> 1.3)
 
 PLATFORMS
   ruby
@@ -272,6 +292,7 @@ DEPENDENCIES
   capistrano-passenger (~> 0.1)
   capistrano-rails (~> 1.1)
   capistrano-rvm (~> 0.1)
+  capybara (~> 2.2)
   coffee-rails (~> 3.2.2)
   compass
   cul-fedora (~> 1.0.3)
@@ -280,6 +301,7 @@ DEPENDENCIES
   googlecharts
   haml (>= 4.0.7)
   httpclient (~> 2.6)
+  jettywrapper (>= 1.4.0)
   jquery-rails
   json
   kaminari (= 0.13.0)
