@@ -30,3 +30,4 @@ doc/plugins
 doc/*.dot
 coverage/*
 /public/assets
+/.settings
