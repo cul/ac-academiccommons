@@ -16,7 +16,7 @@ $('div.left-column ul').each(function(){
         $(ul.parent().children('.toggle')).click(function(){
            // toggle the next ul sibling
            $(this).toggleClass('facet_selected').next('ul').slideToggle();
-           
+
        });
    }else{
       ul.prev('h3').attr("class","facet_selected");
@@ -25,13 +25,13 @@ $('div.left-column ul').each(function(){
 });
 */
 
-  
- 
+
+
 
 
     // Replace input function
     $('.replaceInput').each(function(){
- 
+
         var thisVal = $(this).attr('value');
         $(this).focus(function(){
             if($(this).attr('value')==thisVal){
@@ -44,16 +44,16 @@ $('div.left-column ul').each(function(){
         });
     });
 
- 
+
 
 
   // adds classes for zebra striping table rows
   $('table.zebra tr:even').addClass('zebra_stripe');
   $('ul.zebra li:even').addClass('zebra_stripe');
- 
+
   //add highlight to search results
  /*
- var q = $("#q") 
+ var q = $("#q")
 
   if(q != null && q != undefined && q != " ")
   {
@@ -63,8 +63,8 @@ $('div.left-column ul').each(function(){
 		  function()
 		  {
 			  console.debug($(this));
-			  
-			  
+
+
 			  if($(this).children().length == 0)
 		      {
 				  var re = new RegExp(q, "ig");
@@ -75,26 +75,26 @@ $('div.left-column ul').each(function(){
 	  );
   }
 */
-  
-/*************  
- * Facet more dialog. Uses JQuery UI Dialog. Use crazy closure technique. 
+
+/*************
+ * Facet more dialog. Uses JQuery UI Dialog. Use crazy closure technique.
  * http://docs.jquery.com/UI/Dialog
  */
- 
- 
-    
+
+
+
     //Make sure more facet lists loaded in this dialog have
-    //ajaxy behavior added to next/prev/sort                    
+    //ajaxy behavior added to next/prev/sort
     function addBehaviorToMoreFacetDialog(dialog) {
-      var dialog = $(dialog)      
-      
+      var dialog = $(dialog)
+
       // Make next/prev/sort links load ajaxy
-      dialog.find("a.next_page, a.prev_page, a.sort_change").click( function() {     
+      dialog.find("a.next_page, a.prev_page, a.sort_change").click( function() {
           $("body").css("cursor", "progress");
-          dialog.load( this.href, 
-              function() {  
+          dialog.load( this.href,
+              function() {
                 addBehaviorToMoreFacetDialog(dialog);
-                $("body").css("cursor", "auto");                
+                $("body").css("cursor", "auto");
               }
           );
           //don't follow original href
@@ -104,30 +104,30 @@ $('div.left-column ul').each(function(){
 
     function positionDialog(dialog) {
       dialog = $(dialog);
-      
+
     /*   dialog.dialog("option", "height", $(window).height()-125); */
       dialog.dialog("option", "width", Math.max(  ($(window).width() /2), 45));
       dialog.dialog("option", "position", ['center', 75]);
-      
+
       dialog.dialog("open").dialog("moveToTop");
     }
-    
+
 
     $("a.more_facets_link,a.lightboxLink").each(function() {
       //We use each to let us make a Dialog object for each
       //a, tied to that a, through the miracle of closures. the second
       // arg to 'bind' is used to make sure the event handler gets it's
-      // own dialog. 
+      // own dialog.
       var dialog_box = "empty";
       var link = $(this);
-      $(this).click( function() {     
+      $(this).click( function() {
         //lazy create of dialog
         if ( dialog_box == "empty") {
-          dialog_box = $('<div class="dialog_box"></div>').dialog({ autoOpen: false});          
+          dialog_box = $('<div class="dialog_box"></div>').dialog({ autoOpen: false});
         }
         // Load the original URL on the link into the dialog associated
         // with it. Rails app will give us an appropriate partial.
-        // pull dialog title out of first heading in contents. 
+        // pull dialog title out of first heading in contents.
         $("body").css("cursor", "progress");
         dialog_box.load( this.href , function() {
 	        if(link.attr("class") == "more_facets_link"){
@@ -140,11 +140,11 @@ $('div.left-column ul').each(function(){
           $("body").css("cursor", "auto");
         });
 
-        positionDialog(dialog_box);                
-                
+        positionDialog(dialog_box);
+
         return false; // do not execute default href visit
       });
-      
+
     });
 
 
@@ -154,20 +154,20 @@ $('div.left-column ul').each(function(){
    },function(){
      $(this).parents("li").removeClass("highlight");
    });
- 
- 
+
+
   $("a.facet_deselect").hover(function(){
-   
+
      $(this).parents("li").addClass("highlight");
    },function(){
      $(this).parents("li").removeClass("highlight");
    });
-  
-  
+
+
 /* keep facet boxes visible after page scroll   */
 /*var placeholder = $( "#facet-wrapper" );
 var sb = $( "#facets" );
- var sc = $("#hd-mini"); 
+ var sc = $("#hd-mini");
 var view = $( window );
 view.bind(
 "scroll resize",
@@ -181,27 +181,27 @@ function(){
     (viewTop > placeholderTop) &&
     !sb.is( ".facets-fixed" )
   ){
- 
+
 
     placeholder.height(placeholder.height());
- 
+
 
     sb.addClass( "facets-fixed" );
-   
- 
+
+
 
 
 } else if (
 (viewTop <= placeholderTop) &&
 sb.is( ".facets-fixed" )
 ){
- 
+
 
 placeholder.css( "height", "auto" );
 
 sb.removeClass( "facets-fixed" );
 sc.removeClass("visible");
- 
+
 }
 }
 );*/
@@ -242,12 +242,12 @@ $("#ingest_monitor_content").each
 					type: "GET",
 					url: log_monitor_resource,
 					dataType: "json",
-					processData: true,					
+					processData: true,
 					success: function(data)
 					{
 						$("#ingest_monitor_content").val(data.log);
 						wait = false;
-						if(data.log.indexOf(':results') >= 0) 
+						if(data.log.indexOf(':results') >= 0)
 						{
 							clearInterval(intervalId);
 							$("#cancel_ingest_link").attr("href", $("#cancel_ingest_link").attr("href").replace(/\?cancel=([0-9].*)/i, ""));
@@ -262,12 +262,12 @@ $("#ingest_monitor_content").each
 					}
 				});
 			},
-			3000	
+			3000
 		)
 	}
 )
-    
-    
+
+
 });
 
 function $$archiveDeposit(url)
