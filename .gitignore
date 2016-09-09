@@ -16,6 +16,7 @@ config/*.sphinx.conf
 config/s3_credentials.yml
 config/emails.yml
 config/google_analytics.yml
+jetty
 *~
 *.cache
 *.pid
