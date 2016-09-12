@@ -39,9 +39,8 @@ set :keep_releases, 3
 
 set :passenger_restart_with_touch, true
 
-
-
 set :linked_files, fetch(:linked_files, []).push(
+  ".env",
   "config/database.yml",
   "config/solr.yml",
   "config/fedora.yml",
@@ -50,7 +49,6 @@ set :linked_files, fetch(:linked_files, []).push(
   "config/google_analytics.yml",
   "public/robots.txt",
 )
-
 
 
 namespace :deploy do

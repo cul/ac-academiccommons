@@ -39,10 +39,11 @@ AcademicCommons::Application.configure do
   # ActionMailer::Base.deliveries array.
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
-    :address => "***REMOVED***",
-    :domain => "***REMOVED***",
-    :port => 25
+    :address => ENV['SMTP_ADDRESS'],
+    :domain => ENV['SMTP_DOMAIN'],
+    :port => ENV['SMTP_PORT']
   }
+
 
   # Enable threaded mode
   config.threadsafe!
@@ -64,5 +65,4 @@ AcademicCommons::Application.configure do
   config.static_cache_control = "public, max-age=3600"
 
   config.prod_environment = true
-
 end

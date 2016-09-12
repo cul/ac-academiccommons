@@ -25,13 +25,13 @@ AcademicCommons::Application.configure do
   # Tell Action Mailer not to deliver emails to the real world.
   # The :test delivery method accumulates sent emails in the
   # ActionMailer::Base.deliveries array.
-  config.action_mailer.raise_delivery_errors = true
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
-    :address => "localhost",
-    :domain => "cdrs-nginx-test1.cul.columbia.edu",
-    :port => 25
+    :address => ENV['SMTP_ADDRESS'],
+    :domain => ENV['SMTP_DOMAIN'],
+    :port => ENV['SMTP_PORT']
   }
+
 
 
   # Use SQL instead of Active Record's schema dumper when creating the test database.
