@@ -191,7 +191,7 @@ div.sd h2{
 
 
 
- .box{
+.box {
  background: rgba(255,255,255,.5);
  border: 1px solid white;
  margin-bottom: .75em;
@@ -200,26 +200,15 @@ div.sd h2{
 }
 
 
-
-
-#home-recent{
-
-}
-a:link,  a:visited,   a:active {
+a:link,  a:visited, a:active {
  color: #314E83;
-
 }
 
- a:hover {
-	 color: #cd2c2e;
-}
-
-h1.site_title {
-
+a:hover {
+	color: #cd2c2e;
 }
 
 #header header h1.site_title a {
-	 width: 422px;
 	height: 80px;
 }
 
