@@ -41,18 +41,11 @@ AcademicCommons::Application.configure do
 
   # Print deprecation notices to the stderr
   config.active_support.deprecation = :stderr
-  
+
   config.relative_root = ''
   config.analytics_enabled = false
-  
-  config.deposit_notification_bcc = ["cuac@libraries.cul.columbia.edu"]
-  
-  config.indexing_report_recipients = ["cuac@libraries.cul.columbia.edu"]
-  config.mail_deposit_recipients = ["cuac@libraries.cul.columbia.edu"]
-  config.mail_deliverer = "cuac@libraries.cul.columbia.edu"
+
   config.base_path = "cdrs-nginx-prod1.cul.columbia.edu"
-
-
 
   # Configure static asset server for tests with Cache-Control for performance
   config.serve_static_assets = true
@@ -64,7 +57,7 @@ AcademicCommons::Application.configure do
   config.prod_environment = true
 
   config.log_level = :error
-  
+
   config.threadsafe!
-  
+
 end

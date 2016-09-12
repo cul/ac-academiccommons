@@ -23,10 +23,9 @@ AcademicCommons::Application.configure do
 
   # Only use best-standards-support built into browsers
   config.action_dispatch.best_standards_support = :builtin
-  
+
   config.relative_root = ""
-  config.analytics_enabled = false
-  
+
   # this is example of smtp config for local testig via columbian lionmail
   config.action_mailer.raise_delivery_errors = true
   config.action_mailer.delivery_method = :smtp
@@ -40,17 +39,7 @@ AcademicCommons::Application.configure do
     :enable_starttls_auto => true
   }
 
-  ################################################## !!!
-  
-  #config.deposit_notification_bcc = ["cuac@libraries.cul.columbia.edu"]
-  config.deposit_notification_bcc = ["ap2972@columbia.edu"]
-  config.indexing_report_recipients = ["ap2972@columbia.edu"]
-  
-  #config.mail_deposit_recipients = ["cuac@libraries.cul.columbia.edu", "ap2972@columbia.edu"]
-  config.mail_deposit_recipients = ["ap2972@columbia.edu", "ap2972@columbia.edu"]
-  config.mail_deliverer = "ap2972@columbia.edu"
   config.base_path = "localhost:3000"
-  
 
 # Do not compress assets
   config.assets.compress = false
@@ -60,9 +49,8 @@ AcademicCommons::Application.configure do
 
   config.gem 'blacklight_oai_provider'
   config.gem 'oai'
-  
+
   config.prod_environment = false
-  
+
   config.threadsafe!
 end
-

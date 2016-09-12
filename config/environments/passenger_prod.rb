@@ -57,11 +57,6 @@ AcademicCommons::Application.configure do
   config.relative_root = ''
   config.analytics_enabled = true
 
-  config.deposit_notification_bcc = ["cuac@libraries.cul.columbia.edu"]
-
-  config.indexing_report_recipients = ["cuac@libraries.cul.columbia.edu", "ap2972@columbia.edu"]
-  config.mail_deposit_recipients = ["cuac@libraries.cul.columbia.edu"]
-  config.mail_deliverer = "cuac@libraries.cul.columbia.edu"
   config.base_path = "academiccommons.columbia.edu"
 
   # Configure static asset server for tests with Cache-Control for performance
