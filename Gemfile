@@ -73,4 +73,6 @@ group :development, :test do
   # Just add it to your Gemfile and require it in your Capfile.
   gem 'capistrano-passenger', '~> 0.1', require: false
   gem 'rspec-rails', '~> 3.1'
+  gem 'capybara', '~>2.2'
+  gem "jettywrapper", ">=1.4.0"
 end
