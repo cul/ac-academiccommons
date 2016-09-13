@@ -43,3 +43,7 @@ CURRENT RECOMMENDED VERSION OF RUBY: 1.8.7-p334 (currently running 1.9.3p551 on 
    ```
    rails server
    ```
+
+## Improvements
+### Making Application Faster
+  1. We are only using one image from Font Awesome, instead we could be using a static image.

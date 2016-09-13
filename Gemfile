@@ -34,6 +34,7 @@ gem 'mail_form'
 gem 'dotenv-rails'
 
 gem 'jquery-rails'
+gem 'font-awesome-rails'
 
 # Gems used only for assets and not required
 # in production environments by default.
