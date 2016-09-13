@@ -31,8 +31,16 @@ begin
   RSpec::Core::RakeTask.new(:spec_all) do |t|
   end
 
+  desc 'Copy the Solr config over'
+  task :configure_jetty => :environment do
+    ['jetty/solr/development-core/conf','jetty/solr/test-core/conf'].each do |conf|
+      FileUtils.rm_r conf
+      FileUtils.cp_r 'solr/conf', conf
+    end
+  end
+
   desc 'Run all tests regardless of tags'
-  task :ci => ['jetty:clean', :environment] do
+  task :ci => ['jetty:clean', :configure_jetty] do
     ENV['environment'] = "test"
     #Rake::Task["active_fedora:configure_jetty"].invoke
     jetty_params = Jettywrapper.load_config
