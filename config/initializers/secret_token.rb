@@ -4,4 +4,9 @@
 # If you change this key, all old signed cookies will become invalid!
 # Make sure the secret is at least 30 characters and all random,
 # no regular words or you'll be exposed to dictionary attacks.
-AcademicCommons::Application.config.secret_token = '3b5524c85ed3d68ee37c7cb7e07c5d2be396265d47367f5aa09226dd2be05865d93c18c0cd96eca409412510b21b501c0c8632c525b73a8a48dde45bded08800'
+AcademicCommons::Application.config.secret_token =
+  if Rails.env.development? || Rails.env.test?
+    'f86a56f38ffc7b8f92c12a3cc93bffa05bdeae89df2cbd1a6d014be60a94ee514d9a0b78ad50c40d276e476d67493ea9074b3f4daf0fa95fdce9a62183ad55d3'
+  else
+    ENV['SECRET_TOKEN']
+  end

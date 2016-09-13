@@ -24,12 +24,12 @@ AcademicCommons::Application.configure do
   # Tell Action Mailer not to deliver emails to the real world.
   # The :test delivery method accumulates sent emails in the
   # ActionMailer::Base.deliveries array.
+  config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
-    :address => "***REMOVED***",
-    :domain => "***REMOVED***",
-    :port => 25
+    :address => ENV['SMTP_ADDRESS'],
+    :domain => ENV['SMTP_DOMAIN'],
+    :port => ENV['SMTP_PORT']
   }
-
 
   # Use SQL instead of Active Record's schema dumper when creating the test database.
   # This is necessary if your schema can't be completely dumped by the schema dumper,
@@ -38,23 +38,12 @@ AcademicCommons::Application.configure do
 
   # Print deprecation notices to the stderr
   config.active_support.deprecation = :stderr
-  
-  config.relative_root = ''
-  config.analytics_enabled = false
-  
-  # in test env-t config.deposit_notification_bcc will be used instead of depositor's email
-  # config.deposit_notification_bcc = ["cuac@libraries.cul.columbia.edu"]
-  # config.indexing_report_recipients = ["cuac@libraries.cul.columbia.edu"]
-  # config.mail_deposit_recipients = ["cuac@libraries.cul.columbia.edu"]
-  # config.mail_deliverer = "cuac@libraries.cul.columbia.edu"
-  
-  config.deposit_notification_bcc = ["ac@columbia.edu"]
-  config.indexing_report_recipients = ["ac@columbia.edu"]
-  config.mail_deposit_recipients = ["ac@columbia.edu"]
-  config.mail_deliverer = "ac@columbia.edu"  
-  
-  config.base_path = "academiccommons.columbia.edu"
 
+  config.relative_root = ''
+
+  # in test env-t config.deposit_notification_bcc will be used instead of depositor's email (is this still true?)
+
+  config.base_path = "academiccommons.columbia.edu"
 
 
   # Configure static asset server for tests with Cache-Control for performance
@@ -63,9 +52,7 @@ AcademicCommons::Application.configure do
 
   # Allow pass debug_assets=true as a query parameter to load pages with unpackaged assets
   config.assets.allow_debugging = true
-  
-  config.prod_environment = false
-  
+
   config.threadsafe!
 
 end

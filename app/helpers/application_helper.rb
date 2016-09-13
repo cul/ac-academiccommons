@@ -1,7 +1,7 @@
 require 'rails_rinku'
 
 module ApplicationHelper
-  
+
   def application_name
     'Academic Commons'
   end
@@ -9,24 +9,24 @@ module ApplicationHelper
   def relative_root
     Rails.application.config.relative_root || ""
   end
-  
+
   def document_type
     @document[CatalogController.blacklight_config[:show][:genre]]
   end
-  
+
   def document_author
     @document[CatalogController.blacklight_config[:show][:author]]
   end
-  
+
   def render_document_heading
     heading = ""
      heading += '<h1 class="document_title">' + (document_heading || "") + '</h1>'
 #     heading += '<h2 class="author_name">' + first_names_then_last(document_author || "")  + '</h2>'
     heading.html_safe
   end
-  
+
   def first_names_then_last(last_names_first)
-    
+
     i = 0
     html = ""
     last_names_first.split(";").each do |last_name_first|
@@ -40,7 +40,7 @@ module ApplicationHelper
   end
 
   def first_names_then_last_suggested_citation(last_names_first)
-    
+
     i = 0
     html = ""
     last_names_first.split(";").each do |last_name_first|
@@ -52,7 +52,7 @@ module ApplicationHelper
     end
     return html.html_safe
   end
-  
+
   def first_name_then_last(last_name_first)
     if(last_name_first.index(","))
       parts = last_name_first.split(",")
@@ -64,11 +64,11 @@ module ApplicationHelper
     else
       fl_name = last_name_first.html_safe
     end
-    
+
     raw('<a href="' + relative_root + '/catalog?f[author_facet][]=' + last_name_first + '">' + fl_name + '</a>')
   end
-  
-  
+
+
   # RSolr presumes one suggested word, this is a temporary fix
   def get_suggestions(spellcheck)
     words = []
@@ -103,7 +103,7 @@ module ApplicationHelper
     render = render + ("<span class='item_count'> (" + format_num(item.hits) + ")</span>").html_safe
     render.html_safe
   end
-  
+
   def facet_list_limit
     10
   end
@@ -111,11 +111,11 @@ module ApplicationHelper
   # Standard display of a SELECTED facet value, no link, special span
   # with class, and 'remove' button.
   def render_selected_facet_value(facet_solr_field, item)
-    render = link_to((item.value + "<span class='item_count'> (" + format_num(item.hits) + ")</span>").html_safe, remove_facet_params(facet_solr_field, item.value, params), :class=>"facet_deselect") 
+    render = link_to((item.value + "<span class='item_count'> (" + format_num(item.hits) + ")</span>").html_safe, remove_facet_params(facet_solr_field, item.value, params), :class=>"facet_deselect")
     render = render + render_subfacets(facet_solr_field, item)
     render.html_safe
   end
-  
+
   def render_subfacets(facet_solr_field, item, options ={})
     render = ''
     if (item.instance_variables.include? "@subfacets")
@@ -131,11 +131,11 @@ module ApplicationHelper
       end
       render.html_safe
   end
-  
+
   def get_last_month_name
     Date.today.ago(1.month).strftime("%B")
   end
-  
+
   # def get_last_month_page_visits
 #     needs to be upgraded to oauth2
     # if(File.exists?("#{Rails.root}/tmp/#{get_last_month_name.downcase}_visits"))
@@ -143,7 +143,7 @@ module ApplicationHelper
       # return file.read
     # else
       # require "#{Rails.root}/lib/pagevisits.rb"
-      # Garb::Session.login(Rails.application.config.analytics_username, Rails.application.config.analytics_password)
+      # Garb::Session.login(Rails.application.config.google_analytics['username'], Rails.application.config.google_analytics['password'])
       # profile = Garb::Management::Profile.all.detect {|p| p.web_property_id == 'UA-10481105-1'}
       # ga_results = profile.pagevisits(:start_date => Date.today.ago(1.month).beginning_of_month, :end_date => Date.today.beginning_of_month.ago(1.day))
       # visits = ga_results.to_a[0].visits
@@ -153,47 +153,47 @@ module ApplicationHelper
       # File.open("#{Rails.root}/tmp/#{get_last_month_name.downcase}_visits", 'w') { |file| file.write(visits) }
       # return visits
     # end
-#     
+#
   # end
-  
+
   def get_last_month_page_visits
     return get_analytics("visits")
   end
-  
+
   def get_last_month_page_visitors
     return get_analytics("visitors")
   end
-  
+
   def get_analytics(metrics)
-    
+
     if(File.exists?("#{Rails.root}/tmp/#{get_last_month_name.downcase}_" + metrics))
       file = File.open("#{Rails.root}/tmp/#{get_last_month_name.downcase}_" + metrics, 'rb')
       return file.read
     else
-      
+
       require "#{Rails.root}/lib/pagevisits.rb"
-      Garb::Session.login(Rails.application.config.analytics_username, Rails.application.config.analytics_password)
+      Garb::Session.login(Rails.application.config.google_analytics['username'], Rails.application.config.google_analytics['password'])
       profile = Garb::Management::Profile.all.detect {|p| p.web_property_id == 'UA-10481105-1'}
       ga_results = profile.pagevisits(:start_date => Date.today.ago(1.month).beginning_of_month, :end_date => Date.today.beginning_of_month.ago(1.day))
-      if(metrics == "visitors") 
-        visits = ga_results.to_a[0].visitors 
+      if(metrics == "visitors")
+        visits = ga_results.to_a[0].visitors
       end
-      if(metrics == "visits") 
-         visits = ga_results.to_a[0].visits 
+      if(metrics == "visits")
+         visits = ga_results.to_a[0].visits
       end
       Dir.glob("#{Rails.root}/tmp/*_" + metrics) do |visits_file|
         File.delete(visits_file)
       end
       File.open("#{Rails.root}/tmp/#{get_last_month_name.downcase}_" + metrics, 'w') { |file| file.write(visits) }
       return visits
-      
-     end  
+
+     end
   end
 
-  def document_show_fields_linked(name)   
+  def document_show_fields_linked(name)
     CatalogController.blacklight_config.show_fields[name][:linked]
   end
-  
+
   def document_render_field_value(field_name, value)
 
     if(document_show_fields_linked(field_name))
@@ -203,11 +203,11 @@ module ApplicationHelper
         value = '<a href="' + value + '">' + value + '</a>'
       end
     end
-    
+
     if(field_name == "url")
-      value = '<a class="fancybox-counter" href="' + value + '">' + value + '</a>'  
+      value = '<a class="fancybox-counter" href="' + value + '">' + value + '</a>'
     end
-      
+
     return auto_link(value).html_safe
   end
 
@@ -220,9 +220,9 @@ module ApplicationHelper
 
   def render_meta_as_links()
   end
-  
+
   def metaheader_fix_if_needed(name, content)
-  
+
     if(name == "citation_author")
       parts = content.split(",")
       content = ""
@@ -231,11 +231,11 @@ module ApplicationHelper
       end
       content.strip!
     end
-    
+
     return content
   end
 
- 
+
   def page_location
     if params[:controller] == "catalog"
       if params[:action] == "index" and params[:q].to_s.blank? and params[:f].to_s.blank? and params[:search_field].to_s.blank?
@@ -255,5 +255,5 @@ module ApplicationHelper
       return "unknown"
     end
   end
-  
+
 end

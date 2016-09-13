@@ -39,16 +39,16 @@ set :keep_releases, 3
 
 set :passenger_restart_with_touch, true
 
-
-
 set :linked_files, fetch(:linked_files, []).push(
+  ".env",
   "config/database.yml",
   "config/solr.yml",
   "config/fedora.yml",
   "config/indexing.yml",
+  "config/emails.yml",
+  "config/google_analytics.yml",
   "public/robots.txt",
 )
-
 
 
 namespace :deploy do
@@ -65,7 +65,7 @@ namespace :deploy do
   desc "Add tag based on current version from VERSION file"
   task :auto_tag do
     current_version = "v#{IO.read("VERSION").strip}/#{DateTime.now.strftime("%Y%m%d")}"
-                      
+
     ask(:tag, current_version)
     tag = fetch(:tag)
 

@@ -25,13 +25,13 @@ AcademicCommons::Application.configure do
   # Tell Action Mailer not to deliver emails to the real world.
   # The :test delivery method accumulates sent emails in the
   # ActionMailer::Base.deliveries array.
-  config.action_mailer.raise_delivery_errors = true
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
-    :address => "localhost",
-    :domain => "cdrs-nginx-test1.cul.columbia.edu",
-    :port => 25
+    :address => ENV['SMTP_ADDRESS'],
+    :domain => ENV['SMTP_DOMAIN'],
+    :port => ENV['SMTP_PORT']
   }
+
 
 
   # Use SQL instead of Active Record's schema dumper when creating the test database.
@@ -41,18 +41,11 @@ AcademicCommons::Application.configure do
 
   # Print deprecation notices to the stderr
   config.active_support.deprecation = :stderr
-  
+
   config.relative_root = ''
   config.analytics_enabled = false
-  
-  config.deposit_notification_bcc = ["cuac@libraries.cul.columbia.edu"]
-  
-  config.indexing_report_recipients = ["cuac@libraries.cul.columbia.edu"]
-  config.mail_deposit_recipients = ["cuac@libraries.cul.columbia.edu"]
-  config.mail_deliverer = "cuac@libraries.cul.columbia.edu"
+
   config.base_path = "cdrs-nginx-prod1.cul.columbia.edu"
-
-
 
   # Configure static asset server for tests with Cache-Control for performance
   config.serve_static_assets = true
@@ -64,7 +57,7 @@ AcademicCommons::Application.configure do
   config.prod_environment = true
 
   config.log_level = :error
-  
+
   config.threadsafe!
-  
+
 end
