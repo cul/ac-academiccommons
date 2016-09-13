@@ -311,7 +311,7 @@ config.oai = {
   }
 }
 
-  config.temscope = {
+  config.itemscope = {
     :itemtypes => {
       "Articles"                     => "http://schema.org/ScholarlyArticle",
       "Working Papers"               => "http://schema.org/ScholarlyArticle",
