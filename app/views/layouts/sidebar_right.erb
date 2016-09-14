@@ -15,7 +15,6 @@
 <%= stylesheet_link_tag "blueprint/screen", :media => "screen,projection"  %>
 <%= stylesheet_link_tag "application", :media => "screen,projection", :rel => "stylesheet", :type => "text/css" %>
 <%= stylesheet_link_tag "//fonts.googleapis.com/css?family=Open+Sans:400italic,400,300,600&subset=latin-ext,latin", :media => "screen,projection", :rel => "stylesheet", :type => "text/css" %>
-<%= stylesheet_link_tag  'jquery.fancybox', :media => 'screen, projection' %>
 
 
 <!-- [if lt IE8] <%= stylesheet_link_tag "compiled/ie.css", :media => "screen, projection" %> -->
@@ -34,10 +33,6 @@
 <%= javascript_include_tag "waypoints.min.js" %>
 
 <%= javascript_include_tag "waypoints-sticky.min.js" %>
-
-<%= javascript_include_tag 'fancyBox/source/jquery.fancybox.pack.js' %>
-
-<%= javascript_include_tag 'fancyBox/source/helpers/jquery.fancybox-media.js' %>
 
 <%
 if(@document != nil && @document.include?("title_display") && @document.include?("author_facet") && @document.include?("date_issued"))
