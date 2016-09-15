@@ -69,7 +69,7 @@ class ApplicationController < ActionController::Base
     stylesheet_links << ['zooming_image', {:media=>'all'}]
     stylesheet_links << [ 'jquery/ui-lightness/jquery-ui-1.8.1.custom.css']
     stylesheet_links << [ 'handheld.css?v=1',{:media=>'handheld'}]
-    javascript_includes << ['modernizr-1.5.min.js','jquery-1.7.2.min.js', 'jquery-ui-1.8.1.custom.min.js', 'jquery.ui.selectmenu.js', 'application', 'uservoiceWidget.js' ]
+    javascript_includes << ['modernizr-1.5.min.js', 'application', 'jquery-ui-1.8.1.custom.min.js', 'jquery.ui.selectmenu.js', 'uservoiceWidget.js' ]
     javascript_includes << ['rails.js']
   end
 
