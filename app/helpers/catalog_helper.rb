@@ -302,9 +302,9 @@ begin
   def get_http_client
    hc = HTTPClient.new(:force_basic_auth => true)
    hc.ssl_config.verify_mode = OpenSSL::SSL::VERIFY_NONE
-   domain = "#{fedora_config["riurl"]}"
-   user = "cdrs"
-   password = "***REMOVED***"
+   domain = fedora_config["riurl"]
+   user = fedora_config["user"]
+   password = fedora_config["password"]
    hc.set_auth(domain, user, password)
    hc
   end
@@ -455,7 +455,7 @@ begin
   def itemprop_attribute(name)
     blacklight_config.show_fields[name][:itemprops]
   end
-  
+
   def itemscope_itemtype
 
     url_from_map = blacklight_config[:itemscope][:itemtypes][@document["genre_facet"]]

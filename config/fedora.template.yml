@@ -1,8 +1,14 @@
 # Copy this file to config/fedora.yml
 
+credentials: &credentials
+  user: USERNAME
+  password: PASSWORD
+
 development:
+  <<: *credentials
   riurl: http://localhost:8983/fedora
   riquery: "select $member from <#ri> where walk ($obj <cul:memberOf> <fedora:%s> and $member <cul:memberOf> $obj) and $member <rdf:type> <cul:Aggregator>"
 test:
+  <<: *credentials
   riurl: http://localhost:8983/fedora
   riquery: "select $member from <#ri> where walk ($obj <cul:memberOf> <fedora:%s> and $member <cul:memberOf> $obj) and $member <rdf:type> <cul:Aggregator>"
