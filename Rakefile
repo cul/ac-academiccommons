@@ -13,14 +13,14 @@ end
 require File.expand_path('../config/application', __FILE__)
 require 'rake'
 
-# configure the release versions of jettywrapper to use with CI
-require 'jettywrapper'
-JETTY_ZIP_BASENAME = 'fedora-3.8.1-with-risearch'
-Jettywrapper.url = "https://github.com/cul/hydra-jetty/archive/#{JETTY_ZIP_BASENAME}.zip"
-
 AcademicCommons::Application.load_tasks
 
 begin
+  # configure the release versions of jettywrapper to use with CI
+  require 'jettywrapper'
+  JETTY_ZIP_BASENAME = 'fedora-3.8.1-with-risearch'
+  Jettywrapper.url = "https://github.com/cul/hydra-jetty/archive/#{JETTY_ZIP_BASENAME}.zip"
+
   require 'rspec/core/rake_task'
 
   task(:spec).clear # get rid of the default task
