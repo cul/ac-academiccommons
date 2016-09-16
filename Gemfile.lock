@@ -312,6 +312,7 @@ DEPENDENCIES
   json
   kaminari (= 0.13.0)
   mail_form
+  multipart-post (~> 2.0.0)
   mysql (>= 2.8.1)
   net-ldap (= 0.3.1)
   net-ssh (= 2.9.4)

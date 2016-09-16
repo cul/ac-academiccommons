@@ -1,0 +1,147 @@
+<foxml:digitalObject VERSION="1.1" PID="actest:3"
+xmlns:foxml="info:fedora/fedora-system:def/foxml#"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:schemaLocation="info:fedora/fedora-system:def/foxml# http://www.fedora.info/definitions/1/0/foxml1-1.xsd">
+<foxml:objectProperties>
+<foxml:property NAME="info:fedora/fedora-system:def/model#state" VALUE="Active"/>
+<foxml:property NAME="info:fedora/fedora-system:def/model#label" VALUE="Alice%27s%20Adventures%20in%Wonderland"/>
+<foxml:property NAME="info:fedora/fedora-system:def/model#ownerId" VALUE=""/>
+<foxml:property NAME="info:fedora/fedora-system:def/model#createdDate" VALUE="2016-09-14T20:48:54.944Z"/>
+<foxml:property NAME="info:fedora/fedora-system:def/view#lastModifiedDate" VALUE="2016-09-14T20:48:54.944Z"/>
+</foxml:objectProperties>
+<foxml:datastream ID="AUDIT" STATE="A" CONTROL_GROUP="X" VERSIONABLE="false">
+<foxml:datastreamVersion ID="AUDIT.0" LABEL="Audit Trail for this object" CREATED="2016-09-14T20:48:54.944Z" MIMETYPE="text/xml" FORMAT_URI="info:fedora/fedora-system:format/xml.fedora.audit">
+<foxml:xmlContent>
+<audit:auditTrail xmlns:audit="info:fedora/fedora-system:def/audit#">
+<audit:record ID="AUDREC1">
+<audit:process type="Fedora API-M"/>
+<audit:action>ingest</audit:action>
+<audit:componentID></audit:componentID>
+<audit:responsibility>fedoraAdmin</audit:responsibility>
+<audit:date>2016-09-14T20:48:54.944Z</audit:date>
+<audit:justification>Batch update</audit:justification>
+</audit:record>
+</audit:auditTrail>
+</foxml:xmlContent>
+</foxml:datastreamVersion>
+</foxml:datastream>
+<foxml:datastream ID="DC" STATE="A" CONTROL_GROUP="X" VERSIONABLE="true">
+<foxml:datastreamVersion ID="DC.0" LABEL="Dublin Core Record for this object" CREATED="2004-12-10T00:21:58.000Z" MIMETYPE="text/xml" FORMAT_URI="http://www.openarchives.org/OAI/2.0/oai_dc/" SIZE="785">
+<foxml:xmlContent>
+<oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
+  <dc:title>Alice's Adventures in Wonderland</dc:title>
+  <dc:creator>BATCH</dc:creator>
+  <dc:publisher>Columbia University Libraries</dc:publisher>
+  <dc:type>Text</dc:type>
+  <dc:format>text/xml</dc:format>
+  <dc:identifier>actest:3</dc:identifier>
+  <dc:identifier>24815</dc:identifier>
+  <dc:source>file:///cul/cul0/lito/vmounts/rhys/opt/passenger/hypatia_prod/shared/private/mapper/1473886128_3721/product_2_151.xml</dc:source>
+</oai_dc:dc>
+</foxml:xmlContent>
+</foxml:datastreamVersion>
+</foxml:datastream>
+<foxml:datastream ID="RELS-EXT" STATE="A" CONTROL_GROUP="X" VERSIONABLE="true">
+<foxml:datastreamVersion ID="RELS-EXT.0" LABEL="RDF Statements about this object" CREATED="2016-09-14T16:48:54.000Z" MIMETYPE="application/rdf+xml" FORMAT_URI="info:fedora/fedora-system:FedoraRELSExt-1.0" SIZE="650">
+<foxml:xmlContent>
+<rdf:RDF xmlns:fedora-model="info:fedora/fedora-system:def/model#" xmlns:rel="info:fedora/fedora-system:def/relations-external#" xmlns:cul="http://purl.oclc.org/NET/CUL/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+          <rdf:Description rdf:about="info:fedora/actest:3">
+            <fedora-model:hasModel rdf:resource="info:fedora/ldpd:MODSMetadata"></fedora-model:hasModel>
+    <rdf:type rdf:resource="http://purl.oclc.org/NET/CUL/Metadata"></rdf:type>
+            <cul:metadataFor rdf:resource="info:fedora/actest:1"></cul:metadataFor>
+          </rdf:Description>
+        </rdf:RDF>
+</foxml:xmlContent>
+</foxml:datastreamVersion>
+</foxml:datastream>
+<foxml:datastream ID="CONTENT" STATE="A" CONTROL_GROUP="X" VERSIONABLE="true">
+<foxml:datastreamVersion ID="CONTENT.0" LABEL="Alice%27s%20Adventures%20in%Wonderland" MIMETYPE="text/xml">
+<foxml:xmlContent>
+<mods xmlns="http://www.loc.gov/mods/v3" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.loc.gov/mods/v3 http://www.loc.gov/standards/mods/v3/mods-3-4.xsd">
+    
+    <titleInfo>
+        <title>Alice's Adventures in Wonderland</title>
+    </titleInfo>
+    <name type="personal">
+        <namePart type="family">Carroll</namePart>
+        <namePart type="given">Lewis</namePart>
+        <role>
+            <roleTerm type="text">author</roleTerm>
+        </role>
+    </name>
+    <name type="corporate">
+        <namePart>Oxford University. Bucolic Literary Society.</namePart>
+        <role>
+            <roleTerm type="text">originator</roleTerm>
+        </role>
+    </name>
+    <name type="corporate">
+        <namePart>Weird Old Guys.</namePart>
+        <role>
+            <roleTerm type="text">author</roleTerm>
+        </role>
+    </name>
+    <typeOfResource>text</typeOfResource>
+    <genre>Articles</genre>
+    
+    <originInfo>
+        <dateIssued encoding="w3cdtf" keyDate="yes">1865</dateIssued>
+    </originInfo>
+    
+    <language>
+        <languageTerm type="text">English</languageTerm>
+    </language>
+    <abstract>Background -  Alice is feeling bored and drowsy while sitting on the riverbank with her older sister, who is reading a book with no pictures or conversations.</abstract>
+    <subject>
+        <topic>Tea Parties</topic>
+    </subject>
+    <subject>
+        <topic>Wonderland</topic>
+    </subject>
+    <subject authority="fast" authorityURI="http://id.worldcat.org/fast/void/0.1" valueURI="http://id.worldcat.org/fast/1038956">
+        <topic>Nonsense literature</topic>
+    </subject>
+    <subject authority="fast" authorityURI="http://id.worldcat.org/fast/void/0.1" valueURI="http://id.worldcat.org/fast/831688">
+        <topic>Bildungsromans</topic>
+    </subject>
+    <relatedItem type="host">
+        <titleInfo>
+            <title>Project Gutenberg</title>
+        </titleInfo>
+        <part>
+            <detail type="volume">
+                <number>1</number>
+            </detail>
+            <detail type="issue">
+                <number>2</number>
+            </detail>
+            <extent unit="page">
+                <start>1</start>
+                <end>69</end>
+            </extent>
+            <date>June 2008</date>
+        </part>
+        <identifier type="doi">10.1378/wonderland.01-2345</identifier>
+        <identifier type="issn">0123-4567</identifier>
+    </relatedItem>
+    <identifier type="CDRS doi">http://dx.doi.org/10.7916/ALICE</identifier>
+    
+    <location>
+        <physicalLocation authority="marcorg">NNC</physicalLocation>
+    </location>
+    
+    <recordInfo>
+        <recordContentSource authority="marcorg">NNC</recordContentSource>
+        <recordCreationDate encoding="w3cdtf">2016-09-14 16:31:33 -0400</recordCreationDate>
+        <recordChangeDate encoding="w3cdtf">2016-09-14 16:48:05 -0400</recordChangeDate>
+        <recordIdentifier>24815</recordIdentifier>
+        <languageOfCataloging>
+            <languageTerm authority="iso639-2b">eng</languageTerm>
+        </languageOfCataloging>
+    </recordInfo>
+    
+</mods>
+</foxml:xmlContent>
+</foxml:datastreamVersion>
+</foxml:datastream>
+</foxml:digitalObject>

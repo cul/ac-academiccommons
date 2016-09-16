@@ -29,4 +29,16 @@ describe CatalogController, :type => [:controller,:feature] do
       expect(page).to have_css("a[href=\"/deposit\"]")
     end
   end
+  describe "show" do
+    before do
+      visit catalog_path("actest:1")
+    end
+    it "has the fixture object" do
+      expect(page).to have_content("Weird Old Guys")
+    end
+    it "links to the pdf download" do
+      click_on 'alice_in_wonderland.pdf'
+      expect(page.response_headers['X-Accel-Redirect']).to match /\/repository_download\/.*\/actest:2\/CONTENT$/
+    end
+  end
 end
