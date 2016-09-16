@@ -69,7 +69,7 @@ module Cul
 
 
       def risearch_for_members()
-        results = JSON::parse(@server.request(:method => "", :request => "risearch", :format => "json", :lang => "itql", :query => sprintf(@server.riquery, @pid)))["results"]
+        results = JSON::parse(@server.request(:method => "", :request => "risearch", :format => "json", :lang => "itql", :query => sprintf(@server.riquery, @pid), :limit => @server.rilimit))["results"]
 
         results.collect { |r| @server.item(r["member"]) }
 
