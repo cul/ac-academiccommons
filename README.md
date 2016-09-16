@@ -44,6 +44,10 @@ CURRENT RECOMMENDED VERSION OF RUBY: 1.8.7-p334 (currently running 1.9.3p551 on 
    rails server
    ```
 
+## Running tests
+1. In order to run tests that require javascript you will need `phantomjs` installed. It can be installed using homebrew or macports.
+2. Run test locally by running `RAILS_ENV=test rake ci`.
+
 ## Improvements
 ### Making Application Faster
   1. We are only using one image from Font Awesome, instead we could be using a static image.
