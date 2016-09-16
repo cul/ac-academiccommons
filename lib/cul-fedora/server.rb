@@ -8,12 +8,13 @@ module Cul
   module Fedora
     class Server
       
-      attr_reader :riurl, :riquery
+      attr_reader :riurl, :riquery, :rilimit
 
       def initialize(*args)
         options = args.extract_options!
         @riurl = options[:riurl] || options["riurl"] || raise(ArgumentError, "Must provide riurl argument")
         @riquery = options[:riquery] || options["riquery"] || raise(ArgumentError, "Must provide riquery argument")
+        @rilimit = options[:rilimit] || options["rilimit"] || ""
         @hc = options[:http_client] || options["http_client"]
         @logger = options[:logger] || options["logger"]
       end
