@@ -8,7 +8,7 @@ describe AdminController, :type => :controller do
     allow(@admin).to receive(:admin).and_return(true)
   end
   # these actions do not require an ID param
-  [:edit_alert_message, :edit_home_page, :deposits,
+  [:edit_alert_message, :deposits,
    :agreements, :student_agreements].each do |action|
     describe action.to_s do # rspec wants a String here
       context "without being logged in" do
