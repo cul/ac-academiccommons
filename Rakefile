@@ -40,11 +40,24 @@ begin
   end
 
   desc 'Run all tests regardless of tags'
-  task :ci => ['jetty:clean', :configure_jetty] do
-    ENV['environment'] = "test"
-    #Rake::Task["active_fedora:configure_jetty"].invoke
+  task :ci do
+    #TODO figure out how to get the indexer and the specs to run in the same environment
+    raise "call with RAILS_ENV=test" unless Rails.env == 'test'
+    Rake::Task["jetty:clean"].invoke
+    Rake::Task["configure_jetty"].invoke
     jetty_params = Jettywrapper.load_config
     error = Jettywrapper.wrap(jetty_params) do
+      Rake::Task["ci:load_collection"].invoke
+      Rake::Task["ci:load_fixtures"].invoke
+      collection = Cul::Fedora::Item.new(:pid=>'collection:3', :server_config => Rails.application.config.fedora)
+      tries = 0
+      while((length = collection.listMembers.length) == 0 && tries < 50) do
+        puts "(collection:3).listMembers was zero, waiting for buffer to flush"
+        sleep(1)
+        tries += 1
+      end
+      raise "Never found collection members, check Solr" if (tries > 50)
+      Rake::Task["ac:reindex"].invoke('collection:3')
       Rake::Task["spec_all"].invoke
     end
     raise "test failures: #{error}" if error

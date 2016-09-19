@@ -68,6 +68,7 @@ module Cul
       end
 
 
+      # only works for collections because the members must be Aggregators
       def risearch_for_members()
         results = JSON::parse(@server.request(:method => "", :request => "risearch", :format => "json", :lang => "itql", :query => sprintf(@server.riquery, @pid), :limit => @server.rilimit))["results"]
 
@@ -81,7 +82,9 @@ module Cul
           size = getSize
           items = []
           while (i <= size)
-            result = Nokogiri::XML(request(:method => "/objects", :sdef => "methods/ldpd:sdef.Aggregator", :request => "listMembers", :format => "sparql", :max => MAX_LIST_MEMBERS_PER_REQUEST, :start => (i - 1)))
+            riquery = "select $member from <#ri> where $member <http://purl.oclc.org/NET/CUL/memberOf> <fedora:#{pid}>"
+            result = Nokogiri::XML(@server.request(:method => "", :request => "risearch", :format => "sparql", :lang => "itql", :query => riquery, :limit => MAX_LIST_MEMBERS_PER_REQUEST, :start => (i - 1)))
+            # result = Nokogiri::XML(request(:method => "/objects", :sdef => "methods/ldpd:sdef.Aggregator", :request => "listMembers", :format => "sparql", :max => MAX_LIST_MEMBERS_PER_REQUEST, :start => (i - 1)))
 
             result.css("sparql>results>result>member").collect do |result_node|
               items << @server.item(result_node.attributes["uri"].value)
@@ -100,7 +103,9 @@ module Cul
 
       def getSize()
         begin
-          request(:method => "/objects", :sdef => "methods/ldpd:sdef.Aggregator", :request => "getSize").to_i
+            riquery = "select $member from <#ri> where $member <http://purl.oclc.org/NET/CUL/memberOf> <fedora:#{pid}>"
+            @server.request(:method => "", :request => "risearch", :format => "count", :lang => "itql", :query => riquery, :limit => '').to_i
+            # request(:method => "/objects", :sdef => "methods/ldpd:sdef.Aggregator", :request => "getSize").to_i
         rescue Exception => e
           logger.error e.message
           return -1
@@ -109,8 +114,8 @@ module Cul
 
       def describedBy
         begin
-          params = {:method => '/objects', :request => "describedBy", :sdef => "methods/ldpd:sdef.Core"}
-          result = request(params)
+          riquery = "select $description from <#ri> where $description <http://purl.oclc.org/NET/CUL/metadataFor> <fedora:#{pid}>"
+          result = @server.request(:method => "", :request => "risearch", :format => "sparql", :lang => "itql", :query => riquery, :limit => 1)
           Nokogiri::XML(result).css("sparql>results>result>description").collect do |metadata|
             @server.item(metadata.attributes["uri"].value)
           end

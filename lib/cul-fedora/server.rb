@@ -3,6 +3,8 @@ begin
 rescue
   require "activesupport"
 end
+require 'net/http'
+require 'net/http/post/multipart'
 
 module Cul
   module Fedora
@@ -28,7 +30,55 @@ module Cul
       end
 
       def request(options= {})
-        http_client.get_content(*request_path(options))
+        http_method = options.delete(:http_method)
+        user = Rails.application.config.fedora["user"]
+        password = Rails.application.config.fedora["password"]
+
+        uri = request_path(options)
+        params = uri[1] || {}
+        uri = URI(uri[0])
+        uri.query = URI.encode_www_form(params)
+        req = Net::HTTP::Get.new(uri.request_uri)
+        req.basic_auth user, password
+        res = Net::HTTP.start(uri.hostname, uri.port) do |http|
+          http.request(req)
+        end
+        res.body
+      end
+
+      def post(options= {})
+        user = Rails.application.config.fedora["user"]
+        password = Rails.application.config.fedora["password"]
+        content_type = options.delete(:content_type)
+        body = options.delete(:body)
+        http_client.set_auth(riurl, user, password)
+        uri = request_path(options)[0]
+        uri = URI(uri)
+        req = Net::HTTP::Post.new(uri.request_uri)
+        req.basic_auth user, password
+        req.body = body
+        req.content_type = content_type || 'text/xml'
+        res = Net::HTTP.start(uri.hostname, uri.port) do |http|
+          http.request(req)
+        end
+      end
+
+      def post_multipart(options= {})
+        user = Rails.application.config.fedora["user"]
+        password = Rails.application.config.fedora["password"]
+        content_type = options[:mimeType] || options.delete(:content_type) || 'text/xml'
+        body = options.delete(:body)
+        http_client.set_auth(riurl, user, password)
+        uri = request_path(options)
+        params = uri[1]
+        uri = URI(uri[0])
+        params[:controlGroup] ||= 'M'
+        # unfortunately FCR 3 seems to want the non-file params in the URI, and the body as multipart
+        req = Net::HTTP::Post::Multipart.new(uri.request_uri + "?#{URI.encode_www_form(params)}", :file => UploadIO.new(body, content_type, options[:dsLabel]))
+        req.basic_auth user, password
+        res = Net::HTTP.start(uri.hostname, uri.port) do |http|
+          http.request(req)
+        end
       end
 
       def request_path(options = {})
@@ -44,7 +94,6 @@ module Cul
 
         uri = @riurl + method + pid + sdef + request
         query = options
-        
         return [uri, query]
       end
 
