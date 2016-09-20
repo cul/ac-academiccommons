@@ -67,22 +67,13 @@ module Cul
         request(:request => name.to_s.upcase)
       end
 
-
-      # only works for collections because the members must be Aggregators
-      def risearch_for_members()
-        results = JSON::parse(@server.request(:method => "", :request => "risearch", :format => "json", :lang => "itql", :query => sprintf(@server.riquery, @pid), :limit => @server.rilimit))["results"]
-
-        results.collect { |r| @server.item(r["member"]) }
-
-      end
-
       def listMembers()
         begin
           i = 1
           size = getSize
           items = []
           while (i <= size)
-            riquery = riquery_with_limit(MAX_LIST_MEMBERS_PER_REQUEST, i - 1)
+            riquery = riquery_for_members(limit: MAX_LIST_MEMBERS_PER_REQUEST, offset: i - 1)
             result = Nokogiri::XML(@server.request(:method => "", :request => "risearch", :format => "sparql", :lang => "itql", :query => riquery))
 
             result.css("sparql>results>result>member").collect do |result_node|
@@ -101,15 +92,20 @@ module Cul
       end
 
       # Helper to query for members with offset. Adds ability to pagination through results.
-      def riquery_with_limit(limit, offset)
-        "select $member from <#ri> where $member <http://purl.oclc.org/NET/CUL/memberOf> <fedora:#{pid}> order by $member limit #{limit} offset #{offset}"
+      def riquery_for_members(options = {})
+        limit = options.delete(:limit) || nil
+        offset = options.delete(:offset) || nil
+
+        query = ["select $member from <#ri> where $member <http://purl.oclc.org/NET/CUL/memberOf> <fedora:#{pid}>"]
+        query << "order by $member" if limit || offset
+        query << "limit #{limit}" if limit
+        query << "offset #{offset}" if offset
+        query.join(" ")
       end
 
       def getSize()
         begin
-            riquery = "select $member from <#ri> where $member <http://purl.oclc.org/NET/CUL/memberOf> <fedora:#{pid}>"
-            @server.request(:method => "", :request => "risearch", :format => "count", :lang => "itql", :query => riquery, :limit => '').to_i
-            # request(:method => "/objects", :sdef => "methods/ldpd:sdef.Aggregator", :request => "getSize").to_i
+            @server.request(:method => "", :request => "risearch", :format => "count", :lang => "itql", :query => riquery_for_members, :limit => '').to_i
         rescue Exception => e
           logger.error e.message
           return -1
@@ -303,8 +299,9 @@ module Cul
           logger.info "=== " + resource_pid + " is activated, as part of aggregator: " + aggregator_pid
 
         rescue Exception => e
-          logger.error "=== process_resource() error ==="
+          logger.error "=== process_resource() error for #{pid}==="
           logger.error e.message
+          logger.error e.backtrace
         end
 
       end
