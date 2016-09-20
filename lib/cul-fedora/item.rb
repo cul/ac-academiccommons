@@ -267,9 +267,6 @@ module Cul
       end
 
       def embargo_release_date_indexing(mods, add_field)
-
-        Rails.application.config.fedora
-
         if(free_to_read_start_date = mods.at_css("free_to_read"))
           if(free_to_read_start_date = mods.at_css("free_to_read")['start_date'])
             if(!free_to_read_start_date.nil? && free_to_read_start_date.length != 0)
@@ -313,23 +310,30 @@ module Cul
       end
 
       def get_resource_pid(aggregator_pid)
-        aggregator_members_url = Rails.application.config.fedora['open_url'] + '/objects/' + aggregator_pid + '/methods/ldpd:sdef.Aggregator/listMembers?format=sparql&max=1&start=0'
-        response = Net::HTTP.get_response(URI(aggregator_members_url))
-        contentXML = Nokogiri::XML(response.body.to_s)
+        riquery = "select $member from <#ri> where $member <http://purl.oclc.org/NET/CUL/memberOf> <fedora:#{aggregator_pid}>"
+        response = @server.request(:method => "", :request => "risearch", :format => "sparql", :lang => "itql", :query => riquery, limit: 1)
+        #aggregator_members_url = Rails.application.config.fedora['open_url'] + '/objects/' + aggregator_pid + '/methods/ldpd:sdef.Aggregator/listMembers?format=sparql&max=1&start=0'
+        #response = Net::HTTP.get_response(URI(aggregator_members_url))
+        contentXML = Nokogiri::XML(response.to_s)
         member_node = contentXML.css("member")
         resourse_pid = member_node.first['uri']
         return resourse_pid.sub('info:fedora/', '')
       end
 
       def check_if_resouce_is_available(resourse_pid)
-        fedora_resourse_url = Rails.application.config.fedora['open_url'] + '/objects/' + resourse_pid
-        response = Net::HTTP.get_response(URI(fedora_resourse_url))
+        fedora_url = URI(@server.riurl)
+
+        response = Net::HTTP.start(fedora_url.hostname, fedora_url.port, :use_ssl => fedora_url.scheme == 'https') do |http|
+          http.head("/objects/#{resourse_pid}")
+        end
         return response.code == '200'
       end
 
       def make_resource_active(resource_pid)
-        change_resourse_state_url = Rails.application.config.fedora['pid_state_changer_url'] + '?pid=' + resource_pid + '&repository_id=2&state=A'
-        Net::HTTP.get_response(URI(change_resourse_state_url))
+        logger.error "WARNING: Call made to make_resource_active() by #{pid}"
+
+        #change_resourse_state_url = Rails.application.config.fedora['pid_state_changer_url'] + '?pid=' + resource_pid + '&repository_id=2&state=A'
+        #Net::HTTP.get_response(URI(change_resourse_state_url))
       end
 
       def index_for_ac2(options = {})
