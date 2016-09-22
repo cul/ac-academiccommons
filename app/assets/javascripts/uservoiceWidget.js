@@ -1,3 +1,5 @@
+// This is used by the support popup, that comes up when the user clicks the fandq links.
+
 var uvOptions = {};
   (function() {
     var uv = document.createElement('script'); uv.type = 'text/javascript'; uv.async = true;

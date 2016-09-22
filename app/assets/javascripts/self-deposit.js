@@ -1,3 +1,4 @@
+// Javascript used for the deposit form.
 
 $(document).ready(function(){
   var accordion = $("#stepForm").accordion({animated: false, autoHeight: false});
