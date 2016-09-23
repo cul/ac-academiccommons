@@ -9,7 +9,7 @@ require 'net/http/post/multipart'
 module Cul
   module Fedora
     class Server
-      
+
       attr_reader :riurl, :riquery, :rilimit
 
       def initialize(*args)
@@ -40,7 +40,7 @@ module Cul
         uri.query = URI.encode_www_form(params)
         req = Net::HTTP::Get.new(uri.request_uri)
         req.basic_auth user, password
-        res = Net::HTTP.start(uri.hostname, uri.port) do |http|
+        res = Net::HTTP.start(uri.hostname, uri.port, :use_ssl => uri.scheme == 'https') do |http|
           http.request(req)
         end
         res.body
@@ -58,7 +58,7 @@ module Cul
         req.basic_auth user, password
         req.body = body
         req.content_type = content_type || 'text/xml'
-        res = Net::HTTP.start(uri.hostname, uri.port) do |http|
+        res = Net::HTTP.start(uri.hostname, uri.port, :use_ssl => uri.scheme == 'https') do |http|
           http.request(req)
         end
       end
@@ -76,7 +76,7 @@ module Cul
         # unfortunately FCR 3 seems to want the non-file params in the URI, and the body as multipart
         req = Net::HTTP::Post::Multipart.new(uri.request_uri + "?#{URI.encode_www_form(params)}", :file => UploadIO.new(body, content_type, options[:dsLabel]))
         req.basic_auth user, password
-        res = Net::HTTP.start(uri.hostname, uri.port) do |http|
+        res = Net::HTTP.start(uri.hostname, uri.port, :use_ssl => uri.scheme == 'https') do |http|
           http.request(req)
         end
       end
@@ -103,8 +103,7 @@ module Cul
         @hc ||= HTTPClient.new()
         @hc
       end
-      
+
     end
   end
 end
-
