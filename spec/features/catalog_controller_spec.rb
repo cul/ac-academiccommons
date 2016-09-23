@@ -41,4 +41,14 @@ describe CatalogController, :type => [:controller,:feature] do
       expect(page.response_headers['X-Accel-Redirect']).to match /\/repository_download\/.*\/actest:2\/CONTENT$/
     end
   end
+  describe "browse_department" do
+    before { visit departments_browse_path }
+    let(:authors) { "Weird Old Guys" }
+    let(:department) { "Bucolic Literary Society" }
+    it "has indexed departments listed" do
+      expect(page).to have_content(department)
+      click_on department
+      expect(page).to have_link(authors)
+    end
+  end
 end
