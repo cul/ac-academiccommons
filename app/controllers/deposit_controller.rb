@@ -23,7 +23,15 @@ class DepositController < ApplicationController
         :doi_pmcid => params[:doi_pmcid],
         :notes => params[:software]
       )
-      Notifier.new_deposit(root_url, deposit).deliver
+
+      begin
+        Notifier.new_deposit(root_url, deposit).deliver
+      rescue Net::SMTPFatalError, Net::SMTPSyntaxError, IOError, Net::SMTPAuthenticationError,
+        Net::SMTPServerBusy, Net::SMTPUnknownError, TimeoutError => e
+
+        Rails.logger.warn "Error sending new deposit notification email for deposit #{deposit.id}. ERROR: #{e.message}"
+        Notifier.new_deposit(root_url, deposit, attach_deposit = false).deliver
+      end
     else
       flash[:notice] = "You must accept the author rights agreement."
       redirect_to :action => "index"
