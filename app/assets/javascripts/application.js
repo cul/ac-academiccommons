@@ -3,8 +3,8 @@
 //
 //= require jquery
 //= require fancybox
-//= require custom
 //= require jquery-ui-1.8.1.custom.min
+//= require custom
 //= require jquery.ui.selectmenu
 //= require uservoiceWidget
 //= require rails

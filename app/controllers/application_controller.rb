@@ -55,12 +55,6 @@ class ApplicationController < ActionController::Base
     `ps -p #{pid}`.include?(pid)
   end
 
-  # Scrub sensitive parameters from your log
-  # filter_parameter_logging :password
-  def javascript_tag(href)
-    '<script src="' + href + '" type="text/javascript"></script>'.html_safe
-  end
-
   def stylesheet_tag(href, args)
     '<link href="' + href + '" rel="stylesheet" type="text/css" media="' + args[:media] + '" />'.html_safe
   end

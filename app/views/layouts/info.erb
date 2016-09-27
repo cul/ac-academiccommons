@@ -25,17 +25,9 @@
     <%#= stylesheet_link_tag 'compiled/print.css', :media => "print" %>
     <!-- [if lt IE8] <%= stylesheet_link_tag "compiled/ie.css", :media => "screen, projection" %> -->
 
-    <%= javascript_include_tag "application" %>
+ <%= javascript_include_tag "application" %>
 
-    <%= yield :head %>
-
-
-  <!-- will revert link to native function when done editing stylesheets -->
-
-    <% javascript_tag do -%>
-    <%= yield(:jstemplates) %>
-    <% end -%>
-
+ <%= yield :head %>
 </head>
 
 
