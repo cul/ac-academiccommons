@@ -50,12 +50,13 @@ describe CatalogController, :type => [:controller, :feature] do
     context "search query" do
       it "finds by title" do
         visit catalog_index_path(q: "alice")
-        expect(page).to have_content("Alice")
+        expect(page).to have_css("a[href=\"/catalog/actest%3A1\"]", :text => "Alice's Adventures in Wonderland")
       end
 
       it "finds by author" do
         visit catalog_index_path(q: "lewis carroll")
         expect(page).to have_content("Carroll, Lewis")
+        expect(page).to have_css("a[href=\"/catalog/actest%3A1\"]", :text => "Alice's Adventures in Wonderland")
       end
 
       it "returns nothing when search query is not a match" do
