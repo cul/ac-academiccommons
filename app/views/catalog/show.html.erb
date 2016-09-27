@@ -1,24 +1,26 @@
 <% @page_title = "#{document_show_html_title} - #{application_name}" %>
-<% extra_head_content << render_link_rel_alternates %>
+<% content_for :head do %>
+  <%= render_link_rel_alternates %>
+<% end %>
 <div>
- 
- <%= render 'previous_next_doc' -%>     
+
+ <%= render 'previous_next_doc' -%>
 	 <%if !alert_msg.empty? %>
        <%= render :partial => "/catalog/alert_box.erb" %>
-	 <%end%> 
-	 
+	 <%end%>
+
 </div>
 
 
 <% content_for :sidebar do %>
- 
+
 
 <h2>Download</h2>
- 
+
 <div class="sidebar-content downloads">
 <%=  render :partial => "catalog/_show_partials/display_resources", :locals => {:document => @document} %>
 </div>
- 
+
 <h2>Share</h2>
 <div class="sidebar-content">
  <div class="documentFunctions">
@@ -28,11 +30,11 @@
 
 <hr>
 
-<h3>Helpful Links</h3> 
+<h3>Helpful Links</h3>
 <div class="sidebar-content">
 <a  class='nav-link'  href="<%= relative_root %>/about/">About</a>
- 
-<a class='nav-link' href="javascript:UserVoice.showPopupWidget();" >FAQ/Ask a Question</a>   
+
+<a class='nav-link' href="javascript:UserVoice.showPopupWidget();" >FAQ/Ask a Question</a>
 
 <hr>
   <%= link_to "Browse Departments", departments_browse_path, :class=>"nav-link" %>
@@ -44,7 +46,7 @@
 
 <div id="document">
   <div id="doc_<%= @document[:id] %>" class=" <%= render_document_class %>">
-          
+
 
     <div class="">
       <%#= render_document_partial @document, :show %>
@@ -59,10 +61,10 @@
 
 
   <% if @document.respond_to?(:export_as_openurl_ctx_kev) %>
-    <!-- 
-         // COinS, for Zotero among others. 
+    <!--
+         // COinS, for Zotero among others.
          // This document_partial_name(@document) business is not quite right,
-         // but has been there for a while. 
+         // but has been there for a while.
     -->
     <span class="Z3988" title="<%= @document.export_as_openurl_ctx_kev(document_partial_name(@document)) %>"></span>
   <% end %>

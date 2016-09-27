@@ -1,6 +1,8 @@
 <% @page_title = "#{application_name}" %>
-<% extra_head_content << render_link_rel_alternates %>
-<% extra_head_content << javascript_include_tag('about-videos.js') %>
+<% content_for :head do %>
+  <%= render_link_rel_alternates %>
+  <%= javascript_include_tag('about-videos.js') %>
+<% end %>
 
 <% sidebar_items << capture do %>
 
