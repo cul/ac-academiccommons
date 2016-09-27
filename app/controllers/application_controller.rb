@@ -55,15 +55,6 @@ class ApplicationController < ActionController::Base
     `ps -p #{pid}`.include?(pid)
   end
 
-  def stylesheet_tag(href, args)
-    '<link href="' + href + '" rel="stylesheet" type="text/css" media="' + args[:media] + '" />'.html_safe
-  end
-
-  def default_html_head
-    stylesheet_links << ['zooming_image', {:media=>'all'}]
-    stylesheet_links << [ 'jquery/ui-lightness/jquery-ui-1.8.1.custom.css']
-    stylesheet_links << [ 'handheld.css?v=1',{:media=>'handheld'}]
-  end
 
   ############################################
   ####  Application user-related methods  ####
