@@ -3,18 +3,12 @@
 development:
   riurl: http://localhost:8983/fedora
   riquery: "select $member from <#ri> where walk ($obj <http://purl.oclc.org/NET/CUL/memberOf> <fedora:%s> and $member <http://purl.oclc.org/NET/CUL/memberOf> $obj) and $member <rdf:type> <http://purl.oclc.org/NET/CUL/Aggregator>"
+  rilimit: 100
+  user: fedoraAdmin
+  password: fedoraAdmin
 test:
   riurl: http://localhost:8983/fedora
   riquery: "select $member from <#ri> where walk ($obj <http://purl.oclc.org/NET/CUL/memberOf> <fedora:%s> and $member <http://purl.oclc.org/NET/CUL/memberOf> $obj) and $member <rdf:type> <http://purl.oclc.org/NET/CUL/Aggregator>"
+  user: fedoraAdmin
+  password: fedoraAdmin
 
-# passenger_dev, passenger_test, and passenger_prod yml files are created manually in shared resource location
-# For reference, here are the config values for each remote instance:
-academiccommons_dev:
-  riurl: ***REMOVED***
-  riquery: "select $member from <#ri> where walk ($obj <http://purl.oclc.org/NET/CUL/memberOf> <fedora:%s> and $member <http://purl.oclc.org/NET/CUL/memberOf> $obj) and $member <rdf:type> <http://purl.oclc.org/NET/CUL/Aggregator>"
-academiccommons_test:
-  riurl: ***REMOVED***
-  riquery: "select $member from <#ri> where walk ($obj <http://purl.oclc.org/NET/CUL/memberOf> <fedora:%s> and $member <http://purl.oclc.org/NET/CUL/memberOf> $obj) and $member <rdf:type> <http://purl.oclc.org/NET/CUL/Aggregator>"
-passenger_prod:
-  riurl: ***REMOVED***
-  riquery: "select $member from <#ri> where walk ($obj <http://purl.oclc.org/NET/CUL/memberOf> <fedora:%s> and $member <http://purl.oclc.org/NET/CUL/memberOf> $obj) and $member <rdf:type> <http://purl.oclc.org/NET/CUL/Aggregator>"

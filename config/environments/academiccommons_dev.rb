@@ -24,12 +24,11 @@ AcademicCommons::Application.configure do
   # Tell Action Mailer not to deliver emails to the real world.
   # The :test delivery method accumulates sent emails in the
   # ActionMailer::Base.deliveries array.
-  config.action_mailer.raise_delivery_errors = true
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
-    :address => "***REMOVED***",
-    :domain => "***REMOVED***",
-    :port => 25
+    :address => ENV['SMTP_ADDRESS'],
+    :domain => ENV['SMTP_DOMAIN'],
+    :port => ENV['SMTP_PORT']
   }
 
 
@@ -40,15 +39,10 @@ AcademicCommons::Application.configure do
 
   # Print deprecation notices to the stderr
   config.active_support.deprecation = :stderr
-  
+
   config.relative_root = ''
-  config.analytics_enabled = false
-  
-  config.mail_deposit_recipients = ["cuac@libraries.cul.columbia.edu"]
-  config.mail_deliverer = "cuac@libraries.cul.columbia.edu"
+
   config.base_path = "all-nginx-dev1.cul.columbia.edu"
-
-
 
   # Configure static asset server for tests with Cache-Control for performance
   config.serve_static_assets = true
@@ -56,6 +50,4 @@ AcademicCommons::Application.configure do
 
   # Allow pass debug_assets=true as a query parameter to load pages with unpackaged assets
   config.assets.allow_debugging = true
-
-  config.prod_environment = false  
 end

@@ -4,45 +4,43 @@
 %div{:class => "box home-side"}
 
 
-  -#%li= link_to "Modify home page text", :controller => :admin,  :action => "edit_home_page"
   %div{:style => ""}  
     = link_to "Edit alert message", :controller => :admin,  :action => "edit_alert_message", :id => ""
-  %div{:style => ""}  
+  %div{:style => ""}
     = link_to "Self-deposits", :controller => :admin,  :action => "deposits", :id => ""
-  %div{:style => ""}  
+  %div{:style => ""}
     = link_to "Author Agreements", :controller => :admin,  :action => "agreements", :id => ""
-  %div{:style => ""}  
-    = link_to "Student Agreements", :controller => :admin,  :action => "student_agreements", :id => ""    
-  
+  %div{:style => ""}
+    = link_to "Student Agreements", :controller => :admin,  :action => "student_agreements", :id => ""
+
   %div{:style => "padding: 10px 1px 0px 0px; font-size: 1.2em;"}
     Index Management
-  
-  %div{:style => ""}  
+
+  %div{:style => ""}
     = link_to "Ingest/update data", :controller => :admin, :action => :ingest, :id => ""
-  %div{:style => ""}  
+  %div{:style => ""}
     = link_to "Ingest history", :controller => :logs, :action => :ingest_history, :id => ""
 
-  %div{:style => "padding: 10px 0px 1px 0px; font-size: 1.2em;"}      
-    Statistics 
-    
-  -#= link_to "Item/Search History", {:controller => :statistics, :action =>  :search_history}
-  -# %div{:style => ""}    
-    -# = link_to "School Statistics", {:controller => :statistics, :action => :school_statistics, :id => ""}  
-  %div{:style => ""}    
-    = link_to "Common Statistics", {:controller => :statistics, :action => :generic_statistics, :id => ""}    
-    
-  %div{:style => "padding: 10px 0px 1px 0px; font-size: 1.2em;"}      
-    Statistic reports
-         
-  %div{:style => ""}    
-    = link_to "Author Monthly Report", {:controller => :statistics, :action => :author_monthly, :id => ""}
-  %div{:style => ""}      
-    = link_to "All Author Monthlies", {:controller => :statistics, :action => :all_author_monthlies, :id => ""}
-  %div{:style => ""}  
-    = link_to "All Author Monthlies history", {:controller => :logs, :action => :all_author_monthly_reports_history, :id => ""}    
-    
-  %div{:style => "padding: 10px 0px 1px 0px; font-size: 1.2em;"} 
-       
-  %div{:style => ""}  
-    = link_to "Opt out list", {:controller => :email_preferences, :id => ""}
+  %div{:style => "padding: 10px 0px 1px 0px; font-size: 1.2em;"}
+    Statistics
 
+  -#= link_to "Item/Search History", {:controller => :statistics, :action =>  :search_history}
+  -# %div{:style => ""}
+    -# = link_to "School Statistics", {:controller => :statistics, :action => :school_statistics, :id => ""}
+  %div{:style => ""}
+    = link_to "Common Statistics", {:controller => :statistics, :action => :generic_statistics, :id => ""}
+
+  %div{:style => "padding: 10px 0px 1px 0px; font-size: 1.2em;"}
+    Statistic reports
+
+  %div{:style => ""}
+    = link_to "Author Monthly Report", {:controller => :statistics, :action => :author_monthly, :id => ""}
+  %div{:style => ""}
+    = link_to "All Author Monthlies", {:controller => :statistics, :action => :all_author_monthlies, :id => ""}
+  %div{:style => ""}
+    = link_to "All Author Monthlies history", {:controller => :logs, :action => :all_author_monthly_reports_history, :id => ""}
+
+  %div{:style => "padding: 10px 0px 1px 0px; font-size: 1.2em;"}
+
+  %div{:style => ""}
+    = link_to "Opt out list", {:controller => :email_preferences, :id => ""}

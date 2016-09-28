@@ -52,44 +52,35 @@ module AcademicCommons
     # Configure sensitive parameters which will be filtered from the log file.
     config.filter_parameters += [:password]
 
-    # load Solr and Fedora config values for use in app, tasks, etc.
-    solr_config_file = File.expand_path('../solr.yml', __FILE__)
-    if File.exists? solr_config_file
-      solr_config_settings = ERB.new(IO.read(solr_config_file)).result
-      config.solr = YAML::load(solr_config_settings)[Rails.env.to_s]
-    end
-
-    fedora_config_file = File.expand_path('../fedora.yml', __FILE__)
-    if File.exists? fedora_config_file
-      fedora_config_settings = ERB.new(IO.read(fedora_config_file)).result
-      config.fedora = YAML::load(fedora_config_settings)[Rails.env.to_s]
-    end
-
-    indexing_config_file = File.expand_path('../indexing.yml', __FILE__)
-    if File.exists? indexing_config_file
-      indexing_config_settings = ERB.new(IO.read(indexing_config_file)).result
-      config.indexing = YAML::load(indexing_config_settings)[Rails.env.to_s]
+    # Loading configuration files for Solr, Fedora, Indexing, emails
+    # TODO: This can be removed in Rails 4. Rails 4 automates this process.
+    [:solr, :fedora, :indexing, :emails, :google_analytics].each do |i|
+      config_file = File.expand_path("../#{i}.yml", __FILE__) ## Do this better.
+      if File.exists? config_file
+        settings = ERB.new(IO.read(config_file)).result
+        config.send("#{i}=", YAML::load(settings)[Rails.env.to_s])
+      end
     end
 
     config.logger = Logger.new("#{Rails.root}/log/#{Rails.env}.log", 50, 2048000)
     #config.logger = Logger.new("#{Rails.root}/log/#{Rails.env}.log", 'daily')
 
-    config.analytics_username = "***REMOVED***"
-    config.analytics_password = "***REMOVED***"
-    config.analytics_id = "'UA-10481105-1'"
+    # Analytics disabled by default. Google analytics should be enabled in a
+    # per-environment basis.
+    config.analytics_enabled = false
 
     config.related_content_solr_url = "http://***REMOVED***:8080/solr-1.5/ac_plus"
     config.related_content_show_size = "3"
 
+    config.prod_environment = false
 
-# =============== new start =================== #
-    # Enable the asset pipeline
+    # Always throw errors if there is a problem sending an email.
+    config.action_mailer.raise_delivery_errors = true
+
+    # Enable the asset pipeline.
     config.assets.enabled = true
 
     # Version of your assets, change this if you want to expire all your assets
     config.assets.version = '1.0'
- # =============== new end ==================== #
-
-
   end
 end

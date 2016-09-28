@@ -1,18 +1,15 @@
 <% @page_title = "#{application_name}" %>
 <% extra_head_content << render_link_rel_alternates %>
-<% extra_head_content << stylesheet_link_tag( 'jquery.fancybox', :media => 'screen, projection' )   %>
-<% extra_head_content << javascript_include_tag('fancyBox/source/jquery.fancybox.pack.js') %>
-<% extra_head_content << javascript_include_tag('fancyBox/source/helpers/jquery.fancybox-media.js') %>
 <% extra_head_content << javascript_include_tag('about-videos.js') %>
- 
+
 <% sidebar_items << capture do %>
 
 
-<h3>Helpful Links</h3> 
+<h3>Helpful Links</h3>
 <div class="sidebar-content">
 <a  class='nav-link'  href="<%= relative_root %>/about/">About</a>
- 
-<a class='nav-link' href="javascript:UserVoice.showPopupWidget();" >FAQ/Ask a Question</a>   
+
+<a class='nav-link' href="javascript:UserVoice.showPopupWidget();" >FAQ/Ask a Question</a>
 
 <hr>
   <%= link_to "Browse Departments", departments_browse_path, :class=>"nav-link" %>
@@ -26,5 +23,5 @@
 <p style="margin-left:148px">This item has been removed from Academic Commons. It may have been removed:<br>
 -at the request of author or copyright holder (if other than the author).<br>
 -at the request of the originating department.<br>
- 
-For more information about this item, contact Academic Commons administrators at: <a href='mailto:cuac@libraries.cul.columbia.edu'>cuac@libraries.cul.columbia.edu</a>.</p>
+
+For more information about this item, contact Academic Commons administrators at: <a href='mailto:ac@columbia.edu'>ac@columbia.edu</a>.</p>

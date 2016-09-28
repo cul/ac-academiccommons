@@ -37,5 +37,4 @@ namespace :ac do
     ACIndexing::getremoved()
     
   end
-  
 end

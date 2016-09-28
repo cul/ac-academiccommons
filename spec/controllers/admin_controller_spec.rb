@@ -8,9 +8,9 @@ describe AdminController, :type => :controller do
     allow(@admin).to receive(:admin).and_return(true)
   end
   # these actions do not require an ID param
-  [:edit_alert_message, :edit_home_page, :deposits,
+  [:edit_alert_message, :deposits,
    :agreements, :student_agreements].each do |action|
-    describe action do
+    describe action.to_s do # rspec wants a String here
       context "without being logged in" do
         before do
           allow(controller).to receive(:current_user).and_return(nil)
@@ -43,7 +43,7 @@ describe AdminController, :type => :controller do
     end
   end
   [:show_deposit, :download_deposit_file].each do |action|
-    describe action do
+    describe action.to_s do # rspec wants a String here
       before do
         @deposit = double(Deposit)
         @params = {:id => 'foo'}

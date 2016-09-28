@@ -3,10 +3,10 @@
   <p id="notice"><%= flash[:error] %></p>
   <fieldset class="fields">
     <div>
-      <p>This form is for reporting copyright infringements under section 512 of the DMCA in Columbia University’s research repository, <a href="/">Academic Commons</a> (with root URL http://academiccommons.columbia.edu). The agent to receive complaints for Academic Commons is Kathryn Pope, who can be reached at <a href="mailto:ac@columbia.edu">AC@columbia.edu</a>.
+      <p>This form is for reporting copyright infringements under section 512 of the DMCA in Columbia University’s research repository, <a href="/">Academic Commons</a> (with root URL http://academiccommons.columbia.edu). The agent to receive complaints for Academic Commons is Kathryn Pope, who can be reached at <a href="mailto:ac@columbia.edu">ac@columbia.edu</a>.
       </p>
       <p>
-        Fields marked with an asterisk are required.      
+        Fields marked with an asterisk are required.
       </p>
     </div>
     <div class="field">
@@ -18,12 +18,12 @@
       <label><strong>*</strong>Last Name</label>
       <%= form.text_field :last_name %>
     </div><br>
-    
+
     <div class="field">
       <label><strong>*</strong>Email Address</label>
       <%= form.text_field :email %>
     </div><br>
-    
+
     <div class="field">
       <%= form.label nil, "Intellectual Property Owner (if not you)" %>
       <%= form.text_field :intl_prop %>
@@ -71,10 +71,10 @@
       <%= form.check_box :check_one %>
       <label class="checkbox inline">By typing my name below (electronic signature), I represent that I have a good faith belief that the use of the material named in this complaint is not authorized by the intellectual property owner, its agent, or the law (e.g. it is not fair use).</label>
     </div>
-    
+
     <div class="field" style="display:inline-block;">
       <%= form.check_box :check_two %>
-      <label class="checkbox inline">I represent that the information I have entered in this complaint is accurate, and under penalty of perjury, that I am authorized to act on behalf of the owner of an exclusive right that is allegedly infringed.</label> 
+      <label class="checkbox inline">I represent that the information I have entered in this complaint is accurate, and under penalty of perjury, that I am authorized to act on behalf of the owner of an exclusive right that is allegedly infringed.</label>
     </div>
 
 
