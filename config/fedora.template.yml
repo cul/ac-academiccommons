@@ -11,3 +11,4 @@ test:
   riquery: "select $member from <#ri> where walk ($obj <http://purl.oclc.org/NET/CUL/memberOf> <fedora:%s> and $member <http://purl.oclc.org/NET/CUL/memberOf> $obj) and $member <rdf:type> <http://purl.oclc.org/NET/CUL/Aggregator>"
   user: fedoraAdmin
   password: fedoraAdmin
+
