@@ -43,6 +43,8 @@ module Cul
         res = Net::HTTP.start(uri.hostname, uri.port, :use_ssl => uri.scheme == 'https') do |http|
           http.request(req)
         end
+
+        raise "Unsuccessful Request: #{res.message}" unless res.kind_of? Net::HTTPSuccess
         res.body
       end
 
