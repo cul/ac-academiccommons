@@ -1,66 +1,66 @@
 <!doctype html>
 <html lang="en" class="no-js">
 <head>
-<meta charset="utf-8">
-<!--[if IE]><![endif]-->
+  <meta charset="utf-8">
+  <!--[if IE]><![endif]-->
 
-<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"> <!-- render with chromeframe plugin on IE where available -->
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"> <!-- render with chromeframe plugin on IE where available -->
 
-<title><%= h(@page_title || application_name) %></title>
+  <title><%= h(@page_title || application_name) %></title>
 
-<meta name="bitly-verification" content="35191b8f3154"/>
+  <meta name="bitly-verification" content="35191b8f3154"/>
 
-<%= favicon_link_tag asset_path('favicon-crown.png', :media => "screen,projection", :rel => "shortcut icon", :type => "text/css") %>
+  <%= favicon_link_tag asset_path('favicon-crown.png', :media => "screen,projection", :rel => "shortcut icon", :type => "text/css") %>
 
-<%= stylesheet_link_tag "//fonts.googleapis.com/css?family=Open+Sans:400italic,400,300,600&subset=latin-ext,latin", :media => "screen,projection", :rel => "stylesheet", :type => "text/css" %>
-<%= stylesheet_link_tag "blueprint/screen", :media => "screen,projection"  %>
-<%= stylesheet_link_tag "application", :media => "screen,projection", :rel => "stylesheet", :type => "text/css" %>
+  <%= stylesheet_link_tag "//fonts.googleapis.com/css?family=Open+Sans:400italic,400,300,600&subset=latin-ext,latin", :media => "screen,projection", :rel => "stylesheet", :type => "text/css" %>
+  <%= stylesheet_link_tag "blueprint/screen", :media => "screen,projection"  %>
+  <%= stylesheet_link_tag "application", :media => "screen,projection", :rel => "stylesheet", :type => "text/css" %>
 
-<!-- [if lt IE8] <%= stylesheet_link_tag "compiled/ie.css", :media => "screen, projection" %> -->
+  <!-- [if lt IE8] <%= stylesheet_link_tag "compiled/ie.css", :media => "screen, projection" %> -->
 
-<%= javascript_include_tag "application" %>
+  <%= javascript_include_tag "application" %>
 
-<%= yield :head %>
+  <%= yield :head %>
 
-<link href="<%= url_for :controller=>'catalog',:action => 'opensearch', :format => 'xml', :only_path => false %>" title="<%= application_name%>" type="application/opensearchdescription+xml" rel="search"/>
+  <link href="<%= url_for :controller=>'catalog',:action => 'opensearch', :format => 'xml', :only_path => false %>" title="<%= application_name%>" type="application/opensearchdescription+xml" rel="search"/>
 
-<%
-if(@document != nil && @document.include?("title_display") && @document.include?("author_facet") && @document.include?("date_issued"))
+  <%
+  if(@document != nil && @document.include?("title_display") && @document.include?("author_facet") && @document.include?("date_issued"))
 
-  solr_fields_hash = { "abstract" => "description",
-                       "title_display" => "citation_title",
-                       "author_facet" => "citation_author",
-                       "date_issued" => "citation_publication_date",
-                       "book_journal_title" => "citation_journal_title",
-                       "volume" => "citation_volume",
-                       "issue" => "citation_issue",
-                       "start_page" => "citation_firstpage",
-                       "end_page" => "citation_lastpage",
-                       "doi" => "citation_doi",
-                       "date" => "citation_date",
-                       "handle" => "citation_handle_id",
-                       "issn" => "citation_issn",
-                       "publisher" => "citation_publisher",
-                       "subject_facet" => "citation_keywords"
-                      }
+    solr_fields_hash = { "abstract" => "description",
+      "title_display" => "citation_title",
+      "author_facet" => "citation_author",
+      "date_issued" => "citation_publication_date",
+      "book_journal_title" => "citation_journal_title",
+      "volume" => "citation_volume",
+      "issue" => "citation_issue",
+      "start_page" => "citation_firstpage",
+      "end_page" => "citation_lastpage",
+      "doi" => "citation_doi",
+      "date" => "citation_date",
+      "handle" => "citation_handle_id",
+      "issn" => "citation_issn",
+      "publisher" => "citation_publisher",
+      "subject_facet" => "citation_keywords"
+    }
 
     solr_fields_hash.each_key do |solr_field|
-        if(value = @document[solr_field.to_s])
-            if(value.is_a?(Array))
-                if(!value.empty?)
-                     value.each do |val|
-%>
-<meta name="<%= solr_fields_hash[solr_field] %>" content="<%= metaheader_fix_if_needed(solr_fields_hash[solr_field], val) %>">
-<%
-                    end
-                end
-            else
-%>
-<meta name="<%= solr_fields_hash[solr_field] %>" content="<%= metaheader_fix_if_needed(solr_fields_hash[solr_field], value) %>">
-<%
-            end
+      if(value = @document[solr_field.to_s])
+        if(value.is_a?(Array))
+          if(!value.empty?)
+            value.each do |val|
+            %>
+            <meta name="<%= solr_fields_hash[solr_field] %>" content="<%= metaheader_fix_if_needed(solr_fields_hash[solr_field], val) %>">
+            <%
+          end
         end
+      else
+      %>
+      <meta name="<%= solr_fields_hash[solr_field] %>" content="<%= metaheader_fix_if_needed(solr_fields_hash[solr_field], value) %>">
+      <%
     end
+  end
+end
 end
 
 %>
@@ -95,110 +95,108 @@ end
 
 
 
-<header>
+  <header>
 
-		<h1 class="site_title"><%= link_to application_name, root_path %><%= (params[:controller] == "catalog" and !params[:id]) ? "<span id='results_text'>Search Results</span>".html_safe : "" %></h1>
+    <h1 class="site_title"><%= link_to application_name, root_path %><%= (params[:controller] == "catalog" and !params[:id]) ? "<span id='results_text'>Search Results</span>".html_safe : "" %></h1>
 
-</header>
+  </header>
 </div>
 <div class="container clearfix" id="main" >
 
 
 
-	<%- if page_location == "home" || page_location == "browse_view" -%>
+  <%- if page_location == "home" || page_location == "browse_view" -%>
 
-	<div id="home-search" class="span-16 prepend-4">
-	    <%= render :partial=>'/catalog/search_box' %>
-	</div>
-
-
-	 <%if !alert_msg.empty? %>
-	   <div style="height: 100px;"></div>
-       <%= render :partial => "/catalog/alert_box.erb" %>
-	 <%end%>
-
-		<% end %>
+  <div id="home-search" class="span-16 prepend-4">
+    <%= render :partial=>'/catalog/search_box' %>
+  </div>
 
 
+  <%if !alert_msg.empty? %>
+  <div style="height: 100px;"></div>
+  <%= render :partial => "/catalog/alert_box.erb" %>
+  <%end%>
 
-	<%- if page_location == "home" -%>
-
-	<%= render :partial=>'/catalog/home_text' %>
-
-	<% end %>
+  <% end %>
 
 
 
-    <div id="sidebar" class="span-7">
+  <%- if page_location == "home" -%>
 
-   <div id="util_links" class='box'>
-			<%= render :partial=>'/user_util_links' %>
-   </div>
+  <%= render :partial=>'/catalog/home_text' %>
 
-
-	<%= sidebar_items.join('').html_safe %>
+  <% end %>
 
 
-	</div>
 
-	<div id="content" class="span-17 last">
+  <div id="sidebar" class="span-7">
 
-	<%= render :partial=>'/flash_msg' %>
+    <div id="util_links" class='box'>
+      <%= render :partial=>'/user_util_links' %>
+    </div>
+
+    <%= yield :sidebar %>
+
+  </div>
+
+  <div id="content" class="span-17 last">
+
+    <%= render :partial=>'/flash_msg' %>
 
 
-	<%- if page_location == "search_results" -%>
+    <%- if page_location == "search_results" -%>
 
-	<div id = "search-breadcrumbs">
+    <div id = "search-breadcrumbs">
 
-	<%= render :partial=>'/catalog/constraints' %>
+      <%= render :partial=>'/catalog/constraints' %>
 
-	</div>
+    </div>
 
 
-	<% end %>
+    <% end %>
     <%= yield %>
 
-	</div>
+  </div>
 
 
-	<footer class="span-24 append-bottom">
+  <footer class="span-24 append-bottom">
 
-	<div id="footer">
+    <div id="footer">
 
-		<%= @footer %>
+      <%= @footer %>
 
-	</div>
+    </div>
 
-    </footer>
+  </footer>
 
 </div>  <!-- div#container -->
 
 
 
 
- <div class="container">
+<div class="container">
 
-<div id="colophon" class="span-24 append-bottom">
-<%= render :partial=>'layouts/footer_line' %>
-</div>
+  <div id="colophon" class="span-24 append-bottom">
+    <%= render :partial=>'layouts/footer_line' %>
+  </div>
 </div>
 
 
 <%- if Rails.application.config.analytics_enabled == true -%>
 <script type="text/javascript">
 
-  var _gaq = _gaq || [];
-  _gaq.push(['_setAccount', 'UA-10481105-1']);
-  _gaq.push(['_trackPageview'],
+var _gaq = _gaq || [];
+_gaq.push(['_setAccount', 'UA-10481105-1']);
+_gaq.push(['_trackPageview'],
 ['aggregate._setAccount', 'UA-7973988-3'],
 ['aggregate._trackPageview']
 );
 
-  (function() {
-    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-  })();
+(function() {
+  var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+  ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+  var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+})();
 
 </script>
 <% end %>

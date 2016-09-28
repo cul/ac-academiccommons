@@ -1,82 +1,79 @@
 <!doctype html>
 <html lang="en" class="no-js">
 <head>
-<meta charset="utf-8">
-<!--[if IE]><![endif]-->
+  <meta charset="utf-8">
+  <!--[if IE]><![endif]-->
 
-<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"> <!-- render with chromeframe plugin on IE where available -->
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"> <!-- render with chromeframe plugin on IE where available -->
 
-<title><%= h(@page_title || application_name) %></title>
+  <title><%= h(@page_title || application_name) %></title>
 
-<meta name="bitly-verification" content="35191b8f3154"/>
-
-
-<%= favicon_link_tag asset_path('favicon-crown.png', :media => "screen,projection", :rel => "shortcut icon", :type => "text/css") %>
-<%= stylesheet_link_tag "blueprint/screen", :media => "screen,projection"  %>
-<%= stylesheet_link_tag "application", :media => "screen,projection", :rel => "stylesheet", :type => "text/css" %>
-<%= stylesheet_link_tag "//fonts.googleapis.com/css?family=Open+Sans:400italic,400,300,600&subset=latin-ext,latin", :media => "screen,projection", :rel => "stylesheet", :type => "text/css" %>
+  <meta name="bitly-verification" content="35191b8f3154"/>
 
 
-<!-- [if lt IE8] <%= stylesheet_link_tag "compiled/ie.css", :media => "screen, projection" %> -->
+  <%= favicon_link_tag asset_path('favicon-crown.png', :media => "screen,projection", :rel => "shortcut icon", :type => "text/css") %>
+  <%= stylesheet_link_tag "blueprint/screen", :media => "screen,projection"  %>
+  <%= stylesheet_link_tag "application", :media => "screen,projection", :rel => "stylesheet", :type => "text/css" %>
+  <%= stylesheet_link_tag "//fonts.googleapis.com/css?family=Open+Sans:400italic,400,300,600&subset=latin-ext,latin", :media => "screen,projection", :rel => "stylesheet", :type => "text/css" %>
 
+  <!-- [if lt IE8] <%= stylesheet_link_tag "compiled/ie.css", :media => "screen, projection" %> -->
 
-<%= javascript_include_tag "application" %>
+  <%= javascript_include_tag "application" %>
 
-<%= yield :head %>
+  <%= yield :head %>
 
-<link href="<%= url_for :controller=>'catalog',:action => 'opensearch', :format => 'xml', :only_path => false %>" title="<%= application_name%>" type="application/opensearchdescription+xml" rel="search"/>
+  <link href="<%= url_for :controller=>'catalog',:action => 'opensearch', :format => 'xml', :only_path => false %>" title="<%= application_name%>" type="application/opensearchdescription+xml" rel="search"/>
 
-<%= javascript_include_tag "waypoints.min.js" %>
+  <%= javascript_include_tag "waypoints.min.js" %>
 
-<%= javascript_include_tag "waypoints-sticky.min.js" %>
+  <%= javascript_include_tag "waypoints-sticky.min.js" %>
 
-<%
-if(@document != nil && @document.include?("title_display") && @document.include?("author_facet") && @document.include?("date_issued"))
+  <%
+  if(@document != nil && @document.include?("title_display") && @document.include?("author_facet") && @document.include?("date_issued"))
 
-  solr_fields_hash = { "abstract" => "description",
-                       "title_display" => "citation_title",
-                       "author_facet" => "citation_author",
-                       "date_issued" => "citation_publication_date",
-                       "book_journal_title" => "citation_journal_title",
-                       "volume" => "citation_volume",
-                       "issue" => "citation_issue",
-                       "start_page" => "citation_firstpage",
-                       "end_page" => "citation_lastpage",
-                       "doi" => "citation_doi",
-                       "date" => "citation_date",
-                       "handle" => "citation_handle_id",
-                       "issn" => "citation_issn",
-                       "publisher" => "citation_publisher",
-                       "subject_facet" => "citation_keywords"
-                      }
+    solr_fields_hash = { "abstract" => "description",
+      "title_display" => "citation_title",
+      "author_facet" => "citation_author",
+      "date_issued" => "citation_publication_date",
+      "book_journal_title" => "citation_journal_title",
+      "volume" => "citation_volume",
+      "issue" => "citation_issue",
+      "start_page" => "citation_firstpage",
+      "end_page" => "citation_lastpage",
+      "doi" => "citation_doi",
+      "date" => "citation_date",
+      "handle" => "citation_handle_id",
+      "issn" => "citation_issn",
+      "publisher" => "citation_publisher",
+      "subject_facet" => "citation_keywords"
+    }
 
     solr_fields_hash.each_key do |solr_field|
-        if(value = @document[solr_field.to_s])
-            if(value.is_a?(Array))
-                if(!value.empty?)
-                     value.each do |val|
-%>
-<meta name="<%= solr_fields_hash[solr_field] %>" content="<%= metaheader_fix_if_needed(solr_fields_hash[solr_field], val) %>">
-<%
-                    end
-                end
-            else
-%>
-<meta name="<%= solr_fields_hash[solr_field] %>" content="<%= metaheader_fix_if_needed(solr_fields_hash[solr_field], value) %>">
-<%
-            end
+      if(value = @document[solr_field.to_s])
+        if(value.is_a?(Array))
+          if(!value.empty?)
+            value.each do |val|
+            %>
+            <meta name="<%= solr_fields_hash[solr_field] %>" content="<%= metaheader_fix_if_needed(solr_fields_hash[solr_field], val) %>">
+            <%
+          end
         end
+      else
+      %>
+      <meta name="<%= solr_fields_hash[solr_field] %>" content="<%= metaheader_fix_if_needed(solr_fields_hash[solr_field], value) %>">
+      <%
     end
+  end
+end
 end
 
 %>
 
-<meta name="citation_abstract_html_url" content="<%= request.url %>">
+  <meta name="citation_abstract_html_url" content="<%= request.url %>">
 
-<%     pdf_urls.each do |url|     %>
-<meta name="citation_pdf_url" content="<%= url %>">
-<%     end     %>
-
+  <% pdf_urls.each do |url| %>
+    <meta name="citation_pdf_url" content="<%= url %>">
+  <% end %>
 
 </head>
 
@@ -97,96 +94,120 @@ end
 
 
 <div  class="container" id="header">
-<header>
-<h1 class="site_title"><%= link_to application_name, root_path %><%= (params[:controller] == "catalog" and !params[:id]) ? "<span id='results_text'>Search Results</span>".html_safe : "" %></h1>
-</header>
+  <header>
+    <h1 class="site_title"><%= link_to application_name, root_path %><%= (params[:controller] == "catalog" and !params[:id]) ? "<span id='results_text'>Search Results</span>".html_safe : "" %></h1>
+  </header>
 </div>
 
 <div class="container clearfix" id="main" >
-<div class="header-utils">
+  <div class="header-utils">
 
 
 
-<div style="float:right;" class="float-right">
+    <div style="float:right;" class="float-right">
 
- <%= render :partial=>'/catalog/search_box' %>
-
-</div>
-
-
-<%=  link_to(raw("<i class='fa fa-home'></i>&nbsp; Home"), root_path)  %>
-
-
+      <%= render :partial=>'/catalog/search_box' %>
 
     </div>
 
-<div class="span-19 prepend-3 document-heading">
-<%  if(@document != nil) %>
+
+    <%=  link_to(raw("<i class='fa fa-home'></i>&nbsp; Home"), root_path)  %>
+
+
+
+  </div>
+
+  <div class="span-19 prepend-3 document-heading">
+    <%  if(@document != nil) %>
     <%= render_document_heading %>
-<% else %>
+    <% else %>
     <h2>Item Removed</h2>
-<% end %>
-</div>
-<div class='row'>
-<div id="content" class="span-18">
+    <% end %>
+  </div>
+  <div class='row'>
+    <div id="content" class="span-18">
 
-<%= render :partial=>'/flash_msg' %>
-<%  if(@document != nil) %>
-<h2 class="author_name">
-<%= first_names_then_last(document_author || "")  %>
-</h2>
-<% end %>
+      <%= render :partial=>'/flash_msg' %>
+      <%  if(@document != nil) %>
+      <h2 class="author_name">
+        <%= first_names_then_last(document_author || "")  %>
+      </h2>
+      <% end %>
 
 
-<%= yield %>
+      <%= yield %>
 
-</div> <!-- div#content -->
+    </div> <!-- div#content -->
 
-<div  class="span-6 last">
-<div id="sidebar" class="clearfix">
-	<%= sidebar_items.join('').html_safe %>
+    <!-- Right sidebar -->
+    <div  class="span-6 last">
+      <div id="sidebar" class="clearfix">
 
-<%= yield :sidebar %>
+        <h2>Download</h2>
 
-</div> <!-- div#sidebar -->
-</div>
-</div> <!-- div.row (main content area) -->
+        <div class="sidebar-content downloads">
+          <%=  render :partial => "catalog/_show_partials/display_resources", :locals => {:document => @document} %>
+        </div>
 
-<footer class="span-24">
+        <h2>Share</h2>
+        <div class="sidebar-content">
+          <div class="documentFunctions">
+            <%= render :partial => 'show_tools' %>
+          </div>
+        </div>
 
-<div id="footer">
+        <hr>
 
-<%= @footer %>
+        <h3>Helpful Links</h3>
+        <div class="sidebar-content">
+          <a  class='nav-link'  href="<%= relative_root %>/about/">About</a>
 
-</div>
+          <a class='nav-link' href="javascript:UserVoice.showPopupWidget();" >FAQ/Ask a Question</a>
 
-</footer>
+          <hr>
+          <%= link_to "Browse Departments", departments_browse_path, :class=>"nav-link" %>
+          <%= link_to "Browse Subjects", subjects_browse_path, :class=>"nav-link" %>
+        </div>
+
+      </div> <!-- div#sidebar -->
+    </div>
+  </div> <!-- div.row (main content area) -->
+
+  <footer class="span-24">
+
+    <div id="footer">
+
+      <%= @footer %>
+
+    </div>
+
+  </footer>
 
 </div><!-- div#main -->
 
 <div class="container">
 
-<div id="colophon" class="span-24 append-bottom">
-<%= render :partial=>'layouts/footer_line' %>
-</div>
+  <div id="colophon" class="span-24 append-bottom">
+    <%= render :partial=>'layouts/footer_line' %>
+  </div>
 </div>
 
 
 <%- if Rails.application.config.analytics_enabled == true -%>
 <script type="text/javascript">
 
-  var _gaq = _gaq || [];
-  _gaq.push(['_setAccount', 'UA-10481105-1']);
-  _gaq.push(['_trackPageview'],
+var _gaq = _gaq || [];
+_gaq.push(['_setAccount', 'UA-10481105-1']);
+_gaq.push(['_trackPageview'],
 ['aggregate._setAccount', 'UA-7973988-3'],
 ['aggregate._trackPageview']
 );
 
-  (function() {
-    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-  })();
+(function() {
+  var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+  ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+  var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+})();
 
 </script> <% end %>
 

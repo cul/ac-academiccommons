@@ -1,29 +1,26 @@
 <% @page_title = "#{application_name}" %>
 <% content_for :head do %>
-  <%= render_link_rel_alternates %>
-  <%= javascript_include_tag('about-videos.js') %>
+<%= render_link_rel_alternates %>
+<%= javascript_include_tag('about-videos.js') %>
 <% end %>
 
-<% sidebar_items << capture do %>
+<% content_for :sidebar do %>
+  <h3>Helpful Links</h3>
+  <div class="sidebar-content">
+    <a  class='nav-link'  href="<%= relative_root %>/about/">About</a>
 
+    <a class='nav-link' href="javascript:UserVoice.showPopupWidget();" >FAQ/Ask a Question</a>
 
-<h3>Helpful Links</h3>
-<div class="sidebar-content">
-<a  class='nav-link'  href="<%= relative_root %>/about/">About</a>
+    <hr>
+    <%= link_to "Browse Departments", departments_browse_path, :class=>"nav-link" %>
+    <%= link_to "Browse Subjects", subjects_browse_path, :class=>"nav-link" %>
 
-<a class='nav-link' href="javascript:UserVoice.showPopupWidget();" >FAQ/Ask a Question</a>
-
-<hr>
-  <%= link_to "Browse Departments", departments_browse_path, :class=>"nav-link" %>
-  <%= link_to "Browse Subjects", subjects_browse_path, :class=>"nav-link" %>
-
-</div>
-
+  </div>
 <% end %>
 
 
 <p style="margin-left:148px">This item has been removed from Academic Commons. It may have been removed:<br>
--at the request of author or copyright holder (if other than the author).<br>
--at the request of the originating department.<br>
+  -at the request of author or copyright holder (if other than the author).<br>
+  -at the request of the originating department.<br>
 
-For more information about this item, contact Academic Commons administrators at: <a href='mailto:ac@columbia.edu'>ac@columbia.edu</a>.</p>
+  For more information about this item, contact Academic Commons administrators at: <a href='mailto:ac@columbia.edu'>ac@columbia.edu</a>.</p>
