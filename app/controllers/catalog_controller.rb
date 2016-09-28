@@ -1,13 +1,11 @@
 # -*- encoding : utf-8 -*-
-require 'blacklight/catalog'
-
 class CatalogController < ApplicationController
 
   include Blacklight::Catalog
   include BlacklightOaiProvider::ControllerExtension
 
-  include CatalogHelper
-  include StatisticsHelper
+#  include CatalogHelper
+#  include StatisticsHelper
 
   before_filter :record_view_stats, :only => :show
   unloadable
@@ -18,10 +16,7 @@ class CatalogController < ApplicationController
   helper_method :url_encode_resource, :url_decode_resource
 
   layout "sidebar_right", only: [:show]
-  # ----------------------------
 
-
-#Blacklight.configure(:shared) do |config|
 configure_blacklight do |config|
 
   config.default_solr_params = {

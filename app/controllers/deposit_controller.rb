@@ -1,7 +1,8 @@
 class DepositController < ApplicationController
+  include Blacklight::SolrHelper
 
   def submit
-    if (params[:acceptedAgreement] == "agree")
+    if(params[:acceptedAgreement] == "agree")
       Agreement.create(
         :uni => params[:uni],
         :agreement_version => params["AC-agreement-version"],
@@ -44,6 +45,7 @@ class DepositController < ApplicationController
       if(unival.blank?)
         unival= params[:nouni]
       end
+
       Agreement.create(
         :uni => unival,
         :agreement_version => params["AC-agreement-version"],
@@ -69,12 +71,12 @@ class DepositController < ApplicationController
     end
 
     StudentAgreement.create(
-    :years_embargo => params[:years_embargo],
-    :name => params[:name],
-    :email => params[:email],
-    :uni => params[:uni],
-    :thesis_advisor => params[:thesis_advisor],
-    :department => params[:department])
+        :years_embargo => params[:years_embargo],
+        :name => params[:name],
+        :email => params[:email],
+        :uni => params[:uni],
+        :thesis_advisor => params[:thesis_advisor],
+        :department => params[:department])
 
 
     #attachments = Hash.new
