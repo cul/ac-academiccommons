@@ -26,7 +26,10 @@
       <% end -%>
     </dl>
 
-    <%= render :partial => "catalog/_show_partials/statistics" %>
+    <dl class='defList'>
+      <dt>Item views</dt>
+      <dd><%= Statistic.count(:conditions => {:identifier => params[:id], :event => "View"}) %></dd>
+    </dl>
 
     <% metadata_list = get_metadata_list(document) -%>
 
