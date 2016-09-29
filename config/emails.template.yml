@@ -9,8 +9,7 @@ dev: &dev
     - YOUR_UNI@columbia.edu
   mail_deposit_recipients:
     - YOUR_UNI@columbia.edu
-  mail_deliverer:
-    - YOUR_UNI@columbia.edu
+  mail_deliverer: YOUR_UNI@columbia.edu
 
 development: *dev
 test: *dev
