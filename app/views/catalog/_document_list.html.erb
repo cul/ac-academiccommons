@@ -1,16 +1,5 @@
-<% # container for all documents in index view -%>
-<div id="documents">
-  
-  <% # loop thru each doc -%>
-  <% @response.docs.each_with_index do |document,counter| %>
 
-    <% # container for a single doc -%>
-    
-    
-  <% end %>
-</div>
-
-<% # container for all documents in index view -%>
+<%# container for all documents in index view -%>
 <div id="documents">
   <%= render :partial => 'document', :collection => @document_list, :as => :document %>
 </div>
