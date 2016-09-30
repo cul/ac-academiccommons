@@ -9,6 +9,6 @@
     <h3 class="index_title"><span class="index_counter"><%= document_counter + 1 + @response.params[:start].to_i %></span> <%= link_to_document document, :label=>document_show_link_field, :counter => (document_counter + 1 + @response.params[:start].to_i) %></h3>
   </div>
 
-  <%= render :partial => "catalog/index_descriptive_information", :locals => {:document => document}  %>
-
+  <% # main container for doc partial view -%>
+  <%= render_document_partial document, :index, :document_counter => document_counter %>
 </div>
