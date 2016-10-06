@@ -116,7 +116,7 @@ describe CatalogController, :type => [:controller, :feature] do
     end
 
     it "has abstract" do
-      expect(page).to have_xpath("//dd[@itemprop='description']", exact: false, :text => "Background - Alice is feeling bored and drowsy while sitting on the riverbank with her older sister, who is reading a book with no pictures or conversations.")
+      expect(page).to have_xpath("//dd[@itemprop='description']", :text => "Background - Alice is feeling bored and drowsy while sitting on the riverbank with her older sister, who is reading a book with no pictures or conversations.")
     end
 
     it "has volume" do
