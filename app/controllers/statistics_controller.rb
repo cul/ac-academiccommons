@@ -3,9 +3,7 @@ class StatisticsController < ApplicationController
   before_filter :require_user
   before_filter :require_admin, :except => [:unsubscribe_monthly, :usage_reports, :statistical_reporting]
   include Blacklight::SolrHelper
-  include StatisticsHelper
-  include CatalogHelper
-  include LogsHelper
+ 
   require "csv"
 
 
@@ -371,6 +369,17 @@ class StatisticsController < ApplicationController
 
   private
 
+  def setDefaultParams(params)
+     if (params[:month_from].nil? || params[:month_to].nil? || params[:year_from].nil? || params[:year_to].nil?)
+
+      params[:month_from] = "Apr"
+      params[:year_from] = "2011"
+      params[:month_to] = (Date.today - 1.months).strftime("%b")
+      params[:year_to] = (Date.today).strftime("%Y")
+
+      params[:include_zeroes] = true
+    end
+  end
 
   def get_monthly_author_stats(options = {})
   startdate = options[:startdate]

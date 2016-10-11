@@ -4,9 +4,6 @@ class CatalogController < ApplicationController
   include Blacklight::Catalog
   include BlacklightOaiProvider::ControllerExtension
 
-#  include CatalogHelper
-#  include StatisticsHelper
-
   before_filter :record_view_stats, :only => :show
   unloadable
 

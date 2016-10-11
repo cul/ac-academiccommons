@@ -386,21 +386,6 @@ module StatisticsHelper
 
   end
 
-  def setDefaultParams(params)
-
-     if (params[:month_from].nil? || params[:month_to].nil? || params[:year_from].nil? || params[:year_to].nil?)
-
-      params[:month_from] = "Apr"
-      params[:year_from] = "2011"
-      params[:month_to] = (Date.today - 1.months).strftime("%b")
-      params[:year_to] = (Date.today).strftime("%Y")
-
-      params[:include_zeroes] = true
-
-    end
-  end
-
-
   def makeTestAuthor(author_id, email)
 
         test_author = Hash.new
@@ -788,6 +773,6 @@ module StatisticsHelper
       params[:one_report_email] = nil
   end
 
-  
+
 
 end # ------------------------------------------ #
