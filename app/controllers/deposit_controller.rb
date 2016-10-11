@@ -1,17 +1,22 @@
 class DepositController < ApplicationController
-  include Blacklight::SolrHelper
+  SELF_DEPOSIT_DIR = "data/self-deposit-uploads"
 
   def submit
-    if(params[:acceptedAgreement] == "agree")
+    if params[:acceptedAgreement] == "agree"
       Agreement.create(
         :uni => params[:uni],
         :agreement_version => params["AC-agreement-version"],
         :name => params[:name],
         :email => params[:email]
       )
-      uploaded_file = UploadedFile.save(params[:file], "data/self-deposit-uploads/#{params[:uni]}", params[:file].original_filename)
-      file_path = "data/self-deposit-uploads/#{params[:uni]}/#{params[:file].original_filename}"
-      deposit = Deposit.create(
+
+      deposit_dir = SELF_DEPOSIT_DIR
+      deposit_dir = File.join(deposit_dir, params[:uni]) if params[:uni]
+
+      UploadedFile.save(params[:file], deposit_dir, params[:file].original_filename)
+      file_path = File.join(deposit_dir, params[:file].original_filename)
+
+      deposit = Deposit.create!(
         :agreement_version => params["AC-agreement-version"],
         :uni => params[:uni],
         :name => params[:name],
@@ -71,13 +76,13 @@ class DepositController < ApplicationController
     end
 
     StudentAgreement.create(
-        :years_embargo => params[:years_embargo],
-        :name => params[:name],
-        :email => params[:email],
-        :uni => params[:uni],
-        :thesis_advisor => params[:thesis_advisor],
-        :department => params[:department])
-
+      :years_embargo => params[:years_embargo],
+      :name => params[:name],
+      :email => params[:email],
+      :uni => params[:uni],
+      :thesis_advisor => params[:thesis_advisor],
+      :department => params[:department]
+    )
 
     #attachments = Hash.new
 

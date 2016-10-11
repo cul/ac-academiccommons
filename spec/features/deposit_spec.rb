@@ -65,6 +65,7 @@ RSpec.describe DepositController, :type => :feature do
           it "allows user to submit" do
             click_button "Submit"
             expect(page).to have_content "We Have Received Your Submission"
+            expect(Deposit.count).to eq 1
           end
         end
       end
