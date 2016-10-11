@@ -1,4 +1,5 @@
 class Notifier < ActionMailer::Base
+  MAX_FILE_SIZE = 1024 * 1024 * 25 # Max file size (25 MB) that can be emailed in KB.
 
   def statistics_by_search(to_address, author_id, start_date, end_date, results, stats, totals, request, show_streams)
     statistics_report(to_address, author_id, start_date, end_date, results, stats, totals, request, show_streams, nil)
@@ -35,7 +36,7 @@ class Notifier < ActionMailer::Base
     logger.debug("Report sent for: " + author_id + " to: " + to_address)
   end
 
-  def new_deposit(root_url, deposit)
+  def new_deposit(root_url, deposit, attach_file = true)
     @agreement_version = deposit.agreement_version
     @uni = deposit.uni
     @name = deposit.name
@@ -47,13 +48,20 @@ class Notifier < ActionMailer::Base
     @doi_pmcid = deposit.doi_pmcid
     @notes = deposit.notes
     @record_url = root_url + "admin/deposits/" + deposit.id.to_s
+
+    filepath = File.join(Rails.root, deposit.file_path)
+    if attach_file && File.size(filepath) < MAX_FILE_SIZE  # Tries to attach file if under 25MB.
+      attachments[File.basename(filepath)] = File.read(filepath)
+    end
+
     @file_download_url = root_url + "admin/deposits/" + deposit.id.to_s + "/file"
     recipients = Rails.application.config.emails['mail_deposit_recipients']
     from = Rails.application.config.emails['mail_deliverer']
-    subject = "New Academic Commons Deposit Request"
-    content_type = 'text/html'
+    subject = "SD"
+    subject.concat(" #{@uni} -") if @uni
+    subject.concat(" #{@title.truncate(50)}")
 
-    mail(:to => recipients, :from => from, :subject => subject, :content_type => content_type)
+    mail(:to => recipients, :from => from, :subject => subject)
   end
 
   def new_author_agreement(request)
