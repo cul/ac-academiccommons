@@ -4,7 +4,6 @@ class DownloadController < ApplicationController
 
   include InfoHelper
   include LogsHelper
-  include StatisticsHelper
 
   def download_log
     headers["Content-Type"] = "application/octet-stream"

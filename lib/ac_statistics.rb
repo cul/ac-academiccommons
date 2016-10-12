@@ -1,11 +1,7 @@
 require 'csv'
+require 'uri'
 
-module StatisticsHelper
-
-  include CatalogHelper
-  include InfoHelper
-  include LogsHelper
-  require 'uri'
+module ACStatistics
 
   VIEW = 'view_'
   DOWNLOAD = 'download_'
@@ -27,6 +23,8 @@ module StatisticsHelper
   FACET_NAMES.store('series_facet', 'Series')
   FACET_NAMES.store('non_cu_series_facet', 'Non CU Series')
 
+  private
+  
   def facet_names
     return FACET_NAMES
   end

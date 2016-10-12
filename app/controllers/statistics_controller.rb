@@ -1,11 +1,16 @@
+require 'ac_statistics'
+
 class StatisticsController < ApplicationController
   layout "application"
   before_filter :require_user
   before_filter :require_admin, :except => [:unsubscribe_monthly, :usage_reports, :statistical_reporting]
   include Blacklight::SolrHelper
- 
+  include ACStatistics
+
   require "csv"
 
+  helper_method :facet_names, :facet_items, :base_url, :get_res_list, :get_docs_size_by_query_facets,
+                :get_time_period, :months
 
   def unsubscribe_monthly
     author_id = params[:author_id]
