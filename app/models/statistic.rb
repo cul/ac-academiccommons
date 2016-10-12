@@ -1,14 +1,17 @@
 class Statistic < ActiveRecord::Base
-
+  VIEW_EVENT = 'View'
+  DOWNLOAD_EVENT = 'Download'
+  STREAM_EVENT = 'Streaming'
+  
   def self.reset_downloads
-    Statistic.find_all_by_event("Download").each { |e| e.delete } 
+    Statistic.find_all_by_event("Download").each { |e| e.delete }
 
     fedora_download_match = /^([\d\.]+).+\[([^\]]+)\].+download\/fedora_content\/\w+\/([^\/]+)/
     startdate = DateTime.parse("5/1/2011")
 
     count = 0
     File.open(File.join("tmp", "access.log")).each_with_index do |line, i|
-      
+
       if (match = fedora_download_match.match(line))
         pid = match[3].gsub("%3A", ":")
         datetime = DateTime.parse(match[2].sub(":", " "))
@@ -23,7 +26,7 @@ class Statistic < ActiveRecord::Base
 
     puts count
   end
-  
+
   # warning: MYSQL only
   def self.count_intervals(options = {})
     group = options[:group] || :month
@@ -39,7 +42,7 @@ class Statistic < ActiveRecord::Base
     conditions[:identifier] = options[:identifier].listify
 
     events.each do |event|
-      
+
       conditions[:event] = event
 
       condition_text = "statistics.at_time >= :start_date and  statistics.at_time <= :end_date AND statistics.event = :event"
@@ -56,13 +59,13 @@ class Statistic < ActiveRecord::Base
         years.each do |year|
           Statistic.count(:group => "#{group}(at_time)", :conditions => [condition_text, conditions.merge(:year => year)]).each_pair do |position, count|
             day_of_year = group == :week ? position.to_i.weeks : (position.to_i.months - 1)
-  
+
             results[event][DateTime.civil(year) + day_of_year] = count
           end
-          
+
         end
-  
-         
+
+
       end
     end
     results

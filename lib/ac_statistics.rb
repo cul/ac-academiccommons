@@ -7,10 +7,6 @@ module ACStatistics
   DOWNLOAD = 'download_'
   LINE_BRAKER = RUBY_VERSION < "1.9" ? "\r\n" : ""
 
-  VIEW_EVENT = 'View'
-  DOWNLOAD_EVENT = 'Download'
-  STREAM_EVENT = 'Streaming'
-
   FACET_NAMES = Hash.new
   FACET_NAMES.store('author_facet', 'Author')
   FACET_NAMES.store('pub_date_facet', 'Date')
@@ -24,7 +20,7 @@ module ACStatistics
   FACET_NAMES.store('non_cu_series_facet', 'Non CU Series')
 
   private
-  
+
   def facet_names
     return FACET_NAMES
   end
@@ -533,7 +529,7 @@ module ACStatistics
     pids = []
     pids_collection.each do |pid|
 
-      if(event == DOWNLOAD_EVENT)
+      if(event == Statistic::DOWNLOAD_EVENT)
         pids.push(pid[:id][0, 3] + (pid[:id][3, 8].to_i + 1).to_s)
       else
          pids.push(pid[:id])
@@ -565,17 +561,17 @@ module ACStatistics
         startdate = Date.parse(params[:month_from] + " " + params[:year_from])
         enddate = Date.parse(params[:month_to] + " " + params[:year_to])
 
-        item.store('views', countPidsStatisticByDates([doc], VIEW_EVENT, startdate, enddate))
-        item.store('downloads', countPidsStatisticByDates([doc], DOWNLOAD_EVENT, startdate, enddate))
-        item.store('streams', countPidsStatisticByDates([doc], STREAM_EVENT, startdate, enddate))
+        item.store('views', countPidsStatisticByDates([doc], Statistic::VIEW_EVENT, startdate, enddate))
+        item.store('downloads', countPidsStatisticByDates([doc], Statistic::DOWNLOAD_EVENT, startdate, enddate))
+        item.store('streams', countPidsStatisticByDates([doc], Statistic::STREAM_EVENT, startdate, enddate))
         item.store('doc', doc)
 
         results << item
       else
 
-        item.store('views', countPidsStatistic([doc], VIEW_EVENT))
-        item.store('downloads', countPidsStatistic([doc], DOWNLOAD_EVENT))
-        item.store('streams', countPidsStatistic([doc], STREAM_EVENT))
+        item.store('views', countPidsStatistic([doc], Statistic::VIEW_EVENT))
+        item.store('downloads', countPidsStatistic([doc], Statistic::DOWNLOAD_EVENT))
+        item.store('streams', countPidsStatistic([doc], Statistic::STREAM_EVENT))
         item.store('doc', doc)
         results << item
       end
@@ -624,9 +620,9 @@ module ACStatistics
     csv += CSV.generate_line( [ '', '', '', '', '', '', '', '']) + LINE_BRAKER
 
     query = params[:f]
-    views_stats = get_facetStatsByEvent(query, VIEW_EVENT)
-    downloads_stats = get_facetStatsByEvent(query, DOWNLOAD_EVENT)
-    streams_stats = get_facetStatsByEvent(query, STREAM_EVENT)
+    views_stats = get_facetStatsByEvent(query, Statistic::VIEW_EVENT)
+    downloads_stats = get_facetStatsByEvent(query, Statistic::DOWNLOAD_EVENT)
+    streams_stats = get_facetStatsByEvent(query, Statistic::STREAM_EVENT)
 
     csv += CSV.generate_line( [ 'FACET', 'ITEM', '', '', '', '', '', '']) + LINE_BRAKER
     query.each do |key, value|
