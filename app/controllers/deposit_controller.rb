@@ -13,15 +13,14 @@ class DepositController < ApplicationController
       deposit_dir = SELF_DEPOSIT_DIR
       deposit_dir = File.join(deposit_dir, params[:uni]) if params[:uni]
 
-      UploadedFile.save(params[:file], deposit_dir, params[:file].original_filename)
-      file_path = File.join(deposit_dir, params[:file].original_filename)
+      filepath = UploadedFile.save(params[:file], deposit_dir, params[:file].original_filename)
 
       deposit = Deposit.create!(
         :agreement_version => params["AC-agreement-version"],
         :uni => params[:uni],
         :name => params[:name],
         :email => params[:email],
-        :file_path => file_path,
+        :file_path => filepath,
         :title => params[:title],
         :authors => params[:author],
         :abstract => params[:abstr],
