@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 RSpec.describe Cul::Fedora::Item do
   let!(:fedora_config) { Rails.application.config.fedora }

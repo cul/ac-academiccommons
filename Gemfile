@@ -82,5 +82,6 @@ group :development, :test do
   gem 'rspec-rails', '~> 3.1'
   gem 'capybara', '~>2.2'
   gem 'poltergeist' # Used to run test with js.
+  gem 'database_cleaner'
   gem "jettywrapper", ">=1.4.0"
 end

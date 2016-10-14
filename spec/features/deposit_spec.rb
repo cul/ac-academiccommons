@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 RSpec.describe DepositController, :type => :feature do
 
@@ -62,10 +62,22 @@ RSpec.describe DepositController, :type => :feature do
             expect(page).to have_content "Review and Submit"
           end
 
-          it "allows user to submit" do
-            click_button "Submit"
-            expect(page).to have_content "We Have Received Your Submission"
-            expect(Deposit.count).to eq 1
+          context "when user submits" do
+            before do
+              click_button "Submit"
+            end
+
+            after do
+              FileUtils.rm(File.join(Rails.root, Deposit.first.file_path)) # Remove file deposited
+            end
+
+            it 'renders submission confirmation' do
+              expect(page).to have_content "We Have Received Your Submission"
+            end
+
+            it "creates deposit record" do
+              expect(Deposit.count).to eq 1
+            end
           end
         end
       end
