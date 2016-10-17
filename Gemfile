@@ -1,17 +1,17 @@
 source 'https://rubygems.org'
 
-gem 'rails', '3.2.13'
+gem 'rails', '4.2.7.1'
 
 # Hydra-Related Gems
-gem 'blacklight', '~> 4.0'
+gem 'blacklight', '~> 5.0'
 gem "rsolr",  :git =>"git@github.com:cul/rsolr.git"
 
 gem 'blacklight_oai_provider', '>=0.2.4', :git =>"git@github.com:cul/blacklight_oai_provider.git"
 gem 'rake', '~> 10.0.0'
-gem 'rack', '1.4.5'
+#gem 'rack', '1.4.5'
 gem 'sqlite3', '>= 1.3.5'
-gem 'actionpack', '3.2.13'
-gem 'railties', '3.2.13'
+#gem 'actionpack', '3.2.13'
+#gem 'railties', '3.2.13'
 gem 'kaminari', '0.13.0'
 gem 'rinku', '~> 1.3.0', :require => 'rails_rinku'
 gem 'authlogic'
@@ -33,10 +33,6 @@ gem 'bootstrap-sass'
 gem 'mail_form'
 gem 'dotenv-rails'
 
-# Using for a smooth transition between rails 3 -> 4.
-# Can be removed once the application is running on rails 4.
-gem 'strong_parameters'
-
 # Locked at jquery-1.7.2; could potentially be updated later.
 gem 'jquery-rails', '2.0.3'
 
@@ -46,9 +42,13 @@ gem 'font-awesome-rails'
 # TODO: Confirm that this is needed and used by the application.
 gem 'fancybox2-rails'
 
-gem 'sass-rails', " ~> 3.2.4"
-gem 'coffee-rails', " ~> 3.2.2"
+gem 'sass-rails' #, " ~> 3.2.4"
+#gem 'coffee-rails' #, " ~> 3.2.2"
 gem 'uglifier'
+
+gem "mime-types", "2.99.3" # Locked until we upgrade to ruby >= 2.0
+gem "autoprefixer-rails", "~> 5.0" # Locked at previous version until we upgrade to ruby >= 2.0
+gem "deprecation", "~> 0.2.0" # Locked at previous version until we upgrade to ruby >= 2.1
 
 # Use unicorn as the web server
 # gem 'unicorn'
@@ -79,7 +79,7 @@ group :development, :test do
   # The `deploy:restart` hook for passenger applications is now in a separate gem
   # Just add it to your Gemfile and require it in your Capfile.
   gem 'capistrano-passenger', '~> 0.1', require: false
-  gem 'rspec-rails', '~> 3.1'
+  gem 'rspec-rails', '~> 3.5'
   gem 'capybara', '~>2.2'
   gem 'poltergeist' # Used to run test with js.
   gem 'database_cleaner'
