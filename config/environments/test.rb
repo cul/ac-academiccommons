@@ -22,7 +22,7 @@ AcademicCommons::Application.configure do
   config.relative_root = ""
 
 # Do not compress assets
-  config.assets.compress = false
+  #config.assets.compress = false
 
   # Expands the lines which load the assets
   config.assets.debug = true
