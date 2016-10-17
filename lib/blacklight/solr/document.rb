@@ -33,7 +33,7 @@ require 'rsolr-ext'
 # == Transformation conventions
 # The main use case for extensions is for transforming a Document to another
 # format. Either to another type of Ruby object, or to an exportable string in
-# a certain format. 
+# a certain format.
 #
 # The convention for methods contained in extensions that transform to a ruby
 # object is "to_*".  For instance, "to_marc" would return a Ruby Marc object.
@@ -51,7 +51,7 @@ require 'rsolr-ext'
 # If an extension advertises what export formats it can provide, than those
 # formats will automatically be delivered by the Blacklight catalog/show
 # controller, and potentially automatically advertised in various places
-# that advertise available formats. (HTML link rel=alternate; Atom 
+# that advertise available formats. (HTML link rel=alternate; Atom
 # link rel=alterate; etc).
 #
 # Export formats are 'registered' by calling the #will_export_as method
@@ -82,26 +82,26 @@ module Blacklight::Solr::Document
   autoload :DublinCore, 'blacklight/solr/document/dublin_core'
   autoload :Email, 'blacklight/solr/document/email'
   autoload :Sms, 'blacklight/solr/document/sms'
-  
-  def self.included(base)      
+
+  def self.included(base)
     base.send :include, RSolr::Ext::Model
     base.send :include, InstanceMethods
     base.send :extend,  ClassMethods
     base.send :extend, ActiveModel::Naming
-   
+
     # after_initialize hook comes from RSolr::Ext::Model, I think.
     # We need to make sure all extensions get applied.
-    base.after_initialize do 
-       apply_extensions 
+    base.after_initialize do
+       apply_extensions
     end
-  end    
+  end
 
   module InstanceMethods
     def id # this part is ajusted from original: self[self.class.unique_key]
       if(self[self.class.unique_key].class.to_s == 'Array')
         self[self.class.unique_key][0]
-      else  
-        self[self.class.unique_key]   
+      else
+        self[self.class.unique_key]
       end
     end
 
@@ -118,48 +118,48 @@ module Blacklight::Solr::Document
         self.extend( registration[:module_obj] ) if registration[:condition_proc].nil? || registration[:condition_proc].call( self )
       end
     end
-    
-    ##  
+
+    ##
     # Register exportable formats supported by the individual document.
     # Usually called by an extension in it's self.extended method, to
-    # register the formats that extension can export. 
-    # 
+    # register the formats that extension can export.
+    #
     # some_document.will_export_as(:some_format, "application/type") means
     # that the document (usually via an extension) has a method
     # "export_as_some_format" which returns a String of content that
-    # is described by the mime content_type given. 
-    # 
+    # is described by the mime content_type given.
+    #
     # The format name should ideally _already_ be registered with
     # Rails Mime::Type, in your application initializer, representing
     # the content type given.  However, this method will attempt to
     # register it using Mime::Type.register_alias if it's not previously
-    # registered. This is a bit sketchy though. 
+    # registered. This is a bit sketchy though.
     def will_export_as(short_name, content_type = nil)
       #Lookup in Rails Mime::Type, register if needed, otherwise take
       # content-type from registration if needed. This uses
       # some 'api' to Mime::Type that may or may not be entirely
       # public, the fact that a Mime::CONST is registered for every
       # type. But that's the only way to do the kind of check we need, sorry.
-      if defined?(Mime) && Mime.const_defined?(short_name.to_s.upcase)      
+      if defined?(Mime) && Mime.const_defined?(short_name.to_s.upcase)
         mime_type = "Mime::#{short_name.to_s.upcase}".constantize
-        content_type = mime_type.to_s unless content_type      
+        content_type = mime_type.to_s unless content_type
       else
         # not registered, we need to register. Use register_alias to be least
-        # likely to interfere with host app. 
+        # likely to interfere with host app.
         Mime::Type.register_alias(content_type, short_name)
       end
-      
+
       # if content_type is nil, look it up from Rails Mime::Type
       if content_type.nil?
         # Accurate lookup in Rails Mime::Type is kind of pain, it doesn't
         # really provide the right API.
         if defined?(type_const_name)
           content_type = type_const_name.constantize.to_s
-        end    
-      end    
+        end
+      end
       export_formats[short_name] =  {:content_type => content_type}
     end
-    
+
     # Collects formats that this doc can export as.
     # Returns a hash, keys are format short-names that can
     # be exported. Hash includes:
@@ -167,46 +167,46 @@ module Blacklight::Solr::Document
     #  maybe more later
     # To see if a given export format is supported by this document,
     # simply call document.export_formats.keys.include?(:my_format)
-    # Then call #export_as! to do the export. 
+    # Then call #export_as! to do the export.
     def export_formats
       @export_formats ||= {}
     end
-    
+
     # Call with a format shortname, export_as(:marc), simply returns
     # #export_as_marc . Later we may expand the design to allow you
     # to register an arbitrary method name instead of insisting
     # on the convention, so clients should call this method so
-    # they'll still keep working if we do that. 
+    # they'll still keep working if we do that.
     def export_as(short_name)
       send("export_as_#{short_name.to_s}")
     end
-    
+
     # Returns a hash keyed by semantic tokens (see ExtendableClassMethods#semantic_fields), value is an array of
     # strings. (Array to handle multi-value fields). If no value(s)
-    # available, empty array is returned. 
+    # available, empty array is returned.
     #
     # Default implementation here uses ExtendableClassMethods#semantic_fields
-    # to just take values from Solr stored fields. 
+    # to just take values from Solr stored fields.
     # Extensions can over-ride this method to provide better/different lookup,
     # but extensions should call super and modify hash returned, to avoid
-    # unintentionally erasing values provided by other extensions. 
+    # unintentionally erasing values provided by other extensions.
     def to_semantic_values
       unless @semantic_value_hash
-        @semantic_value_hash = Hash.new([]) # default to empty array   
+        @semantic_value_hash = Hash.new([]) # default to empty array
         self.class.field_semantics.each_pair do |key, solr_field|
           value = self[solr_field]
           # Make single and multi-values all arrays, so clients
           # don't have to know.
           unless value.nil?
-            value = [value] unless value.kind_of?(Array)      
+            value = [value] unless value.kind_of?(Array)
             @semantic_value_hash[key] = value
           end
         end
       end
       return @semantic_value_hash
     end
-  
-    
+
+
   # Certain class-level methods needed for the document-specific
   # extendability architecture
   module ClassMethods
@@ -216,15 +216,15 @@ module Blacklight::Solr::Document
     def unique_key
       # XXX Blacklight.config[:unique_key] should be deprecated soon
       @unique_key ||= Blacklight.config[:unique_key] if Blacklight.respond_to?(:config) and Blacklight.config[:unique_key]
-      @unique_key ||= 'id' 
+      @unique_key ||= 'id'
 
       @unique_key
     end
 
      def connection
-      @connection ||= Blacklight.solr
+      @connection ||= blacklight_solr
      end
-    
+
     # Returns array of hashes of registered extensions. Each hash
     # has a :module_obj key and a :condition_proc key. Usually this
     # method is only used internally in #apply_extensions, but if you
@@ -236,10 +236,10 @@ module Blacklight::Solr::Document
 
     def extension_parameters
       @extension_parameters ||= {}
-    end      
-        
+    end
+
     # Register an extension module with the class. A block taking one
-    # parameter can be supplied; the block will be passed an instance of 
+    # parameter can be supplied; the block will be passed an instance of
     # a Document, and the extension will be applied only if the block
     # evaluates as true. If no condition is given, the extension will
     # be applied to every instance of the class.
@@ -247,7 +247,7 @@ module Blacklight::Solr::Document
     # SolrDocument.use_extension( SomeExtensionModule ) { | document | should_apply_some_extension?(document) }
     # SolrDocument.use_extension( SomeExtensionModule) # will be applied to all docs
     def use_extension( module_obj, &condition )
-      registered_extensions << {:module_obj => module_obj, :condition_proc => condition}    
+      registered_extensions << {:module_obj => module_obj, :condition_proc => condition}
     end
 
     # Class-level method for accessing/setting semantic mappings
@@ -259,13 +259,13 @@ module Blacklight::Solr::Document
     #
     # Currently documented semantic tokens, not all may be
     # used by core BL, but some may be used by plugins present
-    # or future. 
-    # :title, :author, :year, :language => User-presentable strings. 
+    # or future.
+    # :title, :author, :year, :language => User-presentable strings.
     def field_semantics
       @field_semantics ||= {}
-    end    
+    end
   end
-  
- 
-  
+
+
+
 end

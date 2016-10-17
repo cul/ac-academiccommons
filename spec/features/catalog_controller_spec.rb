@@ -50,12 +50,13 @@ describe CatalogController, :type => [:controller, :feature] do
     context "search query" do
       it "finds by title" do
         visit catalog_index_path(q: "alice")
-        expect(page).to have_content("Alice")
+        expect(page).to have_css("a[href=\"/catalog/actest%3A1\"]", :text => "Alice's Adventures in Wonderland")
       end
 
       it "finds by author" do
         visit catalog_index_path(q: "lewis carroll")
         expect(page).to have_content("Carroll, Lewis")
+        expect(page).to have_css("a[href=\"/catalog/actest%3A1\"]", :text => "Alice's Adventures in Wonderland")
       end
 
       it "returns nothing when search query is not a match" do
@@ -115,7 +116,7 @@ describe CatalogController, :type => [:controller, :feature] do
     end
 
     it "has abstract" do
-      expect(page).to have_xpath("//dd[@itemprop='description']", exact: false, :text => "Background - Alice is feeling bored and drowsy while sitting on the riverbank with her older sister, who is reading a book with no pictures or conversations.")
+      expect(page).to have_xpath("//dd[@itemprop='description']", :text => "Background - Alice is feeling bored and drowsy while sitting on the riverbank with her older sister, who is reading a book with no pictures or conversations.")
     end
 
     it "has volume" do

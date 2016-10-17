@@ -1,10 +1,9 @@
 <% @page_title = "Deposit Your Research | " + application_name  %>
 
-
-<% extra_head_content << javascript_include_tag('jquery.validate.min.js') %>
-<% extra_head_content << javascript_include_tag('jquery.replaceholder.min.js') %>
-<% extra_head_content << javascript_include_tag('jquery.getUrlParam.js') %>
-<% extra_head_content << javascript_include_tag('self-deposit.js') %>
+<% content_for :head do %>
+  <%= javascript_include_tag 'jquery.validate.min.js', 'jquery.replaceholder.min.js',
+        'jquery.getUrlParam.js', 'self-deposit.js' %>
+<% end %>
 
 <style>
 	span.warning{
@@ -27,7 +26,7 @@
 <p>
 This form is for Columbia undergraduate and Master's students who are depositing a thesis in Academic Commons.
 If you have questions about the thesis deposit process, contact your department.
-If you want to know more about Academic Commons, please visit our <a href="http://support.academiccommons.columbia.edu/knowledgebase">FAQ</a> or contact us at <a href="mailto:ac@columbia.edu">ac@columbia.edu</a>.	
+If you want to know more about Academic Commons, please visit our <a href="http://support.academiccommons.columbia.edu/knowledgebase">FAQ</a> or contact us at <a href="mailto:ac@columbia.edu">ac@columbia.edu</a>.
 </p>
 
 

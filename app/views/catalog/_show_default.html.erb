@@ -1,0 +1,58 @@
+<%# default partial to display solr document fields in catalog show view -%>
+
+<div itemscope itemtype="<%= itemscope_itemtype %>">
+  <div style="clear:both;">
+    <dl class="defList clearfix">
+      <% document_show_fields.each do |solr_fname, _field| -%>
+        <% if document[solr_fname] %>
+          <% document[solr_fname].delete_if(&:empty?) if document[solr_fname].is_a?(Array) %>
+
+          <% unless document[solr_fname].empty? %>
+            <%# Field display names %>
+            <dt><%= render_document_show_field_label document, :field => solr_fname %></dt>
+
+            <%# Field display values %>
+            <dd <%= "itemprop=#{itemprop_attribute(solr_fname)}" if (itemprop_attribute(solr_fname) != nil) %> >
+              <% if document[solr_fname].is_a?(Array)%>
+                <% document[solr_fname].each do |val| %>
+                  <%= document_render_field_value(solr_fname, val) %><%= "<br/>".html_safe unless val == document[solr_fname].last %>
+                <% end %>
+              <% else %>
+                <%= document_render_field_value(solr_fname, document[solr_fname]) %>
+              <% end %>
+            </dd>
+          <% end -%>
+        <% end -%>
+      <% end -%>
+    </dl>
+
+    <dl class='defList'>
+      <dt>Item views</dt>
+      <dd><%= Statistic.count(:conditions => {:identifier => params[:id], :event => "View"}) %></dd>
+    </dl>
+
+    <% metadata_list = get_metadata_list(document) -%>
+
+    <dl class="defList clearfix">
+      <% if metadata_list.length > 0 -%>
+        <% metadata_list.each do |resource| -%>
+          <dt>Metadata: </dt>
+          <dd>
+            <% show_url = "#{resource[:show_url]}?data=meta" -%>
+            <% download_url = "#{resource[:download_url]}?data=meta" -%>
+            <%= link_to "text", show_url if resource[:show_url] %> | <%= link_to "xml", show_url + "&xml=true" if resource[:show_url] %>
+          </dd>
+        <% end -%>
+      <% else -%>
+        <em>Additional metadata is currently unavailable for this item.</em>
+      <% end -%>
+      <dt>Suggested Citation:</dt>
+      <dd>
+        <%= first_names_then_last_suggested_citation(document_author || "") %>,
+        <%= document_render_field_value("pub_date_facet", document["pub_date_facet"][0]) %>,
+        <%= document_render_field_value("title_display", document["title_display"]) %>, Columbia University Academic Commons,
+        <%= document_render_field_value("handle", document["handle"]) %>.
+      </dd>
+    </dl>
+  </div>
+</div>

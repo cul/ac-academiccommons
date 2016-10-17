@@ -1,20 +1,12 @@
 require 'csv'
+require 'uri'
 
-module StatisticsHelper
-  
-  include CatalogHelper
-  include InfoHelper
-  include LogsHelper
-  require 'uri'
-  
+module ACStatistics
+
   VIEW = 'view_'
   DOWNLOAD = 'download_'
   LINE_BRAKER = RUBY_VERSION < "1.9" ? "\r\n" : ""
-  
-  VIEW_EVENT = 'View'
-  DOWNLOAD_EVENT = 'Download'
-  STREAM_EVENT = 'Streaming'
-  
+
   FACET_NAMES = Hash.new
   FACET_NAMES.store('author_facet', 'Author')
   FACET_NAMES.store('pub_date_facet', 'Date')
@@ -26,7 +18,9 @@ module StatisticsHelper
   FACET_NAMES.store('department_facet', 'Department')
   FACET_NAMES.store('series_facet', 'Series')
   FACET_NAMES.store('non_cu_series_facet', 'Non CU Series')
-  
+
+  private
+
   def facet_names
     return FACET_NAMES
   end
@@ -35,9 +29,9 @@ module StatisticsHelper
 
     months_list = make_months_list(startdate, enddate, recent_first)
     results, stats, totals, download_ids = get_author_stats(startdate, enddate, search_criteria, months_list, include_zeroes, facet, include_streaming_views, order_by)
-    
-    if (results == nil || results.size == 0)    
-      setMessageAndVariables 
+
+    if (results == nil || results.size == 0)
+      setMessageAndVariables
       return
     end
 
@@ -46,7 +40,7 @@ module StatisticsHelper
     else
       csv = "Search criteria: ," + search_criteria.to_s + LINE_BRAKER
     end
- 
+
     csv += CSV.generate_line( [ "Period covered by Report" ]) + LINE_BRAKER
     csv += CSV.generate_line( [ "from:", "to:" ]) + LINE_BRAKER
     csv += CSV.generate_line( [ startdate.strftime("%b-%Y"),  enddate.strftime("%b-%Y") ]) + LINE_BRAKER
@@ -54,39 +48,39 @@ module StatisticsHelper
     csv += CSV.generate_line( [ Time.new.strftime("%Y-%m-%d") ] ) + LINE_BRAKER
     csv += CSV.generate_line( [ "Report created by:" ]) + LINE_BRAKER
     csv += CSV.generate_line( [  current_user == nil ? "N/A" : (current_user.to_s + " (" + current_user.login.to_s + ")") ]) + LINE_BRAKER
-    
+
 
     csv = makeCSVcategory("Views", "View", csv, results, stats, totals, months_list, nil)
     if(include_streaming_views)
       csv = makeCSVcategory("Streams", "Streaming", csv, results, stats, totals, months_list, nil)
-    end  
+    end
     csv = makeCSVcategory("Downloads", "Download", csv, results, stats, totals, months_list, download_ids)
 
     return csv
   end
-  
-  
-  
+
+
+
   def makeCSVcategory(category, key, csv, results, stats, totals, months_list, ids)
-    
+
     csv += CSV.generate_line( [ "" ]) + LINE_BRAKER
-    
+
     csv += CSV.generate_line( [ category + " report:" ]) + LINE_BRAKER
-    
-        csv += CSV.generate_line( [ "Total for period:", 
+
+        csv += CSV.generate_line( [ "Total for period:",
                                 "",
                                 "",
-                                "", 
+                                "",
                                 totals[key].to_s
                                ].concat(make_months_header(category + " by Month", months_list))
                              ) + LINE_BRAKER
-                            
-    csv += CSV.generate_line( [ "Title", 
-                                "Content Type", 
+
+    csv += CSV.generate_line( [ "Title",
+                                "Content Type",
                                 "Permanent URL",
-                                "DOI", 
+                                "DOI",
                                 "Reporting Period Total " + category
-                               ].concat( make_month_line(months_list))   
+                               ].concat( make_month_line(months_list))
                              ) + LINE_BRAKER
 
     results.each do |item|
@@ -97,28 +91,28 @@ module StatisticsHelper
                               item["doi"],
                               stats[key][item["id"]].nil? ? 0 : stats[key][item["id"]]
                               ].concat( make_month_line_stats(stats, months_list, item["id"], ids))
-                              ) + LINE_BRAKER  
+                              ) + LINE_BRAKER
     end
-    
+
     return csv
-    
+
   end
-  
-  
-  
+
+
+
   def make_months_header(first_item, months_list)
-    
+
     header = []
 
     header << first_item
 
     months_list.size.downto(2) do
       header << ""
-    end 
+    end
 
     return header
   end
-  
+
   def months
     months = Array.new(Date::ABBR_MONTHNAMES)
     months.shift
@@ -126,38 +120,38 @@ module StatisticsHelper
   end
 
   def make_month_line(months_list)
-    
+
     month_list = []
-    
+
     months_list.each do |month|
       month_list << month_str = month.strftime("%b-%Y")
     end
-    
+
     return month_list
   end
 
   def make_month_line_stats(stats, months_list, id, download_ids)
-    
+
     line = []
-    
-    months_list.each do |month|                   
-      
-      if(download_ids != nil)    
-        download_id = download_ids[id]       
+
+    months_list.each do |month|
+
+      if(download_ids != nil)
+        download_id = download_ids[id]
         line << (stats[DOWNLOAD + month.to_s][download_id[0]].nil? ? 0 : stats[DOWNLOAD + month.to_s][download_id[0]])
       else
         line << (stats[VIEW + month.to_s][id].nil? ? 0 : stats[VIEW + month.to_s][id])
       end
-      
-    end      
+
+    end
     return line
   end
 
 
   def process_stats_by_month(stats, totals, ids, download_ids, startdate, enddate, months_list)
-    
+
     months_list.each do |month|
-      
+
       contdition = month.strftime("%Y-%m") + "%"
 
       stats[VIEW + month.to_s] = Statistic.count(:group => "identifier", :conditions => ["event = 'View' and identifier IN (?) and at_time like ?", ids, contdition])
@@ -167,16 +161,16 @@ module StatisticsHelper
 
   end
 
-  
+
 
   def get_author_stats(startdate, enddate, query, months_list, include_zeroes, facet, include_streaming_views, order_by)
     logger.info "AAMTESTING: in get author stats for "+query
     if(query == nil || query.empty?)
       return
-    end  
+    end
 
     results = make_solar_request(facet, query)
-    
+
     if results == nil
       return
     end
@@ -184,56 +178,56 @@ module StatisticsHelper
     stats, totals, ids, download_ids = init_holders(results)
 
     process_stats(stats, totals, ids, download_ids, startdate, enddate)
-    
-      results.reject! { |r| (stats['View'][r['id'][0]] || 0) == 0 &&  (stats['Download'][r['id']] || 0) == 0 } unless include_zeroes
-        
 
-      if(order_by == 'views' || order_by == 'downloads') 
+      results.reject! { |r| (stats['View'][r['id'][0]] || 0) == 0 &&  (stats['Download'][r['id']] || 0) == 0 } unless include_zeroes
+
+
+      if(order_by == 'views' || order_by == 'downloads')
         results.sort! do |x,y|
-          if(order_by == 'downloads') 
-            result = (stats['Download'][y['id']] || 0) <=> (stats['Download'][x['id']] || 0) 
-          end  
-          if(order_by == 'views') 
-              result = (stats['View'][y['id']] || 0) <=> (stats['View'][x['id']] || 0) 
-          end         
+          if(order_by == 'downloads')
+            result = (stats['Download'][y['id']] || 0) <=> (stats['Download'][x['id']] || 0)
+          end
+          if(order_by == 'views')
+              result = (stats['View'][y['id']] || 0) <=> (stats['View'][x['id']] || 0)
+          end
             result
         end
       end
-      
+
 
     if(months_list != nil)
-      process_stats_by_month(stats, totals, ids, download_ids, startdate, enddate, months_list)     
-    end   
+      process_stats_by_month(stats, totals, ids, download_ids, startdate, enddate, months_list)
+    end
 
     return results, stats, totals, download_ids
-    
+
   end
 
 
   def init_holders(results)
-    
+
     ids = results.collect { |r| r['id'].to_s.strip }
-    
+
     fedora_server = Cul::Fedora::Server.new(fedora_config)
-    
-    download_ids = Hash.new { |h,k| h[k] = [] } 
-    
+
+    download_ids = Hash.new { |h,k| h[k] = [] }
+
     ids.each do |doc_id|
       download_ids[doc_id] |= fedora_server.item(doc_id).listMembers.collect(&:pid)
     end
-    
+
     stats = Hash.new { |h,k| h[k] = Hash.new { |h,k| h[k] = 0 }}
     totals = Hash.new { |h,k| h[k] = 0 }
 
     return stats, totals, ids, download_ids
-    
+
   end
-  
-  
+
+
   def process_stats(stats, totals, ids, download_ids, startdate, enddate)
-    logger.info "AAMTESTING: in process stats for ids "    
+    logger.info "AAMTESTING: in process stats for ids "
     enddate = enddate + 1.months
-    
+
     stats['View'] = Statistic.count(:group => "identifier", :conditions => ["event = 'View' and identifier IN (?) AND at_time BETWEEN ? and ?", ids, startdate, enddate])
     stats['Streaming'] = Statistic.count(:group => "identifier", :conditions => ["event = 'Streaming' and identifier IN (?) AND at_time BETWEEN ? and ?", ids, startdate, enddate])
 
@@ -241,66 +235,66 @@ module StatisticsHelper
 
     download_ids.each_pair do |doc_id, downloads|
       stats['Download'][doc_id] = downloads.collect { |download_id| stats_downloads[download_id] || 0 }.sum
-    end    
-    
+    end
+
     stats['View'] = convertOrderedHash(stats['View'])
-    
+
     stats['View Lifetime'] = Statistic.count(:group => "identifier", :conditions => ["event = 'View' and identifier IN (?)", ids])
     stats['Streaming Lifetime'] = Statistic.count(:group => "identifier", :conditions => ["event = 'streaming' and identifier IN (?)", ids])
-    
+
     stats_lifetime_downloads = Statistic.count(:group => "identifier", :conditions => ["event = 'Download' and identifier IN (?)" , download_ids.values.flatten])
-    
+
     download_ids.each_pair do |doc_id, downloads|
       stats['Download Lifetime'][doc_id] = downloads.collect { |download_id| stats_lifetime_downloads[download_id] || 0 }.sum
     end
-    
+
     stats.keys.each { |key| totals[key] = stats[key].values.sum }
 
     stats['View Lifetime'] = convertOrderedHash(stats['View Lifetime'])
-    
+
   end
-  
-  
+
+
   def parse_search_query(search_query)
-    
+
     search_query = URI.unescape(search_query)
     search_query = search_query.gsub(/\+/, ' ')
-    
+
     params = Hash.new
-    
+
     if search_query.include? '?'
       search_query = search_query[search_query.index("?") + 1, search_query.length]
     end
 
     search_query.split('&').each do |value|
 
-      key_value = value.split('=') 
+      key_value = value.split('=')
 
       if(key_value[0].start_with?("f[") )
 
         if(params.has_key?("f"))
           array = params["f"]
         else
-          array = Array.new 
+          array = Array.new
         end
 
         value = key_value[0].gsub(/f\[/, '').gsub(/\]\[\]/, '') + ":\"" + key_value[1] + "\""
         array.push(value)
         params.store("f", array)
 
-      else 
+      else
         params.store(key_value[0], key_value[1])
       end
     end
-    
-    return params  
+
+    return params
   end
 
 
   def make_solar_request(facet, query)
     logger.info "AAMTESTING: in make solar request for query "+query
     if(facet == "search_query")
-      
+
       params = parse_search_query(query)
       facet_query = params["f"]
       q = params["q"]
@@ -310,51 +304,51 @@ module StatisticsHelper
 
       facet_query = "#{facet}:\"#{query}\""
       sort = "title_display asc"
-      
+
     end
-    
+
     if facet_query == nil && q == nil
       return
-    else  
-      results = Blacklight.solr.find( :per_page => 100000, 
-                                   :sort => sort, 
+    else
+      results = blacklight_solr.find( :per_page => 100000,
+                                   :sort => sort,
                                    :q => q,
                                    :fq => facet_query,
-                                   :fl => "title_display,id,handle,doi,genre_facet", 
+                                   :fl => "title_display,id,handle,doi,genre_facet",
                                    :page => 1
-                                  )["response"]["docs"]                           
-      return results  
-                            
-    end                            
+                                  )["response"]["docs"]
+      return results
+
+    end
   end
-  
-  
+
+
   def make_months_list(startdate, enddate, recent_first)
     months = []
     months_hash = Hash.new
-    
+
     (startdate..enddate).each do |date|
-      
+
       key = date.strftime("%Y-%m")
-      
+
       if(!months_hash.has_key?(key))
         months << date
         months_hash.store(key, "")
-      end    
-    end    
-    
+      end
+    end
+
     if(recent_first)
       return months.reverse
     else
       return months
     end
   end
-  
+
   def base_url
     return "http://" + Rails.application.config.base_path + Rails.application.config.relative_root
   end
-  
-  def setMessageAndVariables 
+
+  def setMessageAndVariables
     @results = nil
     @stats = nil
     @totals = nil
@@ -364,18 +358,18 @@ module StatisticsHelper
     else
       @message = "second_message"
       params[:facet] = "text"
-    end    
-  end  
-  
+    end
+  end
+
   def logStatisticsUsage(startdate, enddate, params)
-    
-      eventlog = Eventlog.create(:event_name => 'statistics', 
-                                 :user_name  => current_user == nil ? "N/A" : current_user.to_s, 
-                                 :uid        => current_user == nil ? "N/A" : current_user.login.to_s, 
-                                 :ip         => request.remote_ip, 
-                                 :session_id => request.session_options[:id])    
-        
-      eventlog.logvalues.create(:param_name => "startdate", :value => startdate.to_s) 
+
+      eventlog = Eventlog.create(:event_name => 'statistics',
+                                 :user_name  => current_user == nil ? "N/A" : current_user.to_s,
+                                 :uid        => current_user == nil ? "N/A" : current_user.login.to_s,
+                                 :ip         => request.remote_ip,
+                                 :session_id => request.session_options[:id])
+
+      eventlog.logvalues.create(:param_name => "startdate", :value => startdate.to_s)
       eventlog.logvalues.create(:param_name => "enddate", :value => enddate.to_s)
       eventlog.logvalues.create(:param_name => "commit", :value => params[:commit])
       eventlog.logvalues.create(:param_name => "search_criteria", :value => params[:search_criteria] )
@@ -383,36 +377,21 @@ module StatisticsHelper
       eventlog.logvalues.create(:param_name => "include_streaming_views", :value => params[:include_streaming_views] == nil ? "false" : "true")
       eventlog.logvalues.create(:param_name => "facet", :value => params[:facet])
       eventlog.logvalues.create(:param_name => "email_to", :value => params[:email_destination] == "email to" ? nil : params[:email_destination])
-    
-  end
-  
-  def setDefaultParams(params)
-    
-     if (params[:month_from].nil? || params[:month_to].nil? || params[:year_from].nil? || params[:year_to].nil?)
-      
-      params[:month_from] = "Apr"
-      params[:year_from] = "2011"
-      params[:month_to] = (Date.today - 1.months).strftime("%b")
-      params[:year_to] = (Date.today).strftime("%Y")
-      
-      params[:include_zeroes] = true
-      
-    end     
-  end
-  
 
-  def makeTestAuthor(author_id, email)  
+  end
+
+  def makeTestAuthor(author_id, email)
 
         test_author = Hash.new
         test_author[:id] = author_id
-        test_author[:email] = email     
-           
-        processed_authors = Array.new 
+        test_author[:email] = email
+
+        processed_authors = Array.new
         processed_authors.push(test_author)
         return processed_authors
-  end      
-  
-  
+  end
+
+
   def sendReport(recepient, author_id, startdate, enddate, results, stats, totals, request, include_streaming_views, optional_note)
     case params[:email_template]
     when "Normal"
@@ -421,10 +400,10 @@ module StatisticsHelper
       Notifier.author_monthly_first(recepient, author_id, startdate, enddate, results, stats, totals, request, include_streaming_views).deliver
     end
   end
-  
+
   def downloadCSVreport(startdate, enddate, params)
         logStatisticsUsage(startdate, enddate, params)
-        
+
         csv_report = cvsReport( startdate,
                                 enddate,
                                 params[:search_criteria],
@@ -434,70 +413,70 @@ module StatisticsHelper
                                 params[:include_streaming_views],
                                 params[:order_by]
                                )
-                               
+
          if(csv_report != nil)
-           send_data csv_report, :type=>"application/csv", :filename=>params[:search_criteria] + "_monthly_statistics.csv" 
-         end 
+           send_data csv_report, :type=>"application/csv", :filename=>params[:search_criteria] + "_monthly_statistics.csv"
+         end
   end
-  
+
   def school_pids(school)
-    
-    pids_by_institution = Blacklight.solr.find(
-                          :qt=>"search", 
+
+    pids_by_institution = blacklight_solr.find(
+                          :qt=>"search",
                           :rows=>20000,
-                          :fq=>["{!raw f=organization_facet}" + school], 
-                          :"facet.field"=>["pid"], 
-                          )["response"]["docs"] 
-                          
-    return pids_by_institution                       
-                          
+                          :fq=>["{!raw f=organization_facet}" + school],
+                          :"facet.field"=>["pid"],
+                          )["response"]["docs"]
+
+    return pids_by_institution
+
   end
 
   def get_school_docs_size(school)
     query_params = {:qt=>"standard", :q=>'{!raw f=organization_facet}' + school}
     return get_count(query_params)
   end
-  
-  # @@facets_list = Hash.new  
+
+  # @@facets_list = Hash.new
   # def facet_items(facet)
-#     
+#
     # if(!@@facets_list.has_key?(facet) )
       # @@facets_list.store(facet, make_facet_items(facet))
       # logger.info("======= fasets init ====== ")
-    # end  
-# 
+    # end
+#
     # return @@facets_list[facet]
   # end
   # def make_facet_items(facet)
   def facet_items(facet)
-    
+
     results = []
     query_params = {:q=>"", :rows=>"0", "facet.limit"=>-1, :"facet.field"=>[facet]}
-    solr_results = Blacklight.solr.find(query_params)
+    solr_results = blacklight_solr.find(query_params)
     subjects = solr_results.facet_counts["facet_fields"][facet]
-    
+
     results << ["" ,""]
-    
+
     res_item = {}
     subjects.each do |item|
 
       if(item.kind_of? Integer)
         res_item[:count] = item
-        
+
         #Rails.logger.debug("======= " +  res_item[:count].to_s + " == " + res_item[:name].to_s)
-        
+
         results << [res_item[:name].to_s + " (" + res_item[:count].to_s  + ")", res_item[:name].to_s]
         res_item = {}
       else
         res_item[:name] = item
       end
-      
-    end  
-    
+
+    end
+
     return results
   end
-  
-  
+
+
   def getPidsByQueryFacets(query)
 
     solr_facets_query = Array.new
@@ -507,59 +486,59 @@ module StatisticsHelper
         solr_facets_query.push("{!raw f=" + param[0].to_s + "}" + param[1][0].to_s)
       end
     end
-    
+
     Rails.logger.debug(" solr_facets_query size:  " + solr_facets_query.size.to_s )
-    
-    query_params = Hash.new 
+
+    query_params = Hash.new
     query_params.store("qt", "search")
     query_params.store("rows", 20000)
 
-    
+
     query_params.store("fq", solr_facets_query)
     query_params.store("facet.field", ["pid"])
 
-    return  Blacklight.solr.find(query_params)["response"]["docs"] 
+    return  blacklight_solr.find(query_params)["response"]["docs"]
   end
- 
-  
+
+
   def countPidsStatistic(pids_collection, event)
-    count = Statistic.count(:conditions => ["identifier in (?) and event = ?", correct_pids(pids_collection, event), event]) 
+    count = Statistic.count(:conditions => ["identifier in (?) and event = ?", correct_pids(pids_collection, event), event])
     return count
-  end  
- 
- 
+  end
+
+
   def countPidsStatisticByDates(pids_collection, event, startdate, enddate)
-    count = Statistic.count(:conditions => ["identifier in (?) and event = ? and at_time BETWEEN ? and ?", correct_pids(pids_collection, event), event, startdate, enddate]) 
+    count = Statistic.count(:conditions => ["identifier in (?) and event = ? and at_time BETWEEN ? and ?", correct_pids(pids_collection, event), event, startdate, enddate])
     return count
-  end  
-  
+  end
+
   def countDocsByEvent(pids_collection, event)
-    count = Statistic.count(:conditions => ["identifier in (?) and event = ? ", correct_pids(pids_collection, event), event], :group => 'identifier') 
+    count = Statistic.count(:conditions => ["identifier in (?) and event = ? ", correct_pids(pids_collection, event), event], :group => 'identifier')
     return count
-  end  
- 
- 
+  end
+
+
   def countDocsByEventAndDates(pids_collection, event, startdate, enddate)
-    count = Statistic.count(:conditions => ["identifier in (?) and event = ? and at_time BETWEEN ? and ? ", correct_pids(pids_collection, event), event, startdate, enddate], :group => 'identifier') 
+    count = Statistic.count(:conditions => ["identifier in (?) and event = ? and at_time BETWEEN ? and ? ", correct_pids(pids_collection, event), event, startdate, enddate], :group => 'identifier')
     return count
-  end    
-  
+  end
+
 
 
   def correct_pids(pids_collection, event)
     pids = []
     pids_collection.each do |pid|
 
-      if(event == DOWNLOAD_EVENT)
+      if(event == Statistic::DOWNLOAD_EVENT)
         pids.push(pid[:id][0, 3] + (pid[:id][3, 8].to_i + 1).to_s)
       else
          pids.push(pid[:id])
-      end    
-   
+      end
+
     end
     return pids
   end
-  
+
 
   def get_res_list()
 
@@ -568,97 +547,97 @@ module StatisticsHelper
     if( query == nil || query.empty? )
       return []
     end
-    
+
     docs = getPidsByQueryFacets(query)
-    
+
     results = Array.new
-    
+
     docs.each do |doc|
-      
+
       item =  Hash.new
-      
+
       if(params[:month_from] && params[:year_from] && params[:month_to] && params[:year_to] )
-       
+
         startdate = Date.parse(params[:month_from] + " " + params[:year_from])
         enddate = Date.parse(params[:month_to] + " " + params[:year_to])
-        
-        item.store('views', countPidsStatisticByDates([doc], VIEW_EVENT, startdate, enddate))
-        item.store('downloads', countPidsStatisticByDates([doc], DOWNLOAD_EVENT, startdate, enddate))
-        item.store('streams', countPidsStatisticByDates([doc], STREAM_EVENT, startdate, enddate))
+
+        item.store('views', countPidsStatisticByDates([doc], Statistic::VIEW_EVENT, startdate, enddate))
+        item.store('downloads', countPidsStatisticByDates([doc], Statistic::DOWNLOAD_EVENT, startdate, enddate))
+        item.store('streams', countPidsStatisticByDates([doc], Statistic::STREAM_EVENT, startdate, enddate))
         item.store('doc', doc)
-        
+
         results << item
-      else  
-        
-        item.store('views', countPidsStatistic([doc], VIEW_EVENT))
-        item.store('downloads', countPidsStatistic([doc], DOWNLOAD_EVENT))
-        item.store('streams', countPidsStatistic([doc], STREAM_EVENT))
+      else
+
+        item.store('views', countPidsStatistic([doc], Statistic::VIEW_EVENT))
+        item.store('downloads', countPidsStatistic([doc], Statistic::DOWNLOAD_EVENT))
+        item.store('streams', countPidsStatistic([doc], Statistic::STREAM_EVENT))
         item.store('doc', doc)
         results << item
-      end      
+      end
     end
-    
+
     results.sort! do |x,y|
       x['doc']['title_display']<=> y['doc']['title_display']
     end
 
     return results
   end
-  
+
   def get_docs_size_by_query_facets()
     query = params[:f]
-    
+
     if( query == nil || query.empty? )
       pids = []
-    else  
+    else
       pids = getPidsByQueryFacets(query)
     end
-    
+
     return pids
   end
-  
+
   def get_time_period
-    
+
     if(params[:month_from] && params[:year_from] && params[:month_to] && params[:year_to] )
-       
+
       startdate = Date.parse(params[:month_from] + " " + params[:year_from])
       enddate = Date.parse(params[:month_to] + " " + params[:year_to])
-      
+
       time_period = startdate.strftime("%b %Y") + ' - ' + enddate.strftime("%b %Y")
     else
-      time_period = 'Lifetime'  
-    end    
-    
+      time_period = 'Lifetime'
+    end
+
     return time_period
   end
-  
+
   def create_common_statistics_csv(res_list)
-    
+
     count = 0
     csv = ''
-    
+
     csv += CSV.generate_line( [ 'time period: ', get_time_period, '', '', '', '', '', '' ]) + LINE_BRAKER
     csv += CSV.generate_line( [ '', '', '', '', '', '', '', '']) + LINE_BRAKER
-    
+
     query = params[:f]
-    views_stats = get_facetStatsByEvent(query, VIEW_EVENT)
-    downloads_stats = get_facetStatsByEvent(query, DOWNLOAD_EVENT)
-    streams_stats = get_facetStatsByEvent(query, STREAM_EVENT)
-    
+    views_stats = get_facetStatsByEvent(query, Statistic::VIEW_EVENT)
+    downloads_stats = get_facetStatsByEvent(query, Statistic::DOWNLOAD_EVENT)
+    streams_stats = get_facetStatsByEvent(query, Statistic::STREAM_EVENT)
+
     csv += CSV.generate_line( [ 'FACET', 'ITEM', '', '', '', '', '', '']) + LINE_BRAKER
-    query.each do |key, value| 
+    query.each do |key, value|
         csv += CSV.generate_line( [ facet_names[key.to_s], value.first.to_s, '', '', '', '', '', '']) + LINE_BRAKER
     end
     csv += CSV.generate_line( [ '', '', '', '', '', '', '', '' ]) + LINE_BRAKER
-    
+
     csv += CSV.generate_line( [ res_list.size.to_s, '', '', views_stats['statistic'].to_s, downloads_stats['statistic'].to_s, streams_stats['statistic'].to_s, '', '' ]) + LINE_BRAKER
     csv += CSV.generate_line( [ '#', 'TITLE', 'GENRE', 'VIEWS', 'DOWNLOADS', 'STREAMS', 'DEPOSIT DATE', 'HANDLE / DOI' ]) + LINE_BRAKER
-    
+
     res_list.each do |item|
-      
+
       count = count + 1
-      
-      csv += CSV.generate_line( [ 
+
+      csv += CSV.generate_line( [
                                   count,
                                   item['doc']['title_display'],
                                   item['doc']['genre_facet'].first,
@@ -669,63 +648,63 @@ module StatisticsHelper
                                   item['doc']['handle']
                                 ]) + LINE_BRAKER
     end
-    
+
     return csv
   end
-  
+
   def get_facetStatsByEvent(query, event)
-    
+
     if( query == nil || query.empty? )
-        downloads = 0 
+        downloads = 0
         docs = Hash.new
-    else  
-      
+    else
+
       pids_collection = getPidsByQueryFacets(query)
-      
+
       if(params[:month_from] && params[:year_from] && params[:month_to] && params[:year_to] )
         startdate = Date.parse(params[:month_from] + " " + params[:year_from])
         enddate = Date.parse(params[:month_to] + " " + params[:year_to])
         count = countPidsStatisticByDates(pids_collection, event, startdate, enddate)
         docs = countDocsByEventAndDates(pids_collection, event, startdate, enddate)
-      else  
-        count = countPidsStatistic(pids_collection, event) 
+      else
+        count = countPidsStatistic(pids_collection, event)
         docs = countDocsByEvent(pids_collection, event)
       end
 
     end
-    
+
     result = Hash.new
-    
+
     result.store('docs_size', docs.size.to_s)
     result.store('statistic', count.to_s)
-    
-    return result   
+
+    return result
   end
 
   def sendAuthorsReports(processed_authors, designated_recipient)
-    
+
 
         start_time = Time.new
         time_id = start_time.strftime("%Y%m%d-%H%M%S")
         logger = Logger.new(Rails.root.to_s + "/log/monthly_reports/#{time_id}.tmp")
-        
+
         logger.info "\n=== All Authors Monthly Reports ==="
-        
+
         logger.info "\nStarted at: " + start_time.strftime("%Y-%m-%d %H:%M") + "\n"
-        
+
         sent_counter = 0
         skipped_counter = 0
         sent_exceptions = 0
-        
+
         processed_authors.each do |author|
-          
+
           begin
-            
+
             author_id = author[:id]
             startdate = Date.parse(params[:month] + " " + params[:year])
             enddate = Date.parse(params[:month] + " " + params[:year])
-            
-            @results, @stats, @totals =  get_author_stats(startdate, 
+
+            @results, @stats, @totals =  get_author_stats(startdate,
                                                           enddate,
                                                           author_id,
                                                           nil,
@@ -734,37 +713,37 @@ module StatisticsHelper
                                                           false,
                                                           params[:order_by]
                                                           )
-                            
-            if(designated_recipient)  
+
+            if(designated_recipient)
               email = designated_recipient
             else
               email = author[:email]
-            end        
-                                                          
-            if(email == nil) 
+            end
+
+            if(email == nil)
               raise "no email address found"
-            end                                                                                      
-    
+            end
+
             if @totals.values.sum != 0 || params[:include_zeroes]
               sent_counter = sent_counter + 1
               if(params[:do_not_send_email])
                 test_msg = ' (this is test - email was not sent)'
-              else  
+              else
                 Notifier.author_monthly(email, author_id, startdate, enddate, @results, @stats, @totals, request, false, params[:optional_note]).deliver
                 test_msg = ''
               end
-     
+
               logger.info "report for '" + author_id + "' was sent to " + email + " at " + Time.new.strftime("%Y-%m-%d %H:%M") + test_msg
             else
               skipped_counter = skipped_counter + 1
               logger.info "report for '" + author_id + "' was skipped"
-            end   
-             
+            end
+
           rescue Exception => e
             logger.info("(All Authors Monthly Statistics) - There is some error for " + author_id + ", " + (author[:email] || "") + ", error: " + e.to_s + ", " + Time.new.to_s)
-            sent_exceptions = sent_exceptions + 1             
+            sent_exceptions = sent_exceptions + 1
           end # begin
-          
+
         end # processed_authors.each
 
         finish_time = Time.new
@@ -773,12 +752,12 @@ module StatisticsHelper
 
         seconds_spent = finish_time - start_time
         readble_time_spent = Time.at(seconds_spent).utc.strftime("%H hours, %M minutes, %S seconds")
-        
-        logger.info "\nTime spent: " + getReadableTimeSpent(start_time)    
 
-        File.rename(Rails.root.to_s + "/log/monthly_reports/#{time_id}.tmp", Rails.root.to_s + "/log/monthly_reports/#{time_id}.log")  
-        
-  end # sendAuthorsReports 
+        logger.info "\nTime spent: " + getReadableTimeSpent(start_time)
+
+        File.rename(Rails.root.to_s + "/log/monthly_reports/#{time_id}.tmp", Rails.root.to_s + "/log/monthly_reports/#{time_id}.log")
+
+  end # sendAuthorsReports
 
 
   def clean_params(params)
@@ -787,20 +766,7 @@ module StatisticsHelper
       params[:designated_recipient] = nil
       params[:one_report_email] = nil
   end
-  
-  @@robots = ['Alexandria(\s|\+)prototype(\s|\+)project', 'AllenTrack', 'Arachmo', 'Brutus\/AET', 'China\sLocal\sBrowse\s2\.6', 'Code\sSample\sWeb\sClient', 'ContentSmartz', 'DSurf', 'DataCha0s\/2\.0', 'Demo\sBot', 'EmailSiphon', 'EmailWolf', 'FDM(\s|\+)1', 'Fetch(\s|\+)API(\s|\+)Request', 'GetRight', 'Goldfire(\s|\+)Server', 'Googlebot', 'HTTrack', 'LOCKSS', 'LWP\:\:Simple', 'MSNBot', 'Microsoft(\s|\+)URL(\s|\+)Control', 'Milbot', 'MuscatFerre', 'NABOT', 'NaverBot', 'Offline(\s|\+)Navigator', 'OurBrowser', 'Python\-urllib', 'Readpaper', 'Strider', 'T\-H\-U\-N\-D\-E\-R\-S\-T\-O\-N\-E', 'Teleport(\s|\+)Pro', 'Teoma', 'Wanadoo', 'Web(\s|\+)Downloader', 'WebCloner', 'WebCopier', 'WebReaper', 'WebStripper', 'WebZIP', 'Webinator', 'Webmetrics', 'Wget', 'Xenu(\s|\+)Link(\s|\+)Sleuth', '[+:,\.\;\/\\-]bot', '[^a]fish', '^voyager\/', 'acme\.spider', 'alexa', 'almaden', 'appie', 'architext', 'archive\.org_bot', 'arks', 'asterias', 'atomz', 'autoemailspider', 'awbot', 'baiduspider', 'bbot', 'biadu', 'biglotron', 'bjaaland', 'blaiz\-bee', 'bloglines', 'blogpulse', 'boitho\.com\-dc', 'bookmark\-manager', 'bot', 'bot[+:,\.\;\/\\-]', 'bspider', 'bwh3_user_agent', 'celestial', 'cfnetwork|checkbot', 'combine', 'commons\-httpclient', 'contentmatch', 'core', 'crawl', 'crawler', 'cursor', 'custo', 'daumoa', 'docomo', 'dtSearchSpider', 'dumbot', 'easydl', 'exabot', 'fast-webcrawler', 'favorg', 'feedburner', 'feedfetcher\-google', 'ferret', 'findlinks', 'gaisbot', 'geturl', 'gigabot', 'girafabot', 'gnodspider', 'google', 'grub', 'gulliver', 'harvest', 'heritrix', 'hl_ftien_spider', 'holmes', 'htdig', 'htmlparser', 'httpget\-5\.2\.2', 'httpget\?5\.2\.2', 'httrack', 'iSiloX', 'ia_archiver', 'ichiro', 'iktomi', 'ilse', 'internetseer', 'intute', 'java', 'java\/', 'jeeves', 'jobo', 'kyluka', 'larbin', 'libwww', 'libwww\-perl', 'lilina', 'linkbot', 'linkcheck', 'linkchecker', 'linkscan', 'linkwalker', 'livejournal\.com', 'lmspider', 'lwp', 'lwp\-request', 'lwp\-tivial', 'lwp\-trivial', 'lycos[_+]', 'mail.ru', 'mediapartners\-google', 'megite', 'milbot', 'mimas', 'mj12bot', 'mnogosearch', 'moget', 'mojeekbot', 'momspider', 'motor', 'msiecrawler', 'msnbot', 'myweb', 'nagios', 'netcraft', 'netluchs', 'ng\/2\.', 'no_user_agent', 'nomad', 'nutch', 'ocelli', 'onetszukaj', 'perman', 'pioneer', 'playmusic\.com', 'playstarmusic\.com', 'powermarks', 'psbot', 'python', 'qihoobot', 'rambler', 'redalert|robozilla', 'robot', 'robots', 'rss', 'scan4mail', 'scientificcommons', 'scirus', 'scooter', 'seekbot', 'seznambot', 'shoutcast', 'slurp', 'sogou', 'speedy', 'spider', 'spiderman', 'spiderview', 'sunrise', 'superbot', 'surveybot', 'tailrank', 'technoratibot', 'titan', 'turnitinbot', 'twiceler', 'ucsd', 'ultraseek', 'urlaliasbuilder', 'urllib', 'virus[_+]detector', 'voila', 'w3c\-checklink', 'webcollage', 'weblayers', 'webmirror', 'webreaper', 'wordpress', 'worm', 'xenu', 'y!j', 'yacy', 'yahoo', 'yahoo\-mmcrawler', 'yahoofeedseeker', 'yahooseeker', 'yandex', 'yodaobot', 'zealbot', 'zeus', 'zyborg']
-  def is_bot?(user_agent)
-      return false unless user_agent
-      bot = false
-      @@robots.each{|pattern|
-          if(user_agent.match(/#{pattern}/))
-            bot = true
-            break
-          else
-            next
-          end
-      }
-      return bot
-  end
+
+
 
 end # ------------------------------------------ #

@@ -1,8 +1,8 @@
 class Report < ActiveRecord::Base
   belongs_to :user
-  
+
   VALID_CATEGORIES = %w{by_collection}
-  
+
   validates_presence_of :name
   validates_inclusion_of :category, :in => VALID_CATEGORIES
 
@@ -40,18 +40,18 @@ class Report < ActiveRecord::Base
     formats = []
 
     page = 0
-    per_page = 100 
+    per_page = 100
     query_params = {:q => "", :fl => "format, object_display,id,collection_h", :per_page => per_page, :facets => {:fields => ['collection_h']}}
 
     while
-      page_results = Blacklight.solr.find(query_params.merge(:page => page))
-      
+      page_results = blacklight_solr.find(query_params.merge(:page => page))
+
       page_results["response"]["docs"].each do |r|
-        collection_list = collection_list_for_doc(r) 
+        collection_list = collection_list_for_doc(r)
         format = r["format"] || "No format"
         formats << format
         collection_list.each do |coll|
-          collections[coll] ||= {:count => 0} 
+          collections[coll] ||= {:count => 0}
           collections[coll][:count] += 1
 
           collections[coll][format] ||= 0
@@ -59,19 +59,19 @@ class Report < ActiveRecord::Base
 
         end
 
-        
+
       end
       break if page_results["response"]["start"] + per_page >  page_results["response"]["numFound"]
-      
+
       page += 1
 
     end
 
     formats.uniq!.sort!
-  
+
     {"collections" => collections, "formats" => formats}
   end
-  
+
   def self.collection_list_for_doc(doc)
     collections = []
 

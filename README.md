@@ -2,7 +2,7 @@
 
 ## Checking out and working with a local development instance of Academic Commons 2.0
 
-CURRENT RECOMMENDED VERSION OF RUBY: 1.8.7-p334 (currently running 1.9.3p551 on dev vm)
+CURRENT RECOMMENDED VERSION OF RUBY: 1.9.3
 
 1. Clone the repository to a location of your choosing
    ```
@@ -47,6 +47,15 @@ CURRENT RECOMMENDED VERSION OF RUBY: 1.8.7-p334 (currently running 1.9.3p551 on 
 ## Running tests
 1. In order to run tests that require javascript you will need `phantomjs` installed. It can be installed using homebrew or macports.
 2. Run test locally by running `RAILS_ENV=test rake ci`.
+
+
+## Deploying
+1. When deploying a new version of the application to test or prod, make sure to create a new tag by running:
+   ```
+   cap test deploy:auto_tag
+   ```
+   This will create a tag based on the date and version number (listed in `VERSION`).
+
 
 ## Improvements
 ### Making Application Faster
