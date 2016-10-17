@@ -33,6 +33,10 @@ gem 'bootstrap-sass'
 gem 'mail_form'
 gem 'dotenv-rails'
 
+# Using for a smooth transition between rails 3 -> 4.
+# Can be removed once the application is running on rails 4.
+gem 'strong_parameters'
+
 # Locked at jquery-1.7.2; could potentially be updated later.
 gem 'jquery-rails', '2.0.3'
 

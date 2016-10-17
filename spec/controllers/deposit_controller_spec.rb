@@ -78,5 +78,15 @@ RSpec.describe DepositController, :type => :controller do
         end
       end
     end
+
+    it 'creates a deposit record' do
+      expect(Deposit.count).to eq 1
+      expect(Deposit.first.uni).to eq 'xxx123'
+    end
+
+    it 'create a agreement record' do
+      expect(Agreement.count).to eq 1
+      expect(Agreement.first.uni).to eq 'xxx123'
+    end
   end
 end

@@ -44,4 +44,9 @@ class EmailPreferencesController < ApplicationController
     flash[:notice] = "Successfully destroyed email preference."
     redirect_to email_preferences_url
   end
+
+  private
+    def email_preference_params
+      params.require(:email_preference).permit(:author, :monthly_opt_out, :email)
+    end
 end
