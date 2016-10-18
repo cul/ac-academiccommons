@@ -57,7 +57,4 @@ AcademicCommons::Application.configure do
   config.prod_environment = true
 
   config.log_level = :error
-
-  config.threadsafe!
-
 end
