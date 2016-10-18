@@ -27,7 +27,10 @@ gem 'multipart-post', '~>2.0.0'
 gem 'nokogiri', '1.6.0'
 gem 'net-ldap', '0.3.1'
 gem 'net-ssh', '2.9.4'
-gem "oai", '>=0.2.5', :git =>"git@github.com:cul/oai-new-valid.git"
+
+# This gem needs to be a requirement of blacklight_oai_provider
+gem "oai" #, '>=0.2.5', :git =>"git@github.com:cul/oai-new-valid.git"
+
 gem 'unicode'
 gem 'bootstrap-sass'
 gem 'mail_form'
