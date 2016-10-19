@@ -7,7 +7,6 @@ class CatalogController < ApplicationController
   before_filter :record_view_stats, :only => :show
   unloadable
 
-  before_filter :redirect_browse
   before_filter :url_decode_f
 
   helper_method :url_encode_resource, :url_decode_resource
@@ -354,24 +353,12 @@ end
     render :layout => false
   end
 
-  def browse
-    render :layout => "catalog_browse"
-  end
-
   def browse_department
     render :layout => "catalog_browse"
   end
 
   def browse_subject
-    index
-  end
-
-  def redirect_browse
-
-    if(params[:id].to_s == 'browse')
-      redirect_to :action => 'browse', :id => 'subjects'
-    end
-
+    render :layout => "catalog_browse"
   end
 
   def url_decode_f

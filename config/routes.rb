@@ -1,74 +1,19 @@
 AcademicCommons::Application.routes.draw do
+  root :to => "catalog#index"
+
   get "info/about"
+
+  get '/catalog/browse/departments', :to => 'catalog#browse_department', :as => 'departments_browse'
+  get '/catalog/browse/subjects', :to => 'catalog#browse_subject', :as => 'subjects_browse'
+  get '/catalog/browse/departments/:id', :to => 'catalog#browse_department', :as => 'department_browse'
+  get '/catalog/streaming/:id', :to => 'catalog#streaming', :as => 'streaming'
+  get '/catalog/browse' => redirect('/catalog/browse/subjects')
 
   Blacklight.add_routes(self)
 
-  root :to => "catalog#index"
-
-  # The priority is based upon order of creation:
-  # first created -> highest priority.
-
-  # Sample of regular route:
-  #   match 'products/:id' => 'catalog#view'
-  # Keep in mind you can assign values other than :controller and :action
-
-  # Sample of named route:
-  #   match 'products/:id/purchase' => 'catalog#purchase', :as => :purchase
-  # This route can be invoked with purchase_url(:id => product.id)
-
-  # Sample resource route (maps HTTP verbs to controller actions automatically):
-  #   resources :products
-
-  # Sample resource route with options:
-  #   resources :products do
-  #     member do
-  #       get 'short'
-  #       post 'toggle'
-  #     end
-  #
-  #     collection do
-  #       get 'sold'
-  #     end
-  #   end
-
-  # Sample resource route with sub-resources:
-  #   resources :products do
-  #     resources :comments, :sales
-  #     resource :seller
-  #   end
-
-  # Sample resource route with more complex sub-resources
-  #   resources :products do
-  #     resources :comments
-  #     resources :sales do
-  #       get 'recent', :on => :collection
-  #     end
-  #   end
-
-  # Sample resource route within a namespace:
-  #   namespace :admin do
-  #     # Directs /admin/products/* to Admin::ProductsController
-  #     # (app/controllers/admin/products_controller.rb)
-  #     resources :products
-  #   end
-
-  # You can have the root of your site routed with "root"
-  # just remember to delete public/index.html.
-  # root :to => "welcome#index"
-
-  # See how all your routes lay out with "rake routes"
-
-  # This is a legacy wild controller route that's not recommended for RESTful applications.
-  # Note: This route will make all actions in every controller accessible via GET requests.
-  # match ':controller(/:action(/:id(.:format)))'
-
-  # get '/contact', to: 'contact#new', as: 'dmca'
-  # post '/contact', to: 'contact#create', as: 'dmca'
-  # get '/contact', to: 'contact#index', as: 'dmca/received'
-
   # resources :dmcas, path: "dmca"
   get '/copyright_infringement_notice', to: 'dmcas#new', as: 'dmcas'
-  post '/copyright_infringement_notice', to: 'dmcas#create', as: 'dmcas'
+  post '/copyright_infringement_notice', to: 'dmcas#create' #, as: 'dmcas'
   get '/notice_received', to: 'dmcas#index'
 
 
@@ -79,37 +24,58 @@ AcademicCommons::Application.routes.draw do
     :block => /(DC|CONTENT|SOURCE)/,
     :uri => /.+/, :filename => /.+/, :download_method => /(download|show|show_pretty)/
   match '/access_denied', :to => 'application#access_denied', :as => 'access_denied'
-  
-  match '/ingest_monitor/:id', :to => 'ingest_monitor#show', :as => 'ingest_monitor'
-  
-  match '/statistics/search_history', :to => 'statistics#search_history', :as => 'search_statistics'
-  
-  match '/deposit', :to => 'deposit#index', :as => 'deposit'
-  
-  match '/admin', :to => 'admin#index', :as => 'admin'
-  match '/admin/deposits/:id', :to => 'admin#show_deposit', :as => 'show_deposit'
-  match '/admin/deposits/:id/file', :to => 'admin#download_deposit_file', :as => 'download_deposit_file'
-  
-  match ':controller/:action'
-  match ':controller/:action/:id'
-  match ':controller/:action/:id.:format'
-  
-  match '/catalog/browse/departments', :to => 'catalog#browse_department', :as => 'departments_browse'
-  match '/catalog/browse/subjects', :to => 'catalog#browse_subject', :as => 'subjects_browse'
-  match '/catalog/browse/departments/:id', :to => 'catalog#browse_department', :as => 'department_browse'
-  match '/catalog/browse/subjects/:id', :to => 'catalog#browse_subject', :as => 'subject_browse'
-  match '/catalog/streaming/:id', :to => 'catalog#streaming', :as => 'streaming'  
+
+  get '/ingest_monitor/:id', :to => 'ingest_monitor#show', :as => 'ingest_monitor'
+
+  get '/statistics/all_author_monthlies', :to => 'statistics#all_author_monthlies' # post also?
+  get '/statistics/generic_statistics',   :to => 'statistics#generic_statistics'   # post also?
+  get '/statistics/single_pid_stats',     :to => 'statistics#single_pid_stats'
+  get '/statistics/single_pid_count',     :to => 'statistics#single_pid_count'
+  get '/statistics/send_csv_report',      :to => 'statistics#send_csv_report'
+  get '/statistics/school_stats',         :to => 'statistics#school_stats'
+  get '/statistics/stats_by_event',       :to => 'statistics#stats_by_event'
+  get '/statistics/school_docs_size',     :to => 'statistics#school_docs_size'
+  get '/statistics/detail_report',        :to => 'statistics#detail_report' # post also?
+  get '/statistics/facetStatsByEvent',    :to => 'statistics#facetStatsByEvent'
+  get '/statistics/school_statistics',    :to => 'statistics#school_statistics'
+  get '/statistics/docs_size_by_query_facets', :to => 'statistics#docs_size_by_query_facets'
+  get '/statistics/common_statistics_csv', :to => 'statistics#common_statistics_csv'
+  get '/statistics/unsubscribe_monthly',   :to => 'statistics#unsubscribe_monthly'
+
+  match '/deposit/submit', :to => 'deposit#submit', via: [:get, :post]
+  get '/deposit', :to => 'deposit#index', :as => 'deposit'
+  #submit_author_agreement get + post
+  #submit_student_agreement
+
+  get '/admin', :to => 'admin#index', :as => 'admin'
+  get '/admin/deposit', :to => 'admin#deposits'
+  get '/admin/deposits/:id', :to => 'admin#show_deposit', :as => 'show_deposit'
+  get '/admin/deposits/:id/file', :to => 'admin#download_deposit_file', :as => 'download_deposit_file'
+  get '/admin/agreements', :to => 'admin#agreements'
+  get '/admin/student_agreements', :to => 'admin#student_agreements'
+  get '/admin/ingest', :to => 'admin#ingest'
+  get '/admin/edit_alert_message', :to => 'admin#edit_alert_message' # post also?
+
+  get '/emails/get_csv_email_form', :to => 'emails#get_csv_email_form'
+
+  #match ':controller/:action'
+  #match ':controller/:action/:id'
+  #match ':controller/:action/:id.:format'
+
   match '/sitemap.xml', :to => 'sitemap#index', :format => 'xml'
 
-  
-  match '/item/:id', :to => 'catalog#show', :as => 'catalog_item'
-  
+  get '/logs/all_author_monthly_reports_history', :to => 'logs#all_author_monthly_reports_history'
+  get '/logs/log_form', :to => 'logs#log_form'
+  get '/logs/ingest_history', :to => 'logs#ingest_history'
+
+  #match '/item/:id', :to => 'catalog#show', :as => 'catalog_item'
+
   match '/login',          :to => 'user_sessions#new',          :as => 'new_user_session'
   match '/wind_logout',    :to => 'user_sessions#destroy',      :as => 'destroy_user_session'
   # match 'account',        :to => 'application#account',     :as => 'edit_user_registration'
-  
-  
-    match '/about', :to => 'info#about', :as => 'about'
 
- 
+
+  get '/about', :to => 'info#about', :as => 'about'
+
+
 end

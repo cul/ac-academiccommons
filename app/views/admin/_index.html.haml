@@ -4,7 +4,7 @@
 %div{:class => "box home-side"}
 
 
-  %div{:style => ""}  
+  %div{:style => ""}
     = link_to "Edit alert message", :controller => :admin,  :action => "edit_alert_message", :id => ""
   %div{:style => ""}
     = link_to "Self-deposits", :controller => :admin,  :action => "deposits", :id => ""
@@ -34,7 +34,7 @@
     Statistic reports
 
   %div{:style => ""}
-    = link_to "Author Monthly Report", {:controller => :statistics, :action => :author_monthly, :id => ""}
+    = link_to "Detail Report", {:controller => :statistics, :action => :detail_report, :id => ""}
   %div{:style => ""}
     = link_to "All Author Monthlies", {:controller => :statistics, :action => :all_author_monthlies, :id => ""}
   %div{:style => ""}

@@ -9,7 +9,7 @@
 .split_form
 
 
-  = form_tag url_for(:controller => "statistics", :action => "author_monthly") do
+  = form_tag url_for(:controller => "statistics", :action => "detail_report") do
 
     %table
       %tr
@@ -20,10 +20,10 @@
             = text_field_tag :author_id, params[:author_id]
         %td{:width=>"20px"}
           .label by:
-        %td  
+        %td
           .value
             = select_tag :facet, options_for_select(["author_uni", "author_facet","department_facet", "genre_facet", "text", "search"], params[:facet])
-            
+
       %tr
         %td
           .label Report from:
@@ -47,7 +47,7 @@
 
     .value
       = submit_tag "View"
-      
+
     %br
 
 
@@ -63,8 +63,8 @@
           %th{:style=>"width: 70px;"} Downloads
 
         %tr
-          %td 
-          %td 
+          %td
+          %td
             %b Total for #{params[:month]} #{params[:year]}
           %td= @totals["View"] || 0
           %td= @totals["Streaming"] || 0
@@ -86,20 +86,18 @@
           %td{:style=>"width: 100px"}
             .label Email Template:
             .value
-              = select_tag :email_template,  options_for_select(["Normal", "Initial"], params[:email_template] || "Normal"), :style=>"width: 90px" 
+              = select_tag :email_template,  options_for_select(["Normal", "Initial"], params[:email_template] || "Normal"), :style=>"width: 90px"
             %td
               .label Email to:
               .value
                 = text_field_tag :email_destination, params[:email_destination], :size => 40
                 = submit_tag "Email"
 
-      .value 
-        = submit_tag "Download CSV report" 
+      .value
+        = submit_tag "Download CSV report"
         &nbsp;&nbsp;
         = check_box_tag :recent_first, "true", params[:recent_first]
         Recent months first
 
 
       = render :partial => "/debug_deliveries"
-      
-      

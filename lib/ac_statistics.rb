@@ -21,6 +21,13 @@ module ACStatistics
 
   private
 
+  # Copied from Catalog Helper.
+  # TODO: Needs to be in a more centralized place.
+  def get_count(query_params)
+    results = blacklight_solr.find(query_params)
+    return results["response"]["numFound"]
+  end
+
   def facet_names
     return FACET_NAMES
   end

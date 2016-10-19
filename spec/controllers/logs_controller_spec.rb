@@ -1,32 +1,23 @@
 require 'rails_helper'
 
 describe LogsController, :type => :controller do
-  before do
-    @non_admin = double(User)
-    allow(@non_admin).to receive(:admin).and_return(false)
+  describe 'GET ingest_history' do
+    include_examples 'authorization required' do
+      let(:request) { get :ingest_history }
+    end
   end
-  [:ingest_history, :all_author_monthly_reports_history, :log_form].each do |action|
-    describe action.to_s do # rspec wants a String here
-      context "without being logged in" do
-        before do
-          allow(controller).to receive(:current_user).and_return(nil)
-        end
-        it "redirects to new_user_session_path" do
-          get action
-          expect(response.status).to eql(302)
-          expect(response.headers['Location']).to eql(new_user_session_url)
-        end
-      end
-      context "logged in as a non-admin user" do
-        before do
-          allow(controller).to receive(:current_user).and_return(@non_admin)
-        end
-        it "fails" do
-          get action
-          expect(response.status).to eql(302)
-          expect(response.headers['Location']).to eql(access_denied_url)
-        end
-      end
+
+  describe 'GET all_author_monthly_reports_history' do
+    include_examples 'authorization required' do
+      let(:request) { get :all_author_monthly_reports_history}
+    end
+  end
+
+  describe 'GET log_form' do
+    include_context 'log'
+
+    include_examples 'authorization required' do
+      let(:request) { get :log_form, :log_id => id, :log_folder => 'ac-indexing' }
     end
   end
 end
