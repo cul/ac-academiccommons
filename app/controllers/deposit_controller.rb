@@ -1,4 +1,6 @@
 class DepositController < ApplicationController
+  include Blacklight::SolrHelper
+  
   SELF_DEPOSIT_DIR = "data/self-deposit-uploads"
 
   def submit
