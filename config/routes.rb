@@ -47,8 +47,9 @@ AcademicCommons::Application.routes.draw do
 
   match '/deposit/submit', :to => 'deposit#submit', via: [:get, :post]
   get '/deposit', :to => 'deposit#index', :as => 'deposit'
-  #submit_author_agreement get + post
-  #submit_student_agreement
+  match '/deposit/submit_author_agreement', :to => 'deposit#submit_author_agreement', via: [:get, :post]
+  get '/deposit/agreement_only'
+  # submit_student_agreement, not in use
 
   get '/admin', :to => 'admin#index', :as => 'admin'
   get '/admin/deposit', :to => 'admin#deposits'
