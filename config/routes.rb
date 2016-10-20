@@ -54,7 +54,7 @@ AcademicCommons::Application.routes.draw do
   get '/admin/agreements', :to => 'admin#agreements'
   get '/admin/student_agreements', :to => 'admin#student_agreements'
   get '/admin/ingest', :to => 'admin#ingest'
-  get '/admin/edit_alert_message', :to => 'admin#edit_alert_message' # post also?
+  match '/admin/edit_alert_message', :to => 'admin#edit_alert_message', via: [:get, :post]
 
   get '/emails/get_csv_email_form', :to => 'emails#get_csv_email_form'
 
