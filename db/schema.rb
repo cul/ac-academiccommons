@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20141106195937) do
+ActiveRecord::Schema.define(:version => 20161011135848) do
 
   create_table "agreements", :force => true do |t|
     t.string   "uni"
@@ -43,7 +43,7 @@ ActiveRecord::Schema.define(:version => 20141106195937) do
 
   create_table "deposits", :force => true do |t|
     t.string   "agreement_version",                    :null => false
-    t.string   "uni",                                  :null => false
+    t.string   "uni"
     t.string   "name",                                 :null => false
     t.string   "email",                                :null => false
     t.string   "file_path",                            :null => false

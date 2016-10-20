@@ -124,6 +124,7 @@ GEM
       nokogiri
       rsolr (>= 0.12.1)
       rsolr-ext (>= 0.12.1)
+    database_cleaner (1.5.3)
     deprecation (0.2.2)
       activesupport
     diff-lcs (1.2.5)
@@ -301,6 +302,7 @@ DEPENDENCIES
   coffee-rails (~> 3.2.2)
   compass
   cul-fedora (~> 1.0.3)
+  database_cleaner
   dotenv-rails
   fancybox2-rails
   font-awesome-rails

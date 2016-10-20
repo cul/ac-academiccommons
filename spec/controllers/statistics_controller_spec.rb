@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe StatisticsController, :type => :controller do
   let(:pid) { 'actest:1' }
