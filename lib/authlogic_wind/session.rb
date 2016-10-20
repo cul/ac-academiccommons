@@ -6,7 +6,7 @@ module AuthlogicWind
         include Methods
       end
     end
-    
+
     module Config
       # The host of your WIND server.
       #
@@ -25,33 +25,33 @@ module AuthlogicWind
         rw_config(:wind_service, value)
       end
       alias_method :wind_service=, :wind_service
-      
-   
+
+
       def find_by_wind_method(value = nil)
         rw_config(:find_by_wind_method, value, :find_by_wind_login)
       end
       alias_method :find_by_wind_method=, :find_by_wind_method
-   
-      
+
+
       # Add this in your Session object to Auto Register a new user using openid via sreg
       def auto_register(value=nil)
         rw_config(:auto_register,value,false)
       end
-      
+
       alias_method :auto_register=,:auto_register
-      
+
       # Add this in your Session object to Auto Register a new user using openid via sreg
       def login_only_with_wind(value=nil)
         rw_config(:login_only_with_wind,value,false)
       end
-      
+
       alias_method :login_only_with_wind=,:login_only_with_wind
 
 
 
     end
-    
-    
+
+
     module Methods
       def self.included(klass)
         klass.class_eval do
@@ -65,18 +65,19 @@ module AuthlogicWind
         hash = values.first.is_a?(Hash) ? values.first.with_indifferent_access : nil
         self.record = hash[:priority_record] if !hash.nil? && hash.key?(:priority_record)
       end
-      
+
       def save(&block)
         block = nil if redirecting_to_wind_server?
         super(&block)
       end
-      
+
       #TODO: why is this so hacky?
       def build_callback_url
-        wind_controller.url_for(:controller => wind_controller.controller_name) + "/create"
+        #wind_controller.url_for(:controller => wind_controller.controller_name) + "/create"
+        "#{wind_controller.root_url}#{wind_controller.controller_name}/create"
       end
-      
-      
+
+
       private
         def authenticating_with_wind?
           # Initial request when user presses one of the button helpers
@@ -84,13 +85,13 @@ module AuthlogicWind
           # When the oauth provider responds and we made the initial request
           (wind_response && controller.session && controller.session[:wind_request_class] == self.class.name)
         end
-        
+
         def using_wind?
           respond_to(:wind_login) && !wind_login.blank?
         end
-      
+
         def authenticate_with_wind
-          
+
           if @record
             self.attempted_record = record
 
@@ -101,7 +102,7 @@ module AuthlogicWind
           else
             uni = generate_verified_login
             if uni
-              self.attempted_record = search_for_record(find_by_wind_method, uni) 
+              self.attempted_record = search_for_record(find_by_wind_method, uni)
               if !attempted_record
                 if auto_register?
                   self.attempted_record = klass.new(:login => uni, :wind_login => uni)
@@ -112,15 +113,15 @@ module AuthlogicWind
               end
             else
 		errors[:base] << "WIND Ticket did not verify properly."
-            end  
+            end
           end
-          
+
         end
-        
+
         def wind_host
           self.class.wind_host
         end
-        
+
         def wind_service
           self.class.wind_service
         end
@@ -132,12 +133,12 @@ module AuthlogicWind
         def auto_register?
           self.class.auto_register == true
         end
-        
+
         def login_only_with_wind?
           self.class.login_only_with_wind == true
         end
- 
-        
+
+
         def validate_by_wind
           validate_email_field = false
           if wind_response.blank?
@@ -160,7 +161,7 @@ module AuthlogicWind
 
           # Tell our rack callback filter what method the current request is using
           wind_controller.session[:wind_callback_method]      = wind_controller.request.method
-          
+
           wind_controller.redirect_to "https://#{wind_host}/login?destination=#{CGI.escapeHTML(build_callback_url)}&service=#{CGI.escapeHTML(wind_service)}"
         end
 
@@ -203,7 +204,7 @@ module AuthlogicWind
 
 
     end
-  
+
   end
-  
+
 end
