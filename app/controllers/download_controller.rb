@@ -56,6 +56,11 @@ class DownloadController < ApplicationController
   end
 
 
+#downloading of files is handed off to nginx to improve performance.
+#uses the x-accel-redirect header in combination with nginx config location
+#syntax ’repository_download’ to have nginx proxy the download.
+#see http://kovyrin.net/2010/07/24/nginx-fu-x-accel-redirect-remote/
+
   def x_accel_url(url, file_name = nil)
     uri = "/repository_download/#{url.gsub('https://', '')}"
     uri << "?#{file_name}" if file_name
