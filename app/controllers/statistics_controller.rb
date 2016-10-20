@@ -120,11 +120,6 @@ class StatisticsController < ApplicationController
 
   end # ========== all_author_monthlies ===================== #
 
- # def author_monthly
- #   statistical_reporting
- #   render :template => 'statistics/statistical_reporting'
- # end
-
  def detail_report
 
       setDefaultParams(params)
