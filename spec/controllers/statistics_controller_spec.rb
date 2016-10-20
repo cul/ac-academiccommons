@@ -6,6 +6,10 @@ describe StatisticsController, :type => :controller do
   #:statistical_reporting #require admin
 
   describe 'GET all_author_monthlies' do
+    before do
+      allow(EmailPreference).to receive(:find).and_return([])
+    end
+
     include_examples 'authorization required' do
       let(:request) { get :all_author_monthlies }
     end
@@ -91,7 +95,7 @@ describe StatisticsController, :type => :controller do
 
   describe 'GET common_statistics_csv' do
     include_examples 'authorization required' do
-      let(:request) { get :common_statistics_csv }
+      let(:request) { get :common_statistics_csv, :f => {"author_facet"=>["Carroll, Lewis"]} }
     end
   end
 
@@ -110,7 +114,7 @@ describe StatisticsController, :type => :controller do
   describe 'GET send_csv_report' do
     include_examples 'authorization required' do
       let(:request) {
-        get :send_csv_report, :f => {"author_facet"=>["Carroll, Lewis."]},
+        get :send_csv_report, :f => {"author_facet"=>["Carroll, Lewis"]},
             :email_to => 'example@example.com', :email_from => 'me@example.com'
       }
     end
@@ -137,7 +141,7 @@ describe StatisticsController, :type => :controller do
       before do
         allow(controller).to receive(:current_user).and_return(nil)
       end
-      
+
       it "redirects to new_user_session_path" do
         get :unsubscribe_monthly
         expect(response.status).to eql(302)
@@ -146,11 +150,6 @@ describe StatisticsController, :type => :controller do
     end
     context "logged in as a non-admin user" do
       include_context 'mock non-admin user'
-
-      before do
-        allow(controller).to receive(:current_user).and_return(@non_admin)
-        allow(controller).to receive(:statistical_reporting)
-      end
 
       it "succeeds" do
         get :unsubscribe_monthly
