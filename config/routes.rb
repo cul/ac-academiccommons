@@ -9,7 +9,7 @@ AcademicCommons::Application.routes.draw do
   get '/catalog/streaming/:id', :to => 'catalog#streaming', :as => 'streaming'
   get '/catalog/browse' => redirect('/catalog/browse/subjects')
 
-  Blacklight.add_routes(self)
+  blacklight_for :catalog
 
   # resources :dmcas, path: "dmca"
   get '/copyright_infringement_notice', to: 'dmcas#new', as: 'dmcas'
