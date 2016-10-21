@@ -26,4 +26,7 @@ AcademicCommons::Application.configure do
 
   # Expands the lines which load the assets
   config.assets.debug = true
+
+  # Do not eager load code on boot.
+  config.eager_load = false
 end
