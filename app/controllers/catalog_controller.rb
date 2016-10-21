@@ -21,9 +21,8 @@ configure_blacklight do |config|
   }
 
   # solr field configuration for search results/index views
-    config.show.html_title = "title_display"
-    config.show.heading = "title_display"
-    config.show.display_type = "format"
+    config.show.title_field = "title_display"
+    config.show.display_type_field = "format"
     config.show.genre = "genre_facet"
     config.show.author = "author_display"
 
@@ -40,9 +39,9 @@ configure_blacklight do |config|
 
 
   # solr field configuration for search results/index views
-  config.index.show_link = 'title_display'
+  config.index.title_field = 'title_display'
   config.index.num_per_page = 10
-  config.index.record_display_type = 'format'
+  config.index.display_type_field = 'format'
 
 
     # solr fields that will be treated as facets by the blacklight application
