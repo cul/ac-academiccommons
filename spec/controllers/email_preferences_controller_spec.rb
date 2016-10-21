@@ -22,10 +22,45 @@ describe EmailPreferencesController, :type => :controller do
   end
 
   describe 'POST create' do
-    include_examples 'authorization required' do
-      let(:request) {
-        post :create, email_preference: { author: 'John Doe', monthly_opt_out: true, email: 'john.doe@example.com' }
-      }
+    let(:request) {
+      post :create, email_preference: { author: 'John Doe', monthly_opt_out: true, email: 'john.doe@example.com' }
+    }
+
+    context "without being logged in" do
+      before do
+        allow(controller).to receive(:current_user).and_return(nil)
+        request
+      end
+
+      it "redirects to new_user_session_path" do
+        expect(response.status).to eql(302)
+        expect(response.headers['Location']).to eql(new_user_session_url)
+      end
+    end
+
+    context "logged in as a non-admin user" do
+      include_context 'mock non-admin user'
+
+      before do
+        request
+      end
+
+      it "fails" do
+        expect(response.status).to eql(302)
+        expect(response.headers['Location']).to eql(access_denied_url)
+      end
+    end
+
+    context "logged in as an admin user" do
+      include_context 'mock admin user'
+
+      before do
+        request
+      end
+
+      it "succeeds" do
+        expect(response).to redirect_to email_preference_url(EmailPreference.first.id)
+      end
     end
   end
 
@@ -36,14 +71,84 @@ describe EmailPreferencesController, :type => :controller do
   end
 
   describe 'PUT update' do
-    include_examples 'authorization required' do
-      let(:request) { put :update, id: deposit.id }
+    let(:request) { put :update, id: deposit.id }
+
+    context "without being logged in" do
+      before do
+        allow(controller).to receive(:current_user).and_return(nil)
+        request
+      end
+
+      it "redirects to new_user_session_path" do
+        expect(response.status).to eql(302)
+        expect(response.headers['Location']).to eql(new_user_session_url)
+      end
+    end
+
+    context "logged in as a non-admin user" do
+      include_context 'mock non-admin user'
+
+      before do
+        request
+      end
+
+      it "fails" do
+        expect(response.status).to eql(302)
+        expect(response.headers['Location']).to eql(access_denied_url)
+      end
+    end
+
+    context "logged in as an admin user" do
+      include_context 'mock admin user'
+
+      before do
+        request
+      end
+
+      it "succeeds" do
+        expect(response).to redirect_to email_preference_url(deposit.id)
+      end
     end
   end
 
   describe 'DELETE destroy' do
-    include_examples 'authorization required' do
-      let(:request) { delete :destroy, id: deposit.id }
+    let(:request) { delete :destroy, id: deposit.id }
+
+    context "without being logged in" do
+      before do
+        allow(controller).to receive(:current_user).and_return(nil)
+        request
+      end
+
+      it "redirects to new_user_session_path" do
+        expect(response.status).to eql(302)
+        expect(response.headers['Location']).to eql(new_user_session_url)
+      end
+    end
+
+    context "logged in as a non-admin user" do
+      include_context 'mock non-admin user'
+
+      before do
+        request
+      end
+
+      it "fails" do
+        expect(response.status).to eql(302)
+        expect(response.headers['Location']).to eql(access_denied_url)
+      end
+    end
+
+    context "logged in as an admin user" do
+      include_context 'mock admin user'
+
+      before do
+        request
+      end
+
+      it "succeeds" do # Redirects to index page on success.
+        expect(response).to redirect_to email_preferences_url
+      end
     end
   end
 end
