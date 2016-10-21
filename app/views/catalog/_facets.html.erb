@@ -1,35 +1,35 @@
 <% # main container for facets/limits menu -%>
 <div id="facets" class="facets left-column">
    <% facet_field_names.each do |solr_fname| %>
-   
+
       <% display_facet = @response.facets.detect {|f| f.name == solr_fname} -%>
       <% if display_facet &&  display_facet.items.length > 0 %>
        <div>
-        <h3 class="toggle"><%= facet_field_labels[solr_fname] -%></h3>
+        <h3 class="toggle"><%= facet_field_label(solr_fname) -%></h3>
         <ul>
           <% paginator =
-              Blacklight::Solr::FacetPaginator.new(display_facet.items,        
+              Blacklight::Solr::FacetPaginator.new(display_facet.items,
                 :limit => facet_limit_for(solr_fname))
           %>
           <% paginator.items.each do |item| -%>
-          
+
             <% if facet_in_params?( solr_fname, item.value ) %>
-              <li class="facet_selected">              
-                <%= render_selected_facet_value(solr_fname, item) %>              
+              <li class="facet_selected">
+                <%= render_selected_facet_value(solr_fname, item) %>
               <% else %>
-              <li class="facet_unselected">              
-                <%= render_facet_value(solr_fname, item) %>              
+              <li class="facet_unselected">
+                <%= render_facet_value(solr_fname, item) %>
             <% end -%>
             </li>
           <% end %>
-          
+
           <% if(paginator.has_next?)  %>
             <li class="more_facets_link"><%= link_to('more »', params.merge(:id => solr_fname, :action=>"facet"), :class => "more_facets_link") %></li>
           <% end %>
-          
+
         </ul>
        </div>
       <% end %>
-   
+
   <% end %>
 </div>
