@@ -4,8 +4,7 @@ gem 'rails', '3.2.13'
 
 # Hydra-Related Gems
 gem 'blacklight', '~> 4.0'
-gem "rsolr",  :git =>"git@github.com:cul/rsolr.git"
-
+gem 'active-fedora', '~>8.2'
 gem 'blacklight_oai_provider', '>=0.2.4', :git =>"git@github.com:cul/blacklight_oai_provider.git"
 gem 'rake', '~> 10.0.0'
 gem 'rack', '1.4.5'
