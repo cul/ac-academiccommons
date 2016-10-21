@@ -336,6 +336,11 @@ module Cul
         #Net::HTTP.get_response(URI(change_resourse_state_url))
       end
 
+      def descMetadata_content
+        meta = describedBy.first
+        meta ? meta.datastream("CONTENT") : datastream("descMetadata")
+      end
+
       def index_for_ac2(options = {})
         #do_fulltext = options[:fulltext] || false
         do_fulltext = false
@@ -364,9 +369,8 @@ module Cul
 
         begin
           collections = self.belongsTo
-          meta = describedBy.first
-
-          meta = Nokogiri::XML(meta.datastream("CONTENT")) if meta
+          meta = descMetadata_content if do_metadata
+          meta = Nokogiri::XML(meta) if meta
           mods = meta.at_css("mods") if meta
 
           if mods && do_metadata

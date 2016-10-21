@@ -36,4 +36,67 @@ RSpec.describe Cul::Fedora::Item do
       end
     end
   end
+  describe "#descMetadata_content" do
+    let(:item) do
+      item = Cul::Fedora::Item.new(server: fedora_config, pid: "actest:1")
+    end
+    context "MODSMetadata" do
+      let(:metadata) do
+        meta = Cul::Fedora::Item.new(server: fedora_config, pid: "actest:3")
+      end
+      before do
+        allow(item).to receive(:describedBy).and_return([metadata])
+      end
+      it do
+        expect(metadata).to receive(:datastream).with("CONTENT").and_return("")
+        item.descMetadata_content
+      end
+    end
+    context "descMetadata" do
+      before do
+        allow(item).to receive(:describedBy).and_return([])
+      end
+      it do
+        expect(item).to receive(:datastream).with("descMetadata").and_return("")
+        item.descMetadata_content
+      end
+    end
+  end
+  describe "#index_for_ac2" do
+    let(:item) do
+      item = Cul::Fedora::Item.new(server: fedora_config, pid: "actest:1")
+      allow(item).to receive(:belongsTo).and_return(['collection:3'])
+      item
+    end
+    let(:mods_fixture) { File.read('spec/fixtures/actest_3/mods.xml') }
+    let(:expected_json) { JSON.load File.read('spec/fixtures/actest_1/to_solr.json') }
+    context "MODSMetadata" do
+      let(:metadata) do
+        meta = Cul::Fedora::Item.new(server: fedora_config, pid: "actest:3")
+        allow(meta).to receive(:datastream).with("CONTENT").and_return mods_fixture
+        meta
+      end
+      let(:options) { {} }
+      before do
+        allow(item).to receive(:describedBy).and_return([metadata])
+      end
+      subject { item.index_for_ac2(options) }
+      it do
+        expect(subject[:status]).to eql(:success)
+        expect(subject[:results]).to eql(expected_json)
+      end
+    end
+    context "descMetadata" do
+      let(:options) { {} }
+      before do
+        allow(item).to receive(:describedBy).and_return([])
+        allow(item).to receive(:datastream).with("descMetadata").and_return mods_fixture
+      end
+      subject { item.index_for_ac2(options) }
+      it do
+        expect(subject[:status]).to eql(:success)
+        expect(subject[:results]).to eql(expected_json)
+      end
+    end
+  end
 end
