@@ -2,20 +2,20 @@
 <% render :nothing => true %>
 
 <%else-%>
- 
+
 <%localized_params = params %>
-   
+
 <%=link_to "Start Search Over".html_safe, catalog_index_path, :id=>"startOverLink" %>
 
 <% if current_user %>
-	<%=link_to "Get Usage Stats".html_safe, relative_root + "/statistics/usage_reports?commit=Get Usage Stats&facet=search_query&search_criteria=" + CGI::escape(request.fullpath), :id=>"startOverLink" %>
+	<%=link_to "Get Usage Stats".html_safe, relative_root + "/statistics/detail_report?commit=Get Usage Stats&facet=search_query&search_criteria=" + CGI::escape(request.fullpath), :id=>"startOverLink" %>
 <% end %>
 
 
 <%- params[:sort]="record_creation_date desc" -%>
 
  <%= render :partial=>'/catalog/search_box' %>
- 
+
 
 <h2>Active Search Criteria:
 
@@ -33,11 +33,11 @@
 <%- else%>
 <li class="appliedFilter empty query">All Content</li>
 <%- end -%>
-          
+
  </ul>
- 
+
  <br style="clear:both">
-    
+
  <ul class="breadcrumb facet">
     <h3>Limited to:</h3>
 <%- if !localized_params[:f].to_s.empty? -%>
@@ -50,7 +50,7 @@
 
 </ul>
   <%- end -%>
- 
+
       <%- else -%>
         <ul class="breadcrumb facet">
           <li class="appliedFilter empty query">
@@ -64,6 +64,6 @@
 <%= link_to image_tag("rss.gif", :border=>0, :id=>"rssLink"), params.merge(:format => :rss), :class => "feed_link" %>
 
      </div>
-      
+
 
 <% end -%>

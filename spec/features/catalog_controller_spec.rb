@@ -164,4 +164,14 @@ describe CatalogController, :type => [:controller, :feature] do
       expect(page).to have_content "Alice's Adventures in Wonderland"
     end
   end
+
+  describe "browse" do
+    before do
+      visit '/catalog/browse'
+    end
+
+    it 'redirects to subject browse' do
+      expect(current_path).to eq '/catalog/browse/subjects'
+    end
+  end
 end

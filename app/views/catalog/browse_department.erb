@@ -1,2 +1,8 @@
-<% @page_title = "Browse Department - #{params[:id]} - #{application_name}" %>
-<%= render :partial=>'department_facet_list' %>
+
+<% if params[:id] %>
+  <% @page_title = "Browse Department - #{params[:id]} - #{application_name}" %>
+  <%= render :partial => 'department_facet_list' %>
+<% else %>
+  <% @page_title = "Browse Departments - #{application_name}" %>
+  <%= render :partial => 'departments_list' %>
+<% end %>

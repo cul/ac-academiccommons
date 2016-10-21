@@ -48,8 +48,8 @@
 
 <div  class="container" id="header">
 
-  <header> <h1 class="site_title"><%= link_to application_name, root_path %><%= (params[:controller] == "catalog" and !params[:id]) ? "<span id='results_text'>Search Results</span>".html_safe : "" %></h1>
-
+  <header>
+    <h1 class="site_title"><%= link_to application_name, root_path %></h1>
   </header>
 </div>
 <div class="container clearfix" id="main" >

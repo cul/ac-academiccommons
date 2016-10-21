@@ -5,15 +5,15 @@ class EmailPreferencesController < ApplicationController
   def index
     @email_preferences = EmailPreference.all
   end
-  
+
   def show
     @email_preference = EmailPreference.find(params[:id])
   end
-  
+
   def new
     @email_preference = EmailPreference.new
   end
-  
+
   def create
     @email_preference = EmailPreference.new(params[:email_preference])
     if @email_preference.save
@@ -23,11 +23,11 @@ class EmailPreferencesController < ApplicationController
       render :action => 'new'
     end
   end
-  
+
   def edit
     @email_preference = EmailPreference.find(params[:id])
   end
-  
+
   def update
     @email_preference = EmailPreference.find(params[:id])
     if @email_preference.update_attributes(params[:email_preference])
@@ -37,7 +37,7 @@ class EmailPreferencesController < ApplicationController
       render :action => 'edit'
     end
   end
-  
+
   def destroy
     @email_preference = EmailPreference.find(params[:id])
     @email_preference.destroy

@@ -1,7 +1,7 @@
 <% params[:id] = url_decode_resource(params[:id]) %>
 
 <h1 class="content-title">
-	Browsing: <%=  link_to('Departments',catalog_index_path()+'/browse/departments/')%> &raquo; <%= link_to(params[:id], catalog_index_path()+'/browse/departments/'+params[:id]) %>
+	Browsing: <%=  link_to('Departments', departments_browse_path) %> &raquo; <%= link_to(params[:id], department_browse_path(params[:id])) %>
 	<br><%= link_to image_tag("rss.gif", :border=>0, :id=>"rssLink"), root_path + 'catalog.rss/?f[department_facet][]=' + url_encode_resource(params[:id])%>
 </h1>
 
@@ -21,42 +21,42 @@ subject_facets = department_facet_list['subject_facet']
    <div class='span-7 browse-list'>
    <h3>Authors</h3>
     <ul>
- 
+
 
 <% author_facets.each do |v| %>
 <li>
-    
-<%=    
- 
+
+<%=
+
  puts params[:id].inspect
    puts v[:name].inspect
 
-link_to(v[:name],   relative_root+'/?f[department_facet][]=' + url_encode_resource(params[:id]) + '&f[author_facet][]=' + url_encode_resource(v[:name]), :class=>"broswe_select")%>  <span class='item_count'> ( <%= format_num(v[:count]) %> )</span>  
-	       
+link_to(v[:name],   relative_root+'/?f[department_facet][]=' + url_encode_resource(params[:id]) + '&f[author_facet][]=' + url_encode_resource(v[:name]), :class=>"broswe_select")%>  <span class='item_count'> ( <%= format_num(v[:count]) %> )</span>
+
   </li>
-  
+
    <% end %>
   </ul>
   </div>
      <div class='span-7 browse-list'>
- 
+
  <h3>Content Type</h3>
- 
+
   <ul >
   <% genre_facets.each do |v| %>
   <li>
-  
-  
-    
-<%=    
- 
-link_to(v[:name],    relative_root+'/?f[department_facet][]=' + url_encode_resource(params[:id]) + '&f[genre_facet][]=' + url_encode_resource(v[:name]), :class=>"broswe_select")%> <span class='item_count'> ( <%= format_num(v[:count])%>)</span> 
- 
+
+
+
+<%=
+
+link_to(v[:name],    relative_root+'/?f[department_facet][]=' + url_encode_resource(params[:id]) + '&f[genre_facet][]=' + url_encode_resource(v[:name]), :class=>"broswe_select")%> <span class='item_count'> ( <%= format_num(v[:count])%>)</span>
+
   </li>
-  
+
    <% end %>
   </ul>
-  
+
   </div>
       <div class='span-7 browse-list'>
        <h3>Subjects</h3>
@@ -64,24 +64,20 @@ link_to(v[:name],    relative_root+'/?f[department_facet][]=' + url_encode_resou
 
   <% subject_facets.each do |v| %>
   <li>
-  
-  
-    
-<%=    
- 
-link_to(v[:name],   relative_root + '/?f[department_facet][]=' + url_encode_resource(params[:id]) + '&f[subject_facet][]=' + url_encode_resource(v[:name]), :class=>"broswe_select")%> <span class='item_count'> (<%= format_num(v[:count]) %> )</span> 
- 
+
+
+
+<%=
+
+link_to(v[:name],   relative_root + '/?f[department_facet][]=' + url_encode_resource(params[:id]) + '&f[subject_facet][]=' + url_encode_resource(v[:name]), :class=>"broswe_select")%> <span class='item_count'> (<%= format_num(v[:count]) %> )</span>
+
   </li>
-  
+
    <% end %>
   </ul>
-  
+
   </div>
-  
- 
+
+
 
 </div>
- 
-  
- 
- 

@@ -1,11 +1,11 @@
 <ul id="recently-updated">
-  
+
   <div class="home-recent first">New in Academic Commons:</div>
-  
+
   <% build_recent_updated_list.each do |recent_item| %>
-  
+
     <li class="home-recent">
-      <%= link_to recent_item[:title_display], :controller=>"catalog", :action=>recent_item[:id] %>
+      <%= link_to recent_item[:title_display], catalog_path(recent_item[:id]) %>
       <p class="caption">
         <% num_authors = 0 %>
         <% recent_item[:author_facet].each do |author| %>
@@ -17,7 +17,7 @@
         <% end %>
      </p>
     </li>
-    
+
   <% end %>
-  
+
 </ul>

@@ -1,4 +1,6 @@
 class DepositController < ApplicationController
+  include Blacklight::SolrHelper
+
   SELF_DEPOSIT_DIR = "data/self-deposit-uploads"
 
   def submit
@@ -67,6 +69,7 @@ class DepositController < ApplicationController
   end
 
 
+  # currently does not work and is not used.
   def submit_student_agreement
 
     if(params[:acceptedAgreement].empty?)

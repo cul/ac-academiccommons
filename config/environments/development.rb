@@ -32,8 +32,8 @@ AcademicCommons::Application.configure do
   # Expands the lines which load the assets
   config.assets.debug = true
 
-  config.gem 'blacklight_oai_provider'
-  config.gem 'oai'
+  #config.gem 'blacklight_oai_provider'
+  #config.gem 'oai'
 
   config.threadsafe!
 end
