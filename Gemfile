@@ -3,16 +3,12 @@ source 'https://rubygems.org'
 gem 'rails', '4.2.7.1'
 
 # Hydra-Related Gems
-gem 'blacklight', '~> 5.0'
-gem "rsolr",  :git =>"git@github.com:cul/rsolr.git"
+gem 'blacklight', '~> 5.19.0'
+gem "rsolr" #,  :git =>"git@github.com:cul/rsolr.git"
 
 gem 'blacklight_oai_provider', '>=0.2.4', :git =>"git@github.com:cul/blacklight_oai_provider.git"
 gem 'rake', '~> 10.0.0'
-#gem 'rack', '1.4.5'
 gem 'sqlite3', '>= 1.3.5'
-#gem 'actionpack', '3.2.13'
-#gem 'railties', '3.2.13'
-gem 'kaminari', '0.13.0'
 gem 'rinku', '~> 1.3.0', :require => 'rails_rinku'
 gem 'authlogic'
 gem 'authlogic_wind'
@@ -49,24 +45,8 @@ gem 'sass-rails' #, " ~> 3.2.4"
 #gem 'coffee-rails' #, " ~> 3.2.2"
 gem 'uglifier'
 
-gem "mime-types", "2.99.3" # Locked until we upgrade to ruby >= 2.0
-gem "autoprefixer-rails", "~> 5.0" # Locked at previous version until we upgrade to ruby >= 2.0
-gem "deprecation", "~> 0.2.0" # Locked at previous version until we upgrade to ruby >= 2.1
-
-# Use unicorn as the web server
-# gem 'unicorn'
-
-# To use debugger (ruby-debug for Ruby 1.8.7+, ruby-debug19 for Ruby 1.9.2+)
-# gem 'ruby-debug'
-# gem 'ruby-debug19', :require => 'ruby-debug'
-
-# Bundle the extra gems:
-# gem 'bj'
-# gem 'nokogiri'
 gem 'sqlite3-ruby', :require => 'sqlite3'
 gem 'mysql', '>= 2.8.1'
-
-# gem 'aws-s3', :require => 'aws/s3'
 
 # Bundle gems for the local environment. Make sure to
 # put test-only gems in this group so their generators
