@@ -196,6 +196,11 @@
     
     <dynamicField name="*_unstem_search" type="textNoStem" indexed="true" stored="false" multiValued="true" /> 
     <dynamicField name="*spell" type="textSpell" indexed="true" stored="false" multiValued="true"/>
+    <!-- Hydra/ActiveFedora dynamic field definitions -->
+    <dynamicField name="*_dtsi" type="date"    indexed="true"  stored="true" multiValued="false" />
+    <dynamicField name="*_ssi"  type="string"  indexed="true"  stored="true" multiValued="false"/>
+    <dynamicField name="*_ssim"  type="string"  indexed="true"  stored="true" multiValued="true"/>
+    <dynamicField name="*_ssm"  type="string"  indexed="false"  stored="true" multiValued="true"/>
     
   </fields>
 

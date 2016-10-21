@@ -69,7 +69,7 @@ module Cul
         request(:request => name.to_s.upcase)
       end
 
-      def listMembers()
+      def listMembers(pids_only=false)
         begin
           i = 1
           size = getSize
@@ -79,7 +79,8 @@ module Cul
             result = Nokogiri::XML(@server.request(:method => "", :request => "risearch", :format => "sparql", :lang => "itql", :query => riquery))
 
             result.css("sparql>results>result>member").collect do |result_node|
-              items << @server.item(result_node.attributes["uri"].value)
+              pids = result_node.attributes["uri"].value.split('/').last
+              items << pids_only ? pid : @server.item(pid)
             end
             i = i + MAX_LIST_MEMBERS_PER_REQUEST
           end

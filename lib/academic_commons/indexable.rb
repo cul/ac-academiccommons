@@ -26,7 +26,8 @@ module AcademicCommons
       departments = []
       originator_department = ""
       # baseline blacklight fields: id is the unique identifier, format determines by default, what partials get called
-      add_field.call("id", self.pid)
+      #TODO: Make sure access is indifferent
+      add_field.call("id", self.pid) unless (solr_doc["id"] || solr_doc[:id])
       add_field.call("internal_h",  collections.first.to_s + "/")
       add_field.call("pid", self.pid)
       collections.each do |collection|

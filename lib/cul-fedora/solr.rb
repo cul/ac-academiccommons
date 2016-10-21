@@ -61,17 +61,17 @@ module Cul
         logger.info "Identifying items removed from Fedora..."
         while(!results["response"]["docs"].empty?)
           
-          logger.info("Checking Solr index from " + start.to_s + " to " + (start + rows).to_s + "...")
+          logger.info("Checking Solr index from #{start} to #{(start + rows)}...")
           results["response"]["docs"].each do |doc|
             
             if(fedora_item_pids.nil?)
               if(!fedora_server.item(doc["id"]).exists?)
-		logger.info "Noting item removed from fedora:  " + doc["id"].to_s + "..."
+                logger.info "Noting item removed from fedora:  #{doc["id"]}..."
                 removed << doc["id"].to_s
               end
             else
               if(!fedora_item_pids.include?(doc["id"].to_s))
-                logger.info "Noting removed item " + doc["id"] + "..."
+                logger.info "Noting removed item #{doc["id"]}..."
                 removed << doc["id"].to_s
               end
             end
@@ -103,46 +103,45 @@ module Cul
         indexed_count = 0
         items_not_in_solr = []
         new_items = []
-        
+
         logger.info "Preparing the items for indexing..."
         collections.each do |collection|
-          items |= collection.listMembers
+          collection.listMembers(true).each do |member|
+            items << member
+          end
         end
 
+        items.uniq!
         items.sort!
 
         results = Hash.new { |h,k| h[k] = [] }
         errors = []
       
-        item_pids = []
-        items.each do |item|
-          item_pids << item.pid
-        end
         if delete == true
-          delete_removed(fedora_server, item_pids)
+          delete_removed(fedora_server, items)
         end
       
         logger.info "Preparing to index " + items.length.to_s + " items..."
       
-        items.each do |i|
-          
-          if(ignore.index(i.pid).nil? == false || skip.index(i.pid).nil? == false)
-            logger.info "Ignoring/skipping " + i.pid + "..."
-            results[:skipped] << i.pid
+        items.each do |item|
+          if(ignore.index(item).nil? == false || skip.index(item).nil? == false)
+            logger.info "Ignoring/skipping " + item + "..."
+            results[:skipped] << item
             next
           end
-           
-          if item_exists?(i)
+
+          if item_exists?(item)
             unless overwrite == true
-              results[:skipped] << i.pid
+              results[:skipped] << item
               next
             end
           else
-            items_not_in_solr << i.pid  
-          end    
+            items_not_in_solr << item  
+          end
 
-          logger.info "Indexing " + i.pid + "..."
+          logger.info "Indexing #{item}..."
 
+          i = ActiveFedora::Base.find(item)
           result_hash = i.send("index_for_#{format}", options)
 
           results[result_hash[:status]] << i.pid
@@ -150,10 +149,10 @@ module Cul
           case result_hash[:status]
           when :success
             begin
-              
+
               rsolr.add(result_hash[:results])
               rsolr.commit
-              
+
               indexed_count += 1
               if(items_not_in_solr.include? i.pid)
                 new_items << i.pid
@@ -161,6 +160,7 @@ module Cul
             rescue Exception => e
               errors << i.pid
               logger.error e.message
+              logger.error e
             end
           when :error
             errors << i.pid
