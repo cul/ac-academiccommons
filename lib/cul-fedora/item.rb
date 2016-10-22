@@ -115,7 +115,7 @@ module Cul
         end
       end
 
-      def describedBy
+      def described_by
         begin
           riquery = "select $description from <#ri> where $description <http://purl.oclc.org/NET/CUL/metadataFor> <fedora:#{pid}>"
           result = @server.request(:method => "", :request => "risearch", :format => "sparql", :lang => "itql", :query => riquery, :limit => 1)
@@ -168,7 +168,7 @@ module Cul
       end
 
       def descMetadata_content
-        meta = describedBy.first
+        meta = described_by.first
         meta ? meta.datastream("CONTENT") : datastream("descMetadata")
       end
 

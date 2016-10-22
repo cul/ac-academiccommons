@@ -45,7 +45,7 @@ RSpec.describe Cul::Fedora::Item do
         meta = Cul::Fedora::Item.new(server: fedora_config, pid: "actest:3")
       end
       before do
-        allow(item).to receive(:describedBy).and_return([metadata])
+        allow(item).to receive(:described_by).and_return([metadata])
       end
       it do
         expect(metadata).to receive(:datastream).with("CONTENT").and_return("")
@@ -54,7 +54,7 @@ RSpec.describe Cul::Fedora::Item do
     end
     context "descMetadata" do
       before do
-        allow(item).to receive(:describedBy).and_return([])
+        allow(item).to receive(:described_by).and_return([])
       end
       it do
         expect(item).to receive(:datastream).with("descMetadata").and_return("")
@@ -78,7 +78,7 @@ RSpec.describe Cul::Fedora::Item do
       end
       let(:options) { {} }
       before do
-        allow(item).to receive(:describedBy).and_return([metadata])
+        allow(item).to receive(:described_by).and_return([metadata])
       end
       subject { item.index_for_ac2(options) }
       it do
@@ -89,7 +89,7 @@ RSpec.describe Cul::Fedora::Item do
     context "descMetadata" do
       let(:options) { {} }
       before do
-        allow(item).to receive(:describedBy).and_return([])
+        allow(item).to receive(:described_by).and_return([])
         allow(item).to receive(:datastream).with("descMetadata").and_return mods_fixture
       end
       subject { item.index_for_ac2(options) }
