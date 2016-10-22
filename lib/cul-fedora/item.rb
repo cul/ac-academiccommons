@@ -148,7 +148,7 @@ module Cul
       end
 
       def check_if_resouce_is_available(resourse_pid)
-        fedora_url = URI(@server.riurl)
+        fedora_url = URI(@server.url)
 
         response = Net::HTTP.start(fedora_url.hostname, fedora_url.port, :use_ssl => fedora_url.scheme == 'https') do |http|
           http.head("/objects/#{resourse_pid}")

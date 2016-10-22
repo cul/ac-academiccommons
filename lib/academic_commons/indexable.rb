@@ -236,7 +236,7 @@ module AcademicCommons
   #
           # begin
   #
-          # resource_file = Rails.application.config.fedora['riurl'] + "/objects/#{member.pid}/datastreams/CONTENT/content"
+          # resource_file = Rails.application.config.fedora['url'] + "/objects/#{member.pid}/datastreams/CONTENT/content"
           # Rails.logger.debug "======= fulltext resource_file === " + resource_file
   #
           # text_extract_command = "java -jar " + Rails.application.config.indexing['text_extractor_jar_file'] + " -t #{resource_file}"
