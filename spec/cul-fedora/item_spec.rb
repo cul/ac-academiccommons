@@ -65,7 +65,7 @@ RSpec.describe Cul::Fedora::Item do
   describe "#index_for_ac2" do
     let(:item) do
       item = Cul::Fedora::Item.new(server: fedora_config, pid: "actest:1")
-      allow(item).to receive(:belongsTo).and_return(['collection:3'])
+      allow(item).to receive(:belongs_to).and_return(['collection:3'])
       item
     end
     let(:mods_fixture) { File.read('spec/fixtures/actest_3/mods.xml') }

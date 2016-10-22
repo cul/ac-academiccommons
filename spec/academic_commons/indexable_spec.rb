@@ -7,13 +7,13 @@ RSpec.describe AcademicCommons::Indexable do
     class_rig = Class.new
     class_rig.class_eval do
       include AcademicCommons::Indexable
-      def belongsTo; end
+      def belongs_to; end
       def descMetadata_content; end
       def pid; end
     end
     indexable = class_rig.new
     allow(indexable).to receive(:pid).and_return('actest:1')
-    allow(indexable).to receive(:belongsTo).and_return(['collection:3'])
+    allow(indexable).to receive(:belongs_to).and_return(['collection:3'])
     allow(indexable).to receive(:descMetadata_content).and_return mods_fixture
     indexable
   end

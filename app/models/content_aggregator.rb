@@ -52,7 +52,7 @@ class ContentAggregator < ActiveFedora::Base
     end
   end
 
-  def belongsTo
+  def belongs_to
     relationships(CUL_MEMBER_OF).map { |obj| obj.to_s.split('/')[-1] }
   end
 end

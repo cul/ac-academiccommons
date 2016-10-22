@@ -7,7 +7,7 @@ module AcademicCommons
     CORPORATE_DEPARTMENT_ROLES = ["originator"].freeze
     RESOURCE_TYPES = {'text' => 'Text', 'moving image' => 'Video', 'sound recording--nonmusical' => 'Audio', 'software, multimedia' => 'software', 'still image' => 'Image'}.freeze
     # this is documentary, and should go away when this module is a concern
-    REQUIRED_METHODS = [:belongsTo, :descMetadata_content]
+    REQUIRED_METHODS = [:belongs_to, :descMetadata_content]
 
     def index_descMetadata(solr_doc={})
       meta = descMetadata_content
@@ -15,7 +15,7 @@ module AcademicCommons
 
       mods = Nokogiri::XML(meta).at_css("mods")
       
-      collections = self.belongsTo
+      collections = self.belongs_to
       normalize_space = lambda { |s| s.to_s.strip.gsub(/\s{2,}/," ") }
       search_to_content = lambda { |x| x.kind_of?(Nokogiri::XML::Element) ? x.content.strip : x.to_s.strip }
       add_field = lambda { |name, value| solr_doc[name] ? (solr_doc[name] << search_to_content.call(value)) : (solr_doc[name] = [search_to_content.call(value)]) }
@@ -232,7 +232,7 @@ module AcademicCommons
   #
       # Rails.logger.debug "======= fulltext started === "
   #
-       # listMembers.each_with_index do |member, i|
+       # list_members.each_with_index do |member, i|
   #
           # begin
   #

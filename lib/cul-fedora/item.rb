@@ -69,7 +69,7 @@ module Cul
         request(:request => name.to_s.upcase)
       end
 
-      def listMembers(pids_only=false)
+      def list_members(pids_only=false)
         begin
           i = 1
           size = getSize
@@ -87,7 +87,7 @@ module Cul
           return items
         rescue Exception => e
 
-          Rails.logger.info "======= tika listMembers error: " + e.message
+          Rails.logger.info "======= tika list_members error: " + e.message
 
           logger.error e.message
           []
@@ -128,7 +128,7 @@ module Cul
         end
       end
 
-      def belongsTo
+      def belongs_to
         begin
           result = Nokogiri::XML(datastream("RELS-EXT"))
           result.xpath("/rdf:RDF/rdf:Description/*[local-name()='memberOf']").collect do |member|

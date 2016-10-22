@@ -106,7 +106,7 @@ module Cul
 
         logger.info "Preparing the items for indexing..."
         collections.each do |collection|
-          collection.listMembers(true).each do |member|
+          collection.list_members(true).each do |member|
             items << member
           end
         end

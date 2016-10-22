@@ -35,7 +35,7 @@ class ACIndexing
     logger.info "Solr: " + solr_config.inspect
 
     ac_collection = ActiveFedora::Base.find("collection:3")
-    member_pids = ac_collection.listMembers(true)
+    member_pids = ac_collection.list_members(true)
 
     logger.info "Checking against " + member_pids.length.to_s + " items in Fedora..."
 
@@ -142,7 +142,7 @@ class ACIndexing
       :overwrite => overwrite, :ignore => ignore, :skip => skip
     }
     collections.each do |collection|
-      collection.listMembers(true).each { |pid| items << pid }
+      collection.list_members(true).each { |pid| items << pid }
     end
 
     items.uniq!

@@ -13,7 +13,7 @@ class BagAggregator < ActiveFedora::Base
     return index_descMetadata(solr_doc)
   end
 
-  def listMembers(pids_only=false)
+  def list_members(pids_only=false)
     begin
       i = 1
       size = get_size
@@ -32,7 +32,7 @@ class BagAggregator < ActiveFedora::Base
       return pids_only ? items : items.lazy.map { |pid| ActiveFedora::Base.find(pid) }
     rescue Exception => e
 
-      Rails.logger.info "======= BagAggregator.listMembers error: " + e.message
+      Rails.logger.info "======= BagAggregator.list_members error: " + e.message
 
       logger.error e.message
       []

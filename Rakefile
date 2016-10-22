@@ -51,8 +51,8 @@ begin
       Rake::Task["ci:load_fixtures"].invoke
       collection = Cul::Fedora::Item.new(:pid=>'collection:3', :server_config => Rails.application.config.fedora)
       tries = 0
-      while((length = collection.listMembers.length) == 0 && tries < 50) do
-        puts "(collection:3).listMembers was zero, waiting for buffer to flush"
+      while((length = collection.list_members.length) == 0 && tries < 50) do
+        puts "(collection:3).list_members was zero, waiting for buffer to flush"
         sleep(1)
         tries += 1
       end
