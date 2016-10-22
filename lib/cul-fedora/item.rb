@@ -68,7 +68,7 @@ module Cul
       def list_members(pids_only=false)
         begin
           i = 1
-          size = getSize
+          size = repository_size
           items = []
           while (i <= size)
             riquery = riquery_for_members(limit: MAX_LIST_MEMBERS_PER_REQUEST, offset: i - 1)
@@ -102,7 +102,7 @@ module Cul
         query.join(" ")
       end
 
-      def getSize()
+      def repository_size
         begin
             @server.request(:method => "", :request => "risearch", :format => "count", :lang => "itql", :query => riquery_for_members, :limit => '').to_i
         rescue Exception => e

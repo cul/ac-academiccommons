@@ -16,7 +16,7 @@ class BagAggregator < ActiveFedora::Base
   def list_members(pids_only=false)
     begin
       i = 1
-      size = get_size
+      size = repository_size
       items = []
       while (i <= size)
         riquery = riquery_for_members(limit: MAX_LIST_MEMBERS_PER_REQUEST, offset: i - 1)
@@ -51,7 +51,7 @@ class BagAggregator < ActiveFedora::Base
     query.join(" ")
   end
 
-  def get_size
+  def repository_size
     begin
       riquery = riquery_for_members()
       options = {lang: 'itql', format: "count", limit: '' }
