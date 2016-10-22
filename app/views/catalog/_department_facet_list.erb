@@ -28,8 +28,7 @@ subject_facets = department_facet_list['subject_facet']
 
 <%=
 
- puts params[:id].inspect
-   puts v[:name].inspect
+Rails.logger.debug "linking author_facet #{params[:id].inspect} for #{v[:name].inspect}"
 
 link_to(v[:name],   relative_root+'/?f[department_facet][]=' + url_encode_resource(params[:id]) + '&f[author_facet][]=' + url_encode_resource(v[:name]), :class=>"broswe_select")%>  <span class='item_count'> ( <%= format_num(v[:count]) %> )</span>
 
