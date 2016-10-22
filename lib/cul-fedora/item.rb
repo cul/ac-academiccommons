@@ -61,10 +61,6 @@ module Cul
         @server.request_path(options.merge(:pid => @pid))
       end
 
-      def getIndex(profile = "raw")
-        Nokogiri::XML(request(:request => "getIndex", :sdef => "ldpd:sdef.Core", :profile => profile))
-      end
-
       def datastream(name)
         request(:request => name.to_s.upcase)
       end
