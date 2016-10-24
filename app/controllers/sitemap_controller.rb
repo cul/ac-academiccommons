@@ -1,5 +1,5 @@
 class SitemapController < ApplicationController
-  include Blacklight::SolrHelper
+  include Blacklight::SearchHelper
   after_filter :sweep_cache, :only => :index
   def index
 

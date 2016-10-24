@@ -1,5 +1,5 @@
 class DepositController < ApplicationController
-  include Blacklight::SolrHelper
+  include Blacklight::SearchHelper
 
   SELF_DEPOSIT_DIR = "data/self-deposit-uploads"
 

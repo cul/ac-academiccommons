@@ -1,5 +1,5 @@
 class InfoController < ApplicationController
-  include Blacklight::SolrHelper
+  include Blacklight::SearchHelper
 
   def about
   end
