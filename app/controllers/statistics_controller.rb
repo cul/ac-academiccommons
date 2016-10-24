@@ -46,9 +46,7 @@ class StatisticsController < ApplicationController
 
     ids = blacklight_solr.find(:per_page => 100000, :page => 1, :fl => "author_uni")["response"]["docs"].collect { |f| f["author_uni"] }.flatten.compact.uniq - EmailPreference.find_all_by_monthly_opt_out(true).collect(&:author)
 
-    #alternate_emails = Hash[EmailPreference.find(:all, :conditions => "email is NOT NULL").collect { |ep| [ep.author, ep.email] }.flatten]
-
-    emails = EmailPreference.find(:all, :conditions => "email is NOT NULL and monthly_opt_out is false").collect
+    emails = EmailPreference.where("email is NOT NULL and monthly_opt_out is ?", false).collect
 
     alternate_emails = Hash.new
 
@@ -174,7 +172,7 @@ class StatisticsController < ApplicationController
 
   def stats_by_event()
     event = params[:event]
-    count = Statistic.count(:conditions => ["event = '" + event + "'"])
+    count = Statistic.where(event: event).count
 
     respond_to do |format|
       format.html { render :text => count.to_s }
@@ -321,19 +319,19 @@ class StatisticsController < ApplicationController
     totals = Hash.new { |h,k| h[k] = 0 }
 
 
-    stats['View'] = Statistic.count(:group => "identifier", :conditions => ["event = 'View' and identifier IN (?) AND at_time BETWEEN ? and ?", ids,startdate, enddate])
+    stats['View'] = Statistic.group(:identifier).where("event = 'View' and identifier IN (?) AND at_time BETWEEN ? and ?", ids, startdate, enddate).count
 
-    stats_downloads = Statistic.count(:group => "identifier", :conditions => ["event = 'Download' and identifier IN (?) AND at_time BETWEEN ? and ?", download_ids.values.flatten,startdate, enddate])
+    stats_downloads = Statistic.group(:identifier).where("event = 'Download' and identifier IN (?) AND at_time BETWEEN ? and ?", download_ids.values.flatten,startdate, enddate).count
     download_ids.each_pair do |doc_id, downloads|
 
       stats['Download'][doc_id] = downloads.collect { |download_id| stats_downloads[download_id] || 0 }.sum
     end
 
 
-    stats['View Lifetime'] = Statistic.count(:group => "identifier", :conditions => ["event = 'View' and identifier IN (?)", ids])
+    stats['View Lifetime'] = Statistic.group(:identifier).where("event = 'View' and identifier IN (?)", ids).count
 
 
-    stats_lifetime_downloads = Statistic.count(:group => "identifier", :conditions => ["event = 'Download' and identifier IN (?)" , download_ids.values.flatten])
+    stats_lifetime_downloads = Statistic.group(:identifier).where("event = 'Download' and identifier IN (?)" , download_ids.values.flatten).count
     download_ids.each_pair do |doc_id, downloads|
 
       stats['Download Lifetime'][doc_id] = downloads.collect { |download_id| stats_lifetime_downloads[download_id] || 0 }.sum

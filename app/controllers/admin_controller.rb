@@ -56,12 +56,12 @@ class AdminController < ApplicationController
         deposit_to_archive.save
       end
     end
-    @deposits = Deposit.find(:all, :conditions => {:archived => false}, :order => "created_at")
+    @deposits = Deposit.where(:archived => false).order(:created_at)
 
   end
 
   def agreements
-      @agreements = Agreement.find(:all)
+      @agreements = Agreement.all
       respond_to do |format|
          format.html
          format.csv { send_data Agreement.to_csv }
@@ -69,7 +69,7 @@ class AdminController < ApplicationController
   end
 
   def student_agreements
-      @agreements = StudentAgreement.find(:all)
+      @agreements = StudentAgreement.all
       respond_to do |format|
          format.html
          format.csv { send_data StudentAgreement.to_csv }

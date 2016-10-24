@@ -131,6 +131,10 @@ describe CatalogController, :type => [:controller, :feature] do
       expect(page).to have_xpath("//dt[contains(text(),'Book/Journal Title:')]/following-sibling::dd", :text => "Project Gutenberg")
     end
 
+    it "has item views" do
+      expect(page).to have_xpath("//dt[contains(text(),'Item views')]/following-sibling::dd", :text => "0")
+    end
+
     it "links to the pdf download" do
       click_on 'alice_in_wonderland.pdf'
       expect(page.response_headers['X-Accel-Redirect']).to match /\/repository_download\/.*\/actest:2\/CONTENT$/

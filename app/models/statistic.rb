@@ -4,7 +4,7 @@ class Statistic < ActiveRecord::Base
   STREAM_EVENT = 'Streaming'
 
   def self.reset_downloads
-    Statistic.find_all_by_event("Download").each { |e| e.delete }
+    Statistic.where(:event => "Download").each { |e| e.delete }
 
     fedora_download_match = /^([\d\.]+).+\[([^\]]+)\].+download\/fedora_content\/\w+\/([^\/]+)/
     startdate = DateTime.parse("5/1/2011")
