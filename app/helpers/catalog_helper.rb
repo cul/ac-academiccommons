@@ -62,9 +62,9 @@ module CatalogHelper
     extra_params[:fl] = "title_display,id,author_facet,author_display,record_creation_date,handle,abstract,author_uni,subject_facet,department_facet,genre_facet"
 
     if (params[:f].nil?)
-      solr_response = force_to_utf8(repository.search(params.merge(extra_params)))
+      solr_response = repository.search(params.merge(extra_params))
     else
-      solr_response = force_to_utf8(repository.search(self.solr_search_params(params).merge(extra_params)))
+      solr_response = repository.search(self.solr_search_params(params).merge(extra_params))
     end
 
     document_list = solr_response.docs.collect {|doc| SolrDocument.new(doc, solr_response)}

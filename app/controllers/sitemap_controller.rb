@@ -32,7 +32,7 @@ class SitemapController < ApplicationController
     opts[:fl] = "id, record_creation_date"
     opts[:sort] = "record_creation_date desc"
     # this is the upper limit for a single sitemap, see sitemap.org
-    force_to_utf8(repository.search(opts))
+    repository.search(opts)
   end
 
   def latest_doc
