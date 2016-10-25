@@ -10,11 +10,11 @@ module Cul
   module Fedora
     class Server
 
-      attr_reader :riurl, :riquery, :rilimit
+      attr_reader :url, :riquery, :rilimit
 
       def initialize(*args)
         options = args.extract_options!
-        @riurl = options[:riurl] || options["riurl"] || raise(ArgumentError, "Must provide riurl argument")
+        @url = options[:url] || options["url"] || raise(ArgumentError, "Must provide url argument")
         @riquery = options[:riquery] || options["riquery"] || raise(ArgumentError, "Must provide riquery argument")
         @rilimit = options[:rilimit] || options["rilimit"] || ""
         @hc = options[:http_client] || options["http_client"]
@@ -53,7 +53,7 @@ module Cul
         password = Rails.application.config.fedora["password"]
         content_type = options.delete(:content_type)
         body = options.delete(:body)
-        http_client.set_auth(riurl, user, password)
+        http_client.set_auth(url, user, password)
         uri = request_path(options)[0]
         uri = URI(uri)
         req = Net::HTTP::Post.new(uri.request_uri)
@@ -70,7 +70,7 @@ module Cul
         password = Rails.application.config.fedora["password"]
         content_type = options[:mimeType] || options.delete(:content_type) || 'text/xml'
         body = options.delete(:body)
-        http_client.set_auth(riurl, user, password)
+        http_client.set_auth(url, user, password)
         uri = request_path(options)
         params = uri[1]
         uri = URI(uri[0])
@@ -94,7 +94,7 @@ module Cul
         request = "/" + request.to_s
 
 
-        uri = @riurl + method + pid + sdef + request
+        uri = @url + method + pid + sdef + request
         query = options
         return [uri, query]
       end
