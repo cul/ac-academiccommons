@@ -44,7 +44,7 @@ class StatisticsController < ApplicationController
 
     params[:email_template] ||= "Normal"
 
-    ids = blacklight_solr.find(:per_page => 100000, :page => 1, :fl => "author_uni")["response"]["docs"].collect { |f| f["author_uni"] }.flatten.compact.uniq - EmailPreference.where(monthly_opt_out: true).collect(&:author)
+    ids = repository.search(:per_page => 100000, :page => 1, :fl => "author_uni")["response"]["docs"].collect { |f| f["author_uni"] }.flatten.compact.uniq - EmailPreference.where(monthly_opt_out: true).collect(&:author)
 
     emails = EmailPreference.where("email is NOT NULL and monthly_opt_out is ?", false).collect
 
@@ -205,7 +205,7 @@ class StatisticsController < ApplicationController
 
   def single_pid_count
     query_params = {:qt=>"standard", :q=>"pid:\"" + params[:pid] + "\""}
-    results = blacklight_solr.find(query_params)
+    results = repository.search(query_params)
     count = results["response"]["numFound"]
 
     respond_to do |format|
@@ -307,7 +307,7 @@ class StatisticsController < ApplicationController
     author_id = options[:author_id]
     enddate = startdate + 1.month
 
-    results = blacklight_solr.find(:per_page => 100000, :sort => "title_display asc" , :fq => "author_uni:#{author_id}", :fl => "title_display,id", :page => 1)["response"]["docs"]
+    results = repository.search(:per_page => 100000, :sort => "title_display asc" , :fq => "author_uni:#{author_id}", :fl => "title_display,id", :page => 1)["response"]["docs"]
     ids = results.collect { |r| r['id'].to_s.strip }
     fedora_server = Cul::Fedora::Server.new(fedora_config)
     download_ids = Hash.new { |h,k| h[k] = [] }

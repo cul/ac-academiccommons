@@ -2,7 +2,7 @@ require "person_class"
 
 module InfoHelper
 
-  delegate :blacklight_solr, :to => :controller
+  delegate :repository, :to => :controller
 
   def get_person_info(uni)
 

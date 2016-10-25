@@ -44,7 +44,7 @@ class Report < ActiveRecord::Base
     query_params = {:q => "", :fl => "format, object_display,id,collection_h", :per_page => per_page, :facets => {:fields => ['collection_h']}}
 
     while
-      page_results = blacklight_solr.find(query_params.merge(:page => page))
+      page_results = repository.search(query_params.merge(:page => page))
 
       page_results["response"]["docs"].each do |r|
         collection_list = collection_list_for_doc(r)

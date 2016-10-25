@@ -7,7 +7,7 @@ module DepositorHelper
   include SolrHelper
   include InfoHelper
 
-  delegate :blacklight_solr, :to => :controller
+  delegate :repository, :to => :controller
 
   def notifyDepositorsEmbargoedItemAdded(pids)
 

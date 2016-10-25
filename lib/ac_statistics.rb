@@ -24,7 +24,7 @@ module ACStatistics
   # Copied from Catalog Helper.
   # TODO: Needs to be in a more centralized place.
   def get_count(query_params)
-    results = blacklight_solr.find(query_params)
+    results = repository.search(query_params)
     return results["response"]["numFound"]
   end
 
@@ -317,7 +317,7 @@ module ACStatistics
     if facet_query == nil && q == nil
       return
     else
-      results = blacklight_solr.find( :per_page => 100000,
+      results = repository.search( :per_page => 100000,
                                    :sort => sort,
                                    :q => q,
                                    :fq => facet_query,
@@ -428,7 +428,7 @@ module ACStatistics
 
   def school_pids(school)
 
-    pids_by_institution = blacklight_solr.find(
+    pids_by_institution = repository.search(
                           :qt=>"search",
                           :rows=>20000,
                           :fq=>["{!raw f=organization_facet}" + school],
@@ -459,7 +459,7 @@ module ACStatistics
 
     results = []
     query_params = {:q=>"", :rows=>"0", "facet.limit"=>-1, :"facet.field"=>[facet]}
-    solr_results = blacklight_solr.find(query_params)
+    solr_results = repository.search(query_params)
     subjects = solr_results.facet_counts["facet_fields"][facet]
 
     results << ["" ,""]
@@ -504,7 +504,7 @@ module ACStatistics
     query_params.store("fq", solr_facets_query)
     query_params.store("facet.field", ["pid"])
 
-    return  blacklight_solr.find(query_params)["response"]["docs"]
+    return  repository.search(query_params)["response"]["docs"]
   end
 
 

@@ -6,7 +6,7 @@ module CatalogHelper
   #include Blacklight::CatalogHelperBehavior # This probably shouldn't be commented out.
   include ApplicationHelper
 
-  delegate :blacklight_solr, :to => :controller
+  delegate :repository, :to => :controller
 
   ACTIVE_CHILDREN_RI_QUERY =
   'select $member $type $label
@@ -41,7 +41,7 @@ module CatalogHelper
   end
 
   def get_count(query_params)
-    results = blacklight_solr.find(query_params)
+    results = repository.search(query_params)
     return results["response"]["numFound"]
   end
 
@@ -62,9 +62,9 @@ module CatalogHelper
     extra_params[:fl] = "title_display,id,author_facet,author_display,record_creation_date,handle,abstract,author_uni,subject_facet,department_facet,genre_facet"
 
     if (params[:f].nil?)
-      solr_response = force_to_utf8(blacklight_solr.find(params.merge(extra_params)))
+      solr_response = force_to_utf8(repository.search(params.merge(extra_params)))
     else
-      solr_response = force_to_utf8(blacklight_solr.find(self.solr_search_params(params).merge(extra_params)))
+      solr_response = force_to_utf8(repository.search(self.solr_search_params(params).merge(extra_params)))
     end
 
     document_list = solr_response.docs.collect {|doc| SolrDocument.new(doc, solr_response)}
@@ -88,7 +88,7 @@ module CatalogHelper
 
   def build_distinct_authors_list(query_params, included_authors, results)
 
-    updated = blacklight_solr.find(query_params)
+    updated = repository.search(query_params)
     items = updated["response"]["docs"]
     if(items.empty?)
       return results
@@ -163,7 +163,7 @@ module CatalogHelper
   def get_departments_list
     results = []
     query_params = {:q=>"", :rows=>"0", "facet.limit"=>-1}
-    solr_results = blacklight_solr.find(query_params)
+    solr_results = repository.search(query_params)
     affiliation_departments = solr_results.facet_counts["facet_fields"]["department_facet"]
     res = {}
     affiliation_departments.each do |item|
@@ -181,7 +181,7 @@ module CatalogHelper
   def get_department_facet_list(department)
     results = {}
     query_params = {:q=>"", :'fq'=>"department_facet:\"" + department + "\"", :rows=>"0", "facet.limit"=>-1}
-    solr_results = blacklight_solr.find(query_params)
+    solr_results = repository.search(query_params)
     facet_fields = solr_results.facet_counts["facet_fields"]
 
     facet_fields.each do |key, value|
@@ -206,7 +206,7 @@ module CatalogHelper
   def get_subjects_list
     results = []
     query_params = {:q=>"", :rows=>"0", "facet.limit"=>-1, "facet.field" => "subject_facet"}
-    solr_results = blacklight_solr.find(query_params)
+    solr_results = repository.search(query_params)
     subjects = solr_results.facet_counts["facet_fields"]["subject_facet"]
     res = {}
     subjects.each do |item|
