@@ -71,7 +71,7 @@ describe EmailPreferencesController, :type => :controller do
   end
 
   describe 'PUT update' do
-    let(:request) { put :update, id: deposit.id }
+    let(:request) { put :update, id: deposit.id, email_preference: { author: 'John Doe', monthly_opt_out: false, email: 'john.doe@example.com' } }
 
     context "without being logged in" do
       before do
@@ -107,6 +107,10 @@ describe EmailPreferencesController, :type => :controller do
 
       it "succeeds" do
         expect(response).to redirect_to email_preference_url(deposit.id)
+      end
+
+      it "updates monthly_opt_out preference" do
+        expect(EmailPreference.first.monthly_opt_out).to be false
       end
     end
   end
