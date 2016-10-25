@@ -7,7 +7,6 @@ gem 'blacklight', '~> 5.19.0'
 gem 'active-fedora', '~>8.2'
 
 gem 'blacklight_oai_provider', '>=0.2.4', :git =>"git@github.com:cul/blacklight_oai_provider.git"
-gem 'rake', '~> 10.0.0'
 gem 'sqlite3', '>= 1.3.5'
 gem 'rinku', '~> 1.3.0', :require => 'rails_rinku'
 gem 'authlogic'
@@ -22,7 +21,6 @@ gem 'httpclient','~>2.6'
 gem 'multipart-post', '~>2.0.0'
 gem 'nokogiri', '1.6.0'
 gem 'net-ldap', '0.3.1'
-gem 'net-ssh', '2.9.4'
 
 # This gem needs to be a requirement of blacklight_oai_provider
 gem "oai" #, '>=0.2.5', :git =>"git@github.com:cul/oai-new-valid.git"
@@ -48,20 +46,19 @@ gem 'uglifier'
 gem 'sqlite3-ruby', :require => 'sqlite3'
 gem 'mysql', '>= 2.8.1'
 
-# Bundle gems for the local environment. Make sure to
-# put test-only gems in this group so their generators
-# and rake tasks are available in development mode:
+
+group :development do
+  gem 'spring'
+end
+
 group :development, :test do
-# Use Capistrano for deployment
+  # Deploying by using Capistrano. Using rails, rvm and passenger cap gems as
+  # required by our deployment environment.
   gem 'capistrano', '3.4', require: false
-# Rails and Bundler integrations were moved out from Capistrano 3
   gem 'capistrano-rails', '~> 1.1', require: false
-  gem 'capistrano-bundler', '~> 1.1', require: false
-  # "idiomatic support for your preferred ruby version manager"
   gem 'capistrano-rvm', '~> 0.1', require: false
-  # The `deploy:restart` hook for passenger applications is now in a separate gem
-  # Just add it to your Gemfile and require it in your Capfile.
   gem 'capistrano-passenger', '~> 0.1', require: false
+
   gem 'rspec-rails', '~> 3.5'
   gem 'capybara', '~>2.2'
   gem 'poltergeist' # Used to run test with js.
