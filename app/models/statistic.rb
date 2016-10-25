@@ -9,7 +9,6 @@ class Statistic < ActiveRecord::Base
     fedora_download_match = /^([\d\.]+).+\[([^\]]+)\].+download\/fedora_content\/\w+\/([^\/]+)/
     startdate = DateTime.parse("5/1/2011")
 
-    count = 0
     File.open(File.join("tmp", "access.log")).each_with_index do |line, i|
 
       if (match = fedora_download_match.match(line))
@@ -23,7 +22,5 @@ class Statistic < ActiveRecord::Base
       end
 
     end
-
-    puts count
   end
 end

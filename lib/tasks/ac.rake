@@ -22,19 +22,19 @@ namespace :ac do
   task :deletepid, [:pid] => :environment do |t, args|
 
     
-    ACIndexing::deletepid(args[:pid])
+    ACIndexing::delete_pid(args[:pid])
     
   end
   
   task :deleteindex => :environment do
     
-    ACIndexing::deleteindex()
+    ACIndexing::delete_index()
     
   end
   
   task :getremoved => :environment do
     
-    ACIndexing::getremoved()
+    ACIndexing::log_removed()
     
   end
 end

@@ -16,7 +16,7 @@ class DownloadController < ApplicationController
 
   def fedora_content
 
-    url = fedora_config["riurl"] + "/get/" + params[:uri]+ "/" + params[:block]
+    url = fedora_config["url"] + "/get/" + params[:uri]+ "/" + params[:block]
 
     cl = HTTPClient.new
 

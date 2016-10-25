@@ -131,7 +131,7 @@ module CatalogHelper
 
    docs = []
 
-   ri_url = "#{fedora_config["riurl"]}/risearch"
+   ri_url = "#{fedora_config["url"]}/risearch"
    opts = itql_query_opts(ACTIVE_CHILDREN_RI_QUERY.gsub('#{pid}',document['id']))
    res = hc.post(ri_url,opts)
    body = res.body
@@ -146,7 +146,7 @@ module CatalogHelper
 
      res[:download_path] = fedora_content_path(:download, res[:pid], 'CONTENT', res[:filename])
 
-     url = fedora_config["riurl"] + "/get/" + member_pid + "/" + 'CONTENT'
+     url = fedora_config["url"] + "/get/" + member_pid + "/" + 'CONTENT'
 
      h_ct = hc.head(url).header["Content-Type"].to_s
      res[:content_type] = h_ct
@@ -262,9 +262,9 @@ module CatalogHelper
 #catch any error and return an error message that resources are unavailable
 #this prevents fedora server outages from making ac2 item page inaccessible
 begin
-   doc["object_display"] = [ "#{fedora_config["riurl"]}" + "/objects/" + doc["id"] + "/methods" ]
+   doc["object_display"] = [ "#{fedora_config["url"]}" + "/objects/" + doc["id"] + "/methods" ]
 
-   ri_url = "#{fedora_config["riurl"]}/risearch"
+   ri_url = "#{fedora_config["url"]}/risearch"
    opts = itql_query_opts(DESCRIBED_BY_RI_QUERY.gsub('#{pid}',doc['id']))
    hc = get_http_client
    res = hc.post(ri_url,opts)
@@ -303,7 +303,7 @@ begin
   def get_http_client
    hc = HTTPClient.new(:force_basic_auth => true)
    hc.ssl_config.verify_mode = OpenSSL::SSL::VERIFY_NONE
-   domain = fedora_config["riurl"]
+   domain = fedora_config["url"]
    user = fedora_config["user"]
    password = fedora_config["password"]
    hc.set_auth(domain, user, password)
@@ -324,7 +324,7 @@ begin
   end
 
   def resolve_fedora_uri(uri)
-    fedora_config["riurl"] + "/get" + uri.gsub(/info\:fedora/,"")
+    fedora_config["url"] + "/get" + uri.gsub(/info\:fedora/,"")
   end
 
   ############### Copied from Blacklight CatalogHelper #####################

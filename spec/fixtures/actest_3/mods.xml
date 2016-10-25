@@ -1,0 +1,84 @@
+<mods xmlns="http://www.loc.gov/mods/v3" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.loc.gov/mods/v3 http://www.loc.gov/standards/mods/v3/mods-3-4.xsd">
+    
+    <titleInfo>
+        <title>Alice's Adventures in Wonderland</title>
+    </titleInfo>
+    <name type="personal">
+        <namePart type="family">Carroll</namePart>
+        <namePart type="given">Lewis</namePart>
+        <role>
+            <roleTerm type="text">author</roleTerm>
+        </role>
+    </name>
+    <name type="corporate">
+        <namePart>Oxford University. Bucolic Literary Society.</namePart>
+        <role>
+            <roleTerm type="text">originator</roleTerm>
+        </role>
+    </name>
+    <name type="corporate">
+        <namePart>Weird Old Guys.</namePart>
+        <role>
+            <roleTerm type="text">author</roleTerm>
+        </role>
+    </name>
+    <typeOfResource>text</typeOfResource>
+    <genre>Articles</genre>
+    
+    <originInfo>
+        <dateIssued encoding="w3cdtf" keyDate="yes">1865</dateIssued>
+    </originInfo>
+    
+    <language>
+        <languageTerm type="text">English</languageTerm>
+    </language>
+    <abstract>Background -  Alice is feeling bored and drowsy while sitting on the riverbank with her older sister, who is reading a book with no pictures or conversations.</abstract>
+    <subject>
+        <topic>Tea Parties</topic>
+    </subject>
+    <subject>
+        <topic>Wonderland</topic>
+    </subject>
+    <subject authority="fast" authorityURI="http://id.worldcat.org/fast/void/0.1" valueURI="http://id.worldcat.org/fast/1038956">
+        <topic>Nonsense literature</topic>
+    </subject>
+    <subject authority="fast" authorityURI="http://id.worldcat.org/fast/void/0.1" valueURI="http://id.worldcat.org/fast/831688">
+        <topic>Bildungsromans</topic>
+    </subject>
+    <relatedItem type="host">
+        <titleInfo>
+            <title>Project Gutenberg</title>
+        </titleInfo>
+        <part>
+            <detail type="volume">
+                <number>1</number>
+            </detail>
+            <detail type="issue">
+                <number>2</number>
+            </detail>
+            <extent unit="page">
+                <start>1</start>
+                <end>69</end>
+            </extent>
+            <date>June 2008</date>
+        </part>
+        <identifier type="doi">10.1378/wonderland.01-2345</identifier>
+        <identifier type="issn">0123-4567</identifier>
+    </relatedItem>
+    <identifier type="CDRS doi">http://dx.doi.org/10.7916/ALICE</identifier>
+    
+    <location>
+        <physicalLocation authority="marcorg">NNC</physicalLocation>
+    </location>
+    
+    <recordInfo>
+        <recordContentSource authority="marcorg">NNC</recordContentSource>
+        <recordCreationDate encoding="w3cdtf">2016-09-14 16:31:33 -0400</recordCreationDate>
+        <recordChangeDate encoding="w3cdtf">2016-09-14 16:48:05 -0400</recordChangeDate>
+        <recordIdentifier>24815</recordIdentifier>
+        <languageOfCataloging>
+            <languageTerm authority="iso639-2b">eng</languageTerm>
+        </languageOfCataloging>
+    </recordInfo>
+    
+</mods>
