@@ -9,7 +9,7 @@ AcademicCommons::Application.routes.draw do
   get '/catalog/streaming/:id', :to => 'catalog#streaming', :as => 'streaming'
   get '/catalog/browse' => redirect('/catalog/browse/subjects')
 
-  Blacklight.add_routes(self)
+  blacklight_for :catalog
 
   # resources :dmcas, path: "dmca"
   get '/copyright_infringement_notice', to: 'dmcas#new', as: 'dmcas'
@@ -26,7 +26,7 @@ AcademicCommons::Application.routes.draw do
 
   get '/download/download_log/:id', :to => 'download#download_log', :as => 'download_log'
 
-  match '/access_denied', :to => 'application#access_denied', :as => 'access_denied'
+  get '/access_denied', :to => 'application#access_denied', :as => 'access_denied'
 
   get '/ingest_monitor/:id', :to => 'ingest_monitor#show', :as => 'ingest_monitor'
 

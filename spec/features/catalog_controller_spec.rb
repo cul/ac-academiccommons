@@ -50,13 +50,13 @@ describe CatalogController, :type => [:controller, :feature] do
     context "search query" do
       it "finds by title" do
         visit catalog_index_path(q: "alice")
-        expect(page).to have_css("a[href=\"/catalog/actest%3A1\"]", :text => "Alice's Adventures in Wonderland")
+        expect(page).to have_css("a[href=\"/catalog/actest:1\"]", :text => "Alice's Adventures in Wonderland")
       end
 
       it "finds by author" do
         visit catalog_index_path(q: "lewis carroll")
         expect(page).to have_content("Carroll, Lewis")
-        expect(page).to have_css("a[href=\"/catalog/actest%3A1\"]", :text => "Alice's Adventures in Wonderland")
+        expect(page).to have_css("a[href=\"/catalog/actest:1\"]", :text => "Alice's Adventures in Wonderland")
       end
 
       it "returns nothing when search query is not a match" do
@@ -129,6 +129,10 @@ describe CatalogController, :type => [:controller, :feature] do
 
     it "has journal title" do
       expect(page).to have_xpath("//dt[contains(text(),'Book/Journal Title:')]/following-sibling::dd", :text => "Project Gutenberg")
+    end
+
+    it "has item views" do
+      expect(page).to have_xpath("//dt[contains(text(),'Item views')]/following-sibling::dd", :text => "0")
     end
 
     it "links to the pdf download" do

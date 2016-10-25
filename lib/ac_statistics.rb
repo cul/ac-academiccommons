@@ -24,7 +24,7 @@ module ACStatistics
   # Copied from Catalog Helper.
   # TODO: Needs to be in a more centralized place.
   def get_count(query_params)
-    results = blacklight_solr.find(query_params)
+    results = repository.search(query_params)
     return results["response"]["numFound"]
   end
 
@@ -161,8 +161,8 @@ module ACStatistics
 
       contdition = month.strftime("%Y-%m") + "%"
 
-      stats[VIEW + month.to_s] = Statistic.count(:group => "identifier", :conditions => ["event = 'View' and identifier IN (?) and at_time like ?", ids, contdition])
-      stats[DOWNLOAD + month.to_s] = Statistic.count(:group => "identifier", :conditions => ["event = 'Download' and identifier IN (?) and at_time like ?", download_ids.values.flatten, contdition])
+      stats[VIEW + month.to_s] = Statistic.group(:identifier).where("event = 'View' and identifier IN (?) and at_time like ?", ids, contdition).count
+      stats[DOWNLOAD + month.to_s] = Statistic.group(:identifier).where("event = 'Download' and identifier IN (?) and at_time like ?", download_ids.values.flatten, contdition).count
 
     end
 
@@ -235,10 +235,10 @@ module ACStatistics
     logger.info "AAMTESTING: in process stats for ids "
     enddate = enddate + 1.months
 
-    stats['View'] = Statistic.count(:group => "identifier", :conditions => ["event = 'View' and identifier IN (?) AND at_time BETWEEN ? and ?", ids, startdate, enddate])
-    stats['Streaming'] = Statistic.count(:group => "identifier", :conditions => ["event = 'Streaming' and identifier IN (?) AND at_time BETWEEN ? and ?", ids, startdate, enddate])
+    stats['View'] = Statistic.group(:identifier).where("event = 'View' and identifier IN (?) AND at_time BETWEEN ? and ?", ids, startdate, enddate).count
+    stats['Streaming'] = Statistic.group(:identifier).where("event = 'Streaming' and identifier IN (?) AND at_time BETWEEN ? and ?", ids, startdate, enddate).count
 
-    stats_downloads = Statistic.count(:group => "identifier", :conditions => ["event = 'Download' and identifier IN (?) AND at_time BETWEEN ? and ?", download_ids.values.flatten, startdate, enddate])
+    stats_downloads = Statistic.group(:identifier).where("event = 'Download' and identifier IN (?) AND at_time BETWEEN ? and ?", download_ids.values.flatten, startdate, enddate).count
 
     download_ids.each_pair do |doc_id, downloads|
       stats['Download'][doc_id] = downloads.collect { |download_id| stats_downloads[download_id] || 0 }.sum
@@ -246,10 +246,10 @@ module ACStatistics
 
     stats['View'] = convertOrderedHash(stats['View'])
 
-    stats['View Lifetime'] = Statistic.count(:group => "identifier", :conditions => ["event = 'View' and identifier IN (?)", ids])
-    stats['Streaming Lifetime'] = Statistic.count(:group => "identifier", :conditions => ["event = 'streaming' and identifier IN (?)", ids])
+    stats['View Lifetime'] = Statistic.group(:identifier).where("event = 'View' and identifier IN (?)", ids).count
+    stats['Streaming Lifetime'] = Statistic.group(:identifier).where("event = 'streaming' and identifier IN (?)", ids).count
 
-    stats_lifetime_downloads = Statistic.count(:group => "identifier", :conditions => ["event = 'Download' and identifier IN (?)" , download_ids.values.flatten])
+    stats_lifetime_downloads = Statistic.group(:identifier).where("event = 'Download' and identifier IN (?)", download_ids.values.flatten).count
 
     download_ids.each_pair do |doc_id, downloads|
       stats['Download Lifetime'][doc_id] = downloads.collect { |download_id| stats_lifetime_downloads[download_id] || 0 }.sum
@@ -317,7 +317,7 @@ module ACStatistics
     if facet_query == nil && q == nil
       return
     else
-      results = blacklight_solr.find( :per_page => 100000,
+      results = repository.search( :per_page => 100000,
                                    :sort => sort,
                                    :q => q,
                                    :fq => facet_query,
@@ -428,7 +428,7 @@ module ACStatistics
 
   def school_pids(school)
 
-    pids_by_institution = blacklight_solr.find(
+    pids_by_institution = repository.search(
                           :qt=>"search",
                           :rows=>20000,
                           :fq=>["{!raw f=organization_facet}" + school],
@@ -459,7 +459,7 @@ module ACStatistics
 
     results = []
     query_params = {:q=>"", :rows=>"0", "facet.limit"=>-1, :"facet.field"=>[facet]}
-    solr_results = blacklight_solr.find(query_params)
+    solr_results = repository.search(query_params)
     subjects = solr_results.facet_counts["facet_fields"][facet]
 
     results << ["" ,""]
@@ -504,30 +504,26 @@ module ACStatistics
     query_params.store("fq", solr_facets_query)
     query_params.store("facet.field", ["pid"])
 
-    return  blacklight_solr.find(query_params)["response"]["docs"]
+    return  repository.search(query_params)["response"]["docs"]
   end
 
 
   def countPidsStatistic(pids_collection, event)
-    count = Statistic.count(:conditions => ["identifier in (?) and event = ?", correct_pids(pids_collection, event), event])
-    return count
+    Statistic.where("identifier in (?) and event = ?", correct_pids(pids_collection, event), event).count
   end
 
 
   def countPidsStatisticByDates(pids_collection, event, startdate, enddate)
-    count = Statistic.count(:conditions => ["identifier in (?) and event = ? and at_time BETWEEN ? and ?", correct_pids(pids_collection, event), event, startdate, enddate])
-    return count
+    Statistic.where("identifier in (?) and event = ? and at_time BETWEEN ? and ?", correct_pids(pids_collection, event), event, startdate, enddate).count
   end
 
   def countDocsByEvent(pids_collection, event)
-    count = Statistic.count(:conditions => ["identifier in (?) and event = ? ", correct_pids(pids_collection, event), event], :group => 'identifier')
-    return count
+    Statistic.group(:identifier).where("identifier in (?) and event = ? ", correct_pids(pids_collection, event), event).count
   end
 
 
   def countDocsByEventAndDates(pids_collection, event, startdate, enddate)
-    count = Statistic.count(:conditions => ["identifier in (?) and event = ? and at_time BETWEEN ? and ? ", correct_pids(pids_collection, event), event, startdate, enddate], :group => 'identifier')
-    return count
+    Statistic.group(:identifier).where("identifier in (?) and event = ? and at_time BETWEEN ? and ? ", correct_pids(pids_collection, event), event, startdate, enddate).count
   end
 
 

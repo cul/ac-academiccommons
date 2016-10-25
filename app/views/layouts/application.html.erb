@@ -10,7 +10,7 @@
 
   <meta name="bitly-verification" content="35191b8f3154"/>
 
-  <%= favicon_link_tag asset_path('favicon-crown.png', :media => "screen,projection", :rel => "shortcut icon", :type => "text/css") %>
+  <%= favicon_link_tag 'favicon-crown.png', :media => "screen,projection", :type => "text/css" %>
 
   <%= stylesheet_link_tag "//fonts.googleapis.com/css?family=Open+Sans:400italic,400,300,600&subset=latin-ext,latin", :media => "screen,projection", :rel => "stylesheet", :type => "text/css" %>
   <%= stylesheet_link_tag "blueprint/screen", :media => "screen,projection"  %>
@@ -201,7 +201,7 @@ _gaq.push(['_trackPageview'],
 </script>
 <% end %>
 
-<%= render :partial=>'layouts/cul-banner' %>
+<%= render :partial=>'layouts/cul_banner' %>
 
 </body>
 </html>

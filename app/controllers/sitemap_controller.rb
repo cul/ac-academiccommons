@@ -1,5 +1,5 @@
 class SitemapController < ApplicationController
-  include Blacklight::SolrHelper
+  include Blacklight::SearchHelper
   after_filter :sweep_cache, :only => :index
   def index
 
@@ -32,7 +32,7 @@ class SitemapController < ApplicationController
     opts[:fl] = "id, record_creation_date"
     opts[:sort] = "record_creation_date desc"
     # this is the upper limit for a single sitemap, see sitemap.org
-    force_to_utf8(blacklight_solr.find(opts))
+    repository.search(opts)
   end
 
   def latest_doc

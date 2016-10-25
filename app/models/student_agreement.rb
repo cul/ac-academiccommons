@@ -1,6 +1,4 @@
 class StudentAgreement < ActiveRecord::Base
-  attr_accessible :years_embargo, :name, :email, :uni, :thesis_advisor, :department
-
 
  def self.to_csv
     CSV.generate do |csv|

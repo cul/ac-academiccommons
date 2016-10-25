@@ -17,9 +17,6 @@ AcademicCommons::Application.configure do
   # Print deprecation notices to the Rails logger
   config.active_support.deprecation = :log
 
-  # Only use best-standards-support built into browsers
-  config.action_dispatch.best_standards_support = :builtin
-
   config.relative_root = ""
 
   config.action_mailer.delivery_method = :file
@@ -27,13 +24,11 @@ AcademicCommons::Application.configure do
   config.base_path = "localhost:3000"
 
   # Do not compress assets
-  config.assets.compress = false
+  #config.assets.compress = false
 
   # Expands the lines which load the assets
   config.assets.debug = true
 
-  #config.gem 'blacklight_oai_provider'
-  #config.gem 'oai'
-
-  config.threadsafe!
+  # Do not eager load code on boot.
+  config.eager_load = false
 end

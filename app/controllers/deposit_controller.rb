@@ -1,11 +1,11 @@
 class DepositController < ApplicationController
-  include Blacklight::SolrHelper
+  include Blacklight::SearchHelper
 
   SELF_DEPOSIT_DIR = "data/self-deposit-uploads"
 
   def submit
     if params[:acceptedAgreement] == "agree"
-      Agreement.create(
+      Agreement.create!(
         :uni => params[:uni],
         :agreement_version => params["AC-agreement-version"],
         :name => params[:name],
