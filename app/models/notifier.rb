@@ -99,7 +99,9 @@ class Notifier < ActionMailer::Base
     attachments.inline[file_name] = {mime_type: 'text/csv', content: content }
    end
 
-    mail(:to => recipients, :from => from, :subject => subject, :body => message)
+    mail(:to => recipients, :from => from, :subject => subject) do |f|
+      f.text { render :text => message }
+    end
   end
 
   def reindexing_results( errors_count, indexed_count, new_items_count, time_id )
