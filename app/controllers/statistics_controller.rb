@@ -309,11 +309,9 @@ class StatisticsController < ApplicationController
 
     results = repository.search(:per_page => 100000, :sort => "title_display asc" , :fq => "author_uni:#{author_id}", :fl => "title_display,id", :page => 1)["response"]["docs"]
     ids = results.collect { |r| r['id'].to_s.strip }
-    fedora_server = Cul::Fedora::Server.new(fedora_config)
     download_ids = Hash.new { |h,k| h[k] = [] }
     ids.each do |doc_id|
-      download_ids[doc_id] |= fedora_server.item(doc_id).list_members.collect(&:pid)
-#      download_ids[doc_id] |=  fedora_server.item(doc_id).described_by.collect(&:pid)
+      download_ids[doc_id] |= ActiveFedora::Base.find(doc_id).list_members.collect(&:pid)
     end
     stats = Hash.new { |h,k| h[k] = Hash.new { |h,k| h[k] = 0 }}
     totals = Hash.new { |h,k| h[k] = 0 }
