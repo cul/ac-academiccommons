@@ -1,6 +1,6 @@
 class CreateEventlogs < ActiveRecord::Migration
   def self.up
-    create_table :eventlogs do |t|
+    create_table(:eventlogs, { id: false }) do |t|
       t.integer    :id
       t.string     :event_name
       t.string     :user_name
