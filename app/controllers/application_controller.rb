@@ -22,14 +22,6 @@ class ApplicationController < ActionController::Base
     @solr_config ||= Rails.configuration.solr
   end
 
-  def fedora_server
-    @fedora_server ||= Cul::Fedora::Server.new(fedora_config)
-  end
-
-  def solr_server
-    @solr_server ||= Cul::Fedora::Solr.new(solr_config)
-  end
-
   def relative_root
     Rails.configuration.relative_root || ""
   end
