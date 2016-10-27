@@ -189,6 +189,7 @@ GEM
     kaminari (0.17.0)
       actionpack (>= 3.0.0)
       activesupport (>= 3.0.0)
+    libv8 (3.16.14.15)
     link_header (0.0.8)
     linkeddata (1.99.0)
       equivalent-xml (~> 0.6)
@@ -334,6 +335,7 @@ GEM
       rdf (~> 1.1, >= 1.1.10)
     rdf-xsd (1.99.0)
       rdf (~> 1.99)
+    ref (2.0.0)
     request_store (1.3.1)
     rest-client (2.0.0)
       http-cookie (>= 1.0.2, < 2.0)
@@ -415,6 +417,9 @@ GEM
       net-ssh (>= 2.8.0)
     stomp (1.4.3)
     sxp (0.1.5)
+    therubyracer (0.12.2)
+      libv8 (~> 3.16.14.0)
+      ref
     thor (0.19.1)
     thread_safe (0.3.5)
     tilt (2.0.5)
@@ -476,6 +481,7 @@ DEPENDENCIES
   sass-rails
   spring
   sqlite3 (>= 1.3.5)
+  therubyracer
   uglifier
   unicode
 
