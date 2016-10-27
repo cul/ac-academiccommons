@@ -337,7 +337,7 @@ begin
     per_page = 1 if per_page < 1
     current_page = (response.start / per_page).ceil + 1
     num_pages = (response.total / per_page.to_f).ceil
-    Struct.new(:current_page, :num_pages, :limit_value).new(current_page, num_pages, per_page)
+    Struct.new(:current_page, :num_pages, :limit_value, :total_pages).new(current_page, num_pages, per_page, num_pages)
   end
 
   # Equivalent to kaminari "paginate", but takes an RSolr::Response as first argument.
