@@ -69,8 +69,14 @@ RSpec.describe Cul::Fedora::Item do
       item
     end
     let(:mods_fixture) { File.read('spec/fixtures/actest_3/mods.xml') }
-    let(:expected_json) { JSON.load File.read('spec/fixtures/actest_1/to_solr.json') }
+    let(:expected_json) do
+      json = JSON.load File.read('spec/fixtures/actest_1/to_solr.json')
+      json["described_by_ssim"] = ["info:fedora/#{descriptor}/#{descriptor_ds}"]
+      json
+    end
     context "MODSMetadata" do
+      let(:descriptor) { "actest:3" }
+      let(:descriptor_ds) { "CONTENT" }
       let(:metadata) do
         meta = Cul::Fedora::Item.new(server: fedora_config, pid: "actest:3")
         allow(meta).to receive(:datastream).with("CONTENT").and_return mods_fixture
@@ -87,6 +93,8 @@ RSpec.describe Cul::Fedora::Item do
       end
     end
     context "descMetadata" do
+      let(:descriptor) { "actest:1" }
+      let(:descriptor_ds) { "descMetadata" }
       let(:options) { {} }
       before do
         allow(item).to receive(:described_by).and_return([])

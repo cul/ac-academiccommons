@@ -133,6 +133,10 @@ describe CatalogController, :type => :feature do
       expect(page).to have_xpath("//dt[contains(text(),'Item views')]/following-sibling::dd", :text => "0")
     end
 
+    it "links to the MODS download" do
+      expect(page).to have_css("a[href=\"/download/fedora_content/show_pretty/actest:3/CONTENT/actest3_description.xml?data=meta\"]", :text => "text")
+    end
+
     it "links to the pdf download" do
       click_on 'alice_in_wonderland.pdf'
       expect(page.response_headers['X-Accel-Redirect']).to match /\/repository_download\/.*\/actest:2\/CONTENT$/

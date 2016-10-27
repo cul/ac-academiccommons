@@ -163,9 +163,12 @@ module Cul
         #Net::HTTP.get_response(URI(change_resourse_state_url))
       end
 
-      def descMetadata_content
+      def descMetadata_datastream
         meta = described_by.first
-        meta ? meta.datastream("CONTENT") : datastream("descMetadata")
+        meta ? DatastreamProxy.new(meta, "CONTENT") : DatastreamProxy.new(self, "descMetadata")
+      end
+      def descMetadata_content
+        descMetadata_datastream.content
       end
 
       def index_for_ac2(options = {})
@@ -195,6 +198,19 @@ module Cul
 
       def to_s
         @pid
+      end
+      class DatastreamProxy
+        attr_accessor :item, :dsid
+        delegate :pid, to: :item
+
+        def initialize(item, dsid)
+          self.item = item
+          self.dsid = dsid
+        end
+
+        def content
+          item.datastream(dsid)
+        end
       end
     end
   end
