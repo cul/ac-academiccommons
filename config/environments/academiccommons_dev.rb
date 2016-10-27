@@ -1,58 +1,8 @@
+require Rails.root.join("config/environments/academiccommons_prod")
+
 AcademicCommons::Application.configure do
-  # Settings specified here will take precedence over those in config/application.rb
-
-  # The test environment is used exclusively to run your application's
-  # test suite.  You never need to work with it otherwise.  Remember that
-  # your test database is "scratch space" for the test suite and is wiped
-  # and recreated between test runs.  Don't rely on the data there!
-  config.cache_classes = true
-
-  # Eager load code on boot. This eager loads most of Rails and
-  # your application in memory, allowing both threaded web servers
-  # and those relying on copy on write to perform better.
-  # Rake tasks automatically ignore this option for performance.
-  config.eager_load = true
-
-  # Log error messages when you accidentally call methods on nil.
-  config.whiny_nils = true
-
-  # Show full error reports and disable caching
-  config.consider_all_requests_local       = false
-  config.action_controller.perform_caching = false
-
-  # Disable request forgery protection in test environment
-  config.action_controller.allow_forgery_protection    = false
-
-
-  # Tell Action Mailer not to deliver emails to the real world.
-  # The :test delivery method accumulates sent emails in the
-  # ActionMailer::Base.deliveries array.
-  config.action_mailer.delivery_method = :smtp
-  config.action_mailer.smtp_settings = {
-    :address => ENV['SMTP_ADDRESS'],
-    :domain => ENV['SMTP_DOMAIN'],
-    :port => ENV['SMTP_PORT']
-  }
-
-
-  # Use SQL instead of Active Record's schema dumper when creating the test database.
-  # This is necessary if your schema can't be completely dumped by the schema dumper,
-  # like if you have constraints or database-specific column types
-  # config.active_record.schema_format = :sql
-
   # Print deprecation notices to the stderr
   config.active_support.deprecation = :log
-
-  config.relative_root = ''
-
-  config.base_path = "all-nginx-dev1.cul.columbia.edu"
-
-  # Configure static asset server for tests with Cache-Control for performance
-  config.serve_static_assets = true
-  config.static_cache_control = "public, max-age=3600"
-
-  # Allow pass debug_assets=true as a query parameter to load pages with unpackaged assets
-  config.assets.allow_debugging = true
 
   # Expands the lines which load the assets
   config.assets.debug = true
@@ -61,4 +11,9 @@ AcademicCommons::Application.configure do
   # Checks for improperly declared sprockets dependencies.
   # Raises helpful error messages.
   config.assets.raise_runtime_errors = true
+
+  # Application specific configuration.
+  config.analytics_enabled = false
+  config.base_path = "all-nginx-dev1.cul.columbia.edu"
+  config.prod_environment = false
 end

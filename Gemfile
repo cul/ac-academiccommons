@@ -45,6 +45,7 @@ gem 'uglifier'
 
 gem 'mysql', '>= 2.8.1'
 
+gem "therubyracer"
 
 group :development do
   gem 'spring'

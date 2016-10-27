@@ -52,22 +52,20 @@ module AcademicCommons
     config.logger = Logger.new("#{Rails.root}/log/#{Rails.env}.log", 50, 2048000)
     #config.logger = Logger.new("#{Rails.root}/log/#{Rails.env}.log", 'daily')
 
+    # Always throw errors if there is a problem sending an email.
+    config.action_mailer.raise_delivery_errors = true
+
+    ### Application specific configuration.
+
+    # Locally used variable. TODO: Remove its use from the application.
+    config.relative_root = ""
+    config.prod_environment = false
+
     # Analytics disabled by default. Google analytics should be enabled in a
     # per-environment basis.
     config.analytics_enabled = false
 
     config.related_content_solr_url = "http://***REMOVED***:8080/solr-1.5/ac_plus"
     config.related_content_show_size = "3"
-
-    config.prod_environment = false
-
-    # Always throw errors if there is a problem sending an email.
-    config.action_mailer.raise_delivery_errors = true
-
-    # Enable the asset pipeline.
-    config.assets.enabled = true
-
-    # Version of your assets, change this if you want to expire all your assets
-    config.assets.version = '1.0'
   end
 end
