@@ -72,6 +72,7 @@ GEM
       execjs
     bcp47 (0.3.3)
       i18n
+    bcrypt (3.1.11)
     blacklight (5.19.2)
       bootstrap-sass (~> 3.2)
       deprecation
@@ -83,6 +84,7 @@ GEM
       autoprefixer-rails (>= 5.2.1)
       sass (>= 3.3.4)
     builder (3.2.2)
+    cancan (1.6.10)
     capistrano (3.4.0)
       i18n
       rake (>= 10.0.0)
@@ -122,10 +124,23 @@ GEM
     compass-import-once (1.0.5)
       sass (>= 3.2, < 3.5)
     concurrent-ruby (1.0.2)
+    cul_omniauth (0.5.2)
+      cancan
+      devise-guests (~> 0.3)
+      omniauth-cas
+      rails (~> 4.1)
     daemons (1.2.4)
     database_cleaner (1.5.3)
     deprecation (0.2.2)
       activesupport
+    devise (4.2.0)
+      bcrypt (~> 3.0)
+      orm_adapter (~> 0.1)
+      railties (>= 4.1.0, < 5.1)
+      responders
+      warden (~> 1.2.3)
+    devise-guests (0.5.0)
+      devise
     diff-lcs (1.2.5)
     domain_name (0.5.20160826)
       unf (>= 0.0.5, < 1.0.0)
@@ -160,6 +175,7 @@ GEM
     googlecharts (1.6.12)
     haml (4.0.7)
       tilt
+    hashie (3.4.6)
     hooks (0.4.1)
       uber (~> 0.0.14)
     htmlentities (4.3.4)
@@ -243,6 +259,14 @@ GEM
       activesupport
       nokogiri (>= 1.4.2)
       solrizer (~> 3.3)
+    omniauth (1.3.1)
+      hashie (>= 1.2, < 4)
+      rack (>= 1.0, < 3)
+    omniauth-cas (1.1.1)
+      addressable (~> 2.3)
+      nokogiri (~> 1.5)
+      omniauth (~> 1.2)
+    orm_adapter (0.5.0)
     poltergeist (1.11.0)
       capybara (~> 2.1)
       cliver (~> 0.3.1)
@@ -331,6 +355,8 @@ GEM
       rdf (~> 1.99)
     ref (2.0.0)
     request_store (1.3.1)
+    responders (2.3.0)
+      railties (>= 4.2.0, < 5.1)
     rest-client (2.0.0)
       http-cookie (>= 1.0.2, < 2.0)
       mime-types (>= 1.16, < 4.0)
@@ -427,6 +453,8 @@ GEM
       unf_ext
     unf_ext (0.0.7.2)
     unicode (0.4.4.2)
+    warden (1.2.6)
+      rack (>= 1.0)
     websocket-driver (0.6.4)
       websocket-extensions (>= 0.1.0)
     websocket-extensions (0.1.2)
@@ -450,6 +478,7 @@ DEPENDENCIES
   capistrano-rvm (~> 0.1)
   capybara (~> 2.2)
   compass
+  cul_omniauth
   database_cleaner
   dotenv-rails
   fancybox2-rails

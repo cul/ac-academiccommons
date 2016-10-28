@@ -21,6 +21,7 @@ gem 'httpclient','~>2.6'
 gem 'multipart-post', '~>2.0.0'
 gem 'nokogiri', '1.6.0'
 gem 'net-ldap', '0.3.1'
+gem 'cul_omniauth'
 
 # This gem needs to be a requirement of blacklight_oai_provider
 gem "oai" #, '>=0.2.5', :git =>"git@github.com:cul/oai-new-valid.git"
