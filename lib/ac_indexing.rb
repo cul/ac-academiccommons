@@ -6,7 +6,7 @@ require "stdout_logger"
  require File.expand_path(File.dirname(__FILE__) + '../../lib/cul-fedora/solr.rb')
 
 class ACIndexing
-  
+
   def self.delete_index
     logger = Logger.new(STDOUT)
     logger.info "Deleting Solr index..."
@@ -63,9 +63,9 @@ class ACIndexing
   end
 
   def self.reindex(options = {})
-    
+
     start_time = Time.new
-    
+
     collections = options.delete(:collections)
     items = options.delete(:items)
     # skip isn't being passed in to this function in any implementation, but it accepts an array of PIDs to ignore
@@ -77,7 +77,7 @@ class ACIndexing
     delete_removed = as_boolean(options.delete(:delete_removed))
     log_stdout = as_boolean(options.delete(:log_stdout))
     log_level = options.delete(:log_level) || Logger::INFO
-    time_id = options.delete(:time_id) || Time.new.strftime("%Y%m%d-%H%M%S") 
+    time_id = options.delete(:time_id) || Time.new.strftime("%Y%m%d-%H%M%S")
     init_logger(log_stdout, log_level, time_id)
 
     executed_by = options.delete(:executed_by) || "UNKNOWN USER"
@@ -102,7 +102,7 @@ class ACIndexing
     logger.info "Solr: " + solr_config.inspect
 
     if(collections)
-      collections = collections.split(";")      
+      collections = collections.split(";")
       collections = collections.collect { |pid| ActiveFedora::Base.find(pid) }
     end
 
@@ -132,7 +132,7 @@ class ACIndexing
       group_delete_query = group.join(' OR ')
       rsolr.delete_by_query(group_delete_query)
     end
-    
+
     solr_params = {
       :collections => collections,
       :items => items, :format => "ac2",
@@ -141,8 +141,11 @@ class ACIndexing
       :delete_removed => delete_removed,
       :overwrite => overwrite, :ignore => ignore, :skip => skip
     }
-    collections.each do |collection|
-      collection.list_members(true).each { |pid| items << pid }
+    
+    if collections
+      collections.each do |collection|
+        collection.list_members(true).each { |pid| items << pid }
+      end
     end
 
     items.uniq!
@@ -152,7 +155,7 @@ class ACIndexing
     new_items = []
     doc_statuses = Hash.new { |h,k| h[k] = [] }
     errors = []
-  
+
     if delete_removed == true
       delete_removed_objects(items)
     end
@@ -172,7 +175,7 @@ class ACIndexing
           next
         end
       else
-        items_not_in_solr << item  
+        items_not_in_solr << item
       end
 
       logger.info "Indexing #{item}..."
@@ -262,7 +265,7 @@ class ACIndexing
   end
 
   def self.as_boolean(value)
-    if(value.nil?) 
+    if(value.nil?)
       return false
     end
     return [true, "true", 1, "1", "T", "t"].include?(value.class == String ? value.downcase : value)
