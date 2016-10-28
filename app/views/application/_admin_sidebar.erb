@@ -1,23 +1,23 @@
 <% content_for :sidebar do %>
   <h3>Administration</h3>
   <div class="box home-side">
-    <div><%= link_to "Edit Alert Message", admin_edit_alert_message %></div>
-    <div><%= link_to "Self-Deposits", admin_deposit %></div>
-    <div><%= link_to "Author Agreements", admin_agreements %></div>
-    <div><%= link_to "Student Agreements", admin_student_agreements %></div>
+    <div><%= link_to "Edit Alert Message", admin_edit_alert_message_path %></div>
+    <div><%= link_to "Self-Deposits", admin_deposit_path %></div>
+    <div><%= link_to "Author Agreements", admin_agreements_path %></div>
+    <div><%= link_to "Student Agreements", admin_student_agreements_path %></div>
 
     <div style="padding: 10px 1px 0px 0px; font-size: 1.2em;">Index Management</div>
-    <div><%= link_to "Ingest/Update Data", admin_ingest %></div>
-    <div><%= link_to "Ingest History", logs_ingest_history %></div>
+    <div><%= link_to "Ingest/Update Data", admin_ingest_path %></div>
+    <div><%= link_to "Ingest History", logs_ingest_history_path %></div>
 
     <div style="padding: 10px 0px 1px 0px; font-size: 1.2em;">Statistics & Reports</div>
-    <div><%= link_to "Summary Reports", statistics_generic_statistics %></div>
-    <div><%= link_to "Detail Report", statistics_detail_report %></div>
-    <div><%= link_to "School Statistics", statistics_school_stats %></div>
-    <div><%= link_to "Send Author Reports", statistics_all_author_monthlies %></div>
-    <div><%= link_to "History of Sent Author Reports", logs_all_author_monthly_reports_history %></div>
+    <div><%= link_to "Summary Reports", statistics_generic_statistics_path %></div>
+    <div><%= link_to "Detail Report", statistics_detail_report_path %></div>
+    <div><%= link_to "School Statistics", statistics_school_statistics_path %></div>
+    <div><%= link_to "Send Author Reports", statistics_all_author_monthlies_path %></div>
+    <div><%= link_to "History of Sent Author Reports", logs_all_author_monthly_reports_history_path %></div>
 
     <div style="padding: 10px 0px 1px 0px; font-size: 1.2em;"></div>
-    <div><%= link_to "Email Opt-out List", email_preferences %></div>
+    <div><%= link_to "Email Opt-out List", email_preferences_path %></div>
   </div>
 <% end %>
