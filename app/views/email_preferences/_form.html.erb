@@ -1,5 +1,15 @@
+<% if @email_preference.errors.any? %>
+  <div id="error_explanation">
+    <h2><%= pluralize(@email_preference.errors.count, "error") %> prohibited this article from being saved:</h2>
+    <ul>
+      <% @article.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>
+
 <%= form_for @email_preference do |f| %>
-  <%= f.error_messages %>
   <p>
     <%= f.label :author %>
     <br/>
