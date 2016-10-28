@@ -11,14 +11,11 @@ AcademicCommons::Application.routes.draw do
 
   blacklight_for :catalog
 
-  # resources :dmcas, path: "dmca"
   get '/copyright_infringement_notice', to: 'dmcas#new', as: 'dmcas'
-  post '/copyright_infringement_notice', to: 'dmcas#create' #, as: 'dmcas'
+  post '/copyright_infringement_notice', to: 'dmcas#create'
   get '/notice_received', to: 'dmcas#index'
 
-
   resources :email_preferences, :reports
-
 
   get '/download/fedora_content/:download_method/:uri/:block/:filename', :to => 'download#fedora_content', :as => "fedora_content",
     :block => /(DC|CONTENT|SOURCE)/,
@@ -62,10 +59,6 @@ AcademicCommons::Application.routes.draw do
 
   get '/emails/get_csv_email_form', :to => 'emails#get_csv_email_form'
 
-  #match ':controller/:action'
-  #match ':controller/:action/:id'
-  #match ':controller/:action/:id.:format'
-
   get '/sitemap.xml', :to => 'sitemap#index', :format => 'xml'
 
   get '/logs/all_author_monthly_reports_history', :to => 'logs#all_author_monthly_reports_history'
@@ -76,7 +69,6 @@ AcademicCommons::Application.routes.draw do
 
   get '/login',          :to => 'user_sessions#new',          :as => 'new_user_session'
   get '/wind_logout',    :to => 'user_sessions#destroy',      :as => 'destroy_user_session'
-  # match 'account',        :to => 'application#account',     :as => 'edit_user_registration'
 
   get '/about', :to => 'info#about', :as => 'about'
 end
