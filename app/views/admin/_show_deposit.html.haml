@@ -1,12 +1,12 @@
 %p
-  = ('<a href="' + relative_root + '/admin/deposits">&laquo; Back to Self-deposits</a>').html_safe
+  = ('<a href="' + relative_root + '/admin/deposit">&laquo; Back to Self-deposits</a>').html_safe
 
 %h3
   = @deposit.title
-  
+
 - if(@deposit.archived)
   %p
-    = "THIS DEPOSIT IS ARCHIVED"  
+    = "THIS DEPOSIT IS ARCHIVED"
 
 %table
   %tbody

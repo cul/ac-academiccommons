@@ -339,4 +339,36 @@ class CatalogController < ApplicationController
     end
   end
 
+  def custom_results
+
+   bench_start = Time.now
+
+   if (!params[:id].nil?)
+     params[:id] = nil
+   end
+
+   params[:page] = nil
+   params[:q] = (params[:q].nil?) ? "" : params[:q].to_s
+   params[:sort] = (params[:sort].nil?) ? "record_creation_date desc" : params[:sort].to_s
+   params[:rows] = (params[:rows].nil? || params[:rows].to_s == "") ? ((params[:id].nil?) ? blacklight_config[:feed_rows] : params[:id].to_s) : params[:rows].to_s
+
+   extra_params = {}
+   extra_params[:fl] = "title_display,id,author_facet,author_display,record_creation_date,handle,abstract,author_uni,subject_facet,department_facet,genre_facet"
+
+   if (params[:f].nil?)
+     solr_response = repository.search(params.merge(extra_params))
+   else
+     solr_response = repository.search(self.solr_search_params(params).merge(extra_params))
+   end
+
+   document_list = solr_response.docs.collect {|doc| SolrDocument.new(doc, solr_response)}
+
+   document_list.each do |doc|
+    doc[:pub_date] = Time.parse(doc[:record_creation_date].to_s).to_s(:rfc822)
+   end
+
+   logger.info("Solr fetch: #{self.class}#custom_results (#{'%.1f' % ((Time.now.to_f - bench_start.to_f)*1000)}ms)")
+
+   return [solr_response, document_list]
+  end
 end
