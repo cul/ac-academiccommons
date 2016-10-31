@@ -388,30 +388,6 @@ module CatalogHelper
      return urls
   end
 
-
-  def related_links
-
-      if @document["genre_facet"][0] != "Dissertations" && @document["genre_facet"][0] != "Master's theses"
-        return []
-      end
-
-      if @document['originator_department'] == nil
-        return []
-      end
-
-      cu_department = @document['originator_department'][0]
-
-      rsolr = RSolr.connect :url => Rails.application.config.related_content_solr_url
-      list_size = Rails.application.config.related_content_show_size
-      search = rsolr.select :params => { :q => 'cu_department:"' + cu_department + '"', :qt => "document", :start => 0, :rows => list_size, :sort => "date_ssued desc"}
-
-      search = search["response"]
-      search = search["docs"]
-
-      return search
-
-  end
-
   def itemprop_attribute(name)
     blacklight_config.show_fields[name][:itemprops]
   end

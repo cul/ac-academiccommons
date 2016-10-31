@@ -64,8 +64,5 @@ module AcademicCommons
     # Analytics disabled by default. Google analytics should be enabled in a
     # per-environment basis.
     config.analytics_enabled = false
-
-    config.related_content_solr_url = "http://***REMOVED***:8080/solr-1.5/ac_plus"
-    config.related_content_show_size = "3"
   end
 end
