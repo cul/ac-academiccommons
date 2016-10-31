@@ -1,10 +1,5 @@
 require "stdout_logger"
 
-# used for local testing of cul-fedora gem (comment out for normal deployment)
- require File.expand_path(File.dirname(__FILE__) + '../../lib/cul-fedora/item.rb')
- require File.expand_path(File.dirname(__FILE__) + '../../lib/cul-fedora/server.rb')
- require File.expand_path(File.dirname(__FILE__) + '../../lib/cul-fedora/solr.rb')
-
 class ACIndexing
 
   def self.delete_index
@@ -182,6 +177,11 @@ class ACIndexing
       begin
         i = ActiveFedora::Base.find(item)
         i.update_index
+        i.list_members.each do |resource|
+          logger.info("indexing resource: ")
+          logger.info(resource.to_solr)
+          resource.update_index
+        end
         doc_statuses[:success] << item
         if(items_not_in_solr.include? i.pid)
           new_items << i.pid

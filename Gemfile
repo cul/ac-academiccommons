@@ -4,6 +4,7 @@ gem 'rails', '4.2.7.1'
 
 # Hydra-Related Gems
 gem 'blacklight', '~> 5.19.0'
+gem 'rsolr-ext'
 gem 'active-fedora', '~>8.2'
 
 gem 'blacklight_oai_provider', '>=0.2.4', :git =>"git@github.com:cul/blacklight_oai_provider.git"
@@ -11,7 +12,6 @@ gem 'sqlite3', '>= 1.3.5'
 gem 'rinku', '~> 1.3.0', :require => 'rails_rinku'
 gem 'authlogic'
 gem 'authlogic_wind'
-gem 'cul-fedora', '~> 1.0.3'
 gem 'garb' # no longer maintained!
 gem 'googlecharts'
 gem 'haml', '>= 4.0.7'

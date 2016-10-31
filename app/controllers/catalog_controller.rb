@@ -17,6 +17,7 @@ class CatalogController < ApplicationController
 
     config.default_solr_params = {
       :qt => "search",
+      :fq => ["has_model_ssim:\"#{ContentAggregator.to_class_uri}\""],
       :rows => 10
     }
 
@@ -349,6 +350,7 @@ class CatalogController < ApplicationController
 
    params[:page] = nil
    params[:q] = (params[:q].nil?) ? "" : params[:q].to_s
+   params[:fq] = ["has_model_ssim:\"#{ContentAggregator.to_class_uri}\""]
    params[:sort] = (params[:sort].nil?) ? "record_creation_date desc" : params[:sort].to_s
    params[:rows] = (params[:rows].nil? || params[:rows].to_s == "") ? ((params[:id].nil?) ? blacklight_config[:feed_rows] : params[:id].to_s) : params[:rows].to_s
 

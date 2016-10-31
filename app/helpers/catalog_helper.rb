@@ -25,18 +25,21 @@ module CatalogHelper
     text.to_s.gsub(/([^\s-]{5})([^\s-]{5})/,'\1&#x200B;\2')
   end
 
+  def standard_count_query
+    {:qt=>"standard", :q=>"*:*", :fq => ["has_model_ssim:\"#{ContentAggregator.to_class_uri}\""]}
+  end
+
   def get_total_count
-    query_params = {:qt=>"standard", :q=>"*:*"}
-    return get_count(query_params)
+    return get_count(standard_count_query)
   end
 
   def get_count_by_year
-    query_params = {:qt=>"standard", :q=>"record_creation_date:[NOW-1YEAR TO NOW]"}
+    query_params = standard_count_query.merge(q: "record_creation_date:[NOW-1YEAR TO NOW]")
     return get_count(query_params)
   end
 
   def get_count_by_month
-    query_params = {:qt=>"standard", :q=>"record_creation_date:[NOW-1MONTH TO NOW]"}
+    query_params = standard_count_query.merge(q: "record_creation_date:[NOW-1MONTH TO NOW]")
     return get_count(query_params)
   end
 
@@ -46,7 +49,10 @@ module CatalogHelper
   end
 
   def build_recent_updated_list()
-    query_params = {:q => "", :fl => "title_display, id, author_facet, record_creation_date", :sort => "record_creation_date desc", :start => 0, :rows => 100}
+    query_params = {
+      :q => "", :fl => "title_display, id, author_facet, record_creation_date",
+      :sort => "record_creation_date desc", :fq => ["has_model_ssim:\"#{ContentAggregator.to_class_uri}\""],
+      :start => 0, :rows => 100}
     included_authors = []
     results = []
     return build_distinct_authors_list(query_params, included_authors, results)
@@ -96,26 +102,29 @@ module CatalogHelper
    hc = get_http_client
 
    docs = []
+   member_search = {
+    q: '*:*',
+    qt: 'standard',
+    fl: '*',
+    fq: ["cul_member_of_ssim:\"info:fedora/#{obj_display}\""],
+    rows: 10000,
+    facet: false
+   }
 
-   ri_url = "#{fedora_config["url"]}/risearch"
-   opts = itql_query_opts(ACTIVE_CHILDREN_RI_QUERY.gsub('#{pid}',document['id']))
-   res = hc.post(ri_url,opts)
-   body = res.body
-   docs = JSON.parse(body)["results"]
+   response = Blacklight.solr.get 'select', params: member_search
+   docs = response['response']['docs']
+   logger.info "standard qt got #{docs.length}"
+   docs = response['response']['docs']
    docs.each_with_index.collect do |member, i|
 
      res = {}
-     member_pid = member["member"].sub(uri_prefix, "")
+     member_pid = member["id"].sub(uri_prefix, "")
 
      res[:pid] = member_pid
-     res[:filename] = member['label']
-
-     res[:download_path] = fedora_content_path(:download, res[:pid], 'CONTENT', res[:filename])
-
-     url = fedora_config["url"] + "/get/" + member_pid + "/" + 'CONTENT'
-
-     h_ct = hc.head(url).header["Content-Type"].to_s
-     res[:content_type] = h_ct
+     res[:filename] = member['downloadable_content_label_ss']
+     dsid = member['downloadable_content_dsid_ssi']
+     res[:download_path] = fedora_content_path(:download, member_pid, dsid, res[:filename])
+     res[:content_type] = member['downloadable_content_type_ssi']
 
      results << res
     end
@@ -225,40 +234,24 @@ module CatalogHelper
   end
 
   def get_metadata_list(doc)
-#catch any error and return an error message that resources are unavailable
-#this prevents fedora server outages from making ac2 item page inaccessible
-begin
-   doc["object_display"] = [ "#{fedora_config["url"]}" + "/objects/" + doc["id"] + "/methods" ]
+    #catch any error and return an error message that resources are unavailable
+    #this prevents fedora server outages from making ac2 item page inaccessible
+    begin
+      #TODO: is this side effect on doc necessary?
+      doc["object_display"] = [ "#{fedora_config["url"]}" + "/objects/" + doc["id"] + "/methods" ]
 
-   ri_url = "#{fedora_config["url"]}/risearch"
-   opts = itql_query_opts(DESCRIBED_BY_RI_QUERY.gsub('#{pid}',doc['id']))
-   hc = get_http_client
-   res = hc.post(ri_url,opts)
-   body = res.body
-   json = JSON.parse(body)["results"]
-
-    json << {"DC" => base_id_for(doc)}
-    results = []
-    json.each do  |meta_hash|
-      meta_hash.each do |desc, uri|
+      results = doc["described_by_ssim"].map do |ds_uri|
         res = {}
-        res[:title] = desc
-        res[:id] = trim_fedora_uri_to_pid(uri)
-
-        # TEMP -- we want to ignore DC link for now, maybe forever
-        if(desc == "DC")
-          next
-        end
-
-        block = desc == "DC" ? "DC" : "CONTENT"
-        filename = res[:id].gsub(/\:/,"")
-        filename += "_" + res[:title].downcase
-        filename += ".xml"
-        res[:show_url] = fedora_content_path(:show_pretty, res[:id], block, filename)
-        res[:download_url] = fedora_content_path(:download, res[:id], block, filename)
-        results << res
+        pid = ds_uri.split('/')[1]
+        dsid = ds_uri.split('/')[2]
+        # res[:id] = pid is not used
+        # res[:title] = 'description' is not used
+        # constant suffix for backwards compatibility with AC2
+        filename = "#{pid.gsub(/\:/,"")}_description.xml"
+        res[:show_url] = fedora_content_path(:show_pretty, pid, dsid, filename)
+        res[:download_url] = fedora_content_path(:download, pid, dsid, filename)
+        res
       end
-    end
     rescue
       results = []
     end

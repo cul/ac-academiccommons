@@ -8,15 +8,20 @@ RSpec.describe AcademicCommons::Indexable do
     class_rig.class_eval do
       include AcademicCommons::Indexable
       def belongs_to; end
-      def descMetadata_content; end
+      def descMetadata_datastream; end
       def pid; end
     end
     indexable = class_rig.new
     allow(indexable).to receive(:pid).and_return('actest:1')
     allow(indexable).to receive(:belongs_to).and_return(['collection:3'])
-    allow(indexable).to receive(:descMetadata_content).and_return mods_fixture
+
+    ds_fixture = ActiveFedora::Datastream.new(indexable, 'test_ds')
+    allow(ds_fixture).to receive(:content).and_return mods_fixture
+    allow(indexable).to receive(:descMetadata_datastream).and_return ds_fixture
+
     indexable
   end
+
   subject { indexable.index_descMetadata }
 
   describe "#index_descMetadata" do

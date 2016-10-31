@@ -10,11 +10,12 @@ module AcademicCommons
     REQUIRED_METHODS = [:belongs_to, :descMetadata_content]
 
     def index_descMetadata(solr_doc={})
-      meta = descMetadata_content
+    raise "called index_descMetadata twice" if (@index_descMetadata ? (@index_descMetadata += 1) : (@index_descMetadata = 1)) > 1
+      meta = descMetadata_datastream
       return solr_doc unless meta
+      solr_doc["described_by_ssim"] = ["info:fedora/#{meta.pid}/#{meta.dsid}"]
+      mods = Nokogiri::XML(meta.content).at_css("mods")
 
-      mods = Nokogiri::XML(meta).at_css("mods")
-      
       collections = self.belongs_to
       normalize_space = lambda { |s| s.to_s.strip.gsub(/\s{2,}/," ") }
       search_to_content = lambda { |x| x.kind_of?(Nokogiri::XML::Element) ? x.content.strip : x.to_s.strip }
@@ -29,7 +30,7 @@ module AcademicCommons
       #TODO: Make sure access is indifferent
       add_field.call("id", self.pid) unless (solr_doc["id"] || solr_doc[:id])
       add_field.call("internal_h",  collections.first.to_s + "/")
-      add_field.call("pid", self.pid)
+      add_field.call("pid", self.pid) unless (solr_doc["pid"] || solr_doc[:pid])
       collections.each do |collection|
         add_field.call("member_of", collection)
       end

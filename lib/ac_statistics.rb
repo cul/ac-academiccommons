@@ -212,22 +212,18 @@ module ACStatistics
 
 
   def init_holders(results)
-
     ids = results.collect { |r| r['id'].to_s.strip }
-
-    fedora_server = Cul::Fedora::Server.new(fedora_config)
 
     download_ids = Hash.new { |h,k| h[k] = [] }
 
     ids.each do |doc_id|
-      download_ids[doc_id] |= fedora_server.item(doc_id).list_members.collect(&:pid)
+      download_ids[doc_id] |= ActiveFedora::Base.find(doc_id).list_members.collect(&:pid)
     end
 
     stats = Hash.new { |h,k| h[k] = Hash.new { |h,k| h[k] = 0 }}
     totals = Hash.new { |h,k| h[k] = 0 }
 
     return stats, totals, ids, download_ids
-
   end
 
 
