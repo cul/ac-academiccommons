@@ -480,6 +480,7 @@ DEPENDENCIES
   compass
   cul_omniauth
   database_cleaner
+  devise
   dotenv-rails
   fancybox2-rails
   font-awesome-rails
