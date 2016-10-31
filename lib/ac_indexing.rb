@@ -55,9 +55,8 @@ class ACIndexing
   end
 
   def self.rsolr
-    Rails.application.config.solr
     @rsolr ||= begin
-      url = Rails.application.config.solr[:url]
+      url = Rails.application.config.solr['url']
       RSolr.connect(:url => url)
     end
   end
@@ -141,7 +140,7 @@ class ACIndexing
       :delete_removed => delete_removed,
       :overwrite => overwrite, :ignore => ignore, :skip => skip
     }
-    
+
     if collections
       collections.each do |collection|
         collection.list_members(true).each { |pid| items << pid }
