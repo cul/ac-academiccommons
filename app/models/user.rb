@@ -3,8 +3,8 @@ class User < ActiveRecord::Base
  include Blacklight::User
  include Cul::Omniauth::Users
 
-  before_create :set_personal_info_via_ldap
-  after_initialize :set_personal_info_via_ldap
+  #before_create :set_personal_info_via_ldap
+  #after_initialize :set_personal_info_via_ldap
 
   acts_as_authentic do |c|
     c.validate_password_field = false
