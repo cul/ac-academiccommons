@@ -15,12 +15,17 @@ class User < ActiveRecord::Base
   end
 
   def to_s
-    if first_name
-      first_name.to_s + ' ' + last_name.to_s
-    else
-      login
-    end
+    full_name # TODO: or uni?
   end
+
+  def password
+    Devise.friendly_token[0,20]
+  end
+
+  def password=(*val)
+    # NOOP
+  end
+
 
   # def set_personal_info_via_ldap
   #
