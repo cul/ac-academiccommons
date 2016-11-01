@@ -47,6 +47,7 @@ set :linked_files, fetch(:linked_files, []).push(
   "config/indexing.yml",
   "config/emails.yml",
   "config/google_analytics.yml",
+  "config/secrets.yml",
   "public/robots.txt",
 )
 
