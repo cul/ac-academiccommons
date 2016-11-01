@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161031153218) do
+ActiveRecord::Schema.define(version: 20161101143201) do
 
   create_table "agreements", force: :cascade do |t|
     t.string   "uni",               limit: 255
@@ -161,7 +161,7 @@ ActiveRecord::Schema.define(version: 20161031153218) do
     t.string   "last_name",              limit: 255
     t.boolean  "admin"
     t.string   "login",                  limit: 255,             null: false
-    t.string   "wind_login",             limit: 255
+    t.string   "uid",                    limit: 255,             null: false
     t.string   "email",                  limit: 255
     t.string   "crypted_password",       limit: 255
     t.string   "persistence_token",      limit: 255
@@ -182,6 +182,7 @@ ActiveRecord::Schema.define(version: 20161031153218) do
     t.datetime "last_sign_in_at"
     t.string   "current_sign_in_ip"
     t.string   "last_sign_in_ip"
+    t.string   "provider"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true
@@ -189,6 +190,6 @@ ActiveRecord::Schema.define(version: 20161031153218) do
   add_index "users", ["login"], name: "index_users_on_login"
   add_index "users", ["persistence_token"], name: "index_users_on_persistence_token"
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
-  add_index "users", ["wind_login"], name: "index_users_on_wind_login"
+  add_index "users", ["uid"], name: "index_users_on_uid"
 
 end
