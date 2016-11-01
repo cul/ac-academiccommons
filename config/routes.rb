@@ -11,6 +11,11 @@ AcademicCommons::Application.routes.draw do
 
   blacklight_for :catalog
 
+  # RESTful routes for reindex API, working around Blacklight route camping
+  delete '/solr_documents/:id', to: 'solr_documents#destroy'
+  put '/solr_documents/:id', to: 'solr_documents#update'
+  get '/solr_documents/:id', to: 'solr_documents#show'
+
   get '/copyright_infringement_notice', to: 'dmcas#new', as: 'dmcas'
   post '/copyright_infringement_notice', to: 'dmcas#create'
   get '/notice_received', to: 'dmcas#index'
