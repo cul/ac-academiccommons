@@ -12,7 +12,7 @@ class ApplicationController < ActionController::Base
   before_filter :check_new_session
 
   helper :all # include all helpers, all the time
-  helper_method :user_session, :current_user_session, :current_user, :fedora_config, :solr_config, :relative_root # share some methods w/ views via helpers
+  helper_method :user_session, :current_user_session, :current_user, :fedora_config, :solr_config, # share some methods w/ views via helpers
 
   def fedora_config
     @fedora_config ||= Rails.configuration.fedora
@@ -20,10 +20,6 @@ class ApplicationController < ActionController::Base
 
   def solr_config
     @solr_config ||= Rails.configuration.solr
-  end
-
-  def relative_root
-    Rails.configuration.relative_root || ""
   end
 
   def store_location

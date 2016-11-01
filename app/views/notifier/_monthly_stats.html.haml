@@ -1,6 +1,6 @@
 %br
 
-%div 
+%div
   Usage Statistics for #{@author_id}:
 - unless @results.empty?
   %table
@@ -16,25 +16,25 @@
           %td{:colspan => 2, :align => "center"} #{@start_date} - #{@end_date}
           %td{:colspan => 2, :align => "center"} Lifetime
     %tr
-      %td 
-      %td{:style=>"padding: 0px 10px 0px"} 
+      %td
+      %td{:style=>"padding: 0px 10px 0px"}
         %b Views
       - if @streams
-        %td{:style=>"padding: 0px 10px 0px"} 
-          %b Streams 
-      %td{:style=>"padding: 0px 10px 0px"} 
-        %b Downloads       
+        %td{:style=>"padding: 0px 10px 0px"}
+          %b Streams
+      %td{:style=>"padding: 0px 10px 0px"}
+        %b Downloads
       - if lifetime
-        %td{:style=>"padding: 0px 10px 0px 20px"} 
+        %td{:style=>"padding: 0px 10px 0px 20px"}
           %b Views
         - if @streams
-          %td{:style=>"padding: 0px 10px 0px"} 
-            %b Streams 
+          %td{:style=>"padding: 0px 10px 0px"}
+            %b Streams
         %td{:style=>"padding: 0px 10px 0px"}
           %b Downloads
 
     -current_url = (Rails.application.config.base_path != nil) ? Rails.application.config.base_path : "localhost:3000"
-    -current_url = "#{current_url}#{Rails.application.config.relative_root}"
+    -current_url = "#{current_url}"
     - @results.each_with_index do |item, i|
       - views =  @stats["View"][item["id"]] || 0
       - lifetime_views = @stats["View Lifetime"][item["id"]] || 0
@@ -43,7 +43,7 @@
       - streaming = @stats["Streaming"][item["id"]] || 0
       - lifetime_streaming = @stats["Streaming Lifetime"][item["id"]] || 0
       %tr
-        %td= link_to(item["title_display"], url_for(:host => current_url,  :only_path => false, :controller => :catalog, :action => :show, :id => item["id"])) 
+        %td= link_to(item["title_display"], url_for(:host => current_url,  :only_path => false, :controller => :catalog, :action => :show, :id => item["id"]))
         %td{:style=>"padding: 0px 10px 0px"}
           #{views}
         - if @streams
@@ -61,12 +61,12 @@
             #{lifetime_downloads}
     %tr
       %td
-        %b Totals: 
+        %b Totals:
       %td{:style=>"padding: 0px 10px 0px"}
         %b #{@totals["View"]}
       - if @streams
         %td{:style=>"padding: 0px 10px 0px"}
-          %b #{@totals["Streaming"]} 
+          %b #{@totals["Streaming"]}
       %td{:style=>"padding: 0px 10px 0px"}
         %b #{@totals["Download"]}
       - if lifetime
@@ -81,18 +81,18 @@
   %br
 
   %div
-    %b Views 
-    are the number of times someone has looked at the record for the item in Academic Commons.  
+    %b Views
+    are the number of times someone has looked at the record for the item in Academic Commons.
   - if @streams
     %div
-      %b Streams 
+      %b Streams
     are the number of times someone has looked at the deposited file on the Academic Commons site.
   %div
-    %b Downloads 
+    %b Downloads
     are the number of times someone has made a local copy of the deposited file.
 
   %br
-  
+
 - else
   %br
   No views or downloads for your items during this time period.

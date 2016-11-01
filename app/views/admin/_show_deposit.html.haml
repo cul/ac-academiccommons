@@ -1,5 +1,5 @@
 %p
-  = ('<a href="' + relative_root + '/admin/deposit">&laquo; Back to Self-deposits</a>').html_safe
+  = ('<a href="' + '/admin/deposit">&laquo; Back to Self-deposits</a>').html_safe
 
 %h3
   = @deposit.title
@@ -30,7 +30,7 @@
       %td= @deposit.authors.gsub(/\r\n/, '<br/>').html_safe
     %tr
       %td File
-      %td= ('<a href="' + relative_root + '/admin/deposits/' + @deposit.id.to_s + '/file">Download</a>').html_safe
+      %td= ('<a href="' + '/admin/deposits/' + @deposit.id.to_s + '/file">Download</a>').html_safe
     %tr
       %td Abstract
       %td= @deposit.abstract.gsub(/\r\n/, '<br/>').html_safe

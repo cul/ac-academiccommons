@@ -348,7 +348,7 @@ module ACStatistics
   end
 
   def base_url
-    return "http://" + Rails.application.config.base_path + Rails.application.config.relative_root
+    return "http://" + Rails.application.config.base_path
   end
 
   def setMessageAndVariables
