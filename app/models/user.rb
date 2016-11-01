@@ -26,6 +26,26 @@ class User < ActiveRecord::Base
     # NOOP
   end
 
+  # Overriding method from Cul::Omniauth::Users, to use same record if there isn't a
+  # provider, but the uid matches.
+  def self.find_for_provider(token, provider)
+      return nil unless token['uid']
+      props = {:uid => token['uid'].downcase, provider: provider.downcase}
+      user = find_by(props)
+
+      # Check if there's a user with the same uid without a provider.
+      unless user
+        user = find_by(props.slice(:uid))
+        user.update!(props.slice(:provider))
+      end
+
+      # create new user if one could not be found
+      unless user
+        user = create!(whitelist(props))
+      end
+      user
+  end
+
 
   def set_personal_info_via_ldap
     logger.info "============== /// ======="
