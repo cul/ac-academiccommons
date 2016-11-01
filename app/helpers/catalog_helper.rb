@@ -120,6 +120,7 @@ module CatalogHelper
   # copied from AcademicCommons::Indexable
   # TODO: DRY this logic
   def free_to_read?(document)
+    return false unless document['object_state_ssi'] == 'A'
     free_to_read_start_date = document[:free_to_read_start_date]
     return true unless free_to_read_start_date
     embargo_release_date = Date.strptime(free_to_read_start_date, '%Y-%m-%d')
