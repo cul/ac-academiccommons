@@ -21,7 +21,5 @@ end
 
 require 'capistrano/bundler'
 require 'capistrano/rails/assets'
+require 'capistrano/rails/migrations'
 require 'capistrano/passenger'
-
-# Not doing migrations with capistrano for 1.9.3 apps
-# require 'capistrano/rails/migrations'
