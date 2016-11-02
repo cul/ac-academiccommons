@@ -5,5 +5,6 @@ class AddProviderToUsers < ActiveRecord::Migration
 
     # Renaming :wind_login to :uid, which stores the user's uni.
     rename_column :users, :wind_login, :uid
+    change_column_null :users, :uid, false
   end
 end

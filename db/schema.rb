@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161011135848) do
+ActiveRecord::Schema.define(version: 20161101143201) do
 
   create_table "agreements", force: :cascade do |t|
     t.string   "uni",               limit: 255
@@ -157,28 +157,34 @@ ActiveRecord::Schema.define(version: 20161011135848) do
   end
 
   create_table "users", force: :cascade do |t|
-    t.string   "first_name",        limit: 255
-    t.string   "last_name",         limit: 255
+    t.string   "first_name",             limit: 255
+    t.string   "last_name",              limit: 255
     t.boolean  "admin"
-    t.string   "login",             limit: 255,             null: false
-    t.string   "wind_login",        limit: 255,             null: false
-    t.string   "email",             limit: 255
-    t.string   "crypted_password",  limit: 255
-    t.string   "persistence_token", limit: 255
-    t.integer  "login_count",                   default: 0, null: false
+    t.string   "login",                  limit: 255,             null: false
+    t.string   "uid",                    limit: 255,             null: false
+    t.string   "email",                  limit: 255
+    t.string   "crypted_password",       limit: 255
+    t.string   "persistence_token",      limit: 255
+    t.integer  "sign_in_count",                      default: 0, null: false
     t.text     "last_search_url"
-    t.datetime "last_login_at"
+    t.datetime "last_sign_in_at"
     t.datetime "last_request_at"
-    t.datetime "current_login_at"
-    t.string   "last_login_ip",     limit: 255
-    t.string   "current_login_ip",  limit: 255
-    t.datetime "created_at",                                null: false
-    t.datetime "updated_at",                                null: false
+    t.datetime "current_sign_in_at"
+    t.string   "last_sign_in_ip",        limit: 255
+    t.string   "current_sign_in_ip",     limit: 255
+    t.datetime "created_at",                                     null: false
+    t.datetime "updated_at",                                     null: false
+    t.string   "reset_password_token"
+    t.datetime "reset_password_sent_at"
+    t.datetime "remember_created_at"
+    t.string   "provider"
   end
 
+  add_index "users", ["email"], name: "index_users_on_email", unique: true
   add_index "users", ["last_request_at"], name: "index_users_on_last_request_at"
   add_index "users", ["login"], name: "index_users_on_login"
   add_index "users", ["persistence_token"], name: "index_users_on_persistence_token"
-  add_index "users", ["wind_login"], name: "index_users_on_wind_login"
+  add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+  add_index "users", ["uid"], name: "index_users_on_uid"
 
 end
