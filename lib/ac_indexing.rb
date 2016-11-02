@@ -21,13 +21,8 @@ class ACIndexing
   def self.log_removed
     logger = Logger.new(STDOUT)
 
-    fedora_config = Rails.application.config.fedora
-    fedora_config[:logger] = logger
-    solr_config = Rails.application.config.solr
-    solr_config[:logger] = logger
-
-    logger.info "Fedora: " + fedora_config.inspect
-    logger.info "Solr: " + solr_config.inspect
+    logger.info "Fedora URL: " + Rails.application.config_for(:fedora)['url']
+    logger.info "Solr URL: " + Rails.application.config_for(:solr)['url']
 
     ac_collection = ActiveFedora::Base.find("collection:3")
     member_pids = ac_collection.list_members(true)
@@ -86,14 +81,8 @@ class ACIndexing
     logger.info "Delete items removed from Fedora?: " + delete_removed.to_s
     logger.info "Logging to file and STDOUT?: " + log_stdout.to_s
 
-    fedora_config = Rails.application.config.fedora
-    fedora_config[:logger] = logger
-
-    solr_config = Rails.application.config.solr
-    solr_config[:logger] = logger
-
-    logger.info "Fedora: " + fedora_config.inspect
-    logger.info "Solr: " + solr_config.inspect
+    logger.info "Fedora URL: " + Rails.application.config_for(:fedora)['url']
+    logger.info "Solr URL: "   + Rails.application.config_for(:solr)['url']
 
     if(collections)
       collections = collections.split(";")

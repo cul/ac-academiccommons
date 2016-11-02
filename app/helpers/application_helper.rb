@@ -6,10 +6,6 @@ module ApplicationHelper
     'Academic Commons'
   end
 
-  def relative_root
-    Rails.application.config.relative_root || ""
-  end
-
   def document_type
     @document[CatalogController.blacklight_config[:show][:genre]]
   end
@@ -65,7 +61,7 @@ module ApplicationHelper
       fl_name = last_name_first.html_safe
     end
 
-    raw('<a href="' + relative_root + '/catalog?f[author_facet][]=' + last_name_first + '">' + fl_name + '</a>')
+    raw('<a href="' + '/catalog?f[author_facet][]=' + last_name_first + '">' + fl_name + '</a>')
   end
 
 
@@ -198,7 +194,7 @@ module ApplicationHelper
 
     if(document_show_fields_linked(field_name))
       if(document_show_fields_linked(field_name) == "facet")
-        value = '<a href="' + relative_root + '/catalog?f[' + field_name + '][]=' + value + '">' + value + '</a>'
+        value = '<a href="' + '/catalog?f[' + field_name + '][]=' + value + '">' + value + '</a>'
       elsif(document_show_fields_linked(field_name) == "url")
         value = '<a href="' + value + '">' + value + '</a>'
       end

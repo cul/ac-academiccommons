@@ -14,6 +14,6 @@
         %td= deposit.uni
         %td= deposit.title
         %td= deposit.created_at
-        %td= ('<a href="' + relative_root + "/admin/deposits/" + deposit.id.to_s + '">View</a>').html_safe
-        %td= ('<a href="' + relative_root + "/admin/deposits/" + deposit.id.to_s + '/file">Download</a>').html_safe
-        %td= ('<a href="javascript:$$archiveDeposit(\'' + relative_root + "/admin/deposits?archive=" + deposit.id.to_s + '\');">Archive</a>').html_safe
+        %td= ('<a href="' + "/admin/deposits/" + deposit.id.to_s + '">View</a>').html_safe
+        %td= ('<a href="' + "/admin/deposits/" + deposit.id.to_s + '/file">Download</a>').html_safe
+        %td= ('<a href="javascript:$$archiveDeposit(\'' + "/admin/deposits?archive=" + deposit.id.to_s + '\');">Archive</a>').html_safe
