@@ -217,7 +217,7 @@ module ACStatistics
     download_ids = Hash.new { |h,k| h[k] = [] }
 
     ids.each do |doc_id|
-      download_ids[doc_id] |= ActiveFedora::Base.find(doc_id).list_members.collect(&:pid)
+      download_ids[doc_id] |= ActiveFedora::Base.find(doc_id).list_members(pids_only: true)
     end
 
     stats = Hash.new { |h,k| h[k] = Hash.new { |h,k| h[k] = 0 }}
