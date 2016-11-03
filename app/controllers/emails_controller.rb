@@ -1,6 +1,6 @@
 class EmailsController < ApplicationController
-  before_filter :authenticate_user!
-  before_filter :require_admin
+  #before_filter :authenticate_user!
+  before_filter :require_admin!
 
 
   def get_csv_email_form

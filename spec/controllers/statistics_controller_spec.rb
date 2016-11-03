@@ -145,7 +145,7 @@ describe StatisticsController, :type => :controller do
       it "redirects to new_user_session_path" do
         get :unsubscribe_monthly
         expect(response.status).to eql(302)
-        expect(response.headers['Location']).to eql(new_user_session_url)
+        expect(response).to redirect_to new_user_session_url
       end
     end
     context "logged in as a non-admin user" do

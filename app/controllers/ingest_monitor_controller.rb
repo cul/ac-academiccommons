@@ -1,5 +1,5 @@
 class IngestMonitorController < ApplicationController
-  before_filter :require_admin
+  before_filter :require_admin!
 
   def show
     raise "You must include the log ID" unless params[:id]

@@ -6,4 +6,9 @@ class Users::SessionsController < Devise::SessionsController
   def omniauth_provider_key
     # there is support for :wind, :cas, and :saml in Cul::Omniauth
   end
+
+  # GET /resource/sign_in
+  def new
+    redirect_to user_saml_omniauth_authorize_path
+  end
 end
