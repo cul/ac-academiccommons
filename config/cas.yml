@@ -1,3 +1,6 @@
+#
+# SAML configuration for authentication via cul_omniauth.
+#
 
 cas: &CAS
   host: cas.columbia.edu
@@ -11,17 +14,8 @@ saml: &SAML
   provider: saml
   service_validate_url: /cas/samlValidate
 
-development:
-  <<: *SAML
-
-test:
-  <<: *SAML
-
-academiccommons_dev:
-  <<: *SAML
-
-academiccommons_dev:
-  <<: *SAML
-
-academiccommons_prod:
-  <<: *SAML
+development: *SAML
+test: *SAML
+academiccommons_dev: *SAML
+academiccommons_dev: *SAML
+academiccommons_prod: *SAML

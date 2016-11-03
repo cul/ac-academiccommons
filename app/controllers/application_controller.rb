@@ -7,15 +7,15 @@ class ApplicationController < ActionController::Base
   layout "application"
 
   helper :all # include all helpers, all the time
-  helper_method :current_user, :fedora_config # share some methods w/ views via helpers
+  helper_method :fedora_config # share some methods w/ views via helpers
 
   def fedora_config
     @fedora_config ||= Rails.configuration.fedora
   end
 
-  def store_location
-    session[:return_to] = request.fullpath
-  end
+  # def store_location
+  #   session[:return_to] = request.fullpath
+  # end
 
   def pid_exists?(pid)
     `ps -p #{pid}`.include?(pid)

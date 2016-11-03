@@ -1,9 +1,10 @@
 require 'cul/omniauth/failure_app'
 
 class Cul::Omniauth::FailureApp < Devise::FailureApp
-  # def redirect_url
-  #   send "user_#{self.class.provider}_omniauth_authorize_path"
-  # end
+
+  # Instead of redirecting to omniauth login url, use default Devise behavior.
+  # Overriding Cul::Omniauth::FailureApp v.0.5.2 with Devise v.0.4.x implementation.
+  # TODO: Find a better way to do this.
   def redirect_url
     if warden_message == :timeout
       flash[:timedout] = true if is_flashing_format?
