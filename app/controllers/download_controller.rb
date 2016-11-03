@@ -15,25 +15,26 @@ class DownloadController < ApplicationController
   end
 
   def fedora_content
-
-    url = fedora_config["url"] + "/get/" + params[:uri]+ "/" + params[:block]
+    url = fedora_config["url"] + "/objects/" + params[:uri]+ "/datastreams/" + params[:block] + "/content"
 
     cl = HTTPClient.new
 
-    if(cl.head(url).status != 200)
+    head_response = cl.head(url)
+    if(head_response.status != 200)
       render :nothing => true, :status => 404
       return
     end
-
-    text_result = nil
 
     case params[:download_method]
     when "download"
       if(params[:data] != "meta")
          record_stats
       end
-   when "show_pretty"
-      h_ct = cl.head(url).header["Content-Type"].to_s
+      headers['X-Accel-Redirect'] = x_accel_url(url)
+      render :nothing => true
+    when "show_pretty"
+      h_ct = head_response.header["Content-Type"].to_s
+      text_result = nil
       if h_ct.include?("xml")
         xsl = Nokogiri::XSLT(File.read(Rails.root.to_s + "/app/tools/pretty-print.xsl"))
         xml = Nokogiri(cl.get_content(url))
@@ -41,9 +42,6 @@ class DownloadController < ApplicationController
       else
         text_result = "Non-xml content streams cannot be pretty printed."
       end
-    end
-
-    if text_result
       if params[:xml]
         headers["Content-Type"] = "text/xml"
         render :xml => text_result
@@ -51,7 +49,6 @@ class DownloadController < ApplicationController
         headers["Content-Type"] = "text/plain"
         render :text => text_result
       end
-
     else
       headers['X-Accel-Redirect'] = x_accel_url(url)
       render :nothing => true
@@ -65,7 +62,7 @@ class DownloadController < ApplicationController
 #see http://kovyrin.net/2010/07/24/nginx-fu-x-accel-redirect-remote/
 
   def x_accel_url(url, file_name = nil)
-    uri = "/repository_download/#{url.gsub('https://', '')}"
+    uri = "/repository_download/#{url.gsub(/https?\:\/\//, '')}"
     uri << "?#{file_name}" if file_name
 
      logger.info "=========== " + url
