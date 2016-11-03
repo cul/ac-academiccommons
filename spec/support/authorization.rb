@@ -20,19 +20,18 @@ end
 
 # Shared example to check that a route requires authentication and
 # authorization. When including this example a let statement must be provided
-# with the request.
+# with the http_request.
 #
 # @example Usage
 #   include_examples 'authorization required' do
-#     let(:request) { get :index }
+#     let(:http_request) { get :index }
 #   end
 shared_examples 'authorization required' do
   context "without being logged in" do
     before do
-      allow(@request.env['warden']).to receive(:authenticate!).and_throw(:warden, { :scope => :user })
-      allow(controller).to receive(:user_signed_in?).and_return(false)
+      #allow(request.env['warden']).to receive(:authenticate!).and_throw(:warden, { :scope => :user })
       allow(controller).to receive(:current_user).and_return(nil)
-      request
+      http_request
     end
 
     it "redirects to new_user_session_path" do
@@ -45,7 +44,7 @@ shared_examples 'authorization required' do
     include_context 'mock non-admin user'
 
     before do
-      request
+      http_request
     end
 
     it "fails" do
@@ -58,7 +57,7 @@ shared_examples 'authorization required' do
     include_context 'mock admin user'
 
     before do
-      request
+      http_request
     end
 
     it "succeeds" do

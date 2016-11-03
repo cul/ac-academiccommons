@@ -5,31 +5,31 @@ describe EmailPreferencesController, :type => :controller do
 
   describe 'GET index' do
     include_examples 'authorization required' do
-      let(:request) { get :index }
+      let(:http_request) { get :index }
     end
   end
 
   describe 'GET show' do
     include_examples 'authorization required' do
-      let(:request) { get :show, id: deposit.id }
+      let(:http_request) { get :show, id: deposit.id }
     end
   end
 
   describe 'GET new' do
     include_examples 'authorization required' do
-      let(:request) { get :new }
+      let(:http_request) { get :new }
     end
   end
 
   describe 'POST create' do
-    let(:request) {
+    let(:http_request) {
       post :create, email_preference: { author: 'John Doe', monthly_opt_out: true, email: 'john.doe@example.com' }
     }
 
     context "without being logged in" do
       before do
         allow(controller).to receive(:current_user).and_return(nil)
-        request
+        http_request
       end
 
       it "redirects to new_user_session_path" do
@@ -42,7 +42,7 @@ describe EmailPreferencesController, :type => :controller do
       include_context 'mock non-admin user'
 
       before do
-        request
+        http_request
       end
 
       it "fails" do
@@ -55,7 +55,7 @@ describe EmailPreferencesController, :type => :controller do
       include_context 'mock admin user'
 
       before do
-        request
+        http_request
       end
 
       it "succeeds" do
@@ -66,17 +66,17 @@ describe EmailPreferencesController, :type => :controller do
 
   describe 'GET edit' do
     include_examples 'authorization required' do
-      let(:request) { get :edit, id: deposit.id}
+      let(:http_request) { get :edit, id: deposit.id}
     end
   end
 
   describe 'PUT update' do
-    let(:request) { put :update, id: deposit.id, email_preference: { author: 'John Doe', monthly_opt_out: false, email: 'john.doe@example.com' } }
+    let(:http_request) { put :update, id: deposit.id, email_preference: { author: 'John Doe', monthly_opt_out: false, email: 'john.doe@example.com' } }
 
     context "without being logged in" do
       before do
         allow(controller).to receive(:current_user).and_return(nil)
-        request
+        http_request
       end
 
       it "redirects to new_user_session_path" do
@@ -89,7 +89,7 @@ describe EmailPreferencesController, :type => :controller do
       include_context 'mock non-admin user'
 
       before do
-        request
+        http_request
       end
 
       it "fails" do
@@ -102,7 +102,7 @@ describe EmailPreferencesController, :type => :controller do
       include_context 'mock admin user'
 
       before do
-        request
+        http_request
       end
 
       it "succeeds" do
@@ -116,12 +116,12 @@ describe EmailPreferencesController, :type => :controller do
   end
 
   describe 'DELETE destroy' do
-    let(:request) { delete :destroy, id: deposit.id }
+    let(:http_request) { delete :destroy, id: deposit.id }
 
     context "without being logged in" do
       before do
         allow(controller).to receive(:current_user).and_return(nil)
-        request
+        http_request
       end
 
       it "redirects to new_user_session_path" do
@@ -134,7 +134,7 @@ describe EmailPreferencesController, :type => :controller do
       include_context 'mock non-admin user'
 
       before do
-        request
+        http_request
       end
 
       it "fails" do
@@ -147,7 +147,7 @@ describe EmailPreferencesController, :type => :controller do
       include_context 'mock admin user'
 
       before do
-        request
+        http_request
       end
 
       it "succeeds" do # Redirects to index page on success.

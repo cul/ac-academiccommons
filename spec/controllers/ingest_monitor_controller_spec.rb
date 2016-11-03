@@ -5,7 +5,7 @@ describe IngestMonitorController, :type => :controller do
     include_context 'log'
 
     include_examples 'authorization required' do
-      let(:request) { get :show, :id => id }
+      let(:http_request) { get :show, :id => id }
     end
   end
 end

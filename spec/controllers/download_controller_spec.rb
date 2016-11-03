@@ -5,7 +5,7 @@ RSpec.describe DownloadController, :type => :controller do
     include_context 'log'
 
    include_examples 'authorization required' do
-     let(:request) { get :download_log, :log_folder => 'ac-indexing', :id => id }
+     let(:http_request) { get :download_log, :log_folder => 'ac-indexing', :id => id }
    end
   end
 end
