@@ -31,6 +31,10 @@ describe SolrDocumentsController, :type => [:controller,:integration] do
       get :show, id: 'actest:2', format: 'json'
       expect(response.status).to eql(404)
     end
+    after do
+      put :update, { id: 'actest:1' }
+      put :update, { id: 'actest:2' }
+    end
   end
   describe "destroy" do
     it do
