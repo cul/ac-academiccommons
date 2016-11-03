@@ -63,7 +63,7 @@ describe CatalogHelper do
       let(:document) do
         SolrDocument.new({
           id: 'test:obj',
-          free_to_read_start_date: Date.tomorrow.strftime('%Y-%m-%d'),
+          free_to_read_start_date: Date.today.next_day.strftime('%Y-%m-%d'),
           object_state_ssi: 'I'
         })
       end
@@ -83,7 +83,7 @@ describe CatalogHelper do
       let(:document) do
         SolrDocument.new({
           id: 'test:obj',
-          free_to_read_start_date: Date.yesterday.strftime('%Y-%m-%d'),
+          free_to_read_start_date: Date.today.prev_day.strftime('%Y-%m-%d'),
           object_state_ssi: 'A'
         })
       end
