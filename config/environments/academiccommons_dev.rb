@@ -12,6 +12,9 @@ AcademicCommons::Application.configure do
   # Raises helpful error messages.
   config.assets.raise_runtime_errors = true
 
+  # Setting host so that url helpers can be used in mailer views.
+  config.action_mailer.default_url_options = { host: 'all-nginx-dev1.cul.columbia.edu"' }
+
   # Application specific configuration.
   config.analytics_enabled = false
   config.base_path = "all-nginx-dev1.cul.columbia.edu"

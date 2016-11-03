@@ -11,25 +11,25 @@ describe StatisticsController, :type => :controller do
     end
 
     include_examples 'authorization required' do
-      let(:request) { get :all_author_monthlies }
+      let(:http_request) { get :all_author_monthlies }
     end
   end
 
   describe 'GET detail_report' do
     include_examples 'authorization required' do
-      let(:request) { get :detail_report }
+      let(:http_request) { get :detail_report }
     end
   end
 
   describe 'GET school_docs_size' do
     include_examples 'authorization required' do
-      let(:request) { get :school_docs_size, :school => 'Columbia University' }
+      let(:http_request) { get :school_docs_size, :school => 'Columbia University' }
     end
   end
 
   describe 'GET single_pid_count' do
     include_examples 'authorization required' do
-      let(:request) { get :single_pid_count, :pid => 'actest:1' }
+      let(:http_request) { get :single_pid_count, :pid => 'actest:1' }
     end
 
     context 'when admin user makes request' do
@@ -44,7 +44,7 @@ describe StatisticsController, :type => :controller do
 
   describe 'GET single_pid_stats' do
     include_examples 'authorization required' do
-      let(:request) { get :single_pid_stats }
+      let(:http_request) { get :single_pid_stats }
     end
 
     context 'when admin user makes request' do
@@ -71,49 +71,49 @@ describe StatisticsController, :type => :controller do
 
   describe 'GET school_stats' do
     include_examples 'authorization required' do
-      let(:request) { get :school_stats, :school => 'Columbia University' }
+      let(:http_request) { get :school_stats, :school => 'Columbia University' }
     end
   end
 
   describe 'GET stats_by_event' do
     include_examples 'authorization required' do
-      let(:request) { get :stats_by_event, :event => 'View' }
+      let(:http_request) { get :stats_by_event, :event => 'View' }
     end
   end
 
   describe 'GET docs_size_by_query_facets' do
     include_examples 'authorization required' do
-      let(:request) { get :docs_size_by_query_facets }
+      let(:http_request) { get :docs_size_by_query_facets }
     end
   end
 
   describe 'GET facetStatsByEvent' do
     include_examples 'authorization required' do
-      let(:request) { get :facetStatsByEvent }
+      let(:http_request) { get :facetStatsByEvent }
     end
   end
 
   describe 'GET common_statistics_csv' do
     include_examples 'authorization required' do
-      let(:request) { get :common_statistics_csv, :f => {"author_facet"=>["Carroll, Lewis"]} }
+      let(:http_request) { get :common_statistics_csv, :f => {"author_facet"=>["Carroll, Lewis"]} }
     end
   end
 
   describe 'GET generic_statistics' do
     include_examples 'authorization required' do
-      let(:request) { get :generic_statistics }
+      let(:http_request) { get :generic_statistics }
     end
   end
 
   describe 'GET school_statistics' do
     include_examples 'authorization required' do
-      let(:request) { get :school_statistics }
+      let(:http_request) { get :school_statistics }
     end
   end
 
   describe 'GET send_csv_report' do
     include_examples 'authorization required' do
-      let(:request) {
+      let(:http_request) {
         get :send_csv_report, :f => {"author_facet"=>["Carroll, Lewis"]},
             :email_to => 'example@example.com', :email_from => 'me@example.com'
       }
@@ -145,7 +145,7 @@ describe StatisticsController, :type => :controller do
       it "redirects to new_user_session_path" do
         get :unsubscribe_monthly
         expect(response.status).to eql(302)
-        expect(response.headers['Location']).to eql(new_user_session_url)
+        expect(response).to redirect_to new_user_session_url
       end
     end
     context "logged in as a non-admin user" do

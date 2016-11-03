@@ -26,4 +26,7 @@ AcademicCommons::Application.configure do
 
   # Do not eager load code on boot.
   config.eager_load = false
+
+  # Setting host so that url helpers can be used in mailer views.
+  config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
 end

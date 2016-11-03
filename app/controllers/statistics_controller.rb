@@ -2,8 +2,8 @@ require 'ac_statistics'
 
 class StatisticsController < ApplicationController
   layout "application"
-  before_filter :require_user
-  before_filter :require_admin, :except => :unsubscribe_monthly
+  before_filter :authenticate_user!, :only => :unsubscribe_monthly
+  before_filter :require_admin!, :except => :unsubscribe_monthly
   include Blacklight::SearchHelper
   include ACStatistics
 

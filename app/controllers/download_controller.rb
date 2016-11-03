@@ -5,7 +5,7 @@ class DownloadController < ApplicationController
   include InfoHelper
   include LogsHelper
 
-  before_filter :require_admin, only: :download_log
+  before_filter :require_admin!, only: :download_log
 
 
   def download_log

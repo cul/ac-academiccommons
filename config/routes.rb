@@ -1,4 +1,11 @@
 AcademicCommons::Application.routes.draw do
+  devise_for :users, controllers: { sessions: 'users/sessions', :omniauth_callbacks => "users/omniauth_callbacks" }
+
+  devise_scope :user do
+    get 'sign_in', :to => 'users/sessions#new', :as => :new_user_session
+    get 'sign_out', :to => 'users/sessions#destroy', :as => :destroy_user_session
+  end
+
   root :to => "catalog#index"
 
   get "info/about"
@@ -69,11 +76,6 @@ AcademicCommons::Application.routes.draw do
   get '/logs/all_author_monthly_reports_history', :to => 'logs#all_author_monthly_reports_history'
   get '/logs/log_form', :to => 'logs#log_form'
   get '/logs/ingest_history', :to => 'logs#ingest_history'
-
-  get '/user_sessions/create', :to => 'user_sessions#create'
-
-  get '/login',          :to => 'user_sessions#new',          :as => 'new_user_session'
-  get '/wind_logout',    :to => 'user_sessions#destroy',      :as => 'destroy_user_session'
 
   get '/about', :to => 'info#about', :as => 'about'
 end
