@@ -7,6 +7,12 @@ class DownloadController < ApplicationController
 
   before_filter :require_admin!, only: :download_log
 
+  STANDARD_SEARCH_PARAMS = {
+    qt: 'standard',
+    fl: '*',
+    fq: [],
+    facet: false
+  }
 
   def download_log
     headers["Content-Type"] = "application/octet-stream"
@@ -15,12 +21,34 @@ class DownloadController < ApplicationController
   end
 
   def fedora_content
-    url = fedora_config["url"] + "/objects/" + params[:uri]+ "/datastreams/" + params[:block] + "/content"
+    repository = Blacklight.default_index.connection
+    # get the resource doc and its parent docs
+    # this might be possible in one solr query if we index the info:fedora URI
+    # and use a join clause on cul_member_of OR'd to the id search
+    search_params = STANDARD_SEARCH_PARAMS.merge(
+      q: "id:#{params[:uri].gsub(':','\:')}"
+    )
+    solr_results = repository.get("select", params: search_params)
+    docs = solr_results['response']['docs']
+    # did the resource doc exist? is it active?
+    resource_doc = docs.first
+    resource_doc = SolrDocument.new(resource_doc) if resource_doc
+    fail_fast = resource_doc.nil? || !free_to_read?(resource_doc)
 
-    cl = HTTPClient.new
+    if !fail_fast
+      # are any parent docs active and readable?
+      ids = resource_doc[:cul_member_of_ssim].map { |val| val.split('/').last }
+      ids = ids.map { |val| val.gsub(':','\:') }
+      fail_fast = !any_free_to_read?(ids)
+    end
 
-    head_response = cl.head(url)
-    if(head_response.status != 200)
+    url = fedora_config["url"] + "/objects/" + params[:uri] + "/datastreams/" + params[:block] + "/content"
+
+    cl = HTTPClient.new unless fail_fast
+
+    head_response = cl.head(url) unless fail_fast
+    fail_fast ||= (head_response.status != 200)
+    if fail_fast
       render :nothing => true, :status => 404
       return
     end
@@ -70,7 +98,26 @@ class DownloadController < ApplicationController
     return uri
   end
 
+  # copied from AcademicCommons::Indexable
+  # TODO: DRY this logic
+  def free_to_read?(document)
+    return false unless document['object_state_ssi'] == 'A'
+    free_to_read_start_date = document[:free_to_read_start_date]
+    return true unless free_to_read_start_date
+    embargo_release_date = Date.strptime(free_to_read_start_date, '%Y-%m-%d')
+    current_date = Date.strptime(Time.now.strftime('%Y-%m-%d'), '%Y-%m-%d')
+    current_date > embargo_release_date
+  end
 
+  def any_free_to_read?(ids)
+    repository = Blacklight.default_index.connection
+    search_params = STANDARD_SEARCH_PARAMS.merge(
+      q: "id:(#{ids.join(' OR ')})"
+    )
+    solr_results = repository.get("select", params: search_params)
+    docs = solr_results['response']['docs'].map { |d| SolrDocument.new(d) }
+    docs.detect { |d| free_to_read?(d) }
+  end
 
   private
 
