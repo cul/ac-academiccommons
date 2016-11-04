@@ -8,10 +8,6 @@ module CatalogHelper
 
   delegate :repository, :to => :controller
 
-  def auto_add_empty_spaces(text)
-    text.to_s.gsub(/([^\s-]{5})([^\s-]{5})/,'\1&#x200B;\2')
-  end
-
   def standard_count_query
     {:qt=>"standard", :q=>"*:*", :fq => ["has_model_ssim:\"#{ContentAggregator.to_class_uri}\""]}
   end
@@ -205,19 +201,8 @@ module CatalogHelper
     filename.to_s.split(".").last.strip
   end
 
-  def base_id_for(doc)
-    doc["id"].gsub(/(\#.+|\@.+)/, "")
-  end
-
   def doc_object_method(doc, method)
     doc["object_display"].first + method.to_s
-  end
-
-  def doc_json_method(doc, method)
-    hc = HTTPClient.new
-     hc.ssl_config.verify_mode = OpenSSL::SSL::VERIFY_NONE
-
-    res = JSON.parse(hc.get_content(doc_object_method(doc,method)))
   end
 
   def get_metadata_list(doc)
@@ -254,23 +239,6 @@ module CatalogHelper
    password = fedora_config["password"]
    hc.set_auth(domain, user, password)
    hc
-  end
-  def itql_query_opts(query)
-   {
-    'type'=>'tuples',
-    'lang'=>'itql',
-    'format'=> 'json',
-    'limit' => '',
-    'dt' => 'checked',
-    'query' => query
-   }
-  end
-  def trim_fedora_uri_to_pid(uri)
-    uri.gsub(/info\:fedora\//,"")
-  end
-
-  def resolve_fedora_uri(uri)
-    fedora_config["url"] + "/get" + uri.gsub(/info\:fedora/,"")
   end
 
   ############### Copied from Blacklight CatalogHelper #####################
@@ -393,10 +361,9 @@ module CatalogHelper
     'blacklight-' + document.get(blacklight_config.view_config(document_index_view_type_field).display_type_field).parameterize rescue nil
   end
 
-    # override of blacklight method - when a request for /catalog/BAD_SOLR_ID is made, this method is executed...
-    def invalid_solr_id_error
-        index
-        render "tombstone", :status => 404
-    end
-
+  # override of blacklight method - when a request for /catalog/BAD_SOLR_ID is made, this method is executed...
+  def invalid_solr_id_error
+      index
+      render "tombstone", :status => 404
+  end
 end
