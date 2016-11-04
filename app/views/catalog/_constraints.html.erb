@@ -7,7 +7,7 @@
 
 <%=link_to "Start Search Over".html_safe, catalog_index_path, :id=>"startOverLink" %>
 
-<% if current_user %>
+<% if user_signed_in? && current_user.admin %>
 	<%=link_to "Get Usage Stats".html_safe, "/statistics/detail_report?commit=Get Usage Stats&facet=search_query&search_criteria=" + CGI::escape(request.fullpath), :id=>"startOverLink" %>
 <% end %>
 
