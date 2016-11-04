@@ -45,7 +45,6 @@ set :linked_files, fetch(:linked_files, []).push(
   "config/solr.yml",
   "config/fedora.yml",
   "config/indexing.yml",
-  "config/emails.yml",
   "config/google_analytics.yml",
   "config/secrets.yml",
   "public/robots.txt",
