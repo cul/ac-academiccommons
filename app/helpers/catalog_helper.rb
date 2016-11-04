@@ -264,11 +264,6 @@ module CatalogHelper
   end
 
   #
-  # shortcut for built-in Rails helper, "number_with_delimiter"
-  #
-  def format_num(num); number_with_delimiter(num) end
-
-  #
   # Pass in an RSolr::Response. Displays the "showing X through Y of N" message.
   def render_pagination_info(response, options = {})
       start = response.start + 1
@@ -277,9 +272,9 @@ module CatalogHelper
       num_pages = (response.total / per_page.to_f).ceil
       total_hits = response.total
 
-      start_num = format_num(start)
-      end_num = format_num(start + response.docs.length - 1)
-      total_num = format_num(total_hits)
+      start_num = number_with_delimiter(start)
+      end_num = number_with_delimiter(start + response.docs.length - 1)
+      total_num = number_with_delimiter(total_hits)
 
       entry_name = options[:entry_name] ||
         (response.empty?? 'entry' : response.docs.first.class.name.underscore.sub('_', ' '))
@@ -301,7 +296,7 @@ module CatalogHelper
   # Code should call this method rather than interrogating session directly,
   # because implementation of where this data is stored/retrieved may change.
   def item_page_entry_info
-    "Showing item <b>#{session[:search][:counter].to_i} of #{format_num(session[:search][:total])}</b> from your search.".html_safe
+    "Showing item <b>#{session[:search][:counter].to_i} of #{number_with_delimiter(session[:search][:total])}</b> from your search.".html_safe
   end
 
   # Look up search field user-displayable label

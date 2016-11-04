@@ -96,7 +96,7 @@ module ApplicationHelper
   # :suppress_link => true # do not make it a link, used for an already selected value for instance
   def render_facet_value(facet_solr_field, item, options ={})
     render = link_to_unless(options[:suppress_link], item.value, add_facet_params_and_redirect(facet_solr_field, item.value), :class=>"facet_select")
-    render = render + ("<span class='item_count'> (" + format_num(item.hits) + ")</span>").html_safe
+    render = render + ("<span class='item_count'> (" + number_with_delimiter(item.hits) + ")</span>").html_safe
     render.html_safe
   end
 
@@ -107,7 +107,7 @@ module ApplicationHelper
   # Standard display of a SELECTED facet value, no link, special span
   # with class, and 'remove' button.
   def render_selected_facet_value(facet_solr_field, item)
-    render = link_to((item.value + "<span class='item_count'> (" + format_num(item.hits) + ")</span>").html_safe, remove_facet_params(facet_solr_field, item.value, params), :class=>"facet_deselect")
+    render = link_to((item.value + "<span class='item_count'> (" + number_with_delimiter(item.hits) + ")</span>").html_safe, remove_facet_params(facet_solr_field, item.value, params), :class=>"facet_deselect")
     render = render + render_subfacets(facet_solr_field, item)
     render.html_safe
   end

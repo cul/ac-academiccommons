@@ -3,7 +3,7 @@
     <% if params[:action] == 'index' -%>
       <%= render_pagination_info @response, { :entry_name=>'item' } -%>
     <% else -%>
-      <%= session[:search][:counter].to_i %> of <%= format_num(session[:search][:total]) %> items from your search.
+      <%= session[:search][:counter].to_i %> of <%= number_with_delimiter(session[:search][:total]) %> items from your search.
     <% end -%>
   </div>
 
