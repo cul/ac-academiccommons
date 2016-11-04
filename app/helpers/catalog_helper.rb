@@ -8,19 +8,6 @@ module CatalogHelper
 
   delegate :repository, :to => :controller
 
-  ACTIVE_CHILDREN_RI_QUERY =
-  'select $member $type $label
-   subquery( select $dctype $title from <#ri> where $member <dc:type> $dctype and $member <dc:title> $title order by $dctype )
-   from <#ri> where ($member <http://purl.oclc.org/NET/CUL/memberOf> <info:fedora/#{pid}>)
-   and ($member <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> $type)
-   and ($member <fedora-model:label> $label)
-   and ($member <fedora-model:state> <fedora-model:Active>) order by $member'.gsub("\n",' ')
-
-  DESCRIBED_BY_RI_QUERY =
-  'select $description from <#ri> where
-   $description <http://purl.oclc.org/NET/CUL/metadataFor> <info:fedora/#{pid}>
-   order by $description limit 10 offset 0'.gsub("\n",' ')
-
   def auto_add_empty_spaces(text)
     text.to_s.gsub(/([^\s-]{5})([^\s-]{5})/,'\1&#x200B;\2')
   end
