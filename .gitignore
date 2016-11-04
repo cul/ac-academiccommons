@@ -15,7 +15,6 @@ config/fedora.yml
 config/*.sphinx.conf
 config/s3_credentials.yml
 config/secrets.yml
-config/emails.yml
 config/google_analytics.yml
 jetty
 *~
