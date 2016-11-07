@@ -1,6 +1,6 @@
 <div id="sort-per-page" class="clearfix">
   <div id="page-count">
-    <% if params[:action] == 'index' -%>
+    <% if params[:action] == :index -%>
       <%= render_pagination_info @response, { :entry_name=>'item' } -%>
     <% else -%>
       <%= session[:search][:counter].to_i %> of <%= number_with_delimiter(session[:search][:total]) %> items from your search.

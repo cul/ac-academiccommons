@@ -5,7 +5,7 @@
   %h2 Detail Report
 
 .split_form
-  = form_tag url_for(:controller => "statistics", :action => "detail_report") do
+  = form_tag url_for(:controller => "statistics", :action => :detail_report) do
     <input type="hidden" id="email_template" name="email_template" value="Normal">
 
     %div{:style => "padding: 5px 10px;"}

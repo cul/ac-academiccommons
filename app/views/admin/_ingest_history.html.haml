@@ -2,4 +2,4 @@
 
 %ul
   - @logs.each do |log|
-    %li= link_to log[:time], :controller => "admin", :action => "download_ingest_log", :id => log[:time_id]
+    %li= link_to log[:time], :controller => "admin", :action => :download_ingest_log, :id => log[:time_id]

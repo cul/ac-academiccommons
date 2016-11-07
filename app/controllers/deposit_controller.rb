@@ -41,7 +41,7 @@ class DepositController < ApplicationController
       end
     else
       flash[:notice] = "You must accept the author rights agreement."
-      redirect_to :action => "index"
+      redirect_to :action => :index
     end
   end
 
@@ -64,7 +64,7 @@ class DepositController < ApplicationController
       @message_2 = 'Thank you for accepting our author agreement.'
     else
       flash[:notice] = "You must accept the author rights agreement."
-      redirect_to :action => "agreement_only"
+      redirect_to :action => :agreement_only
     end
   end
 
@@ -74,7 +74,7 @@ class DepositController < ApplicationController
 
     if(params[:acceptedAgreement].empty?)
       flash[:notice] = "You must accept the author rights agreement."
-      redirect_to :action => "student_theses_agreement_only"
+      redirect_to :action => :student_theses_agreement_only
     end
 
     StudentAgreement.create(
