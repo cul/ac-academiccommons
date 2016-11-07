@@ -35,7 +35,7 @@ xml.feed("xmlns" => "http://www.w3.org/2005/Atom",
   # used as an example in opensearch docs
   xml.link( "rel" => "search",
             "type" => "application/opensearchdescription+xml",
-            "href" =>  url_for(:controller=>'catalog',:action => :opensearch, :format => 'xml', :only_path => false))
+            "href" =>  url_for(:controller=>:catalog, :action => :opensearch, :format => 'xml', :only_path => false))
 
   # opensearch response elements
   xml.opensearch :totalResults, @response.total.to_s

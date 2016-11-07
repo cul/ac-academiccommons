@@ -57,4 +57,4 @@
   %p
     %textarea{:style => "width:100%;", :id => "ingest_monitor_content", :name => "/ingest_monitor/" + @existing_ingest_time_id}
   %p
-    = link_to("Cancel Ingest", {:controller => "admin", :action => :ingest, :cancel => @existing_ingest_pid.to_s}, :id => "cancel_ingest_link")
+    = link_to("Cancel Ingest", {:controller => :admin, :action => :ingest, :cancel => @existing_ingest_pid.to_s}, :id => "cancel_ingest_link")

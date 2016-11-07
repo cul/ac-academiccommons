@@ -78,7 +78,7 @@ module ApplicationHelper
     end
     words
   end
- 
+
   def get_last_month_name
     Date.today.ago(1.month).strftime("%B")
   end
@@ -150,19 +150,19 @@ module ApplicationHelper
 
 
   def page_location
-    if params[:controller] == "catalog"
-      if params[:action] == "index" and params[:q].to_s.blank? and params[:f].to_s.blank? and params[:search_field].to_s.blank?
+    if params[:controller] == 'catalog'
+      if params[:action] == 'index' and params[:q].to_s.blank? and params[:f].to_s.blank? && params[:search_field].to_s.blank?
         return "home"
-      elsif params[:action] == "index"
+      elsif params[:action] == 'index'
         return "search_results"
-      elsif params[:action] == "show"
+      elsif params[:action] == 'show'
         return "record_view"
-      elsif params[:action] == "browse" || params[:action] == "browse_department" || params[:action] == "browse_subject"
+      elsif params[:action] == 'browse' || params[:action] == 'browse_department' || params[:action] == 'browse_subject'
         return "browse_view"
       end
-    elsif params[:controller] == "advanced"
+    elsif params[:controller] == 'advanced'
       return "advanced"
-    elsif params[:controller] == "search_history"
+    elsif params[:controller] == 'search_history'
       return "search_history"
     else
       return "unknown"
