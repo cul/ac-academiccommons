@@ -1,11 +1,9 @@
 # -*- encoding : utf-8 -*-
 class CatalogController < ApplicationController
-
   include Blacklight::Catalog
   include BlacklightOaiProvider::ControllerExtension
 
   before_filter :record_view_stats, :only => :show
-  unloadable
 
   before_filter :url_decode_f
 

@@ -57,10 +57,10 @@ h2.search {margin:0; display:inline;}
 
 /* Search Box */
 #search  {
-  text-align: left; 
+  text-align: left;
   font-size: 120%;
   border: 1px solid #AAAAAA;
-  border-radius: 4px 4px 0 0;  
+  border-radius: 4px 4px 0 0;
   -moz-border-radius: 4px 4px 0 0;
   -webkit-border-radius: 4px 4px 0 0;
   padding: 0.66em;
@@ -92,40 +92,40 @@ ul.facet_extended_list li {list-style:none; margin: 0.5em 0;}
 .facet_extended_list .sort_options {
   text-align: right
 }
-.facet_extended_list .prev_next_links { float: left; }
+.facet_pagination .prev_next_links { float: left; }
 
 /* jquery-ui-like buttonsets, but without actually using jquery-ui */
-.facet_extended_list .sort_options .az, .facet_extended_list .sort_options .numeric, .facet_extended_list .next_page, .facet_extended_list .prev_page {
+.facet_pagination .sort_options .az, .facet_pagination .sort_options .numeric, .facet_pagination .next_page, .facet_pagination .prev_page {
   display: inline-block;
-  background: #F6F6F6;  
+  background: #F6F6F6;
   border: 1px solid #CCCCCC;
   padding: 0.2em 1em;
   font-weight: bold;
 }
-.facet_extended_list .next_page, .facet_extended_list .sort_options .numeric {
+.facet_pagination .next_page, .facet_pagination .sort_options .numeric {
   border-radius: 0 4px 4px 0;
   -moz-border-radius: 0 4px 4px 0;
   -webkit-border-radius: 0 4px 4px 0;
 }
-.facet_extended_list .prev_page, .facet_extended_list .sort_options .az {
+.facet_pagination .prev_page, .facet_pagination .sort_options .az {
   border-radius: 4px 0 0 4px;
   -moz-border-radius: 4px 0 0 4px;
   -webkit-border-radius: 4px 0 0 4px;
 }
-.facet_extended_list .prev_next_links .disabled {
+.facet_pagination .prev_next_links .disabled {
   background: none;
   color: gray;
   font-weight: normal;
 }
-.facet_extended_list .sort_options .disabled {
+.facet_pagination .sort_options .disabled {
   /* in this case disabled really means selected */
   background-color: #E2EDFE;
   border:1px solid #C4DAFE;
 }
-.facet_extended_list .sort_options a:hover, .facet_extended_list .prev_next_links a:hover {
-  border: 1px solid #999999; 
-  background: #dadada;  
-  color: #212121; 
+.facet_pagination .sort_options a:hover, .facet_pagination .prev_next_links a:hover {
+  border: 1px solid #999999;
+  background: #dadada;
+  color: #212121;
 }
 
 /* Solr Query */
@@ -139,7 +139,7 @@ ul.facet_extended_list li {list-style:none; margin: 0.5em 0;}
   background-color:#F0F0F0;
   border-style: solid;
   border-color: #AAAAAA;
-  border-width: 0 1px 1px 1px;  
+  border-width: 0 1px 1px 1px;
   border-radius: 0 0 4px 4px;
   -moz-border-radius: 0 0 4px 4px;
   -webkit-border-radius: 0 0 4px 4px;
@@ -153,14 +153,14 @@ ul.facet_extended_list li {list-style:none; margin: 0.5em 0;}
   position: absolute;
   left: 0;
   margin-left: 0.66em;
-  border-bottom: none;  
+  border-bottom: none;
 }
 .pagination .next_page {
   position: absolute;
   right: 0;
   margin-right: 0.66em;
   border-bottom: none;
-  
+
 }
 #results_text {display: none;}
 
@@ -191,7 +191,7 @@ font-weight:bold;
 .pagination a {
   /* leave room so when we show the box on hover, it won't nudge
      everything all over the place. */
-  border: 1px solid transparent;  
+  border: 1px solid transparent;
 }
 .pagination a:hover, .pagination a:focus {
   border:1px solid #000033;
@@ -199,7 +199,7 @@ font-weight:bold;
 }
 
 .page_links {
-  /* centering, taking account of absolutely positioned right/left buttons*/  
+  /* centering, taking account of absolutely positioned right/left buttons*/
   margin-right: 8em;
   margin-left: 8em;
   text-align: center;
@@ -247,7 +247,7 @@ font-weight:bold;
   float: right;
 }
 
-/* 'Document functions', Bookmark/Folder. Appear on both results/index and 
+/* 'Document functions', Bookmark/Folder. Appear on both results/index and
    detail/show views. */
 .documentFunctions { float: right; margin-left: 1em; margin-bottom: 0.5em;}
 .documentFunctions .folder_toggle, .documentFunctions .bookmark_toggle { display: inline; }
@@ -307,11 +307,11 @@ dl.defList dd {float: left; text-align: left; margin: 0; padding: 2px 0; width: 
 }
 
 .search_history td {
-  vertical-align: top; 
+  vertical-align: top;
 }
 
 .search_history .filterName, .search_history .label {
-  color: gray; 
+  color: gray;
 }
 .search_history .constraint {
     margin-right: 2em;
@@ -414,14 +414,14 @@ Search Parameters
   border-left: 1px solid #AAAAAA;
   border-bottom: 1px solid #AAAAAA;
   padding: 1em 0.66em 0em 1em;
-  border-radius:0 0 4px 4px;  
+  border-radius:0 0 4px 4px;
   -moz-border-radius:0 0 4px 4px;
   -webkit-border-radius:0 0 4px 4px;
   margin-bottom: 1.5em;
 }
 
 #appliedParams .label {
-  /* just here for screen-readers, attributes copied from Jquery-ui 
+  /* just here for screen-readers, attributes copied from Jquery-ui
      .ui-helper-hidden-accessible */
   position: absolute;
   left: -100000000px;
@@ -435,7 +435,7 @@ Search Parameters
 .show #appliedParams {
   /* it's the top, give it a top border with corners */
   border-top: 1px solid #AAAAAA;
-  border-radius:4px 4px 4px 4px;  
+  border-radius:4px 4px 4px 4px;
   -moz-border-radius:4px 4px 4px 4px;
   -webkit-border-radius:4px 4px 4px 4px;
 }
@@ -443,10 +443,10 @@ Search Parameters
 .appliedFilter {
   position: relative;
   display:inline-block;
-  padding:3px 3px 3px 1.5em; 
+  padding:3px 3px 3px 1.5em;
   margin-bottom: 0.66em;
   margin-right: 0.33em;
-  background:#e2edfe;  
+  background:#e2edfe;
   border:1px solid #c4dafe;
   -moz-border-radius:15px 15px 15px 15px;
   -webkit-border-radius:15px 15px 15px 15px;
@@ -454,13 +454,13 @@ Search Parameters
 }
 .appliedFilter .btnRemove{
   display:block;
-  position:absolute; 
-  z-index:5; 
-  right:0px; 
-  top:0; 
+  position:absolute;
+  z-index:5;
+  right:0px;
+  top:0;
   width:32px;
-  height:100%; 
-  background:url(blacklight/remove.gif) no-repeat center center; 
+  height:100%;
+  background:url(blacklight/remove.gif) no-repeat center center;
   border-left:1px solid #d0daea;
   border-bottom: none;
   text-indent:-99999px; /* text there for screen readers, hidden visually */
@@ -473,13 +473,13 @@ Search Parameters
 }
 
 .appliedFilter .queryName, .appliedFilter .filterName {
-  /* ">" image */ 
-  padding-right:14px; 
+  /* ">" image */
+  padding-right:14px;
   background:url(blacklight/separator.gif) no-repeat right center;
 }
 
 .filterValue {
-  padding-right:37px; /* leave room for close button */ 
+  padding-right:37px; /* leave room for close button */
 }
 
 
@@ -488,6 +488,6 @@ Search Parameters
 
 .hide {display:none}
 
-/* local implementations may define styles for open + closed "twiddles", e.g. disclosure triangles */ 
+/* local implementations may define styles for open + closed "twiddles", e.g. disclosure triangles */
 .twiddle { }
 .twiddle-open { }

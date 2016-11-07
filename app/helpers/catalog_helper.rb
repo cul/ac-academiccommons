@@ -3,7 +3,7 @@ require 'rsolr'
 require 'json'
 
 module CatalogHelper
-  #include Blacklight::CatalogHelperBehavior # This probably shouldn't be commented out.
+  include Blacklight::CatalogHelperBehavior
   include ApplicationHelper
 
   delegate :repository, :to => :controller
@@ -361,4 +361,35 @@ module CatalogHelper
       index
       render "tombstone", :status => 404
   end
+
+ def facet_list_limit
+   10
+ end
+
+ # Overriding Blacklight helper method.
+ #
+ # Standard display of a SELECTED facet value, no link, special span
+ # with class, and 'remove' button.
+ def render_selected_facet_value(facet_solr_field, item)
+   render = link_to((item.value + render_facet_count(item.hits)).html_safe, search_action_path(remove_facet_params(facet_solr_field, item.value, params)), :class=>"facet_deselect")
+   render = render + render_subfacets(facet_solr_field, item)
+   render.html_safe
+ end
+
+ def render_subfacets(facet_solr_field, item, options ={})
+   render = ''
+   if (item.instance_variables.include? "@subfacets")
+     render = '<span class="toggle">[+/-]</span><ul>'
+     item.subfacets.each do |subfacet|
+       if facet_in_params?(facet_solr_field, subfacet.value)
+         render += '<li>' + render_selected_facet_value(facet_solr_field, subfacet) + '</li>'
+       else
+         render += '<li>' + render_facet_value(facet_solr_field, subfacet,options) + '</li>'
+       end
+     end
+     render += '</ul>'
+     end
+     render.html_safe
+ end
+
 end

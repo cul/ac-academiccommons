@@ -1,11 +1,6 @@
 require 'rails_rinku'
 
 module ApplicationHelper
-
-  def application_name
-    'Academic Commons'
-  end
-
   def document_type
     @document[CatalogController.blacklight_config[:show][:genre]]
   end
@@ -16,8 +11,7 @@ module ApplicationHelper
 
   def render_document_heading
     heading = ""
-     heading += '<h1 class="document_title">' + (document_heading || "") + '</h1>'
-#     heading += '<h2 class="author_name">' + first_names_then_last(document_author || "")  + '</h2>'
+    heading += '<h1 class="document_title">' + (document_heading || "") + '</h1>'
     heading.html_safe
   end
 
@@ -84,50 +78,7 @@ module ApplicationHelper
     end
     words
   end
-  #
-  # facet param helpers ->
-  #
-
-  # Standard display of a facet value in a list. Used in both _facets sidebar
-  # partial and catalog/facet expanded list. Will output facet value name as
-  # a link to add that to your restrictions, with count in parens.
-  # first arg item is a facet value item from rsolr-ext.
-  # options consist of:
-  # :suppress_link => true # do not make it a link, used for an already selected value for instance
-  def render_facet_value(facet_solr_field, item, options ={})
-    render = link_to_unless(options[:suppress_link], item.value, add_facet_params_and_redirect(facet_solr_field, item.value), :class=>"facet_select")
-    render = render + ("<span class='item_count'> (" + number_with_delimiter(item.hits) + ")</span>").html_safe
-    render.html_safe
-  end
-
-  def facet_list_limit
-    10
-  end
-
-  # Standard display of a SELECTED facet value, no link, special span
-  # with class, and 'remove' button.
-  def render_selected_facet_value(facet_solr_field, item)
-    render = link_to((item.value + "<span class='item_count'> (" + number_with_delimiter(item.hits) + ")</span>").html_safe, remove_facet_params(facet_solr_field, item.value, params), :class=>"facet_deselect")
-    render = render + render_subfacets(facet_solr_field, item)
-    render.html_safe
-  end
-
-  def render_subfacets(facet_solr_field, item, options ={})
-    render = ''
-    if (item.instance_variables.include? "@subfacets")
-      render = '<span class="toggle">[+/-]</span><ul>'
-      item.subfacets.each do |subfacet|
-        if facet_in_params?(facet_solr_field, subfacet.value)
-          render += '<li>' + render_selected_facet_value(facet_solr_field, subfacet) + '</li>'
-        else
-          render += '<li>' + render_facet_value(facet_solr_field, subfacet,options) + '</li>'
-        end
-      end
-      render += '</ul>'
-      end
-      render.html_safe
-  end
-
+ 
   def get_last_month_name
     Date.today.ago(1.month).strftime("%B")
   end
@@ -217,5 +168,4 @@ module ApplicationHelper
       return "unknown"
     end
   end
-
 end
