@@ -1,8 +1,8 @@
-# Academic Commons 2.0
+# Academic Commons 3.0
 
-## Checking out and working with a local development instance of Academic Commons 2.0
+## Checking out and working with a local development instance of Academic Commons 3.0
 
-CURRENT RECOMMENDED VERSION OF RUBY: 1.9.3
+CURRENT RECOMMENDED VERSION OF RUBY: 2.3.0
 
 1. Clone the repository to a location of your choosing
    ```
@@ -19,18 +19,20 @@ CURRENT RECOMMENDED VERSION OF RUBY: 1.9.3
    cp config/database.template.yml config/database.yml
    cp config/solr.template.yml config/solr.yml
    cp config/fedora.template.yml config/fedora.yml
+   cp config/secrets.template.yml config/secrets.yml
+   cp config/google_analytics.template.yml config/google_analytics.yml
    ```
 
-4. Install any needed gems using Rails 3 Bundler
+4. Install any needed gems using Bundler
    ```
    bundle install
    ```
 
-5. Run `rake db:schema:load` to create your local development DB. Running `rake db:migrate` does not work because models previously used no longer exist.
+5. Run `rake db:schema:load` to create your local development DB.
 
 6. Start your local development solr instance
    ```
-   cd jetty && java -jar start.jar
+   rake jetty:start
    ```
 
 7. Populate your Solr instance from Fedora
