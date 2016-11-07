@@ -240,7 +240,7 @@ module AcademicCommons
           # resource_file = Rails.application.config.fedora['url'] + "/objects/#{member.pid}/datastreams/CONTENT/content"
           # Rails.logger.debug "======= fulltext resource_file === " + resource_file
   #
-          # text_extract_command = "java -jar " + Rails.application.config.indexing['text_extractor_jar_file'] + " -t #{resource_file}"
+          # text_extract_command = "java -jar " + Rails.application.secrets.full_text_indexing['text_extractor_jar_file'] + " -t #{resource_file}"
           # Rails.logger.debug "======= fulltext text_extract_command === " + text_extract_command
   #
           # tika_result = `#{text_extract_command}`
