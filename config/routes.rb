@@ -30,7 +30,7 @@ AcademicCommons::Application.routes.draw do
   resources :email_preferences, :reports
 
   get '/download/fedora_content/:download_method/:uri/:block/:filename', :to => 'download#fedora_content', :as => "fedora_content",
-    :block => /(DC|CONTENT|SOURCE)/,
+    :block => /(DC|CONTENT|content|SOURCE)/,
     :uri => /.+/, :filename => /.+/, :download_method => /(download|show|show_pretty)/
 
   get '/download/download_log/:id', :to => 'download#download_log', :as => 'download_log'

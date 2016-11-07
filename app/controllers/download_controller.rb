@@ -37,16 +37,14 @@ class DownloadController < ApplicationController
 
     if !fail_fast
       # are any parent docs active and readable?
-      ids = resource_doc[:cul_member_of_ssim].map { |val| val.split('/').last }
+      ids = resource_doc.fetch(:cul_member_of_ssim,[]).map { |val| val.split('/').last }
       ids = ids.map { |val| val.gsub(':','\:') }
       fail_fast = !any_free_to_read?(ids)
     end
 
     url = fedora_config["url"] + "/objects/" + params[:uri] + "/datastreams/" + params[:block] + "/content"
 
-    cl = HTTPClient.new unless fail_fast
-
-    head_response = cl.head(url) unless fail_fast
+    head_response = http_client.head(url) unless fail_fast
     fail_fast ||= (head_response.status != 200)
     if fail_fast
       render :nothing => true, :status => 404
@@ -65,7 +63,7 @@ class DownloadController < ApplicationController
       text_result = nil
       if h_ct.include?("xml")
         xsl = Nokogiri::XSLT(File.read(Rails.root.to_s + "/app/tools/pretty-print.xsl"))
-        xml = Nokogiri(cl.get_content(url))
+        xml = Nokogiri(http_client.get_content(url))
         text_result = xsl.apply_to(xml).to_s
       else
         text_result = "Non-xml content streams cannot be pretty printed."
@@ -83,6 +81,9 @@ class DownloadController < ApplicationController
     end
   end
 
+  def http_client
+    @cl ||= HTTPClient.new
+  end
 
 #downloading of files is handed off to nginx to improve performance.
 #uses the x-accel-redirect header in combination with nginx config location
@@ -110,6 +111,7 @@ class DownloadController < ApplicationController
   end
 
   def any_free_to_read?(ids)
+    return false if ids.blank?
     repository = Blacklight.default_index.connection
     search_params = STANDARD_SEARCH_PARAMS.merge(
       q: "id:(#{ids.join(' OR ')})"
