@@ -83,7 +83,7 @@ describe CatalogController, :type => :feature do
 
         it "have facets for language" do
           expect(page).to have_css("span.facet-label > a.facet_select", text: "English")
-      end
+        end
 
         it "have facets for date" do
           expect(page).to have_css("span.facet-label > a.facet_select", text: "1865")
@@ -91,6 +91,28 @@ describe CatalogController, :type => :feature do
 
         it "have facets for content type" do
           expect(page).to have_css("span.facet-label > a.facet_select", text: "Articles")
+        end
+
+        context "'more' link for subject facets" do
+          it "is present" do
+            expect(page).to have_css("ul.facet-values > li.more_facets_link > a", text: 'more ')
+          end
+
+          context "clicking on link", :js => true do
+            before do
+              click_link "more "
+            end
+
+            it "opens dialog box with correct title" do
+              expect(page).to have_css("span.ui-dialog-title", text: "Subject")
+            end
+
+            it "shows all three facets" do
+              expect(page).to have_css("ul.facet_extended_list > li > span > a.facet_select", text: "Rabbits")
+              expect(page).to have_css("ul.facet_extended_list > li > span > a.facet_select", text: "Tea Parties")
+              expect(page).to have_css("ul.facet_extended_list > li > span > a.facet_select", text: "Wonderland")
+            end
+          end
         end
       end
     end
