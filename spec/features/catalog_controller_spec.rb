@@ -68,29 +68,29 @@ describe CatalogController, :type => :feature do
         end
 
         it "have facets for subjects" do
-          expect(page).to have_css("ul.facet-values > li > a.facet_select", text: "Tea Parties")
-          expect(page).to have_css("ul.facet-values > li > a.facet_select", text: "Wonderland")
+          expect(page).to have_css("span.facet-label > a.facet_select", text: "Tea Parties")
+          expect(page).to have_css("span.facet-label > a.facet_select", text: "Rabbits")
         end
 
         it "have facets for authors" do
-          expect(page).to have_css("ul.facet-values > li > a.facet_select", text: "Carroll, Lewis")
-          expect(page).to have_css("ul.facet-values > li > a.facet_select", text: "Weird Old Guys.")
+          expect(page).to have_css("span.facet-label > a.facet_select", text: "Carroll, Lewis")
+          expect(page).to have_css("span.facet-label > a.facet_select", text: "Weird Old Guys.")
         end
 
         it "have facets for departments" do
-          expect(page).to have_css("ul.facet-values > li > a.facet_select", text: "Bucolic Literary Society.")
+          expect(page).to have_css("span.facet-label > a.facet_select", text: "Bucolic Literary Society.")
         end
 
         it "have facets for language" do
-          expect(page).to have_css("ul.facet-values > li > a.facet_select", text: "English")
+          expect(page).to have_css("span.facet-label > a.facet_select", text: "English")
       end
 
         it "have facets for date" do
-          expect(page).to have_css("ul.facet-values > li > a.facet_select", text: "1865")
+          expect(page).to have_css("span.facet-label > a.facet_select", text: "1865")
         end
 
         it "have facets for content type" do
-          expect(page).to have_css("ul.facet-values > li > a.facet_select", text: "Articles")
+          expect(page).to have_css("span.facet-label > a.facet_select", text: "Articles")
         end
       end
     end
