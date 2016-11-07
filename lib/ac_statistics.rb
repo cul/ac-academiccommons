@@ -171,35 +171,36 @@ module ACStatistics
 
 
   def get_author_stats(startdate, enddate, query, months_list, include_zeroes, facet, include_streaming_views, order_by)
-    logger.info "AAMTESTING: in get author stats for "+query
+    logger.debug "In get_author_stats for #{query}"
     if(query == nil || query.empty?)
       return
     end
 
     results = make_solar_request(facet, query)
+    logger.debug "Solr request returned #{results.count} results."
 
-    if results == nil
-      return
-    end
+    return if results.nil?
 
     stats, totals, ids, download_ids = init_holders(results)
 
+    logger.debug "#{ids.count} results after init_holders"
+
     process_stats(stats, totals, ids, download_ids, startdate, enddate)
 
-      results.reject! { |r| (stats['View'][r['id'][0]] || 0) == 0 &&  (stats['Download'][r['id']] || 0) == 0 } unless include_zeroes
+    results.reject! { |r| (stats['View'][r['id'][0]] || 0) == 0 &&  (stats['Download'][r['id']] || 0) == 0 } unless include_zeroes
 
 
-      if(order_by == 'views' || order_by == 'downloads')
-        results.sort! do |x,y|
-          if(order_by == 'downloads')
-            result = (stats['Download'][y['id']] || 0) <=> (stats['Download'][x['id']] || 0)
-          end
-          if(order_by == 'views')
-              result = (stats['View'][y['id']] || 0) <=> (stats['View'][x['id']] || 0)
-          end
-            result
+    if(order_by == 'views' || order_by == 'downloads')
+      results.sort! do |x,y|
+        if(order_by == 'downloads')
+          result = (stats['Download'][y['id']] || 0) <=> (stats['Download'][x['id']] || 0)
         end
+        if(order_by == 'views')
+          result = (stats['View'][y['id']] || 0) <=> (stats['View'][x['id']] || 0)
+        end
+        result
       end
+    end
 
 
     if(months_list != nil)
@@ -228,7 +229,7 @@ module ACStatistics
 
 
   def process_stats(stats, totals, ids, download_ids, startdate, enddate)
-    logger.info "AAMTESTING: in process stats for ids "
+    logger.debug "In process_stats for ids "
     enddate = enddate + 1.months
 
     stats['View'] = Statistic.group(:identifier).where("event = 'View' and identifier IN (?) AND at_time BETWEEN ? and ?", ids, startdate, enddate).count
@@ -295,7 +296,7 @@ module ACStatistics
 
 
   def make_solar_request(facet, query)
-    logger.info "AAMTESTING: in make solar request for query "+query
+    logger.debug "In make_solar_request for query: #{query}"
     if(facet == "search_query")
 
       params = parse_search_query(query)
@@ -321,7 +322,6 @@ module ACStatistics
                                    :page => 1
                                   )["response"]["docs"]
       return results
-
     end
   end
 

@@ -114,9 +114,8 @@ class StatisticsController < ApplicationController
 
       clean_params(params)
 
-    end # params[:commit].in?("Send")
-
-  end # ========== all_author_monthlies ===================== #
+    end
+  end
 
  def detail_report
 
