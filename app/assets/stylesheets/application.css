@@ -61,11 +61,6 @@ p.caption {
 
 
 }
-/*p.caption:before {
-
-	content:'by: ';
-	color: #3f3f3f;}*/
-
 
 #recently-updated li.home-recent p.caption a {
 	font-weight: normal;
@@ -556,9 +551,6 @@ th, td {
 	list-style-type: none;
 }
 
-
-
-
 #facets a:hover{
 	text-decoration: underline;
 }
@@ -593,8 +585,12 @@ ul.facet_extended_list {
 	margin-top: .75em;}
 
 ul.facet_extended_list li a {
-        border-bottom: none;
-		padding: .25em 0 .25em 14px;
+  border-bottom: none;
+}
+
+ul.facet_extended_list li a:hover {
+  border-bottom: none;
+  color: #558fd0;
 }
 
 .facet_extended_list {
@@ -659,7 +655,7 @@ span.item_count{
 
 /* for our ajaxy dialog to make sure we're overriding the yui global text-align: center */
 
-.facet_extended_list .sort_options {
+.facet_pagination .sort_options {
 	text-align: right
 }
 
@@ -725,14 +721,14 @@ span.item_count{
 
 }
 
- .prev_next_links{
-	float: right;
+.prev_next_links{
+  float: right;
 }
 
 
-     .prev_next_links span.disabled {
-    color: #999;
-    border: 1px solid #DDD; }
+.prev_next_links span.disabled {
+  color: #999;
+}
 
 #pagination div.page_links span.current {
 	 color: silver;
@@ -1937,23 +1933,29 @@ a.nav-link{
 	text-align: left;
 }
 
-.facet_extended_list .facet_pagination {
+/* Not displaying facet dialog box title. Used by custom jquery code to
+   display title. */
+#facet_title {
+  display: none;
+}
+
+.facet_pagination {
 	text-align: right;
 }
-.facet_extended_list .facet_pagination .ui-state-active {
+.facet_pagination .ui-state-active {
 	border:none;
 }
-.facet_extended_list .facet_pagination .prev_next_links {
+.facet_pagination .prev_next_links {
 	float: left;
 }
 
-.facet_extended_list .top {
+.facet_pagination.top {
 	border-bottom:1px dotted #CCCCCC;
 	margin-bottom:10px;
-	padding-bottom:5px;
+	padding-bottom:25px;
 }
 
-.facet_extended_list .bottom {
+.facet_pagination.bottom {
 	border-top:1px dotted #CCCCCC;
 	margin-top:10px;
 	padding-top:5px;
@@ -1963,13 +1965,13 @@ a.nav-link{
 	margin-right: 15px;
 }
 
-.facet_extended_list .prev_next_links .prev_page, .facet_extended_list .sort_options .az {
+.prev_next_links .prev_page, .facet_pagination .sort_options .az {
   padding-right:10px;
   margin-right:10px;
   border-right:1px solid #CCCCCC;
 }
 
-.facet_extended_list .prev_next_links .next_page, .facet_extended_list .sort_options .numeric {
+.prev_next_links .next_page, .facet_pagination .sort_options .numeric {
 }
 
 .ui-state-active, .ui-widget-content .ui-state-active, .ui-widget-header .ui-state-active {  background: transparent;   }
@@ -1985,19 +1987,6 @@ a.nav-link{
 .browse-list h3 {
 	text-align: center;
 }
-
-/*#content form p label {
-	display: block;
-	width: 76px;
-	float: left;
-	text-align: right;
-	margin-right: 1em;
-
-}*/
-
-/*self deposit form*/
-
-
 
 input#accept {
 	width: 15px;
@@ -2067,8 +2056,6 @@ form.self-deposit-form .error{
 		  -moz-box-shadow: 3px 3px 3px rgba(0,0,0,.2);
   -webkit-box-shadow: 3px 3px 3px rgba(0,0,0,.2);
   box-shadow:3px 3px 3px rgba(0,0,0,.2);
-
-
 }
 
 textarea {

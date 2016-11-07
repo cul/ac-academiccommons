@@ -7,7 +7,7 @@ class SitemapController < ApplicationController
     @latest_time = Time.zone.parse(@latest_doc["record_creation_date"])
     if stale?(:etag => @latest_doc, :last_modified => @latest_time.utc)
       key_parms = {
-        :controller => 'sitemap', :action => 'index',
+        :controller => :sitemap, :action => :index,
         :record_creation_date => @latest_time.to_i
       }
       @sitemap_cache_key = fragment_cache_key(key_parms)

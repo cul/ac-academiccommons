@@ -20,7 +20,7 @@ class EmailPreferencesController < ApplicationController
       flash[:notice] = "Successfully created email preference."
       redirect_to @email_preference
     else
-      render :action => 'new'
+      render :action => :new
     end
   end
 
@@ -34,7 +34,7 @@ class EmailPreferencesController < ApplicationController
       flash[:notice] = "Successfully updated email preference."
       redirect_to @email_preference
     else
-      render :action => 'edit'
+      render :action => :edit
     end
   end
 

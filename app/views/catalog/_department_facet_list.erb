@@ -30,7 +30,7 @@ subject_facets = department_facet_list['subject_facet']
 
 Rails.logger.debug "linking author_facet #{params[:id].inspect} for #{v[:name].inspect}"
 
-link_to(v[:name], '/?f[department_facet][]=' + url_encode_resource(params[:id]) + '&f[author_facet][]=' + url_encode_resource(v[:name]), :class=>"broswe_select")%>  <span class='item_count'> ( <%= format_num(v[:count]) %> )</span>
+link_to(v[:name], '/?f[department_facet][]=' + url_encode_resource(params[:id]) + '&f[author_facet][]=' + url_encode_resource(v[:name]), :class=>"broswe_select")%>  <span class='item_count'> ( <%= number_with_delimiter(v[:count]) %> )</span>
 
   </li>
 
@@ -49,7 +49,7 @@ link_to(v[:name], '/?f[department_facet][]=' + url_encode_resource(params[:id]) 
 
 <%=
 
-link_to(v[:name], '/?f[department_facet][]=' + url_encode_resource(params[:id]) + '&f[genre_facet][]=' + url_encode_resource(v[:name]), :class=>"broswe_select")%> <span class='item_count'> ( <%= format_num(v[:count])%>)</span>
+link_to(v[:name], '/?f[department_facet][]=' + url_encode_resource(params[:id]) + '&f[genre_facet][]=' + url_encode_resource(v[:name]), :class=>"broswe_select")%> <span class='item_count'> ( <%= number_with_delimiter(v[:count])%>)</span>
 
   </li>
 
@@ -68,7 +68,7 @@ link_to(v[:name], '/?f[department_facet][]=' + url_encode_resource(params[:id]) 
 
 <%=
 
-link_to(v[:name], '/?f[department_facet][]=' + url_encode_resource(params[:id]) + '&f[subject_facet][]=' + url_encode_resource(v[:name]), :class=>"broswe_select")%> <span class='item_count'> (<%= format_num(v[:count]) %> )</span>
+link_to(v[:name], '/?f[department_facet][]=' + url_encode_resource(params[:id]) + '&f[subject_facet][]=' + url_encode_resource(v[:name]), :class=>"broswe_select")%> <span class='item_count'> (<%= number_with_delimiter(v[:count]) %> )</span>
 
   </li>
 

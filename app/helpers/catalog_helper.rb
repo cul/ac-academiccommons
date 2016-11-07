@@ -3,27 +3,10 @@ require 'rsolr'
 require 'json'
 
 module CatalogHelper
-  #include Blacklight::CatalogHelperBehavior # This probably shouldn't be commented out.
+  include Blacklight::CatalogHelperBehavior
   include ApplicationHelper
 
   delegate :repository, :to => :controller
-
-  ACTIVE_CHILDREN_RI_QUERY =
-  'select $member $type $label
-   subquery( select $dctype $title from <#ri> where $member <dc:type> $dctype and $member <dc:title> $title order by $dctype )
-   from <#ri> where ($member <http://purl.oclc.org/NET/CUL/memberOf> <info:fedora/#{pid}>)
-   and ($member <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> $type)
-   and ($member <fedora-model:label> $label)
-   and ($member <fedora-model:state> <fedora-model:Active>) order by $member'.gsub("\n",' ')
-
-  DESCRIBED_BY_RI_QUERY =
-  'select $description from <#ri> where
-   $description <http://purl.oclc.org/NET/CUL/metadataFor> <info:fedora/#{pid}>
-   order by $description limit 10 offset 0'.gsub("\n",' ')
-
-  def auto_add_empty_spaces(text)
-    text.to_s.gsub(/([^\s-]{5})([^\s-]{5})/,'\1&#x200B;\2')
-  end
 
   def standard_count_query
     {:qt=>"standard", :q=>"*:*", :fq => ["has_model_ssim:\"#{ContentAggregator.to_class_uri}\""]}
@@ -218,19 +201,8 @@ module CatalogHelper
     filename.to_s.split(".").last.strip
   end
 
-  def base_id_for(doc)
-    doc["id"].gsub(/(\#.+|\@.+)/, "")
-  end
-
   def doc_object_method(doc, method)
     doc["object_display"].first + method.to_s
-  end
-
-  def doc_json_method(doc, method)
-    hc = HTTPClient.new
-     hc.ssl_config.verify_mode = OpenSSL::SSL::VERIFY_NONE
-
-    res = JSON.parse(hc.get_content(doc_object_method(doc,method)))
   end
 
   def get_metadata_list(doc)
@@ -268,23 +240,6 @@ module CatalogHelper
    hc.set_auth(domain, user, password)
    hc
   end
-  def itql_query_opts(query)
-   {
-    'type'=>'tuples',
-    'lang'=>'itql',
-    'format'=> 'json',
-    'limit' => '',
-    'dt' => 'checked',
-    'query' => query
-   }
-  end
-  def trim_fedora_uri_to_pid(uri)
-    uri.gsub(/info\:fedora\//,"")
-  end
-
-  def resolve_fedora_uri(uri)
-    fedora_config["url"] + "/get" + uri.gsub(/info\:fedora/,"")
-  end
 
   ############### Copied from Blacklight CatalogHelper #####################
 
@@ -309,11 +264,6 @@ module CatalogHelper
   end
 
   #
-  # shortcut for built-in Rails helper, "number_with_delimiter"
-  #
-  def format_num(num); number_with_delimiter(num) end
-
-  #
   # Pass in an RSolr::Response. Displays the "showing X through Y of N" message.
   def render_pagination_info(response, options = {})
       start = response.start + 1
@@ -322,9 +272,9 @@ module CatalogHelper
       num_pages = (response.total / per_page.to_f).ceil
       total_hits = response.total
 
-      start_num = format_num(start)
-      end_num = format_num(start + response.docs.length - 1)
-      total_num = format_num(total_hits)
+      start_num = number_with_delimiter(start)
+      end_num = number_with_delimiter(start + response.docs.length - 1)
+      total_num = number_with_delimiter(total_hits)
 
       entry_name = options[:entry_name] ||
         (response.empty?? 'entry' : response.docs.first.class.name.underscore.sub('_', ' '))
@@ -346,7 +296,7 @@ module CatalogHelper
   # Code should call this method rather than interrogating session directly,
   # because implementation of where this data is stored/retrieved may change.
   def item_page_entry_info
-    "Showing item <b>#{session[:search][:counter].to_i} of #{format_num(session[:search][:total])}</b> from your search.".html_safe
+    "Showing item <b>#{session[:search][:counter].to_i} of #{number_with_delimiter(session[:search][:total])}</b> from your search.".html_safe
   end
 
   # Look up search field user-displayable label
@@ -406,10 +356,40 @@ module CatalogHelper
     'blacklight-' + document.get(blacklight_config.view_config(document_index_view_type_field).display_type_field).parameterize rescue nil
   end
 
-    # override of blacklight method - when a request for /catalog/BAD_SOLR_ID is made, this method is executed...
-    def invalid_solr_id_error
-        index
-        render "tombstone", :status => 404
-    end
+  # override of blacklight method - when a request for /catalog/BAD_SOLR_ID is made, this method is executed...
+  def invalid_solr_id_error
+      index
+      render "tombstone", :status => 404
+  end
+
+ def facet_list_limit
+   10
+ end
+
+ # Overriding Blacklight helper method.
+ #
+ # Standard display of a SELECTED facet value, no link, special span
+ # with class, and 'remove' button.
+ def render_selected_facet_value(facet_solr_field, item)
+   render = link_to((item.value + render_facet_count(item.hits)).html_safe, search_action_path(remove_facet_params(facet_solr_field, item.value, params)), :class=>"facet_deselect")
+   render = render + render_subfacets(facet_solr_field, item)
+   render.html_safe
+ end
+
+ def render_subfacets(facet_solr_field, item, options ={})
+   render = ''
+   if (item.instance_variables.include? "@subfacets")
+     render = '<span class="toggle">[+/-]</span><ul>'
+     item.subfacets.each do |subfacet|
+       if facet_in_params?(facet_solr_field, subfacet.value)
+         render += '<li>' + render_selected_facet_value(facet_solr_field, subfacet) + '</li>'
+       else
+         render += '<li>' + render_facet_value(facet_solr_field, subfacet,options) + '</li>'
+       end
+     end
+     render += '</ul>'
+     end
+     render.html_safe
+ end
 
 end

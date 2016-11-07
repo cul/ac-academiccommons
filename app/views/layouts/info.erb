@@ -20,7 +20,7 @@
 
   <!--  <link rel="apple-touch-icon" href="/apple-touch-icon.png"> -->
 
-  <link href="<%= url_for :controller=>'catalog',:action => 'opensearch', :format => 'xml', :only_path => false %>" title="<%= application_name%>" type="application/opensearchdescription+xml" rel="search"/>
+  <link href="<%= url_for :controller=>:catalog,:action => :opensearch, :format => 'xml', :only_path => false %>" title="<%= application_name%>" type="application/opensearchdescription+xml" rel="search"/>
   <%#= stylesheet_link_tag 'compiled/screen.css', :media => 'screen, projection' %>
   <%#= stylesheet_link_tag 'compiled/print.css', :media => "print" %>
   <!-- [if lt IE8] <%= stylesheet_link_tag "compiled/ie.css", :media => "screen, projection" %> -->

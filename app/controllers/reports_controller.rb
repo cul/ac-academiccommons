@@ -26,7 +26,7 @@ class ReportsController < ApplicationController
       flash[:notice] = "Successfully created report."
       redirect_to @report
     else
-      render :action => 'new'
+      render :action => :new
     end
   end
 
@@ -42,7 +42,7 @@ class ReportsController < ApplicationController
       flash[:notice] = "Successfully updated report."
       redirect_to @report
     else
-      render :action => 'edit'
+      render :action => :edit
     end
   end
 

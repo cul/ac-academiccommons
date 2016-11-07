@@ -44,7 +44,7 @@ class StatisticsController < ApplicationController
 
     params[:email_template] ||= "Normal"
 
-    ids = repository.search(:per_page => 100000, :page => 1, :fl => "author_uni")["response"]["docs"].collect { |f| f["author_uni"] }.flatten.compact.uniq - EmailPreference.where(monthly_opt_out: true).collect(&:author)
+    ids = repository.search(:rows => 100000, :page => 1, :fl => "author_uni")["response"]["docs"].collect { |f| f["author_uni"] }.flatten.compact.uniq - EmailPreference.where(monthly_opt_out: true).collect(&:author)
 
     emails = EmailPreference.where("email is NOT NULL and monthly_opt_out = 0").collect
 
@@ -114,9 +114,8 @@ class StatisticsController < ApplicationController
 
       clean_params(params)
 
-    end # params[:commit].in?("Send")
-
-  end # ========== all_author_monthlies ===================== #
+    end
+  end
 
  def detail_report
 
@@ -307,7 +306,7 @@ class StatisticsController < ApplicationController
     author_id = options[:author_id]
     enddate = startdate + 1.month
 
-    results = repository.search(:per_page => 100000, :sort => "title_display asc" , :fq => "author_uni:#{author_id}", :fl => "title_display,id", :page => 1)["response"]["docs"]
+    results = repository.search(:rows => 100000, :sort => "title_display asc" , :fq => "author_uni:#{author_id}", :fl => "title_display,id", :page => 1)["response"]["docs"]
     ids = results.collect { |r| r['id'].to_s.strip }
     download_ids = Hash.new { |h,k| h[k] = [] }
     ids.each do |doc_id|

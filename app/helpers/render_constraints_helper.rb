@@ -15,7 +15,7 @@ module RenderConstraintsHelper
   #     render_constraint_element(search_field_label(localized_params),
   #           localized_params[:q],
   #           :classes => ["query"],
-  #           :remove => catalog_index_path(localized_params.merge(:q=>nil, :action=>'index')))
+  #           :remove => catalog_index_path(localized_params.merge(:q=>nil, :action=>:index)))
   #   else
   #     render_constraint_element(nil, "No Keywords", :classes => ["query"], :check => false)
   #   end
