@@ -41,7 +41,7 @@ class Report < ActiveRecord::Base
 
     page = 0
     per_page = 100
-    query_params = {:q => "", :fl => "format, object_display,id,collection_h", :per_page => per_page, :facets => {:fields => ['collection_h']}}
+    query_params = {:q => "", :fl => "format, object_display,id,collection_h", :rows => per_page, :facets => {:fields => ['collection_h']}}
 
     while
       page_results = repository.search(query_params.merge(:page => page))

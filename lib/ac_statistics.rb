@@ -189,7 +189,6 @@ module ACStatistics
 
     results.reject! { |r| (stats['View'][r['id'][0]] || 0) == 0 &&  (stats['Download'][r['id']] || 0) == 0 } unless include_zeroes
 
-
     if(order_by == 'views' || order_by == 'downloads')
       results.sort! do |x,y|
         if(order_by == 'downloads')
@@ -314,7 +313,7 @@ module ACStatistics
     if facet_query == nil && q == nil
       return
     else
-      results = repository.search( :per_page => 100000,
+      results = repository.search( :rows => 100000,
                                    :sort => sort,
                                    :q => q,
                                    :fq => facet_query,
