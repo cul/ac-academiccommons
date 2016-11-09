@@ -35,3 +35,4 @@ coverage/*
 /public/assets
 /.settings
 /.env*
+.byebug_history

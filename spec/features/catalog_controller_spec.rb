@@ -68,8 +68,8 @@ describe CatalogController, :type => :feature do
         end
 
         it "have facets for subjects" do
-          expect(page).to have_css("span.facet-label > a.facet_select", text: "Tea Parties")
-          expect(page).to have_css("span.facet-label > a.facet_select", text: "Rabbits")
+          expect(page).to have_css("span.facet-label > a.facet_select", text: "Bildungsromans")
+          expect(page).to have_css("span.facet-label > a.facet_select", text: "Nonsense literature")
         end
 
         it "have facets for authors" do
@@ -108,6 +108,8 @@ describe CatalogController, :type => :feature do
             end
 
             it "shows all three facets" do
+              expect(page).to have_css("ul.facet_extended_list > li > span > a.facet_select", text: "Nonsense literature")
+              expect(page).to have_css("ul.facet_extended_list > li > span > a.facet_select", text: "Rabbits")
               expect(page).to have_css("ul.facet_extended_list > li > span > a.facet_select", text: "Rabbits")
               expect(page).to have_css("ul.facet_extended_list > li > span > a.facet_select", text: "Tea Parties")
               expect(page).to have_css("ul.facet_extended_list > li > span > a.facet_select", text: "Wonderland")
