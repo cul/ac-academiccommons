@@ -135,7 +135,8 @@ module AcademicCommons
       #add_field.call("handle", mods.at_css("identifier[@type='hdl']"))
 
       mods.css("subject").each do |subject_node|
-        if(subject_node.attributes.count == 0)
+        attri = subject_node.attributes
+        if attri.count.zero? || (attri['authority'] && attri['authority'].value == 'fast')
           subject_node.css("topic").each do |topic_node|
             add_field.call("keyword_search", topic_node.content.downcase)
             add_field.call("subject_facet", topic_node)
