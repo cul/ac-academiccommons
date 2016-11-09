@@ -64,4 +64,6 @@ group :development, :test do
   gem 'poltergeist' # Used to run test with js.
   gem 'database_cleaner'
   gem "jettywrapper", ">=1.4.0"
+
+  gem 'byebug'
 end
