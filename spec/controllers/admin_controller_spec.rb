@@ -43,12 +43,6 @@ describe AdminController, :type => :controller do
     end
   end
 
-  describe 'GET student_agreements' do
-    include_examples 'authorization required' do
-      let(:http_request) { get :student_agreements }
-    end
-  end
-
   describe 'GET ingest' do
     include_examples 'authorization required' do
       let(:http_request) { get :ingest, id: 'foo' }
