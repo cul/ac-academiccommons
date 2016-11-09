@@ -60,15 +60,6 @@ class AdminController < ApplicationController
       end
   end
 
-  def student_agreements
-      @agreements = StudentAgreement.all
-      respond_to do |format|
-         format.html
-         format.csv { send_data StudentAgreement.to_csv }
-      end
-  end
-
-
   def show_deposit
     @deposit = Deposit.find(params[:id])
   end

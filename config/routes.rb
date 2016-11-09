@@ -58,14 +58,12 @@ AcademicCommons::Application.routes.draw do
   get '/deposit', :to => 'deposit#index', :as => 'deposit'
   match '/deposit/submit_author_agreement', :to => 'deposit#submit_author_agreement', via: [:get, :post]
   get '/deposit/agreement_only'
-  # submit_student_agreement, not in use
 
   get '/admin', :to => 'admin#index', :as => 'admin'
   get '/admin/deposit', :to => 'admin#deposits'
   get '/admin/deposits/:id', :to => 'admin#show_deposit', :as => 'show_deposit'
   get '/admin/deposits/:id/file', :to => 'admin#download_deposit_file', :as => 'download_deposit_file'
   get '/admin/agreements', :to => 'admin#agreements'
-  get '/admin/student_agreements', :to => 'admin#student_agreements'
   match '/admin/ingest', :to => 'admin#ingest', via: [:get, :post]
   match '/admin/edit_alert_message', :to => 'admin#edit_alert_message', via: [:get, :post]
 
