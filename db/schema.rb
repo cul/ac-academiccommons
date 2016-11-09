@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161101143201) do
+ActiveRecord::Schema.define(version: 20161109143808) do
 
   create_table "agreements", force: :cascade do |t|
     t.string   "uni",               limit: 255
@@ -130,17 +130,6 @@ ActiveRecord::Schema.define(version: 20161101143201) do
   add_index "statistics", ["at_time"], name: "index_statistics_on_at_time"
   add_index "statistics", ["event"], name: "index_statistics_on_event"
   add_index "statistics", ["identifier"], name: "index_statistics_on_identifier"
-
-  create_table "student_agreements", force: :cascade do |t|
-    t.string   "uni",            limit: 255
-    t.string   "name",           limit: 255
-    t.string   "email",          limit: 255
-    t.string   "years_embargo",  limit: 255
-    t.string   "thesis_advisor", limit: 255
-    t.string   "department",     limit: 255
-    t.datetime "created_at",                 null: false
-    t.datetime "updated_at",                 null: false
-  end
 
   create_table "taggings", force: :cascade do |t|
     t.integer  "tag_id"
