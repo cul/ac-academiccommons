@@ -76,30 +76,15 @@ class Notifier < ActionMailer::Base
     mail(:to => recipients, :from => from, :subject => subject, :content_type => content_type)
   end
 
-  def student_agreement(uni, name, email, advisor, department, empbargo, attachment_path)
-    @uni = uni
-    @name = name
-    @email = email
-    @advisor = advisor
-    @department = department
-    @empbargo = empbargo
-
-    recipients = Rails.application.config.emails['mail_deposit_recipients']
-    from = Rails.application.config.emails['mail_deliverer']
-    subject = "Academic Commons Student Agreement Accepted"
-
-    attachments.inline['agreement.pdf'] = { mime_type: 'application/x-pdf',
-                                            content: File.read(attachment_path) }
-    mail(:to => recipients, :from => from, :subject => subject)
-  end
-
   def statistics_report_with_csv_attachment(recipients, from, subject, message, prepared_attachments)
 
    prepared_attachments.each do |file_name, content|
     attachments.inline[file_name] = {mime_type: 'text/csv', content: content }
    end
 
-    mail(:to => recipients, :from => from, :subject => subject, :body => message)
+    mail(:to => recipients, :from => from, :subject => subject) do |f|
+      f.text { render :text => message }
+    end
   end
 
   def reindexing_results( errors_count, indexed_count, new_items_count, time_id )

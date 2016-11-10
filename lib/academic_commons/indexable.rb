@@ -10,11 +10,14 @@ module AcademicCommons
     REQUIRED_METHODS = [:belongs_to, :descMetadata_content]
 
     def index_descMetadata(solr_doc={})
-      meta = descMetadata_content
-      return solr_doc unless meta
+      raise "called index_descMetadata twice" if (@index_descMetadata ? (@index_descMetadata += 1) : (@index_descMetadata = 1)) > 1
 
-      mods = Nokogiri::XML(meta).at_css("mods")
-      
+      meta = descMetadata_datastream
+      raise "descMetadata COULD NOT be found for #{self.pid}.\nSolr doc: #{solr_doc.inspect}" unless meta
+
+      solr_doc["described_by_ssim"] = ["info:fedora/#{meta.pid}/#{meta.dsid}"]
+      mods = Nokogiri::XML(meta.content).at_css("mods")
+
       collections = self.belongs_to
       normalize_space = lambda { |s| s.to_s.strip.gsub(/\s{2,}/," ") }
       search_to_content = lambda { |x| x.kind_of?(Nokogiri::XML::Element) ? x.content.strip : x.to_s.strip }
@@ -29,7 +32,7 @@ module AcademicCommons
       #TODO: Make sure access is indifferent
       add_field.call("id", self.pid) unless (solr_doc["id"] || solr_doc[:id])
       add_field.call("internal_h",  collections.first.to_s + "/")
-      add_field.call("pid", self.pid)
+      add_field.call("pid", self.pid) unless (solr_doc["pid"] || solr_doc[:pid])
       collections.each do |collection|
         add_field.call("member_of", collection)
       end
@@ -134,7 +137,8 @@ module AcademicCommons
       #add_field.call("handle", mods.at_css("identifier[@type='hdl']"))
 
       mods.css("subject").each do |subject_node|
-        if(subject_node.attributes.count == 0)
+        attri = subject_node.attributes
+        if attri.count.zero? || (attri['authority'] && attri['authority'].value == 'fast')
           subject_node.css("topic").each do |topic_node|
             add_field.call("keyword_search", topic_node.content.downcase)
             add_field.call("subject_facet", topic_node)
@@ -239,7 +243,7 @@ module AcademicCommons
           # resource_file = Rails.application.config.fedora['url'] + "/objects/#{member.pid}/datastreams/CONTENT/content"
           # Rails.logger.debug "======= fulltext resource_file === " + resource_file
   #
-          # text_extract_command = "java -jar " + Rails.application.config.indexing['text_extractor_jar_file'] + " -t #{resource_file}"
+          # text_extract_command = "java -jar " + Rails.application.secrets.full_text_indexing['text_extractor_jar_file'] + " -t #{resource_file}"
           # Rails.logger.debug "======= fulltext text_extract_command === " + text_extract_command
   #
           # tika_result = `#{text_extract_command}`

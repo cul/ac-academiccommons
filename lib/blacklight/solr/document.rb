@@ -222,7 +222,7 @@ module Blacklight::Solr::Document
     end
 
      def connection
-      @connection ||= blacklight_solr
+      @connection ||= repository.connection
      end
 
     # Returns array of hashes of registered extensions. Each hash

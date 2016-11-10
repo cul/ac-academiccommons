@@ -1,5 +1,5 @@
 <mods xmlns="http://www.loc.gov/mods/v3" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.loc.gov/mods/v3 http://www.loc.gov/standards/mods/v3/mods-3-4.xsd">
-    
+
     <titleInfo>
         <title>Alice's Adventures in Wonderland</title>
     </titleInfo>
@@ -24,11 +24,11 @@
     </name>
     <typeOfResource>text</typeOfResource>
     <genre>Articles</genre>
-    
+
     <originInfo>
         <dateIssued encoding="w3cdtf" keyDate="yes">1865</dateIssued>
     </originInfo>
-    
+
     <language>
         <languageTerm type="text">English</languageTerm>
     </language>
@@ -38,6 +38,9 @@
     </subject>
     <subject>
         <topic>Wonderland</topic>
+    </subject>
+    <subject>
+        <topic>Rabbits</topic>
     </subject>
     <subject authority="fast" authorityURI="http://id.worldcat.org/fast/void/0.1" valueURI="http://id.worldcat.org/fast/1038956">
         <topic>Nonsense literature</topic>
@@ -66,11 +69,11 @@
         <identifier type="issn">0123-4567</identifier>
     </relatedItem>
     <identifier type="CDRS doi">http://dx.doi.org/10.7916/ALICE</identifier>
-    
+
     <location>
         <physicalLocation authority="marcorg">NNC</physicalLocation>
     </location>
-    
+
     <recordInfo>
         <recordContentSource authority="marcorg">NNC</recordContentSource>
         <recordCreationDate encoding="w3cdtf">2016-09-14 16:31:33 -0400</recordCreationDate>
@@ -80,5 +83,5 @@
             <languageTerm authority="iso639-2b">eng</languageTerm>
         </languageOfCataloging>
     </recordInfo>
-    
+
 </mods>

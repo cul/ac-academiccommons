@@ -1,8 +1,6 @@
 require 'rails_helper'
 
-describe CatalogController, :type => [:controller, :feature] do
-
-  render_views
+describe CatalogController, :type => :feature do
 
   describe "index" do
     context "homepage" do # when there isn't a search query it displays the homepage
@@ -50,13 +48,13 @@ describe CatalogController, :type => [:controller, :feature] do
     context "search query" do
       it "finds by title" do
         visit catalog_index_path(q: "alice")
-        expect(page).to have_css("a[href=\"/catalog/actest%3A1\"]", :text => "Alice's Adventures in Wonderland")
+        expect(page).to have_css("a[href=\"/catalog/actest:1\"]", :text => "Alice's Adventures in Wonderland")
       end
 
       it "finds by author" do
         visit catalog_index_path(q: "lewis carroll")
         expect(page).to have_content("Carroll, Lewis")
-        expect(page).to have_css("a[href=\"/catalog/actest%3A1\"]", :text => "Alice's Adventures in Wonderland")
+        expect(page).to have_css("a[href=\"/catalog/actest:1\"]", :text => "Alice's Adventures in Wonderland")
       end
 
       it "returns nothing when search query is not a match" do
@@ -70,29 +68,53 @@ describe CatalogController, :type => [:controller, :feature] do
         end
 
         it "have facets for subjects" do
-          expect(page).to have_css("div#facets > div > ul > li.facet_unselected > a", text: "Tea Parties")
-          expect(page).to have_css("div#facets > div > ul > li.facet_unselected > a", text: "Wonderland")
+          expect(page).to have_css("span.facet-label > a.facet_select", text: "Bildungsromans")
+          expect(page).to have_css("span.facet-label > a.facet_select", text: "Nonsense literature")
         end
 
         it "have facets for authors" do
-          expect(page).to have_css("div#facets > div > ul > li.facet_unselected > a", text: "Carroll, Lewis")
-          expect(page).to have_css("div#facets > div > ul > li.facet_unselected > a", text: "Weird Old Guys.")
+          expect(page).to have_css("span.facet-label > a.facet_select", text: "Carroll, Lewis")
+          expect(page).to have_css("span.facet-label > a.facet_select", text: "Weird Old Guys.")
         end
 
         it "have facets for departments" do
-          expect(page).to have_css("div#facets > div > ul > li.facet_unselected > a", text: "Bucolic Literary Society.")
+          expect(page).to have_css("span.facet-label > a.facet_select", text: "Bucolic Literary Society.")
         end
 
         it "have facets for language" do
-          expect(page).to have_css("div#facets > div > ul > li.facet_unselected > a", text: "English")
-      end
+          expect(page).to have_css("span.facet-label > a.facet_select", text: "English")
+        end
 
         it "have facets for date" do
-          expect(page).to have_css("div#facets > div > ul > li.facet_unselected > a", text: "1865")
+          expect(page).to have_css("span.facet-label > a.facet_select", text: "1865")
         end
 
         it "have facets for content type" do
-          expect(page).to have_css("div#facets > div > ul > li.facet_unselected > a", text: "Articles")
+          expect(page).to have_css("span.facet-label > a.facet_select", text: "Articles")
+        end
+
+        context "'more' link for subject facets" do
+          it "is present" do
+            expect(page).to have_css("ul.facet-values > li.more_facets_link > a", text: 'more ')
+          end
+
+          context "clicking on link", :js => true do
+            before do
+              click_link "more "
+            end
+
+            it "opens dialog box with correct title" do
+              expect(page).to have_css("span.ui-dialog-title", text: "Subject")
+            end
+
+            it "shows all three facets" do
+              expect(page).to have_css("ul.facet_extended_list > li > span > a.facet_select", text: "Nonsense literature")
+              expect(page).to have_css("ul.facet_extended_list > li > span > a.facet_select", text: "Rabbits")
+              expect(page).to have_css("ul.facet_extended_list > li > span > a.facet_select", text: "Rabbits")
+              expect(page).to have_css("ul.facet_extended_list > li > span > a.facet_select", text: "Tea Parties")
+              expect(page).to have_css("ul.facet_extended_list > li > span > a.facet_select", text: "Wonderland")
+            end
+          end
         end
       end
     end
@@ -131,9 +153,17 @@ describe CatalogController, :type => [:controller, :feature] do
       expect(page).to have_xpath("//dt[contains(text(),'Book/Journal Title:')]/following-sibling::dd", :text => "Project Gutenberg")
     end
 
+    it "has item views" do
+      expect(page).to have_xpath("//dt[contains(text(),'Item views')]/following-sibling::dd", :text => "0")
+    end
+
+    it "links to the MODS download" do
+      expect(page).to have_css("a[href=\"/download/fedora_content/show_pretty/actest:3/CONTENT/actest3_description.xml?data=meta\"]", :text => "text")
+    end
+
     it "links to the pdf download" do
       click_on 'alice_in_wonderland.pdf'
-      expect(page.response_headers['X-Accel-Redirect']).to match /\/repository_download\/.*\/actest:2\/CONTENT$/
+      expect(page.response_headers['X-Accel-Redirect']).to match /\/repository_download\/.*\/actest:2\/datastreams\/CONTENT\/content$/
     end
   end
 

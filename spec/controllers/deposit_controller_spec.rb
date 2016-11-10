@@ -32,6 +32,11 @@ RSpec.describe DepositController, :type => :controller do
         expect(Deposit.first.uni).to eq 'xxx123'
         expect(Deposit.first.file_path).to eq 'data/self-deposit-uploads/xxx123/test_file.txt'
       end
+
+      it 'create a agreement record' do
+        expect(Agreement.count).to eq 1
+        expect(Agreement.first.uni).to eq 'xxx123'
+      end
     end
 
     context "when user does not have a uni" do
@@ -54,6 +59,11 @@ RSpec.describe DepositController, :type => :controller do
         expect(Deposit.count).to eq 1
         expect(Deposit.first.uni).to eq nil
         expect(Deposit.first.email).to eq 'xxx123@columbia.edu'
+      end
+
+      it 'create a agreement record' do
+        expect(Agreement.count).to eq 1
+        expect(Agreement.first.name).to eq 'Jane Doe'
       end
 
       context 'when the same file is deposited twice' do

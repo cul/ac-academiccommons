@@ -83,15 +83,24 @@
   ],
   "keyword_search": [
     "tea parties",
-    "wonderland"
+    "wonderland",
+    "rabbits",
+    "nonsense literature",
+    "bildungsromans"
   ],
   "subject_facet": [
     "Tea Parties",
-    "Wonderland"
+    "Wonderland",
+    "Rabbits",
+    "Nonsense literature",
+    "Bildungsromans"
   ],
   "subject_search": [
     "Tea Parties",
-    "Wonderland"
+    "Wonderland",
+    "Rabbits",
+    "Nonsense literature",
+    "Bildungsromans"
   ],
   "originator_department": [
     "Bucolic Literary Society."
@@ -131,5 +140,8 @@
   ],
   "department_facet": [
     "Bucolic Literary Society."
+  ],
+  "described_by_ssim": [
+    "info:fedora/actest:1/test_ds"
   ]
 }

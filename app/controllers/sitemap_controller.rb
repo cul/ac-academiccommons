@@ -1,5 +1,5 @@
 class SitemapController < ApplicationController
-  include Blacklight::SolrHelper
+  include Blacklight::SearchHelper
   after_filter :sweep_cache, :only => :index
   def index
 
@@ -7,7 +7,7 @@ class SitemapController < ApplicationController
     @latest_time = Time.zone.parse(@latest_doc["record_creation_date"])
     if stale?(:etag => @latest_doc, :last_modified => @latest_time.utc)
       key_parms = {
-        :controller => 'sitemap', :action => 'index',
+        :controller => :sitemap, :action => :index,
         :record_creation_date => @latest_time.to_i
       }
       @sitemap_cache_key = fragment_cache_key(key_parms)
@@ -32,7 +32,7 @@ class SitemapController < ApplicationController
     opts[:fl] = "id, record_creation_date"
     opts[:sort] = "record_creation_date desc"
     # this is the upper limit for a single sitemap, see sitemap.org
-    force_to_utf8(blacklight_solr.find(opts))
+    repository.search(opts)
   end
 
   def latest_doc

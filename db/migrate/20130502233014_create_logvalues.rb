@@ -1,7 +1,7 @@
 class CreateLogvalues < ActiveRecord::Migration
 
   def self.up
-    create_table :logvalues do |t|
+    create_table(:logvalues, { id: false }) do |t|
       t.integer    :id
       t.integer    :eventlog_id
       t.string     :param_name

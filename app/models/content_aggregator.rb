@@ -1,17 +1,6 @@
 class ContentAggregator < ActiveFedora::Base
   include AcademicCommons::Indexable
-
-  CUL_MEMBER_OF = RDF::URI("http://purl.oclc.org/NET/CUL/memberOf")
-
-  def pid_escaped
-    "\"#{self.pid}\""
-  end
-
-  def to_solr(solr_doc={}, options={})
-    solr_doc = super
-    solr_doc = index_descMetadata(solr_doc)
-    solr_doc
-  end
+  include AcademicCommons::Aggregator
 
   def index_for_ac2(options={})
     solr_doc = nil
@@ -30,29 +19,18 @@ class ContentAggregator < ActiveFedora::Base
     result
   end
 
-  def descMetadata_content
-  	if datastreams.keys.include?('descMetadata')
-      return datastreams['descMetadata'].content
+  def descMetadata_datastream
+    if datastreams.keys.include?('descMetadata')
+      return datastreams['descMetadata']
     else
-      begin
-        riquery = "select $description from <#ri> where $description <http://purl.oclc.org/NET/CUL/metadataFor> <fedora:#{pid}>"
-        options = {lang: 'itql', format: "sparql", limit: 1 }
-        rubydora = ActiveFedora::Base.connection_for_pid(pid)
-        result = rubydora.risearch(riquery, options)
-        descPids = Nokogiri::XML(result).css("sparql>results>result>description").collect do |metadata|
-          metadata.attributes["uri"].value.split('/').last
-        end
-        if !descPids.empty?
-          return ActiveFedora::Base.find(descPids[0]).datastreams['CONTENT'].content
-        end
-      rescue Exception => e
-        logger.error e.message
-        return nil
-      end
+      descPids = repository_inbound(AcademicCommons::Resource::CUL_METADATA_FOR, true)
+      return nil if descPids.blank?
+      return ActiveFedora::Base.find(descPids[0]).datastreams['CONTENT']
     end
   end
 
-  def belongs_to
-    relationships(CUL_MEMBER_OF).map { |obj| obj.to_s.split('/')[-1] }
+  def descMetadata_content
+    content_ds = descMetadata_datastream
+    return content_ds ? content_ds.content : nil
   end
 end

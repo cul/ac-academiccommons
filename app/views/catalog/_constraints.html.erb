@@ -7,8 +7,8 @@
 
 <%=link_to "Start Search Over".html_safe, catalog_index_path, :id=>"startOverLink" %>
 
-<% if current_user %>
-	<%=link_to "Get Usage Stats".html_safe, relative_root + "/statistics/detail_report?commit=Get Usage Stats&facet=search_query&search_criteria=" + CGI::escape(request.fullpath), :id=>"startOverLink" %>
+<% if user_signed_in? && current_user.admin %>
+	<%=link_to "Get Usage Stats".html_safe, "/statistics/detail_report?commit=Get Usage Stats&facet=search_query&search_criteria=" + CGI::escape(request.fullpath), :id=>"startOverLink" %>
 <% end %>
 
 
@@ -28,7 +28,7 @@
 <%=render_constraint_element(search_field_label(localized_params),
             localized_params[:q],
             :classes => ["query"],
-            :remove => catalog_index_path(localized_params.merge(:q=>nil, :action=>'index')))%>
+            :remove => catalog_index_path(localized_params.merge(:q=>nil, :action=>:index)))%>
 
 <%- else%>
 <li class="appliedFilter empty query">All Content</li>
@@ -43,7 +43,7 @@
 <%- if !localized_params[:f].to_s.empty? -%>
 <%- localized_params[:f].each_pair do |facet,values| %>
 <%- values.each do |val| %>
-<%= render_constraint_element( facet_field_labels[facet],val, :remove => catalog_index_path(remove_facet_params(facet, val, localized_params)),:classes => ["filter"] )%>
+<%= render_constraint_element(facet_field_label(facet),val, :remove => catalog_index_path(remove_facet_params(facet, val, localized_params)),:classes => ["filter"] )%>
 
 <%= '<span class=\'join\'> + </span>'.html_safe unless val == values.last %>
 <%- end -%>

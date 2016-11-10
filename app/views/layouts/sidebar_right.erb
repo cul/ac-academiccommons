@@ -11,7 +11,7 @@
   <meta name="bitly-verification" content="35191b8f3154"/>
 
 
-  <%= favicon_link_tag asset_path('favicon-crown.png', :media => "screen,projection", :rel => "shortcut icon", :type => "text/css") %>
+  <%= favicon_link_tag 'favicon-crown.png', :media => "screen,projection", :type => "text/css" %>
   <%= stylesheet_link_tag "blueprint/screen", :media => "screen,projection"  %>
   <%= stylesheet_link_tag "application", :media => "screen,projection", :rel => "stylesheet", :type => "text/css" %>
   <%= stylesheet_link_tag "//fonts.googleapis.com/css?family=Open+Sans:400italic,400,300,600&subset=latin-ext,latin", :media => "screen,projection", :rel => "stylesheet", :type => "text/css" %>
@@ -22,7 +22,7 @@
 
   <%= yield :head %>
 
-  <link href="<%= url_for :controller=>'catalog',:action => 'opensearch', :format => 'xml', :only_path => false %>" title="<%= application_name%>" type="application/opensearchdescription+xml" rel="search"/>
+  <link href="<%= url_for :controller=>:catalog,:action => :opensearch, :format => 'xml', :only_path => false %>" title="<%= application_name%>" type="application/opensearchdescription+xml" rel="search"/>
 
   <%= javascript_include_tag "waypoints.min.js" %>
 
@@ -160,7 +160,7 @@ end
 
         <h3>Helpful Links</h3>
         <div class="sidebar-content">
-          <a  class='nav-link'  href="<%= relative_root %>/about/">About</a>
+          <a  class='nav-link'  href="/about/">About</a>
 
           <a class='nav-link' href="javascript:UserVoice.showPopupWidget();" >FAQ/Ask a Question</a>
 
@@ -219,7 +219,7 @@ $('#sidebar').waypoint('sticky', {
 
 </script>
 
-<%= render :partial=>'layouts/cul-banner' %>
+<%= render :partial=>'layouts/cul_banner' %>
 
 </body>
 </html>

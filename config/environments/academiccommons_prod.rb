@@ -1,26 +1,47 @@
 AcademicCommons::Application.configure do
   # Settings specified here will take precedence over those in config/application.rb
 
-  # The test environment is used exclusively to run your application's
-  # test suite.  You never need to work with it otherwise.  Remember that
-  # your test database is "scratch space" for the test suite and is wiped
-  # and recreated between test runs.  Don't rely on the data there!
+  # The production environment is meant for finished, "live" apps.
+  # Code is not reloaded between requests
   config.cache_classes = true
 
-  # Log error messages when you accidentally call methods on nil.
-  config.whiny_nils = true
+  # Eager load code on boot. This eager loads most of Rails and
+  # your application in memory, allowing both threaded web servers
+  # and those relying on copy on write to perform better.
+  # Rake tasks automatically ignore this option for performance.
+  config.eager_load = true
 
-  # Show full error reports and disable caching
-  config.consider_all_requests_local       = true
+  # Full error reports are disabled and caching is turned on
+  config.consider_all_requests_local       = false
   config.action_controller.perform_caching = true
 
-  # Raise exceptions instead of rendering exception templates
-  config.action_dispatch.show_exceptions = false
+  # Disable serving static files from the `/public` folder by default since
+  # Apache or NGINX already handles this.
+  config.serve_static_files = ENV['RAILS_SERVE_STATIC_FILES'].present?
 
-  # Disable request forgery protection in test environment
-  config.action_controller.allow_forgery_protection    = false
+  # Compress JavaScripts and CSS.
+  config.assets.js_compressor = :uglifier
+  config.assets.css_compressor = :sass
 
+  # Do not fallback to assets pipeline if a precompiled asset is missed.
+  config.assets.compile = true # TODO: Should be false.
 
+  # Asset digests allow you to set far-future HTTP expiration dates on all assets,
+  # yet still be able to expire them through the digest params.
+  config.assets.digest = true
+
+  # Specifies the header that your server uses for sending files
+  config.action_dispatch.x_sendfile_header = 'X-Accel-Redirect'
+
+  # Use the lowest log level to ensure availability of diagnostic information
+  # when problems arise.
+  config.log_level = :debug
+
+  # Use a different logger for distributed setups
+  # config.logger = SyslogLogger.new
+
+  # Use a different cache store in production
+  # config.cache_store = :mem_cache_store
 
   # Tell Action Mailer not to deliver emails to the real world.
   # The :test delivery method accumulates sent emails in the
@@ -32,32 +53,18 @@ AcademicCommons::Application.configure do
     :port => ENV['SMTP_PORT']
   }
 
+  # Enable locale fallbacks for I18n (makes lookups for any locale fall back to
+  # the I18n.default_locale when a translation can not be found)
+  config.i18n.fallbacks = true
 
+  # Send deprecation notices to registered listeners
+  config.active_support.deprecation = :notify
 
-  # Use SQL instead of Active Record's schema dumper when creating the test database.
-  # This is necessary if your schema can't be completely dumped by the schema dumper,
-  # like if you have constraints or database-specific column types
-  # config.active_record.schema_format = :sql
+  # Setting host so that url helpers can be used in mailer views.
+  config.action_mailer.default_url_options = { host: 'academiccommons.columbia.edu' }
 
-  # Print deprecation notices to the stderr
-  config.active_support.deprecation = :stderr
-
-  config.relative_root = ''
-  config.analytics_enabled = false
-
-  config.base_path = "cdrs-nginx-prod1.cul.columbia.edu"
-
-  # Configure static asset server for tests with Cache-Control for performance
-  config.serve_static_assets = true
-  config.static_cache_control = "public, max-age=3600"
-
-  # Allow pass debug_assets=true as a query parameter to load pages with unpackaged assets
-  #config.assets.allow_debugging = true
-
+  # Application specific configuration.
+  config.analytics_enabled = true
+  config.base_path = "academiccommons.columbia.edu"
   config.prod_environment = true
-
-  config.log_level = :error
-
-  config.threadsafe!
-
 end

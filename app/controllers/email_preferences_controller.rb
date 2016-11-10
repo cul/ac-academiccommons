@@ -1,5 +1,5 @@
 class EmailPreferencesController < ApplicationController
-  before_filter :require_admin
+  before_filter :require_admin!
   layout "application"
 
   def index
@@ -15,12 +15,12 @@ class EmailPreferencesController < ApplicationController
   end
 
   def create
-    @email_preference = EmailPreference.new(params[:email_preference])
+    @email_preference = EmailPreference.new(email_preference_params)
     if @email_preference.save
       flash[:notice] = "Successfully created email preference."
       redirect_to @email_preference
     else
-      render :action => 'new'
+      render :action => :new
     end
   end
 
@@ -30,11 +30,11 @@ class EmailPreferencesController < ApplicationController
 
   def update
     @email_preference = EmailPreference.find(params[:id])
-    if @email_preference.update_attributes(params[:email_preference])
+    if @email_preference.update_attributes(email_preference_params)
       flash[:notice] = "Successfully updated email preference."
       redirect_to @email_preference
     else
-      render :action => 'edit'
+      render :action => :edit
     end
   end
 
@@ -44,4 +44,9 @@ class EmailPreferencesController < ApplicationController
     flash[:notice] = "Successfully destroyed email preference."
     redirect_to email_preferences_url
   end
+
+  private
+    def email_preference_params
+      params.require(:email_preference).permit(:author, :monthly_opt_out, :email)
+    end
 end

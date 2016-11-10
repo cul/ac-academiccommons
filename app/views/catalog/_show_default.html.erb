@@ -28,7 +28,7 @@
 
     <dl class='defList'>
       <dt>Item views</dt>
-      <dd><%= Statistic.count(:conditions => {:identifier => params[:id], :event => "View"}) %></dd>
+      <dd><%= Statistic.where(:identifier => params[:id], :event => "View").count %></dd>
     </dl>
 
     <% metadata_list = get_metadata_list(document) -%>

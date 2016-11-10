@@ -3,84 +3,39 @@ require 'rsolr'
 require 'json'
 
 module CatalogHelper
-  #include Blacklight::CatalogHelperBehavior # This probably shouldn't be commented out.
+  include Blacklight::CatalogHelperBehavior
   include ApplicationHelper
 
-  delegate :blacklight_solr, :to => :controller
+  delegate :repository, :to => :controller
 
-  ACTIVE_CHILDREN_RI_QUERY =
-  'select $member $type $label
-   subquery( select $dctype $title from <#ri> where $member <dc:type> $dctype and $member <dc:title> $title order by $dctype )
-   from <#ri> where ($member <http://purl.oclc.org/NET/CUL/memberOf> <info:fedora/#{pid}>)
-   and ($member <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> $type)
-   and ($member <fedora-model:label> $label)
-   and ($member <fedora-model:state> <fedora-model:Active>) order by $member'.gsub("\n",' ')
-
-  DESCRIBED_BY_RI_QUERY =
-  'select $description from <#ri> where
-   $description <http://purl.oclc.org/NET/CUL/metadataFor> <info:fedora/#{pid}>
-   order by $description limit 10 offset 0'.gsub("\n",' ')
-
-  def auto_add_empty_spaces(text)
-    text.to_s.gsub(/([^\s-]{5})([^\s-]{5})/,'\1&#x200B;\2')
+  def standard_count_query
+    {:qt=>"standard", :q=>"*:*", :fq => ["has_model_ssim:\"#{ContentAggregator.to_class_uri}\""]}
   end
 
   def get_total_count
-    query_params = {:qt=>"standard", :q=>"*:*"}
-    return get_count(query_params)
+    return get_count(standard_count_query)
   end
 
   def get_count_by_year
-    query_params = {:qt=>"standard", :q=>"record_creation_date:[NOW-1YEAR TO NOW]"}
+    query_params = standard_count_query.merge(q: "record_creation_date:[NOW-1YEAR TO NOW]")
     return get_count(query_params)
   end
 
   def get_count_by_month
-    query_params = {:qt=>"standard", :q=>"record_creation_date:[NOW-1MONTH TO NOW]"}
+    query_params = standard_count_query.merge(q: "record_creation_date:[NOW-1MONTH TO NOW]")
     return get_count(query_params)
   end
 
   def get_count(query_params)
-    results = blacklight_solr.find(query_params)
+    results = repository.search(query_params)
     return results["response"]["numFound"]
   end
 
-  def custom_results()
-
-    bench_start = Time.now
-
-    if (!params[:id].nil?)
-      params[:id] = nil
-    end
-
-    params[:page] = nil
-    params[:q] = (params[:q].nil?) ? "" : params[:q].to_s
-    params[:sort] = (params[:sort].nil?) ? "record_creation_date desc" : params[:sort].to_s
-    params[:rows] = (params[:rows].nil? || params[:rows].to_s == "") ? ((params[:id].nil?) ? blacklight_config[:feed_rows] : params[:id].to_s) : params[:rows].to_s
-
-    extra_params = {}
-    extra_params[:fl] = "title_display,id,author_facet,author_display,record_creation_date,handle,abstract,author_uni,subject_facet,department_facet,genre_facet"
-
-    if (params[:f].nil?)
-      solr_response = force_to_utf8(blacklight_solr.find(params.merge(extra_params)))
-    else
-      solr_response = force_to_utf8(blacklight_solr.find(self.solr_search_params(params).merge(extra_params)))
-    end
-
-    document_list = solr_response.docs.collect {|doc| SolrDocument.new(doc, solr_response)}
-
-    document_list.each do |doc|
-     doc[:pub_date] = Time.parse(doc[:record_creation_date].to_s).to_s(:rfc822)
-    end
-
-    logger.info("Solr fetch: #{self.class}#custom_results (#{'%.1f' % ((Time.now.to_f - bench_start.to_f)*1000)}ms)")
-
-    return [solr_response, document_list]
-
-  end
-
   def build_recent_updated_list()
-    query_params = {:q => "", :fl => "title_display, id, author_facet, record_creation_date", :sort => "record_creation_date desc", :start => 0, :rows => 100}
+    query_params = {
+      :q => "", :fl => "title_display, id, author_facet, record_creation_date",
+      :sort => "record_creation_date desc", :fq => ["has_model_ssim:\"#{ContentAggregator.to_class_uri}\""],
+      :start => 0, :rows => 100}
     included_authors = []
     results = []
     return build_distinct_authors_list(query_params, included_authors, results)
@@ -88,7 +43,7 @@ module CatalogHelper
 
   def build_distinct_authors_list(query_params, included_authors, results)
 
-    updated = blacklight_solr.find(query_params)
+    updated = repository.search(query_params)
     items = updated["response"]["docs"]
     if(items.empty?)
       return results
@@ -122,34 +77,36 @@ module CatalogHelper
     end
   end
 
-  def build_resource_list(document)
-
+  def build_resource_list(document, include_inactive = false)
+    return [] unless free_to_read?(document)
    obj_display = (document["id"] || [])
    results = []
    uri_prefix = "info:fedora/"
-   hc = get_http_client
 
    docs = []
-
-   ri_url = "#{fedora_config["url"]}/risearch"
-   opts = itql_query_opts(ACTIVE_CHILDREN_RI_QUERY.gsub('#{pid}',document['id']))
-   res = hc.post(ri_url,opts)
-   body = res.body
-   docs = JSON.parse(body)["results"]
+   member_search = {
+    q: '*:*',
+    qt: 'standard',
+    fl: '*',
+    fq: ["cul_member_of_ssim:\"info:fedora/#{obj_display}\""],
+    rows: 10000,
+    facet: false
+   }
+   member_search[:fq] << "object_state_ssi:A" unless include_inactive
+   response = Blacklight.solr.get 'select', params: member_search
+   docs = response['response']['docs']
+   logger.info "standard qt got #{docs.length}"
+   docs = response['response']['docs']
    docs.each_with_index.collect do |member, i|
 
      res = {}
-     member_pid = member["member"].sub(uri_prefix, "")
+     member_pid = member["id"].sub(uri_prefix, "")
 
      res[:pid] = member_pid
-     res[:filename] = member['label']
-
-     res[:download_path] = fedora_content_path(:download, res[:pid], 'CONTENT', res[:filename])
-
-     url = fedora_config["url"] + "/get/" + member_pid + "/" + 'CONTENT'
-
-     h_ct = hc.head(url).header["Content-Type"].to_s
-     res[:content_type] = h_ct
+     res[:filename] = member['downloadable_content_label_ss']
+     dsid = member['downloadable_content_dsid_ssi']
+     res[:download_path] = fedora_content_path(:download, member_pid, dsid, res[:filename])
+     res[:content_type] = member['downloadable_content_type_ssi']
 
      results << res
     end
@@ -160,10 +117,21 @@ module CatalogHelper
     return []
   end
 
+  # copied from AcademicCommons::Indexable
+  # TODO: DRY this logic
+  def free_to_read?(document)
+    return false unless document['object_state_ssi'] == 'A'
+    free_to_read_start_date = document[:free_to_read_start_date]
+    return true unless free_to_read_start_date
+    embargo_release_date = Date.strptime(free_to_read_start_date, '%Y-%m-%d')
+    current_date = Date.strptime(Time.now.strftime('%Y-%m-%d'), '%Y-%m-%d')
+    current_date > embargo_release_date
+  end
+
   def get_departments_list
     results = []
     query_params = {:q=>"", :rows=>"0", "facet.limit"=>-1}
-    solr_results = blacklight_solr.find(query_params)
+    solr_results = repository.search(query_params)
     affiliation_departments = solr_results.facet_counts["facet_fields"]["department_facet"]
     res = {}
     affiliation_departments.each do |item|
@@ -181,7 +149,7 @@ module CatalogHelper
   def get_department_facet_list(department)
     results = {}
     query_params = {:q=>"", :'fq'=>"department_facet:\"" + department + "\"", :rows=>"0", "facet.limit"=>-1}
-    solr_results = blacklight_solr.find(query_params)
+    solr_results = repository.search(query_params)
     facet_fields = solr_results.facet_counts["facet_fields"]
 
     facet_fields.each do |key, value|
@@ -206,7 +174,7 @@ module CatalogHelper
   def get_subjects_list
     results = []
     query_params = {:q=>"", :rows=>"0", "facet.limit"=>-1, "facet.field" => "subject_facet"}
-    solr_results = blacklight_solr.find(query_params)
+    solr_results = repository.search(query_params)
     subjects = solr_results.facet_counts["facet_fields"]["subject_facet"]
     res = {}
     subjects.each do |item|
@@ -243,56 +211,29 @@ module CatalogHelper
     filename.to_s.split(".").last.strip
   end
 
-  def base_id_for(doc)
-    doc["id"].gsub(/(\#.+|\@.+)/, "")
-  end
-
   def doc_object_method(doc, method)
     doc["object_display"].first + method.to_s
   end
 
-  def doc_json_method(doc, method)
-    hc = HTTPClient.new
-     hc.ssl_config.verify_mode = OpenSSL::SSL::VERIFY_NONE
-
-    res = JSON.parse(hc.get_content(doc_object_method(doc,method)))
-  end
-
   def get_metadata_list(doc)
-#catch any error and return an error message that resources are unavailable
-#this prevents fedora server outages from making ac2 item page inaccessible
-begin
-   doc["object_display"] = [ "#{fedora_config["url"]}" + "/objects/" + doc["id"] + "/methods" ]
+    #catch any error and return an error message that resources are unavailable
+    #this prevents fedora server outages from making ac2 item page inaccessible
+    begin
+      #TODO: is this side effect on doc necessary?
+      doc["object_display"] = [ "#{fedora_config["url"]}" + "/objects/" + doc["id"] + "/methods" ]
 
-   ri_url = "#{fedora_config["url"]}/risearch"
-   opts = itql_query_opts(DESCRIBED_BY_RI_QUERY.gsub('#{pid}',doc['id']))
-   hc = get_http_client
-   res = hc.post(ri_url,opts)
-   body = res.body
-   json = JSON.parse(body)["results"]
-
-    json << {"DC" => base_id_for(doc)}
-    results = []
-    json.each do  |meta_hash|
-      meta_hash.each do |desc, uri|
+      results = doc["described_by_ssim"].map do |ds_uri|
         res = {}
-        res[:title] = desc
-        res[:id] = trim_fedora_uri_to_pid(uri)
-
-        # TEMP -- we want to ignore DC link for now, maybe forever
-        if(desc == "DC")
-          next
-        end
-
-        block = desc == "DC" ? "DC" : "CONTENT"
-        filename = res[:id].gsub(/\:/,"")
-        filename += "_" + res[:title].downcase
-        filename += ".xml"
-        res[:show_url] = fedora_content_path(:show_pretty, res[:id], block, filename)
-        res[:download_url] = fedora_content_path(:download, res[:id], block, filename)
-        results << res
+        pid = ds_uri.split('/')[1]
+        dsid = ds_uri.split('/')[2]
+        # res[:id] = pid is not used
+        # res[:title] = 'description' is not used
+        # constant suffix for backwards compatibility with AC2
+        filename = "#{pid.gsub(/\:/,"")}_description.xml"
+        res[:show_url] = fedora_content_path(:show_pretty, pid, dsid, filename)
+        res[:download_url] = fedora_content_path(:download, pid, dsid, filename)
+        res
       end
-    end
     rescue
       results = []
     end
@@ -309,23 +250,6 @@ begin
    hc.set_auth(domain, user, password)
    hc
   end
-  def itql_query_opts(query)
-   {
-    'type'=>'tuples',
-    'lang'=>'itql',
-    'format'=> 'json',
-    'limit' => '',
-    'dt' => 'checked',
-    'query' => query
-   }
-  end
-  def trim_fedora_uri_to_pid(uri)
-    uri.gsub(/info\:fedora\//,"")
-  end
-
-  def resolve_fedora_uri(uri)
-    fedora_config["url"] + "/get" + uri.gsub(/info\:fedora/,"")
-  end
 
   ############### Copied from Blacklight CatalogHelper #####################
 
@@ -337,7 +261,7 @@ begin
     per_page = 1 if per_page < 1
     current_page = (response.start / per_page).ceil + 1
     num_pages = (response.total / per_page.to_f).ceil
-    Struct.new(:current_page, :num_pages, :limit_value).new(current_page, num_pages, per_page)
+    Struct.new(:current_page, :num_pages, :limit_value, :total_pages).new(current_page, num_pages, per_page, num_pages)
   end
 
   # Equivalent to kaminari "paginate", but takes an RSolr::Response as first argument.
@@ -350,11 +274,6 @@ begin
   end
 
   #
-  # shortcut for built-in Rails helper, "number_with_delimiter"
-  #
-  def format_num(num); number_with_delimiter(num) end
-
-  #
   # Pass in an RSolr::Response. Displays the "showing X through Y of N" message.
   def render_pagination_info(response, options = {})
       start = response.start + 1
@@ -363,9 +282,9 @@ begin
       num_pages = (response.total / per_page.to_f).ceil
       total_hits = response.total
 
-      start_num = format_num(start)
-      end_num = format_num(start + response.docs.length - 1)
-      total_num = format_num(total_hits)
+      start_num = number_with_delimiter(start)
+      end_num = number_with_delimiter(start + response.docs.length - 1)
+      total_num = number_with_delimiter(total_hits)
 
       entry_name = options[:entry_name] ||
         (response.empty?? 'entry' : response.docs.first.class.name.underscore.sub('_', ' '))
@@ -387,7 +306,7 @@ begin
   # Code should call this method rather than interrogating session directly,
   # because implementation of where this data is stored/retrieved may change.
   def item_page_entry_info
-    "Showing item <b>#{session[:search][:counter].to_i} of #{format_num(session[:search][:total])}</b> from your search.".html_safe
+    "Showing item <b>#{session[:search][:counter].to_i} of #{number_with_delimiter(session[:search][:total])}</b> from your search.".html_safe
   end
 
   # Look up search field user-displayable label
@@ -429,30 +348,6 @@ begin
      return urls
   end
 
-
-  def related_links
-
-      if @document["genre_facet"][0] != "Dissertations" && @document["genre_facet"][0] != "Master's theses"
-        return []
-      end
-
-      if @document['originator_department'] == nil
-        return []
-      end
-
-      cu_department = @document['originator_department'][0]
-
-      rsolr = RSolr.connect :url => Rails.application.config.related_content_solr_url
-      list_size = Rails.application.config.related_content_show_size
-      search = rsolr.select :params => { :q => 'cu_department:"' + cu_department + '"', :qt => "document", :start => 0, :rows => list_size, :sort => "date_ssued desc"}
-
-      search = search["response"]
-      search = search["docs"]
-
-      return search
-
-  end
-
   def itemprop_attribute(name)
     blacklight_config.show_fields[name][:itemprops]
   end
@@ -471,10 +366,40 @@ begin
     'blacklight-' + document.get(blacklight_config.view_config(document_index_view_type_field).display_type_field).parameterize rescue nil
   end
 
-    # override of blacklight method - when a request for /catalog/BAD_SOLR_ID is made, this method is executed...
-    def invalid_solr_id_error
-        index
-        render "tombstone", :status => 404
-    end
+  # override of blacklight method - when a request for /catalog/BAD_SOLR_ID is made, this method is executed...
+  def invalid_solr_id_error
+      index
+      render "tombstone", :status => 404
+  end
+
+ def facet_list_limit
+   10
+ end
+
+ # Overriding Blacklight helper method.
+ #
+ # Standard display of a SELECTED facet value, no link, special span
+ # with class, and 'remove' button.
+ def render_selected_facet_value(facet_solr_field, item)
+   render = link_to((item.value + render_facet_count(item.hits)).html_safe, search_action_path(remove_facet_params(facet_solr_field, item.value, params)), :class=>"facet_deselect")
+   render = render + render_subfacets(facet_solr_field, item)
+   render.html_safe
+ end
+
+ def render_subfacets(facet_solr_field, item, options ={})
+   render = ''
+   if (item.instance_variables.include? "@subfacets")
+     render = '<span class="toggle">[+/-]</span><ul>'
+     item.subfacets.each do |subfacet|
+       if facet_in_params?(facet_solr_field, subfacet.value)
+         render += '<li>' + render_selected_facet_value(facet_solr_field, subfacet) + '</li>'
+       else
+         render += '<li>' + render_facet_value(facet_solr_field, subfacet,options) + '</li>'
+       end
+     end
+     render += '</ul>'
+     end
+     render.html_safe
+ end
 
 end

@@ -1,8 +1,6 @@
 class IndexingController < ApplicationController
-  
   include DepositorHelper
-  
-  
+
   def push_indexing_results
 
     start_time = Time.new
@@ -20,20 +18,20 @@ class IndexingController < ApplicationController
     if(new_indexed.size > 0)
       notifyDepositorsItemAdded(new_indexed)
     end
-    
+
     if(new_embargoed.size > 0)
       notifyDepositorsEmbargoedItemAdded(new_embargoed)
-    end  
-    
+    end
+
     Notifier.reindexing_summary(params, time_id).deliver
 
-    render nothing: true 
-  end  
-  
-  
+    render nothing: true
+  end
+
+
   def ingest_by_cron
     processIndexing(params)
-    render nothing: true 
-  end  
-  
-end ### ===================================================== ###
+    render nothing: true
+  end
+
+end

@@ -16,7 +16,7 @@
 
 
 
-  <%= form_tag({ :action=>'submit_author_agreement'}, :method=>'post', :id=>'sd-form', :class=>'self-deposit-form', :charset=>'utf-8') do %>
+  <%= form_tag({ :action=>:submit_author_agreement}, :method=>'post', :id=>'sd-form', :class=>'self-deposit-form', :charset=>'utf-8') do %>
     <fieldset>
       <%= render :partial => 'author_agreement', :locals => {:required_class => "pageRequired required" } %>
 

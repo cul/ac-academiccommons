@@ -1,101 +1,101 @@
 %div{:style => "padding: 0 0 10px 0;"}
   = flash[:notice]
 
-%h3 Send out all Author Monthlies 
+%h3 Send Author Reports
 .split_form
 
-  = form_tag url_for(:controller => "statistics", :action => "all_author_monthlies") do
-  
+  = form_tag url_for(:controller => :statistics, :action => :all_author_monthlies) do
+
     %div{:style => "padding: 10px 0px;"}
-      
-      %div{:style => "display: table; width: ;"}  
+
+      %div{:style => "display: table; width: ;"}
 
         -# %div{:style => "display: table-row;"}
         -# %div{:style => "display: table-cell;  padding: 2px 15px 2px 0px", :class=>"table-cell"}
           -# .label Email Template:
-        -# %div{:style => "display: table-cell;", :class=>"table-cell"}    
+        -# %div{:style => "display: table-cell;", :class=>"table-cell"}
           -# .value
             -# = select_tag :email_template, options_for_select(["Normal", "Initial"], params[:email_template] || "Normal")
-    
+
         %div{:style => "display: table-row;"}
         %div{:style => "display: table-cell; padding: 2px 15px 2px 0px", :class=>"table-cell"}
           .label Report month:
-        %div{:style => "display: table-cell;", :class=>"table-cell"}      
+        %div{:style => "display: table-cell;", :class=>"table-cell"}
           .value
             = select_tag :month, options_for_select(Date::ABBR_MONTHNAMES, params[:month] || (Date.today - 1.months).strftime("%b"))
             - if (Date.today - 1.months).strftime("%b") == 'Dec'
               = select_tag :year, options_for_select((2011..Date.today.year), params[:year] || Date.today.year - 1)
             -else
               = select_tag :year, options_for_select((2011..Date.today.year), params[:year] || Date.today.year)
-              
+
         %div{:style => "display: table-row;"}
         %div{:style => "display: table-cell; padding: 2px 15px 2px 0px", :class=>"table-cell"}
           .label Include zeroes
-        %div{:style => "display: table-cell;", :class=>"table-cell"}  
+        %div{:style => "display: table-cell;", :class=>"table-cell"}
           .value
           = check_box_tag :include_zeroes, "true", params[:include_zeroes]
-          
+
 
         %div{:style => "display: table-row;"}
         %div{:style => "display: table-cell; padding: 2px 15px 2px 0px", :class=>"table-cell"}
           .label Do not send email, log only
-        %div{:style => "display: table-cell;", :class=>"table-cell"}  
-          .value
-          = check_box_tag :do_not_send_email, "true", params[:do_not_send_email]         
-                  
-        %div{:style => "display: table-row;"}
-        %div{:style => "display: table-cell; padding: 2px 15px 2px 0px", :class=>"table-cell"}
-          .label Order by: 
         %div{:style => "display: table-cell;", :class=>"table-cell"}
           .value
-            = select_tag :order_by, options_for_select([["Titles", "titles"], ["Views", "views"], ["Downloads", "downloads"]], params[:order_by])      
-        
+          = check_box_tag :do_not_send_email, "true", params[:do_not_send_email]
+
         %div{:style => "display: table-row;"}
-        %div{:style => "display: table-cell; padding: 12px 15px 2px 0px", :class=>"table-cell"}    
+        %div{:style => "display: table-cell; padding: 2px 15px 2px 0px", :class=>"table-cell"}
+          .label Order by:
+        %div{:style => "display: table-cell;", :class=>"table-cell"}
+          .value
+            = select_tag :order_by, options_for_select([["Titles", "titles"], ["Views", "views"], ["Downloads", "downloads"]], params[:order_by])
+
+        %div{:style => "display: table-row;"}
+        %div{:style => "display: table-cell; padding: 12px 15px 2px 0px", :class=>"table-cell"}
           .label Number of reports to send:
         %div{:style => "display: table-cell;", :class=>"table-cell"}
           .value
             = @authors.length
-            
-    %div= 'Optional note:'        
-    %div= text_area_tag "optional_note", @alert_message, :style => "width: 600px"     
-    %br   
+
+    %div= 'Optional note:'
+    %div= text_area_tag "optional_note", @alert_message, :style => "width: 600px"
+    %br
     %div= submit_tag "Send To Authors", :onclick => "return confirm('This will send most likely hundreds of emails. Are you sure?');"
 
     %br
     %hr
 
-   
+
     %div{:style => "padding: 0px 0px;"}
-      
-      %div{:style => "display: table; width: ;"}  
-        
+
+      %div{:style => "display: table; width: ;"}
+
         %div{:style => "display: table-row;"}
-        %div{:style => "display: table-cell; padding: 2px 15px 2px 0px", :class=>"table-cell"}    
+        %div{:style => "display: table-cell; padding: 2px 15px 2px 0px", :class=>"table-cell"}
           = submit_tag "Send Report For Single Person"
         %div{:style => "display: table-cell; padding: 2px 15px 2px 0px", :class=>"table-cell"}
-          UNI: 
+          UNI:
         %div{:style => "display: table-cell; padding: 2px 15px 2px 0px", :class=>"table-cell"}
           = text_field_tag :one_report_uni, params[:one_report_uni]
         %div{:style => "display: table-cell; padding: 2px 15px 2px 0px", :class=>"table-cell"}
-          Email: 
+          Email:
         %div{:style => "display: table-cell; padding: 2px 15px 2px 0px", :class=>"table-cell"}
           = text_field_tag :one_report_email, params[:one_report_email]
 
         %div{:style => "display: table-row;"}
-        %div{:style => "display: table-cell; padding: 2px 15px 2px 0px", :class=>"table-cell"}    
+        %div{:style => "display: table-cell; padding: 2px 15px 2px 0px", :class=>"table-cell"}
           = submit_tag "Test Alternate Email For Person"
         %div{:style => "display: table-cell; padding: 2px 15px 2px 0px", :class=>"table-cell"}
-          UNI: 
+          UNI:
         %div{:style => "display: table-cell; padding: 2px 15px 2px 0px", :class=>"table-cell"}
           = text_field_tag :test_users, params[:test_users]
-          
+
 
         %div{:style => "display: table-row;"}
-        %div{:style => "display: table-cell; padding: 5px 15px 2px 0px", :class=>"table-cell"}    
+        %div{:style => "display: table-cell; padding: 5px 15px 2px 0px", :class=>"table-cell"}
           = submit_tag "Send All Reports To Single Email", :onclick => "return confirm('This will send most likely hundreds of emails. Are you sure?');"
         %div{:style => "display: table-cell; padding: 5px 15px 2px 0px", :class=>"table-cell"}
-          Email: 
+          Email:
         %div{:style => "display: table-cell;; padding: 5px 15px 2px 0px", :class=>"table-cell"}
           .value
           = text_field_tag :designated_recipient, params[:designated_recipient]

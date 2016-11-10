@@ -1,18 +1,10 @@
 class AdminController < ApplicationController
-
   include DepositorHelper
   include InfoHelper
 
-  #before_filter :require_admin, :except => [:ingest_by_cron]
-  before_filter :require_admin
+  before_filter :require_admin!
 
-  #layout "no_sidebar"
   layout "application"
-
-  # def ingest_by_cron
-    # processIndexing(params)
-    # render nothing: true
-  # end
 
   def ingest
 
@@ -56,26 +48,17 @@ class AdminController < ApplicationController
         deposit_to_archive.save
       end
     end
-    @deposits = Deposit.find(:all, :conditions => {:archived => false}, :order => "created_at")
+    @deposits = Deposit.where(:archived => false).order(:created_at)
 
   end
 
   def agreements
-      @agreements = Agreement.find(:all)
+      @agreements = Agreement.all
       respond_to do |format|
          format.html
          format.csv { send_data Agreement.to_csv }
       end
   end
-
-  def student_agreements
-      @agreements = StudentAgreement.find(:all)
-      respond_to do |format|
-         format.html
-         format.csv { send_data StudentAgreement.to_csv }
-      end
-  end
-
 
   def show_deposit
     @deposit = Deposit.find(params[:id])

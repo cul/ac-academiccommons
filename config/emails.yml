@@ -1,0 +1,35 @@
+#
+# List of emails to send report and deposit notifications. Can also set
+# "from" field in emails.
+#
+
+# Emails for local environments.
+# Emails are not actually sent in local environments, therefore the emails don't
+# have to be valid.
+local: &local
+  deposit_notification_bcc:
+    - example@columbia.edu
+  indexing_report_recipients:
+    - example@columbia.edu
+  mail_deposit_recipients:
+    - example@columbia.edu
+  mail_deliverer: ac@columbia.edu
+
+development: *local
+test: *local
+
+
+# Emails for deployed environments.
+deployed: &deployed
+  deposit_notification_bcc:
+    - ac@columbia.edu
+  indexing_report_recipients:
+    - ac@columbia.edu
+  mail_deposit_recipients:
+    - ACdeposit@columbia.edu
+  mail_deliverer: ac@columbia.edu
+
+academiccommons_dev: *deployed
+academiccommons_test: *deployed
+academiccommons_prod: *deployed
+passenger_prod: *deployed

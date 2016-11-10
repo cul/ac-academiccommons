@@ -61,11 +61,6 @@ p.caption {
 
 
 }
-/*p.caption:before {
-
-	content:'by: ';
-	color: #3f3f3f;}*/
-
 
 #recently-updated li.home-recent p.caption a {
 	font-weight: normal;
@@ -556,9 +551,6 @@ th, td {
 	list-style-type: none;
 }
 
-
-
-
 #facets a:hover{
 	text-decoration: underline;
 }
@@ -581,20 +573,6 @@ a.btnRemove.imgReplace {
 	color: navy;
 }
 
-/*li.facet_unselected {
-	background: url(facet-toggle-ui.png) no-repeat 0 5px;
-}
-
-
-li.facet_selected {
-	background: url(facet-toggle-ui.png) no-repeat -1px -16px;
-	font-weight: bold;
-}
-
-li.facet_selected:hover {
-	background: url(facet-toggle-ui.png) no-repeat -1px -36px;
-}*/
-
 #facets li.more_facets_link {
 	text-align: right;
 	margin-right: .5em;
@@ -607,8 +585,12 @@ ul.facet_extended_list {
 	margin-top: .75em;}
 
 ul.facet_extended_list li a {
-        border-bottom: none;
-		padding: .25em 0 .25em 14px;
+  border-bottom: none;
+}
+
+ul.facet_extended_list li a:hover {
+  border-bottom: none;
+  color: #558fd0;
 }
 
 .facet_extended_list {
@@ -620,7 +602,7 @@ a.facet_deselect{
 	padding-right: 18px;
 	background: url(link-ui.png) no-repeat 100% 4px;
 	display: inline-block;
-	width: 94%;
+	width: 92%;
 	font-weight: bold;
 	color: #2D2A62;
 	border-bottom: none;
@@ -641,29 +623,30 @@ a.facet_select{
 	/*background: url(facet-toggle-ui.png) no-repeat -1px 20px;*/
 }
 
-#facets div ul li{
+#facets div ul li a.facet_deselect{
 	padding-right: 7px;
 	padding-left: 7px;
 	margin-bottom: .25em;
 	margin-right: .5em;
 }
-#facets div ul li.facet_selected {
+
+#facets div ul li a.facet_select {
+	padding-left: 7px;
+	margin-bottom: .25em;
+}
+
+#facets div ul a.facet_deselect {
 
 	-moz-border-radius: 15px;
 	-webkit-border-radius: 15px;
     border-radius: 15px;
-	background: #EAF5FF;
+	background-color: #EAF5FF;
 
 	-moz-box-shadow: 1px 2px 2px #333;
     -webkit-box-shadow: 2px 2px 4px #777;
     box-shadow: 2px 2px 2px #333;
 	border: 0 solid #779BC3;
 }
-a.facet_select:hover{
-
-
-	}
-
 
 
 span.item_count{
@@ -672,7 +655,7 @@ span.item_count{
 
 /* for our ajaxy dialog to make sure we're overriding the yui global text-align: center */
 
-.facet_extended_list .sort_options {
+.facet_pagination .sort_options {
 	text-align: right
 }
 
@@ -738,14 +721,14 @@ span.item_count{
 
 }
 
- .prev_next_links{
-	float: right;
+.prev_next_links{
+  float: right;
 }
 
 
-     .prev_next_links span.disabled {
-    color: #999;
-    border: 1px solid #DDD; }
+.prev_next_links span.disabled {
+  color: #999;
+}
 
 #pagination div.page_links span.current {
 	 color: silver;
@@ -1306,11 +1289,17 @@ li.appliedFilter {
 	margin-right: 5px;
 }
 
-li.highlight, #facets div ul li.facet_selected.highlight{
+#breadcrumbs li.highlight {
 	background: #5285B8;
-
 }
 
+#facets div ul li.highlight a{
+	background-color: #5285B8;
+}
+
+#facets li.highlight {
+  background: none;
+}
 
 
 li.appliedFilter:hover {
@@ -1648,7 +1637,7 @@ body.single-col #page {
 
 
 }
-#facets h3 {
+#facets h5 {
 
 	padding: .5em .5em;
 	margin-bottom: 0;
@@ -1658,14 +1647,26 @@ body.single-col #page {
 	border-bottom: 1px solid #C9E5FF;
 	/*background: -moz-linear-gradient(top, #284585, #122D62);
 	background: -webkit-gradient(linear, left top, left bottom, from(#284585), to(#122D62));*/
-    color: white;
-
-
-    text-shadow: black 2px 2px 0px;
-	text-transform: uppercase;
-	letter-spacing: .2em;
-	font-size: 123.1%;
 }
+
+#facets h5 a {
+  color: white;
+  text-shadow: black 2px 2px 0px;
+  text-transform: uppercase;
+  letter-spacing: .2em;
+  font-size: 123.1%;
+	font-family: "Open Sans", Arial, Helvetica, Geneva, sans-serif;
+}
+
+#facets h5:hover{
+  background: #154784 url(accordion-closed.png) no-repeat 98%;
+}
+
+
+/*#facets a.facet_deselect:hover{
+		background: #154784 url(accordion-open.png) no-repeat 98%;
+}*/
+
 
 #top-slug .box{
 
@@ -1679,20 +1680,6 @@ body.single-col #page {
 	 background: rgba(255,255,255,.7);
 
 
-}
-
-
-#home-stats  {
-
-
-
-
-}
-
-
-
-#facets .facet_selected{
-		background: #122D62 url(accordion-open.png) no-repeat 98%;
 }
 
 #facets h2 {
@@ -1714,18 +1701,9 @@ body.single-col #page {
 }
 
 
-#facets h3:hover{
-
-	background: #154784 url(accordion-closed.png) no-repeat 98%;
-	}
 
 
-	#facets h3.facet_selected:hover{
-		background: #154784 url(accordion-open.png) no-repeat 98%;
-}
-
-
-#facets div{
+#facets .facet_limit{
 	margin-top: .5em;
 	background-color: white;
 	border: 1px solid #b8b8b8;
@@ -1919,9 +1897,7 @@ div.school.union{
 	background: url(college-sprites.gif) -640px 5px;
 	width: 170px;
 }
-#facets div h3  {
-	font-family: "Open Sans", Arial, Helvetica, Geneva, sans-serif;
-}
+
 
 #colophon p{
 	text-align: center;
@@ -1957,23 +1933,29 @@ a.nav-link{
 	text-align: left;
 }
 
-.facet_extended_list .facet_pagination {
+/* Not displaying facet dialog box title. Used by custom jquery code to
+   display title. */
+#facet_title {
+  display: none;
+}
+
+.facet_pagination {
 	text-align: right;
 }
-.facet_extended_list .facet_pagination .ui-state-active {
+.facet_pagination .ui-state-active {
 	border:none;
 }
-.facet_extended_list .facet_pagination .prev_next_links {
+.facet_pagination .prev_next_links {
 	float: left;
 }
 
-.facet_extended_list .top {
+.facet_pagination.top {
 	border-bottom:1px dotted #CCCCCC;
 	margin-bottom:10px;
-	padding-bottom:5px;
+	padding-bottom:25px;
 }
 
-.facet_extended_list .bottom {
+.facet_pagination.bottom {
 	border-top:1px dotted #CCCCCC;
 	margin-top:10px;
 	padding-top:5px;
@@ -1983,13 +1965,13 @@ a.nav-link{
 	margin-right: 15px;
 }
 
-.facet_extended_list .prev_next_links .prev_page, .facet_extended_list .sort_options .az {
+.prev_next_links .prev_page, .facet_pagination .sort_options .az {
   padding-right:10px;
   margin-right:10px;
   border-right:1px solid #CCCCCC;
 }
 
-.facet_extended_list .prev_next_links .next_page, .facet_extended_list .sort_options .numeric {
+.prev_next_links .next_page, .facet_pagination .sort_options .numeric {
 }
 
 .ui-state-active, .ui-widget-content .ui-state-active, .ui-widget-header .ui-state-active {  background: transparent;   }
@@ -2005,19 +1987,6 @@ a.nav-link{
 .browse-list h3 {
 	text-align: center;
 }
-
-/*#content form p label {
-	display: block;
-	width: 76px;
-	float: left;
-	text-align: right;
-	margin-right: 1em;
-
-}*/
-
-/*self deposit form*/
-
-
 
 input#accept {
 	width: 15px;
@@ -2087,8 +2056,6 @@ form.self-deposit-form .error{
 		  -moz-box-shadow: 3px 3px 3px rgba(0,0,0,.2);
   -webkit-box-shadow: 3px 3px 3px rgba(0,0,0,.2);
   box-shadow:3px 3px 3px rgba(0,0,0,.2);
-
-
 }
 
 textarea {
@@ -2127,7 +2094,6 @@ margin-left: 115px;
 color: #2c2f28;
 background-color: #fafeff;
 width: 400px;
-background
 
 
    /* fallback (Opera) */

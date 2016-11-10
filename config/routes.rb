@@ -1,4 +1,11 @@
 AcademicCommons::Application.routes.draw do
+  devise_for :users, controllers: { sessions: 'users/sessions', :omniauth_callbacks => "users/omniauth_callbacks" }
+
+  devise_scope :user do
+    get 'sign_in', :to => 'users/sessions#new', :as => :new_user_session
+    get 'sign_out', :to => 'users/sessions#destroy', :as => :destroy_user_session
+  end
+
   root :to => "catalog#index"
 
   get "info/about"
@@ -9,24 +16,26 @@ AcademicCommons::Application.routes.draw do
   get '/catalog/streaming/:id', :to => 'catalog#streaming', :as => 'streaming'
   get '/catalog/browse' => redirect('/catalog/browse/subjects')
 
-  Blacklight.add_routes(self)
+  blacklight_for :catalog
 
-  # resources :dmcas, path: "dmca"
+  # RESTful routes for reindex API, working around Blacklight route camping
+  delete '/solr_documents/:id', to: 'solr_documents#destroy'
+  put '/solr_documents/:id', to: 'solr_documents#update'
+  get '/solr_documents/:id', to: 'solr_documents#show'
+
   get '/copyright_infringement_notice', to: 'dmcas#new', as: 'dmcas'
-  post '/copyright_infringement_notice', to: 'dmcas#create' #, as: 'dmcas'
+  post '/copyright_infringement_notice', to: 'dmcas#create'
   get '/notice_received', to: 'dmcas#index'
-
 
   resources :email_preferences, :reports
 
-
   get '/download/fedora_content/:download_method/:uri/:block/:filename', :to => 'download#fedora_content', :as => "fedora_content",
-    :block => /(DC|CONTENT|SOURCE)/,
+    :block => /(DC|CONTENT|content|SOURCE)/,
     :uri => /.+/, :filename => /.+/, :download_method => /(download|show|show_pretty)/
 
   get '/download/download_log/:id', :to => 'download#download_log', :as => 'download_log'
 
-  match '/access_denied', :to => 'application#access_denied', :as => 'access_denied'
+  get '/access_denied', :to => 'application#access_denied', :as => 'access_denied'
 
   get '/ingest_monitor/:id', :to => 'ingest_monitor#show', :as => 'ingest_monitor'
 
@@ -49,34 +58,22 @@ AcademicCommons::Application.routes.draw do
   get '/deposit', :to => 'deposit#index', :as => 'deposit'
   match '/deposit/submit_author_agreement', :to => 'deposit#submit_author_agreement', via: [:get, :post]
   get '/deposit/agreement_only'
-  # submit_student_agreement, not in use
 
   get '/admin', :to => 'admin#index', :as => 'admin'
   get '/admin/deposit', :to => 'admin#deposits'
   get '/admin/deposits/:id', :to => 'admin#show_deposit', :as => 'show_deposit'
   get '/admin/deposits/:id/file', :to => 'admin#download_deposit_file', :as => 'download_deposit_file'
   get '/admin/agreements', :to => 'admin#agreements'
-  get '/admin/student_agreements', :to => 'admin#student_agreements'
   match '/admin/ingest', :to => 'admin#ingest', via: [:get, :post]
   match '/admin/edit_alert_message', :to => 'admin#edit_alert_message', via: [:get, :post]
 
   get '/emails/get_csv_email_form', :to => 'emails#get_csv_email_form'
-
-  #match ':controller/:action'
-  #match ':controller/:action/:id'
-  #match ':controller/:action/:id.:format'
 
   get '/sitemap.xml', :to => 'sitemap#index', :format => 'xml'
 
   get '/logs/all_author_monthly_reports_history', :to => 'logs#all_author_monthly_reports_history'
   get '/logs/log_form', :to => 'logs#log_form'
   get '/logs/ingest_history', :to => 'logs#ingest_history'
-
-  get '/user_sessions/create', :to => 'user_sessions#create'
-
-  get '/login',          :to => 'user_sessions#new',          :as => 'new_user_session'
-  get '/wind_logout',    :to => 'user_sessions#destroy',      :as => 'destroy_user_session'
-  # match 'account',        :to => 'application#account',     :as => 'edit_user_registration'
 
   get '/about', :to => 'info#about', :as => 'about'
 end

@@ -1,14 +1,14 @@
 module SolrHelper
-  
+
   def getAuthorsUni(pid)
 
-    result = blacklight_solr.find(:fl => 'author_uni', :fq => 'pid:"' + pid + '"')["response"]["docs"]
+    result = repository.search(:fl => 'author_uni', :fq => 'pid:"' + pid + '"')["response"]["docs"]
     return result.first[:author_uni] || []
   end
 
   def getItem(pid)
 
-    result = blacklight_solr.find(:fl => 'author_uni,id,handle,title_display,free_to_read_start_date', :fq => 'pid:"' + pid + '"')["response"]["docs"]
+    result = repository.search(:fl => 'author_uni,id,handle,title_display,free_to_read_start_date', :fq => 'pid:"' + pid + '"')["response"]["docs"]
 
       item = Item.new
       item.pid = result.first[:id]

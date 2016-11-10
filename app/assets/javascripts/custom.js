@@ -3,30 +3,6 @@
 
 jQuery(document).ready(function() {
 
-/*
-$('div.left-column ul').each(function(){
-   var ul = $(this);
-   // find all ul's that don't have any span descendants with a class of "selected"
-   if($('li.facet_selected', ul).length == 0){
-        // hide it
-        ul.hide();
-        // attach the toggle behavior to the h3 tag
-        $(ul.parent().children('.toggle')).click(function(){
-           // toggle the next ul sibling
-           $(this).toggleClass('facet_selected').next('ul').slideToggle();
-
-       });
-   }else{
-      ul.prev('h3').attr("class","facet_selected");
-    }
-
-});
-*/
-
-
-
-
-
     // Replace input function
     $('.replaceInput').each(function(){
 
@@ -87,7 +63,7 @@ $('div.left-column ul').each(function(){
       var dialog = $(dialog)
 
       // Make next/prev/sort links load ajaxy
-      dialog.find("a.next_page, a.prev_page, a.sort_change").click( function() {
+      dialog.find("div.prev_next_links > a, a.sort_change").click( function() {
           $("body").css("cursor", "progress");
           dialog.load( this.href,
               function() {

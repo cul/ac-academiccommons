@@ -1,0 +1,13 @@
+<% @page_title = "Edit Email Preference" %>
+<%= render :partial=>'admin_sidebar' %>
+<div class="box">
+  New Email Preference
+  <br/>
+  <br/>
+  <%= render :partial => 'form' %>
+  <p>
+    <%= link_to "Show", email_preference_path(@email_preference) %>
+    |
+    <%= link_to "View All", email_preferences_path %>
+  </p>
+</div>

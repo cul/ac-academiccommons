@@ -15,13 +15,7 @@ require "capistrano/deploy"
 #   https://github.com/capistrano/rails
 #   https://github.com/capistrano/passenger
 #
-unless [:bronte, :bernstein].include? ARGV[0].to_sym
-  require 'capistrano/rvm'
-end
 
-require 'capistrano/bundler'
-require 'capistrano/rails/assets'
+require 'capistrano/rails'
+require 'capistrano/rvm'
 require 'capistrano/passenger'
-
-# Not doing migrations with capistrano for 1.9.3 apps
-# require 'capistrano/rails/migrations'

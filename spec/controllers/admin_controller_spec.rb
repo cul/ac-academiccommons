@@ -15,43 +15,37 @@ describe AdminController, :type => :controller do
 
   describe 'GET index' do
     include_examples 'authorization required' do
-      let(:request) { get :index }
+      let(:http_request) { get :index }
     end
   end
 
   describe 'GET edit_alert_message' do
     include_examples 'authorization required' do
-      let(:request) { get :edit_alert_message }
+      let(:http_request) { get :edit_alert_message }
     end
   end
 
   describe 'POST edit_alert_message' do
     include_examples 'authorization required' do
-      let(:request) { post :edit_alert_message }
+      let(:http_request) { post :edit_alert_message }
     end
   end
 
   describe 'GET deposits' do
     include_examples 'authorization required' do
-      let(:request) { get :deposits }
+      let(:http_request) { get :deposits }
     end
   end
 
   describe 'GET agreements' do
     include_examples 'authorization required' do
-      let(:request) { get :agreements }
-    end
-  end
-
-  describe 'GET student_agreements' do
-    include_examples 'authorization required' do
-      let(:request) { get :student_agreements }
+      let(:http_request) { get :agreements }
     end
   end
 
   describe 'GET ingest' do
     include_examples 'authorization required' do
-      let(:request) { get :ingest, id: 'foo' }
+      let(:http_request) { get :ingest, id: 'foo' }
     end
   end
 
@@ -59,7 +53,7 @@ describe AdminController, :type => :controller do
     include_context 'mock_deposit'
 
     include_examples 'authorization required' do
-      let(:request) { get :show_deposit, id: id }
+      let(:http_request) { get :show_deposit, id: id }
     end
   end
 
@@ -67,7 +61,7 @@ describe AdminController, :type => :controller do
     include_context 'mock_deposit'
 
     include_examples 'authorization required' do
-      let(:request) { get :download_deposit_file, id: id }
+      let(:http_request) { get :download_deposit_file, id: id }
     end
   end
 end

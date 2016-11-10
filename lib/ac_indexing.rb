@@ -1,12 +1,7 @@
 require "stdout_logger"
 
-# used for local testing of cul-fedora gem (comment out for normal deployment)
- require File.expand_path(File.dirname(__FILE__) + '../../lib/cul-fedora/item.rb')
- require File.expand_path(File.dirname(__FILE__) + '../../lib/cul-fedora/server.rb')
- require File.expand_path(File.dirname(__FILE__) + '../../lib/cul-fedora/solr.rb')
-
 class ACIndexing
-  
+
   def self.delete_index
     logger = Logger.new(STDOUT)
     logger.info "Deleting Solr index..."
@@ -26,13 +21,8 @@ class ACIndexing
   def self.log_removed
     logger = Logger.new(STDOUT)
 
-    fedora_config = Rails.application.config.fedora
-    fedora_config[:logger] = logger
-    solr_config = Rails.application.config.solr
-    solr_config[:logger] = logger
-
-    logger.info "Fedora: " + fedora_config.inspect
-    logger.info "Solr: " + solr_config.inspect
+    logger.info "Fedora URL: " + Rails.application.config_for(:fedora)['url']
+    logger.info "Solr URL: " + Rails.application.config_for(:solr)['url']
 
     ac_collection = ActiveFedora::Base.find("collection:3")
     member_pids = ac_collection.list_members(true)
@@ -55,17 +45,16 @@ class ACIndexing
   end
 
   def self.rsolr
-    Rails.application.config.solr
     @rsolr ||= begin
-      url = Rails.application.config.solr[:url]
+      url = Rails.application.config.solr['url']
       RSolr.connect(:url => url)
     end
   end
 
   def self.reindex(options = {})
-    
+
     start_time = Time.new
-    
+
     collections = options.delete(:collections)
     items = options.delete(:items)
     # skip isn't being passed in to this function in any implementation, but it accepts an array of PIDs to ignore
@@ -77,7 +66,7 @@ class ACIndexing
     delete_removed = as_boolean(options.delete(:delete_removed))
     log_stdout = as_boolean(options.delete(:log_stdout))
     log_level = options.delete(:log_level) || Logger::INFO
-    time_id = options.delete(:time_id) || Time.new.strftime("%Y%m%d-%H%M%S") 
+    time_id = options.delete(:time_id) || Time.new.strftime("%Y%m%d-%H%M%S")
     init_logger(log_stdout, log_level, time_id)
 
     executed_by = options.delete(:executed_by) || "UNKNOWN USER"
@@ -92,17 +81,11 @@ class ACIndexing
     logger.info "Delete items removed from Fedora?: " + delete_removed.to_s
     logger.info "Logging to file and STDOUT?: " + log_stdout.to_s
 
-    fedora_config = Rails.application.config.fedora
-    fedora_config[:logger] = logger
-
-    solr_config = Rails.application.config.solr
-    solr_config[:logger] = logger
-
-    logger.info "Fedora: " + fedora_config.inspect
-    logger.info "Solr: " + solr_config.inspect
+    logger.info "Fedora URL: " + Rails.application.config_for(:fedora)['url']
+    logger.info "Solr URL: "   + Rails.application.config_for(:solr)['url']
 
     if(collections)
-      collections = collections.split(";")      
+      collections = collections.split(";")
       collections = collections.collect { |pid| ActiveFedora::Base.find(pid) }
     end
 
@@ -132,7 +115,7 @@ class ACIndexing
       group_delete_query = group.join(' OR ')
       rsolr.delete_by_query(group_delete_query)
     end
-    
+
     solr_params = {
       :collections => collections,
       :items => items, :format => "ac2",
@@ -141,8 +124,11 @@ class ACIndexing
       :delete_removed => delete_removed,
       :overwrite => overwrite, :ignore => ignore, :skip => skip
     }
-    collections.each do |collection|
-      collection.list_members(true).each { |pid| items << pid }
+
+    if collections
+      collections.each do |collection|
+        collection.list_members(true).each { |pid| items << pid }
+      end
     end
 
     items.uniq!
@@ -152,7 +138,7 @@ class ACIndexing
     new_items = []
     doc_statuses = Hash.new { |h,k| h[k] = [] }
     errors = []
-  
+
     if delete_removed == true
       delete_removed_objects(items)
     end
@@ -172,7 +158,7 @@ class ACIndexing
           next
         end
       else
-        items_not_in_solr << item  
+        items_not_in_solr << item
       end
 
       logger.info "Indexing #{item}..."
@@ -180,6 +166,11 @@ class ACIndexing
       begin
         i = ActiveFedora::Base.find(item)
         i.update_index
+        i.list_members.each do |resource|
+          logger.info("indexing resource: ")
+          logger.info(resource.to_solr)
+          resource.update_index
+        end
         doc_statuses[:success] << item
         if(items_not_in_solr.include? i.pid)
           new_items << i.pid
@@ -262,7 +253,7 @@ class ACIndexing
   end
 
   def self.as_boolean(value)
-    if(value.nil?) 
+    if(value.nil?)
       return false
     end
     return [true, "true", 1, "1", "T", "t"].include?(value.class == String ? value.downcase : value)
