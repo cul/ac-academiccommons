@@ -47,13 +47,6 @@ describe CatalogHelper do
           object_state_ssi: 'A'
         })
       end
-      let(:expected_params) do
-        {
-          q: '*:*', qt: 'standard', fl: '*',
-          fq: ["cul_member_of_ssim:\"info:fedora/#{document[:id]}\""],
-          rows: 10000, facet: false
-        }
-      end
       it "calls solr with expected params" do
         expect(Blacklight.solr).not_to receive(:get)
         helper.build_resource_list(document, true)
@@ -63,16 +56,9 @@ describe CatalogHelper do
       let(:document) do
         SolrDocument.new({
           id: 'test:obj',
-          free_to_read_start_date: Date.today.next_day.strftime('%Y-%m-%d'),
+          free_to_read_start_date: Date.today.prev_day.strftime('%Y-%m-%d'),
           object_state_ssi: 'I'
         })
-      end
-      let(:expected_params) do
-        {
-          q: '*:*', qt: 'standard', fl: '*',
-          fq: ["cul_member_of_ssim:\"info:fedora/#{document[:id]}\""],
-          rows: 10000, facet: false
-        }
       end
       it "calls solr with expected params" do
         expect(Blacklight.solr).not_to receive(:get)
@@ -95,7 +81,9 @@ describe CatalogHelper do
         }
       end
       it "calls solr with expected params" do
-        expect(Blacklight.solr).to receive(:get).and_return(:empty_response)
+        expect(Blacklight.solr).to receive(:get).
+          with('select', { params: expected_params }).
+          and_return(:empty_response)
         helper.build_resource_list(document, true)
       end
     end
