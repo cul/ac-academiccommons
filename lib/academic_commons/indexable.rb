@@ -10,9 +10,11 @@ module AcademicCommons
     REQUIRED_METHODS = [:belongs_to, :descMetadata_content]
 
     def index_descMetadata(solr_doc={})
-    raise "called index_descMetadata twice" if (@index_descMetadata ? (@index_descMetadata += 1) : (@index_descMetadata = 1)) > 1
+      raise "called index_descMetadata twice" if (@index_descMetadata ? (@index_descMetadata += 1) : (@index_descMetadata = 1)) > 1
+
       meta = descMetadata_datastream
-      return solr_doc unless meta
+      raise "descMetadata COULD NOT be found for #{self.pid}.\nSolr doc: #{solr_doc.inspect}" unless meta
+
       solr_doc["described_by_ssim"] = ["info:fedora/#{meta.pid}/#{meta.dsid}"]
       mods = Nokogiri::XML(meta.content).at_css("mods")
 
