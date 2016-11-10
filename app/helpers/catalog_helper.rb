@@ -77,12 +77,11 @@ module CatalogHelper
     end
   end
 
-  def build_resource_list(document)
-
+  def build_resource_list(document, include_inactive = false)
+    return [] unless free_to_read?(document)
    obj_display = (document["id"] || [])
    results = []
    uri_prefix = "info:fedora/"
-   hc = get_http_client
 
    docs = []
    member_search = {
@@ -93,7 +92,7 @@ module CatalogHelper
     rows: 10000,
     facet: false
    }
-
+   member_search[:fq] << "object_state_ssi:A" unless include_inactive
    response = Blacklight.solr.get 'select', params: member_search
    docs = response['response']['docs']
    logger.info "standard qt got #{docs.length}"
@@ -116,6 +115,17 @@ module CatalogHelper
   rescue StandardError => e
     Rails.logger.error e.message
     return []
+  end
+
+  # copied from AcademicCommons::Indexable
+  # TODO: DRY this logic
+  def free_to_read?(document)
+    return false unless document['object_state_ssi'] == 'A'
+    free_to_read_start_date = document[:free_to_read_start_date]
+    return true unless free_to_read_start_date
+    embargo_release_date = Date.strptime(free_to_read_start_date, '%Y-%m-%d')
+    current_date = Date.strptime(Time.now.strftime('%Y-%m-%d'), '%Y-%m-%d')
+    current_date > embargo_release_date
   end
 
   def get_departments_list

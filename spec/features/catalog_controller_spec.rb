@@ -163,7 +163,7 @@ describe CatalogController, :type => :feature do
 
     it "links to the pdf download" do
       click_on 'alice_in_wonderland.pdf'
-      expect(page.response_headers['X-Accel-Redirect']).to match /\/repository_download\/.*\/actest:2\/CONTENT$/
+      expect(page.response_headers['X-Accel-Redirect']).to match /\/repository_download\/.*\/actest:2\/datastreams\/CONTENT\/content$/
     end
   end
 

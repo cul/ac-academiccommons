@@ -27,6 +27,13 @@ describe SolrDocumentsController, :type => [:controller,:integration] do
       expect(response.status).to eql(200)
       get :show, id: 'actest:1', format: 'json'
       expect(response.status).to eql(200)
+      # publish does not cascade
+      get :show, id: 'actest:2', format: 'json'
+      expect(response.status).to eql(404)
+    end
+    after do
+      put :update, { id: 'actest:1' }
+      put :update, { id: 'actest:2' }
     end
   end
   describe "destroy" do
@@ -37,10 +44,14 @@ describe SolrDocumentsController, :type => [:controller,:integration] do
       expect(response.status).to eql(200)
       get :show, id: 'actest:1', format: 'json'
       expect(response.status).to eql(404)
+      # unpublish cascades
+      get :show, id: 'actest:2', format: 'json'
+      expect(response.status).to eql(404)
     end
     after do
       # reindex the fixture so that other tests can run
       put :update, { id: 'actest:1' }
+      put :update, { id: 'actest:2' }
     end
   end
 end
