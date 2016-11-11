@@ -14,4 +14,14 @@ namespace :migration_helpers do
     # Destroy all records that don't contain an email.
     User.where(email: nil).destroy_all
   end
+
+  desc "Removes records with duplicate emails"
+  task :delete_duplicate_emails => :environment do
+    dup_emails = User.select(:email).group(:email).having("count(*) > 1").count.keys
+
+    dup_emails.each do |e|
+      logger.info "Deleting extra record for #{e}."
+      User.find_by(email: e).destroy
+    end
+  end
 end
