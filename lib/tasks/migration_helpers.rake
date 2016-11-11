@@ -3,9 +3,8 @@
 #
 
 namespace :migration_helpers do
-
-  desc "Update user data to match new table schema"
-  task :update_user_data => :environment do
+  desc "Looks up User email and destroys record if email can't be found"
+  task :require_email => :environment do
     # Attempt to update user information via ldap.
     User.where(email: nil) do |u|
       u = u.set_personal_info_via_ldap
@@ -17,7 +16,10 @@ namespace :migration_helpers do
 
     # Destroy all records that don't contain an email.
     User.where(email: nil).destroy_all
+  end
 
+  desc "Add provider for each User."
+  task :add_provider => :environment do
     # Add :saml as the provider for each row.
     User.find_each do |u|
       u.update!(provider: 'saml')
