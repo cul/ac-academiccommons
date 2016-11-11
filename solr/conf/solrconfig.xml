@@ -35,7 +35,7 @@
        that you fully re-index after changing this setting as it can
        affect both how text is indexed and queried.
   -->
-  <luceneMatchVersion>LUCENE_42</luceneMatchVersion>
+  <luceneMatchVersion>LUCENE_60</luceneMatchVersion>
 
   <!-- <lib/> directives can be used to instruct Solr to load an Jars
        identified and use them to resolve any "plugins" specified in
@@ -1083,30 +1083,6 @@
        This handler will pick a response format to match the input
        if the 'wt' parameter is not explicit
     -->
-  <requestHandler name="/update" class="solr.UpdateRequestHandler">
-    <!-- See below for information on defining 
-         updateRequestProcessorChains that can be used by name 
-         on each Update Request
-      -->
-    <!--
-       <lst name="defaults">
-         <str name="update.chain">dedupe</str>
-       </lst>
-       -->
-  </requestHandler>
-
-  <!-- for back compat with clients using /update/json and /update/csv -->  
-  <requestHandler name="/update/json" class="solr.JsonUpdateRequestHandler">
-        <lst name="defaults">
-         <str name="stream.contentType">application/json</str>
-       </lst>
-  </requestHandler>
-  <requestHandler name="/update/csv" class="solr.CSVRequestHandler">
-        <lst name="defaults">
-         <str name="stream.contentType">application/csv</str>
-       </lst>
-  </requestHandler>
-
   <!-- Solr Cell Update Request Handler
 
        http://wiki.apache.org/solr/ExtractingRequestHandler 
@@ -1180,77 +1156,6 @@
     true, all field tokens that match the query tokens will be marked
     as a "match". 
   -->
-  <requestHandler name="/analysis/document" 
-                  class="solr.DocumentAnalysisRequestHandler" 
-                  startup="lazy" />
-
-  <!-- Admin Handlers
-
-       Admin Handlers - This will register all the standard admin
-       RequestHandlers.  
-    -->
-  <requestHandler name="/admin/" 
-                  class="solr.admin.AdminHandlers" />
-  <!-- This single handler is equivalent to the following... -->
-  <!--
-     <requestHandler name="/admin/luke"       class="solr.admin.LukeRequestHandler" />
-     <requestHandler name="/admin/system"     class="solr.admin.SystemInfoHandler" />
-     <requestHandler name="/admin/plugins"    class="solr.admin.PluginInfoHandler" />
-     <requestHandler name="/admin/threads"    class="solr.admin.ThreadDumpHandler" />
-     <requestHandler name="/admin/properties" class="solr.admin.PropertiesRequestHandler" />
-     <requestHandler name="/admin/file"       class="solr.admin.ShowFileRequestHandler" >
-    -->
-  <!-- If you wish to hide files under ${solr.home}/conf, explicitly
-       register the ShowFileRequestHandler using: 
-    -->
-  <!--
-     <requestHandler name="/admin/file" 
-                     class="solr.admin.ShowFileRequestHandler" >
-       <lst name="invariants">
-         <str name="hidden">synonyms.txt</str> 
-         <str name="hidden">anotherfile.txt</str> 
-       </lst>
-     </requestHandler>
-    -->
-
-  <!-- ping/healthcheck -->
-  <requestHandler name="/admin/ping" class="solr.PingRequestHandler">
-    <lst name="invariants">
-      <str name="q">solrpingquery</str>
-    </lst>
-    <lst name="defaults">
-      <str name="echoParams">all</str>
-    </lst>
-    <!-- An optional feature of the PingRequestHandler is to configure the 
-         handler with a "healthcheckFile" which can be used to enable/disable 
-         the PingRequestHandler.
-         relative paths are resolved against the data dir 
-      -->
-    <!-- <str name="healthcheckFile">server-enabled.txt</str> -->
-  </requestHandler>
-
-  <!-- Echo the request contents back to the client -->
-  <requestHandler name="/debug/dump" class="solr.DumpRequestHandler" >
-    <lst name="defaults">
-     <str name="echoParams">explicit</str> 
-     <str name="echoHandler">true</str>
-    </lst>
-  </requestHandler>
-  
-  <!-- Solr Replication
-
-       The SolrReplicationHandler supports replicating indexes from a
-       "master" used for indexing and "slaves" used for queries.
-
-       http://wiki.apache.org/solr/SolrReplication 
-
-       It is also necessary for SolrCloud to function (in Cloud mode, the
-       replication handler is used to bulk transfer segments when nodes 
-       are added or need to recover).
-
-       https://wiki.apache.org/solr/SolrCloud/
-    -->
-  <requestHandler name="/replication" class="solr.ReplicationHandler" > 
     <!--
        To enable simple master/slave replication, uncomment one of the 
        sections below, depending on whether this solr instance should be
@@ -1270,7 +1175,6 @@
          <str name="pollInterval">00:00:60</str>
        </lst>
     -->
-  </requestHandler>
 
   <!-- Search Components
 
@@ -1551,46 +1455,6 @@
       <str name="carrot.algorithm">org.carrot2.clustering.stc.STCClusteringAlgorithm</str>
     </lst>
   </searchComponent>
-
-  <!-- A request handler for demonstrating the clustering component
-
-       This is purely as an example.
-
-       In reality you will likely want to add the component to your 
-       already specified request handlers. 
-    -->
-  <requestHandler name="/clustering"
-                  startup="lazy"
-                  enable="${solr.clustering.enabled:false}"
-                  class="solr.SearchHandler">
-    <lst name="defaults">
-      <bool name="clustering">true</bool>
-      <str name="clustering.engine">default</str>
-      <bool name="clustering.results">true</bool>
-      <!-- The title field -->
-      <str name="carrot.title">name</str>
-      <str name="carrot.url">id</str>
-      <!-- The field to cluster on -->
-       <str name="carrot.snippet">features</str>
-       <!-- produce summaries -->
-       <bool name="carrot.produceSummary">true</bool>
-       <!-- the maximum number of labels per cluster -->
-       <!--<int name="carrot.numDescriptions">5</int>-->
-       <!-- produce sub clusters -->
-       <bool name="carrot.outputSubClusters">false</bool>
-       
-       <str name="defType">edismax</str>
-       <str name="qf">
-         text^0.5 features^1.0 name^1.2 sku^1.5 id^10.0 manu^1.1 cat^1.4
-       </str>
-       <str name="q.alt">*:*</str>
-       <str name="rows">10</str>
-       <str name="fl">*,score</str>
-    </lst>     
-    <arr name="last-components">
-      <str>clustering</str>
-    </arr>
-  </requestHandler>
   
   <!-- Terms Component
 
@@ -1600,17 +1464,6 @@
        terms
     -->
   <searchComponent name="terms" class="solr.TermsComponent"/>
-
-  <!-- A request handler for demonstrating the terms component -->
-  <requestHandler name="/terms" class="solr.SearchHandler" startup="lazy">
-     <lst name="defaults">
-      <bool name="terms">true</bool>
-      <bool name="distrib">false</bool>
-    </lst>     
-    <arr name="components">
-      <str>terms</str>
-    </arr>
-  </requestHandler>
 
 
   <!-- Query Elevation Component
