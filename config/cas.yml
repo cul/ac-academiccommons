@@ -17,5 +17,5 @@ saml: &SAML
 development: *SAML
 test: *SAML
 academiccommons_dev: *SAML
-academiccommons_dev: *SAML
+academiccommons_test: *SAML
 academiccommons_prod: *SAML
