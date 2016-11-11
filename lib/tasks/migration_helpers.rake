@@ -8,7 +8,7 @@ namespace :migration_helpers do
     # Attempt to update user information via ldap.
     User.where(email: nil).each do |u|
       u = u.set_personal_info_via_ldap
-      u.save!
+      u.save! if u.changed?
     end
 
     # Destroy all records that don't contain an email.
