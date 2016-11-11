@@ -11,4 +11,3 @@ test: *default
 academiccommons_dev: *default
 academiccommons_test: *default
 academiccommons_prod: *default
-passenger_prod: *default
