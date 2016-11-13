@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161109143808) do
+ActiveRecord::Schema.define(version: 20161113211527) do
 
   create_table "agreements", force: :cascade do |t|
     t.string   "uni"
@@ -149,7 +149,6 @@ ActiveRecord::Schema.define(version: 20161109143808) do
     t.string   "first_name"
     t.string   "last_name"
     t.boolean  "admin"
-    t.string   "login",                              null: false
     t.string   "uid",                                null: false
     t.string   "email"
     t.string   "crypted_password"
@@ -171,7 +170,6 @@ ActiveRecord::Schema.define(version: 20161109143808) do
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true
   add_index "users", ["last_request_at"], name: "index_users_on_last_request_at"
-  add_index "users", ["login"], name: "index_users_on_login"
   add_index "users", ["persistence_token"], name: "index_users_on_persistence_token"
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   add_index "users", ["uid"], name: "index_users_on_uid"
