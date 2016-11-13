@@ -34,31 +34,17 @@ RSpec.describe Users::OmniauthCallbacksController, type: :controller do
     before :each do
       get :saml
     end
-    # mock ldap response, what to do if response doesn't return?
+
     it 'creates new user' do
       expect(User.count).to eq 1
     end
 
     it 'creates new user with correct details' do
       jane = User.first
-      expect(jane.first_name).to be eq 'Jane'
-      expect(jane.last_name).to be eq 'Doe'
-      expect(jane.uid).to be eq 'abc123'
-      expect(jane.email).to be eq 'abc123@columbia.edu'
-    end
-
-    context 'on second login' do
-      before :each do
-        get :saml
-      end
-
-      it 'does not create a new record' do
-        expect(User.count).to eq 1
-      end
-
-      it 'increases login count' do
-        expect(User.first.sign_in_count).to eq 2
-      end
+      expect(jane.first_name).to eq 'Jane'
+      expect(jane.last_name).to eq 'Doe'
+      expect(jane.uid).to eq 'abc123'
+      expect(jane.email).to eq 'abc123@columbia.edu'
     end
   end
 end

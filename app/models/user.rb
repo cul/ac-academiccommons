@@ -23,6 +23,7 @@ class User < ActiveRecord::Base
     # NOOP
   end
 
+  #TODO: What to do if lDAP doesn't return?
   def set_personal_info_via_ldap
     if uid
       entry = Net::LDAP.new({:host => "ldap.columbia.edu", :port => 389}).search(:base => "o=Columbia University, c=US", :filter => Net::LDAP::Filter.eq("uid", uid)) || []
