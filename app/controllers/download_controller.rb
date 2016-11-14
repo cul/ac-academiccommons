@@ -20,6 +20,14 @@ class DownloadController < ApplicationController
     render :text => getLogContent(params[:log_folder], params[:id])
   end
 
+  # ACHYDRA-177: check that download appears to be metadata
+  # TODO: Remove after Hyacinth migration
+  def description_download?
+    block_checked = params[:block] == 'CONTENT'
+    name_checked = params[:filename] && params[:filename] =~ /^ac(test)?\d+_description\.xml$/
+    block_checked && (name_checked == 0)
+  end
+
   def fedora_content
     repository = Blacklight.default_index.connection
     # get the resource doc and its parent docs
@@ -44,8 +52,15 @@ class DownloadController < ApplicationController
 
     url = fedora_config["url"] + "/objects/" + params[:uri] + "/datastreams/" + params[:block] + "/content"
 
+    # ACHYDRA-177: exempt if a description download
+    # TODO: Remove after Hyacinth migration
+    if (!resource_doc && description_download?)
+      fail_fast = false
+    end
+
     head_response = http_client.head(url) unless fail_fast
     fail_fast ||= (head_response.status != 200)
+
     if fail_fast
       render :nothing => true, :status => 404
       return
