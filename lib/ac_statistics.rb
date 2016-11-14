@@ -84,7 +84,7 @@ module ACStatistics
 
     csv += CSV.generate_line( [ "Title",
                                 "Content Type",
-                                "Permanent URL",
+                                "Persistent URL",
                                 "DOI",
                                 "Reporting Period Total " + category
                                ].concat( make_month_line(months_list))

@@ -87,7 +87,7 @@ class CatalogController < ApplicationController
     config.add_index_field 'subject_facet',  :label => 'Subject'
     config.add_index_field 'genre_facet',    :label => 'Content Type'
     config.add_index_field 'publisher',      :label => 'Publisher'
-    config.add_index_field 'handle',         :label => 'Permanent URL'
+    config.add_index_field 'handle',         :label => 'Persistent URL'
 
 
     config.add_show_field 'title_display',           :label => 'Title',             :itemprops => 'name'
@@ -97,7 +97,7 @@ class CatalogController < ApplicationController
     config.add_show_field 'genre_facet',             :label => 'Type',              :itemprops => 'genre',         :linked => 'facet'
     config.add_show_field 'originator_department',   :label => 'Department',                                       :linked => 'facet'
     config.add_show_field 'volume',                  :label => 'Volume'
-    config.add_show_field 'handle',                  :label => 'Permanent URL',     :itemprops => 'url',           :linked => 'url'
+    config.add_show_field 'handle',                  :label => 'Persistent URL',     :itemprops => 'url',           :linked => 'url'
     config.add_show_field 'url',                     :label => 'Streaming URL'
     config.add_show_field 'series_facet',            :label => 'Series',                                           :linked => 'facet'
     config.add_show_field 'part_number',             :label => 'Part Number'
