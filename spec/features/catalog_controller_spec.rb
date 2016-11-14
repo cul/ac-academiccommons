@@ -159,6 +159,8 @@ describe CatalogController, :type => :feature do
 
     it "links to the MODS download" do
       expect(page).to have_css("a[href=\"/download/fedora_content/show_pretty/actest:3/CONTENT/actest3_description.xml?data=meta\"]", :text => "text")
+      page.find("a[href=\"/download/fedora_content/show_pretty/actest:3/CONTENT/actest3_description.xml?data=meta\"]", :text => "text").click
+      expect(page).to have_text("Alice's Adventures in Wonderland")
     end
 
     it "links to the pdf download" do
