@@ -34,6 +34,9 @@ class User < ActiveRecord::Base
         entry[:sn].kind_of?(Array) ? self.last_name = entry[:sn].first.to_s : self.last_name = entry[:sn].to_s
         entry[:givenname].kind_of?(Array) ? self.first_name = entry[:givenname].first.to_s : self.first_name = entry[:givenname].to_s
 
+        # Setting email if missing from lDAP
+        self.email = "#{uid}@columbia.edu" if self.email.blank?
+
         logger.info "Retriving/updating user information via LDAP for #{first_name} #{last_name} (#{uid})"
       end
     end

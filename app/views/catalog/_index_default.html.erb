@@ -10,8 +10,8 @@
       <% if should_render_show_field? document, field %>
         <% display_label = render_index_field_label document, :field => solr_fname %>
         <dt><%= display_label %></dt>
-        <% if display_label == 'Persistent URL:' %>
-          <dd><%= link_to document[solr_fname] %></dd>
+        <% if field.linked == 'url' %>
+          <dd><%= link_to document[solr_fname], document[solr_fname] %></dd>
         <% else %>
           <dd><%= h(document[solr_fname].listify.join(", ")) %></dd>
         <% end %>
