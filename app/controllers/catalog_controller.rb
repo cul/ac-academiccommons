@@ -87,7 +87,7 @@ class CatalogController < ApplicationController
     config.add_index_field 'subject_facet',  :label => 'Subject'
     config.add_index_field 'genre_facet',    :label => 'Content Type'
     config.add_index_field 'publisher',      :label => 'Publisher'
-    config.add_index_field 'handle',         :label => 'Persistent URL'
+    config.add_index_field 'handle',         :label => 'Persistent URL',   :itemprops => 'url',           :linked => 'url'
 
 
     config.add_show_field 'title_display',           :label => 'Title',             :itemprops => 'name'
