@@ -54,7 +54,7 @@ module ACStatistics
     csv += CSV.generate_line( [ "Date run:" ]) + LINE_BRAKER
     csv += CSV.generate_line( [ Time.new.strftime("%Y-%m-%d") ] ) + LINE_BRAKER
     csv += CSV.generate_line( [ "Report created by:" ]) + LINE_BRAKER
-    csv += CSV.generate_line( [  current_user == nil ? "N/A" : (current_user.to_s + " (" + current_user.login.to_s + ")") ]) + LINE_BRAKER
+    csv += CSV.generate_line( [  current_user == nil ? "N/A" : (current_user.to_s + " (" + current_user.uid.to_s + ")") ]) + LINE_BRAKER
 
 
     csv = makeCSVcategory("Views", "View", csv, results, stats, totals, months_list, nil)
@@ -367,7 +367,7 @@ module ACStatistics
 
       eventlog = Eventlog.create(:event_name => 'statistics',
                                  :user_name  => current_user == nil ? "N/A" : current_user.to_s,
-                                 :uid        => current_user == nil ? "N/A" : current_user.login.to_s,
+                                 :uid        => current_user == nil ? "N/A" : current_user.uid.to_s,
                                  :ip         => request.remote_ip,
                                  :session_id => request.session_options[:id])
 

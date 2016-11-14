@@ -1,5 +1,5 @@
 <% if current_user %>
-  <%= link_to "Log Out", destroy_user_session_path %> [<%= current_user.login %>]
+  <%= link_to "Log Out", destroy_user_session_path %> [<%= current_user.uid %>]
   <% if current_user.last_search_url %>
   | <%= link_to('View your last search', catalog_index_path(current_user.last_search_url)) %>
   <% end %> |
