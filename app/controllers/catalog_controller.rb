@@ -347,10 +347,10 @@ class CatalogController < ApplicationController
    end
 
    params[:page] = nil
-   params[:q] = (params[:q].nil?) ? "" : params[:q].to_s
-   params[:fq] = ["has_model_ssim:\"#{ContentAggregator.to_class_uri}\""]
+   params[:q] = params[:q].to_s
    params[:sort] = (params[:sort].nil?) ? "record_creation_date desc" : params[:sort].to_s
    params[:rows] = (params[:rows].nil? || params[:rows].to_s == "") ? ((params[:id].nil?) ? blacklight_config[:feed_rows] : params[:id].to_s) : params[:rows].to_s
+   params[:fq] = Array(params[:fq]).append("has_model_ssim:\"#{ContentAggregator.to_class_uri}\"")
 
    extra_params = {}
    extra_params[:fl] = "title_display,id,author_facet,author_display,record_creation_date,handle,abstract,author_uni,subject_facet,department_facet,genre_facet"
