@@ -63,16 +63,11 @@ namespace :deploy do
 
   desc "Add tag based on current version from VERSION file"
   task :auto_tag do
-    current_version = "v#{IO.read("VERSION").strip}/#{DateTime.now.strftime("%Y%m%d")}"
+    current_version = "v#{IO.read("VERSION").strip}"
 
     ask(:tag, current_version)
     tag = fetch(:tag)
 
     system("git tag -a #{tag} -m 'auto-tagged' && git push origin --tags")
   end
-
-#  after :restart, :clear_cache do
-#    on roles(:web), in: :groups, limit: 3, wait: 10 do
-#    end
-#  end
 end
