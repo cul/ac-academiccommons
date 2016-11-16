@@ -34,14 +34,7 @@ begin
   desc 'Start Solr'
   task :solr do
     puts "Unpacking and starting solr...\n"
-    solr_version = '6.3.0'
     SolrWrapper.wrap({
-      port: 9983,
-      version: solr_version,
-      verbose: false,
-      managed: true,
-      solr_zip_path: File.join('tmp', "solr-#{solr_version}.zip"),
-      instance_dir: File.join('tmp', "solr-#{solr_version}"),
     }) do |solr_wrapper_instance|
       # Create collection
       solr_wrapper_instance.with_collection(name: 'test', dir: 'solr/conf') do |collection_name|
@@ -60,14 +53,7 @@ begin
     jetty_params = Jettywrapper.load_config
     error = Jettywrapper.wrap(jetty_params) do
       puts "Unpacking and starting solr...\n"
-      solr_version = '6.3.0'
       SolrWrapper.wrap({
-        port: 9983,
-        version: solr_version,
-        verbose: false,
-        managed: true,
-        solr_zip_path: File.join('tmp', "solr-#{solr_version}.zip"),
-        instance_dir: File.join('tmp', "solr-#{solr_version}"),
       }) do |solr_wrapper_instance|
         # Create collection
         solr_wrapper_instance.with_collection(name: 'test', dir: 'solr/conf') do |collection_name|

@@ -30,18 +30,23 @@ CURRENT RECOMMENDED VERSION OF RUBY: 2.3.0
 
 5. Run `rake db:schema:load` to create your local development DB.
 
-6. Start your local development solr instance
+6. Start your local fedora instance.
    ```
    rake jetty:start
    ```
+   
+7. Start your local solr instance with a development core.
+   ```
+   solr_wrapper
+   ```
 
-7. Populate your Solr instance from Fedora
+8. Populate your Solr instance from Fedora
    ```
    rake ac:reindex[collection:3]
    ```
    **Note: This doesn't seem to work, but I have a feeling it has to do with the parameters.**
 
-8. Start your local Rails app
+9. Start your local Rails app
    ```
    rails server
    ```
@@ -56,7 +61,7 @@ CURRENT RECOMMENDED VERSION OF RUBY: 2.3.0
    ```
    cap test deploy:auto_tag
    ```
-   This will create a tag based on the date and version number (listed in `VERSION`).
+   This will create a tag based on the version number (listed in `VERSION`).
 
 
 ## Improvements
