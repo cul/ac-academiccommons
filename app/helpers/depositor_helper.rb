@@ -3,9 +3,10 @@ require "item_class"
 require "ac_indexing"
 
 module DepositorHelper
-
   include SolrHelper
   include InfoHelper
+
+  AC_COLLECTION_NAME = 'collection:3'
 
   delegate :repository, :to => :controller
 
@@ -122,15 +123,12 @@ module DepositorHelper
     return person
   end
 
-  def processIndexing(params)
+  def process_indexing(params)
+    logger.info "==== started ingest function ==="
 
-   logger.info "==== started ingest function ==="
-
-      params.each do |key, value|
-        logger.info "param: " + key + " - " + value
-      end
-
-
+    params.each do |key, value|
+      logger.info "param: " + key + " - " + value
+    end
 
     if(params[:cancel])
       existing_time_id = existing_ingest_time_id(params[:cancel])
@@ -164,25 +162,29 @@ module DepositorHelper
     end
 
     if(params[:commit] == "Commit" && @existing_ingest_time_id.nil? && !params[:cancel])
+      collection = params[:collections].to_s.strip
+      unless collection.blank? || (collection == AC_COLLECTION_NAME)
+        flash.now[:notice] = "#{collection} is not a collection used by Academic Commons."
+        return
+      end
 
-      collections = params[:collections] ? params[:collections].sub(" ", ";") : ""
       items = params[:items] ? params[:items].gsub(/ /, ";") : ""
 
       @existing_ingest_pid = Process.fork do
-
         logger.info "==== started indexing ==="
 
-        indexing_results = ACIndexing::reindex({
-                                :collections => collections,
-                                :items => items,
-                                :overwrite => params[:overwrite],
-                                :metadata => params[:metadata],
-                                :fulltext => params[:fulltext],
-                                :delete_removed => params[:delete_removed],
-                                :time_id => time_id,
-                                :executed_by => params[:executed_by] || current_user.uid
-                                #:executed_by => "test"
-                              })
+        indexing_results = ACIndexing::reindex(
+          {
+            :collections => collection,
+            :items => items,
+            :overwrite => params[:overwrite],
+            :metadata => params[:metadata],
+            :fulltext => params[:fulltext],
+            :delete_removed => params[:delete_removed],
+            :time_id => time_id,
+            :executed_by => params[:executed_by] || current_user.uid
+          }
+        )
 
         logger.info "===== finished indexing, starting notifications part ==="
 
@@ -192,8 +194,8 @@ module DepositorHelper
 
         notifyDepositorsItemAdded(indexing_results[:new_items])
         #notifyDepositorsItemAdded(indexing_results[:results][:success]) # this is for test
-
       end
+
       Process.detach(@existing_ingest_pid)
       @existing_ingest_time_id = time_id.to_s
 
@@ -202,9 +204,6 @@ module DepositorHelper
       tmp_pid_file = File.new("#{Rails.root}/tmp/#{@existing_ingest_pid}.index.pid", "w+")
       tmp_pid_file.write(@existing_ingest_time_id)
       tmp_pid_file.close
-
     end
-
   end
-
 end

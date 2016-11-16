@@ -7,8 +7,7 @@ class AdminController < ApplicationController
   layout "application"
 
   def ingest
-
-      processIndexing(params)
+      process_indexing(params)
 
       if(params[:executed_by])
         render nothing: true
