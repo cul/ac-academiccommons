@@ -182,6 +182,32 @@ describe StatisticsController, :type => :controller, integration: true do
     end
     context "logged in as a non-admin user" do
       include_context 'mock non-admin user'
+      let(:uni) { 'abc123' }
+
+      context 'when chk param is correctly signed' do
+        before :each do
+          get :unsubscribe_monthly, author_id: uni, chk: uni.to_s.crypt("xZ")
+        end
+
+        it 'creates email preference' do
+          expect(EmailPreference.count).to eq 1
+        end
+
+        it 'unsubscribes user' do
+          expect(EmailPreference.first.author).to eq uni
+          expect(EmailPreference.first.monthly_opt_out).to be true
+        end
+      end
+
+      context 'when check param is not correctly signed' do
+        before(:each) do
+          get :unsubscribe_monthly, author_id: uni, chk: 'abc'.to_s.crypt("xZ")
+        end
+
+        it 'does not unsubscribe user' do
+          expect(EmailPreference.count).to eq 0
+        end
+      end
 
       it "succeeds" do
         get :unsubscribe_monthly

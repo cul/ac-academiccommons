@@ -5,8 +5,8 @@
   #{mail_to "ac@columbia.edu"}
 %br
 %div
-Have more to deposit: #{link_to 'click here', 'http://academiccommons.columbia.edu/deposit'}
+Have more to deposit: #{link_to 'click here', deposit_url}
 %div
 %br
   Wish to unsubscribe:
-  #{link_to("click here", url_for(:host => (Rails.application.config.base_path != nil) ? Rails.application.config.base_path : "localhost:3000",  :only_path => false, :controller => :statistics, :action => :unsubscribe_monthly, :author_id => @author_id, :chk => @author_id.crypt("xZ")))}
+  #{link_to("click here", url_for(:only_path => false, :controller => :statistics, :action => :unsubscribe_monthly, :author_id => @author_id, :chk => @author_id.crypt("xZ")))}
