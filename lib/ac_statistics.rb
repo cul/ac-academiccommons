@@ -66,49 +66,45 @@ module ACStatistics
     return csv
   end
 
-
-
   def makeCSVcategory(category, key, csv, results, stats, totals, months_list, ids)
 
     csv += CSV.generate_line( [ "" ]) + LINE_BRAKER
 
     csv += CSV.generate_line( [ category + " report:" ]) + LINE_BRAKER
 
-        csv += CSV.generate_line( [ "Total for period:",
-                                "",
-                                "",
-                                "",
-                                totals[key].to_s
-                               ].concat(make_months_header(category + " by Month", months_list))
-                             ) + LINE_BRAKER
+    csv += CSV.generate_line( [ "Total for period:",
+      "",
+      "",
+      "",
+      totals[key].to_s
+    ].concat(make_months_header(category + " by Month", months_list))
+    ) + LINE_BRAKER
 
     csv += CSV.generate_line( [ "Title",
-                                "Content Type",
-                                "Persistent URL",
-                                "DOI",
-                                "Reporting Period Total " + category
-                               ].concat( make_month_line(months_list))
-                             ) + LINE_BRAKER
+      "Content Type",
+      "Persistent URL",
+      "DOI",
+      "Reporting Period Total " + category
+    ].concat( make_month_line(months_list))
+    ) + LINE_BRAKER
 
     results.each do |item|
 
-    csv += CSV.generate_line([item["title_display"],
-                              item["genre_facet"].first,
-                              item["handle"],
-                              item["doi"],
-                              stats[key][item["id"]].nil? ? 0 : stats[key][item["id"]]
-                              ].concat( make_month_line_stats(stats, months_list, item["id"], ids))
-                              ) + LINE_BRAKER
+      csv += CSV.generate_line([item["title_display"],
+      item["genre_facet"].first,
+      item["handle"],
+      item["doi"],
+      stats[key][item["id"]].nil? ? 0 : stats[key][item["id"]]
+        ].concat( make_month_line_stats(stats, months_list, item["id"], ids))
+        ) + LINE_BRAKER
     end
 
     return csv
-
   end
 
 
 
   def make_months_header(first_item, months_list)
-
     header = []
 
     header << first_item
@@ -165,7 +161,6 @@ module ACStatistics
       stats[DOWNLOAD + month.to_s] = Statistic.group(:identifier).where("event = 'Download' and identifier IN (?) and at_time like ?", download_ids.values.flatten, contdition).count
 
     end
-
   end
 
 
@@ -314,12 +309,12 @@ module ACStatistics
       return
     else
       results = repository.search( :rows => 100000,
-                                   :sort => sort,
-                                   :q => q,
-                                   :fq => facet_query,
-                                   :fl => "title_display,id,handle,doi,genre_facet",
-                                   :page => 1
-                                  )["response"]["docs"]
+      :sort => sort,
+      :q => q,
+      :fq => facet_query,
+      :fl => "title_display,id,handle,doi,genre_facet",
+      :page => 1
+      )["response"]["docs"]
       return results
     end
   end
@@ -365,32 +360,32 @@ module ACStatistics
 
   def logStatisticsUsage(startdate, enddate, params)
 
-      eventlog = Eventlog.create(:event_name => 'statistics',
-                                 :user_name  => current_user == nil ? "N/A" : current_user.to_s,
-                                 :uid        => current_user == nil ? "N/A" : current_user.uid.to_s,
-                                 :ip         => request.remote_ip,
-                                 :session_id => request.session_options[:id])
+    eventlog = Eventlog.create(:event_name => 'statistics',
+    :user_name  => current_user == nil ? "N/A" : current_user.to_s,
+    :uid        => current_user == nil ? "N/A" : current_user.uid.to_s,
+    :ip         => request.remote_ip,
+    :session_id => request.session_options[:id])
 
-      eventlog.logvalues.create(:param_name => "startdate", :value => startdate.to_s)
-      eventlog.logvalues.create(:param_name => "enddate", :value => enddate.to_s)
-      eventlog.logvalues.create(:param_name => "commit", :value => params[:commit])
-      eventlog.logvalues.create(:param_name => "search_criteria", :value => params[:search_criteria] )
-      eventlog.logvalues.create(:param_name => "include_zeroes", :value => params[:include_zeroes] == nil ? "false" : "true")
-      eventlog.logvalues.create(:param_name => "include_streaming_views", :value => params[:include_streaming_views] == nil ? "false" : "true")
-      eventlog.logvalues.create(:param_name => "facet", :value => params[:facet])
-      eventlog.logvalues.create(:param_name => "email_to", :value => params[:email_destination] == "email to" ? nil : params[:email_destination])
+    eventlog.logvalues.create(:param_name => "startdate", :value => startdate.to_s)
+    eventlog.logvalues.create(:param_name => "enddate", :value => enddate.to_s)
+    eventlog.logvalues.create(:param_name => "commit", :value => params[:commit])
+    eventlog.logvalues.create(:param_name => "search_criteria", :value => params[:search_criteria] )
+    eventlog.logvalues.create(:param_name => "include_zeroes", :value => params[:include_zeroes] == nil ? "false" : "true")
+    eventlog.logvalues.create(:param_name => "include_streaming_views", :value => params[:include_streaming_views] == nil ? "false" : "true")
+    eventlog.logvalues.create(:param_name => "facet", :value => params[:facet])
+    eventlog.logvalues.create(:param_name => "email_to", :value => params[:email_destination] == "email to" ? nil : params[:email_destination])
 
   end
 
   def makeTestAuthor(author_id, email)
 
-        test_author = Hash.new
-        test_author[:id] = author_id
-        test_author[:email] = email
+    test_author = Hash.new
+    test_author[:id] = author_id
+    test_author[:email] = email
 
-        processed_authors = Array.new
-        processed_authors.push(test_author)
-        return processed_authors
+    processed_authors = Array.new
+    processed_authors.push(test_author)
+    return processed_authors
   end
 
 
@@ -404,31 +399,31 @@ module ACStatistics
   end
 
   def downloadCSVreport(startdate, enddate, params)
-        logStatisticsUsage(startdate, enddate, params)
+    logStatisticsUsage(startdate, enddate, params)
 
-        csv_report = cvsReport( startdate,
-                                enddate,
-                                params[:search_criteria],
-                                params[:include_zeroes],
-                                params[:recent_first],
-                                params[:facet],
-                                params[:include_streaming_views],
-                                params[:order_by]
-                               )
+    csv_report = cvsReport( startdate,
+    enddate,
+    params[:search_criteria],
+    params[:include_zeroes],
+    params[:recent_first],
+    params[:facet],
+    params[:include_streaming_views],
+    params[:order_by]
+    )
 
-         if(csv_report != nil)
-           send_data csv_report, :type=>"application/csv", :filename=>params[:search_criteria] + "_monthly_statistics.csv"
-         end
+    if(csv_report != nil)
+      send_data csv_report, :type=>"application/csv", :filename=>params[:search_criteria] + "_monthly_statistics.csv"
+    end
   end
 
   def school_pids(school)
 
     pids_by_institution = repository.search(
-                          :qt=>"search",
-                          :rows=>20000,
-                          :fq=>["{!raw f=organization_facet}" + school],
-                          :"facet.field"=>["pid"],
-                          )["response"]["docs"]
+    :qt=>"search",
+    :rows=>20000,
+    :fq=>["{!raw f=organization_facet}" + school],
+    :"facet.field"=>["pid"],
+    )["response"]["docs"]
 
     return pids_by_institution
 
@@ -441,13 +436,13 @@ module ACStatistics
 
   # @@facets_list = Hash.new
   # def facet_items(facet)
-#
-    # if(!@@facets_list.has_key?(facet) )
-      # @@facets_list.store(facet, make_facet_items(facet))
-      # logger.info("======= fasets init ====== ")
-    # end
-#
-    # return @@facets_list[facet]
+  #
+  # if(!@@facets_list.has_key?(facet) )
+  # @@facets_list.store(facet, make_facet_items(facet))
+  # logger.info("======= fasets init ====== ")
+  # end
+  #
+  # return @@facets_list[facet]
   # end
   # def make_facet_items(facet)
   def facet_items(facet)
@@ -530,7 +525,7 @@ module ACStatistics
       if(event == Statistic::DOWNLOAD_EVENT)
         pids.push(pid[:id][0, 3] + (pid[:id][3, 8].to_i + 1).to_s)
       else
-         pids.push(pid[:id])
+        pids.push(pid[:id])
       end
 
     end
@@ -595,9 +590,7 @@ module ACStatistics
   end
 
   def get_time_period
-
     if(params[:month_from] && params[:year_from] && params[:month_to] && params[:year_to] )
-
       startdate = Date.parse(params[:month_from] + " " + params[:year_from])
       enddate = Date.parse(params[:month_to] + " " + params[:year_to])
 
@@ -610,7 +603,6 @@ module ACStatistics
   end
 
   def create_common_statistics_csv(res_list)
-
     count = 0
     csv = ''
 
@@ -624,7 +616,7 @@ module ACStatistics
 
     csv += CSV.generate_line( [ 'FACET', 'ITEM', '', '', '', '', '', '']) + LINE_BRAKER
     query.each do |key, value|
-        csv += CSV.generate_line( [ facet_names[key.to_s], value.first.to_s, '', '', '', '', '', '']) + LINE_BRAKER
+      csv += CSV.generate_line( [ facet_names[key.to_s], value.first.to_s, '', '', '', '', '', '']) + LINE_BRAKER
     end
     csv += CSV.generate_line( [ '', '', '', '', '', '', '', '' ]) + LINE_BRAKER
 
@@ -632,29 +624,27 @@ module ACStatistics
     csv += CSV.generate_line( [ '#', 'TITLE', 'GENRE', 'VIEWS', 'DOWNLOADS', 'STREAMS', 'DEPOSIT DATE', 'HANDLE / DOI' ]) + LINE_BRAKER
 
     res_list.each do |item|
-
       count = count + 1
 
       csv += CSV.generate_line( [
-                                  count,
-                                  item['doc']['title_display'],
-                                  item['doc']['genre_facet'].first,
-                                  item['views'],
-                                  item['downloads'],
-                                  item['streams'],
-                                  Date.strptime(item['doc']['record_creation_date']).strftime('%m/%d/%Y'),
-                                  item['doc']['handle']
-                                ]) + LINE_BRAKER
-    end
+        count,
+        item['doc']['title_display'],
+        item['doc']['genre_facet'].first,
+        item['views'],
+        item['downloads'],
+        item['streams'],
+        Date.strptime(item['doc']['record_creation_date']).strftime('%m/%d/%Y'),
+        item['doc']['handle']
+        ]) + LINE_BRAKER
+      end
 
     return csv
   end
 
   def get_facetStatsByEvent(query, event)
-
     if( query == nil || query.empty? )
-        downloads = 0
-        docs = Hash.new
+      downloads = 0
+      docs = Hash.new
     else
 
       pids_collection = getPidsByQueryFacets(query)
@@ -668,7 +658,6 @@ module ACStatistics
         count = countPidsStatistic(pids_collection, event)
         docs = countDocsByEvent(pids_collection, event)
       end
-
     end
 
     result = Hash.new
@@ -680,91 +669,85 @@ module ACStatistics
   end
 
   def sendAuthorsReports(processed_authors, designated_recipient)
+    start_time = Time.new
+    time_id = start_time.strftime("%Y%m%d-%H%M%S")
+    logger = Logger.new(Rails.root.to_s + "/log/monthly_reports/#{time_id}.tmp")
 
+    logger.info "\n=== All Authors Monthly Reports ==="
 
-        start_time = Time.new
-        time_id = start_time.strftime("%Y%m%d-%H%M%S")
-        logger = Logger.new(Rails.root.to_s + "/log/monthly_reports/#{time_id}.tmp")
+    logger.info "\nStarted at: " + start_time.strftime("%Y-%m-%d %H:%M") + "\n"
 
-        logger.info "\n=== All Authors Monthly Reports ==="
+    sent_counter = 0
+    skipped_counter = 0
+    sent_exceptions = 0
 
-        logger.info "\nStarted at: " + start_time.strftime("%Y-%m-%d %H:%M") + "\n"
+    processed_authors.each do |author|
 
-        sent_counter = 0
-        skipped_counter = 0
-        sent_exceptions = 0
+      begin
+        author_id = author[:id]
+        startdate = Date.parse(params[:month] + " " + params[:year])
+        enddate = Date.parse(params[:month] + " " + params[:year])
 
-        processed_authors.each do |author|
+        @results, @stats, @totals =  get_author_stats(startdate,
+        enddate,
+        author_id,
+        nil,
+        params[:include_zeroes],
+        'author_uni',
+        false,
+        params[:order_by]
+        )
 
-          begin
+        if(designated_recipient)
+          email = designated_recipient
+        else
+          email = author[:email]
+        end
 
-            author_id = author[:id]
-            startdate = Date.parse(params[:month] + " " + params[:year])
-            enddate = Date.parse(params[:month] + " " + params[:year])
+        if(email == nil)
+          raise "no email address found"
+        end
 
-            @results, @stats, @totals =  get_author_stats(startdate,
-                                                          enddate,
-                                                          author_id,
-                                                          nil,
-                                                          params[:include_zeroes],
-                                                          'author_uni',
-                                                          false,
-                                                          params[:order_by]
-                                                          )
+        if @totals.values.sum != 0 || params[:include_zeroes]
+          sent_counter = sent_counter + 1
+          if(params[:do_not_send_email])
+            test_msg = ' (this is test - email was not sent)'
+          else
+            Notifier.author_monthly(email, author_id, startdate, enddate, @results, @stats, @totals, request, false, params[:optional_note]).deliver
+            test_msg = ''
+          end
 
-            if(designated_recipient)
-              email = designated_recipient
-            else
-              email = author[:email]
-            end
+          logger.info "report for '" + author_id + "' was sent to " + email + " at " + Time.new.strftime("%Y-%m-%d %H:%M") + test_msg
+        else
+          skipped_counter = skipped_counter + 1
+          logger.info "report for '" + author_id + "' was skipped"
+        end
 
-            if(email == nil)
-              raise "no email address found"
-            end
+      rescue Exception => e
+        logger.info("(All Authors Monthly Statistics) - There is some error for " + author_id + ", " + (author[:email] || "") + ", error: " + e.to_s + ", " + Time.new.to_s)
+        sent_exceptions = sent_exceptions + 1
+      end # begin
 
-            if @totals.values.sum != 0 || params[:include_zeroes]
-              sent_counter = sent_counter + 1
-              if(params[:do_not_send_email])
-                test_msg = ' (this is test - email was not sent)'
-              else
-                Notifier.author_monthly(email, author_id, startdate, enddate, @results, @stats, @totals, request, false, params[:optional_note]).deliver
-                test_msg = ''
-              end
+    end # processed_authors.each
 
-              logger.info "report for '" + author_id + "' was sent to " + email + " at " + Time.new.strftime("%Y-%m-%d %H:%M") + test_msg
-            else
-              skipped_counter = skipped_counter + 1
-              logger.info "report for '" + author_id + "' was skipped"
-            end
+    finish_time = Time.new
+    logger.info "\nNumber of emails\n sent: " + sent_counter.to_s + ",\n skipped: " + skipped_counter.to_s +  ",\n errors: " + sent_exceptions.to_s
+    logger.info "\nFinished at: " + finish_time.strftime("%Y-%m-%d %H:%M")
 
-          rescue Exception => e
-            logger.info("(All Authors Monthly Statistics) - There is some error for " + author_id + ", " + (author[:email] || "") + ", error: " + e.to_s + ", " + Time.new.to_s)
-            sent_exceptions = sent_exceptions + 1
-          end # begin
+    seconds_spent = finish_time - start_time
+    readble_time_spent = Time.at(seconds_spent).utc.strftime("%H hours, %M minutes, %S seconds")
 
-        end # processed_authors.each
+    logger.info "\nTime spent: " + getReadableTimeSpent(start_time)
 
-        finish_time = Time.new
-        logger.info "\nNumber of emails\n sent: " + sent_counter.to_s + ",\n skipped: " + skipped_counter.to_s +  ",\n errors: " + sent_exceptions.to_s
-        logger.info "\nFinished at: " + finish_time.strftime("%Y-%m-%d %H:%M")
-
-        seconds_spent = finish_time - start_time
-        readble_time_spent = Time.at(seconds_spent).utc.strftime("%H hours, %M minutes, %S seconds")
-
-        logger.info "\nTime spent: " + getReadableTimeSpent(start_time)
-
-        File.rename(Rails.root.to_s + "/log/monthly_reports/#{time_id}.tmp", Rails.root.to_s + "/log/monthly_reports/#{time_id}.log")
+    File.rename(Rails.root.to_s + "/log/monthly_reports/#{time_id}.tmp", Rails.root.to_s + "/log/monthly_reports/#{time_id}.log")
 
   end # sendAuthorsReports
 
 
   def clean_params(params)
-      params[:one_report_uni] = nil
-      params[:test_users] = nil
-      params[:designated_recipient] = nil
-      params[:one_report_email] = nil
+    params[:one_report_uni] = nil
+    params[:test_users] = nil
+    params[:designated_recipient] = nil
+    params[:one_report_email] = nil
   end
-
-
-
-end # ------------------------------------------ #
+end
