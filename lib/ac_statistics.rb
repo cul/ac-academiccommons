@@ -388,16 +388,6 @@ module ACStatistics
     return processed_authors
   end
 
-
-  def sendReport(recepient, author_id, startdate, enddate, results, stats, totals, request, include_streaming_views, optional_note)
-    case params[:email_template]
-    when "Normal"
-      Notifier.author_monthly(recepient, author_id, startdate, enddate, results, stats, totals, request, include_streaming_views, optional_note).deliver
-    else
-      Notifier.author_monthly_first(recepient, author_id, startdate, enddate, results, stats, totals, request, include_streaming_views).deliver
-    end
-  end
-
   def download_csv_report(startdate, enddate, params)
     log_statistics_usage(startdate, enddate, params)
 
