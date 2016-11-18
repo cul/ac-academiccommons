@@ -88,7 +88,7 @@ class StatisticsController < ApplicationController
           clean_params(params)
           return
         end
-        processed_authors = makeTestAuthor(params[:test_users].to_s, alternate_emails[params[:test_users].to_s])
+        processed_authors = make_test_author(params[:test_users].to_s, alternate_emails[params[:test_users].to_s])
         final_notice = "The monthly report for " + params[:test_users].to_s + " was sent to " + alternate_emails[params[:test_users].to_s]
       end
 
@@ -98,12 +98,12 @@ class StatisticsController < ApplicationController
           flash[:notice] = "Could not get statistics. The UNI and Email must be provided!"
           return
         end
-        processed_authors = makeTestAuthor(params[:one_report_uni].to_s, params[:one_report_email])
+        processed_authors = make_test_author(params[:one_report_uni].to_s, params[:one_report_email])
         final_notice = "The monthly report for " + params[:one_report_uni].to_s + " was sent to " + params[:one_report_email]
       end
 
       if(!isMonthlyReportsInProcess)
-        sendAuthorsReports(processed_authors, designated_recipient)
+        send_authors_reports(processed_authors, designated_recipient)
       else
         final_notice = "The process is already running."
       end
@@ -126,7 +126,7 @@ class StatisticsController < ApplicationController
 
       if params[:commit].in?('View', "Email", "Get Usage Stats", "keyword search")
 
-        logStatisticsUsage(startdate, enddate, params)
+        log_statistics_usage(startdate, enddate, params)
         @results, @stats, @totals =  get_author_stats(startdate,
                                                       enddate,
                                                       params[:search_criteria],
@@ -137,7 +137,7 @@ class StatisticsController < ApplicationController
                                                       params[:order_by]
                                                       )
         if (@results == nil || @results.size == 0)
-          setMessageAndVariables
+          set_message_and_variables
           return
         end
 
@@ -148,7 +148,7 @@ class StatisticsController < ApplicationController
       end
 
       if params[:commit] == "Download CSV report"
-        downloadCSVreport(startdate, enddate, params)
+        download_csv_report(startdate, enddate, params)
       end
   end
 
@@ -192,7 +192,7 @@ class StatisticsController < ApplicationController
     query = params[:f]
     event = params[:event]
 
-    stuts_result = get_facetStatsByEvent(query, event)
+    stuts_result = get_facet_stats_by_event(query, event)
 
     result = stuts_result['docs_size'].to_s + ' ( ' + stuts_result['statistic'].to_s + ' )'
 
@@ -223,7 +223,7 @@ class StatisticsController < ApplicationController
     pids_collection = Array.new
     pids_collection << Mash.new(pid_item)
 
-    count = countPidsStatistic(pids_collection, event)
+    count = count_pids_statistic(pids_collection, event)
 
     respond_to do |format|
       format.html { render :text => count.to_s }
@@ -236,7 +236,7 @@ class StatisticsController < ApplicationController
 
     pids_by_institution = school_pids(school)
 
-    count = countPidsStatistic(pids_by_institution, event)
+    count = count_pids_statistic(pids_by_institution, event)
 
     respond_to do |format|
       format.html { render :text => count.to_s }

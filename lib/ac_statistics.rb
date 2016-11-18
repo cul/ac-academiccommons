@@ -32,13 +32,13 @@ module ACStatistics
     return FACET_NAMES
   end
 
-  def cvsReport(startdate, enddate, search_criteria, include_zeroes, recent_first, facet, include_streaming_views, order_by)
+  def cvs_report(startdate, enddate, search_criteria, include_zeroes, recent_first, facet, include_streaming_views, order_by)
 
     months_list = make_months_list(startdate, enddate, recent_first)
     results, stats, totals, download_ids = get_author_stats(startdate, enddate, search_criteria, months_list, include_zeroes, facet, include_streaming_views, order_by)
 
     if (results == nil || results.size == 0)
-      setMessageAndVariables
+      set_message_and_variables
       return
     end
 
@@ -57,16 +57,16 @@ module ACStatistics
     csv += CSV.generate_line( [  current_user == nil ? "N/A" : (current_user.to_s + " (" + current_user.uid.to_s + ")") ]) + LINE_BRAKER
 
 
-    csv = makeCSVcategory("Views", "View", csv, results, stats, totals, months_list, nil)
+    csv = make_csv_category("Views", "View", csv, results, stats, totals, months_list, nil)
     if(include_streaming_views)
-      csv = makeCSVcategory("Streams", "Streaming", csv, results, stats, totals, months_list, nil)
+      csv = make_csv_category("Streams", "Streaming", csv, results, stats, totals, months_list, nil)
     end
-    csv = makeCSVcategory("Downloads", "Download", csv, results, stats, totals, months_list, download_ids)
+    csv = make_csv_category("Downloads", "Download", csv, results, stats, totals, months_list, download_ids)
 
     return csv
   end
 
-  def makeCSVcategory(category, key, csv, results, stats, totals, months_list, ids)
+  def make_csv_category(category, key, csv, results, stats, totals, months_list, ids)
 
     csv += CSV.generate_line( [ "" ]) + LINE_BRAKER
 
@@ -345,7 +345,7 @@ module ACStatistics
     return "http://" + Rails.application.config.base_path
   end
 
-  def setMessageAndVariables
+  def set_message_and_variables
     @results = nil
     @stats = nil
     @totals = nil
@@ -358,7 +358,7 @@ module ACStatistics
     end
   end
 
-  def logStatisticsUsage(startdate, enddate, params)
+  def log_statistics_usage(startdate, enddate, params)
 
     eventlog = Eventlog.create(:event_name => 'statistics',
     :user_name  => current_user == nil ? "N/A" : current_user.to_s,
@@ -377,7 +377,7 @@ module ACStatistics
 
   end
 
-  def makeTestAuthor(author_id, email)
+  def make_test_author(author_id, email)
 
     test_author = Hash.new
     test_author[:id] = author_id
@@ -398,10 +398,10 @@ module ACStatistics
     end
   end
 
-  def downloadCSVreport(startdate, enddate, params)
-    logStatisticsUsage(startdate, enddate, params)
+  def download_csv_report(startdate, enddate, params)
+    log_statistics_usage(startdate, enddate, params)
 
-    csv_report = cvsReport( startdate,
+    csv_report = cvs_report( startdate,
     enddate,
     params[:search_criteria],
     params[:include_zeroes],
@@ -474,7 +474,7 @@ module ACStatistics
   end
 
 
-  def getPidsByQueryFacets(query)
+  def get_pids_by_query_facets(query)
 
     solr_facets_query = Array.new
     query.each do | param|
@@ -498,21 +498,21 @@ module ACStatistics
   end
 
 
-  def countPidsStatistic(pids_collection, event)
+  def count_pids_statistic(pids_collection, event)
     Statistic.where("identifier in (?) and event = ?", correct_pids(pids_collection, event), event).count
   end
 
 
-  def countPidsStatisticByDates(pids_collection, event, startdate, enddate)
+  def count_pids_statistic_by_dates(pids_collection, event, startdate, enddate)
     Statistic.where("identifier in (?) and event = ? and at_time BETWEEN ? and ?", correct_pids(pids_collection, event), event, startdate, enddate).count
   end
 
-  def countDocsByEvent(pids_collection, event)
+  def count_docs_by_event(pids_collection, event)
     Statistic.group(:identifier).where("identifier in (?) and event = ? ", correct_pids(pids_collection, event), event).count
   end
 
 
-  def countDocsByEventAndDates(pids_collection, event, startdate, enddate)
+  def count_docs_by_event_and_dates(pids_collection, event, startdate, enddate)
     Statistic.group(:identifier).where("identifier in (?) and event = ? and at_time BETWEEN ? and ? ", correct_pids(pids_collection, event), event, startdate, enddate).count
   end
 
@@ -541,7 +541,7 @@ module ACStatistics
       return []
     end
 
-    docs = getPidsByQueryFacets(query)
+    docs = get_pids_by_query_facets(query)
 
     results = Array.new
 
@@ -554,17 +554,17 @@ module ACStatistics
         startdate = Date.parse(params[:month_from] + " " + params[:year_from])
         enddate = Date.parse(params[:month_to] + " " + params[:year_to])
 
-        item.store('views', countPidsStatisticByDates([doc], Statistic::VIEW_EVENT, startdate, enddate))
-        item.store('downloads', countPidsStatisticByDates([doc], Statistic::DOWNLOAD_EVENT, startdate, enddate))
-        item.store('streams', countPidsStatisticByDates([doc], Statistic::STREAM_EVENT, startdate, enddate))
+        item.store('views', count_pids_statistic_by_dates([doc], Statistic::VIEW_EVENT, startdate, enddate))
+        item.store('downloads', count_pids_statistic_by_dates([doc], Statistic::DOWNLOAD_EVENT, startdate, enddate))
+        item.store('streams', count_pids_statistic_by_dates([doc], Statistic::STREAM_EVENT, startdate, enddate))
         item.store('doc', doc)
 
         results << item
       else
 
-        item.store('views', countPidsStatistic([doc], Statistic::VIEW_EVENT))
-        item.store('downloads', countPidsStatistic([doc], Statistic::DOWNLOAD_EVENT))
-        item.store('streams', countPidsStatistic([doc], Statistic::STREAM_EVENT))
+        item.store('views', count_pids_statistic([doc], Statistic::VIEW_EVENT))
+        item.store('downloads', count_pids_statistic([doc], Statistic::DOWNLOAD_EVENT))
+        item.store('streams', count_pids_statistic([doc], Statistic::STREAM_EVENT))
         item.store('doc', doc)
         results << item
       end
@@ -583,7 +583,7 @@ module ACStatistics
     if( query == nil || query.empty? )
       pids = []
     else
-      pids = getPidsByQueryFacets(query)
+      pids = get_pids_by_query_facets(query)
     end
 
     return pids
@@ -610,9 +610,9 @@ module ACStatistics
     csv += CSV.generate_line( [ '', '', '', '', '', '', '', '']) + LINE_BRAKER
 
     query = params[:f]
-    views_stats = get_facetStatsByEvent(query, Statistic::VIEW_EVENT)
-    downloads_stats = get_facetStatsByEvent(query, Statistic::DOWNLOAD_EVENT)
-    streams_stats = get_facetStatsByEvent(query, Statistic::STREAM_EVENT)
+    views_stats = get_facet_stats_by_event(query, Statistic::VIEW_EVENT)
+    downloads_stats = get_facet_stats_by_event(query, Statistic::DOWNLOAD_EVENT)
+    streams_stats = get_facet_stats_by_event(query, Statistic::STREAM_EVENT)
 
     csv += CSV.generate_line( [ 'FACET', 'ITEM', '', '', '', '', '', '']) + LINE_BRAKER
     query.each do |key, value|
@@ -641,22 +641,22 @@ module ACStatistics
     return csv
   end
 
-  def get_facetStatsByEvent(query, event)
+  def get_facet_stats_by_event(query, event)
     if( query == nil || query.empty? )
       downloads = 0
       docs = Hash.new
     else
 
-      pids_collection = getPidsByQueryFacets(query)
+      pids_collection = get_pids_by_query_facets(query)
 
       if(params[:month_from] && params[:year_from] && params[:month_to] && params[:year_to] )
         startdate = Date.parse(params[:month_from] + " " + params[:year_from])
         enddate = Date.parse(params[:month_to] + " " + params[:year_to])
-        count = countPidsStatisticByDates(pids_collection, event, startdate, enddate)
-        docs = countDocsByEventAndDates(pids_collection, event, startdate, enddate)
+        count = count_pids_statistic_by_dates(pids_collection, event, startdate, enddate)
+        docs = count_docs_by_event_and_dates(pids_collection, event, startdate, enddate)
       else
-        count = countPidsStatistic(pids_collection, event)
-        docs = countDocsByEvent(pids_collection, event)
+        count = count_pids_statistic(pids_collection, event)
+        docs = count_docs_by_event(pids_collection, event)
       end
     end
 
@@ -668,7 +668,7 @@ module ACStatistics
     return result
   end
 
-  def sendAuthorsReports(processed_authors, designated_recipient)
+  def send_authors_reports(processed_authors, designated_recipient)
     start_time = Time.new
     time_id = start_time.strftime("%Y%m%d-%H%M%S")
     logger = Logger.new(Rails.root.to_s + "/log/monthly_reports/#{time_id}.tmp")
@@ -741,7 +741,7 @@ module ACStatistics
 
     File.rename(Rails.root.to_s + "/log/monthly_reports/#{time_id}.tmp", Rails.root.to_s + "/log/monthly_reports/#{time_id}.log")
 
-  end # sendAuthorsReports
+  end # send_authors_reports
 
 
   def clean_params(params)
