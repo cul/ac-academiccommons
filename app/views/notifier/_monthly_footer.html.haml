@@ -9,4 +9,4 @@ Have more to deposit: #{link_to 'click here', deposit_url}
 %div
 %br
   Wish to unsubscribe:
-  #{link_to("click here", url_for(:only_path => false, :controller => :statistics, :action => :unsubscribe_monthly, :author_id => @author_id, :chk => @author_id.crypt("xZ")))}
+  #{link_to("click here", statistics_unsubscribe_monthly_url(:author_id => @author_id, :chk => Rails.application.message_verifier(:unsubscribe).generate(@author_id)))}
