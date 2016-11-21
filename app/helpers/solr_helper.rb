@@ -1,11 +1,5 @@
 module SolrHelper
 
-  def getAuthorsUni(pid)
-
-    result = repository.search(:fl => 'author_uni', :fq => 'pid:"' + pid + '"')["response"]["docs"]
-    return result.first[:author_uni] || []
-  end
-
   def getItem(pid)
 
     result = repository.search(:fl => 'author_uni,id,handle,title_display,free_to_read_start_date', :fq => 'pid:"' + pid + '"')["response"]["docs"]
@@ -36,6 +30,4 @@ module SolrHelper
 
     return author_unis_clean.flatten
   end
-
-
-end # =============================================================== #
+end
