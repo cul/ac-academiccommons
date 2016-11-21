@@ -188,9 +188,7 @@ module ACStatistics
 
     process_stats(stats, totals, ids, download_ids, startdate, enddate)
 
-    logger.debug("results: #{results.inspect}")
-
-    results.reject! { |r| (stats['View'][r['id'][0]] || 0) == 0 &&  (stats['Download'][r['id']] || 0) == 0 } unless include_zeroes
+    results.reject! { |r| (stats['View'][r['id']] || 0) == 0 &&  (stats['Download'][r['id']] || 0) == 0 } unless include_zeroes
 
     if(order_by == 'views' || order_by == 'downloads')
       results.sort! do |x,y|
