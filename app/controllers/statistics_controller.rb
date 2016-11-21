@@ -289,6 +289,13 @@ class StatisticsController < ApplicationController
 
   private
 
+  def isMonthlyReportsInProcess
+    Dir.glob("#{Rails.root}/log/monthly_reports/*.tmp") do |log_file_path|
+      return true
+    end
+    return false
+  end
+
   def setDefaultParams(params)
      if (params[:month_from].nil? || params[:month_to].nil? || params[:year_from].nil? || params[:year_to].nil?)
 
