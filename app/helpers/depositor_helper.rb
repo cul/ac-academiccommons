@@ -4,7 +4,6 @@ require "ac_indexing"
 
 module DepositorHelper
   include SolrHelper
-  include InfoHelper
 
   AC_COLLECTION_NAME = 'collection:3'
 
@@ -123,7 +122,7 @@ module DepositorHelper
     return person
   end
 
-  #TODO: Make this into a module
+  #TODO: Make this into a module.
   def get_person_info(uni)
     entry = Net::LDAP.new({:host => "ldap.columbia.edu", :port => 389}).search(:base => "o=Columbia University, c=US", :filter => Net::LDAP::Filter.eq("uid", uni)) || []
     entry = entry.first

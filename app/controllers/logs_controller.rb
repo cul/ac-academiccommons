@@ -1,6 +1,5 @@
 class LogsController < ApplicationController
 
-  include InfoHelper
   include LogsHelper
 
   before_filter :require_admin!

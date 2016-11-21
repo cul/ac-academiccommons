@@ -1,7 +1,6 @@
 class AdminController < ApplicationController
   include DepositorHelper
-  include InfoHelper
-
+  
   before_filter :require_admin!
 
   layout "application"
