@@ -188,6 +188,8 @@ module ACStatistics
 
     process_stats(stats, totals, ids, download_ids, startdate, enddate)
 
+    logger.debug("results: #{results.inspect}")
+
     results.reject! { |r| (stats['View'][r['id'][0]] || 0) == 0 &&  (stats['Download'][r['id']] || 0) == 0 } unless include_zeroes
 
     if(order_by == 'views' || order_by == 'downloads')
@@ -235,7 +237,7 @@ module ACStatistics
 
 
   def process_stats(stats, totals, ids, download_ids, startdate, enddate)
-    logger.debug "In process_stats for ids "
+    logger.debug "In process_stats for #{ids}"
     enddate = enddate + 1.months
 
     stats['View'] = Statistic.group(:identifier).where("event = 'View' and identifier IN (?) AND at_time BETWEEN ? and ?", ids, startdate, enddate).count
@@ -262,6 +264,7 @@ module ACStatistics
 
     stats['View Lifetime'] = convertOrderedHash(stats['View Lifetime'])
 
+    logger.debug("statistics hash: #{stats.inspect}")
   end
 
 
