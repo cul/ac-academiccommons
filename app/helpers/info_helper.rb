@@ -31,10 +31,6 @@ module InfoHelper
       return person
   end
 
-  def getReadableTimeSpent(start_time)
-    return timeReadableFormat(getSecondsSpent(start_time))
-  end
-
   def timeReadableFormat(seconds)
     return Time.at(seconds).utc.strftime("%H hours, %M minutes, %S seconds")
   end

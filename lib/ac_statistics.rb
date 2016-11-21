@@ -748,6 +748,9 @@ module ACStatistics
 
   end # send_authors_reports
 
+  def getReadableTimeSpent(start_time)
+    return timeReadableFormat(getSecondsSpent(start_time))
+  end
 
   def clean_params(params)
     params[:one_report_uni] = nil
