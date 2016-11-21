@@ -769,4 +769,11 @@ module ACStatistics
     params[:designated_recipient] = nil
     params[:one_report_email] = nil
   end
+
+  def convertOrderedHash(ohash)
+    a =  ohash.to_a
+    oh = {}
+    a.each{|x|  oh[x[0]] = x[1]}
+    return oh
+  end
 end

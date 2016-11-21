@@ -308,63 +308,6 @@ class StatisticsController < ApplicationController
     end
   end
 
-  def get_monthly_author_stats(options = {})
-  startdate = options[:startdate]
-    author_id = options[:author_id]
-    enddate = startdate + 1.month
-
-    results = repository.search(:rows => 100000, :sort => "title_display asc" , :fq => "author_uni:#{author_id}", :fl => "title_display,id", :page => 1)["response"]["docs"]
-    ids = results.collect { |r| r['id'].to_s.strip }
-    download_ids = Hash.new { |h,k| h[k] = [] }
-    ids.each do |doc_id|
-      download_ids[doc_id] |= ActiveFedora::Base.find(doc_id).list_members.collect(&:pid)
-    end
-    stats = Hash.new { |h,k| h[k] = Hash.new { |h,k| h[k] = 0 }}
-    totals = Hash.new { |h,k| h[k] = 0 }
-
-
-    stats['View'] = Statistic.group(:identifier).where("event = 'View' and identifier IN (?) AND at_time BETWEEN ? and ?", ids, startdate, enddate).count
-
-    stats_downloads = Statistic.group(:identifier).where("event = 'Download' and identifier IN (?) AND at_time BETWEEN ? and ?", download_ids.values.flatten,startdate, enddate).count
-    download_ids.each_pair do |doc_id, downloads|
-
-      stats['Download'][doc_id] = downloads.collect { |download_id| stats_downloads[download_id] || 0 }.sum
-    end
-
-
-    stats['View Lifetime'] = Statistic.group(:identifier).where("event = 'View' and identifier IN (?)", ids).count
-
-
-    stats_lifetime_downloads = Statistic.group(:identifier).where("event = 'Download' and identifier IN (?)" , download_ids.values.flatten).count
-    download_ids.each_pair do |doc_id, downloads|
-
-      stats['Download Lifetime'][doc_id] = downloads.collect { |download_id| stats_lifetime_downloads[download_id] || 0 }.sum
-    end
-    stats.keys.each { |key| totals[key] = stats[key].values.sum }
-
-
-stats['View'] = convertOrderedHash(stats['View'])
-stats['View Lifetime'] = convertOrderedHash(stats['View Lifetime'])
-
-    results.reject! { |r| (stats['View'][r['id'][0]] || 0) == 0 &&  (stats['Download'][r['id']] || 0) == 0 } unless params[:include_zeroes]
-    results.sort! do |x,y|
-      result = (stats['Download'][y['id']] || 0) <=> (stats['Download'][x['id']] || 0)
-      result = x["title_display"] <=> y["title_display"] if result == 0
-      result
-    end
-
-    return results, stats, totals
-
-  end
-
-def convertOrderedHash(ohash)
-  a =  ohash.to_a
-  oh = {}
-  a.each{|x|  oh[x[0]] = x[1]}
-  return oh
-end
-
-
   ##################
   # Config-lookup methods. Should be moved to a module of some kind, once
   # all this stuff is modulized. But methods to look up config'ed values,
