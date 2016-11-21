@@ -50,22 +50,32 @@ describe StatisticsController, :type => :controller do
     context 'when admin user makes request' do
       include_context 'mock admin user'
 
+      before :each do
+        Statistic.create!(identifier: pid, event: 'View', at_time: Time.now)
+        Statistic.create!(identifier: pid, event: 'Download', at_time: Time.now)
+        Statistic.create!(identifier: pid, event: 'Streaming', at_time: Time.now)
+      end
+
       it 'returns correct number of views' do
         get :single_pid_stats, :pid => pid, :event => 'View'
-        expect(response.body).to eq '0'
+        expect(response.body).to eq '1'
       end
 
       it 'returns correct number of downloads' do
         get :single_pid_stats, :pid => pid, :event => 'Download'
-        expect(response.body).to eq '0'
+        expect(response.body).to eq '1'
       end
 
       it 'returns correct number of streams' do
         get :single_pid_stats, :pid => pid, :event => 'Streaming'
-        expect(response.body).to eq '0'
+        expect(response.body).to eq '1'
       end
 
-      it 'numbers of view increment with item viewed'
+      it 'numbers of view increment with item viewed' do
+        Statistic.create(identifier: pid, event: 'View', at_time: Time.now)
+        get :single_pid_stats, pid: pid, event: 'View'
+        expect(response.body).to eq '2'
+      end
     end
   end
 
@@ -78,6 +88,25 @@ describe StatisticsController, :type => :controller do
   describe 'GET stats_by_event' do
     include_examples 'authorization required' do
       let(:http_request) { get :stats_by_event, :event => 'View' }
+    end
+
+    context 'when admin user makes request' do
+      include_context 'mock admin user'
+
+      before :each do
+        Statistic.create(event: 'View', at_time: Time.now)
+        Statistic.create(event: 'Download', at_time: Time.now)
+      end
+
+      it 'returns total number of views' do
+        get :stats_by_event, event: 'View'
+        expect(response.body).to eql '1'
+      end
+
+      it 'returns total number of downloads' do
+        get :stats_by_event, event: 'Download'
+        expect(response.body).to eql '1'
+      end
     end
   end
 

@@ -32,7 +32,9 @@ module ACStatistics
     return FACET_NAMES
   end
 
-  def cvs_report(startdate, enddate, search_criteria, include_zeroes, recent_first, facet, include_streaming_views, order_by)
+  # Gets author statistics and generates csv report.
+  # CSV has different sections for Views, Downloads, Streaming listing how many times of each action was done per month.
+  def csv_report(startdate, enddate, search_criteria, include_zeroes, recent_first, facet, include_streaming_views, order_by)
 
     months_list = make_months_list(startdate, enddate, recent_first)
     results, stats, totals, download_ids = get_author_stats(startdate, enddate, search_criteria, months_list, include_zeroes, facet, include_streaming_views, order_by)
@@ -66,6 +68,7 @@ module ACStatistics
     return csv
   end
 
+  # Makes each category (View, Download, Streaming) section of csv. Helper for csv_report.
   def make_csv_category(category, key, csv, results, stats, totals, months_list, ids)
 
     csv += CSV.generate_line( [ "" ]) + LINE_BRAKER
@@ -103,7 +106,7 @@ module ACStatistics
   end
 
 
-
+  # Creates part of the header above the column names.
   def make_months_header(first_item, months_list)
     header = []
 
@@ -116,12 +119,12 @@ module ACStatistics
     return header
   end
 
+  # Return array of abbreviated month names.
   def months
-    months = Array.new(Date::ABBR_MONTHNAMES)
-    months.shift
-    return months
+    Array.new(Date::ABBR_MONTHNAMES).shift
   end
 
+  # Makes column headers of all months represented in this csv.
   def make_month_line(months_list)
 
     month_list = []
@@ -133,6 +136,9 @@ module ACStatistics
     return month_list
   end
 
+  # Populated statistics for each month.
+  #
+  # @param Array<Array<String>> stats
   def make_month_line_stats(stats, months_list, id, download_ids)
 
     line = []
@@ -150,9 +156,9 @@ module ACStatistics
     return line
   end
 
-
+  # For each month get the number of view and downloads for each id and populate
+  # them into stats.
   def process_stats_by_month(stats, totals, ids, download_ids, startdate, enddate, months_list)
-
     months_list.each do |month|
 
       contdition = month.strftime("%Y-%m") + "%"
@@ -205,12 +211,18 @@ module ACStatistics
 
   end
 
-
+  # Generates base line objects to hold usage statistic information.
+  #
+  # @return stats hash keeping track of item views and downloads
+  # @return totals
+  # @return id all aggregator pids
+  # @return download_ids all downloadable item pids
   def init_holders(results)
-    ids = results.collect { |r| r['id'].to_s.strip }
+    ids = results.collect { |r| r['id'].to_s.strip } # Get all the aggregator pids.
 
     download_ids = Hash.new { |h,k| h[k] = [] }
 
+    # Get pids of all downloadable files.
     ids.each do |doc_id|
       download_ids[doc_id] |= ActiveFedora::Base.find(doc_id).list_members(pids_only: true)
     end
@@ -319,7 +331,10 @@ module ACStatistics
     end
   end
 
-
+  # Creates list of month-year strings in order from the startdate to the
+  # enddate given.
+  #
+  # @param recent_first flag that reverses array
   def make_months_list(startdate, enddate, recent_first)
     months = []
     months_hash = Hash.new
@@ -391,7 +406,7 @@ module ACStatistics
   def download_csv_report(startdate, enddate, params)
     log_statistics_usage(startdate, enddate, params)
 
-    csv_report = cvs_report( startdate,
+    csv_report = csv_report( startdate,
     enddate,
     params[:search_criteria],
     params[:include_zeroes],
