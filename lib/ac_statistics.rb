@@ -121,7 +121,7 @@ module ACStatistics
 
   # Return array of abbreviated month names.
   def months
-    Array.new(Date::ABBR_MONTHNAMES).shift
+    Array.new(Date::ABBR_MONTHNAMES).drop(1)
   end
 
   # Makes column headers of all months represented in this csv.
