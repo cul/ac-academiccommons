@@ -60,6 +60,7 @@ group :development, :test do
   gem 'capistrano-passenger', '~> 0.1', require: false
 
   gem 'rspec-rails', '~> 3.5'
+  gem 'factory_girl_rails'
   gem 'capybara', '~>2.2'
   gem 'poltergeist' # Used to run test with js.
   gem 'database_cleaner'
