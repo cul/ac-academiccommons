@@ -30,7 +30,7 @@ class IndexingController < ApplicationController
 
 
   def ingest_by_cron
-    processIndexing(params)
+    process_indexing(params)
     render nothing: true
   end
 

@@ -1,0 +1,10 @@
+#
+# Defaults for solr_wrapper
+
+port: 9983
+version: 6.3.0
+verbose: false
+managed: true
+collection:
+  dir: solr/conf
+  name: development
