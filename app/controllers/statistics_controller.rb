@@ -63,7 +63,7 @@ class StatisticsController < ApplicationController
 
       if params[:commit].in?(commit_button_all_to_single)
         if params[:designated_recipient].empty?
-          flash[:notice] = "Can not 'Send All Reports To Single Email' - the destination email was not provided"
+          flash.now[:error] = "Cannot 'Send All Reports To Single Email' - the destination email was not provided"
           return
         end
         processed_authors = @authors
@@ -75,14 +75,14 @@ class StatisticsController < ApplicationController
 
       if params[:commit].in?(commit_button_aternate)
         if params[:test_users].empty?
-          flash[:notice] = "Could not get statistics. The UNI must be provided!"
+          flash.now[:error] = "Could not get statistics. The UNI must be provided!"
           clean_params(params)
           return
         end
 
         email = alternate_emails[params[:test_users].to_s]
         if email.nil? || email.empty?
-          flash[:notice] = "Could not get statistics for " + params[:test_users].to_s + ". The alternate email was not found!"
+          flash.now[:error] = "Could not get statistics for " + params[:test_users].to_s + ". The alternate email was not found!"
           clean_params(params)
           return
         end
@@ -93,7 +93,7 @@ class StatisticsController < ApplicationController
       if params[:commit].in?(commit_button_one_to_one )
 
         if params[:one_report_uni].empty? || params[:one_report_email].empty?
-          flash[:notice] = "Could not get statistics. The UNI and Email must be provided!"
+          flash.now[:error] = "Could not get statistics. The UNI and Email must be provided!"
           return
         end
         processed_authors = make_test_author(params[:one_report_uni].to_s, params[:one_report_email])
@@ -108,7 +108,7 @@ class StatisticsController < ApplicationController
 
       logger.info "============= final_notice: " + final_notice
 
-      flash[:notice] = final_notice
+      flash.now[:notice] = final_notice
 
       clean_params(params)
 
@@ -141,7 +141,7 @@ class StatisticsController < ApplicationController
 
         if params[:commit] == "Email"
           Notifier.statistics_by_search(params[:email_destination], params[:search_criteria], startdate, enddate, @results, @stats, @totals, request, params[:include_streaming_views]).deliver
-          flash[:notice] = "The report for: " + params[:search_criteria] + " was sent to: " + params[:email_destination]
+          flash.now[:notice] = "The report for: " + params[:search_criteria] + " was sent to: " + params[:email_destination]
         end
       end
 
