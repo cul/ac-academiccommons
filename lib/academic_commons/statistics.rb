@@ -170,21 +170,30 @@ module AcademicCommons
     end
 
 
-
+    # Returns statistics for all the items returned by a solr query
+    #
+    # @param startdate
+    # @param enddate
+    # @param query solr query
+    # @param months_list if not nil organizes the statistics based on the months given in this array
+    # @param include_zeroes flag to indicate whether records with no usage stats should be included
+    # @param facet
+    # @param include_streaming_views
+    # @param order_by
     def get_author_stats(startdate, enddate, query, months_list, include_zeroes, facet, include_streaming_views, order_by)
-      logger.debug "In get_author_stats for #{query}"
+      Rails.logger.debug "In get_author_stats for #{query}"
       if(query == nil || query.empty?)
         return
       end
 
-      results = make_solar_request(facet, query)
-      logger.debug "Solr request returned #{results.count} results."
+      results = make_solr_request(facet, query)
+      Rails.logger.debug "Solr request returned #{results.count} results."
 
       return if results.nil?
 
       stats, totals, ids, download_ids = init_holders(results)
 
-      logger.debug "#{ids.count} results after init_holders"
+      Rails.logger.debug "#{ids.count} results after init_holders"
 
       process_stats(stats, totals, ids, download_ids, startdate, enddate)
 
@@ -213,10 +222,11 @@ module AcademicCommons
 
     # Generates base line objects to hold usage statistic information.
     #
-    # @return stats hash keeping track of item views and downloads
-    # @return totals
-    # @return id all aggregator pids
-    # @return download_ids all downloadable item pids
+    # @param [] solr results from query
+    # @return [Hash]stats hash keeping track of item views and downloads
+    # @return [Hash] totals
+    # @return [Array<String>] id all aggregator pids
+    # @return [Hash] download_ids all downloadable item pids
     def init_holders(results)
       ids = results.collect { |r| r['id'].to_s.strip } # Get all the aggregator pids.
 
@@ -228,14 +238,14 @@ module AcademicCommons
       end
 
       stats = Hash.new { |h,k| h[k] = Hash.new { |h,k| h[k] = 0 }}
-      totals = Hash.new { |h,k| h[k] = 0 }
+      totals = Hash.new { |h,k| h[k] = 0 } # Couldn't this be created by just seeting the default value of the hash?
 
       return stats, totals, ids, download_ids
     end
 
 
     def process_stats(stats, totals, ids, download_ids, startdate, enddate)
-      logger.debug "In process_stats for #{ids}"
+      Rails.logger.debug "In process_stats for #{ids}"
       enddate = enddate + 1.months
 
       stats['View'] = Statistic.group(:identifier).where("event = 'View' and identifier IN (?) AND at_time BETWEEN ? and ?", ids, startdate, enddate).count
@@ -250,7 +260,7 @@ module AcademicCommons
       stats['View'] = convertOrderedHash(stats['View'])
 
       stats['View Lifetime'] = Statistic.group(:identifier).where("event = 'View' and identifier IN (?)", ids).count
-      stats['Streaming Lifetime'] = Statistic.group(:identifier).where("event = 'streaming' and identifier IN (?)", ids).count
+      stats['Streaming Lifetime'] = Statistic.group(:identifier).where("event = 'Streaming' and identifier IN (?)", ids).count
 
       stats_lifetime_downloads = Statistic.group(:identifier).where("event = 'Download' and identifier IN (?)", download_ids.values.flatten).count
 
@@ -262,7 +272,7 @@ module AcademicCommons
 
       stats['View Lifetime'] = convertOrderedHash(stats['View Lifetime'])
 
-      logger.debug("statistics hash: #{stats.inspect}")
+      Rails.logger.debug("statistics hash: #{stats.inspect}")
     end
 
 
@@ -302,8 +312,8 @@ module AcademicCommons
     end
 
 
-    def make_solar_request(facet, query)
-      logger.debug "In make_solar_request for query: #{query}"
+    def make_solr_request(facet, query)
+      Rails.logger.debug "In make_solr_request for query: #{query}"
       if(facet == "search_query")
 
         params = parse_search_query(query)
@@ -445,7 +455,7 @@ module AcademicCommons
     #
     # if(!@@facets_list.has_key?(facet) )
     # @@facets_list.store(facet, make_facet_items(facet))
-    # logger.info("======= fasets init ====== ")
+    # Rails.logger.info("======= fasets init ====== ")
     # end
     #
     # return @@facets_list[facet]
@@ -527,7 +537,7 @@ module AcademicCommons
     def correct_pids(pids_collection, event)
       pids = []
       pids_collection.each do |pid|
-
+        # TODO: This works, but would be more robust if it queried solr for the download ids.
         if(event == Statistic::DOWNLOAD_EVENT)
           pids.push(pid[:id][0, 3] + (pid[:id][3, 8].to_i + 1).to_s)
         else
