@@ -51,9 +51,9 @@ describe StatisticsController, :type => :controller do
       include_context 'mock admin user'
 
       before :each do
-        Statistic.create!(identifier: pid, event: 'View', at_time: Time.now)
-        Statistic.create!(identifier: pid, event: 'Download', at_time: Time.now)
-        Statistic.create!(identifier: pid, event: 'Streaming', at_time: Time.now)
+        FactoryGirl.create(:view_stat)
+        FactoryGirl.create(:download_stat)
+        FactoryGirl.create(:streaming_stat)
       end
 
       it 'returns correct number of views' do
@@ -61,6 +61,9 @@ describe StatisticsController, :type => :controller do
         expect(response.body).to eq '1'
       end
 
+      # TODO: This test does not pass because instead of querying solr id number
+      # is increased from the aggregator pid. Only works if the prefix is a
+      # two letter prefix.
       it 'returns correct number of downloads' do
         get :single_pid_stats, :pid => pid, :event => 'Download'
         expect(response.body).to eq '1'
@@ -72,7 +75,7 @@ describe StatisticsController, :type => :controller do
       end
 
       it 'numbers of view increment with item viewed' do
-        Statistic.create(identifier: pid, event: 'View', at_time: Time.now)
+        FactoryGirl.create(:view_stat)
         get :single_pid_stats, pid: pid, event: 'View'
         expect(response.body).to eq '2'
       end
@@ -94,8 +97,8 @@ describe StatisticsController, :type => :controller do
       include_context 'mock admin user'
 
       before :each do
-        Statistic.create(event: 'View', at_time: Time.now)
-        Statistic.create(event: 'Download', at_time: Time.now)
+        FactoryGirl.create(:view_stat)
+        FactoryGirl.create(:download_stat)
       end
 
       it 'returns total number of views' do
