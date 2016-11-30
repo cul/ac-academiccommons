@@ -9,10 +9,6 @@ class Notifier < ActionMailer::Base
     statistics_report(to_address, author_id, start_date, end_date, results, stats, totals, request, show_streams, optional_note)
   end
 
-  def author_monthly_first(to_address, author_id, start_date, end_date, results, stats, totals, request, show_streams)
-    statistics_report(to_address, author_id, start_date, end_date, results, stats, totals, request, show_streams, nil)
-  end
-
   def statistics_report(to_address, author_id, start_date, end_date, results, stats, totals, request, show_streams, optional_note)
     @request = request
     @author_id = author_id

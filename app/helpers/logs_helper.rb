@@ -1,9 +1,9 @@
 module LogsHelper
 
   def getHistoryLogs(log_folder)
-    
+
     path_file_pattern = "#{Rails.root}/log/#{log_folder}/*.log"
-    
+
     logs = []
     Dir.glob(path_file_pattern) do |log_file_path|
       log = {}
@@ -18,24 +18,16 @@ module LogsHelper
       log[:minute] = time_id[11..12].to_i
       log[:second] = time_id[13..14].to_i
       log[:time] = Time.mktime(log[:year], log[:month], log[:day], log[:hour], log[:minute], log[:second]).strftime("%B %e, %Y %r")
-      logs << log 
+      logs << log
     end
-    
+
     logs.reverse!
-    
+
     return logs
-    
+
   end
-  
+
   def getLogContent(log_folder, log_id)
     return File.open("#{Rails.root}/log/#{log_folder}/#{log_id}.log").read
-  end
-  
-  def isMonthlyReportsInProcess
-    Dir.glob("#{Rails.root}/log/monthly_reports/*.tmp") do |log_file_path|
-      return true
-    end
-      return false
-  end
-  
+  end  
 end # ==================================================== #

@@ -1,11 +1,9 @@
-require 'ac_statistics'
-
 class StatisticsController < ApplicationController
   layout "application"
   before_filter :authenticate_user!, :only => :unsubscribe_monthly
   before_filter :require_admin!, :except => :unsubscribe_monthly
   include Blacklight::SearchHelper
-  include ACStatistics
+  include AcademicCommons::Statistics
 
   require "csv"
 
@@ -65,7 +63,7 @@ class StatisticsController < ApplicationController
 
       if params[:commit].in?(commit_button_all_to_single)
         if params[:designated_recipient].empty?
-          flash[:notice] = "Can not 'Send All Reports To Single Email' - the destination email was not provided"
+          flash.now[:error] = "Cannot 'Send All Reports To Single Email' - the destination email was not provided"
           return
         end
         processed_authors = @authors
@@ -77,40 +75,40 @@ class StatisticsController < ApplicationController
 
       if params[:commit].in?(commit_button_aternate)
         if params[:test_users].empty?
-          flash[:notice] = "Could not get statistics. The UNI must be provided!"
+          flash.now[:error] = "Could not get statistics. The UNI must be provided!"
           clean_params(params)
           return
         end
 
         email = alternate_emails[params[:test_users].to_s]
         if email.nil? || email.empty?
-          flash[:notice] = "Could not get statistics for " + params[:test_users].to_s + ". The alternate email was not found!"
+          flash.now[:error] = "Could not get statistics for " + params[:test_users].to_s + ". The alternate email was not found!"
           clean_params(params)
           return
         end
-        processed_authors = makeTestAuthor(params[:test_users].to_s, alternate_emails[params[:test_users].to_s])
+        processed_authors = make_test_author(params[:test_users].to_s, alternate_emails[params[:test_users].to_s])
         final_notice = "The monthly report for " + params[:test_users].to_s + " was sent to " + alternate_emails[params[:test_users].to_s]
       end
 
       if params[:commit].in?(commit_button_one_to_one )
 
         if params[:one_report_uni].empty? || params[:one_report_email].empty?
-          flash[:notice] = "Could not get statistics. The UNI and Email must be provided!"
+          flash.now[:error] = "Could not get statistics. The UNI and Email must be provided!"
           return
         end
-        processed_authors = makeTestAuthor(params[:one_report_uni].to_s, params[:one_report_email])
+        processed_authors = make_test_author(params[:one_report_uni].to_s, params[:one_report_email])
         final_notice = "The monthly report for " + params[:one_report_uni].to_s + " was sent to " + params[:one_report_email]
       end
 
       if(!isMonthlyReportsInProcess)
-        sendAuthorsReports(processed_authors, designated_recipient)
+        send_authors_reports(processed_authors, designated_recipient)
       else
         final_notice = "The process is already running."
       end
 
       logger.info "============= final_notice: " + final_notice
 
-      flash[:notice] = final_notice
+      flash.now[:notice] = final_notice
 
       clean_params(params)
 
@@ -126,7 +124,7 @@ class StatisticsController < ApplicationController
 
       if params[:commit].in?('View', "Email", "Get Usage Stats", "keyword search")
 
-        logStatisticsUsage(startdate, enddate, params)
+        log_statistics_usage(startdate, enddate, params)
         @results, @stats, @totals =  get_author_stats(startdate,
                                                       enddate,
                                                       params[:search_criteria],
@@ -137,18 +135,18 @@ class StatisticsController < ApplicationController
                                                       params[:order_by]
                                                       )
         if (@results == nil || @results.size == 0)
-          setMessageAndVariables
+          set_message_and_variables
           return
         end
 
         if params[:commit] == "Email"
           Notifier.statistics_by_search(params[:email_destination], params[:search_criteria], startdate, enddate, @results, @stats, @totals, request, params[:include_streaming_views]).deliver
-          flash[:notice] = "The report for: " + params[:search_criteria] + " was sent to: " + params[:email_destination]
+          flash.now[:notice] = "The report for: " + params[:search_criteria] + " was sent to: " + params[:email_destination]
         end
       end
 
       if params[:commit] == "Download CSV report"
-        downloadCSVreport(startdate, enddate, params)
+        download_csv_report(startdate, enddate, params)
       end
   end
 
@@ -192,7 +190,7 @@ class StatisticsController < ApplicationController
     query = params[:f]
     event = params[:event]
 
-    stuts_result = get_facetStatsByEvent(query, event)
+    stuts_result = get_facet_stats_by_event(query, event)
 
     result = stuts_result['docs_size'].to_s + ' ( ' + stuts_result['statistic'].to_s + ' )'
 
@@ -223,7 +221,7 @@ class StatisticsController < ApplicationController
     pids_collection = Array.new
     pids_collection << Mash.new(pid_item)
 
-    count = countPidsStatistic(pids_collection, event)
+    count = count_pids_statistic(pids_collection, event)
 
     respond_to do |format|
       format.html { render :text => count.to_s }
@@ -236,7 +234,7 @@ class StatisticsController < ApplicationController
 
     pids_by_institution = school_pids(school)
 
-    count = countPidsStatistic(pids_by_institution, event)
+    count = count_pids_statistic(pids_by_institution, event)
 
     respond_to do |format|
       format.html { render :text => count.to_s }
@@ -289,6 +287,13 @@ class StatisticsController < ApplicationController
 
   private
 
+  def isMonthlyReportsInProcess
+    Dir.glob("#{Rails.root}/log/monthly_reports/*.tmp") do |log_file_path|
+      return true
+    end
+    return false
+  end
+
   def setDefaultParams(params)
      if (params[:month_from].nil? || params[:month_to].nil? || params[:year_from].nil? || params[:year_to].nil?)
 
@@ -300,63 +305,6 @@ class StatisticsController < ApplicationController
       params[:include_zeroes] = true
     end
   end
-
-  def get_monthly_author_stats(options = {})
-  startdate = options[:startdate]
-    author_id = options[:author_id]
-    enddate = startdate + 1.month
-
-    results = repository.search(:rows => 100000, :sort => "title_display asc" , :fq => "author_uni:#{author_id}", :fl => "title_display,id", :page => 1)["response"]["docs"]
-    ids = results.collect { |r| r['id'].to_s.strip }
-    download_ids = Hash.new { |h,k| h[k] = [] }
-    ids.each do |doc_id|
-      download_ids[doc_id] |= ActiveFedora::Base.find(doc_id).list_members.collect(&:pid)
-    end
-    stats = Hash.new { |h,k| h[k] = Hash.new { |h,k| h[k] = 0 }}
-    totals = Hash.new { |h,k| h[k] = 0 }
-
-
-    stats['View'] = Statistic.group(:identifier).where("event = 'View' and identifier IN (?) AND at_time BETWEEN ? and ?", ids, startdate, enddate).count
-
-    stats_downloads = Statistic.group(:identifier).where("event = 'Download' and identifier IN (?) AND at_time BETWEEN ? and ?", download_ids.values.flatten,startdate, enddate).count
-    download_ids.each_pair do |doc_id, downloads|
-
-      stats['Download'][doc_id] = downloads.collect { |download_id| stats_downloads[download_id] || 0 }.sum
-    end
-
-
-    stats['View Lifetime'] = Statistic.group(:identifier).where("event = 'View' and identifier IN (?)", ids).count
-
-
-    stats_lifetime_downloads = Statistic.group(:identifier).where("event = 'Download' and identifier IN (?)" , download_ids.values.flatten).count
-    download_ids.each_pair do |doc_id, downloads|
-
-      stats['Download Lifetime'][doc_id] = downloads.collect { |download_id| stats_lifetime_downloads[download_id] || 0 }.sum
-    end
-    stats.keys.each { |key| totals[key] = stats[key].values.sum }
-
-
-stats['View'] = convertOrderedHash(stats['View'])
-stats['View Lifetime'] = convertOrderedHash(stats['View Lifetime'])
-
-    results.reject! { |r| (stats['View'][r['id'][0]] || 0) == 0 &&  (stats['Download'][r['id']] || 0) == 0 } unless params[:include_zeroes]
-    results.sort! do |x,y|
-      result = (stats['Download'][y['id']] || 0) <=> (stats['Download'][x['id']] || 0)
-      result = x["title_display"] <=> y["title_display"] if result == 0
-      result
-    end
-
-    return results, stats, totals
-
-  end
-
-def convertOrderedHash(ohash)
-  a =  ohash.to_a
-  oh = {}
-  a.each{|x|  oh[x[0]] = x[1]}
-  return oh
-end
-
 
   ##################
   # Config-lookup methods. Should be moved to a module of some kind, once
