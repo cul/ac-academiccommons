@@ -76,4 +76,8 @@ AcademicCommons::Application.routes.draw do
   get '/logs/ingest_history', :to => 'logs#ingest_history'
 
   get '/about', :to => 'info#about', :as => 'about'
+
+  # Handle server redirects to /item/:id. This route will redirect those requests
+  # to /catalog/:id.
+  get '/item/:id', to: redirect('/catalog/%{id}')
 end
