@@ -533,11 +533,12 @@ module AcademicCommons
     end
 
     # Maps a collection of Item/Aggregator PIDs to File/Asset PIDs
-    #TODO: Query Solr for resource PIDs and flatten/aggregate?
+    #TODO: Query Solr for resource PIDs and flatten/aggregate
     def collect_asset_pids(pids_collection, event)
       pids_collection.map do |pid|
         if(event == Statistic::DOWNLOAD_EVENT)
-          (pid[:id][0, 3] + (pid[:id][3, 8].to_i + 1).to_s)
+          pos = pid[:id].index(':') + 1
+          (pid[:id][0, pos] + (pid[:id][pos, 8].to_i + 1).to_s)
         else
           pid[:id]
         end
