@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe StatisticsController, :type => :controller do
+describe StatisticsController, :type => :controller, integration: true do
   let(:pid) { 'actest:1' }
 
   #:statistical_reporting #require admin
