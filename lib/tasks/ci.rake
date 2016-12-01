@@ -12,21 +12,18 @@ namespace :ci do
     fedora_config = Rails.application.config.fedora
     fedora_server = ActiveFedora::Base.connection_for_pid("actest:1")
     # ingest the actest:1 aggregator
-    path = "spec/fixtures/actest_1/actest_1.xml"
-    raise "#{path} does not exists" unless File.exists?(path)
-    fedora_server.ingest(pid: "actest:1", file: File.read(path))
-    # ingest the actest:3 metadata
-    path = "spec/fixtures/actest_1/actest_3.xml"
-    raise "#{path} does not exists" unless File.exists?(path)
-    fedora_server.ingest(pid: "actest:3", file: File.read(path))
-    # ingest the actest:2 resource object
-    path = "spec/fixtures/actest_1/actest_2.xml"
-    raise "#{path} does not exists" unless File.exists?(path)
-    fedora_server.ingest(pid: "actest:2", file: File.read(path))
+    Dir.glob("spec/fixtures/actest_1/actest_*.xml") do |path|
+        pid = File.basename(path, ".xml").sub('_',':')
+        fedora_server.ingest(pid: pid, file: File.read(path))
+    end
+
     # create the CONTENT datastream on actest:2 with the pdf fixture
     path = "spec/fixtures/actest_1/alice_in_wonderland.pdf"
     fedora_server.add_datastream(pid: "actest:2", dsid: 'CONTENT', content: File.open(path), :controlGroup => 'M',
                           :dsLabel => 'alice_in_wonderland.pdf', :mimeType => 'application/pdf')
-    # index actest:1 
+    # create the content datastream on actest:4 with the pdf fixture
+    path = "spec/fixtures/actest_1/to_solr.json"
+    fedora_server.add_datastream(pid: "actest:4", dsid: 'content', content: File.open(path), :controlGroup => 'M',
+                          :dsLabel => 'to_solr.json', :mimeType => 'application/json')
   end
 end

@@ -101,9 +101,8 @@ RSpec.describe AcademicCommons::Statistics do
           )
         end
         it 'returns correct download_ids' do
-          expect(@download_ids).to match(
-            "#{pid}" => ['actest:2']
-          )
+          expect(@download_ids).to include(pid)
+          expect(@download_ids[pid]).to contain_exactly('actest:2','actest:4')
         end
       end
 
