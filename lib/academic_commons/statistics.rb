@@ -515,39 +515,34 @@ module AcademicCommons
 
 
     def count_pids_statistic(pids_collection, event)
-      Statistic.where("identifier in (?) and event = ?", correct_pids(pids_collection, event), event).count
+      Statistic.where("identifier in (?) and event = ?", collect_asset_pids(pids_collection, event), event).count
     end
 
 
     def count_pids_statistic_by_dates(pids_collection, event, startdate, enddate)
-      Statistic.where("identifier in (?) and event = ? and at_time BETWEEN ? and ?", correct_pids(pids_collection, event), event, startdate, enddate).count
+      Statistic.where("identifier in (?) and event = ? and at_time BETWEEN ? and ?", collect_asset_pids(pids_collection, event), event, startdate, enddate).count
     end
 
     def count_docs_by_event(pids_collection, event)
-      Statistic.group(:identifier).where("identifier in (?) and event = ? ", correct_pids(pids_collection, event), event).count
+      Statistic.group(:identifier).where("identifier in (?) and event = ? ", collect_asset_pids(pids_collection, event), event).count
     end
 
 
     def count_docs_by_event_and_dates(pids_collection, event, startdate, enddate)
-      Statistic.group(:identifier).where("identifier in (?) and event = ? and at_time BETWEEN ? and ? ", correct_pids(pids_collection, event), event, startdate, enddate).count
+      Statistic.group(:identifier).where("identifier in (?) and event = ? and at_time BETWEEN ? and ? ", collect_asset_pids(pids_collection, event), event, startdate, enddate).count
     end
 
-
-
-    def correct_pids(pids_collection, event)
-      pids = []
-      pids_collection.each do |pid|
-        # TODO: This works, but would be more robust if it queried solr for the download ids.
+    # Maps a collection of Item/Aggregator PIDs to File/Asset PIDs
+    #TODO: Query Solr for resource PIDs and flatten/aggregate?
+    def collect_asset_pids(pids_collection, event)
+      pids_collection.map do |pid|
         if(event == Statistic::DOWNLOAD_EVENT)
-          pids.push(pid[:id][0, 3] + (pid[:id][3, 8].to_i + 1).to_s)
+          (pid[:id][0, 3] + (pid[:id][3, 8].to_i + 1).to_s)
         else
-          pids.push(pid[:id])
+          pid[:id]
         end
-
       end
-      return pids
     end
-
 
     def get_res_list()
 

@@ -12,21 +12,21 @@ RSpec.describe AcademicCommons::Statistics do
     end
     class_rig.new
   end
-  describe '.correct_pids' do
+  describe '.collect_asset_pids' do
     let(:original_pids) { ['ac:8', 'ac: 2', "ac:\n3", "ac:a5"] }
     let(:pid_collection) { original_pids.map {|v| { id: v } } }
     shared_examples 'for event type' do
-      subject { statistics.send :correct_pids, pid_collection, event }
-      it { is_expected.to contain_exactly(*corrected_pids) }
+      subject { statistics.send :collect_asset_pids, pid_collection, event }
+      it { is_expected.to contain_exactly(*collected_pids) }
     end
     context 'download event' do
       let(:event) { Statistic::DOWNLOAD_EVENT }
-      let(:corrected_pids) { ['ac:9', 'ac:3', 'ac:4', 'ac:1'] }
+      let(:collected_pids) { ['ac:9', 'ac:3', 'ac:4', 'ac:1'] }
       include_examples 'for event type'
     end
     context 'non-download event' do
       let(:event) { Statistic::VIEW_EVENT }
-      let(:corrected_pids) { original_pids }
+      let(:collected_pids) { original_pids }
       include_examples 'for event type'
     end
   end
