@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe SolrDocumentsController, :type => [:controller,:integration] do
+describe SolrDocumentsController, type: :controller, integration: true do
   before do
     @original_creds = Rails.application.secrets.index_api_creds
     Rails.application.secrets.index_api_creds = {'name' => 'clientapp', 'password' =>'goodtoken'}
@@ -9,6 +9,7 @@ describe SolrDocumentsController, :type => [:controller,:integration] do
   after do
     Rails.application.secrets.index_api_creds = @original_creds
   end
+
   let(:credentials) do
     user = Rails.application.secrets.index_api_creds['name']
     pw = Rails.application.secrets.index_api_creds['password']

@@ -26,7 +26,7 @@ begin
   task(:spec).clear # get rid of the default task
 
   RSpec::Core::RakeTask.new(:spec) do |t|
-    t.rspec_opts = "--tag ~type:integration --tag ~type:feature"
+    t.rspec_opts = "--tag ~integration --tag ~type:feature"
   end
   RSpec::Core::RakeTask.new(:spec_all) do |t|
   end

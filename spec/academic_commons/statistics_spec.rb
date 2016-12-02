@@ -10,12 +10,30 @@ RSpec.describe AcademicCommons::Statistics do
       include AcademicCommons::Statistics
       def repository; end
     end
-    c = class_rig.new
-    allow(c).to receive(:repository).and_return(Blacklight.default_index)
-    c
+    class_rig.new
   end
-
-  describe '.get_author_stats' do
+  describe '.collect_asset_pids' do
+    let(:original_pids) { ['ac:8', 'ac: 2', "ac:\n3", "ac:a5", "acc:32"] }
+    let(:pid_collection) { original_pids.map {|v| { id: v } } }
+    shared_examples 'for event type' do
+      subject { statistics.send :collect_asset_pids, pid_collection, event }
+      it { is_expected.to contain_exactly(*collected_pids) }
+    end
+    context 'download event' do
+      let(:event) { Statistic::DOWNLOAD_EVENT }
+      let(:collected_pids) { ['ac:9', 'ac:3', 'ac:4', 'ac:1','acc:33'] }
+      include_examples 'for event type'
+    end
+    context 'non-download event' do
+      let(:event) { Statistic::VIEW_EVENT }
+      let(:collected_pids) { original_pids }
+      include_examples 'for event type'
+    end
+  end
+  describe '.get_author_stats', integration: true do
+    before do
+      allow(statistics).to receive(:repository).and_return(Blacklight.default_index)
+    end
     context 'when requesting usage stats for author' do
       let(:solr_params) do
         {
