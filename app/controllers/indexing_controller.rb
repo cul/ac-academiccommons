@@ -27,11 +27,4 @@ class IndexingController < ApplicationController
 
     render nothing: true
   end
-
-
-  def ingest_by_cron
-    process_indexing(params)
-    render nothing: true
-  end
-
 end
