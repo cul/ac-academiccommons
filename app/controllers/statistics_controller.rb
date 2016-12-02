@@ -285,6 +285,10 @@ class StatisticsController < ApplicationController
 
   end
 
+  def free_to_read?(doc)
+    true # document embargo authorization is not relevant here
+  end
+
   private
 
   def isMonthlyReportsInProcess

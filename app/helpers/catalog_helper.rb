@@ -5,6 +5,7 @@ require 'json'
 module CatalogHelper
   include Blacklight::CatalogHelperBehavior
   include ApplicationHelper
+  include AcademicCommons::Listable
 
   delegate :repository, :to => :controller
 
@@ -75,46 +76,6 @@ module CatalogHelper
     else
       return results
     end
-  end
-
-  def build_resource_list(document, include_inactive = false)
-    return [] unless free_to_read?(document)
-   obj_display = (document["id"] || [])
-   results = []
-   uri_prefix = "info:fedora/"
-
-   docs = []
-   member_search = {
-    q: '*:*',
-    qt: 'standard',
-    fl: '*',
-    fq: ["cul_member_of_ssim:\"info:fedora/#{obj_display}\""],
-    rows: 10000,
-    facet: false
-   }
-   member_search[:fq] << "object_state_ssi:A" unless include_inactive
-   response = Blacklight.default_index.connection.get 'select', params: member_search
-   docs = response['response']['docs']
-   logger.info "standard qt got #{docs.length}"
-   docs = response['response']['docs']
-   docs.each_with_index.collect do |member, i|
-
-     res = {}
-     member_pid = member["id"].sub(uri_prefix, "")
-
-     res[:pid] = member_pid
-     res[:filename] = member['downloadable_content_label_ss']
-     dsid = member['downloadable_content_dsid_ssi']
-     res[:download_path] = fedora_content_path(:download, member_pid, dsid, res[:filename])
-     res[:content_type] = member['downloadable_content_type_ssi']
-
-     results << res
-    end
-
-    return results
-  rescue StandardError => e
-    Rails.logger.error e.message
-    return []
   end
 
   # copied from AcademicCommons::Indexable

@@ -2,6 +2,7 @@ require 'csv'
 require 'uri'
 module AcademicCommons
   module Statistics
+    include AcademicCommons::Listable
 
     VIEW = 'view_'
     DOWNLOAD = 'download_'
@@ -533,16 +534,15 @@ module AcademicCommons
     end
 
     # Maps a collection of Item/Aggregator PIDs to File/Asset PIDs
-    #TODO: Query Solr for resource PIDs and flatten/aggregate
     def collect_asset_pids(pids_collection, event)
       pids_collection.map do |pid|
+        pid[:id] ||= pid[:pid] # facet doc may be submitted with only pid value
         if(event == Statistic::DOWNLOAD_EVENT)
-          pos = pid[:id].index(':') + 1
-          (pid[:id][0, pos] + (pid[:id][pos, 8].to_i + 1).to_s)
+          build_resource_list(pid).map { |doc| doc[:pid] }
         else
           pid[:id]
         end
-      end
+      end.flatten.compact.uniq
     end
 
     def get_res_list()

@@ -13,7 +13,7 @@ RSpec.describe AcademicCommons::Statistics do
     class_rig.new
   end
   describe '.collect_asset_pids' do
-    let(:original_pids) { ['ac:8', 'ac: 2', "ac:\n3", "ac:a5", "acc:32"] }
+    let(:original_pids) { ['ac:8', 'ac: 2', "ac:3", "ac:a5", "acc:32"] }
     let(:pid_collection) { original_pids.map {|v| { id: v } } }
     shared_examples 'for event type' do
       subject { statistics.send :collect_asset_pids, pid_collection, event }
@@ -22,6 +22,14 @@ RSpec.describe AcademicCommons::Statistics do
     context 'download event' do
       let(:event) { Statistic::DOWNLOAD_EVENT }
       let(:collected_pids) { ['ac:9', 'ac:3', 'ac:4', 'ac:1','acc:33'] }
+      before do
+        allow(statistics).to receive(:build_resource_list).with(hash_including(:id)).
+        and_return([{pid:'ac:9'}],
+                   [{pid:'ac:3'}],
+                   [{pid:'ac:4'}],
+                   [{pid:'ac:1'}], # method expected to dedupe
+                   [{pid:'ac:1'},{pid:'acc:33'}])
+      end
       include_examples 'for event type'
     end
     context 'non-download event' do
