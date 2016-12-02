@@ -3,32 +3,25 @@ require "item_class"
 require "ac_indexing"
 
 module DepositorHelper
-  include SolrHelper
-
   AC_COLLECTION_NAME = 'collection:3'
 
   delegate :repository, :to => :controller
 
-  def notifyDepositorsEmbargoedItemAdded(pids)
+  def notify_depositors_embargoed_item_added(pids)
 
-    depositors = prepareDepositorsToNotify(pids)
+    depositors = prepare_depositors_to_notify(pids)
 
     depositors.each do | depositor |
-      logger.info "\n ============ notifyDepositorsEmbargoedItemAdded ============="
-      logger.info "=== uni: " + depositor.uni
-      logger.info "=== email: " + depositor.email
-      if(depositor.full_name == nil)
-        logger.info "=== full_name: "
-      else
-        logger.info "=== full_name: " + depositor.full_name
-      end
-
+      logger.info "\n ============ notify_depositors_embargoed_item_added ============="
+      logger.info "=== uni: #{depositor.uni}"
+      logger.info "=== email: #{depositor.email}"
+      logger.info "=== full_name: #{depositor.full_name}"
 
       depositor.items_list.each do | item |
         logger.info "------ "
-        logger.info "------ item.pid: " + item.pid
-        logger.info "------ item.title: " + item.title
-        logger.info "------ item.handle: " + item.handle
+        logger.info "------ item.pid: #{item.pid}"
+        logger.info "------ item.title: #{item.title}"
+        logger.info "------ item.handle: #{item.handle}"
       end
 
       Notifier.depositor_embargoed_notification(depositor).deliver
@@ -36,84 +29,76 @@ module DepositorHelper
 
   end
 
-  def notifyDepositorsItemAdded(pids)
+  def notify_depositors_item_added(pids)
+    depositors = prepare_depositors_to_notify(pids)
 
-    depositors = prepareDepositorsToNotify(pids)
-
+    # Loops through each depositor and notifies them for each new item now available.
     depositors.each do | depositor |
-      logger.info "\n ============ notifyDepositorsItemAdded ============="
-      logger.info "=== uni: " + depositor.uni
-      logger.info "=== email: " + depositor.email
-      if(depositor.full_name == nil)
-        logger.info "=== full_name: "
-      else
-        logger.info "=== full_name: " + depositor.full_name
-      end
-
+      logger.info "\n ============ Notifing Depositor of New Item ============="
+      logger.info "=== uni: #{depositor.uni}"
+      logger.info "=== email: #{depositor.email}"
+      logger.info "=== full_name: #{depositor.full_name}"
 
       depositor.items_list.each do | item |
         logger.info "------ "
-        logger.info "------ item.pid: " + item.pid
-        logger.info "------ item.title: " + item.title
-        logger.info "------ item.handle: " + item.handle
+        logger.info "------ item.pid: #{item.pid}"
+        logger.info "------ item.title: #{item.title}"
+        logger.info "------ item.handle: #{item.handle}"
       end
 
-      Notifier.depositor_first_time_indexed_notification(depositor).deliver
+      Notifier.depositor_first_time_indexed_notification(depositor).deliver_now
     end
-
   end
 
 
-  def prepareDepositorsToNotify(pids)
-
+  def prepare_depositors_to_notify(pids)
     depositors_to_notify = Hash.new
 
     pids.each do | pid |
 
-      logger.info "=== process depositors for pid: " + pid
+      logger.info "=== process depositors for pid: #{pid}"
 
-      item = getItem(pid)
+      item = get_item(pid)
 
-      logger.info "=== item created for pid: " + pid
+      logger.info "=== item created for pid: #{pid}"
 
-      logger.debug "=== item.pid: " + item.pid
-      logger.debug "=== item.title: " + item.title
-      logger.debug "=== item.handle: " + item.handle
-      logger.debug "=== item.authors_uni: " + item.authors_uni.size.to_s
+      logger.debug "=== item.pid: #{item.pid}"
+      logger.debug "=== item.title: #{item.title}"
+      logger.debug "=== item.handle: #{item.handle}"
+      logger.debug "=== item.authors_uni: #{item.authors_uni.size}"
 
       item.authors_uni.each do | uni |
 
-        logger.info "=== process uni: " + uni.to_s + " depositor for pid: " + pid
+        logger.info "=== process uni: #{uni} depositor for pid: #{pid}"
 
         if(!depositors_to_notify.key?(uni))
-          depositor = getDepositor(uni)
+          depositor = get_depositor(uni)
           depositors_to_notify.store(uni, depositor)
         end
 
         depositor = depositors_to_notify[uni]
         depositor.items_list << item
 
-        logger.info "=== process uni: " + uni +" depositor for pid: " + pid + " === finished"
+        logger.info "=== process uni: #{uni} depositor for pid: #{pid} === finished"
       end
     end
 
-    logger.info "====== depositors_to_notify.size: " + depositors_to_notify.size.to_s
+    logger.info "====== depositors_to_notify.size: #{depositors_to_notify.size}"
 
     return depositors_to_notify.values
   end
 
-  def getDepositor(uni)
-
+  def get_depositor(uni)
     person = get_person_info(uni)
 
-    (person.email == nil) ?  depositor_email = person.uni + "@columbia.edu" : depositor_email = person.email
+    (person.email == nil) ?  depositor_email = "#{person.uni}@columbia.edu" : depositor_email = person.email
     if (person.last_name == nil || person.first_name == nil)
-       logger.info "==== uni: " + person.uni  + " was not found in LDAP ==="
+       logger.info "==== uni: #{person.uni}  was not found in LDAP ==="
        depositor_name = nil
     else
-      depositor_name = person.first_name + ' ' + person.last_name
+      depositor_name = "#{person.first_name} #{person.last_name}"
 
-      logger.info "name: " + depositor_name + " was found in LDAP"
+      logger.info "name: #{depositor_name} was found in LDAP"
     end
 
     person.email = depositor_email
@@ -122,7 +107,7 @@ module DepositorHelper
     return person
   end
 
-  #TODO: Make this into a module.
+  # TODO: Make this into a module.
   def get_person_info(uni)
     entry = Net::LDAP.new({:host => "ldap.columbia.edu", :port => 389}).search(:base => "o=Columbia University, c=US", :filter => Net::LDAP::Filter.eq("uid", uni)) || []
     entry = entry.first
@@ -151,7 +136,7 @@ module DepositorHelper
     logger.info "==== started ingest function ==="
 
     params.each do |key, value|
-      logger.info "param: " + key + " - " + value
+      logger.info "param: #{key} - #{value}"
     end
 
     if(params[:cancel])
@@ -216,8 +201,7 @@ module DepositorHelper
           Notifier.reindexing_results(indexing_results[:errors].size.to_s, indexing_results[:indexed_count].to_s, indexing_results[:new_items].size.to_s, time_id).deliver
         end
 
-        notifyDepositorsItemAdded(indexing_results[:new_items])
-        #notifyDepositorsItemAdded(indexing_results[:results][:success]) # this is for test
+        notify_depositors_item_added(indexing_results[:new_items])
       end
 
       Process.detach(@existing_ingest_pid)
@@ -229,5 +213,46 @@ module DepositorHelper
       tmp_pid_file.write(@existing_ingest_time_id)
       tmp_pid_file.close
     end
+  end
+
+  def existing_ingest_time_id(pid)
+    if(pid_exists?(pid))
+      running_tmp_pid_file = File.open("#{Rails.root}/tmp/#{pid}.index.pid")
+      return running_tmp_pid_file.gets
+    end
+  end
+
+  def pid_exists?(pid)
+    `ps -p #{pid}`.include?(pid)
+  end
+
+  def get_item(pid)
+    # Can probably just use the object returned by blacklight, solr document struct of some sort.
+    result = Blacklight.default_index.search(:fl => 'author_uni,id,handle,title_display,free_to_read_start_date', :fq => "pid:\"#{pid}\"")["response"]["docs"]
+
+    item = Item.new
+    item.pid = result.first[:id]
+    item.title = result.first[:title_display]
+    item.handle = result.first[:handle]
+    item.free_to_read_start_date = result.first[:free_to_read_start_date]
+
+    item.authors_uni = []
+
+    if(result.first[:author_uni] != nil)
+      # item.authors_uni = result.first[:author_uni] || []
+      item.authors_uni = fix_authors_array(result.first[:author_uni])
+    end
+
+    return item
+  end
+
+  def fix_authors_array(authors_uni)
+    author_unis_clean = []
+
+    authors_uni.each do | uni_str |
+      author_unis_clean.push(uni_str.split(', '))
+    end
+
+    return author_unis_clean.flatten
   end
 end
