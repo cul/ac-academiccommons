@@ -140,7 +140,7 @@ RSpec.describe 'DepositorHelper' do
 
     subject { helper.get_depositor(uni) }
 
-    its(:email)      { is_expected.to eql 'abc123@columbia.edu'}
+    its(:email)      { is_expected.to eql 'janedoe@columbia.edu'}
     its(:first_name) { is_expected.to eql 'Jane'}
     its(:last_name)  { is_expected.to eql 'Doe'}
     its(:full_name)  { is_expected.to eql 'Jane Doe' }

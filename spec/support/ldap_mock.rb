@@ -1,15 +1,15 @@
 shared_context 'mock ldap request' do
-  let(:uid) { 'abc123' }
+  let(:uni) { 'abc123' }
 
   let(:ldap_request) do
     {
       :base => "o=Columbia University, c=US",
-      :filter => Net::LDAP::Filter.eq("uid", uid)
+      :filter => Net::LDAP::Filter.eq("uid", uni)
     }
   end
 
   let(:ldap_response) do
-    [{ :mail => 'abc123@columbia.edu', :sn => 'Doe', :givenname => 'Jane' }]
+    [{ :mail => 'janedoe@columbia.edu', :sn => 'Doe', :givenname => 'Jane' }]
   end
 
   before :each do
