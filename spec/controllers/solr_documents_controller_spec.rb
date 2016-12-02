@@ -53,11 +53,12 @@ describe SolrDocumentsController, :type => :controller do
       end
       context 'good doc id' do
         let(:mock_object) do
-          double(ActiveFedora::Base)
+          ContentAggregator.new
         end
         let(:params) { { id: 'good:id' } }
         before do
           allow(ActiveFedora::Base).to receive(:find).with('good:id').and_return(mock_object)
+          allow(mock_object).to receive(:pid).and_return('good:id')
           expect(mock_object).to receive(:update_index)
         end
         it do
