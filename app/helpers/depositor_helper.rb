@@ -5,8 +5,6 @@ require "ac_indexing"
 module DepositorHelper
   AC_COLLECTION_NAME = 'collection:3'
 
-  delegate :repository, :to => :controller
-
   def notify_depositors_embargoed_item_added(pids)
 
     depositors = prepare_depositors_to_notify(pids)
@@ -24,9 +22,8 @@ module DepositorHelper
         logger.info "------ item.handle: #{item.handle}"
       end
 
-      Notifier.depositor_embargoed_notification(depositor).deliver
+      Notifier.depositor_embargoed_notification(depositor).deliver_now
     end
-
   end
 
   def notify_depositors_item_added(pids)
@@ -34,16 +31,11 @@ module DepositorHelper
 
     # Loops through each depositor and notifies them for each new item now available.
     depositors.each do | depositor |
-      logger.info "\n ============ Notifing Depositor of New Item ============="
-      logger.info "=== uni: #{depositor.uni}"
-      logger.info "=== email: #{depositor.email}"
-      logger.info "=== full_name: #{depositor.full_name}"
+      logger.info "====== Notifing Depositor of New Item ======"
+      logger.info "=== Notifying #{depositor.full_name}(#{depositor.uni}) at #{depositor.email}"
 
       depositor.items_list.each do | item |
-        logger.info "------ "
-        logger.info "------ item.pid: #{item.pid}"
-        logger.info "------ item.title: #{item.title}"
-        logger.info "------ item.handle: #{item.handle}"
+        logger.info "==== For #{item.title}, PID: #{item.pid}, Persistent URL: #{item.handle}"
       end
 
       Notifier.depositor_first_time_indexed_notification(depositor).deliver_now
@@ -56,7 +48,7 @@ module DepositorHelper
 
     pids.each do | pid |
 
-      logger.info "=== process depositors for pid: #{pid}"
+      logger.info "=== Processing depositors for record: #{pid}"
 
       item = get_item(pid)
 
