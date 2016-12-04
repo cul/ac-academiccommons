@@ -5,20 +5,15 @@ module DepositorHelper
   AC_COLLECTION_NAME = 'collection:3'
 
   def notify_depositors_embargoed_item_added(pids)
-
     depositors = prepare_depositors_to_notify(pids)
 
-    depositors.each do | depositor |
-      logger.info "\n ============ notify_depositors_embargoed_item_added ============="
-      logger.info "=== uni: #{depositor.uni}"
-      logger.info "=== email: #{depositor.email}"
-      logger.info "=== name: #{depositor.name}"
+    logger.info "====== Notifying Depositors of New Embargoed Item ======"
 
-      depositor.items_list.each do | item |
-        logger.info "------ "
-        logger.info "------ item.pid: #{item.pid}"
-        logger.info "------ item.title: #{item.title}"
-        logger.info "------ item.handle: #{item.handle}"
+    depositors.each do |depositor|
+      logger.info "=== Notifying #{depositor.name}(#{depositor.uni}) at #{depositor.email} ==="
+
+      depositor.items_list.each do |item|
+        logger.info "\tFor #{item.title}, PID: #{item.pid}, Persistent URL: #{item.handle}"
       end
 
       Notifier.depositor_embargoed_notification(depositor).deliver_now
@@ -28,35 +23,30 @@ module DepositorHelper
   def notify_depositors_item_added(pids)
     depositors = prepare_depositors_to_notify(pids)
 
-    # Loops through each depositor and notifies them for each new item now available.
-    depositors.each do | depositor |
-      logger.info "====== Notifing Depositor of New Item ======"
-      logger.info "=== Notifying #{depositor.name}(#{depositor.uni}) at #{depositor.email}"
+    logger.info "====== Notifing Depositors of New Item ======"
 
-      depositor.items_list.each do | item |
-        logger.info "==== For #{item.title}, PID: #{item.pid}, Persistent URL: #{item.handle}"
+    # Loops through each depositor and notifies them for each new item now available.
+    depositors.each do |depositor|
+      logger.info "=== Notifying #{depositor.name}(#{depositor.uni}) at #{depositor.email} ==="
+
+      depositor.items_list.each do |item|
+        logger.info "\tFor #{item.title}, PID: #{item.pid}, Persistent URL: #{item.handle}"
       end
 
       Notifier.depositor_first_time_indexed_notification(depositor).deliver_now
     end
   end
 
-
   def prepare_depositors_to_notify(pids)
     depositors_to_notify = Hash.new
 
     pids.each do | pid |
-
-      logger.info "=== Processing depositors for record: #{pid}"
+      logger.debug "=== Processing Depositors for Record: #{pid}"
 
       item = get_item(pid)
 
-      logger.info "=== item created for pid: #{pid}"
-
-      logger.debug "=== item.pid: #{item.pid}"
-      logger.debug "=== item.title: #{item.title}"
-      logger.debug "=== item.handle: #{item.handle}"
-      logger.debug "=== item.authors_uni: #{item.authors_uni.size}"
+      logger.debug "=== item created for pid: #{pid}"
+      logger.debug "title: #{item.title}, handle: #{item.handle}, num of authors: #{item.authors_uni.size}"
 
       item.authors_uni.each do | uni |
 
