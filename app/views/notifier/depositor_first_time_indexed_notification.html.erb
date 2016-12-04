@@ -8,10 +8,10 @@
 <table>
 
 <tr><td>
-	<%if(@depositor.full_name == nil)%>
+	<%if(@depositor.name == nil)%>
 		Dear author [<%= @depositor.uni %>],
 	<% else %>
-		Dear <%= @depositor.full_name %>,
+		Dear <%= @depositor.name %>,
 	<% end %>
 </td></tr>
 <tr><td class="box">
