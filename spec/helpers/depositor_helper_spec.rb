@@ -65,14 +65,14 @@ RSpec.describe 'DepositorHelper' do
     let(:pid_2) { 'actest:5' }
     let(:item_1) { OpenStruct.new(pid: 'actest:1', authors_uni: ['abc123']) }
     let(:item_2) { OpenStruct.new(pid: pid_2, authors_uni: ['xyz123']) }
-    let(:john) { OpenStruct.new(uni: 'xyz123', full_name: 'John Doe', email: 'xyz123@columbia.edu', items_list: []) }
-    let(:jane) { OpenStruct.new(uni: 'abc123', full_name: 'Jane Doe', email: 'abc123@columbia.edu', items_list: []) }
+    let(:john) { OpenStruct.new(uni: 'xyz123', name: 'John Doe', email: 'xyz123@columbia.edu') }
+    let(:jane) { OpenStruct.new(uni: 'abc123', name: 'Jane Doe', email: 'abc123@columbia.edu') }
 
     before :each do
       allow(helper).to receive(:get_item).with(pid).and_return(item_1)
       allow(helper).to receive(:get_item).with(pid_2).and_return(item_2)
-      allow(helper).to receive(:get_depositor).with('xyz123').and_return(john)
-      allow(helper).to receive(:get_depositor).with('abc123').and_return(jane)
+      allow(AcademicCommons::LDAP).to receive(:find_by_uni).with('xyz123').and_return(john)
+      allow(AcademicCommons::LDAP).to receive(:find_by_uni).with('abc123').and_return(jane)
     end
 
     subject { helper.prepare_depositors_to_notify([pid, pid_2]) }
@@ -133,17 +133,5 @@ RSpec.describe 'DepositorHelper' do
     its(:authors_uni) { is_expected.to eql ['abc123', 'xyz123']}
 
     it 'returns with free_to_read_start_date'
-  end
-
-  describe 'get_depositor' do
-    include_context 'mock ldap request'
-
-    subject { helper.get_depositor(uni) }
-
-    its(:email)      { is_expected.to eql 'janedoe@columbia.edu'}
-    its(:first_name) { is_expected.to eql 'Jane'}
-    its(:last_name)  { is_expected.to eql 'Doe'}
-    its(:full_name)  { is_expected.to eql 'Jane Doe' }
-    its(:uni)        { is_expected.to eql 'abc123' }
   end
 end
