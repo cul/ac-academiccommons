@@ -2,18 +2,17 @@ require 'rails_helper'
 
 describe SolrDocumentsController, type: :controller, integration: true do
   before do
-    @original_creds = Rails.application.secrets.index_api_creds
-    Rails.application.secrets.index_api_creds = {'name' => 'clientapp', 'password' =>'goodtoken'}
-    request.env['HTTP_AUTHORIZATION'] = credentials
+    @original_creds = Rails.application.secrets.index_api_key
+    Rails.application.secrets.index_api_key = 'goodtoken'
+    request.env['HTTP_AUTHORIZATION'] = api_key
   end
   after do
-    Rails.application.secrets.index_api_creds = @original_creds
+    Rails.application.secrets.index_api_key = @original_creds
   end
 
-  let(:credentials) do
-    user = Rails.application.secrets.index_api_creds['name']
-    pw = Rails.application.secrets.index_api_creds['password']
-    ActionController::HttpAuthentication::Basic.encode_credentials(user,pw)
+  let(:api_key) do
+    key = Rails.application.secrets.index_api_key
+    ActionController::HttpAuthentication::Token.encode_credentials(key)
   end
 
   describe "update" do
