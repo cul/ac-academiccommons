@@ -18,7 +18,6 @@ module AcademicCommons
       response = Blacklight.solr.get 'select', params: member_search
       docs = response['response']['docs']
       logger.debug "standard qt got #{docs.length} resources"
-      docs = response['response']['docs']
       docs.map do |member|
         res = {}
         member = SolrDocument.new(member)
