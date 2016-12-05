@@ -1,43 +1,52 @@
 require 'rails_helper'
 
 describe SolrDocumentsController, :type => :controller do
+  shared_context 'good api key' do
+   let(:api_key) do
+     key = Rails.application.secrets.index_api_key
+     ActionController::HttpAuthentication::Token.encode_credentials(key)
+   end
+  end
+
+  shared_context 'bad api key' do
+    let(:api_key) do
+      ActionController::HttpAuthentication::Token.encode_credentials('badtoken')
+    end
+  end
+
   before do
-    @original_creds = Rails.application.secrets.index_api_creds
-    Rails.application.secrets.index_api_creds = {'name' => 'clientapp', 'password' =>'goodtoken'}
-    request.env['HTTP_AUTHORIZATION'] = credentials
+    @original_creds = Rails.application.secrets.index_api_key
+    Rails.application.secrets.index_api_key = 'goodtoken'
+    request.env['HTTP_AUTHORIZATION'] = api_key
     allow(ActiveFedora::Base).to receive(:find).with('baad:id').and_raise(ActiveFedora::ObjectNotFoundError)
   end
+
   after do
-    Rails.application.secrets.index_api_creds = @original_creds
+    Rails.application.secrets.index_api_key = @original_creds
   end
+
   let(:mock_object) do
     double(ActiveFedora::Base)
   end
+
   describe '#update' do
     subject do
       put :update, params
       response.status
     end
-    context 'no credentials' do
-      let(:credentials) { nil }
+    context 'no api key' do
+      let(:api_key) { nil }
       let(:params) { { id: 'good:id' } }
       it { is_expected.to eql(401) }
     end
-    context 'invalid credentials' do
-      let(:credentials) do
-        user = Rails.application.secrets.index_api_creds['name']
-        pw = 'badtoken'
-        ActionController::HttpAuthentication::Basic.encode_credentials(user,pw)
-      end
+    context 'invalid api_key' do
+      include_context 'bad api key'
+
       let(:params) { { id: 'good:id' } }
       it { is_expected.to eql(403) }
     end
-    context 'valid credentials' do
-      let(:credentials) do
-        user = Rails.application.secrets.index_api_creds['name']
-        pw = Rails.application.secrets.index_api_creds['password']
-        ActionController::HttpAuthentication::Basic.encode_credentials(user,pw)
-      end
+    context 'valid api key' do
+      include_context 'good api key'
       context 'bad doc id' do
         let(:params) { { id: 'baad:id' } }
         it { is_expected.to eql(404) }
@@ -73,30 +82,22 @@ describe SolrDocumentsController, :type => :controller do
       delete :destroy, params
       response.status
     end
-    context 'no credentials' do
-      let(:credentials) { nil }
+    context 'no api key' do
+      let(:api_key) { nil }
       let(:params) { { id: 'good:id' } }
       it { is_expected.to eql(401) }
     end
-    context 'invalid credentials' do
-      let(:credentials) do
-        user = Rails.application.secrets.index_api_creds['name']
-        pw = 'badtoken'
-        ActionController::HttpAuthentication::Basic.encode_credentials(user,pw)
-      end
+    context 'invalid api_key' do
+      include_context 'bad api key'
       let(:params) { { id: 'good:id' } }
       it { is_expected.to eql(403) }
     end
-    context 'valid credentials' do
+    context 'valid api key' do
+      include_context 'good api key'
       before do
         allow(rsolr).to receive(:delete_by_id).with('baad:id').and_return(bad_id_response)
         allow(rsolr).to receive(:delete_by_id).with('good:id').and_return(good_id_response)
         allow(rsolr).to receive(:commit)
-      end
-      let(:credentials) do
-        user = Rails.application.secrets.index_api_creds['name']
-        pw = Rails.application.secrets.index_api_creds['password']
-        ActionController::HttpAuthentication::Basic.encode_credentials(user,pw)
       end
       context 'bad doc id' do
         let(:params) { { id: 'baad:id' } }
