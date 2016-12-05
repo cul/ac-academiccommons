@@ -16,11 +16,11 @@ class IndexingController < ApplicationController
     new_indexed = new_indexed.flatten
 
     if(new_indexed.size > 0)
-      notify_depositors_item_added(new_indexed)
+      AcademicCommons::NotifyDepositors.of_new_items(new_indexed)
     end
 
     if(new_embargoed.size > 0)
-      notify_depositors_embargoed_item_added(new_embargoed)
+      AcademicCommons::NotifyDepositors.of_new_embargoed_items(new_embargoed)
     end
 
     Notifier.reindexing_summary(params, time_id).deliver

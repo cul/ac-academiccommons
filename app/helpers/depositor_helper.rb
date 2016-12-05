@@ -1,74 +1,7 @@
-require "item_class"
 require "ac_indexing"
 
 module DepositorHelper
   AC_COLLECTION_NAME = 'collection:3'
-
-  def notify_depositors_embargoed_item_added(pids)
-    depositors = prepare_depositors_to_notify(pids)
-
-    logger.info "====== Notifying Depositors of New Embargoed Item ======"
-
-    depositors.each do |depositor|
-      logger.info "=== Notifying #{depositor.name}(#{depositor.uni}) at #{depositor.email} ==="
-
-      depositor.items_list.each do |item|
-        logger.info "\tFor #{item.title}, PID: #{item.pid}, Persistent URL: #{item.handle}"
-      end
-
-      Notifier.depositor_embargoed_notification(depositor).deliver_now
-    end
-  end
-
-  def notify_depositors_item_added(pids)
-    depositors = prepare_depositors_to_notify(pids)
-
-    logger.info "====== Notifing Depositors of New Item ======"
-
-    # Loops through each depositor and notifies them for each new item now available.
-    depositors.each do |depositor|
-      logger.info "=== Notifying #{depositor.name}(#{depositor.uni}) at #{depositor.email} ==="
-
-      depositor.items_list.each do |item|
-        logger.info "\tFor #{item.title}, PID: #{item.pid}, Persistent URL: #{item.handle}"
-      end
-
-      Notifier.depositor_first_time_indexed_notification(depositor).deliver_now
-    end
-  end
-
-  def prepare_depositors_to_notify(pids)
-    depositors_to_notify = Hash.new
-
-    pids.each do | pid |
-      logger.debug "=== Processing Depositors for Record: #{pid}"
-
-      item = get_item(pid)
-
-      logger.debug "=== item created for pid: #{pid}"
-      logger.debug "title: #{item.title}, handle: #{item.handle}, num of authors: #{item.authors_uni.size}"
-
-      item.authors_uni.each do | uni |
-
-        logger.info "=== process uni: #{uni} depositor for pid: #{pid}"
-
-        if(!depositors_to_notify.key?(uni))
-          depositor = AcademicCommons::LDAP.find_by_uni(uni)
-          depositor.items_list = []
-          depositors_to_notify.store(uni, depositor)
-        end
-
-        depositor = depositors_to_notify[uni]
-        depositor.items_list << item
-
-        logger.info "=== process uni: #{uni} depositor for pid: #{pid} === finished"
-      end
-    end
-
-    logger.info "====== depositors_to_notify.size: #{depositors_to_notify.size}"
-
-    return depositors_to_notify.values
-  end
 
   def process_indexing(params)
     logger.info "==== started ingest function ==="
@@ -139,7 +72,7 @@ module DepositorHelper
           Notifier.reindexing_results(indexing_results[:errors].size.to_s, indexing_results[:indexed_count].to_s, indexing_results[:new_items].size.to_s, time_id).deliver
         end
 
-        notify_depositors_item_added(indexing_results[:new_items])
+        AcademicCommons::NotifyDepositors.of_new_items(indexing_results[:new_items])
       end
 
       Process.detach(@existing_ingest_pid)
@@ -162,35 +95,5 @@ module DepositorHelper
 
   def pid_exists?(pid)
     `ps -p #{pid}`.include?(pid)
-  end
-
-  def get_item(pid)
-    # Can probably just use the object returned by blacklight, solr document struct of some sort.
-    result = Blacklight.default_index.search(:fl => 'author_uni,id,handle,title_display,free_to_read_start_date', :fq => "pid:\"#{pid}\"")["response"]["docs"]
-
-    item = Item.new
-    item.pid = result.first[:id]
-    item.title = result.first[:title_display]
-    item.handle = result.first[:handle]
-    item.free_to_read_start_date = result.first[:free_to_read_start_date]
-
-    item.authors_uni = []
-
-    if(result.first[:author_uni] != nil)
-      # item.authors_uni = result.first[:author_uni] || []
-      item.authors_uni = fix_authors_array(result.first[:author_uni])
-    end
-
-    return item
-  end
-
-  def fix_authors_array(authors_uni)
-    author_unis_clean = []
-
-    authors_uni.each do | uni_str |
-      author_unis_clean.push(uni_str.split(', '))
-    end
-
-    return author_unis_clean.flatten
   end
 end
