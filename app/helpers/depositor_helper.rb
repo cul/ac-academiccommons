@@ -51,28 +51,32 @@ module DepositorHelper
       items = params[:items] ? params[:items].gsub(/ /, ";") : ""
 
       @existing_ingest_pid = Process.fork do
-        logger.info "==== started indexing ==="
+        logger.info "==== STARTED INDEXING ==="
+        begin
+          indexing_results = ACIndexing::reindex(
+            {
+              :collections => collection,
+              :items => items,
+              :overwrite => params[:overwrite],
+              :metadata => params[:metadata],
+              :fulltext => params[:fulltext],
+              :delete_removed => params[:delete_removed],
+              :time_id => time_id,
+              :executed_by => params[:executed_by] || current_user.uid
+            }
+          )
 
-        indexing_results = ACIndexing::reindex(
-          {
-            :collections => collection,
-            :items => items,
-            :overwrite => params[:overwrite],
-            :metadata => params[:metadata],
-            :fulltext => params[:fulltext],
-            :delete_removed => params[:delete_removed],
-            :time_id => time_id,
-            :executed_by => params[:executed_by] || current_user.uid
-          }
-        )
+          logger.info "===== FINISHED INDEXING, STARTING TO SEND NOTIFICATIONS ==="
 
-        logger.info "===== finished indexing, starting notifications part ==="
+          if(params[:notify])
+            Notifier.reindexing_results(indexing_results[:errors].size.to_s, indexing_results[:indexed_count].to_s, indexing_results[:new_items].size.to_s, time_id).deliver
+          end
 
-        if(params[:notify])
-          Notifier.reindexing_results(indexing_results[:errors].size.to_s, indexing_results[:indexed_count].to_s, indexing_results[:new_items].size.to_s, time_id).deliver
+          AcademicCommons::NotifyDepositors.of_new_items(indexing_results[:new_items])
+        rescue => e
+          logger.fatal "Error Indexing: #{e.message}"
+          logger.fatal e.backtrace.join("\n ")
         end
-
-        AcademicCommons::NotifyDepositors.of_new_items(indexing_results[:new_items])
       end
 
       Process.detach(@existing_ingest_pid)
