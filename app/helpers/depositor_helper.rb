@@ -6,10 +6,6 @@ module DepositorHelper
   def process_indexing(params)
     logger.info "==== started ingest function ==="
 
-    params.each do |key, value|
-      logger.info "param: #{key} - #{value}"
-    end
-
     if(params[:cancel])
       existing_time_id = existing_ingest_time_id(params[:cancel])
       if(existing_time_id)
