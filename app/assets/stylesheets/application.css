@@ -7,9 +7,8 @@
 
 
 body {
-
-font-family: "Open Sans", "Helvetica Neue", sans-serif;
- }
+  font-family: "Open Sans", "Helvetica Neue", sans-serif;
+}
 
 div#header.container {
 	padding-left: 36px;
@@ -163,9 +162,6 @@ ul#recently-updated {
 	color: #333;
 }
 
-#about-text p{
-	margin-right: 50px;
-}
 div#intro {
 	padding-right: 120px;
 	margin-top: 20px;
@@ -2275,26 +2271,59 @@ span.pdf-link {
 .nextbutton {
 	float: right;
 }
-#about-text div.about-video {
-	float: right;
-	margin-right: 68px;
-		margin-left: 20px;
+
+/*
+ * STATIC CONTENT PAGES
+*/
+div#static-text {
+  background: rgba(255,255,255,.5);
+  border: 1px solid white;
+  margin-bottom: .75em;
+  padding:12px;
+}
+#static-text p {
+  margin-right: 50px;
+}
+#static-text h1 {
+ 	color: #221d53;
+ 	font: "Open Sans", Arial, Helvetica, Geneva, sans-serif;
+ 	font-size: 2.25em;
+ 	font-weight: bold;
+ 	margin-bottom: .5em;
+ 	text-transform: uppercase;
+}
+#static-text h2 {
+  font-weight: bold;
+  font-size: 1.5em;
+}
+#static-text h3 {
+  font-weight: bold;
+  font-size: 1.25em;
+  line-height: 1.25em;
+}
+#static-text h4 {
+  font-weight: bold;
+  font-size: 1.1em;
+  margin-bottom: 0;
+}
+#static-text div.about-video {
+  float: right;
+  margin-right: 68px;
+  margin-left: 20px;
+}
+#static-text ul {
+  list-style-type: disc;
+  padding: 0 0 0 30px;
+  margin-bottom: 1.5em;
+  margin-right: 50px;
+}
+#static-text p.list_title {
+  margin-bottom: 0;
+}
+#static-text p, ul, li {
+  font-size: 13px;
 }
 
-div#about-text {
-background: rgba(255,255,255,.5);
- border: 1px solid white;
- margin-bottom: .75em;
- padding:12px;
-
-}
-
-#about-text h1 {
-	color: #221d53;
-	font: 34px/36px "Open Sans", Arial, Helvetica, Geneva, sans-serif;
-	margin-bottom: .5em;
-	text-transform: uppercase;
-}
 
 ul.how-to-videos li{
 	margin-bottom: 1em;
