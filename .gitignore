@@ -16,6 +16,7 @@ config/*.sphinx.conf
 config/s3_credentials.yml
 config/secrets.yml
 config/google_analytics.yml
+config/blacklight.yml
 jetty
 *~
 *.cache

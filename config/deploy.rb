@@ -43,6 +43,7 @@ set :linked_files, fetch(:linked_files, []).push(
   ".env",
   "config/database.yml",
   "config/solr.yml",
+  "config/blacklight.yml",
   "config/fedora.yml",
   "config/google_analytics.yml",
   "config/secrets.yml",
