@@ -24,7 +24,7 @@ describe CatalogController, :type => :feature do
         expect(page).to have_css("a[href=\"/about/\"]")
         # if we click on the link, the next page should have expected content
         click_on 'About Academic Commons'
-        expect(page).to have_css "div#subhead_1", :text => "Deposit Your Research and Scholarship"
+        expect(page).to have_css "h2", text: "Deposit Your Research and Scholarship"
       end
 
       it "links to the self-deposit page" do
