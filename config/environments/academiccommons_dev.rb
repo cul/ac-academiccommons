@@ -1,9 +1,6 @@
 require Rails.root.join("config/environments/academiccommons_prod")
 
 AcademicCommons::Application.configure do
-  # Print deprecation notices to the stderr
-  config.active_support.deprecation = :log
-
   # Expands the lines which load the assets
   config.assets.debug = true
 
