@@ -358,7 +358,7 @@ class CatalogController < ApplicationController
    if (params[:f].nil?)
      solr_response = repository.search(params.merge(extra_params))
    else
-     solr_response = repository.search(self.solr_search_params(params).merge(extra_params))
+     solr_response = repository.search(self.processed_parameters(params).merge(extra_params))
    end
 
    document_list = solr_response.docs.collect {|doc| SolrDocument.new(doc, solr_response)}
