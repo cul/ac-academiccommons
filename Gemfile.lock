@@ -233,7 +233,7 @@ GEM
     minitest (5.9.1)
     multi_json (1.12.1)
     multipart-post (2.0.0)
-    mysql (2.9.1)
+    mysql2 (0.4.5)
     net-http-persistent (2.9.4)
     net-ldap (0.3.1)
     net-scp (1.2.1)
@@ -490,7 +490,7 @@ DEPENDENCIES
   json
   mail_form
   multipart-post (~> 2.0.0)
-  mysql (>= 2.8.1)
+  mysql2
   net-ldap (= 0.3.1)
   nokogiri (= 1.6.0)
   oai
