@@ -11,7 +11,6 @@ gem 'blacklight_oai_provider', '>=0.2.4', :git =>"git@github.com:cul/blacklight_
 gem 'sqlite3', '>= 1.3.5'
 gem 'rinku', '~> 1.3.0', :require => 'rails_rinku'
 gem 'garb' # no longer maintained!
-gem 'googlecharts'
 gem 'haml', '>= 4.0.7'
 gem 'json'
 gem 'compass'
