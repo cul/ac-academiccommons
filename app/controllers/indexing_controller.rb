@@ -16,22 +16,15 @@ class IndexingController < ApplicationController
     new_indexed = new_indexed.flatten
 
     if(new_indexed.size > 0)
-      notifyDepositorsItemAdded(new_indexed)
+      AcademicCommons::NotifyDepositors.of_new_items(new_indexed)
     end
 
     if(new_embargoed.size > 0)
-      notifyDepositorsEmbargoedItemAdded(new_embargoed)
+      AcademicCommons::NotifyDepositors.of_new_embargoed_items(new_embargoed)
     end
 
     Notifier.reindexing_summary(params, time_id).deliver
 
     render nothing: true
   end
-
-
-  def ingest_by_cron
-    process_indexing(params)
-    render nothing: true
-  end
-
 end

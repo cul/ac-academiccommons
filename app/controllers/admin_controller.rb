@@ -1,6 +1,6 @@
 class AdminController < ApplicationController
   include DepositorHelper
-  
+
   before_filter :require_admin!
 
   layout "application"
@@ -11,13 +11,6 @@ class AdminController < ApplicationController
       if(params[:executed_by])
         render nothing: true
       end
-  end
-
-  def existing_ingest_time_id(pid)
-    if(pid_exists?(pid))
-      running_tmp_pid_file = File.open("#{Rails.root}/tmp/#{pid}.index.pid")
-      return running_tmp_pid_file.gets
-    end
   end
 
   def edit_alert_message

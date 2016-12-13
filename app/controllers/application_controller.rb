@@ -17,10 +17,6 @@ class ApplicationController < ActionController::Base
   #   session[:return_to] = request.fullpath
   # end
 
-  def pid_exists?(pid)
-    `ps -p #{pid}`.include?(pid)
-  end
-
   def access_denied
     render :template => 'access_denied'
   end

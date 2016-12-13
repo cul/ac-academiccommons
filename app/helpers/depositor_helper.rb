@@ -1,158 +1,10 @@
-require "person_class"
-require "item_class"
 require "ac_indexing"
 
 module DepositorHelper
-  include SolrHelper
-
   AC_COLLECTION_NAME = 'collection:3'
-
-  delegate :repository, :to => :controller
-
-  def notifyDepositorsEmbargoedItemAdded(pids)
-
-    depositors = prepareDepositorsToNotify(pids)
-
-    depositors.each do | depositor |
-      logger.info "\n ============ notifyDepositorsEmbargoedItemAdded ============="
-      logger.info "=== uni: " + depositor.uni
-      logger.info "=== email: " + depositor.email
-      if(depositor.full_name == nil)
-        logger.info "=== full_name: "
-      else
-        logger.info "=== full_name: " + depositor.full_name
-      end
-
-
-      depositor.items_list.each do | item |
-        logger.info "------ "
-        logger.info "------ item.pid: " + item.pid
-        logger.info "------ item.title: " + item.title
-        logger.info "------ item.handle: " + item.handle
-      end
-
-      Notifier.depositor_embargoed_notification(depositor).deliver
-    end
-
-  end
-
-  def notifyDepositorsItemAdded(pids)
-
-    depositors = prepareDepositorsToNotify(pids)
-
-    depositors.each do | depositor |
-      logger.info "\n ============ notifyDepositorsItemAdded ============="
-      logger.info "=== uni: " + depositor.uni
-      logger.info "=== email: " + depositor.email
-      if(depositor.full_name == nil)
-        logger.info "=== full_name: "
-      else
-        logger.info "=== full_name: " + depositor.full_name
-      end
-
-
-      depositor.items_list.each do | item |
-        logger.info "------ "
-        logger.info "------ item.pid: " + item.pid
-        logger.info "------ item.title: " + item.title
-        logger.info "------ item.handle: " + item.handle
-      end
-
-      Notifier.depositor_first_time_indexed_notification(depositor).deliver
-    end
-
-  end
-
-
-  def prepareDepositorsToNotify(pids)
-
-    depositors_to_notify = Hash.new
-
-    pids.each do | pid |
-
-      logger.info "=== process depositors for pid: " + pid
-
-      item = getItem(pid)
-
-      logger.info "=== item created for pid: " + pid
-
-      logger.debug "=== item.pid: " + item.pid
-      logger.debug "=== item.title: " + item.title
-      logger.debug "=== item.handle: " + item.handle
-      logger.debug "=== item.authors_uni: " + item.authors_uni.size.to_s
-
-      item.authors_uni.each do | uni |
-
-        logger.info "=== process uni: " + uni.to_s + " depositor for pid: " + pid
-
-        if(!depositors_to_notify.key?(uni))
-          depositor = getDepositor(uni)
-          depositors_to_notify.store(uni, depositor)
-        end
-
-        depositor = depositors_to_notify[uni]
-        depositor.items_list << item
-
-        logger.info "=== process uni: " + uni +" depositor for pid: " + pid + " === finished"
-      end
-    end
-
-    logger.info "====== depositors_to_notify.size: " + depositors_to_notify.size.to_s
-
-    return depositors_to_notify.values
-  end
-
-  def getDepositor(uni)
-
-    person = get_person_info(uni)
-
-    (person.email == nil) ?  depositor_email = person.uni + "@columbia.edu" : depositor_email = person.email
-    if (person.last_name == nil || person.first_name == nil)
-       logger.info "==== uni: " + person.uni  + " was not found in LDAP ==="
-       depositor_name = nil
-    else
-      depositor_name = person.first_name + ' ' + person.last_name
-
-      logger.info "name: " + depositor_name + " was found in LDAP"
-    end
-
-    person.email = depositor_email
-    person.full_name = depositor_name
-
-    return person
-  end
-
-  #TODO: Make this into a module.
-  def get_person_info(uni)
-    entry = Net::LDAP.new({:host => "ldap.columbia.edu", :port => 389}).search(:base => "o=Columbia University, c=US", :filter => Net::LDAP::Filter.eq("uid", uni)) || []
-    entry = entry.first
-
-    email = nil
-    last_name = nil
-    first_name = nil
-
-    if entry
-      entry[:mail].kind_of?(Array) ? email = entry[:mail].first.to_s : email = entry[:mail].to_s
-      entry[:sn].kind_of?(Array) ? last_name = entry[:sn].first.to_s : last_name = entry[:sn].to_s
-      entry[:givenname].kind_of?(Array) ? first_name = entry[:givenname].first.to_s : first_name = entry[:givenname].to_s
-    end
-
-    person = Person.new
-
-    person.uni = uni
-    person.email = email
-    person.last_name = last_name
-    person.first_name = first_name
-
-    return person
-  end
 
   def process_indexing(params)
     logger.info "==== started ingest function ==="
-
-    params.each do |key, value|
-      logger.info "param: " + key + " - " + value
-    end
 
     if(params[:cancel])
       existing_time_id = existing_ingest_time_id(params[:cancel])
@@ -195,29 +47,32 @@ module DepositorHelper
       items = params[:items] ? params[:items].gsub(/ /, ";") : ""
 
       @existing_ingest_pid = Process.fork do
-        logger.info "==== started indexing ==="
+        logger.info "==== STARTED INDEXING ==="
+        begin
+          indexing_results = ACIndexing::reindex(
+            {
+              :collections => collection,
+              :items => items,
+              :overwrite => params[:overwrite],
+              :metadata => params[:metadata],
+              :fulltext => params[:fulltext],
+              :delete_removed => params[:delete_removed],
+              :time_id => time_id,
+              :executed_by => params[:executed_by] || current_user.uid
+            }
+          )
 
-        indexing_results = ACIndexing::reindex(
-          {
-            :collections => collection,
-            :items => items,
-            :overwrite => params[:overwrite],
-            :metadata => params[:metadata],
-            :fulltext => params[:fulltext],
-            :delete_removed => params[:delete_removed],
-            :time_id => time_id,
-            :executed_by => params[:executed_by] || current_user.uid
-          }
-        )
+          logger.info "===== FINISHED INDEXING, STARTING TO SEND NOTIFICATIONS ==="
 
-        logger.info "===== finished indexing, starting notifications part ==="
+          if(params[:notify])
+            Notifier.reindexing_results(indexing_results[:errors].size.to_s, indexing_results[:indexed_count].to_s, indexing_results[:new_items].size.to_s, time_id).deliver
+          end
 
-        if(params[:notify])
-          Notifier.reindexing_results(indexing_results[:errors].size.to_s, indexing_results[:indexed_count].to_s, indexing_results[:new_items].size.to_s, time_id).deliver
+          AcademicCommons::NotifyDepositors.of_new_items(indexing_results[:new_items])
+        rescue => e
+          logger.fatal "Error Indexing: #{e.message}"
+          logger.fatal e.backtrace.join("\n ")
         end
-
-        notifyDepositorsItemAdded(indexing_results[:new_items])
-        #notifyDepositorsItemAdded(indexing_results[:results][:success]) # this is for test
       end
 
       Process.detach(@existing_ingest_pid)
@@ -229,5 +84,16 @@ module DepositorHelper
       tmp_pid_file.write(@existing_ingest_time_id)
       tmp_pid_file.close
     end
+  end
+
+  def existing_ingest_time_id(pid)
+    if(pid_exists?(pid))
+      running_tmp_pid_file = File.open("#{Rails.root}/tmp/#{pid}.index.pid")
+      return running_tmp_pid_file.gets
+    end
+  end
+
+  def pid_exists?(pid)
+    `ps -p #{pid}`.include?(pid)
   end
 end
