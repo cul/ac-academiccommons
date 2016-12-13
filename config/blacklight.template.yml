@@ -1,11 +1,10 @@
-# Template for solr.yml.
-# solr.yml is used by ActiveFedora.
-#
-# DO NOT COMMIT SOLR.YML
-#
+# Template for blacklight.yml.
+# blacklight.yml is used by Blacklight.
 
 development:
+  adapter: solr
   url: http://127.0.0.1:9983/solr/development
 
 test:
+  adapter: solr
   url: http://127.0.0.1:9983/solr/test

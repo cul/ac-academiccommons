@@ -1,10 +1,6 @@
-# Currently, running test server as production.
 require Rails.root.join("config/environments/academiccommons_prod")
 
 AcademicCommons::Application.configure do
-  # Print deprecation notices to the stderr
-  config.active_support.deprecation = :log
-
   # Expands the lines which load the assets
   config.assets.debug = true
 
@@ -18,6 +14,6 @@ AcademicCommons::Application.configure do
 
   # Application specific configuration.
   config.analytics_enabled = false
-  config.base_path = "academiccommons-test.cul.columbia.edu"
+  config.base_path = "academiccommons-test.cdrs.columbia.edu"
   config.prod_environment = false
 end

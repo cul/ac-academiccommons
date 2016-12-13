@@ -6,7 +6,7 @@
       <% # bookmark/folder functions for items/docs -%>
       <%#=render_index_doc_actions document %>
     </div>
-    <h3 class="index_title"><span class="index_counter"><%= document_counter + 1 + @response.params[:start].to_i %></span> <%= link_to_document document, :label=>document_show_link_field, :counter => (document_counter + 1 + @response.params[:start].to_i) %></h3>
+    <h3 class="index_title"><span class="index_counter"><%= document_counter + 1 + @response.params[:start].to_i %></span> <%= link_to_document document, document_show_link_field, :counter => (document_counter + 1 + @response.params[:start].to_i) %></h3>
   </div>
 
   <% # main container for doc partial view -%>

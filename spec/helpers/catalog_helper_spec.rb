@@ -18,7 +18,7 @@ describe CatalogHelper do
         }
       end
       it "calls solr with expected params" do
-        expect(Blacklight.solr).to receive(:get).
+        expect(Blacklight.default_index.connection).to receive(:get).
           with('select', { params: expected_params }).
           and_return(:empty_response)
         helper.build_resource_list(document)
@@ -33,7 +33,7 @@ describe CatalogHelper do
         }
       end
       it "calls solr with expected params" do
-        expect(Blacklight.solr).to receive(:get).
+        expect(Blacklight.default_index.connection).to receive(:get).
           with('select', { params: expected_params }).
           and_return(:empty_response)
         helper.build_resource_list(document, true)
@@ -48,7 +48,7 @@ describe CatalogHelper do
         })
       end
       it "calls solr with expected params" do
-        expect(Blacklight.solr).not_to receive(:get)
+        expect(Blacklight.default_index.connection).not_to receive(:get)
         helper.build_resource_list(document, true)
       end
     end
@@ -61,7 +61,7 @@ describe CatalogHelper do
         })
       end
       it "calls solr with expected params" do
-        expect(Blacklight.solr).not_to receive(:get)
+        expect(Blacklight.default_index.connection).not_to receive(:get)
         helper.build_resource_list(document, true)
       end
     end
@@ -81,7 +81,7 @@ describe CatalogHelper do
         }
       end
       it "calls solr with expected params" do
-        expect(Blacklight.solr).to receive(:get).
+        expect(Blacklight.default_index.connection).to receive(:get).
           with('select', { params: expected_params }).
           and_return(:empty_response)
         helper.build_resource_list(document, true)

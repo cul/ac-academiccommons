@@ -93,7 +93,7 @@ module CatalogHelper
     facet: false
    }
    member_search[:fq] << "object_state_ssi:A" unless include_inactive
-   response = Blacklight.solr.get 'select', params: member_search
+   response = Blacklight.default_index.connection.get 'select', params: member_search
    docs = response['response']['docs']
    logger.info "standard qt got #{docs.length}"
    docs = response['response']['docs']
