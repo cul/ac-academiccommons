@@ -51,6 +51,40 @@ RSpec.describe CatalogController, type: :controller do
         end
       end
 
+      context 'when filtering by organization using :f' do
+        # /catalog.rss?f%5Borganization_facet%5D%5B%5D=Teachers+College&sort=record_creation_date+desc
+        let(:expected_params) do
+          {
+            "qt" => "search",
+            "facet.field" =>
+              ["author_facet", "department_facet", "subject_facet", "genre_facet", "pub_date_facet", "series_facet", "language", "type_of_resource_facet"],
+            "facet.query" => [],
+            "facet.pivot" => [],
+            "fq"=> ["has_model_ssim:\"info:fedora/ldpd:ContentAggregator\"", "{!raw f=organization_facet}Teachers College"],
+            "hl.fl" => [],
+            "rows" => 100,
+            "q" => "",
+            "facet" => true,
+            "f.author_facet.facet.limit"=>3,
+            "f.department_facet.facet.limit"=>3,
+            "f.subject_facet.facet.limit"=>3,
+            "f.genre_facet.facet.limit"=>3,
+            "f.pub_date_facet.facet.limit"=>3,
+            "f.series_facet.facet.limit"=>3,
+            "sort"=>"record_create_date desc",
+            "fl" => "title_display,id,author_facet,author_display,record_creation_date,handle,abstract,author_uni,subject_facet,department_facet,genre_facet"
+          }
+        end
+
+        it 'correctly creates solr query' do
+          expect(@controller.repository).to receive(:send_and_receive)
+            .with('select', expected_params)
+            .and_return(empty_response)
+          get :index, f: { 'organization_facet' => ['Teachers College'] },
+               sort: 'record_create_date desc', format: 'rss'
+        end
+      end
+
       context 'facets by department'
 
       context "filters users by uni" do
