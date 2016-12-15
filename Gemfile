@@ -13,7 +13,6 @@ gem 'rinku', '~> 1.3.0', :require => 'rails_rinku'
 gem 'garb' # no longer maintained!
 gem 'haml', '>= 4.0.7'
 gem 'json'
-gem 'compass'
 gem 'httpclient','~>2.6'
 gem 'multipart-post', '~>2.0.0'
 gem 'nokogiri', '1.6.0'
