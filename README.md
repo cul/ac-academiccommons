@@ -20,7 +20,7 @@ CURRENT RECOMMENDED VERSION OF RUBY: 2.3.0
    cp config/solr.template.yml config/solr.yml
    cp config/fedora.template.yml config/fedora.yml
    cp config/secrets.template.yml config/secrets.yml
-   cp config/google_analytics.template.yml config/google_analytics.yml
+   cp config/blacklight.template.yml config/blacklight.yml
    ```
 
 4. Install any needed gems using Bundler
@@ -34,7 +34,7 @@ CURRENT RECOMMENDED VERSION OF RUBY: 2.3.0
    ```
    rake jetty:start
    ```
-   
+
 7. Start your local solr instance with a development core.
    ```
    solr_wrapper
