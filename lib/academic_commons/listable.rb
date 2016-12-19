@@ -5,7 +5,6 @@ module AcademicCommons
       obj_display = document.fetch("id", [])
       uri_prefix = "info:fedora/"
 
-      docs = []
       member_search = {
       q: '*:*',
       qt: 'standard',

@@ -545,6 +545,18 @@ module AcademicCommons
       end.flatten.compact.uniq
     end
 
+    def most_downloaded_asset(pid)
+      asset_pids = build_resource_list(pid).map { |doc| doc[:pid] }
+      return asset_pids.first if asset_pids.count == 1
+
+      # get the higest value stored here
+      counts = Statistic.per_identifier(asset_pids, Statistic::DOWNLOAD_EVENT)
+
+      key, value = counts.max_by{ |_,v| v }
+      key
+    end
+
+
     def get_res_list()
 
       query = params[:f]

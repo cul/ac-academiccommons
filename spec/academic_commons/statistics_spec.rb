@@ -140,5 +140,47 @@ RSpec.describe AcademicCommons::Statistics do
     end
   end
 
+  describe '.most_downloaded_asset' do
+    let(:pid1) { 'actest:2' }
+    let(:pid2) { 'actest:10' }
+
+    subject {
+      statistics.instance_eval{ most_downloaded_asset('actest:1') }
+    }
+
+    context 'when item has one asset' do
+      let(:asset_pids_response) do
+        [{ pid: pid1 }]
+      end
+
+      before :each do
+        allow(statistics).to receive(:build_resource_list)
+          .with(any_args).and_return(asset_pids_response)
+      end
+
+      it 'returns only asset' do
+        expect(subject).to eql 'actest:2'
+      end
+    end
+
+    context 'when item has more than one asset' do
+      let(:asset_pids_response) do
+        [{ pid: pid1 }, { pid: pid2 }]
+      end
+
+      before :each do
+        FactoryGirl.create(:download_stat)
+        FactoryGirl.create(:download_stat, identifier: pid2)
+        FactoryGirl.create(:download_stat, identifier: pid2)
+        allow(statistics).to receive(:build_resource_list)
+          .with(any_args).and_return(asset_pids_response)
+      end
+
+      it 'returns most downloaded' do
+        expect(subject).to eql 'actest:10'
+      end
+    end
+  end
+
   describe '.make_solr_request'
 end
