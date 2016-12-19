@@ -239,7 +239,7 @@ module AcademicCommons
       end
 
       stats = Hash.new { |h,k| h[k] = Hash.new { |h,k| h[k] = 0 }}
-      totals = Hash.new { |h,k| h[k] = 0 } # Couldn't this be created by just seeting the default value of the hash?
+      totals = Hash.new { |h,k| h[k] = 0 }
 
       return stats, totals, ids, download_ids
     end
@@ -538,20 +538,27 @@ module AcademicCommons
       pids_collection.map do |pid|
         pid[:id] ||= pid[:pid] # facet doc may be submitted with only pid value
         if(event == Statistic::DOWNLOAD_EVENT)
-          build_resource_list(pid).map { |doc| doc[:pid] }
+          most_downloaded_asset(pid) # Chooses most downloaded over lifetime.
         else
           pid[:id]
         end
       end.flatten.compact.uniq
     end
 
+    # Most downloaded asset over entire lifetime.
+    # Eventually may have to reevaluate this for queries that are for a specific
+    # time range. For now, we are okay with this assumption.
     def most_downloaded_asset(pid)
       asset_pids = build_resource_list(pid).map { |doc| doc[:pid] }
       return asset_pids.first if asset_pids.count == 1
 
-      # get the higest value stored here
+      # Get the higest value stored here.
       counts = Statistic.per_identifier(asset_pids, Statistic::DOWNLOAD_EVENT)
 
+      # Return first pid, if items have never been downloaded.
+      return asset_pids.first if counts.empty?
+
+      # Get key of most downloaded asset.
       key, value = counts.max_by{ |_,v| v }
       key
     end

@@ -12,32 +12,37 @@ RSpec.describe AcademicCommons::Statistics do
     end
     class_rig.new
   end
+
   describe '.collect_asset_pids' do
     let(:original_pids) { ['ac:8', 'ac: 2', "ac:3", "ac:a5", "acc:32"] }
     let(:pid_collection) { original_pids.map {|v| { id: v } } }
-    shared_examples 'for event type' do
-      subject { statistics.send :collect_asset_pids, pid_collection, event }
-      it { is_expected.to contain_exactly(*collected_pids) }
-    end
+
     context 'download event' do
       let(:event) { Statistic::DOWNLOAD_EVENT }
-      let(:collected_pids) { ['ac:9', 'ac:3', 'ac:4', 'ac:1','acc:33'] }
+      let(:collected_pids) { ['ac:9', 'ac:3', 'ac:4', 'ac:1'] }
       before do
-        allow(statistics).to receive(:build_resource_list).with(hash_including(:id)).
-        and_return([{pid:'ac:9'}],
-                   [{pid:'ac:3'}],
-                   [{pid:'ac:4'}],
-                   [{pid:'ac:1'}], # method expected to dedupe
-                   [{pid:'ac:1'},{pid:'acc:33'}])
+        allow(statistics).to receive(:build_resource_list).with(hash_including(:id))
+          .and_return([{pid:'ac:9'}],
+                     [{pid:'ac:3'}],
+                     [{pid:'ac:4'}],
+                     [{pid:'ac:1'}], # method expected to dedupe
+                     [{pid:'ac:1'},{pid:'acc:33'}]) # method expected to pick first one
       end
-      include_examples 'for event type'
+
+      subject { statistics.send :collect_asset_pids, pid_collection, event }
+
+      it { is_expected.to contain_exactly(*collected_pids) }
     end
+
     context 'non-download event' do
       let(:event) { Statistic::VIEW_EVENT }
       let(:collected_pids) { original_pids }
-      include_examples 'for event type'
+
+      subject { statistics.send :collect_asset_pids, pid_collection, event }
+      it { is_expected.to contain_exactly(*collected_pids) }
     end
   end
+
   describe '.get_author_stats', integration: true do
     before do
       allow(statistics).to receive(:repository).and_return(Blacklight.default_index)
@@ -147,6 +152,12 @@ RSpec.describe AcademicCommons::Statistics do
       statistics.instance_eval{ most_downloaded_asset('actest:1') }
     }
 
+    it 'returns error when pid not provided' do
+      expect{
+        statistics.instance_eval{ most_downloaded_asset }
+      }.to raise_error ArgumentError
+    end
+
     context 'when item has one asset' do
       let(:asset_pids_response) do
         [{ pid: pid1 }]
@@ -177,6 +188,21 @@ RSpec.describe AcademicCommons::Statistics do
 
       it 'returns most downloaded' do
         expect(subject).to eql 'actest:10'
+      end
+    end
+
+    context 'when item asset has never been downloaded' do
+      let(:asset_pids_response) do
+        [{ pid: pid1 }]
+      end
+
+      before :each do
+        allow(statistics).to receive(:build_resource_list)
+          .with(any_args).and_return(asset_pids_response)
+      end
+
+      it 'returns first pid' do
+        expect(subject).to eql pid1
       end
     end
   end
