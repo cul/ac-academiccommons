@@ -33,6 +33,10 @@ class SolrDocumentsController < ApplicationController
     begin
       obj = ActiveFedora::Base.find(params[:id])
       obj.update_index
+      location_url = obj.is_a?(ContentAggregator) ?
+        catalog_url(params[:id]) :
+        download_url(obj)
+      response.headers['Location'] = location_url
       render status: :ok, plain: ''
     rescue ActiveFedora::ObjectNotFoundError => e
       render status: :not_found, plain: ''
@@ -69,5 +73,21 @@ class SolrDocumentsController < ApplicationController
     else
       render status: :not_found, plain: ''
     end
+  end
+
+  private
+  def download_url(af_obj)
+    download_params = {
+      block: nil,
+      uri: af_obj.pid,
+      filename: nil,
+      download_method: 'download'
+    }
+    block_ds = af_obj.downloadable_content
+    if block_ds
+      download_params[:block] = block_ds.dsid
+      download_params[:filename] = block_ds.label.blank? ? af_obj.label : block_ds.label
+    end
+    fedora_content_url(download_params)
   end
 end

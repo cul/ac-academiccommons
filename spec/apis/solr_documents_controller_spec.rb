@@ -25,11 +25,15 @@ describe SolrDocumentsController, type: :controller, integration: true do
       expect(response.status).to eql(404)
       put :update, { id: 'actest:1' }
       expect(response.status).to eql(200)
+      expect(response.headers['Location']).to eql("http://test.host/catalog/actest:1")
       get :show, id: 'actest:1', format: 'json'
       expect(response.status).to eql(200)
       # publish does not cascade
       get :show, id: 'actest:2', format: 'json'
       expect(response.status).to eql(404)
+      put :update, { id: 'actest:2' }
+      expect(response.headers['Location']).
+        to eql("http://test.host/download/fedora_content/download/actest:2/CONTENT/alice_in_wonderland.pdf")
     end
     after do
       put :update, { id: 'actest:1' }
