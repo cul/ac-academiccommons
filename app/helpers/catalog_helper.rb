@@ -14,17 +14,19 @@ module CatalogHelper
   end
 
   def get_total_count
-    return get_count(standard_count_query)
+    date_trend.counts[:total]
   end
 
   def get_count_by_year
-    query_params = standard_count_query.merge(q: "record_creation_date:[NOW-1YEAR TO NOW]")
-    return get_count(query_params)
+    date_trend.counts[:last_year]
   end
 
   def get_count_by_month
-    query_params = standard_count_query.merge(q: "record_creation_date:[NOW-1MONTH TO NOW]")
-    return get_count(query_params)
+    date_trend.counts[:last_month]
+  end
+
+  def date_trend
+    @date_trend ||= AcademicCommons::DateTrend.new("record_creation_date", ContentAggregator)
   end
 
   def get_count(query_params)
