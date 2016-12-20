@@ -2,6 +2,7 @@ require 'csv'
 require 'uri'
 module AcademicCommons
   module Statistics
+    include AcademicCommons::Listable
 
     VIEW = 'view_'
     DOWNLOAD = 'download_'
@@ -238,7 +239,7 @@ module AcademicCommons
       end
 
       stats = Hash.new { |h,k| h[k] = Hash.new { |h,k| h[k] = 0 }}
-      totals = Hash.new { |h,k| h[k] = 0 } # Couldn't this be created by just seeting the default value of the hash?
+      totals = Hash.new { |h,k| h[k] = 0 }
 
       return stats, totals, ids, download_ids
     end
@@ -533,17 +534,35 @@ module AcademicCommons
     end
 
     # Maps a collection of Item/Aggregator PIDs to File/Asset PIDs
-    #TODO: Query Solr for resource PIDs and flatten/aggregate
     def collect_asset_pids(pids_collection, event)
       pids_collection.map do |pid|
+        pid[:id] ||= pid[:pid] # facet doc may be submitted with only pid value
         if(event == Statistic::DOWNLOAD_EVENT)
-          pos = pid[:id].index(':') + 1
-          (pid[:id][0, pos] + (pid[:id][pos, 8].to_i + 1).to_s)
+          most_downloaded_asset(pid) # Chooses most downloaded over lifetime.
         else
           pid[:id]
         end
-      end
+      end.flatten.compact.uniq
     end
+
+    # Most downloaded asset over entire lifetime.
+    # Eventually may have to reevaluate this for queries that are for a specific
+    # time range. For now, we are okay with this assumption.
+    def most_downloaded_asset(pid)
+      asset_pids = build_resource_list(pid).map { |doc| doc[:pid] }
+      return asset_pids.first if asset_pids.count == 1
+
+      # Get the higest value stored here.
+      counts = Statistic.per_identifier(asset_pids, Statistic::DOWNLOAD_EVENT)
+
+      # Return first pid, if items have never been downloaded.
+      return asset_pids.first if counts.empty?
+
+      # Get key of most downloaded asset.
+      key, value = counts.max_by{ |_,v| v }
+      key
+    end
+
 
     def get_res_list()
 

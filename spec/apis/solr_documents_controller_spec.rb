@@ -38,6 +38,7 @@ describe SolrDocumentsController, type: :controller, integration: true do
     after do
       put :update, { id: 'actest:1' }
       put :update, { id: 'actest:2' }
+      put :update, { id: 'actest:4' }
     end
   end
   describe "destroy" do
@@ -56,6 +57,7 @@ describe SolrDocumentsController, type: :controller, integration: true do
       # reindex the fixture so that other tests can run
       put :update, { id: 'actest:1' }
       put :update, { id: 'actest:2' }
+      put :update, { id: 'actest:4' }
     end
   end
 end

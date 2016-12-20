@@ -167,6 +167,10 @@ describe CatalogController, :type => :feature do
       click_on 'alice_in_wonderland.pdf'
       expect(page.response_headers['X-Accel-Redirect']).to match /\/repository_download\/.*\/actest:2\/datastreams\/CONTENT\/content$/
     end
+    it "links to the non-pdf download" do
+      click_on 'to_solr.json'
+      expect(page.response_headers['X-Accel-Redirect']).to match /\/repository_download\/.*\/actest:4\/datastreams\/content\/content$/
+    end
   end
 
   describe "department browse" do
