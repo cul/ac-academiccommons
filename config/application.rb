@@ -42,7 +42,7 @@ module AcademicCommons
 
     # Loading configuration files for Solr, Fedora, Indexing, emails
     # TODO: This can be removed in Rails 4. Rails 4 automates this process.
-    [:solr, :fedora, :emails, :google_analytics].each do |i|
+    [:solr, :fedora, :emails].each do |i|
       config_file = File.expand_path("../#{i}.yml", __FILE__) ## Do this better.
       if File.exists? config_file
         settings = ERB.new(IO.read(config_file)).result
