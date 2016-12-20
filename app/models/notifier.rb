@@ -1,3 +1,5 @@
+# TODO: Mailer should be moved to app/mailers directory.
+# TODO: Mailer should be divided into NotifierMailer and StatisticsMailer.
 class Notifier < ActionMailer::Base
   MAX_FILE_SIZE = 1024 * 1024 * 25 # Max file size (25 MB) that can be emailed in KB.
 

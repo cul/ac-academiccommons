@@ -167,26 +167,54 @@ describe StatisticsController, :type => :controller, integration: true do
     end
   end
 
-  # require_user
+  # Does not require user login.
   describe 'unsubscribe_monthly' do
-    context "without being logged in" do
-      before do
-        allow(controller).to receive(:current_user).and_return(nil)
+    let(:uni) { 'abc123' }
+    context 'does not add email preference' do
+      it 'when author missing' do
+        get :unsubscribe_monthly, chk: 'foo'
+        expect(EmailPreference.count).to eq 0
       end
 
-      it "redirects to new_user_session_path" do
+      it 'when chk missing' do
+        get :unsubscribe_monthly, author_id: 'foo'
+        expect(EmailPreference.count).to eq 0
+      end
+
+      it 'when chk and author missing' do
         get :unsubscribe_monthly
-        expect(response.status).to eql(302)
-        expect(response).to redirect_to new_user_session_url
+        expect(EmailPreference.count).to eq 0
       end
     end
-    context "logged in as a non-admin user" do
-      include_context 'mock non-admin user'
 
-      it "succeeds" do
-        get :unsubscribe_monthly
-        expect(response.status).to eql(302)
-        expect(response.headers['Location']).to eql(root_url)
+    context 'when chk param is correctly signed' do
+      before :each do
+        get :unsubscribe_monthly, author_id: uni, chk: Rails.application.message_verifier(:unsubscribe).generate(uni)
+      end
+
+      it 'creates email preference' do
+        expect(EmailPreference.count).to eq 1
+      end
+
+      it 'unsubscribes user' do
+        expect(EmailPreference.first.author).to eq uni
+        expect(EmailPreference.first.monthly_opt_out).to be true
+      end
+
+      it 'changes email preference' do
+        EmailPreference.first.update!(monthly_opt_out: false)
+        get :unsubscribe_monthly, author_id: uni, chk: Rails.application.message_verifier(:unsubscribe).generate(uni)
+        expect(EmailPreference.first.monthly_opt_out).to be true
+      end
+    end
+
+    context 'when check param is not correctly signed' do
+      before(:each) do
+        get :unsubscribe_monthly, author_id: uni, chk: Rails.application.message_verifier(:unsubscribe).generate('abc')
+      end
+
+      it 'does not unsubscribe user' do
+        expect(EmailPreference.count).to eq 0
       end
     end
   end

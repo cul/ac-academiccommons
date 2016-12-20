@@ -1,6 +1,5 @@
 class StatisticsController < ApplicationController
   layout "application"
-  before_filter :authenticate_user!, :only => :unsubscribe_monthly
   before_filter :require_admin!, :except => :unsubscribe_monthly
   include Blacklight::SearchHelper
   include AcademicCommons::Statistics
@@ -11,23 +10,19 @@ class StatisticsController < ApplicationController
                 :get_time_period, :months
 
   def unsubscribe_monthly
-    author_id = params[:author_id]
+    author_id = params[:author_id].to_s
 
-    if author_id && author_id.to_s.crypt("xZ") == params[:chk]
-      epref = EmailPreference.find_by_author(author_id)
-      if epref
-        epref.update_attributes(:monthly_opt_out => true)
-      else
-        EmailPreference.create!(:author => author_id, :monthly_opt_out => true)
-      end
-    else
-      error=true
-    end
+    begin
+      raise 'Request missing parameters.' if author_id.blank? || params[:chk].blank?
+      raise 'Cannot be verified.' unless Rails.application.message_verifier(:unsubscribe).verify(params[:chk]) == author_id
 
-    if error
+      epref = EmailPreference.find_or_initialize_by(author: author_id)
+      epref.monthly_opt_out = true
+      epref.save!
+
+      flash[:success] = "Unsubscribe request successful"
+    rescue
       flash[:error] = "There was an error with your unsubscribe request"
-    else
-      flash[:notice] = "Unsubscribe request successful"
     end
 
     redirect_to root_url
