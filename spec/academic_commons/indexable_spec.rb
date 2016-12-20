@@ -1,7 +1,5 @@
 require 'rails_helper'
-
 RSpec.describe AcademicCommons::Indexable do
-  let(:mods_fixture) { File.read('spec/fixtures/actest_3/mods.xml') }
   let(:expected_json) { JSON.load File.read('spec/fixtures/actest_1/to_solr.json') }
   let(:indexable) do
     class_rig = Class.new
@@ -22,9 +20,23 @@ RSpec.describe AcademicCommons::Indexable do
     indexable
   end
 
-  subject { indexable.index_descMetadata }
+  shared_examples 'indexing mods' do
+    subject { indexable.index_descMetadata }
 
-  describe "#index_descMetadata" do
-    it  { is_expected.to eql(expected_json) }
+    describe "#index_descMetadata" do
+      it  { is_expected.to eql(expected_json) }
+    end
+  end
+
+  context 'when mods not prefixed' do
+    let(:mods_fixture) { File.read('spec/fixtures/actest_3/mods.xml') }
+
+    include_examples 'indexing mods'
+  end
+
+  context 'when mods prefixed' do
+    let(:mods_fixture) { File.read('spec/fixtures/mods_with_prefix.xml') }
+
+    include_examples 'indexing mods'
   end
 end

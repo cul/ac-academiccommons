@@ -16,7 +16,8 @@ module AcademicCommons
       raise "descMetadata COULD NOT be found for #{self.pid}.\nSolr doc: #{solr_doc.inspect}" unless meta
 
       solr_doc["described_by_ssim"] = ["info:fedora/#{meta.pid}/#{meta.dsid}"]
-      mods = Nokogiri::XML(meta.content).at_css("mods")
+      document = Nokogiri::XML(meta.content).remove_namespaces!
+      mods = document.at_css("mods")
 
       collections = self.belongs_to
       normalize_space = lambda { |s| s.to_s.strip.gsub(/\s{2,}/," ") }

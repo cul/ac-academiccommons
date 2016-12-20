@@ -1,0 +1,87 @@
+<mods:mods xmlns:mods="http://www.loc.gov/mods/v3" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.loc.gov/mods/v3 http://www.loc.gov/standards/mods/v3/mods-3-4.xsd">
+
+    <mods:titleInfo>
+        <mods:title>Alice's Adventures in Wonderland</mods:title>
+    </mods:titleInfo>
+    <mods:name type="personal">
+        <mods:namePart type="family">Carroll</mods:namePart>
+        <mods:namePart type="given">Lewis</mods:namePart>
+        <mods:role>
+            <mods:roleTerm type="text">author</mods:roleTerm>
+        </mods:role>
+    </mods:name>
+    <mods:name type="corporate">
+        <mods:namePart>Oxford University. Bucolic Literary Society.</mods:namePart>
+        <mods:role>
+            <mods:roleTerm type="text">originator</mods:roleTerm>
+        </mods:role>
+    </mods:name>
+    <mods:name type="corporate">
+        <mods:namePart>Weird Old Guys.</mods:namePart>
+        <mods:role>
+            <mods:roleTerm type="text">author</mods:roleTerm>
+        </mods:role>
+    </mods:name>
+    <mods:typeOfResource>text</mods:typeOfResource>
+    <mods:genre>Articles</mods:genre>
+
+    <mods:originInfo>
+        <mods:dateIssued encoding="w3cdtf" keyDate="yes">1865</mods:dateIssued>
+    </mods:originInfo>
+
+    <mods:language>
+        <mods:languageTerm type="text">English</mods:languageTerm>
+    </mods:language>
+    <abstract>Background -  Alice is feeling bored and drowsy while sitting on the riverbank with her older sister, who is reading a book with no pictures or conversations.</abstract>
+    <mods:subject>
+        <mods:topic>Tea Parties</mods:topic>
+    </mods:subject>
+    <mods:subject>
+        <mods:topic>Wonderland</mods:topic>
+    </mods:subject>
+    <mods:subject>
+        <mods:topic>Rabbits</mods:topic>
+    </mods:subject>
+    <mods:subject authority="fast" authorityURI="http://id.worldcat.org/fast/void/0.1" valueURI="http://id.worldcat.org/fast/1038956">
+        <mods:topic>Nonsense literature</mods:topic>
+    </mods:subject>
+    <mods:subject authority="fast" authorityURI="http://id.worldcat.org/fast/void/0.1" valueURI="http://id.worldcat.org/fast/831688">
+        <mods:topic>Bildungsromans</mods:topic>
+    </mods:subject>
+    <mods:relatedItem type="host">
+        <mods:titleInfo>
+            <mods:title>Project Gutenberg</mods:title>
+        </mods:titleInfo>
+        <mods:part>
+            <mods:detail type="volume">
+                <mods:number>1</mods:number>
+            </mods:detail>
+            <mods:detail type="issue">
+                <mods:number>2</mods:number>
+            </mods:detail>
+            <mods:extent unit="page">
+                <mods:start>1</mods:start>
+                <mods:end>69</mods:end>
+            </mods:extent>
+            <date>June 2008</date>
+        </mods:part>
+        <mods:identifier type="doi">10.1378/wonderland.01-2345</mods:identifier>
+        <mods:identifier type="issn">0123-4567</mods:identifier>
+    </mods:relatedItem>
+    <mods:identifier type="CDRS doi">http://dx.doi.org/10.7916/ALICE</mods:identifier>
+
+    <mods:location>
+        <mods:physicalLocation authority="marcorg">NNC</mods:physicalLocation>
+    </mods:location>
+
+    <mods:recordInfo>
+        <mods:recordContentSource authority="marcorg">NNC</mods:recordContentSource>
+        <mods:recordCreationDate encoding="w3cdtf">2016-09-14 16:31:33 -0400</mods:recordCreationDate>
+        <mods:recordChangeDate encoding="w3cdtf">2016-09-14 16:48:05 -0400</mods:recordChangeDate>
+        <mods:recordIdentifier>24815</mods:recordIdentifier>
+        <mods:languageOfCataloging>
+            <mods:languageTerm authority="iso639-2b">eng</mods:languageTerm>
+        </mods:languageOfCataloging>
+    </mods:recordInfo>
+
+</mods:mods>
