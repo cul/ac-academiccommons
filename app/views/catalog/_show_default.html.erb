@@ -34,25 +34,21 @@
     <% metadata_list = get_metadata_list(document) -%>
 
     <dl class="defList clearfix">
-      <% if metadata_list.length > 0 -%>
-        <% metadata_list.each do |resource| -%>
-          <dt>Metadata: </dt>
-          <dd>
-            <% show_url = "#{resource[:show_url]}?data=meta" -%>
-            <% download_url = "#{resource[:download_url]}?data=meta" -%>
-            <%= link_to "text", show_url if resource[:show_url] %> | <%= link_to "xml", show_url + "&xml=true" if resource[:show_url] %>
-          </dd>
-        <% end -%>
-      <% else -%>
-        <em>Additional metadata is currently unavailable for this item.</em>
-      <% end -%>
-      <dt>Suggested Citation:</dt>
+      <dt>Metadata: </dt>
       <dd>
-        <%= first_names_then_last_suggested_citation(document_author || "") %>,
-        <%= document_render_field_value("pub_date_facet", document["pub_date_facet"][0]) %>,
-        <%= document_render_field_value("title_display", document["title_display"]) %>, Columbia University Academic Commons,
-        <%= document_render_field_value("handle", document["handle"]) %>.
+        <% if metadata_list.length > 0 -%>
+          <% metadata_list.each do |resource| -%>
+              <% show_url = "#{resource[:show_url]}?data=meta" -%>
+              <% download_url = "#{resource[:download_url]}?data=meta" -%>
+              <%= link_to "text", show_url if resource[:show_url] %> | <%= link_to "xml", show_url + "&xml=true" if resource[:show_url] %>
+          <% end -%>
+        <% else -%>
+          <em>Additional metadata is currently unavailable for this item.</em>
+        <% end -%>
       </dd>
+      
+      <dt>Suggested Citation: </dt>
+      <dd><%= suggested_citation(document) %></dd>
     </dl>
   </div>
 </div>

@@ -15,6 +15,20 @@ module ApplicationHelper
     heading.html_safe
   end
 
+  def suggested_citation(document)
+    citation = []
+    citation << first_names_then_last_suggested_citation(document_author || "")
+
+    unless document["pub_date_facet"].blank? || document['pub_date_facet'][0].blank?
+      citation << document_render_field_value("pub_date_facet", document["pub_date_facet"][0])
+    end
+
+    citation << document_render_field_value("title_display", document["title_display"])
+    citation << 'Columbia University Academic Commons'
+    citation << document_render_field_value("handle", document["handle"]) unless document["handle"].blank?
+    citation.reject(&:blank?).join(', ').concat('.').html_safe
+  end
+
   def first_names_then_last(last_names_first)
 
     i = 0

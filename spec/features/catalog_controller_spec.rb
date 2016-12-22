@@ -165,6 +165,11 @@ describe CatalogController, :type => :feature do
       expect(page).to have_xpath("//dt[contains(text(),'Item views')]/following-sibling::dd", :text => "0")
     end
 
+    it "has suggested citation" do
+      expect(page).to have_xpath("//dt[contains(text(),'Suggested Citation')]/following-sibling::dd",
+        text: 'Lewis Carroll, Weird Old Guys., 1865, Alice\'s Adventures in Wonderland, Columbia University Academic Commons, http://dx.doi.org/10.7916/ALICE.')
+    end
+
     it "links to the MODS download" do
       expect(page).to have_css("a[href=\"/download/fedora_content/show_pretty/actest:3/CONTENT/actest3_description.xml?data=meta\"]", :text => "text")
       page.find("a[href=\"/download/fedora_content/show_pretty/actest:3/CONTENT/actest3_description.xml?data=meta\"]", :text => "text").click
