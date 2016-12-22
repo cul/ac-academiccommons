@@ -40,8 +40,16 @@ describe CatalogController, :type => :feature do
         expect(page).to have_content("Alice's Adventures in Wonderland")
       end
 
-      it "displays correct number of items in repository" do
+      it "displays correct total number of items in repository" do
         expect(page).to have_content("1 items in Academic Commons")
+      end
+
+      it "displays correct yearly number of items in repository" do
+        expect(page).to have_content("Objects added in the last year: 1")
+      end
+
+      it "displays correct monthly number of items in repository" do
+        expect(page).to have_content("Objects added in the last 30 days: 0")
       end
     end
 

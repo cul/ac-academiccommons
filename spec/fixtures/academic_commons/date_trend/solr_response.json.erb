@@ -1,0 +1,64 @@
+{
+  "responseHeader": {
+    "status": 0,
+    "QTime": 38,
+    "params": {
+      "f.system_modified_dtsi.facet.range.end": "NOW",
+      "facet": "true",
+      "f.system_modified_dtsi.facet.sort": "index",
+      "indent": "true",
+      "f.system_modified_dtsi.facet.range.start": "NOW-1YEAR",
+      "facet.range": "system_modified_dtsi",
+      "wt": "json",
+      "rows": "0",
+      "f.system_modified_dtsi.facet.range.gap": "+1MONTH",
+      "q": "*:*",
+      "_": "0123456789abc",
+      "facet.field": "active_fedora_model_ssi",
+      "fq": "has_model_ssim:\"info:fedora/ldpd:ContentAggregator\""
+    }
+  },
+  "response": {
+    "numFound": 116471,
+    "start": 0,
+    "maxScore": 1,
+    "docs": []
+  },
+  "facet_counts": {
+    "facet_queries": {},
+    "facet_fields": {
+      "active_fedora_model_ssi": [
+        "ContentAggregator",
+        116471
+      ]
+    },
+    "facet_dates": {},
+    "facet_ranges": {
+      "system_modified_dtsi": {
+        "counts": [
+          "<%= (now - 10.months).getutc %>",
+          14994,
+          "<%= (now - 9.months).getutc %>",
+          67,
+          "<%= (now - 8.months).getutc %>",
+          1,
+          "<%= (now - 6.months).getutc %>",
+          245,
+          "<%= (now - 5.months).getutc %>",
+          9861,
+          "<%= (now - 4.months).getutc %>",
+          619,
+          "<%= (now - 3.months).getutc %>",
+          376,
+          "<%= (now - 2.months).getutc %>",
+          105,
+          "<%= (now - 1.months).getutc %>",
+          13779
+        ],
+        "gap": "+1MONTH",
+        "start": "<%= (now - 1.years).getutc %>",
+        "end": "<%= now.getutc %>"
+      }
+    }
+  }
+}

@@ -33,6 +33,7 @@ class SolrDocumentsController < ApplicationController
     begin
       obj = ActiveFedora::Base.find(params[:id])
       obj.update_index
+      Rails.cache.delete('repository_statistics')
       location_url = obj.is_a?(ContentAggregator) ?
         catalog_url(params[:id]) :
         download_url(obj)
