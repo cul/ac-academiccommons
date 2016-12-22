@@ -184,7 +184,6 @@ module CatalogHelper
     begin
       #TODO: is this side effect on doc necessary?
       doc["object_display"] = [ "#{fedora_config["url"]}" + "/objects/" + doc["id"] + "/methods" ]
-
       results = doc["described_by_ssim"].map do |ds_uri|
         res = {}
         pid = ds_uri.split('/')[1]
@@ -197,7 +196,8 @@ module CatalogHelper
         res[:download_url] = fedora_content_path(:download, pid, dsid, filename)
         res
       end
-    rescue
+    rescue => e
+      Rails.logger.error "In get_metadata_list: #{e.message}"
       results = []
     end
 
