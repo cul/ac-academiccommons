@@ -2,7 +2,14 @@
 
 <div id="static-text">
   <h1>Frequently Asked Questions</h1>
-  <h2>Overview</h2>
+  <p>
+  <%= link_to 'Overview', '#overview' %> | <%= link_to 'Deposit Your Work', '#deposit-your-work' %>
+    | <%= link_to 'Copyright', '#copyright' %> | <%= link_to 'Data', '#faq-data' %>
+    | <%= link_to 'Dissertations and Theses', '#dissertations-and-theses' %> | <%= link_to 'File Format', '#file-format' %>
+    | <%= link_to 'Visibility', '#visibility' %>
+  </p>
+
+  <h2 id="overview">Overview</h2>
   <h3>What is Academic Commons?</h3>
   <p><a target="_blank" href="http://academiccommons.columbia.edu">Academic Commons</a> is the digital research repository of Columbia University and its affiliate institutions including Barnard College, Teachers College, Union Theological Seminary, and Jewish Theological Seminary.  In other words, we are the place to archive digital versions of your articles or other scholarly works that are created before or during your time at Columbia and that are in what you consider to be their final form.  Academic Commons is one of the suite of services offered by the Columbia University Libraries' <a href="http://cdrs.columbia.edu">Center for Digital Research and Scholarship</a>.</p>
 
@@ -34,7 +41,7 @@
 
   <br/>
 
-  <h2>Deposit your work</h2>
+  <h2 id="deposit-your-work">Deposit Your Work</h2>
   <h3>Why should I deposit in Academic Commons?</h3>
   <p class="list_title">Here are a number of reasons to deposit work in Academic Commons, provided by actual depositors:</p>
   <ul>
@@ -155,7 +162,7 @@
 
   <br/>
 
-  <h2>Copyright</h2>
+  <h2 id="copyright">Copyright</h2>
 
   <h3>What can I do if I think someone has plagiarized my work which has been deposited in Academic Commons?</h3>
   <p class="list_title">Avoiding plagiarism is an ethical obligation, not a legal standard. If you suspect that your work has be plagiarized, you could do one of the following:</p>
@@ -186,7 +193,7 @@
 
   <br/>
 
-  <h2>Data</h2>
+  <h2 id="faq-data">Data</h2>
 
   <h3>Is there a copyright on data?</h3>
   <p>Not as such. Facts are not copyrightable. However, the design or structure of a database may be subject to copyright. We encourage you to consider using a <a target="_blank" href="http://creativecommons.org/">Creative Commons</a> license for your dataset to clarify how it can be reused. We can help you determine which Creative Commons license is most appropriate for your dataset; just send us an email at <a href="mailto:ac@columbia.edu">ac@columbia.edu</a>.</p>
@@ -271,7 +278,7 @@
 
   <br/>
 
-  <h2>Dissertations and Theses</h2>
+  <h2 id="dissertations-and-theses">Dissertations and Theses</h2>
 
   <h3>How do I deposit my dissertation or thesis?</h3>
   <p>Since February of 2011, all dissertations for doctoral degrees awarded by Columbia's Graduate School of Arts and Sciences (GSAS) have been deposited in Academic Commons. Those students should use the <a href="http://gsas.columbia.edu/content/electronic-deposit-faqs?q=node/293">GSAS Deposit Gateway</a> to submit their completed dissertation. GSAS also has an <a href="http://gsas.columbia.edu/content/electronic-deposit-faqs">FAQ</a> on their site that addresses additional questions about their process.</p>
@@ -293,7 +300,7 @@
 
   <br/>
 
-  <h2>File format</h2>
+  <h2 id="file-format">File Format</h2>
 
   <h3>What is the preferred file format in Academic Commons?</h3>
   <p>We will accept any file type you provide, but we cannot guarantee full preservation for all file types. This means we can guarantee the preservation of the bits that make up your files, but we cannot guarantee that the file itself will be usable in the future, since the format may not be supported.</p>
@@ -310,7 +317,7 @@
 
   <br/>
 
-  <h2>Visibility</h2>
+  <h2 id="visibility">Visibility</h2>
 
   <h3>What is the difference between a Handle and a DOI?</h3>
   <p>The <a href="http://www.handle.net/">Handle System</a> provides permanent identifiers for digital objects. The <a href="http://www.doi.org/index.html">Digital Object Identifier </a>(DOI) system is a specific implementation of the Handle System.</p>
