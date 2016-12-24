@@ -44,7 +44,7 @@ describe CatalogHelper do
         helper.build_resource_list(document)
       end
       it 'returns array with documents' do
-        allow(Blacklight.solr).to receive(:get)
+        allow(Blacklight.default_index.connection).to receive(:get)
           .with('select', params: expected_params)
           .and_return(solr_response)
         resource_list = helper.build_resource_list(document)

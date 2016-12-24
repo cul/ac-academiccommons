@@ -19,14 +19,6 @@ class DownloadController < ApplicationController
     render :text => getLogContent(params[:log_folder], params[:id])
   end
 
-  # ACHYDRA-177: check that download appears to be metadata
-  # TODO: Remove after Hyacinth migration
-  def description_download?
-    block_checked = params[:block] == 'CONTENT'
-    name_checked = params[:filename] && params[:filename] =~ /^ac(test)?\d+_description\.xml$/
-    block_checked && (name_checked == 0)
-  end
-
   def fedora_content
     repository = Blacklight.default_index.connection
     # get the resource doc and its parent docs
@@ -51,9 +43,9 @@ class DownloadController < ApplicationController
 
     url = fedora_config["url"] + "/objects/" + params[:uri] + "/datastreams/" + params[:block] + "/content"
 
-    # ACHYDRA-177: exempt if a description download
-    # TODO: Remove after Hyacinth migration
-    if (!resource_doc && description_download?)
+    # Allow descMetadata downloads of resources regardless of embargo status.
+    # Allow CONTENT downloads of metadata. # TODO: Remove after Hyacinth migration.
+    if (is_metadata?(resource_doc) && params[:block] == 'CONTENT') || (params[:block] == 'descMetadata')
       fail_fast = false
     end
 
@@ -137,7 +129,12 @@ class DownloadController < ApplicationController
 
   private
 
-  def record_stats()
+  # TODO: Remove after Hyacinth migration.
+  def is_metadata?(doc)
+    doc['has_model_ssim'] && doc['has_model_ssim'].include?('info:fedora/ldpd:MODSMetadata')
+  end
+
+  def record_stats
     unless is_bot?(request.user_agent)
       Statistic.create!(:session_id => request.session_options[:id], :ip_address => request.env['HTTP_X_FORWARDED_FOR'] || request.remote_addr, :event => "Download", :identifier => params["uri"], :at_time => Time.now())
     end
