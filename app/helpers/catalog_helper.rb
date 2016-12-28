@@ -37,46 +37,30 @@ module CatalogHelper
   def build_recent_updated_list()
     query_params = {
       :q => "", :fl => "title_display, id, author_facet, record_creation_date",
-      :sort => "record_creation_date desc", :fq => ["has_model_ssim:\"#{ContentAggregator.to_class_uri}\""],
+      :sort => "record_creation_date desc",
+      :fq => ["author_facet:*", "has_model_ssim:\"#{ContentAggregator.to_class_uri}\""],
       :start => 0, :rows => 100}
-    included_authors = []
-    results = []
-    return build_distinct_authors_list(query_params, included_authors, results)
+    build_distinct_authors_list(query_params)
   end
 
-  def build_distinct_authors_list(query_params, included_authors, results)
+  def build_distinct_authors_list(query_params, authors = [], results = [])
+    response = repository.search(query_params)["response"]
+    return results unless response["docs"].present?
 
-    updated = repository.search(query_params)
-    items = updated["response"]["docs"]
-    if(items.empty?)
-      return results
+    response["docs"].each do |r|
+      new_authors = r["author_facet"] - authors if r["author_facet"]
+
+      next unless new_authors.present?
+      authors.concat new_authors
+      results << r
+      break if(results.length == blacklight_config[:max_most_recent])
     end
-    items.sort! do  |x,y|
-      y["record_creation_date"]<=>x["record_creation_date"]
-    end
-    items.each do |r|
-      new = true
-      if(r["author_facet"])
-        r["author_facet"].each do |author|
-          if(included_authors.include?(author))
-            new = false
-          else
-            included_authors << author
-          end
-        end
-        if (new)
-          results << r
-          if(results.length == blacklight_config[:max_most_recent])
-            return results
-          end
-        end
-      end
-    end
-    if(results.length < blacklight_config[:max_most_recent])
-      query_params[:start] = query_params[:start] + 100
-      build_distinct_authors_list(query_params, included_authors, results)
+    more_items = query_params[:start] + query_params[:rows] < response["numFound"]
+    if(results.length < blacklight_config[:max_most_recent] && more_items)
+      query_params[:start] = query_params[:start] + query_params[:rows]
+      build_distinct_authors_list(query_params, authors, results)
     else
-      return results
+      results
     end
   end
 
