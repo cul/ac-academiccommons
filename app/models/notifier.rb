@@ -66,7 +66,7 @@ class Notifier < ActionMailer::Base
     @name = request[:name]
     @email = request[:email]
     @agreement_version = request["AC-agreement-version"]
-    recipients = Rails.application.config.emails['mail_deposit_recipients']
+    recipients = Rails.application.config.emails['new_agreement_notification']
     from = Rails.application.config.emails['mail_deliverer']
     subject = "Academic Commons Author Agreement Accepted"
     content_type = 'text/html'

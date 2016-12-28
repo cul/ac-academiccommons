@@ -2,7 +2,6 @@
 # List of emails to send report and deposit notifications. Can also set
 # "from" field in emails.
 #
-
 # Emails for local environments.
 # Emails are not actually sent in local environments, therefore the emails don't
 # have to be valid.
@@ -14,6 +13,8 @@ local: &local
   mail_deposit_recipients:
     - example@columbia.edu
   mail_deliverer: ac@columbia.edu
+  new_agreement_notification:
+    - example@columbia.edu
 
 development: *local
 test: *local
@@ -28,6 +29,8 @@ deployed: &deployed
   mail_deposit_recipients:
     - ACdeposit@columbia.edu
   mail_deliverer: ac@columbia.edu
+  new_agreement_notification:
+    - ac@columbia.edu
 
 academiccommons_dev: *deployed
 academiccommons_test: *deployed
