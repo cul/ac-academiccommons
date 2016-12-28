@@ -37,46 +37,30 @@ module CatalogHelper
   def build_recent_updated_list()
     query_params = {
       :q => "", :fl => "title_display, id, author_facet, record_creation_date",
-      :sort => "record_creation_date desc", :fq => ["has_model_ssim:\"#{ContentAggregator.to_class_uri}\""],
+      :sort => "record_creation_date desc",
+      :fq => ["author_facet:*", "has_model_ssim:\"#{ContentAggregator.to_class_uri}\""],
       :start => 0, :rows => 100}
-    included_authors = []
-    results = []
-    return build_distinct_authors_list(query_params, included_authors, results)
+    build_distinct_authors_list(query_params)
   end
 
-  def build_distinct_authors_list(query_params, included_authors, results)
+  def build_distinct_authors_list(query_params, authors = [], results = [])
+    response = repository.search(query_params)["response"]
+    return results unless response["docs"].present?
 
-    updated = repository.search(query_params)
-    items = updated["response"]["docs"]
-    if(items.empty?)
-      return results
+    response["docs"].each do |r|
+      new_authors = r["author_facet"] - authors if r["author_facet"]
+
+      next unless new_authors.present?
+      authors.concat new_authors
+      results << r
+      break if(results.length == blacklight_config[:max_most_recent])
     end
-    items.sort! do  |x,y|
-      y["record_creation_date"]<=>x["record_creation_date"]
-    end
-    items.each do |r|
-      new = true
-      if(r["author_facet"])
-        r["author_facet"].each do |author|
-          if(included_authors.include?(author))
-            new = false
-          else
-            included_authors << author
-          end
-        end
-        if (new)
-          results << r
-          if(results.length == blacklight_config[:max_most_recent])
-            return results
-          end
-        end
-      end
-    end
-    if(results.length < blacklight_config[:max_most_recent])
-      query_params[:start] = query_params[:start] + 100
-      build_distinct_authors_list(query_params, included_authors, results)
+    more_items = query_params[:start] + query_params[:rows] < response["numFound"]
+    if(results.length < blacklight_config[:max_most_recent] && more_items)
+      query_params[:start] = query_params[:start] + query_params[:rows]
+      build_distinct_authors_list(query_params, authors, results)
     else
-      return results
+      results
     end
   end
 
@@ -91,65 +75,43 @@ module CatalogHelper
     current_date > embargo_release_date
   end
 
-  def get_departments_list
-    results = []
-    query_params = {:q=>"", :rows=>"0", "facet.limit"=>-1}
-    solr_results = repository.search(query_params)
-    affiliation_departments = solr_results.facet_counts["facet_fields"]["department_facet"]
-    res = {}
-    affiliation_departments.each do |item|
-      if(item.to_s.match(/\A[+-]?\d+?(\.\d+)?\Z/) != nil)
-        res[:count] = item
-        results << res
-        res = {}
-      else
-        res[:name] = item
+  # TODO: Move to a browse controller
+  def collect_facet_field_values(facet_field_results)
+    results = {}
+    facet_field_results.each do |facet_field, facet_counts|
+      results[facet_field] = (0...facet_counts.length/2).map do |ix|
+        {name: facet_counts[ix * 2], count: facet_counts[1 + ix * 2]}
       end
     end
-    return results
+    results
   end
 
+  # TODO: Move to a browse controller
+  def single_facet_values(facet_field)
+    query_params = {:q=>"", :rows=>"0", "facet.limit"=>-1, "facet.field" => facet_field}
+    solr_results = repository.search(query_params)
+    facet_field_results = solr_results.facet_counts["facet_fields"]
+    collect_facet_field_values(facet_field_results).fetch(facet_field,[])
+  end
+
+  # TODO: Move to a browse controller
+  def get_subjects_list
+    single_facet_values("subject_facet")
+  end
+
+  # TODO: Move to a browse controller
+  def get_departments_list
+    single_facet_values("department_facet")
+  end
+
+  # TODO: Move to a browse controller
   def get_department_facet_list(department)
-    results = {}
     query_params = {:q=>"", :'fq'=>"department_facet:\"" + department + "\"", :rows=>"0", "facet.limit"=>-1}
     solr_results = repository.search(query_params)
-    facet_fields = solr_results.facet_counts["facet_fields"]
-
-    facet_fields.each do |key, value|
-      if(key != "department_facet" && key != "organization_facet")
-        facet_field_values = []
-        facet_field_value = {}
-        value.each do |item|
-          if(item.to_s.match(/\A[+-]?\d+?(\.\d+)?\Z/) != nil)
-            facet_field_value[:count] = item
-            facet_field_values << facet_field_value
-            facet_field_value = {}
-          else
-            facet_field_value[:name] = item
-          end
-        end
-        results[key] = facet_field_values
-      end
+    facet_field_results = solr_results.facet_counts["facet_fields"]
+    collect_facet_field_values(facet_field_results).delete_if do |k,v|
+      k == "department_facet" || k == "organization_facet"
     end
-    return results
-  end
-
-  def get_subjects_list
-    results = []
-    query_params = {:q=>"", :rows=>"0", "facet.limit"=>-1, "facet.field" => "subject_facet"}
-    solr_results = repository.search(query_params)
-    subjects = solr_results.facet_counts["facet_fields"]["subject_facet"]
-    res = {}
-    subjects.each do |item|
-      if(item.to_s.match(/\A[+-]?\d+?(\.\d+)?\Z/) != nil)
-        res[:count] = item
-        results << res
-        res = {}
-      else
-        res[:name] = item
-      end
-    end
-    return results
   end
 
   def thumbnail_for_resource(resource)
@@ -236,23 +198,18 @@ module CatalogHelper
     paginate paginate_params(response), options, &block
   end
 
-  #
   # Pass in an RSolr::Response. Displays the "showing X through Y of N" message.
   def render_pagination_info(response, options = {})
-      start = response.start + 1
-      per_page = response.rows
-      current_page = (response.start / per_page).ceil + 1
-      num_pages = (response.total / per_page.to_f).ceil
-      total_hits = response.total
+      page_info = paginate_params(response)
 
-      start_num = number_with_delimiter(start)
-      end_num = number_with_delimiter(start + response.docs.length - 1)
-      total_num = number_with_delimiter(total_hits)
+      start_num = number_with_delimiter(response.start + 1)
+      end_num = number_with_delimiter(response.start + response.docs.length)
+      total_num = number_with_delimiter(response.total)
 
       entry_name = options[:entry_name] ||
-        (response.empty?? 'entry' : response.docs.first.class.name.underscore.sub('_', ' '))
+        (response.empty? ? 'entry' : response.docs.first.class.name.underscore.sub('_', ' '))
 
-      if num_pages < 2
+      if page_info.num_pages < 2
         case response.docs.length
         when 0; "No #{h(entry_name.pluralize)} found".html_safe
         when 1; "Displaying <b>1</b> #{h(entry_name)}".html_safe

@@ -17,7 +17,7 @@ module ApplicationHelper
 
   def suggested_citation(document)
     citation = []
-    citation << first_names_then_last_suggested_citation(document_author || "")
+    citation << first_names_then_last(document_author || "", ", ")
 
     unless document["pub_date_facet"].blank? || document['pub_date_facet'][0].blank?
       citation << document_render_field_value("pub_date_facet", document["pub_date_facet"][0])
@@ -29,32 +29,10 @@ module ApplicationHelper
     citation.reject(&:blank?).join(', ').concat('.').html_safe
   end
 
-  def first_names_then_last(last_names_first)
-
-    i = 0
-    html = ""
-    last_names_first.split(";").each do |last_name_first|
-      if(i > 0)
-        html << "; "
-      end
-      html << first_name_then_last(last_name_first.strip)
-      i += 1
-    end
-    return html.html_safe
-  end
-
-  def first_names_then_last_suggested_citation(last_names_first)
-
-    i = 0
-    html = ""
-    last_names_first.split(";").each do |last_name_first|
-      if(i > 0)
-        html << ", "
-      end
-      html << first_name_then_last(last_name_first.strip)
-      i += 1
-    end
-    return html.html_safe
+  def first_names_then_last(last_names_first, sep = "; ")
+    last_names_first.split(";").map do |last_name_first|
+      first_name_then_last(last_name_first.strip)
+    end.join(sep).html_safe
   end
 
   def first_name_then_last(last_name_first)
@@ -71,7 +49,6 @@ module ApplicationHelper
 
     raw('<a href="' + '/catalog?f[author_facet][]=' + last_name_first + '">' + fl_name + '</a>')
   end
-
 
   # RSolr presumes one suggested word, this is a temporary fix
   def get_suggestions(spellcheck)
@@ -98,7 +75,6 @@ module ApplicationHelper
   end
 
   def document_render_field_value(field_name, value)
-
     if(document_show_fields_linked(field_name))
       if(document_show_fields_linked(field_name) == "facet")
         value = '<a href="' + '/catalog?f[' + field_name + '][]=' + value + '">' + value + '</a>'
@@ -127,7 +103,6 @@ module ApplicationHelper
 
     return content
   end
-
 
   def page_location
     if params[:controller] == 'catalog'
