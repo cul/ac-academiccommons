@@ -214,23 +214,18 @@ module CatalogHelper
     paginate paginate_params(response), options, &block
   end
 
-  #
   # Pass in an RSolr::Response. Displays the "showing X through Y of N" message.
   def render_pagination_info(response, options = {})
-      start = response.start + 1
-      per_page = response.rows
-      current_page = (response.start / per_page).ceil + 1
-      num_pages = (response.total / per_page.to_f).ceil
-      total_hits = response.total
+      page_info = paginate_params(response)
 
-      start_num = number_with_delimiter(start)
-      end_num = number_with_delimiter(start + response.docs.length - 1)
-      total_num = number_with_delimiter(total_hits)
+      start_num = number_with_delimiter(response.start + 1)
+      end_num = number_with_delimiter(response.start + response.docs.length)
+      total_num = number_with_delimiter(response.total)
 
       entry_name = options[:entry_name] ||
-        (response.empty?? 'entry' : response.docs.first.class.name.underscore.sub('_', ' '))
+        (response.empty? ? 'entry' : response.docs.first.class.name.underscore.sub('_', ' '))
 
-      if num_pages < 2
+      if page_info.num_pages < 2
         case response.docs.length
         when 0; "No #{h(entry_name.pluralize)} found".html_safe
         when 1; "Displaying <b>1</b> #{h(entry_name)}".html_safe
