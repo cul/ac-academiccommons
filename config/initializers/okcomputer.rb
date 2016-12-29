@@ -12,7 +12,8 @@ solr_urls.each_with_index do |url, i|
   OkComputer::Registry.register("solr#{i}", OkComputer::SolrCheck.new(url))
 end
 
-# Checking Fedora connection
+# Checking Fedora object retrieval
+OkComputer::Registry.register("fedora_object", OkComputer::FedoraObjectCheck.new)
 
 # Checking mail server configuration and availability
 OkComputer::Registry.register('action_mailer', OkComputer::ActionMailerCheck.new)
