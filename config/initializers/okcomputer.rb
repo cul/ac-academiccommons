@@ -1,12 +1,16 @@
 # Additional checks for OkComputer.
 
+# Require authentication to all checks but the default check
+creds = Rails.application.config_for(:secrets)['okcomputer']
+raise 'Missing OkComputer credentials' if creds.blank?
+
+OkComputer.require_authentication(creds['user'], creds['password'], except: %w(default))
+
 # Checking Solr connection
-OkComputer::Registry.register(
-  'solr', OkComputer::SolrCheck.new(Rails.application.config_for(:solr)['url'])
-)
-OkComputer::Registry.register(
-  'blacklight_solr', OkComputer::SolrCheck.new(Rails.application.config_for(:blacklight)['url'])
-)
+solr_urls = [:solr, :blacklight].map {|c| Rails.application.config_for(c)['url'] }.uniq
+solr_urls.each_with_index do |url, i|
+  OkComputer::Registry.register("solr#{i}", OkComputer::SolrCheck.new(url))
+end
 
 # Checking Fedora connection
 
