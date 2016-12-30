@@ -29,7 +29,6 @@ class StatisticsController < ApplicationController
   end
 
   def all_author_monthlies
-
     commit_button_all = "Send To Authors"
     commit_button_all_to_single = "Send All Reports To Single Email"
     commit_button_aternate = "Test Alternate Email For Person"
@@ -95,7 +94,7 @@ class StatisticsController < ApplicationController
         final_notice = "The monthly report for " + params[:one_report_uni].to_s + " was sent to " + params[:one_report_email]
       end
 
-      if(!isMonthlyReportsInProcess)
+      if(!monthly_reports_in_process?)
         send_authors_reports(processed_authors, designated_recipient)
       else
         final_notice = "The process is already running."
@@ -106,47 +105,43 @@ class StatisticsController < ApplicationController
       flash.now[:notice] = final_notice
 
       clean_params(params)
-
     end
   end
 
- def detail_report
+  def detail_report
+    set_default_params(params)
 
-      setDefaultParams(params)
+    startdate = Date.parse(params[:month_from] + " " + params[:year_from])
+    enddate = Date.parse(params[:month_to] + " " + params[:year_to])
 
-      startdate = Date.parse(params[:month_from] + " " + params[:year_from])
-      enddate = Date.parse(params[:month_to] + " " + params[:year_to])
-
-      if params[:commit].in?('View', "Email", "Get Usage Stats", "keyword search")
-
-        log_statistics_usage(startdate, enddate, params)
-        @results, @stats, @totals =  get_author_stats(startdate,
-                                                      enddate,
-                                                      params[:search_criteria],
-                                                      nil,
-                                                      params[:include_zeroes],
-                                                      params[:facet],
-                                                      params[:include_streaming_views],
-                                                      params[:order_by]
-                                                      )
-        if (@results == nil || @results.size == 0)
-          set_message_and_variables
-          return
-        end
-
-        if params[:commit] == "Email"
-          Notifier.statistics_by_search(params[:email_destination], params[:search_criteria], startdate, enddate, @results, @stats, @totals, request, params[:include_streaming_views]).deliver
-          flash.now[:notice] = "The report for: " + params[:search_criteria] + " was sent to: " + params[:email_destination]
-        end
+    if params[:commit].in?('View', "Email", "Get Usage Stats", "keyword search")
+      log_statistics_usage(startdate, enddate, params)
+      @results, @stats, @totals =  get_author_stats(startdate,
+      enddate,
+      params[:search_criteria],
+      nil,
+      params[:include_zeroes],
+      params[:facet],
+      params[:include_streaming_views],
+      params[:order_by]
+      )
+      if (@results == nil || @results.size == 0)
+        set_message_and_variables
+        return
       end
 
-      if params[:commit] == "Download CSV report"
-        download_csv_report(startdate, enddate, params)
+      if params[:commit] == "Email"
+        Notifier.statistics_by_search(params[:email_destination], params[:search_criteria], startdate, enddate, @results, @stats, @totals, request, params[:include_streaming_views]).deliver
+        flash.now[:notice] = "The report for: " + params[:search_criteria] + " was sent to: " + params[:email_destination]
       end
+    end
+
+    if params[:commit] == "Download CSV report"
+      download_csv_report(startdate, enddate, params)
+    end
   end
 
-  def school_docs_size()
-
+  def school_docs_size
     schools = params[:school]
 
     schools_arr = schools.split(',')
@@ -161,8 +156,7 @@ class StatisticsController < ApplicationController
     end
   end
 
-
-  def stats_by_event()
+  def stats_by_event
     event = params[:event]
     count = Statistic.where(event: event).count
 
@@ -171,17 +165,13 @@ class StatisticsController < ApplicationController
     end
   end
 
-
   def docs_size_by_query_facets
-
     respond_to do |format|
       format.html { render :text => get_docs_size_by_query_facets().size.to_s}
     end
   end
 
-
   def facetStatsByEvent
-
     query = params[:f]
     event = params[:event]
 
@@ -194,7 +184,6 @@ class StatisticsController < ApplicationController
     end
   end
 
-
   def single_pid_count
     query_params = {:qt=>"standard", :q=>"pid:\"" + params[:pid] + "\""}
     results = repository.search(query_params)
@@ -204,7 +193,6 @@ class StatisticsController < ApplicationController
       format.html { render :text => count.to_s }
     end
   end
-
 
   def single_pid_stats
     event = params[:event]
@@ -223,7 +211,7 @@ class StatisticsController < ApplicationController
     end
   end
 
-  def school_stats()
+  def school_stats
     school = params[:school]
     event = params[:event]
 
@@ -237,31 +225,22 @@ class StatisticsController < ApplicationController
   end
 
   def common_statistics_csv
-
     res_list = get_res_list
 
     if(res_list.size != 0)
-
       csv = create_common_statistics_csv(res_list)
 
       send_data csv, :type=>"application/csv", :filename => "common_statistics.csv"
     end
-
-
   end
 
-  def generic_statistics
+  def generic_statistics; end
 
-  end
-
-  def school_statistics
-
-  end
+  def school_statistics; end
 
   def send_csv_report
-
     params.each do |key, value|
-        logger.info("pram: " + key + " = " + value.to_s)
+      logger.info("pram: " + key + " = " + value.to_s)
     end
 
     recipients = params[:email_to]
@@ -275,9 +254,7 @@ class StatisticsController < ApplicationController
 
     Notifier.statistics_report_with_csv_attachment(recipients, from, subject, message, prepared_attachments).deliver
 
-    #render nothing: true
     render :text => 'sent'
-
   end
 
   def free_to_read?(doc)
@@ -286,15 +263,15 @@ class StatisticsController < ApplicationController
 
   private
 
-  def isMonthlyReportsInProcess
+  def monthly_reports_in_process?
     Dir.glob("#{Rails.root}/log/monthly_reports/*.tmp") do |log_file_path|
       return true
     end
     return false
   end
 
-  def setDefaultParams(params)
-     if (params[:month_from].nil? || params[:month_to].nil? || params[:year_from].nil? || params[:year_to].nil?)
+  def set_default_params(params)
+    if (params[:month_from].nil? || params[:month_to].nil? || params[:year_from].nil? || params[:year_to].nil?)
 
       params[:month_from] = "Apr"
       params[:year_from] = "2011"
@@ -328,6 +305,7 @@ class StatisticsController < ApplicationController
     return limit
   end
   helper_method :facet_limit_for
+  
   # Returns complete hash of key=facet_field, value=limit.
   # Used by SolrHelper#solr_search_params to add limits to solr
   # request for all configured facet limits.
