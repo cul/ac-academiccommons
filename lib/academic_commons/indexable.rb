@@ -24,8 +24,6 @@ module AcademicCommons
       search_to_content = lambda { |x| x.kind_of?(Nokogiri::XML::Element) ? x.content.strip : x.to_s.strip }
       add_field = lambda { |name, value| solr_doc[name] ? (solr_doc[name] << search_to_content.call(value)) : (solr_doc[name] = [search_to_content.call(value)]) }
 
-      get_fullname = lambda { |node| node.nil? ? nil : (node.css("namePart[@type='family']").collect(&:content) | node.css("namePart[@type='given']").collect(&:content)).join(", ") }
-
       organizations = []
       departments = []
       originator_department = ""
@@ -56,7 +54,7 @@ module AcademicCommons
       all_author_names = []
       mods.css("name[@type='personal']").each do |name_node|
 
-        fullname = get_fullname.call(name_node)
+        fullname = get_fullname(name_node)
         note_org = false
 
         if name_node.css("role>roleTerm").collect(&:content).any? { |role| AUTHOR_ROLES.include?(role) }
@@ -185,7 +183,7 @@ module AcademicCommons
 
         add_field.call("book_journal_title", book_journal_title)
 
-        add_field.call("book_author", get_fullname.call(related_host.at_css("name")))
+        add_field.call("book_author", get_fullname(related_host.at_css("name")))
 
       end
 
@@ -431,6 +429,18 @@ module AcademicCommons
       embargo_release_date = Date.strptime(free_to_read_start_date, '%Y-%m-%d')
       current_date = Date.strptime(Time.now.strftime('%Y-%m-%d'), '%Y-%m-%d')
       return current_date > embargo_release_date
+    end
+
+    # If there a namePart element with no type attribute use that name, otherwise
+    # look for a first and last name and combine them.
+    # TODO: This logic can be simplified when we completely transition to Hyacinth.
+    def get_fullname(node)
+      return nil if node.nil?
+      if name = node.at_css('namePart:not([type])')
+        name.content
+      else
+        (node.css("namePart[@type='family']").collect(&:content) | node.css("namePart[@type='given']").collect(&:content)).join(', ')
+      end
     end
   end
 end

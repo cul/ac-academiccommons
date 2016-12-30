@@ -5,7 +5,7 @@
     <img src="<%= doc_object_method(document,'/ldpd:sdef.Image/getThumbnail') %>">
   <% end %>
 
-  <dl class="defList" style="float:right">
+  <dl class="defList">
     <% index_fields(document).each do |solr_fname, field| -%>
       <% if should_render_show_field? document, field %>
         <% display_label = render_index_field_label document, :field => solr_fname %>

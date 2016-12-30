@@ -28,15 +28,18 @@ RSpec.describe AcademicCommons::Indexable do
     end
   end
 
-  context 'when mods not prefixed' do
+  # Tests prefixed MODS with joined names. These changes were introduced with the
+  # migration to Hyacinth.
+  context 'when mods from Hyacinth' do
     let(:mods_fixture) { File.read('spec/fixtures/actest_3/mods.xml') }
 
     include_examples 'indexing mods'
   end
 
-  context 'when mods prefixed' do
-    let(:mods_fixture) { File.read('spec/fixtures/mods_with_prefix.xml') }
-
+  # TODO: This can test and its associated fixture can be removed when we
+  # completely transition over to Hyacinth.
+  context 'when mods from Hypatia' do
+    let(:mods_fixture) { File.read('spec/fixtures/hypatia_mods.xml') }
     include_examples 'indexing mods'
   end
 end
