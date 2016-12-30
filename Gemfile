@@ -44,6 +44,8 @@ gem 'mysql2'
 
 gem "therubyracer"
 
+gem 'okcomputer'
+
 group :development do
   gem 'spring'
 end
