@@ -64,7 +64,7 @@ group :development, :test do
   gem 'capybara', '~>2.2'
   gem 'poltergeist' # Used to run test with js.
   gem 'database_cleaner'
-  gem "jettywrapper", ">=1.4.0"
+  gem "jettywrapper", ">=1.4.0", git: 'https://github.com/projecthydra/jettywrapper.git', branch: "master"
   gem 'solr_wrapper', '>= 0.18.0'
 
   gem 'byebug'
