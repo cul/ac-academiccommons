@@ -15,9 +15,13 @@ class Statistic < ActiveRecord::Base
     asset_pids = [asset_pids] if asset_pids.is_a? String
 
     raise 'asset_pids must be an Array or String' unless asset_pids.is_a? Array
-    raise "event must one of #{EVENTS}"           unless EVENTS.include? event
+    raise "event must one of #{EVENTS}"           unless valid_event?(event)
 
     group(:identifier).where("identifier IN (?) and event = ?", asset_pids, event).count
+  end
+
+  def self.valid_event?(e)
+    EVENTS.include?(e)
   end
 
   def self.reset_downloads
