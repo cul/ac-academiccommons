@@ -2459,3 +2459,10 @@ div.title{
 	text-overflow: ellipsis;
 	overflow: hidden;
 }
+
+a.anchor {
+  display: block;
+  position: relative;
+  top: -60px;
+  visibility: hidden;
+}
