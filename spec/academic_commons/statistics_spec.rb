@@ -9,6 +9,7 @@ RSpec.describe AcademicCommons::Statistics do
     class_rig.class_eval do
       include AcademicCommons::Statistics
       def repository; end
+      def params; Hash.new; end
     end
     class_rig.new
   end
@@ -208,4 +209,67 @@ RSpec.describe AcademicCommons::Statistics do
   end
 
   describe '.make_solr_request'
+
+  describe '.send_authors_reports' do
+    let(:test_params) do
+      {
+        include_zeroes: true,
+        year: Date.today.strftime("%Y"),
+        month: Date.today.strftime("%b"),
+      }
+    end
+    let(:author_search) do
+      {
+        :rows => 100000, :sort => 'title_display asc', :q => nil, :page => 1,
+        :fq => "author_uni:\"abc123\"", :fl => "title_display,id,handle,doi,genre_facet"
+      }
+    end
+    let(:author_docs) do
+      {
+        'response' => {
+          'docs' => [
+            { 'id' => pid, 'title_display' => 'First Test Document',
+              'handle' => '', 'doi' => '', 'genre_facet' => '' },
+          ]
+        }
+      }
+    end
+
+    before :each do
+      # FactoryGirl.create_list(:view_stat, 5)
+      allow(statistics).to receive(:params).and_return(test_params)
+      allow(statistics.repository).to receive(:search)
+        .with(author_search).and_return(author_docs)
+      authors = [ { id: 'abc123', email: 'abc123@columbia.edu' } ]
+      statistics.instance_eval{ send_authors_reports(authors, nil) }
+    end
+
+    context 'sends email' do
+      let(:email) { ActionMailer::Base.deliveries.pop }
+
+      it 'to correct author' do
+        expect(email.to).to contain_exactly 'abc123@columbia.edu'
+      end
+
+      it 'with expected subject' do
+        expect(email.subject).to eql "Academic Commons Monthly Download Report for #{test_params[:month]} #{test_params[:year]} - #{test_params[:month]} #{test_params[:year]}"
+      end
+
+      it 'with appropriate title' do
+        expect(email.body.to_s).to match /Usage Statistics for abc123/
+      end
+
+      it 'with correct view stats' do
+        expect(email.body.to_s).to match /5/
+      end
+
+      it 'with correct documents' do
+        expect(email.body.to_s).to match /First Test Document/
+      end
+    end
+  end
+
+  describe ".get_facet_stats_by_event" do
+    
+  end
 end

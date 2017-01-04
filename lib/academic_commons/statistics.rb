@@ -212,13 +212,11 @@ module AcademicCommons
         end
       end
 
-
       if(months_list != nil)
         process_stats_by_month(stats, totals, ids, download_ids, startdate, enddate, months_list)
       end
 
       return results, stats, totals, download_ids
-
     end
 
     # Generates base line objects to hold usage statistic information.
@@ -276,9 +274,7 @@ module AcademicCommons
       Rails.logger.debug("statistics hash: #{stats.inspect}")
     end
 
-
     def parse_search_query(search_query)
-
       search_query = URI.unescape(search_query)
       search_query = search_query.gsub(/\+/, ' ')
 
@@ -312,21 +308,16 @@ module AcademicCommons
       return params
     end
 
-
     def make_solr_request(facet, query)
       Rails.logger.debug "In make_solr_request for query: #{query}"
       if(facet == "search_query")
-
         params = parse_search_query(query)
         facet_query = params["f"]
         q = params["q"]
         sort = params["sort"]
-
       else
-
         facet_query = "#{facet}:\"#{query}\""
         sort = "title_display asc"
-
       end
 
       if facet_query == nil && q == nil
@@ -352,7 +343,6 @@ module AcademicCommons
       months_hash = Hash.new
 
       (startdate..enddate).each do |date|
-
         key = date.strftime("%Y-%m")
 
         if(!months_hash.has_key?(key))
@@ -366,10 +356,6 @@ module AcademicCommons
       else
         return months
       end
-    end
-
-    def base_url
-      return "http://" + Rails.application.config.base_path
     end
 
     def set_message_and_variables
@@ -405,7 +391,6 @@ module AcademicCommons
     end
 
     def make_test_author(author_id, email)
-
       test_author = Hash.new
       test_author[:id] = author_id
       test_author[:email] = email
@@ -677,7 +662,6 @@ module AcademicCommons
         downloads = 0
         docs = Hash.new
       else
-
         pids_collection = get_pids_by_query_facets(query)
 
         if(params[:month_from] && params[:year_from] && params[:month_to] && params[:year_to] )
@@ -695,97 +679,68 @@ module AcademicCommons
 
       result.store('docs_size', docs.size.to_s)
       result.store('statistic', count.to_s)
-
-      return result
+      result
     end
 
     def send_authors_reports(processed_authors, designated_recipient)
       start_time = Time.new
       time_id = start_time.strftime("%Y%m%d-%H%M%S")
-      logger = Logger.new(Rails.root.to_s + "/log/monthly_reports/#{time_id}.tmp")
+      log_path = File.join(Rails.root, 'log', 'monthly_reports')
+      logger = Logger.new(File.join(log_path, "#{time_id}.tmp"))
 
-      logger.info "\n=== All Authors Monthly Reports ==="
-
-      logger.info "\nStarted at: " + start_time.strftime("%Y-%m-%d %H:%M") + "\n"
+      logger.info "=== All Authors Monthly Reports ==="
+      logger.info "Started at: " + start_time.strftime("%Y-%m-%d %H:%M")
 
       sent_counter = 0
       skipped_counter = 0
       sent_exceptions = 0
 
       processed_authors.each do |author|
-
         begin
           author_id = author[:id]
-          startdate = Date.parse(params[:month] + " " + params[:year])
-          enddate = Date.parse(params[:month] + " " + params[:year])
+          date = Date.parse(params[:month] + " " + params[:year])
 
-          @results, @stats, @totals =  get_author_stats(startdate,
-          enddate,
-          author_id,
-          nil,
-          params[:include_zeroes],
-          'author_uni',
-          false,
-          params[:order_by]
+          @results, @stats, @totals =  get_author_stats(
+            date, date, author_id, nil, params[:include_zeroes],
+            'author_uni', false, params[:order_by]
           )
 
-          if(designated_recipient)
-            email = designated_recipient
-          else
-            email = author[:email]
-          end
-
-          if(email == nil)
-            raise "no email address found"
-          end
+          email = designated_recipient || author[:email]
+          raise "no email address found" if email.nil?
 
           if @totals.values.sum != 0 || params[:include_zeroes]
-            sent_counter = sent_counter + 1
+            sent_counter += 1
             if(params[:do_not_send_email])
               test_msg = ' (this is test - email was not sent)'
             else
-              Notifier.author_monthly(email, author_id, startdate, enddate, @results, @stats, @totals, request, false, params[:optional_note]).deliver
+              Notifier.author_monthly(email, author_id, date, date, @results, @stats, @totals, false, params[:optional_note]).deliver
               test_msg = ''
             end
 
-            logger.info "report for '" + author_id + "' was sent to " + email + " at " + Time.new.strftime("%Y-%m-%d %H:%M") + test_msg
+            logger.info "Report for '#{author_id}' was sent to #{email} at " + Time.new.strftime("%Y-%m-%d %H:%M") + test_msg
           else
-            skipped_counter = skipped_counter + 1
-            logger.info "report for '" + author_id + "' was skipped"
+            skipped_counter += 1
+            logger.info "Report for '#{author_id}' was skipped"
           end
 
         rescue Exception => e
-          logger.info("(All Authors Monthly Statistics) - There is some error for " + author_id + ", " + (author[:email] || "") + ", error: " + e.to_s + ", " + Time.new.to_s)
-          sent_exceptions = sent_exceptions + 1
-        end # begin
-
-      end # processed_authors.each
+          logger.error "For #{author_id}, email: #{author[:email]}"
+          logger.error "#{e}\n\t#{e.backtrace.join("\n\t")}"
+          sent_exceptions += 1
+        end
+      end
 
       finish_time = Time.new
-      logger.info "\nNumber of emails\n sent: " + sent_counter.to_s + ",\n skipped: " + skipped_counter.to_s +  ",\n errors: " + sent_exceptions.to_s
-      logger.info "\nFinished at: " + finish_time.strftime("%Y-%m-%d %H:%M")
+      logger.info "Number of emails"
+      logger.info "\tsent: #{sent_counter}, skipped: #{skipped_counter}, errors: #{sent_exceptions}"
+      logger.info "Finished at: " + finish_time.strftime("%Y-%m-%d %H:%M")
 
       seconds_spent = finish_time - start_time
       readble_time_spent = Time.at(seconds_spent).utc.strftime("%H hours, %M minutes, %S seconds")
 
-      logger.info "\nTime spent: " + getReadableTimeSpent(start_time)
+      logger.info "Time spent: #{readble_time_spent}"
 
-      File.rename(Rails.root.to_s + "/log/monthly_reports/#{time_id}.tmp", Rails.root.to_s + "/log/monthly_reports/#{time_id}.log")
-
-    end # send_authors_reports
-
-    def getReadableTimeSpent(start_time)
-      return timeReadableFormat(getSecondsSpent(start_time))
-    end
-
-    def timeReadableFormat(seconds)
-      return Time.at(seconds).utc.strftime("%H hours, %M minutes, %S seconds")
-    end
-
-    def getSecondsSpent(start_time)
-      finish_time = Time.new
-      seconds_spent = finish_time - start_time
-      return seconds_spent
+      File.rename(File.join(log_path, "#{time_id}.tmp"), File.join(log_path, "#{time_id}.log"))
     end
 
     def clean_params(params)

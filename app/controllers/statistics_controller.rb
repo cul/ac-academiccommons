@@ -6,7 +6,7 @@ class StatisticsController < ApplicationController
 
   require "csv"
 
-  helper_method :facet_names, :facet_items, :base_url, :get_res_list, :get_docs_size_by_query_facets,
+  helper_method :facet_names, :facet_items, :get_res_list, :get_docs_size_by_query_facets,
                 :get_time_period, :months
 
   def unsubscribe_monthly
@@ -185,9 +185,8 @@ class StatisticsController < ApplicationController
   end
 
   def single_pid_count
-    query_params = {:qt=>"standard", :q=>"pid:\"" + params[:pid] + "\""}
-    results = repository.search(query_params)
-    count = results["response"]["numFound"]
+    query_params = { qt: "standard", q:"pid:\"" + params[:pid] + "\"" }
+    count = Blacklight.default_index.search(query_params)["response"]["numFound"]
 
     respond_to do |format|
       format.html { render :text => count.to_s }
@@ -198,13 +197,9 @@ class StatisticsController < ApplicationController
     event = params[:event]
     pid = params[:pid]
 
-    pid_item = Hash.new
-    pid_item.store("id", pid)
+    pids_array = [ { "id" => pid }.with_indifferent_access ]
 
-    pids_collection = Array.new
-    pids_collection << Mash.new(pid_item)
-
-    count = count_pids_statistic(pids_collection, event)
+    count = count_pids_statistic(pids_array, event)
 
     respond_to do |format|
       format.html { render :text => count.to_s }
@@ -305,7 +300,7 @@ class StatisticsController < ApplicationController
     return limit
   end
   helper_method :facet_limit_for
-  
+
   # Returns complete hash of key=facet_field, value=limit.
   # Used by SolrHelper#solr_search_params to add limits to solr
   # request for all configured facet limits.
