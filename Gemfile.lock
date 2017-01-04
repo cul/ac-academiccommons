@@ -6,6 +6,17 @@ GIT
       blacklight (>= 4.2.2)
       rails (>= 3.2.13)
 
+GIT
+  remote: https://github.com/projecthydra/jettywrapper.git
+  revision: 862bb29a6b72a2507869786ea07da27e89d60365
+  branch: master
+  specs:
+    jettywrapper (2.0.4)
+      activesupport (>= 3.0.0)
+      childprocess
+      i18n
+      rubyzip (~> 1.0)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -163,12 +174,6 @@ GEM
       domain_name (~> 0.5)
     httpclient (2.8.3)
     i18n (0.7.0)
-    jettywrapper (2.0.4)
-      activesupport (>= 3.0.0)
-      childprocess
-      i18n
-      logger
-      rubyzip (~> 1.0)
     jquery-rails (2.0.3)
       railties (>= 3.1.0, < 5.0)
       thor (~> 0.14)
@@ -202,7 +207,6 @@ GEM
       rdf-xsd (~> 1.1, >= 1.1.5)
       sparql (~> 1.99)
       sparql-client (~> 1.99)
-    logger (1.2.8)
     loofah (2.0.3)
       nokogiri (>= 1.5.9)
     mail (2.6.4)
@@ -468,7 +472,7 @@ DEPENDENCIES
   font-awesome-rails
   haml (>= 4.0.7)
   httpclient (~> 2.6)
-  jettywrapper (>= 1.4.0)
+  jettywrapper (>= 1.4.0)!
   jquery-rails (= 2.0.3)
   json
   mail_form
