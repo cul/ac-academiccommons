@@ -116,13 +116,7 @@ module AcademicCommons
 
     # Makes column headers of all months represented in this csv.
     def make_month_line(months_list)
-      month_list = []
-
-      months_list.each do |month|
-        month_list << month_str = month.strftime("%b-%Y")
-      end
-
-      return month_list
+      months_list.map { |m| m.strftime("%b-%Y") }
     end
 
     # Populated statistics for each month.
@@ -270,7 +264,6 @@ module AcademicCommons
       end
 
       search_query.split('&').each do |value|
-
         key_value = value.split('=')
 
         if(key_value[0].start_with?("f[") )
@@ -308,12 +301,9 @@ module AcademicCommons
       if facet_query == nil && q == nil
         return
       else
-        results = repository.search( :rows => 100000,
-        :sort => sort,
-        :q => q,
-        :fq => facet_query,
-        :fl => "title_display,id,handle,doi,genre_facet",
-        :page => 1
+        results = repository.search(
+          :rows => 100000, :sort => sort, :q => q, :fq => facet_query,
+          :fl => "title_display,id,handle,doi,genre_facet", :page => 1
         )["response"]["docs"]
         return results
       end
@@ -323,24 +313,16 @@ module AcademicCommons
     # enddate given.
     #
     # @param recent_first flag that reverses array
-    def make_months_list(startdate, enddate, recent_first)
+    def make_months_list(startdate, enddate, recent_first = false)
       months = []
-      months_hash = Hash.new
 
-      (startdate..enddate).each do |date|
-        key = date.strftime("%Y-%m")
-
-        if(!months_hash.has_key?(key))
-          months << date
-          months_hash.store(key, "")
-        end
+      date = startdate
+      while date <= enddate
+        months << date
+        date += 1.month
       end
 
-      if(recent_first)
-        return months.reverse
-      else
-        return months
-      end
+      (recent_first) ? months.reverse : months
     end
 
     def set_message_and_variables
@@ -374,13 +356,7 @@ module AcademicCommons
     end
 
     def make_test_author(author_id, email)
-      test_author = Hash.new
-      test_author[:id] = author_id
-      test_author[:email] = email
-
-      processed_authors = Array.new
-      processed_authors.push(test_author)
-      return processed_authors
+      [{ id: author_id, email: email }]
     end
 
     def download_csv_report(startdate, enddate, params)

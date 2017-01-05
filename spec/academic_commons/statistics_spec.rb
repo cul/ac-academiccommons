@@ -338,4 +338,31 @@ RSpec.describe AcademicCommons::Statistics do
       expect(subject).to eq ['first column', '', '', '']
     end
   end
+
+  describe '.make_month_line' do
+    it 'returns correct values' do
+      dates = ['Dec-2015', 'Jan-2016', 'Feb-2016', 'Mar-2016', 'Apr-2016']
+      date_objs = dates.map { |d| Date.parse(d) }
+      expect(
+        statistics.instance_eval { make_month_line(date_objs) }
+      ).to eq dates
+    end
+  end
+
+  describe '.make_months_list' do
+    let(:dates) do
+      ['Dec-2015', 'Jan-2016', 'Feb-2016', 'Mar-2016', 'Apr-2016'].map { |d| Date.parse(d) }
+    end
+
+    it 'returns correct list' do
+      start = dates.first; last = dates.last
+      result = statistics.instance_eval { make_months_list(start, last) }
+      expect(result).to eq dates
+    end
+    it 'returns correct list in reverse' do
+      start = dates.first; last = dates.last
+      result = statistics.instance_eval { make_months_list(start, last, true) }
+      expect(result).to eq dates.reverse
+    end
+  end
 end
