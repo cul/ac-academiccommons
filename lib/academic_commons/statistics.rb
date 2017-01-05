@@ -419,16 +419,10 @@ module AcademicCommons
     end
 
     def school_pids(school)
-
-      pids_by_institution = repository.search(
-      :qt=>"search",
-      :rows=>20000,
-      :fq=>["{!raw f=organization_facet}" + school],
-      :"facet.field"=>["pid"],
+      Blacklight.default_index.search(
+        'qt' => "search", 'rows'=> 20000, 'facet.field'=>["pid"],
+        'fq' => ["{!raw f=organization_facet}#{school}"]
       )["response"]["docs"]
-
-      return pids_by_institution
-
     end
 
     def get_school_docs_size(school)

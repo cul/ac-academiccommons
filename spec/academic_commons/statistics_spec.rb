@@ -3,6 +3,7 @@ require 'rails_helper'
 RSpec.describe AcademicCommons::Statistics do
   let(:uni) { 'abc123' }
   let(:pid) { 'actest:1' }
+  let(:empty_response) { { 'response' => { 'docs' => [] } } }
 
   let(:statistics) do
     class_rig = Class.new
@@ -270,8 +271,6 @@ RSpec.describe AcademicCommons::Statistics do
   end
 
   describe ".get_pids_by_query_facets" do
-    let(:empty_response) { { 'response' => { 'docs' => [] } } }
-
     context 'when querying by two facets' do
       let(:solr_params) do
         {
@@ -312,6 +311,21 @@ RSpec.describe AcademicCommons::Statistics do
           get_pids_by_query_facets([['Bears', ['Polar Bears']], ['Birds', [nil]]])
         }
       end
+    end
+  end
+
+  describe '.school_pids' do
+    let(:solr_params) do
+      {
+        'qt' => "search", 'rows'=> 20000, 'facet.field'=>["pid"],
+        'fq' => ["{!raw f=organization_facet}Carlas Academy"]
+      }
+    end
+
+    it 'creates correct query' do
+      expect(Blacklight.default_index).to receive(:search)
+        .with(solr_params).and_return(empty_response)
+      statistics.instance_eval { school_pids('Carlas Academy') }
     end
   end
 end
