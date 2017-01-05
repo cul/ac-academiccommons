@@ -104,15 +104,9 @@ module AcademicCommons
 
     # Creates part of the header above the column names.
     def make_months_header(first_item, months_list)
-      header = []
-
-      header << first_item
-
-      months_list.size.downto(2) do
-        header << ""
-      end
-
-      return header
+      header = Array.new(months_list.size, "")
+      header[0] = first_item
+      header
     end
 
     # Return array of abbreviated month names.
@@ -420,28 +414,24 @@ module AcademicCommons
     end
 
     def facet_items(facet)
-      results = []
-      query_params = {:q=>"", :rows=>"0", "facet.limit"=>-1, :"facet.field"=>[facet]}
+      query_params = {:q => "", :rows => 0, 'facet.limit' => -1, 'facet.field' => [facet]}
       solr_results = repository.search(query_params)
       subjects = solr_results.facet_counts["facet_fields"][facet]
 
-      results << ["" ,""]
+      results = [["" ,""]]
 
       res_item = {}
       subjects.each do |item|
         if(item.kind_of? Integer)
           res_item[:count] = item
-
-          #Rails.logger.debug("======= " +  res_item[:count].to_s + " == " + res_item[:name].to_s)
-
-          results << [res_item[:name].to_s + " (" + res_item[:count].to_s  + ")", res_item[:name].to_s]
+          results << ["#{res_item[:name]} (#{res_item[:count]})", res_item[:name].to_s]
           res_item = {}
         else
           res_item[:name] = item
         end
       end
 
-      return results
+      results
     end
 
 

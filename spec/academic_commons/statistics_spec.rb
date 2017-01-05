@@ -328,4 +328,14 @@ RSpec.describe AcademicCommons::Statistics do
       statistics.instance_eval { school_pids('Carlas Academy') }
     end
   end
+
+  describe '.make_months_header' do
+    subject { statistics.instance_eval {
+      make_months_header("first column", ['Jan', 'Feb', 'Mar', 'Apr'])
+    }}
+
+    it 'makes header array' do
+      expect(subject).to eq ['first column', '', '', '']
+    end
+  end
 end
