@@ -436,19 +436,7 @@ module AcademicCommons
       return get_count(query_params)
     end
 
-    # @@facets_list = Hash.new
-    # def facet_items(facet)
-    #
-    # if(!@@facets_list.has_key?(facet) )
-    # @@facets_list.store(facet, make_facet_items(facet))
-    # Rails.logger.info("======= fasets init ====== ")
-    # end
-    #
-    # return @@facets_list[facet]
-    # end
-    # def make_facet_items(facet)
     def facet_items(facet)
-
       results = []
       query_params = {:q=>"", :rows=>"0", "facet.limit"=>-1, :"facet.field"=>[facet]}
       solr_results = repository.search(query_params)
@@ -477,26 +465,17 @@ module AcademicCommons
 
 
     def get_pids_by_query_facets(query)
+      facets_query = query.map do |param|
+        facet = param[0]
+        facet_item = param[1][0].to_s
+        (facet_item.blank? || facet_item == 'undefined') ? nil : "{!raw f=#{facet}}#{facet_item}"
+      end.compact
 
-      solr_facets_query = Array.new
-      query.each do | param|
-        Rails.logger.debug(" facet parameters:  facet - " + param[0].to_s + ", facet item - " + param[1].first.to_s )
-        if(param[1][0] != nil && !param[1][0].to_s.empty? && param[1][0].to_s != 'undefined' )
-          solr_facets_query.push("{!raw f=" + param[0].to_s + "}" + param[1][0].to_s)
-        end
-      end
-
-      Rails.logger.debug(" solr_facets_query size:  " + solr_facets_query.size.to_s )
-
-      query_params = Hash.new
-      query_params.store("qt", "search")
-      query_params.store("rows", 20000)
-
-
-      query_params.store("fq", solr_facets_query)
-      query_params.store("facet.field", ["pid"])
-
-      return  repository.search(query_params)["response"]["docs"]
+      query_params = {
+        "qt" => "search", "rows" => 20000, "facet.field" => ["pid"],
+        "fq" => facets_query
+      }
+      Blacklight.default_index.search(query_params)["response"]["docs"]
     end
 
 
@@ -549,8 +528,7 @@ module AcademicCommons
     end
 
 
-    def get_res_list()
-
+    def get_res_list
       query = params[:f]
 
       if( query == nil || query.empty? )
@@ -562,11 +540,9 @@ module AcademicCommons
       results = Array.new
 
       docs.each do |doc|
-
         item =  Hash.new
 
         if(params[:month_from] && params[:year_from] && params[:month_to] && params[:year_to] )
-
           startdate = Date.parse(params[:month_from] + " " + params[:year_from])
           enddate = Date.parse(params[:month_to] + " " + params[:year_to])
 
@@ -593,7 +569,7 @@ module AcademicCommons
       return results
     end
 
-    def get_docs_size_by_query_facets()
+    def get_docs_size_by_query_facets
       query = params[:f]
 
       if( query == nil || query.empty? )

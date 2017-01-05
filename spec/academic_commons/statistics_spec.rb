@@ -269,7 +269,49 @@ RSpec.describe AcademicCommons::Statistics do
     end
   end
 
-  describe ".get_facet_stats_by_event" do
-    
+  describe ".get_pids_by_query_facets" do
+    let(:empty_response) { { 'response' => { 'docs' => [] } } }
+
+    context 'when querying by two facets' do
+      let(:solr_params) do
+        {
+          'qt' => 'search', 'rows' => 20000, "facet.field" => ["pid"],
+          'fq' => ['{!raw f=Bears}Polar Bears', '{!raw f=Birds}Hummingbird']
+        }
+      end
+
+      it 'creates correct query' do
+        expect(Blacklight.default_index).to receive(:search)
+          .with(solr_params).and_return(empty_response)
+        statistics.instance_eval{
+          get_pids_by_query_facets([['Bears', ['Polar Bears']], ['Birds', ['Hummingbird']]])
+        }
+      end
+    end
+
+    context 'when querying by one facet' do
+      let(:solr_params) do
+        {
+          'qt' => 'search', 'rows' => 20000, "facet.field" => ["pid"],
+          'fq' => ['{!raw f=Bears}Polar Bears']
+        }
+      end
+
+      it 'creates correct query' do
+        expect(Blacklight.default_index).to receive(:search)
+          .with(solr_params).and_return(empty_response)
+        statistics.instance_eval{
+          get_pids_by_query_facets([['Bears', ['Polar Bears', 'Black Bear']]])
+        }
+      end
+
+      it 'ignores query with no facet_item' do
+        expect(Blacklight.default_index).to receive(:search)
+          .with(solr_params).and_return(empty_response)
+        statistics.instance_eval{
+          get_pids_by_query_facets([['Bears', ['Polar Bears']], ['Birds', [nil]]])
+        }
+      end
+    end
   end
 end
