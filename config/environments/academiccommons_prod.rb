@@ -33,8 +33,7 @@ AcademicCommons::Application.configure do
   # Specifies the header that your server uses for sending files
   config.action_dispatch.x_sendfile_header = 'X-Accel-Redirect'
 
-  # Use the lowest log level to ensure availability of diagnostic information
-  # when problems arise.
+  # Reducing logging in production.
   config.log_level = :info
 
   # Use a different logger for distributed setups
