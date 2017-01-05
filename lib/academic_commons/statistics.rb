@@ -25,18 +25,16 @@ module AcademicCommons
     # Copied from Catalog Helper.
     # TODO: Needs to be in a more centralized place.
     def get_count(query_params)
-      results = repository.search(query_params)
-      return results["response"]["numFound"]
+      repository.search(query_params)["response"]["numFound"]
     end
 
     def facet_names
-      return FACET_NAMES
+      FACET_NAMES
     end
 
     # Gets author statistics and generates csv report.
     # CSV has different sections for Views, Downloads, Streaming listing how many times of each action was done per month.
     def csv_report(startdate, enddate, search_criteria, include_zeroes, recent_first, facet, include_streaming_views, order_by)
-
       months_list = make_months_list(startdate, enddate, recent_first)
       results, stats, totals, download_ids = get_author_stats(startdate, enddate, search_criteria, months_list, include_zeroes, facet, include_streaming_views, order_by)
 
@@ -71,11 +69,8 @@ module AcademicCommons
 
     # Makes each category (View, Download, Streaming) section of csv. Helper for csv_report.
     def make_csv_category(category, key, csv, results, stats, totals, months_list, ids)
-
       csv += CSV.generate_line( [ "" ]) + LINE_BRAKER
-
       csv += CSV.generate_line( [ category + " report:" ]) + LINE_BRAKER
-
       csv += CSV.generate_line( [ "Total for period:",
         "",
         "",
@@ -127,7 +122,6 @@ module AcademicCommons
 
     # Makes column headers of all months represented in this csv.
     def make_month_line(months_list)
-
       month_list = []
 
       months_list.each do |month|
@@ -141,7 +135,6 @@ module AcademicCommons
     #
     # @param Array<Array<String>> stats
     def make_month_line_stats(stats, months_list, id, download_ids)
-
       line = []
 
       months_list.each do |month|
@@ -161,7 +154,6 @@ module AcademicCommons
     # them into stats.
     def process_stats_by_month(stats, totals, ids, download_ids, startdate, enddate, months_list)
       months_list.each do |month|
-
         contdition = month.strftime("%Y-%m") + "%"
 
         stats[VIEW + month.to_s] = Statistic.group(:identifier).where("event = 'View' and identifier IN (?) and at_time like ?", ids, contdition).count
@@ -169,7 +161,6 @@ module AcademicCommons
 
       end
     end
-
 
     # Returns statistics for all the items returned by a solr query
     #
@@ -372,7 +363,6 @@ module AcademicCommons
     end
 
     def log_statistics_usage(startdate, enddate, params)
-
       eventlog = Eventlog.create(:event_name => 'statistics',
       :user_name  => current_user == nil ? "N/A" : current_user.to_s,
       :uid        => current_user == nil ? "N/A" : current_user.uid.to_s,
@@ -387,7 +377,6 @@ module AcademicCommons
       eventlog.logvalues.create(:param_name => "include_streaming_views", :value => params[:include_streaming_views] == nil ? "false" : "true")
       eventlog.logvalues.create(:param_name => "facet", :value => params[:facet])
       eventlog.logvalues.create(:param_name => "email_to", :value => params[:email_destination] == "email to" ? nil : params[:email_destination])
-
     end
 
     def make_test_author(author_id, email)
@@ -440,7 +429,6 @@ module AcademicCommons
 
       res_item = {}
       subjects.each do |item|
-
         if(item.kind_of? Integer)
           res_item[:count] = item
 
@@ -451,7 +439,6 @@ module AcademicCommons
         else
           res_item[:name] = item
         end
-
       end
 
       return results
@@ -472,11 +459,9 @@ module AcademicCommons
       Blacklight.default_index.search(query_params)["response"]["docs"]
     end
 
-
     def count_pids_statistic(pids_collection, event)
       Statistic.where("identifier in (?) and event = ?", collect_asset_pids(pids_collection, event), event).count
     end
-
 
     def count_pids_statistic_by_dates(pids_collection, event, startdate, enddate)
       Statistic.where("identifier in (?) and event = ? and at_time BETWEEN ? and ?", collect_asset_pids(pids_collection, event), event, startdate, enddate).count
@@ -485,7 +470,6 @@ module AcademicCommons
     def count_docs_by_event(pids_collection, event)
       Statistic.group(:identifier).where("identifier in (?) and event = ? ", collect_asset_pids(pids_collection, event), event).count
     end
-
 
     def count_docs_by_event_and_dates(pids_collection, event, startdate, enddate)
       Statistic.group(:identifier).where("identifier in (?) and event = ? and at_time BETWEEN ? and ? ", collect_asset_pids(pids_collection, event), event, startdate, enddate).count
@@ -520,7 +504,6 @@ module AcademicCommons
       key, value = counts.max_by{ |_,v| v }
       key
     end
-
 
     def get_res_list
       query = params[:f]
@@ -646,7 +629,6 @@ module AcademicCommons
       end
 
       result = Hash.new
-
       result.store('docs_size', docs.size.to_s)
       result.store('statistic', count.to_s)
       result
