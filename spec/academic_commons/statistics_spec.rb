@@ -209,7 +209,40 @@ RSpec.describe AcademicCommons::Statistics do
     end
   end
 
-  describe '.make_solr_request'
+  describe '.make_solr_request' do
+    context 'searching by facet' do
+      let(:solr_params) do
+        {
+          :rows => 100000, :sort => "title_display asc", :q => nil, :fq => 'author_uni:"xyz123"',
+          :fl => "title_display,id,handle,doi,genre_facet", :page => 1
+        }
+      end
+
+      it 'makes correct solr request' do
+        expect(statistics.repository).to receive(:search).with(solr_params).and_return(empty_response)
+        statistics.instance_eval { make_solr_request('author_uni', 'xyz123') }
+      end
+    end
+
+    context 'searching by query' do
+      let(:test_params) { { 'f' => 'department_facet:Columbia College', 'q' => '', 'sort' => 'author_sort asc'} }
+      let(:solr_params) do
+        {
+          :rows => 100000, :sort => 'author_sort asc', :q => '', :fq => 'department_facet:Columbia College',
+          :fl => "title_display,id,handle,doi,genre_facet", :page => 1
+        }
+      end
+
+      before :each do
+        allow(statistics).to receive(:parse_search_query).and_return(test_params)
+      end
+
+      it 'makes correct solr request' do
+        expect(statistics.repository).to receive(:search).with(solr_params).and_return(empty_response)
+        statistics.instance_eval { make_solr_request('search_query', 'author_uni=xyz123') }
+      end
+    end
+  end
 
   describe '.send_authors_reports' do
     let(:test_params) do
