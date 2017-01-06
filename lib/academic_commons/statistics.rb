@@ -87,7 +87,6 @@ module AcademicCommons
       )
 
       results.each do |item|
-
         csv += CSV.generate_line([item["title_display"],
         item["genre_facet"].first,
         item["handle"],
@@ -287,25 +286,22 @@ module AcademicCommons
 
     def make_solr_request(facet, query)
       Rails.logger.debug "In make_solr_request for query: #{query}"
-      if(facet == "search_query")
-        params = parse_search_query(query)
-        facet_query = params["f"]
-        q = params["q"]
-        sort = params["sort"]
+      if facet == "search_query"
+        solr_params = parse_search_query(query)
+        facet_query = solr_params["f"]
+        q = solr_params["q"]
+        sort = solr_params["sort"]
       else
         facet_query = "#{facet}:\"#{query}\""
         sort = "title_display asc"
       end
 
-      if facet_query == nil && q == nil
-        return
-      else
-        results = repository.search(
-          :rows => 100000, :sort => sort, :q => q, :fq => facet_query,
-          :fl => "title_display,id,handle,doi,genre_facet", :page => 1
-        )["response"]["docs"]
-        return results
-      end
+      return if facet_query == nil && q == nil
+
+      repository.search(
+        :rows => 100000, :sort => sort, :q => q, :fq => facet_query,
+        :fl => "title_display,id,handle,doi,genre_facet", :page => 1
+      )["response"]["docs"]
     end
 
     # Creates list of month-year strings in order from the startdate to the
@@ -524,16 +520,13 @@ module AcademicCommons
     end
 
     def get_time_period
-      if(params[:month_from] && params[:year_from] && params[:month_to] && params[:year_to] )
+      if(params[:month_from] && params[:year_from] && params[:month_to] && params[:year_to])
         startdate = Date.parse(params[:month_from] + " " + params[:year_from])
         enddate = Date.parse(params[:month_to] + " " + params[:year_to])
-
-        time_period = startdate.strftime("%b %Y") + ' - ' + enddate.strftime("%b %Y")
+        "#{startdate.strftime("%b %Y")} - #{enddate.strftime("%b %Y")}"
       else
-        time_period = 'Lifetime'
+        'Lifetime'
       end
-
-      return time_period
     end
 
     def create_common_statistics_csv(res_list)
