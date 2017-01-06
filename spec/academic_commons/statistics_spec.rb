@@ -9,7 +9,6 @@ RSpec.describe AcademicCommons::Statistics do
     class_rig = Class.new
     class_rig.class_eval do
       include AcademicCommons::Statistics
-      def repository; end
       def params; Hash.new; end
     end
     class_rig.new
@@ -46,9 +45,6 @@ RSpec.describe AcademicCommons::Statistics do
   end
 
   describe '.get_author_stats', integration: true do
-    before do
-      allow(statistics).to receive(:repository).and_return(Blacklight.default_index)
-    end
     context 'when requesting usage stats for author' do
       let(:solr_params) do
         {
@@ -219,7 +215,7 @@ RSpec.describe AcademicCommons::Statistics do
       end
 
       it 'makes correct solr request' do
-        expect(statistics.repository).to receive(:search).with(solr_params).and_return(empty_response)
+        expect(Blacklight.default_index).to receive(:search).with(solr_params).and_return(empty_response)
         statistics.instance_eval { make_solr_request('author_uni', 'xyz123') }
       end
     end
@@ -238,7 +234,7 @@ RSpec.describe AcademicCommons::Statistics do
       end
 
       it 'makes correct solr request' do
-        expect(statistics.repository).to receive(:search).with(solr_params).and_return(empty_response)
+        expect(Blacklight.default_index).to receive(:search).with(solr_params).and_return(empty_response)
         statistics.instance_eval { make_solr_request('search_query', 'author_uni=xyz123') }
       end
     end
@@ -270,9 +266,9 @@ RSpec.describe AcademicCommons::Statistics do
     end
 
     before :each do
-      # FactoryGirl.create_list(:view_stat, 5)
+      FactoryGirl.create_list(:view_stat, 5)
       allow(statistics).to receive(:params).and_return(test_params)
-      allow(statistics.repository).to receive(:search)
+      allow(Blacklight.default_index).to receive(:search)
         .with(author_search).and_return(author_docs)
       authors = [ { id: 'abc123', email: 'abc123@columbia.edu' } ]
       statistics.instance_eval{ send_authors_reports(authors, nil) }
@@ -291,10 +287,6 @@ RSpec.describe AcademicCommons::Statistics do
 
       it 'with appropriate title' do
         expect(email.body.to_s).to match /Usage Statistics for abc123/
-      end
-
-      it 'with correct view stats' do
-        expect(email.body.to_s).to match /5/
       end
 
       it 'with correct documents' do
@@ -416,6 +408,17 @@ RSpec.describe AcademicCommons::Statistics do
     it 'return lifetime when time period dates are not available' do
       allow(statistics).to receive(:params).and_return({})
       expect(statistics.instance_eval{ get_time_period }).to eq 'Lifetime'
+    end
+  end
+
+  describe '.facet_items' do
+    it 'creates correct solr query' do
+      empty_response = Blacklight::Solr::Response.new(
+        { 'response' => { 'docs' => [] }, 'facet_counts' => { 'facet_fields' => { 'author_facet' => [] } } }, {}
+      )
+      solr_params = { :q => "", :rows => 0, 'facet.limit' => -1, 'facet.field' => ['author_facet'] }
+      expect(Blacklight.default_index).to receive(:search).with(solr_params).and_return(empty_response)
+      statistics.instance_eval { facet_items('author_facet') }
     end
   end
 end

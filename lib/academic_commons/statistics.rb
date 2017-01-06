@@ -24,7 +24,7 @@ module AcademicCommons
     # Copied from Catalog Helper.
     # TODO: Needs to be in a more centralized place.
     def get_count(query_params)
-      repository.search(query_params)["response"]["numFound"]
+      Blacklight.default_index.search(query_params)["response"]["numFound"]
     end
 
     def facet_names
@@ -43,9 +43,9 @@ module AcademicCommons
       end
 
       if facet.in?('author_facet', 'author_uni')
-        csv = "Author UNI/Name: ," + search_criteria.to_s
+        csv = "Author UNI/Name: ,#{search_criteria}"
       else
-        csv = "Search criteria: ," + search_criteria.to_s
+        csv = "Search criteria: ,#{search_criteria}"
       end
 
       csv += CSV.generate_line( [ "Period covered by Report" ])
@@ -54,7 +54,7 @@ module AcademicCommons
       csv += CSV.generate_line( [ "Date run:" ])
       csv += CSV.generate_line( [ Time.new.strftime("%Y-%m-%d") ] )
       csv += CSV.generate_line( [ "Report created by:" ])
-      csv += CSV.generate_line( [  current_user == nil ? "N/A" : (current_user.to_s + " (" + current_user.uid.to_s + ")") ])
+      csv += CSV.generate_line( [  current_user == nil ? "N/A" : "#{current_user} (#{current_user.uid})" ])
 
 
       csv = make_csv_category("Views", "View", csv, results, stats, totals, months_list, nil)
@@ -69,20 +69,20 @@ module AcademicCommons
     # Makes each category (View, Download, Streaming) section of csv. Helper for csv_report.
     def make_csv_category(category, key, csv, results, stats, totals, months_list, ids)
       csv += CSV.generate_line( [ "" ])
-      csv += CSV.generate_line( [ category + " report:" ])
+      csv += CSV.generate_line( [ "#{category} report:" ])
       csv += CSV.generate_line( [ "Total for period:",
         "",
         "",
         "",
         totals[key].to_s
-      ].concat(make_months_header(category + " by Month", months_list))
+      ].concat(make_months_header("#{category} by Month", months_list))
       )
 
       csv += CSV.generate_line( [ "Title",
         "Content Type",
         "Persistent URL",
         "DOI",
-        "Reporting Period Total " + category
+        "Reporting Period Total #{category}"
       ].concat( make_month_line(months_list))
       )
 
@@ -298,7 +298,7 @@ module AcademicCommons
 
       return if facet_query == nil && q == nil
 
-      repository.search(
+      Blacklight.default_index.search(
         :rows => 100000, :sort => sort, :q => q, :fq => facet_query,
         :fl => "title_display,id,handle,doi,genre_facet", :page => 1
       )["response"]["docs"]
@@ -386,7 +386,7 @@ module AcademicCommons
 
     def facet_items(facet)
       query_params = {:q => "", :rows => 0, 'facet.limit' => -1, 'facet.field' => [facet]}
-      solr_results = repository.search(query_params)
+      solr_results = Blacklight.default_index.search(query_params)
       subjects = solr_results.facet_counts["facet_fields"][facet]
 
       results = [["" ,""]]
@@ -510,13 +510,11 @@ module AcademicCommons
     def get_docs_size_by_query_facets
       query = params[:f]
 
-      if( query == nil || query.empty? )
-        pids = []
+      if query == nil || query.empty?
+        []
       else
-        pids = get_pids_by_query_facets(query)
+        get_pids_by_query_facets(query)
       end
-
-      return pids
     end
 
     def get_time_period
