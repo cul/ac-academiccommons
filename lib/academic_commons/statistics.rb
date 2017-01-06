@@ -6,7 +6,6 @@ module AcademicCommons
 
     VIEW = 'view_'
     DOWNLOAD = 'download_'
-    LINE_BRAKER = RUBY_VERSION < "1.9" ? "\r\n" : ""
 
     FACET_NAMES = Hash.new
     FACET_NAMES.store('author_facet', 'Author')
@@ -44,18 +43,18 @@ module AcademicCommons
       end
 
       if facet.in?('author_facet', 'author_uni')
-        csv = "Author UNI/Name: ," + search_criteria.to_s + LINE_BRAKER
+        csv = "Author UNI/Name: ," + search_criteria.to_s
       else
-        csv = "Search criteria: ," + search_criteria.to_s + LINE_BRAKER
+        csv = "Search criteria: ," + search_criteria.to_s
       end
 
-      csv += CSV.generate_line( [ "Period covered by Report" ]) + LINE_BRAKER
-      csv += CSV.generate_line( [ "from:", "to:" ]) + LINE_BRAKER
-      csv += CSV.generate_line( [ startdate.strftime("%b-%Y"),  enddate.strftime("%b-%Y") ]) + LINE_BRAKER
-      csv += CSV.generate_line( [ "Date run:" ]) + LINE_BRAKER
-      csv += CSV.generate_line( [ Time.new.strftime("%Y-%m-%d") ] ) + LINE_BRAKER
-      csv += CSV.generate_line( [ "Report created by:" ]) + LINE_BRAKER
-      csv += CSV.generate_line( [  current_user == nil ? "N/A" : (current_user.to_s + " (" + current_user.uid.to_s + ")") ]) + LINE_BRAKER
+      csv += CSV.generate_line( [ "Period covered by Report" ])
+      csv += CSV.generate_line( [ "from:", "to:" ])
+      csv += CSV.generate_line( [ startdate.strftime("%b-%Y"),  enddate.strftime("%b-%Y") ])
+      csv += CSV.generate_line( [ "Date run:" ])
+      csv += CSV.generate_line( [ Time.new.strftime("%Y-%m-%d") ] )
+      csv += CSV.generate_line( [ "Report created by:" ])
+      csv += CSV.generate_line( [  current_user == nil ? "N/A" : (current_user.to_s + " (" + current_user.uid.to_s + ")") ])
 
 
       csv = make_csv_category("Views", "View", csv, results, stats, totals, months_list, nil)
@@ -69,15 +68,15 @@ module AcademicCommons
 
     # Makes each category (View, Download, Streaming) section of csv. Helper for csv_report.
     def make_csv_category(category, key, csv, results, stats, totals, months_list, ids)
-      csv += CSV.generate_line( [ "" ]) + LINE_BRAKER
-      csv += CSV.generate_line( [ category + " report:" ]) + LINE_BRAKER
+      csv += CSV.generate_line( [ "" ])
+      csv += CSV.generate_line( [ category + " report:" ])
       csv += CSV.generate_line( [ "Total for period:",
         "",
         "",
         "",
         totals[key].to_s
       ].concat(make_months_header(category + " by Month", months_list))
-      ) + LINE_BRAKER
+      )
 
       csv += CSV.generate_line( [ "Title",
         "Content Type",
@@ -85,7 +84,7 @@ module AcademicCommons
         "DOI",
         "Reporting Period Total " + category
       ].concat( make_month_line(months_list))
-      ) + LINE_BRAKER
+      )
 
       results.each do |item|
 
@@ -95,7 +94,7 @@ module AcademicCommons
         item["doi"],
         stats[key][item["id"]].nil? ? 0 : stats[key][item["id"]]
           ].concat( make_month_line_stats(stats, months_list, item["id"], ids))
-          ) + LINE_BRAKER
+          )
       end
 
       return csv
@@ -541,22 +540,22 @@ module AcademicCommons
       count = 0
       csv = ''
 
-      csv += CSV.generate_line( [ 'time period: ', get_time_period, '', '', '', '', '', '' ]) + LINE_BRAKER
-      csv += CSV.generate_line( [ '', '', '', '', '', '', '', '']) + LINE_BRAKER
+      csv += CSV.generate_line( [ 'time period: ', get_time_period, '', '', '', '', '', '' ])
+      csv += CSV.generate_line( [ '', '', '', '', '', '', '', ''])
 
       query = params[:f]
       views_stats = get_facet_stats_by_event(query, Statistic::VIEW_EVENT)
       downloads_stats = get_facet_stats_by_event(query, Statistic::DOWNLOAD_EVENT)
       streams_stats = get_facet_stats_by_event(query, Statistic::STREAM_EVENT)
 
-      csv += CSV.generate_line( [ 'FACET', 'ITEM', '', '', '', '', '', '']) + LINE_BRAKER
+      csv += CSV.generate_line( [ 'FACET', 'ITEM', '', '', '', '', '', ''])
       query.each do |key, value|
-        csv += CSV.generate_line( [ facet_names[key.to_s], value.first.to_s, '', '', '', '', '', '']) + LINE_BRAKER
+        csv += CSV.generate_line( [ facet_names[key.to_s], value.first.to_s, '', '', '', '', '', ''])
       end
-      csv += CSV.generate_line( [ '', '', '', '', '', '', '', '' ]) + LINE_BRAKER
+      csv += CSV.generate_line( [ '', '', '', '', '', '', '', '' ])
 
-      csv += CSV.generate_line( [ res_list.size.to_s, '', '', views_stats['statistic'].to_s, downloads_stats['statistic'].to_s, streams_stats['statistic'].to_s, '', '' ]) + LINE_BRAKER
-      csv += CSV.generate_line( [ '#', 'TITLE', 'GENRE', 'VIEWS', 'DOWNLOADS', 'STREAMS', 'DEPOSIT DATE', 'HANDLE / DOI' ]) + LINE_BRAKER
+      csv += CSV.generate_line( [ res_list.size.to_s, '', '', views_stats['statistic'].to_s, downloads_stats['statistic'].to_s, streams_stats['statistic'].to_s, '', '' ])
+      csv += CSV.generate_line( [ '#', 'TITLE', 'GENRE', 'VIEWS', 'DOWNLOADS', 'STREAMS', 'DEPOSIT DATE', 'HANDLE / DOI' ])
 
       res_list.each do |item|
         count = count + 1
@@ -570,7 +569,7 @@ module AcademicCommons
           item['streams'],
           Date.strptime(item['doc']['record_creation_date']).strftime('%m/%d/%Y'),
           item['doc']['handle']
-          ]) + LINE_BRAKER
+          ])
         end
 
       return csv
