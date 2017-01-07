@@ -116,15 +116,15 @@ class StatisticsController < ApplicationController
 
     if params[:commit].in?('View', "Email", "Get Usage Stats", "keyword search")
       log_statistics_usage(startdate, enddate, params)
-      @results, @stats, @totals =  get_author_stats(startdate,
-      enddate,
-      params[:search_criteria],
-      nil,
-      params[:include_zeroes],
-      params[:facet],
-      params[:include_streaming_views],
-      params[:order_by]
+      usage_stats =  AcademicCommons::UsageStatistics.new(
+        startdate, enddate, params[:search_criteria], params[:facet],
+        params[:order_by], include_zeroes: params[:include_zeroes],
+        include_streaming: params[:include_streaming_views]
       )
+      @results = usage_stats.results
+      @stats = usage_stats.stats
+      @totals = usage_stats.totals
+
       if (@results == nil || @results.size == 0)
         set_message_and_variables
         return

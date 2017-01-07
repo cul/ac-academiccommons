@@ -44,104 +44,6 @@ RSpec.describe AcademicCommons::Statistics do
     end
   end
 
-  describe '.get_author_stats', integration: true do
-    context 'when requesting usage stats for author' do
-      let(:solr_params) do
-        {
-          :rows => 100000, :sort => 'title_display asc', :q => nil,
-          :fq => "author_uni:\"author_uni:#{uni}\"", :fl => "title_display,id,handle,doi,genre_facet",
-          :page => 1
-        }
-      end
-
-      let(:solr_response) do
-        {
-          'response' => {
-            'docs' => [
-              { 'id' => pid, 'title_display' => 'First Test Document',
-                'handle' => '', 'doi' => '', 'genre_facet' => '' },
-            ]
-          }
-        }
-      end
-
-      before :each do
-        # Add records for a pid view and download
-        FactoryGirl.create(:view_stat)
-        FactoryGirl.create(:view_stat)
-        FactoryGirl.create(:download_stat)
-        FactoryGirl.create(:streaming_stat)
-
-        allow(Blacklight.default_index).to receive(:search)
-          .with(solr_params).and_return(solr_response)
-      end
-
-      context 'when requesting stats for current month' do
-        before :each do
-          @results, @stats, @totals, @download_ids = statistics.instance_eval{
-            get_author_stats(Date.today - 1.month, Date.today,
-              "author_uni:abc123", nil, true, 'author_uni', true, nil)
-          }
-        end
-
-        it 'returns correct results' do
-          expect(@results).to eq solr_response['response']['docs']
-        end
-        it 'returns correct stats' do
-          expect(@stats).to match(
-            'View' => { "#{pid}" => 2 },
-            'Download' => { "#{pid}" => 1 },
-            'Streaming' => { "#{pid}" => 1 },
-            'View Lifetime' => { "#{pid}" => 2 },
-            'Download Lifetime' => { "#{pid}" => 1 },
-            'Streaming Lifetime' => { "#{pid}" => 1 }
-          )
-        end
-        it 'returns correct totals' do
-          expect(@totals).to match(
-            'View' => 2, 'Download' => 1, 'Streaming' => 1, 'View Lifetime' => 2,
-            'Download Lifetime' => 1, 'Streaming Lifetime' => 1
-          )
-        end
-        it 'returns correct download_ids' do
-          expect(@download_ids).to include(pid)
-          expect(@download_ids[pid]).to contain_exactly('actest:2','actest:4')
-        end
-      end
-
-      context 'when requesting stats for previous month' do
-        before :each do
-          @results, @stats, @totals, @download_ids = statistics.instance_eval{
-            get_author_stats(Date.today - 2.month, Date.today - 1.month,
-              "author_uni:abc123", nil, true, 'author_uni', true, nil)
-          }
-        end
-
-        it 'returns correct results' do
-          expect(@results).to eq solr_response['response']['docs']
-        end
-        it 'returns empty stats' do
-          expect(@stats).to match(
-            'View' => {},
-            'Download' => { "#{pid}" => 0 },
-            'Streaming' => {},
-            'View Lifetime' => { "#{pid}" => 2 },
-            'Download Lifetime' => { "#{pid}" => 1 },
-            'Streaming Lifetime' => { "#{pid}" => 1 }
-          )
-        end
-        it 'returns correct totals' do
-          expect(@totals).to match(
-            'View' => 0, 'Download' => 0, 'Streaming' => 0, 'View Lifetime' => 2,
-            'Download Lifetime' => 1, 'Streaming Lifetime' => 1
-          )
-        end
-      end
-
-      it 'returns correct stats when ommitting streaming views'
-    end
-  end
-
   describe '.most_downloaded_asset' do
     let(:pid1) { 'actest:2' }
     let(:pid2) { 'actest:10' }
@@ -201,41 +103,6 @@ RSpec.describe AcademicCommons::Statistics do
 
       it 'returns first pid' do
         expect(subject).to eql pid1
-      end
-    end
-  end
-
-  describe '.make_solr_request' do
-    context 'searching by facet' do
-      let(:solr_params) do
-        {
-          :rows => 100000, :sort => "title_display asc", :q => nil, :fq => 'author_uni:"xyz123"',
-          :fl => "title_display,id,handle,doi,genre_facet", :page => 1
-        }
-      end
-
-      it 'makes correct solr request' do
-        expect(Blacklight.default_index).to receive(:search).with(solr_params).and_return(empty_response)
-        statistics.instance_eval { make_solr_request('author_uni', 'xyz123') }
-      end
-    end
-
-    context 'searching by query' do
-      let(:test_params) { { 'f' => 'department_facet:Columbia College', 'q' => '', 'sort' => 'author_sort asc'} }
-      let(:solr_params) do
-        {
-          :rows => 100000, :sort => 'author_sort asc', :q => '', :fq => 'department_facet:Columbia College',
-          :fl => "title_display,id,handle,doi,genre_facet", :page => 1
-        }
-      end
-
-      before :each do
-        allow(statistics).to receive(:parse_search_query).and_return(test_params)
-      end
-
-      it 'makes correct solr request' do
-        expect(Blacklight.default_index).to receive(:search).with(solr_params).and_return(empty_response)
-        statistics.instance_eval { make_solr_request('search_query', 'author_uni=xyz123') }
       end
     end
   end
@@ -371,23 +238,6 @@ RSpec.describe AcademicCommons::Statistics do
       expect(
         statistics.instance_eval { make_month_line(date_objs) }
       ).to eq dates
-    end
-  end
-
-  describe '.make_months_list' do
-    let(:dates) do
-      ['Dec-2015', 'Jan-2016', 'Feb-2016', 'Mar-2016', 'Apr-2016'].map { |d| Date.parse(d) }
-    end
-
-    it 'returns correct list' do
-      start = dates.first; last = dates.last
-      result = statistics.instance_eval { make_months_list(start, last) }
-      expect(result).to eq dates
-    end
-    it 'returns correct list in reverse' do
-      start = dates.first; last = dates.last
-      result = statistics.instance_eval { make_months_list(start, last, true) }
-      expect(result).to eq dates.reverse
     end
   end
 

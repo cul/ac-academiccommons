@@ -34,8 +34,14 @@ module AcademicCommons
     # Gets author statistics and generates csv report.
     # CSV has different sections for Views, Downloads, Streaming listing how many times of each action was done per month.
     def csv_report(startdate, enddate, search_criteria, include_zeroes, recent_first, facet, include_streaming_views, order_by)
-      months_list = make_months_list(startdate, enddate, recent_first)
-      results, stats, totals, download_ids = get_author_stats(startdate, enddate, search_criteria, months_list, include_zeroes, facet, include_streaming_views, order_by)
+      usage_stats = AcademicCommons::UsageStatistics.new(
+        startdate, enddate, search_criteria, facet, order_by, include_zeroes: include_zeroes,
+        include_streaming: include_streaming_views, recent_first: recent_first, per_month: true
+      )
+      results = usage_stats.results
+      stats = usage_stats.stats
+      totals = usage_stats.totals
+      download_ids = usage_stats.download_ids
 
       if (results == nil || results.size == 0)
         set_message_and_variables
@@ -134,190 +140,6 @@ module AcademicCommons
 
       end
       return line
-    end
-
-    # For each month get the number of view and downloads for each id and populate
-    # them into stats.
-    def process_stats_by_month(stats, totals, ids, download_ids, startdate, enddate, months_list)
-      months_list.each do |month|
-        contdition = month.strftime("%Y-%m") + "%"
-
-        stats[VIEW + month.to_s] = Statistic.group(:identifier).where("event = 'View' and identifier IN (?) and at_time like ?", ids, contdition).count
-        stats[DOWNLOAD + month.to_s] = Statistic.group(:identifier).where("event = 'Download' and identifier IN (?) and at_time like ?", download_ids.values.flatten, contdition).count
-
-      end
-    end
-
-    # Returns statistics for all the items returned by a solr query
-    #
-    # @param startdate
-    # @param enddate
-    # @param query solr query
-    # @param months_list if not nil organizes the statistics based on the months given in this array
-    # @param include_zeroes flag to indicate whether records with no usage stats should be included
-    # @param facet
-    # @param include_streaming_views
-    # @param order_by
-    def get_author_stats(startdate, enddate, query, months_list, include_zeroes, facet, include_streaming_views, order_by)
-      Rails.logger.debug "In get_author_stats for #{query}"
-      if(query == nil || query.empty?)
-        return
-      end
-
-      results = make_solr_request(facet, query)
-      Rails.logger.debug "Solr request returned #{results.count} results."
-
-      return if results.nil?
-
-      stats, totals, ids, download_ids = init_holders(results)
-
-      Rails.logger.debug "#{ids.count} results after init_holders"
-
-      process_stats(stats, totals, ids, download_ids, startdate, enddate)
-
-      results.reject! { |r| (stats['View'][r['id']] || 0) == 0 &&  (stats['Download'][r['id']] || 0) == 0 } unless include_zeroes
-
-      if(order_by == 'views' || order_by == 'downloads')
-        results.sort! do |x,y|
-          if(order_by == 'downloads')
-            result = (stats['Download'][y['id']] || 0) <=> (stats['Download'][x['id']] || 0)
-          end
-          if(order_by == 'views')
-            result = (stats['View'][y['id']] || 0) <=> (stats['View'][x['id']] || 0)
-          end
-          result
-        end
-      end
-
-      if(months_list != nil)
-        process_stats_by_month(stats, totals, ids, download_ids, startdate, enddate, months_list)
-      end
-
-      return results, stats, totals, download_ids
-    end
-
-    # Generates base line objects to hold usage statistic information.
-    #
-    # @param [] solr results from query
-    # @return [Hash]stats hash keeping track of item views and downloads
-    # @return [Hash] totals
-    # @return [Array<String>] id all aggregator pids
-    # @return [Hash] download_ids all downloadable item pids
-    def init_holders(results)
-      ids = results.collect { |r| r['id'].to_s.strip } # Get all the aggregator pids.
-
-      download_ids = Hash.new { |h,k| h[k] = [] }
-
-      # Get pids of all downloadable files.
-      ids.each do |doc_id|
-        download_ids[doc_id] |= ActiveFedora::Base.find(doc_id).list_members(pids_only: true)
-      end
-
-      stats = Hash.new { |h,k| h[k] = Hash.new { |h,k| h[k] = 0 }}
-      totals = Hash.new { |h,k| h[k] = 0 }
-
-      return stats, totals, ids, download_ids
-    end
-
-
-    def process_stats(stats, totals, ids, download_ids, startdate, enddate)
-      Rails.logger.debug "In process_stats for #{ids}"
-      enddate = enddate + 1.months
-
-      stats['View'] = Statistic.group(:identifier).where("event = 'View' and identifier IN (?) AND at_time BETWEEN ? and ?", ids, startdate, enddate).count
-      stats['Streaming'] = Statistic.group(:identifier).where("event = 'Streaming' and identifier IN (?) AND at_time BETWEEN ? and ?", ids, startdate, enddate).count
-
-      stats_downloads = Statistic.group(:identifier).where("event = 'Download' and identifier IN (?) AND at_time BETWEEN ? and ?", download_ids.values.flatten, startdate, enddate).count
-
-      download_ids.each_pair do |doc_id, downloads|
-        stats['Download'][doc_id] = downloads.collect { |download_id| stats_downloads[download_id] || 0 }.sum
-      end
-
-      stats['View'] = convertOrderedHash(stats['View'])
-
-      stats['View Lifetime'] = Statistic.group(:identifier).where("event = 'View' and identifier IN (?)", ids).count
-      stats['Streaming Lifetime'] = Statistic.group(:identifier).where("event = 'Streaming' and identifier IN (?)", ids).count
-
-      stats_lifetime_downloads = Statistic.group(:identifier).where("event = 'Download' and identifier IN (?)", download_ids.values.flatten).count
-
-      download_ids.each_pair do |doc_id, downloads|
-        stats['Download Lifetime'][doc_id] = downloads.collect { |download_id| stats_lifetime_downloads[download_id] || 0 }.sum
-      end
-
-      stats.keys.each { |key| totals[key] = stats[key].values.sum }
-
-      stats['View Lifetime'] = convertOrderedHash(stats['View Lifetime'])
-
-      Rails.logger.debug("statistics hash: #{stats.inspect}")
-    end
-
-    def parse_search_query(search_query)
-      search_query = URI.unescape(search_query)
-      search_query = search_query.gsub(/\+/, ' ')
-
-      params = Hash.new
-
-      if search_query.include? '?'
-        search_query = search_query[search_query.index("?") + 1, search_query.length]
-      end
-
-      search_query.split('&').each do |value|
-        key_value = value.split('=')
-
-        if(key_value[0].start_with?("f[") )
-
-          if(params.has_key?("f"))
-            array = params["f"]
-          else
-            array = Array.new
-          end
-
-          value = key_value[0].gsub(/f\[/, '').gsub(/\]\[\]/, '') + ":\"" + key_value[1] + "\""
-          array.push(value)
-          params.store("f", array)
-
-        else
-          params.store(key_value[0], key_value[1])
-        end
-      end
-
-      return params
-    end
-
-    def make_solr_request(facet, query)
-      Rails.logger.debug "In make_solr_request for query: #{query}"
-      if facet == "search_query"
-        solr_params = parse_search_query(query)
-        facet_query = solr_params["f"]
-        q = solr_params["q"]
-        sort = solr_params["sort"]
-      else
-        facet_query = "#{facet}:\"#{query}\""
-        sort = "title_display asc"
-      end
-
-      return if facet_query == nil && q == nil
-
-      Blacklight.default_index.search(
-        :rows => 100000, :sort => sort, :q => q, :fq => facet_query,
-        :fl => "title_display,id,handle,doi,genre_facet", :page => 1
-      )["response"]["docs"]
-    end
-
-    # Creates list of month-year strings in order from the startdate to the
-    # enddate given.
-    #
-    # @param recent_first flag that reverses array
-    def make_months_list(startdate, enddate, recent_first = false)
-      months = []
-
-      date = startdate
-      while date <= enddate
-        months << date
-        date += 1.month
-      end
-
-      (recent_first) ? months.reverse : months
     end
 
     def set_message_and_variables
@@ -608,10 +430,13 @@ module AcademicCommons
           author_id = author[:id]
           date = Date.parse(params[:month] + " " + params[:year])
 
-          @results, @stats, @totals =  get_author_stats(
-            date, date, author_id, nil, params[:include_zeroes],
-            'author_uni', false, params[:order_by]
+          usage_stats = AcademicCommons::UsageStatistics.new(
+            date, date, author_id, 'author_uni', params[:order_by],
+            include_zeroes: params[:include_zeroes], include_streaming: false,
           )
+          @results = usage_stats.results
+          @stats = usage_stats.stats
+          @totals = usage_stats.totals
 
           email = designated_recipient || author[:email]
           raise "no email address found" if email.nil?
@@ -658,11 +483,6 @@ module AcademicCommons
       params[:one_report_email] = nil
     end
 
-    def convertOrderedHash(ohash)
-      a =  ohash.to_a
-      oh = {}
-      a.each{|x|  oh[x[0]] = x[1]}
-      return oh
-    end
+
   end
 end
