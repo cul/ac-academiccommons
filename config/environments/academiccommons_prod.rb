@@ -36,9 +36,6 @@ AcademicCommons::Application.configure do
   # Reducing logging in production.
   config.log_level = :info
 
-  # Use a different logger for distributed setups
-  # config.logger = SyslogLogger.new
-
   # Use a different cache store in production
   # config.cache_store = :mem_cache_store
 
