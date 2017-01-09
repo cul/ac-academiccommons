@@ -1,35 +1,35 @@
-require "stdout_logger"
-
 class ACIndexing
 
   def self.delete_index
-    logger = Logger.new(STDOUT)
-    logger.info "Deleting Solr index..."
+    indexing_log = ActiveSupport::Logger.new(STDOUT)
+    indexing_log.info "Deleting Solr index..."
     rsolr.delete_by_query("*:*")
     rsolr.commit
+    indexing_log.close
   end
 
   def self.delete_pid(pid)
-    logger = Logger.new(STDOUT)
-
-    logger.info "delete: " + pid
+    indexing_log = ActiveSupport::Logger.new(STDOUT)
+    indexing_log.info "delete: #{pid}"
     rsolr.delete_by_id(pid)
     rsolr.commit
-    logger.info "Deleting Solr index for: (" + pid + ") - success"
+    indexing_log.info "Deleting Solr index for: (#{pid}) - success"
+    indexing_log.close
   end
 
   def self.log_removed
-    logger = Logger.new(STDOUT)
+    indexing_log = ActiveSupport::Logger.new(STDOUT)
 
-    logger.info "Fedora URL: " + Rails.application.config_for(:fedora)['url']
-    logger.info "Solr URL: " + Rails.application.config_for(:solr)['url']
+    indexing_log.info "Fedora URL: " + Rails.application.config_for(:fedora)['url']
+    indexing_log.info "Solr URL: " + Rails.application.config_for(:solr)['url']
 
     ac_collection = ActiveFedora::Base.find("collection:3")
     member_pids = ac_collection.list_members(true)
 
-    logger.info "Checking against " + member_pids.length.to_s + " items in Fedora..."
+    indexing_log.info "Checking against " + member_pids.length.to_s + " items in Fedora..."
 
-    logger.info removed_objects(member_pids)
+    indexing_log.info removed_objects(member_pids)
+    indexing_log.close
   end
 
   def self.object_indexed?(pid)
@@ -40,7 +40,7 @@ class ACIndexing
     rubydora = ActiveFedora::Base.connection_for_pid(pid)
     rubydora.client[object_url(pid, query_options)].head.status == 200
   rescue Exception => exception
-    logger.error(exception)
+    reindex_logger.error(exception)
     return false
   end
 
@@ -52,7 +52,6 @@ class ACIndexing
   end
 
   def self.reindex(options = {})
-
     start_time = Time.new
 
     collections = options.delete(:collections)
@@ -64,25 +63,22 @@ class ACIndexing
     metadata = as_boolean(options.delete(:metadata))
     fulltext = as_boolean(options.delete(:fulltext))
     delete_removed = as_boolean(options.delete(:delete_removed))
-    log_stdout = as_boolean(options.delete(:log_stdout))
     log_level = options.delete(:log_level) || Logger::INFO
     time_id = options.delete(:time_id) || Time.new.strftime("%Y%m%d-%H%M%S")
-    init_logger(log_stdout, log_level, time_id)
+    init_logger(log_level, time_id)
 
     executed_by = options.delete(:executed_by) || "UNKNOWN USER"
 
-    logger.info "This re-index executed by: #{executed_by}"
+    reindex_logger.info "This re-index executed by: #{executed_by}"
+    reindex_logger.info "Collections: " + (collections || "(none)")
+    reindex_logger.info "Items: " + (items || "(none)")
+    reindex_logger.info "Overwrite existing?: " + overwrite.to_s
+    reindex_logger.info "Index metadata?: " + metadata.to_s
+    reindex_logger.info "Index full text?: " + fulltext.to_s
+    reindex_logger.info "Delete items removed from Fedora?: " + delete_removed.to_s
 
-    logger.info "Collections: " + (collections || "(none)")
-    logger.info "Items: " + (items || "(none)")
-    logger.info "Overwrite existing?: " + overwrite.to_s
-    logger.info "Index metadata?: " + metadata.to_s
-    logger.info "Index full text?: " + fulltext.to_s
-    logger.info "Delete items removed from Fedora?: " + delete_removed.to_s
-    logger.info "Logging to file and STDOUT?: " + log_stdout.to_s
-
-    logger.info "Fedora URL: " + Rails.application.config_for(:fedora)['url']
-    logger.info "Solr URL: "   + Rails.application.config_for(:solr)['url']
+    reindex_logger.info "Fedora URL: " + Rails.application.config_for(:fedora)['url']
+    reindex_logger.info "Solr URL: "   + Rails.application.config_for(:solr)['url']
 
     if(collections)
       collections = collections.split(";")
@@ -107,9 +103,9 @@ class ACIndexing
     ignore_file.each_line { |line| ignore.push line.strip }
 
     # Build up an ignore query, so we can remove anything in the ignore file from the index
-    logger.info "Removing any items from the index that we're supposed to ignore..."
+    reindex_logger.info "Removing any items from the index that we're supposed to ignore..."
     ignore_item_delete_queries = []
-    logger.debug ignore.inspect
+    reindex_logger.debug ignore.inspect
     ignore.each { |ignore_item| ignore_item_delete_queries.push 'id:' + ignore_item.gsub(/:/, "\\:") }
     ignore_item_delete_queries.in_groups_of(100, false).each do |group|
       group_delete_query = group.join(' OR ')
@@ -143,11 +139,11 @@ class ACIndexing
       delete_removed_objects(items)
     end
 
-    logger.info "Preparing to index " + items.length.to_s + " items..."
+    reindex_logger.info "Preparing to index " + items.length.to_s + " items..."
 
     items.each do |item|
       if(ignore.index(item).nil? == false || skip.index(item).nil? == false)
-        logger.info "Ignoring/skipping " + item + "..."
+        reindex_logger.info "Ignoring/skipping " + item + "..."
         doc_statuses[:skipped] << item
         next
       end
@@ -161,14 +157,14 @@ class ACIndexing
         items_not_in_solr << item
       end
 
-      logger.info "Indexing #{item}..."
+      reindex_logger.info "Indexing #{item}..."
 
       begin
         i = ActiveFedora::Base.find(item)
         i.update_index
         i.list_members.each do |resource|
-          logger.info("indexing resource: ")
-          logger.info(resource.to_solr)
+          reindex_logger.info("indexing resource: ")
+          reindex_logger.info(resource.to_solr)
           resource.update_index
         end
         doc_statuses[:success] << item
@@ -176,48 +172,47 @@ class ACIndexing
           new_items << i.pid
         end
       rescue Exception => e
-        logger.error e.message
+        reindex_logger.error e.message
         doc_statuses[:error] << item
         next
       end
     end
 
-    logger.info "Committing changes to Solr..."
+    reindex_logger.info "Committing changes to Solr..."
     rsolr.commit
 
     indexed_count = doc_statuses[:success].length
     errors = doc_statuses[:error]
     results = {:results => doc_statuses, :errors => errors, :indexed_count => indexed_count, :new_items => new_items}
 
-    logger.info "FINISHED WITH THE FOLLOWING RESULTS: \n#{results.inspect}"
+    reindex_logger.info "FINISHED WITH THE FOLLOWING RESULTS: \n#{results.inspect}"
 
     seconds_spent = Time.new - start_time
     readable_time_spent = Time.at(seconds_spent).utc.strftime("%H hours, %M minutes, %S seconds")
 
-    logger.info "Time spent: " + readable_time_spent
+    reindex_logger.info "Time spent: " + readable_time_spent
     Rails.cache.delete('repository_statistics')
+    reindex_logger.close
 
     return results
   end
 
-  def self.logger
-    @logger
+  def self.reindex_logger
+    @reindex_logger
   end
 
-  def self.init_logger(log_stdout, log_level, time_id)
-    if(log_stdout == true)
-      @logger = StdOutLogger.new(File.dirname(__FILE__) + "/../log/ac-indexing/#{time_id}.log", $stdout)
-    else
-      @logger = Logger.new(File.dirname(__FILE__) + "/../log/ac-indexing/#{time_id}.log")
-    end
-    @logger.level = log_level
-    @logger
+  def self.init_logger(log_level, time_id)
+    filepath = File.join(Rails.root, 'log', 'ac-indexing', "#{time_id}.log")
+    @reindex_logger = ActiveSupport::Logger.new(filepath)
+    @reindex_logger.level = log_level
+    @reindex_logger.formatter = Rails.application.config.log_formatter
+    @reindex_logger
   end
 
   def self.delete_removed_objects(fedora_item_pids = [])
-    logger.info "Deleting items removed from Fedora..."
+    reindex_logger.info "Deleting items removed from Fedora..."
     removed_objects(fedora_item_pids).each do |id|
-      logger.info "Deleting " + id + "..."
+      reindex_logger.info "Deleting " + id + "..."
       rsolr.delete_by_query("id:" + id.to_s.gsub(/:/,'\\:'))
     end
 
@@ -229,19 +224,19 @@ class ACIndexing
     rows = 500
     removed = []
     results = rsolr.select({:q => "", :fl => "id", :start => start, :rows => rows})
-    logger.info "Identifying items removed from Fedora..."
+    reindex_logger.info "Identifying items removed from Fedora..."
     while(!results["response"]["docs"].empty?)
-      logger.info("Checking Solr index from #{start} to #{(start + rows)}...")
+      reindex_logger.info("Checking Solr index from #{start} to #{(start + rows)}...")
       results["response"]["docs"].each do |doc|
 
         if(fedora_item_pids.nil?)
           if(!object_exists?(doc["id"]))
-            logger.info "Noting item removed from fedora:  #{doc["id"]}..."
+            reindex_logger.info "Noting item removed from fedora:  #{doc["id"]}..."
             removed << doc["id"].to_s
           end
         else
           if(!fedora_item_pids.include?(doc["id"].to_s))
-            logger.info "Noting removed item #{doc["id"]}..."
+            reindex_logger.info "Noting removed item #{doc["id"]}..."
             removed << doc["id"].to_s
           end
         end
