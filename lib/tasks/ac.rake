@@ -6,13 +6,12 @@ namespace :ac do
   task :reindex, [:collections, :items, :overwrite, :metadata, :fulltext, :delete_removed] => :environment do |t, args|
 
     ACIndexing::reindex({
-        :collections => args[:collections], 
+        :collections => args[:collections],
         :items => args[:items],
         :overwrite => args[:overwrite] || 1,
         :metadata => args[:metadata] || 1,
         :fulltext => args[:fulltext],
         :delete_removed => args[:delete_removed],
-        :log_stdout => 1,
         :executed_by => "rake"
     })
   end
