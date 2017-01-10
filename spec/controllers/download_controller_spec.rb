@@ -73,10 +73,20 @@ RSpec.describe DownloadController, :type => :controller do
       end
 
       context 'from active metadata resource' do
-        let(:mock_resource) { SolrDocument.new(object_state_ssi: 'A', has_model_ssim: ['info:fedora/ldpd:MODSMetadata']) }
-        it 'returns metadata' do
-          get :fedora_content, uri: 'good:id', block: 'CONTENT', filename: 'metadata.txt', download_method: 'show_pretty', data: 'meta'
-          expect(response.headers['Content-Type']).to eql 'text/plain'
+        context 'with solr document' do
+          let(:mock_resource) { SolrDocument.new(object_state_ssi: 'A', has_model_ssim: ['info:fedora/ldpd:MODSMetadata']) }
+          it 'returns metadata' do
+            get :fedora_content, uri: 'good:id', block: 'CONTENT', filename: 'metadata.txt', download_method: 'show_pretty', data: 'meta'
+            expect(response.headers['Content-Type']).to eql 'text/plain'
+          end
+        end
+
+        context 'without solr document' do
+          let(:mock_resource) { nil }
+          it 'returns metadata' do
+            get :fedora_content, uri: 'good:id', block: 'CONTENT', filename: 'metadata.txt', download_method: 'show_pretty', data: 'meta'
+            expect(response.headers['Content-Type']).to eql 'text/plain'
+          end
         end
       end
 
