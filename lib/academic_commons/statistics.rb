@@ -702,11 +702,12 @@ module AcademicCommons
     def send_authors_reports(processed_authors, designated_recipient)
       start_time = Time.new
       time_id = start_time.strftime("%Y%m%d-%H%M%S")
-      logger = Logger.new(Rails.root.to_s + "/log/monthly_reports/#{time_id}.tmp")
+      reports_logger = ActiveSupport::Logger.new(File.join(Rails.root, 'log', 'monthly_reports', "#{time_id}.tmp"))
+      reports_logger.formatter = Rails.application.config.log_formatter
 
-      logger.info "\n=== All Authors Monthly Reports ==="
+      reports_logger.info "\n=== All Authors Monthly Reports ==="
 
-      logger.info "\nStarted at: " + start_time.strftime("%Y-%m-%d %H:%M") + "\n"
+      reports_logger.info "\nStarted at: " + start_time.strftime("%Y-%m-%d %H:%M") + "\n"
 
       sent_counter = 0
       skipped_counter = 0
@@ -748,29 +749,30 @@ module AcademicCommons
               test_msg = ''
             end
 
-            logger.info "report for '" + author_id + "' was sent to " + email + " at " + Time.new.strftime("%Y-%m-%d %H:%M") + test_msg
+            reports_logger.info "report for '" + author_id + "' was sent to " + email + " at " + Time.new.strftime("%Y-%m-%d %H:%M") + test_msg
           else
             skipped_counter = skipped_counter + 1
-            logger.info "report for '" + author_id + "' was skipped"
+            reports_logger.info "report for '" + author_id + "' was skipped"
           end
 
         rescue Exception => e
-          logger.info("(All Authors Monthly Statistics) - There is some error for " + author_id + ", " + (author[:email] || "") + ", error: " + e.to_s + ", " + Time.new.to_s)
+          reports_logger.info("(All Authors Monthly Statistics) - There is some error for " + author_id + ", " + (author[:email] || "") + ", error: " + e.to_s + ", " + Time.new.to_s)
           sent_exceptions = sent_exceptions + 1
         end # begin
 
       end # processed_authors.each
 
       finish_time = Time.new
-      logger.info "\nNumber of emails\n sent: " + sent_counter.to_s + ",\n skipped: " + skipped_counter.to_s +  ",\n errors: " + sent_exceptions.to_s
-      logger.info "\nFinished at: " + finish_time.strftime("%Y-%m-%d %H:%M")
+      reports_logger.info "\nNumber of emails\n sent: " + sent_counter.to_s + ",\n skipped: " + skipped_counter.to_s +  ",\n errors: " + sent_exceptions.to_s
+      reports_logger.info "\nFinished at: " + finish_time.strftime("%Y-%m-%d %H:%M")
 
       seconds_spent = finish_time - start_time
       readble_time_spent = Time.at(seconds_spent).utc.strftime("%H hours, %M minutes, %S seconds")
 
-      logger.info "\nTime spent: " + getReadableTimeSpent(start_time)
+      reports_logger.info "\nTime spent: " + getReadableTimeSpent(start_time)
 
       File.rename(Rails.root.to_s + "/log/monthly_reports/#{time_id}.tmp", Rails.root.to_s + "/log/monthly_reports/#{time_id}.log")
+      reports_logger.close
 
     end # send_authors_reports
 
