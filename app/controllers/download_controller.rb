@@ -131,7 +131,7 @@ class DownloadController < ApplicationController
 
   # TODO: Remove after Hyacinth migration.
   def is_metadata?(doc)
-    doc['has_model_ssim'] && doc['has_model_ssim'].include?('info:fedora/ldpd:MODSMetadata')
+    doc.nil? || (doc['has_model_ssim'] && doc['has_model_ssim'].include?('info:fedora/ldpd:MODSMetadata'))
   end
 
   def record_stats
