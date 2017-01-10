@@ -1,8 +1,8 @@
 # Academic Commons 3.0
 
-## Checking out and working with a local development instance of Academic Commons 3.0
+## Checking out and working with a local development instance of Academic Commons 3.x.x
 
-CURRENT RECOMMENDED VERSION OF RUBY: 2.3.0
+CURRENT RECOMMENDED VERSION OF RUBY: 2.3.3
 
 1. Clone the repository to a location of your choosing
    ```
@@ -28,7 +28,10 @@ CURRENT RECOMMENDED VERSION OF RUBY: 2.3.0
    bundle install
    ```
 
-5. Run `rake db:schema:load` to create your local development DB.
+5. Setup your local development DB.
+   ```
+   rake db:migrate
+   ```
 
 6. Start your local fedora instance.
    ```
