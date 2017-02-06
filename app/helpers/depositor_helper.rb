@@ -70,7 +70,7 @@ module DepositorHelper
           end
 
           AcademicCommons::NotifyDepositors.of_new_items(indexing_results[:new_items])
-
+          expire_fragment('repository_statistics')
         rescue => e
           logger.fatal "Error Indexing: #{e.message}"
           logger.fatal e.backtrace.join("\n ")

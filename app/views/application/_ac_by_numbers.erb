@@ -1,6 +1,6 @@
 <h3>Repository Statistics</h3>
 <div class='box home-side'>
-<% cache('repository_statistics', expires_in: 1.day, race_condition_ttl: 2) do %>
+<% cache('repository_statistics', expires_in: 1.day, race_condition_ttl: 2, skip_digest: true) do %>
   <ul>
     <li><strong><%= get_total_count() %></strong> items in Academic Commons.</li>
     <li>Objects added in the last year: <strong><%= get_count_by_year() %></strong></li>

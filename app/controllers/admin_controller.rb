@@ -6,11 +6,11 @@ class AdminController < ApplicationController
   layout "application"
 
   def ingest
-      process_indexing(params)
+    process_indexing(params)
 
-      if(params[:executed_by])
-        render nothing: true
-      end
+    if(params[:executed_by])
+      render nothing: true
+    end
   end
 
   def edit_alert_message
