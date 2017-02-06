@@ -2324,6 +2324,9 @@ div#static-text {
   font-size: 13px;
 }
 
+#static-text p.anchor-links {
+  margin-right: 0;
+}
 
 ul.how-to-videos li{
 	margin-bottom: 1em;
@@ -2458,4 +2461,11 @@ div.title{
 	width: 200px;
 	text-overflow: ellipsis;
 	overflow: hidden;
+}
+
+a.anchor {
+  display: block;
+  position: relative;
+  top: -60px;
+  visibility: hidden;
 }
