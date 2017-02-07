@@ -137,7 +137,18 @@ class StatisticsController < ApplicationController
     end
 
     if params[:commit] == "Download CSV report"
-      download_csv_report(startdate, enddate, params)
+       usage_stats = AcademicCommons::UsageStatistics.new(
+         startdate, enddate, params[:search_criteria], params[:facet],
+         params[:order_by], include_zeroes: params[:include_zeroes],
+         include_streaming: params[:include_streaming_views],
+         recent_first: params[:recent_first], per_month: true
+       )
+      log_statistics_usage(startdate, enddate, params)
+      csv_report = usage_stats.to_csv_by_month(requested_by: current_user)
+
+      if(csv_report != nil)
+        send_data csv_report, :type=>"application/csv", :filename=>params[:search_criteria] + "_monthly_statistics.csv"
+      end
     end
   end
 

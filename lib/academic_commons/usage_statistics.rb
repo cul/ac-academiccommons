@@ -1,6 +1,9 @@
 module AcademicCommons
   class UsageStatistics
-    attr_accessor :stats, :totals, :results, :download_ids, :ids, :months_list
+    include AcademicCommons::Statistics::OutputCSV
+
+    attr_reader :start_date, :end_date, :months_list, :facet, :query
+    attr_accessor :stats, :totals, :results, :download_ids, :ids, :options
 
     DEFAULT_OPTIONS = {
       include_zeroes: true, include_streaming: false, per_month: false, recent_first: false
@@ -22,9 +25,13 @@ module AcademicCommons
     # @option options [Boolean] :per_month flag to organize statistics by month
     # @option options [Boolean] :recent_first if true, when listing months list most recent month first
     def initialize(start_date, end_date, query, facet, order_by, options = {})
-      options = DEFAULT_OPTIONS.merge(options)
-      self.months_list = (options[:per_month]) ? make_months_list(start_date, end_date, options[:recent_first]) : nil
-      generate_stats(start_date, end_date, query, months_list, options[:include_zeroes], facet, options[:include_streaming_views], order_by)
+      @start_date = start_date
+      @end_date = end_date
+      @query = query
+      @facet = facet
+      self.options = DEFAULT_OPTIONS.merge(options)
+      @months_list = (options[:per_month]) ? make_months_list(start_date, end_date, options[:recent_first]) : nil
+      generate_stats(start_date, end_date, query, self.months_list, options[:include_zeroes], facet, options[:include_streaming_views], order_by)
     end
 
     private
@@ -32,9 +39,7 @@ module AcademicCommons
     # Returns statistics for all the items returned by a solr query
     def generate_stats(startdate, enddate, query, months_list, include_zeroes, facet, include_streaming_views, order_by)
       Rails.logger.debug "In generate_stats for #{query}"
-      if(query == nil || query.empty?)
-        return
-      end
+      return if query.blank?
 
       self.results = make_solr_request(facet, query)
       Rails.logger.debug "Solr request returned #{self.results.count} results."

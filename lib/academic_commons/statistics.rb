@@ -31,116 +31,9 @@ module AcademicCommons
       FACET_NAMES
     end
 
-    # Gets author statistics and generates csv report.
-    # CSV has different sections for Views, Downloads, Streaming listing how many times of each action was done per month.
-    def csv_report(startdate, enddate, search_criteria, include_zeroes, recent_first, facet, include_streaming_views, order_by)
-      usage_stats = AcademicCommons::UsageStatistics.new(
-        startdate, enddate, search_criteria, facet, order_by, include_zeroes: include_zeroes,
-        include_streaming: include_streaming_views, recent_first: recent_first, per_month: true
-      )
-      results = usage_stats.results
-      stats = usage_stats.stats
-      totals = usage_stats.totals
-      download_ids = usage_stats.download_ids
-      months_list = usage_stats.months_list
-
-      if results.nil? || results.size.zero?
-        set_message_and_variables
-        return
-      end
-
-      if facet.in?('author_facet', 'author_uni')
-        csv = "Author UNI/Name: ,#{search_criteria}"
-      else
-        csv = "Search criteria: ,#{search_criteria}"
-      end
-
-      csv += CSV.generate_line( [ "Period covered by Report" ])
-      csv += CSV.generate_line( [ "from:", "to:" ])
-      csv += CSV.generate_line( [ startdate.strftime("%b-%Y"),  enddate.strftime("%b-%Y") ])
-      csv += CSV.generate_line( [ "Date run:" ])
-      csv += CSV.generate_line( [ Time.new.strftime("%Y-%m-%d") ] )
-      csv += CSV.generate_line( [ "Report created by:" ])
-      csv += CSV.generate_line( [  current_user == nil ? "N/A" : "#{current_user} (#{current_user.uid})" ])
-
-
-      csv = make_csv_category("Views", "View", csv, results, stats, totals, months_list, nil)
-      if(include_streaming_views)
-        csv = make_csv_category("Streams", "Streaming", csv, results, stats, totals, months_list, nil)
-      end
-      csv = make_csv_category("Downloads", "Download", csv, results, stats, totals, months_list, download_ids)
-
-      return csv
-    end
-
-    # Makes each category (View, Download, Streaming) section of csv. Helper for csv_report.
-    def make_csv_category(category, key, csv, results, stats, totals, months_list, ids)
-      csv += CSV.generate_line( [ "" ])
-      csv += CSV.generate_line( [ "#{category} report:" ])
-      csv += CSV.generate_line( [ "Total for period:",
-        "",
-        "",
-        "",
-        totals[key].to_s
-      ].concat(make_months_header("#{category} by Month", months_list))
-      )
-
-      csv += CSV.generate_line( [ "Title",
-        "Content Type",
-        "Persistent URL",
-        "DOI",
-        "Reporting Period Total #{category}"
-      ].concat( make_month_line(months_list))
-      )
-
-      results.each do |item|
-        csv += CSV.generate_line([item["title_display"],
-        item["genre_facet"].first,
-        item["handle"],
-        item["doi"],
-        stats[key][item["id"]].nil? ? 0 : stats[key][item["id"]]
-          ].concat( make_month_line_stats(stats, months_list, item["id"], ids))
-          )
-      end
-
-      return csv
-    end
-
-
-    # Creates part of the header above the column names.
-    def make_months_header(first_item, months_list)
-      header = Array.new(months_list.size, "")
-      header[0] = first_item
-      header
-    end
-
     # Return array of abbreviated month names.
     def months
       Array.new(Date::ABBR_MONTHNAMES).drop(1)
-    end
-
-    # Makes column headers of all months represented in this csv.
-    def make_month_line(months_list)
-      months_list.map { |m| m.strftime("%b-%Y") }
-    end
-
-    # Populated statistics for each month.
-    #
-    # @param Array<Array<String>> stats
-    def make_month_line_stats(stats, months_list, id, download_ids)
-      line = []
-
-      months_list.each do |month|
-
-        if(download_ids != nil)
-          download_id = download_ids[id]
-          line << (stats[DOWNLOAD + month.to_s][download_id[0]].nil? ? 0 : stats[DOWNLOAD + month.to_s][download_id[0]])
-        else
-          line << (stats[VIEW + month.to_s][id].nil? ? 0 : stats[VIEW + month.to_s][id])
-        end
-
-      end
-      return line
     end
 
     def set_message_and_variables
@@ -175,24 +68,6 @@ module AcademicCommons
 
     def make_test_author(author_id, email)
       [{ id: author_id, email: email }]
-    end
-
-    def download_csv_report(startdate, enddate, params)
-      log_statistics_usage(startdate, enddate, params)
-
-      csv_report = csv_report( startdate,
-      enddate,
-      params[:search_criteria],
-      params[:include_zeroes],
-      params[:recent_first],
-      params[:facet],
-      params[:include_streaming_views],
-      params[:order_by]
-      )
-
-      if(csv_report != nil)
-        send_data csv_report, :type=>"application/csv", :filename=>params[:search_criteria] + "_monthly_statistics.csv"
-      end
     end
 
     def school_pids(school)
@@ -483,7 +358,5 @@ module AcademicCommons
       params[:designated_recipient] = nil
       params[:one_report_email] = nil
     end
-
-
   end
 end

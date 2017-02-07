@@ -153,4 +153,93 @@ RSpec.describe AcademicCommons::UsageStatistics do
       end
     end
   end
+
+  describe '.to_csv_by_month' do
+    let(:pid) { 'actest:1' }
+    let(:uni) { 'abc123' }
+    let(:solr_params) do
+      {
+        :rows => 100000, :sort => 'title_display asc', :q => nil, :page => 1,
+        :fq => "author_uni:\"author_uni:#{uni}\"", :fl => "title_display,id,handle,doi,genre_facet"
+      }
+    end
+    let(:solr_response) do
+      {
+        'response' => {
+          'docs' => [
+            { 'id' => pid, 'title_display' => 'First Test Document',
+              'handle' => '', 'doi' => '', 'genre_facet' => '' },
+            ]
+          }
+        }
+    end
+    let(:expected_csv) do
+      [
+        ["Author UNI/Name: ", "author_uni:abc123Period covered by Report"],
+        ["from:", "to:"],
+        ["Jan-2015", "Dec-2016"],
+        ["Date run:"],
+        ["2017-02-07"],
+        ["Report created by:"],
+        ["N/A"],
+        [""],
+        ["Views report:"],
+        ["Total for period:", "", "", "", "2", "Views by Month", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", ""],
+        ["Title", "Content Type", "Persistent URL", "DOI", "Reporting Period Total Views", "Jan-2015", "Feb-2015", "Mar-2015", "Apr-2015", "May-2015", "Jun-2015", "Jul-2015", "Aug-2015", "Sep-2015", "Oct-2015", "Nov-2015", "Dec-2015", "Jan-2016", "Feb-2016", "Mar-2016", "Apr-2016", "May-2016", "Jun-2016", "Jul-2016", "Aug-2016", "Sep-2016", "Oct-2016", "Nov-2016", "Dec-2016"],
+        ["First Test Document", "", "", "", "2", "1", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "1", "0", "0", "0", "0", "0", "0", "0", "0", "0"],
+        [""],
+        ["Streams report:"],
+        ["Total for period:", "", "", "", "1", "Streams by Month", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", ""],
+        ["Title", "Content Type", "Persistent URL", "DOI", "Reporting Period Total Streams", "Jan-2015", "Feb-2015", "Mar-2015", "Apr-2015", "May-2015", "Jun-2015", "Jul-2015", "Aug-2015", "Sep-2015", "Oct-2015", "Nov-2015", "Dec-2015", "Jan-2016", "Feb-2016", "Mar-2016", "Apr-2016", "May-2016", "Jun-2016", "Jul-2016", "Aug-2016", "Sep-2016", "Oct-2016", "Nov-2016", "Dec-2016"],
+        ["First Test Document", "", "", "", "1", "1", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "1", "0", "0", "0", "0", "0", "0", "0", "0", "0"],
+        [""],
+        ["Downloads report:"],
+        ["Total for period:", "", "", "", "2", "Downloads by Month", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", ""],
+        ["Title", "Content Type", "Persistent URL", "DOI", "Reporting Period Total Downloads", "Jan-2015", "Feb-2015", "Mar-2015", "Apr-2015", "May-2015", "Jun-2015", "Jul-2015", "Aug-2015", "Sep-2015", "Oct-2015", "Nov-2015", "Dec-2015", "Jan-2016", "Feb-2016", "Mar-2016", "Apr-2016", "May-2016", "Jun-2016", "Jul-2016", "Aug-2016", "Sep-2016", "Oct-2016", "Nov-2016", "Dec-2016"],
+        ["First Test Document", "", "", "", "2", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "2", "0", "0", "0", "0", "0", "0", "0", "0"]
+      ]
+    end
+    let(:usage_stats) do
+      AcademicCommons::UsageStatistics.new(Date.parse('Jan 2015'), Date.parse('Dec 2016'),
+      "author_uni:abc123", 'author_uni', 'views', include_zeroes: true, include_streaming: true, per_month: true)
+    end
+
+    before :each do
+      FactoryGirl.create(:view_stat, at_time: Date.parse('Jan 15, 2015'))
+      FactoryGirl.create(:view_stat, at_time: Date.parse('March 9, 2016'))
+      FactoryGirl.create(:download_stat, at_time: Date.parse('April 2, 2016'))
+      FactoryGirl.create(:download_stat, at_time: Date.parse('April 2, 2016'))
+      FactoryGirl.create(:streaming_stat, at_time: Date.parse('May 3, 2015'))
+
+      allow(Blacklight.default_index).to receive(:search)
+        .with(solr_params).and_return(solr_response)
+    end
+
+    it 'creates the expected csv' do
+      csv = usage_stats.to_csv_by_month
+      expect(CSV.parse(csv)).to match expected_csv
+    end
+  end
+
+  describe '.make_months_header' do
+    let(:usage_stats) { AcademicCommons::UsageStatistics.new(Date.parse('Jan-2015'), Date.parse('Apr-2015'), '', '', '', per_month: true) }
+
+    subject { usage_stats.instance_eval {
+      make_months_header("first column")
+    }}
+
+    it 'makes header array' do
+      expect(subject).to eq ['first column', '', '', '']
+    end
+  end
+
+  describe '.make_month_line' do
+    it 'returns correct values' do
+      dates = ['Dec-2015', 'Jan-2016', 'Feb-2016', 'Mar-2016', 'Apr-2016']
+      date_objs = dates.map { |d| Date.parse(d) }
+      expect(
+        usage_stats.instance_eval { make_month_line(date_objs) }
+      ).to eq dates
+    end
+  end
 end
