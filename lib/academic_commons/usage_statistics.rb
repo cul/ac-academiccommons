@@ -1,6 +1,6 @@
 module AcademicCommons
   class UsageStatistics
-    attr_accessor :stats, :totals, :results, :download_ids, :ids
+    attr_accessor :stats, :totals, :results, :download_ids, :ids, :months_list
 
     DEFAULT_OPTIONS = {
       include_zeroes: true, include_streaming: false, per_month: false, recent_first: false
@@ -23,7 +23,7 @@ module AcademicCommons
     # @option options [Boolean] :recent_first if true, when listing months list most recent month first
     def initialize(start_date, end_date, query, facet, order_by, options = {})
       options = DEFAULT_OPTIONS.merge(options)
-      months_list = (options[:per_month]) ? make_months_list(start_date, end_date, options[:recent_first]) : nil
+      self.months_list = (options[:per_month]) ? make_months_list(start_date, end_date, options[:recent_first]) : nil
       generate_stats(start_date, end_date, query, months_list, options[:include_zeroes], facet, options[:include_streaming_views], order_by)
     end
 
@@ -83,8 +83,8 @@ module AcademicCommons
 
     # Generates base line objects to hold usage statistic information.
     #
-    # @param [] solr results from query
-    # @return [Hash]stats hash keeping track of item views and downloads
+    # @param [] results solr results from query
+    # @return [Hash] stats hash keeping track of item views and downloads
     # @return [Hash] totals
     # @return [Array<String>] id all aggregator pids
     # @return [Hash] download_ids all downloadable item pids
@@ -190,8 +190,8 @@ module AcademicCommons
       return if facet_query == nil && q == nil
 
       Blacklight.default_index.search(
-      :rows => 100000, :sort => sort, :q => q, :fq => facet_query,
-      :fl => "title_display,id,handle,doi,genre_facet", :page => 1
+        :rows => 100000, :sort => sort, :q => q, :fq => facet_query,
+        :fl => "title_display,id,handle,doi,genre_facet", :page => 1
       )["response"]["docs"]
     end
 

@@ -42,8 +42,9 @@ module AcademicCommons
       stats = usage_stats.stats
       totals = usage_stats.totals
       download_ids = usage_stats.download_ids
+      months_list = usage_stats.months_list
 
-      if (results == nil || results.size == 0)
+      if results.nil? || results.size.zero?
         set_message_and_variables
         return
       end
