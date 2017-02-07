@@ -16,22 +16,18 @@ module AcademicCommons::Statistics
                      "Search criteria: ,#{self.query}"
                    end
 
-      CSV.generate(first_line) do |csv|
-        csv.add_row ['Period covered by Report']
-        csv.add_row [ "from:", "to:" ]
-        csv.add_row [ self.start_date.strftime("%b-%Y"),  self.end_date.strftime("%b-%Y") ]
-        csv.add_row [ "Date run:" ]
-        csv.add_row [ Time.new.strftime("%Y-%m-%d") ]
-        csv.add_row [ "Report created by:" ]
-        csv.add_row [  requested_by.nil? ? "N/A" : "#{requested_by} (#{requested_by.uid})" ]
+      CSV.generate do |csv|
+        csv.add_row [facet.in?('author_facet', 'author_uni') ? 'Author UNI/Name:' : 'Search criteria:', self.query]
+        csv.add_row []
+        csv.add_row ['Period Covered by Report', "#{self.start_date.strftime("%b-%Y")} to #{self.end_date.strftime("%b-%Y")}"]
+        csv.add_row []
+        csv.add_row ['Report created by:', requested_by.nil? ? "N/A" : "#{requested_by} (#{requested_by.uid})"]
+        csv.add_row ['Report created on:', Time.new.strftime("%Y-%m-%d") ]
 
         add_usage_category(csv, "Views", "View", nil)
-        if(options[:include_streaming])
-         add_usage_category(csv, "Streams", "Streaming", nil)
-        end
+        add_usage_category(csv, "Streams", "Streaming", nil) if (options[:include_streaming])
         add_usage_category(csv, "Downloads", "Download", self.download_ids)
       end
-
     end
 
     def to_csv
@@ -43,8 +39,8 @@ module AcademicCommons::Statistics
     def add_usage_category(csv, category, key, ids)
       csv.add_row [ "" ]
       csv.add_row [ "#{category} report:" ]
-      csv.add_row [ "Total for period:", "", "", "", self.totals[key].to_s].concat(make_months_header("#{category} by Month"))
-      csv.add_row [ "Title", "Content Type", "Persistent URL", "DOI", "Reporting Period Total #{category}"].concat(make_month_line(self.months_list))
+      csv.add_row [ "Total for period:", self.totals[key].to_s,  "", "", "", "#{category} by Month"]
+      csv.add_row [ "Title", "Content Type", "Persistent URL", "Publisher DOI", "Reporting Period Total #{category}"].concat(make_month_line(self.months_list))
 
       self.results.each do |item|
         csv.add_row [
