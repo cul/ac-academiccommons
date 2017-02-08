@@ -4,8 +4,8 @@ module AcademicCommons
   module Statistics
     include AcademicCommons::Listable
 
-    VIEW = 'view_'
-    DOWNLOAD = 'download_'
+    VIEW = 'View '
+    DOWNLOAD = 'Download '
 
     FACET_NAMES = Hash.new
     FACET_NAMES.store('author_facet', 'Author')

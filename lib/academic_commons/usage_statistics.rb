@@ -8,8 +8,9 @@ module AcademicCommons
     DEFAULT_OPTIONS = {
       include_zeroes: true, include_streaming: false, per_month: false, recent_first: false
     }
-    VIEW = 'view_'
-    DOWNLOAD = 'download_'
+    VIEW = 'View '
+    DOWNLOAD = 'Download '
+    STREAMING = 'Streaming '
 
     # Create statistics object that calculates usage statistics for all the
     # items that match the query.
@@ -146,6 +147,7 @@ module AcademicCommons
 
         self.stats[VIEW + month.to_s] = Statistic.group(:identifier).where("event = 'View' and identifier IN (?) and at_time like ?", self.ids, contdition).count
         self.stats[DOWNLOAD + month.to_s] = Statistic.group(:identifier).where("event = 'Download' and identifier IN (?) and at_time like ?", self.download_ids.values.flatten, contdition).count
+        self.stats[STREAMING + month.to_s] = Statistic.group(:identifier).where("event = 'Streaming' and identifier IN (?) and at_time like ?", self.ids, contdition).count
       end
     end
 
