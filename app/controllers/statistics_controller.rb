@@ -243,6 +243,8 @@ class StatisticsController < ApplicationController
   def generic_statistics; end
 
   def school_statistics; end
+  
+  def statistic_res_list; end
 
   def send_csv_report
     params.each do |key, value|
