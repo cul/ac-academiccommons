@@ -1,5 +1,4 @@
 /*
- *= require font-awesome
  *= require fancybox
  *= require zooming_image
  *= require jquery/ui-lightness/jquery-ui-1.8.1.custom
@@ -2156,4 +2155,12 @@ a.anchor {
   position: relative;
   top: -60px;
   visibility: hidden;
+}
+
+a.icon-home {
+  display: inline-block;
+}
+
+a.icon-home img {
+  margin-right: 5px;
 }
