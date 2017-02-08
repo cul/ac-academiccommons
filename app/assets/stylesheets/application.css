@@ -2469,3 +2469,7 @@ a.anchor {
   top: -60px;
   visibility: hidden;
 }
+
+/* fixes distracting jump before CUL banner loads */
+
+@media (max-width:978px){body{padding:0}}@media (max-width:979px){body{padding-top:0;margin:0}}@media (min-width:980px){body{padding-top:50px !important}}
