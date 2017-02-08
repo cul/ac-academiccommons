@@ -82,6 +82,11 @@ RSpec.describe DownloadController, :type => :controller do
         end
 
         context 'without solr document' do
+          before :each do
+            allow(ActiveFedora::Base).to receive(:find).with('good:id').and_return(ActiveFedora::Base.new)
+            allow(ActiveFedora::Base.find('good:id')).to receive(:to_solr).and_return({'has_model_ssim' => 'info:fedora/ldpd:MODSMetadata'})
+          end
+
           let(:mock_resource) { nil }
           it 'returns metadata' do
             get :fedora_content, uri: 'good:id', block: 'CONTENT', filename: 'metadata.txt', download_method: 'show_pretty', data: 'meta'
