@@ -23,7 +23,7 @@ module AcademicCommons
     # @param [Hash] options options to use when creating/rendering stats
     # @option options [Boolean] :include_zeroes flag to indicate whether records with no usage stats should be included
     # @option options [Boolean] :include_streaming
-    # @option options [Boolean] :per_month flag to organize statistics by month
+    # @option options [Boolean] :per_month flag to organize/calculate statistics by month
     # @option options [Boolean] :recent_first if true, when listing months list most recent month first
     def initialize(start_date, end_date, query, facet, order_by, options = {})
       @start_date = start_date
@@ -31,14 +31,14 @@ module AcademicCommons
       @query = query
       @facet = facet
       self.options = DEFAULT_OPTIONS.merge(options)
-      @months_list = (options[:per_month]) ? make_months_list(start_date, end_date, options[:recent_first]) : nil
-      generate_stats(start_date, end_date, query, self.months_list, options[:include_zeroes], facet, options[:include_streaming_views], order_by)
+      @months_list = (options[:per_month]) ? make_months_list(options[:recent_first]) : nil
+      generate_stats(query, facet, order_by)
     end
 
     private
 
     # Returns statistics for all the items returned by a solr query
-    def generate_stats(startdate, enddate, query, months_list, include_zeroes, facet, include_streaming_views, order_by)
+    def generate_stats(query, facet, order_by)
       Rails.logger.debug "In generate_stats for #{query}"
       return if query.blank?
 
@@ -51,24 +51,23 @@ module AcademicCommons
 
       Rails.logger.debug "#{ids.count} results after init_holders"
 
-      process_stats(startdate, enddate)
+      process_stats(self.start_date, self.end_date)
 
-      self.results.reject! { |r| (self.stats['View'][r['id']] || 0) == 0 &&  (self.stats['Download'][r['id']] || 0) == 0 } unless include_zeroes
+      self.results.reject! { |r| (self.stats['View'][r['id']] || 0) == 0 &&  (self.stats['Download'][r['id']] || 0) == 0 } unless options[:include_zeroes]
 
-      if(order_by == 'views' || order_by == 'downloads')
+      if order_by == 'views' || order_by == 'downloads'
         self.results.sort! do |x,y|
-          if(order_by == 'downloads')
+          if order_by == 'downloads'
             result = (stats['Download'][y['id']] || 0) <=> (self.stats['Download'][x['id']] || 0)
-          end
-          if(order_by == 'views')
+          elsif order_by == 'views'
             result = (self.stats['View'][y['id']] || 0) <=> (self.stats['View'][x['id']] || 0)
           end
           result
         end
       end
 
-      if(months_list != nil)
-        process_stats_by_month(self.stats, self.totals, self.ids, self.download_ids, startdate, enddate, months_list)
+      if options[:per_month]
+        process_stats_by_month(self.stats, self.totals, self.ids, self.download_ids)
       end
     end
 
@@ -76,10 +75,10 @@ module AcademicCommons
     # enddate given.
     #
     # @param recent_first flag that reverses array
-    def make_months_list(startdate, enddate, recent_first = false)
+    def make_months_list(recent_first = false)
       months = []
-      date = startdate
-      while date <= enddate
+      date = self.start_date
+      while date <= self.end_date
         months << date
         date += 1.month
       end
@@ -141,8 +140,8 @@ module AcademicCommons
 
     # For each month get the number of view and downloads for each id and populate
     # them into stats.
-    def process_stats_by_month(stats, totals, ids, download_ids, startdate, enddate, months_list)
-      months_list.each do |month|
+    def process_stats_by_month(stats, totals, ids, download_ids)
+      self.months_list.each do |month|
         contdition = month.strftime("%Y-%m") + "%"
 
         self.stats[VIEW + month.to_s] = Statistic.group(:identifier).where("event = 'View' and identifier IN (?) and at_time like ?", self.ids, contdition).count
@@ -194,7 +193,7 @@ module AcademicCommons
         sort = "title_display asc"
       end
 
-      return if facet_query == nil && q == nil
+      return if facet_query.nil? && q.nil?
 
       Blacklight.default_index.search(
         :rows => 100000, :sort => sort, :q => q, :fq => facet_query,
@@ -206,7 +205,7 @@ module AcademicCommons
       a =  ohash.to_a
       oh = {}
       a.each{|x|  oh[x[0]] = x[1]}
-      return oh
+      oh
     end
   end
 end

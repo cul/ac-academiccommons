@@ -106,15 +106,14 @@ RSpec.describe AcademicCommons::UsageStatistics do
     let(:dates) do
       ['Dec-2015', 'Jan-2016', 'Feb-2016', 'Mar-2016', 'Apr-2016'].map { |d| Date.parse(d) }
     end
+    let(:usage_stats) { AcademicCommons::UsageStatistics.new(dates[0], dates[4], '', '', '') }
 
     it 'returns correct list' do
-      start = dates.first; last = dates.last
-      result = usage_stats.instance_eval { make_months_list(start, last) }
+      result = usage_stats.instance_eval { make_months_list }
       expect(result).to eq dates
     end
     it 'returns correct list in reverse' do
-      start = dates.first; last = dates.last
-      result = usage_stats.instance_eval{ make_months_list(start, last, true) }
+      result = usage_stats.instance_eval{ make_months_list(true) }
       expect(result).to eq dates.reverse
     end
   end
