@@ -34,7 +34,7 @@ AcademicCommons::Application.configure do
   config.action_dispatch.x_sendfile_header = 'X-Accel-Redirect'
 
   # Reducing logging in production.
-  config.log_level = :info
+  config.log_level = :warn
 
   # Use a different cache store in production
   # config.cache_store = :mem_cache_store
