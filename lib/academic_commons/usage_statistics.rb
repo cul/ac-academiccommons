@@ -112,12 +112,12 @@ module AcademicCommons
 
     def process_stats(startdate, enddate)
       Rails.logger.debug "In process_stats for #{ids}"
-      enddate = enddate + 1.months
+      # enddate = enddate + 1.months
 
-      self.stats['View'] = Statistic.group(:identifier).where("event = 'View' and identifier IN (?) AND at_time BETWEEN ? and ?", self.ids, startdate, enddate).count
-      self.stats['Streaming'] = Statistic.group(:identifier).where("event = 'Streaming' and identifier IN (?) AND at_time BETWEEN ? and ?", self.ids, startdate, enddate).count
+      self.stats['View'] = Statistic.event_count(self.ids, Statistic::VIEW_EVENT, start_date: startdate, end_date: end_date)
+      self.stats['Streaming'] = Statistic.event_count(self.ids, Statistic::STREAM_EVENT, start_date: startdate, end_date: enddate)
 
-      stats_downloads = Statistic.group(:identifier).where("event = 'Download' and identifier IN (?) AND at_time BETWEEN ? and ?", self.download_ids.values.flatten, startdate, enddate).count
+      stats_downloads = Statistic.event_count(self.download_ids.values.flatten, Statistic::DOWNLOAD_EVENT, start_date: startdate, end_date: enddate)
 
       self.download_ids.each_pair do |doc_id, downloads|
         self.stats['Download'][doc_id] = downloads.collect { |download_id| stats_downloads[download_id] || 0 }.sum
@@ -144,12 +144,13 @@ module AcademicCommons
     # For each month get the number of view and downloads for each id and populate
     # them into stats.
     def process_stats_by_month(stats, totals, ids, download_ids)
-      self.months_list.each do |month|
-        contdition = month.strftime("%Y-%m") + "%"
+      self.months_list.each do |date|
+        start = Date.new(date.year, date.month, 1)
+        final = Date.new(date.year, date.month, -1)
 
-        self.stats[VIEW + month.to_s] = Statistic.group(:identifier).where("event = 'View' and identifier IN (?) and at_time like ?", self.ids, contdition).count
-        self.stats[DOWNLOAD + month.to_s] = Statistic.group(:identifier).where("event = 'Download' and identifier IN (?) and at_time like ?", self.download_ids.values.flatten, contdition).count
-        self.stats[STREAMING + month.to_s] = Statistic.group(:identifier).where("event = 'Streaming' and identifier IN (?) and at_time like ?", self.ids, contdition).count
+        self.stats[VIEW + date.to_s] = Statistic.event_count(self.ids, Statistic::VIEW_EVENT, start_date: start, end_date: final)
+        self.stats[DOWNLOAD + date.to_s] = Statistic.event_count(self.download_ids.values.flatten, Statistic::DOWNLOAD_EVENT, start_date: start, end_date: final)
+        self.stats[STREAMING + date.to_s] = Statistic.event_count(self.ids, Statistic::STREAM_EVENT, start_date: start, end_date: final)
       end
     end
 

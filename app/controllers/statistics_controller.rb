@@ -113,6 +113,7 @@ class StatisticsController < ApplicationController
 
     startdate = Date.parse(params[:month_from] + " " + params[:year_from])
     enddate = Date.parse(params[:month_to] + " " + params[:year_to])
+    enddate = Date.new(enddate.year, enddate.month, -1) # needs to be the last day of month
 
     if params[:commit].in?('View', "Email", "Get Usage Stats", "keyword search")
       log_statistics_usage(startdate, enddate, params)
@@ -243,7 +244,7 @@ class StatisticsController < ApplicationController
   def generic_statistics; end
 
   def school_statistics; end
-  
+
   def statistic_res_list; end
 
   def send_csv_report

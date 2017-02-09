@@ -61,8 +61,8 @@ RSpec.describe AcademicCommons::UsageStatistics do
         end
         it 'returns correct totals' do
           expect(totals).to match(
-          'View' => 2, 'Download' => 1, 'Streaming' => 1, 'View Lifetime' => 2,
-          'Download Lifetime' => 1, 'Streaming Lifetime' => 1
+            'View' => 2, 'Download' => 1, 'Streaming' => 1, 'View Lifetime' => 2,
+            'Download Lifetime' => 1, 'Streaming Lifetime' => 1
           )
         end
         it 'returns correct download_ids' do
@@ -80,6 +80,7 @@ RSpec.describe AcademicCommons::UsageStatistics do
         it 'returns correct results' do
           expect(results).to eq solr_response['response']['docs']
         end
+        
         it 'returns empty stats' do
           expect(stats).to match(
             'View' => {},

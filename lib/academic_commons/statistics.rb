@@ -302,10 +302,11 @@ module AcademicCommons
       processed_authors.each do |author|
         begin
           author_id = author[:id]
-          date = Date.parse(params[:month] + " " + params[:year])
+          startdate = Date.parse(params[:month] + " " + params[:year])
+          enddate = Date.new(startdate.year, startdate.month, -1) # end_date needs to be last day of month
 
           usage_stats = AcademicCommons::UsageStatistics.new(
-            date, date, author_id, 'author_uni', params[:order_by],
+            startdate, enddate, author_id, 'author_uni', params[:order_by],
             include_zeroes: params[:include_zeroes], include_streaming: false,
           )
           @results = usage_stats.results
@@ -320,7 +321,7 @@ module AcademicCommons
             if(params[:do_not_send_email])
               test_msg = ' (this is test - email was not sent)'
             else
-              Notifier.author_monthly(email, author_id, date, date, @results, @stats, @totals, false, params[:optional_note]).deliver
+              Notifier.author_monthly(email, author_id, startdate, enddate, @results, @stats, @totals, false, params[:optional_note]).deliver
               test_msg = ''
             end
 
