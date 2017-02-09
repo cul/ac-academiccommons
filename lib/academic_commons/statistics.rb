@@ -154,7 +154,7 @@ module AcademicCommons
       return asset_pids.first if asset_pids.count == 1
 
       # Get the higest value stored here.
-      counts = Statistic.per_identifier(asset_pids, Statistic::DOWNLOAD_EVENT)
+      counts = Statistic.event_count(asset_pids, Statistic::DOWNLOAD_EVENT)
 
       # Return first pid, if items have never been downloaded.
       return asset_pids.first if counts.empty?
@@ -167,16 +167,14 @@ module AcademicCommons
     def get_res_list
       query = params[:f]
 
-      if( query == nil || query.empty? )
-        return []
-      end
+      return [] if query.blank?
 
       docs = get_pids_by_query_facets(query)
 
       results = Array.new
 
       docs.each do |doc|
-        item =  Hash.new
+        item = Hash.new
 
         if(params[:month_from] && params[:year_from] && params[:month_to] && params[:year_to] )
           startdate = Date.parse(params[:month_from] + " " + params[:year_from])

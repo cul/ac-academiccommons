@@ -12,8 +12,11 @@ module AcademicCommons
     DOWNLOAD = 'Download '
     STREAMING = 'Streaming '
 
-    # Create statistics object that calculates usage statistics for all the
-    # items that match the query.
+    # Create statistics object that calculates usage statistics (views,
+    # downloads, and streams) for all the items that match the query. If a time
+    # period is given, stats for that time period are calculated. If :per_month
+    # is true statistics are broken down by month. Lifetime statistics are always
+    # calculated.
     #
     # @param [Date] start_date
     # @param [Date] end_date
@@ -122,10 +125,10 @@ module AcademicCommons
 
       self.stats['View'] = convert_ordered_hash(self.stats['View'])
 
-      self.stats['View Lifetime'] = Statistic.group(:identifier).where("event = 'View' and identifier IN (?)", self.ids).count
-      self.stats['Streaming Lifetime'] = Statistic.group(:identifier).where("event = 'Streaming' and identifier IN (?)", self.ids).count
+      self.stats['View Lifetime'] = Statistic.event_count(self.ids, Statistic::VIEW_EVENT)
+      self.stats['Streaming Lifetime'] = Statistic.event_count(self.ids, Statistic::STREAM_EVENT)
 
-      stats_lifetime_downloads = Statistic.group(:identifier).where("event = 'Download' and identifier IN (?)", self.download_ids.values.flatten).count
+      stats_lifetime_downloads = Statistic.event_count(self.download_ids.values.flatten, Statistic::DOWNLOAD_EVENT)
 
       self.download_ids.each_pair do |doc_id, downloads|
         self.stats['Download Lifetime'][doc_id] = downloads.collect { |download_id| stats_lifetime_downloads[download_id] || 0 }.sum

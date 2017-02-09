@@ -6,18 +6,34 @@ class Statistic < ActiveRecord::Base
   EVENTS = [VIEW_EVENT, DOWNLOAD_EVENT, STREAM_EVENT]
 
   # Calculate the number of times the event given has occured for all the given
-  # asset_pids.
+  # pids. If start and end date are given, the query is limited to that time period.
+  # When querying with dates, time stamps are ignored.
   #
-  # @param [Array<String>|String] asset_pids
-  # @param String event
-  def self.per_identifier(asset_pids, event)
+  # @note When querying for downloads asset pids must be used, not aggregator pids.
+  #
+  # @param [Array<String>|String] pids
+  # @param [String] event
+  # @param [Date] start_date
+  # @param [Date] end_date
+  # @return [Hash<String,Integer>] keys are ids and the value is the number of times said event occured
+  def self.event_count(pids, event, start_date: nil, end_date: nil)
     # Check parameters.
-    asset_pids = [asset_pids] if asset_pids.is_a? String
+    pids = [pids] if pids.is_a? String
 
-    raise 'asset_pids must be an Array or String' unless asset_pids.is_a? Array
-    raise "event must one of #{EVENTS}"           unless valid_event?(event)
+    raise 'pids must be an Array or String' unless pids.is_a? Array
+    raise "event must one of #{EVENTS}"     unless valid_event?(event)
 
-    group(:identifier).where("identifier IN (?) and event = ?", asset_pids, event).count
+    if start_date || end_date
+      if start_date.respond_to?(:to_time) && end_date.respond_to?(:to_time)
+        start_date = start_date.to_time.beginning_of_day
+        end_date = end_date.to_time.end_of_day
+        group(:identifier).where("identifier IN (?) and event = ? AND at_time BETWEEN ? and ?", pids, event, start_date, end_date).count
+      else
+        raise 'start_date and end_date must respond to :to_time'
+      end
+    else
+      group(:identifier).where("identifier IN (?) and event = ?", pids, event).count
+    end
   end
 
   def self.valid_event?(e)
