@@ -43,13 +43,7 @@ CURRENT RECOMMENDED VERSION OF RUBY: 2.3.3
    solr_wrapper
    ```
 
-8. Populate your Solr instance from Fedora
-   ```
-   rake ac:reindex[collection:3]
-   ```
-   **Note: This doesn't seem to work, but I have a feeling it has to do with the parameters.**
-
-9. Start your local Rails app
+8. Start your local Rails app
    ```
    rails server
    ```
