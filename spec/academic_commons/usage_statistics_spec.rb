@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe AcademicCommons::UsageStatistics do
+RSpec.describe AcademicCommons::UsageStatistics, integration: true do
   let(:uni) { 'abc123' }
   let(:pid) { 'actest:1' }
   let(:empty_response) { { 'response' => { 'docs' => [] } } }
@@ -22,7 +22,7 @@ RSpec.describe AcademicCommons::UsageStatistics do
       }
   end
 
-  describe '.new', integration: true do
+  describe '.new' do
     context 'when requesting usage stats for author' do
       let(:results) { usage_stats.results }
       let(:stats)   { usage_stats.stats }
@@ -51,12 +51,12 @@ RSpec.describe AcademicCommons::UsageStatistics do
         end
         it 'returns correct stats' do
           expect(stats).to match(
-          'View Period' => { "#{pid}" => 2 },
-          'Download Period' => { "#{pid}" => 1 },
-          'Streaming Period' => { "#{pid}" => 1 },
-          'View Lifetime' => { "#{pid}" => 2 },
-          'Download Lifetime' => { "#{pid}" => 1 },
-          'Streaming Lifetime' => { "#{pid}" => 1 }
+            'View Period' => { "#{pid}" => 2 },
+            'Download Period' => { "#{pid}" => 1 },
+            'Streaming Period' => { "#{pid}" => 1 },
+            'View Lifetime' => { "#{pid}" => 2 },
+            'Download Lifetime' => { "#{pid}" => 1 },
+            'Streaming Lifetime' => { "#{pid}" => 1 }
           )
         end
         it 'returns correct totals' do
@@ -67,7 +67,7 @@ RSpec.describe AcademicCommons::UsageStatistics do
         end
         it 'returns correct download_ids' do
           expect(download_ids).to include(pid)
-          expect(download_ids[pid]).to contain_exactly('actest:2','actest:4')
+          expect(download_ids[pid]).to eql 'actest:2'
         end
       end
 
@@ -200,7 +200,6 @@ RSpec.describe AcademicCommons::UsageStatistics do
 
     it 'creates the expected csv' do
       csv = usage_stats.to_csv_by_month
-      puts usage_stats.stats.inspect
       expect(CSV.parse(csv)).to match expected_csv
     end
   end
@@ -258,6 +257,52 @@ RSpec.describe AcademicCommons::UsageStatistics do
 
     it 'returns 0 if id not present' do
       expect(usage_stats.get_stat_for('actest:2', 'View', "Jan 2016")).to eql 0
+    end
+  end
+
+  describe '.most_downloaded_asset' do
+    let(:pid1) { 'actest:2' }
+    let(:pid2) { 'actest:4' }
+
+    subject {
+      usage_stats.instance_eval{ most_downloaded_asset('actest:1') }
+    }
+
+    it 'returns error when pid not provided' do
+      expect {
+        usage_stats.instance_eval{ most_downloaded_asset }
+      }.to raise_error ArgumentError
+    end
+
+    context 'when item has one asset' do
+      let(:asset_pids_response) { [{ pid: pid1 }] }
+
+      before :each do
+        allow(usage_stats).to receive(:build_resource_list)
+          .with(any_args).and_return(asset_pids_response)
+      end
+
+      it 'returns only asset' do
+        expect(subject).to eql 'actest:2'
+      end
+    end
+
+    context 'when item has more than one asset' do
+      before :each do
+        FactoryGirl.create(:download_stat)
+        FactoryGirl.create(:download_stat, identifier: pid2)
+        FactoryGirl.create(:download_stat, identifier: pid2)
+      end
+
+      it 'returns most downloaded' do
+        expect(subject).to eql pid2
+      end
+    end
+
+    context 'when item asset has never been downloaded' do
+      it 'returns first pid' do
+        expect(subject).to eql pid1
+      end
     end
   end
 end

@@ -21,9 +21,9 @@ module AcademicCommons::Statistics
         csv.add_row ['Report created by:', requested_by.nil? ? "N/A" : "#{requested_by} (#{requested_by.uid})"]
         csv.add_row ['Report created on:', Time.new.strftime("%Y-%m-%d") ]
 
-        add_usage_category(csv, "Views", "View", nil)
-        add_usage_category(csv, "Streams", "Streaming", nil) if (options[:include_streaming])
-        add_usage_category(csv, "Downloads", "Download", self.download_ids)
+        add_usage_category(csv, "Views", "View")
+        add_usage_category(csv, "Streams", "Streaming") if (options[:include_streaming])
+        add_usage_category(csv, "Downloads", "Download")
       end
     end
 
@@ -33,7 +33,7 @@ module AcademicCommons::Statistics
     private
 
     # Makes each category (View, Download, Streaming) section of csv.
-    def add_usage_category(csv, category, key, ids)
+    def add_usage_category(csv, category, key)
       csv.add_row []
       csv.add_row []
       csv.add_row [ "#{category} report:".upcase ]
@@ -54,12 +54,12 @@ module AcademicCommons::Statistics
     def make_month_line_stats(key, id)
      self.months_list.map do |month|
        hash_key = "#{key} #{month.strftime(MONTH_KEY)}"
-       if key == 'Download'
-         download_id = self.download_ids[id]
-         stats[hash_key][download_id[0]].nil? ? 0 : stats[hash_key][download_id[0]]
-       else
+      #  if key == 'Download'
+      #    download_id = self.download_ids[id]
+      #    stats[hash_key][download_id[0]].nil? ? 0 : stats[hash_key][download_id[0]]
+      #  else
          stats[hash_key][id].nil? ? 0 : stats[hash_key][id]
-       end
+      #  end
      end
     end
 

@@ -1,6 +1,7 @@
 module AcademicCommons
   class UsageStatistics
     include AcademicCommons::Statistics::OutputCSV
+    include AcademicCommons::Listable
 
     attr_reader :start_date, :end_date, :months_list, :facet, :query
     attr_accessor :stats, :totals, :results, :download_ids, :ids, :options
@@ -119,11 +120,11 @@ module AcademicCommons
     def init_holders(results)
       self.ids = results.collect { |r| r['id'].to_s.strip } # Get all the aggregator pids.
 
-      self.download_ids = Hash.new { |h,k| h[k] = [] }
+      self.download_ids = {}
 
-      # Get pids of all downloadable files.
-      self.ids.each do |doc_id|
-        download_ids[doc_id] |= ActiveFedora::Base.find(doc_id).list_members(pids_only: true)
+      # Get pid of most downloaded file for each resource/item.
+      self.ids.each do |id|
+        self.download_ids[id] = most_downloaded_asset(id)
       end
 
       self.stats = Hash.new { |h,k| h[k] = Hash.new { |h,k| h[k] = 0 }}
@@ -136,10 +137,10 @@ module AcademicCommons
       self.stats["View #{PERIOD}"] = Statistic.event_count(self.ids, Statistic::VIEW_EVENT, start_date: startdate, end_date: end_date)
       self.stats["Streaming #{PERIOD}"] = Statistic.event_count(self.ids, Statistic::STREAM_EVENT, start_date: startdate, end_date: enddate)
 
-      stats_downloads = Statistic.event_count(self.download_ids.values.flatten, Statistic::DOWNLOAD_EVENT, start_date: startdate, end_date: enddate)
+      stats_downloads = Statistic.event_count(self.download_ids.values, Statistic::DOWNLOAD_EVENT, start_date: startdate, end_date: enddate)
 
-      self.download_ids.each_pair do |doc_id, downloads|
-        self.stats["Download #{PERIOD}"][doc_id] = downloads.collect { |download_id| stats_downloads[download_id] || 0 }.sum
+      self.download_ids.each_pair do |id, asset_id|
+        self.stats["Download #{PERIOD}"][id] = stats_downloads[asset_id] || 0
       end
 
       self.stats["View #{PERIOD}"] = convert_ordered_hash(self.stats["View #{PERIOD}"])
@@ -147,10 +148,10 @@ module AcademicCommons
       self.stats["View #{LIFETIME}"] = Statistic.event_count(self.ids, Statistic::VIEW_EVENT)
       self.stats["Streaming #{LIFETIME}"] = Statistic.event_count(self.ids, Statistic::STREAM_EVENT)
 
-      stats_lifetime_downloads = Statistic.event_count(self.download_ids.values.flatten, Statistic::DOWNLOAD_EVENT)
+      stats_lifetime_downloads = Statistic.event_count(self.download_ids.values, Statistic::DOWNLOAD_EVENT)
 
-      self.download_ids.each_pair do |doc_id, downloads|
-        self.stats['Download Lifetime'][doc_id] = downloads.collect { |download_id| stats_lifetime_downloads[download_id] || 0 }.sum
+      self.download_ids.each_pair do |id, asset_id|
+        self.stats['Download Lifetime'][id] = stats_lifetime_downloads[asset_id] || 0
       end
 
       self.stats.keys.each { |key| self.totals[key] = self.stats[key].values.sum }
@@ -169,7 +170,12 @@ module AcademicCommons
         month_key = start.strftime(MONTH_KEY)
 
         self.stats["#{VIEW} #{month_key}"] = Statistic.event_count(self.ids, Statistic::VIEW_EVENT, start_date: start, end_date: final)
-        self.stats["#{DOWNLOAD} #{month_key}"] = Statistic.event_count(self.download_ids.values.flatten, Statistic::DOWNLOAD_EVENT, start_date: start, end_date: final)
+
+        download_stats = Statistic.event_count(self.download_ids.values, Statistic::DOWNLOAD_EVENT, start_date: start, end_date: final)
+        self.download_ids.each_pair do |id, asset_id|
+          self.stats["#{DOWNLOAD} #{month_key}"][id] = download_stats[asset_id] || 0
+        end
+
         self.stats["#{STREAMING} #{month_key}"] = Statistic.event_count(self.ids, Statistic::STREAM_EVENT, start_date: start, end_date: final)
       end
     end
@@ -230,6 +236,28 @@ module AcademicCommons
       oh = {}
       a.each{|x|  oh[x[0]] = x[1]}
       oh
+    end
+
+    # Most downloaded asset over entire lifetime.
+    # Eventually may have to reevaluate this for queries that are for a specific
+    # time range. For now, we are okay with this assumption.
+    def most_downloaded_asset(pid)
+      asset_pids = build_resource_list({ 'id' => pid }).map { |doc| doc[:pid] }
+      return asset_pids.first if asset_pids.count == 1
+
+      # Get the higest value stored here.
+      counts = Statistic.event_count(asset_pids, Statistic::DOWNLOAD_EVENT)
+
+      # Return first pid, if items have never been downloaded.
+      return asset_pids.first if counts.empty?
+
+      # Get key of most downloaded asset.
+      key, value = counts.max_by{ |_,v| v }
+      key
+    end
+
+    def free_to_read?(document) # free_to_read not relevant here
+      true
     end
   end
 end
