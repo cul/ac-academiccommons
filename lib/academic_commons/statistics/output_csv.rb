@@ -2,6 +2,8 @@ require 'csv'
 
 module AcademicCommons::Statistics
   module OutputCSV
+    MONTH_KEY = '%b %Y'
+
     #
     # @param [User] requested_by user the report was requested by
     def to_csv_by_month(requested_by: nil) # Monthly breakdown of stats
@@ -35,13 +37,13 @@ module AcademicCommons::Statistics
       csv.add_row []
       csv.add_row []
       csv.add_row [ "#{category} report:".upcase ]
-      csv.add_row [ "Total for period:", self.totals[key].to_s,  "", "", "", "#{category} by Month"]
+      csv.add_row [ "Total for period:", self.totals["#{key} Period"].to_s,  "", "", "", "#{category} by Month"]
       csv.add_row [ "Title", "Content Type", "Persistent URL", "Publisher DOI", "Reporting Period Total #{category}"].concat(month_column_headers)
 
       self.results.each do |item|
         csv.add_row [
           item["title_display"], item["genre_facet"].first, item["handle"], item["doi"],
-          self.stats[key][item["id"]].nil? ? 0 : self.stats[key][item["id"]]
+          self.stats["#{key} Period"][item["id"]].nil? ? 0 : self.stats["#{key} Period"][item["id"]]
         ].concat(make_month_line_stats(key, item["id"]))
       end
     end
@@ -51,11 +53,12 @@ module AcademicCommons::Statistics
     # @param Array<Array<String>> stats
     def make_month_line_stats(key, id)
      self.months_list.map do |month|
+       hash_key = "#{key} #{month.strftime(MONTH_KEY)}"
        if key == 'Download'
          download_id = self.download_ids[id]
-         stats["#{key} #{month.to_s}"][download_id[0]].nil? ? 0 : stats["#{key} #{month.to_s}"][download_id[0]]
+         stats[hash_key][download_id[0]].nil? ? 0 : stats[hash_key][download_id[0]]
        else
-         stats["#{key} #{month.to_s}"][id].nil? ? 0 : stats["#{key} #{month.to_s}"][id]
+         stats[hash_key][id].nil? ? 0 : stats[hash_key][id]
        end
      end
     end

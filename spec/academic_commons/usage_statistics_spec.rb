@@ -51,9 +51,9 @@ RSpec.describe AcademicCommons::UsageStatistics do
         end
         it 'returns correct stats' do
           expect(stats).to match(
-          'View' => { "#{pid}" => 2 },
-          'Download' => { "#{pid}" => 1 },
-          'Streaming' => { "#{pid}" => 1 },
+          'View Period' => { "#{pid}" => 2 },
+          'Download Period' => { "#{pid}" => 1 },
+          'Streaming Period' => { "#{pid}" => 1 },
           'View Lifetime' => { "#{pid}" => 2 },
           'Download Lifetime' => { "#{pid}" => 1 },
           'Streaming Lifetime' => { "#{pid}" => 1 }
@@ -61,7 +61,7 @@ RSpec.describe AcademicCommons::UsageStatistics do
         end
         it 'returns correct totals' do
           expect(totals).to match(
-            'View' => 2, 'Download' => 1, 'Streaming' => 1, 'View Lifetime' => 2,
+            'View Period' => 2, 'Download Period' => 1, 'Streaming Period' => 1, 'View Lifetime' => 2,
             'Download Lifetime' => 1, 'Streaming Lifetime' => 1
           )
         end
@@ -80,12 +80,12 @@ RSpec.describe AcademicCommons::UsageStatistics do
         it 'returns correct results' do
           expect(results).to eq solr_response['response']['docs']
         end
-        
+
         it 'returns empty stats' do
           expect(stats).to match(
-            'View' => {},
-            'Download' => { "#{pid}" => 0 },
-            'Streaming' => {},
+            'View Period' => {},
+            'Download Period' => { "#{pid}" => 0 },
+            'Streaming Period' => {},
             'View Lifetime' => { "#{pid}" => 2 },
             'Download Lifetime' => { "#{pid}" => 1 },
             'Streaming Lifetime' => { "#{pid}" => 1 }
@@ -93,7 +93,7 @@ RSpec.describe AcademicCommons::UsageStatistics do
         end
         it 'returns correct totals' do
           expect(totals).to match(
-            'View' => 0, 'Download' => 0, 'Streaming' => 0, 'View Lifetime' => 2,
+            'View Period' => 0, 'Download Period' => 0, 'Streaming Period' => 0, 'View Lifetime' => 2,
             'Download Lifetime' => 1, 'Streaming Lifetime' => 1
           )
         end

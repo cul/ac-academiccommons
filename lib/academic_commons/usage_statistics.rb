@@ -8,9 +8,13 @@ module AcademicCommons
     DEFAULT_OPTIONS = {
       include_zeroes: true, include_streaming: false, per_month: false, recent_first: false
     }
-    VIEW = 'View '
-    DOWNLOAD = 'Download '
-    STREAMING = 'Streaming '
+    VIEW = 'View'
+    DOWNLOAD = 'Download'
+    STREAMING = 'Streaming'
+
+    PERIOD = 'Period'
+    LIFETIME = 'Lifetime'
+    MONTH_KEY = '%b %Y'
 
     # Create statistics object that calculates usage statistics (views,
     # downloads, and streams) for all the items that match the query. If a time
@@ -112,21 +116,20 @@ module AcademicCommons
 
     def process_stats(startdate, enddate)
       Rails.logger.debug "In process_stats for #{ids}"
-      # enddate = enddate + 1.months
 
-      self.stats['View'] = Statistic.event_count(self.ids, Statistic::VIEW_EVENT, start_date: startdate, end_date: end_date)
-      self.stats['Streaming'] = Statistic.event_count(self.ids, Statistic::STREAM_EVENT, start_date: startdate, end_date: enddate)
+      self.stats["View #{PERIOD}"] = Statistic.event_count(self.ids, Statistic::VIEW_EVENT, start_date: startdate, end_date: end_date)
+      self.stats["Streaming #{PERIOD}"] = Statistic.event_count(self.ids, Statistic::STREAM_EVENT, start_date: startdate, end_date: enddate)
 
       stats_downloads = Statistic.event_count(self.download_ids.values.flatten, Statistic::DOWNLOAD_EVENT, start_date: startdate, end_date: enddate)
 
       self.download_ids.each_pair do |doc_id, downloads|
-        self.stats['Download'][doc_id] = downloads.collect { |download_id| stats_downloads[download_id] || 0 }.sum
+        self.stats["Download #{PERIOD}"][doc_id] = downloads.collect { |download_id| stats_downloads[download_id] || 0 }.sum
       end
 
-      self.stats['View'] = convert_ordered_hash(self.stats['View'])
+      self.stats["View #{PERIOD}"] = convert_ordered_hash(self.stats["View #{PERIOD}"])
 
-      self.stats['View Lifetime'] = Statistic.event_count(self.ids, Statistic::VIEW_EVENT)
-      self.stats['Streaming Lifetime'] = Statistic.event_count(self.ids, Statistic::STREAM_EVENT)
+      self.stats["View #{LIFETIME}"] = Statistic.event_count(self.ids, Statistic::VIEW_EVENT)
+      self.stats["Streaming #{LIFETIME}"] = Statistic.event_count(self.ids, Statistic::STREAM_EVENT)
 
       stats_lifetime_downloads = Statistic.event_count(self.download_ids.values.flatten, Statistic::DOWNLOAD_EVENT)
 
@@ -147,10 +150,11 @@ module AcademicCommons
       self.months_list.each do |date|
         start = Date.new(date.year, date.month, 1)
         final = Date.new(date.year, date.month, -1)
+        month_key = start.strftime(MONTH_KEY)
 
-        self.stats[VIEW + date.to_s] = Statistic.event_count(self.ids, Statistic::VIEW_EVENT, start_date: start, end_date: final)
-        self.stats[DOWNLOAD + date.to_s] = Statistic.event_count(self.download_ids.values.flatten, Statistic::DOWNLOAD_EVENT, start_date: start, end_date: final)
-        self.stats[STREAMING + date.to_s] = Statistic.event_count(self.ids, Statistic::STREAM_EVENT, start_date: start, end_date: final)
+        self.stats["#{VIEW} #{month_key}"] = Statistic.event_count(self.ids, Statistic::VIEW_EVENT, start_date: start, end_date: final)
+        self.stats["#{DOWNLOAD} #{month_key}"] = Statistic.event_count(self.download_ids.values.flatten, Statistic::DOWNLOAD_EVENT, start_date: start, end_date: final)
+        self.stats["#{STREAMING} #{month_key}"] = Statistic.event_count(self.ids, Statistic::STREAM_EVENT, start_date: start, end_date: final)
       end
     end
 
@@ -210,6 +214,10 @@ module AcademicCommons
       oh = {}
       a.each{|x|  oh[x[0]] = x[1]}
       oh
+    end
+
+    def get_stat_for(id:, event:, date:) # Date can be Lifetime, Period, month-year
+      # /Lifetime|Period|\w{3} \d{4}/.match date
     end
   end
 end
