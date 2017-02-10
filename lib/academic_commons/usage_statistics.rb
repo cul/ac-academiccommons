@@ -42,6 +42,22 @@ module AcademicCommons
       generate_stats(query, facet, order_by)
     end
 
+    # This will convert aggregator pids to asset pids for downloads? maybe?
+
+    def get_stat_for(id, event, time='Period') # time can be Lifetime, Period, month-year
+      unless /Lifetime|Period|\w{3} \d{4}/.match(time)
+        # Mon year format can only be used if per_month is true
+        raise 'time must be in Lifetime, Period or Mon Year'
+      end
+
+      key = "#{event} #{time}"
+      if self.stats[key].present?
+        self.stats[key][id] || 0
+      else
+        raise "#{key} not part of stats. Check parameters."
+      end
+    end
+
     private
 
     # Returns statistics for all the items returned by a solr query
@@ -214,10 +230,6 @@ module AcademicCommons
       oh = {}
       a.each{|x|  oh[x[0]] = x[1]}
       oh
-    end
-
-    def get_stat_for(id:, event:, date:) # Date can be Lifetime, Period, month-year
-      # /Lifetime|Period|\w{3} \d{4}/.match date
     end
   end
 end

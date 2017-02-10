@@ -5,25 +5,25 @@ RSpec.describe AcademicCommons::UsageStatistics do
   let(:pid) { 'actest:1' }
   let(:empty_response) { { 'response' => { 'docs' => [] } } }
   let(:usage_stats) { AcademicCommons::UsageStatistics.new('', '', '', '', '') }
+  let(:solr_params) do
+    {
+      :rows => 100000, :sort => 'title_display asc', :q => nil, :page => 1,
+      :fq => "author_uni:\"author_uni:#{uni}\"", :fl => "title_display,id,handle,doi,genre_facet"
+    }
+  end
+  let(:solr_response) do
+    {
+      'response' => {
+        'docs' => [
+          { 'id' => pid, 'title_display' => 'First Test Document',
+            'handle' => '', 'doi' => '', 'genre_facet' => '' },
+          ]
+        }
+      }
+  end
 
   describe '.new', integration: true do
     context 'when requesting usage stats for author' do
-      let(:solr_params) do
-        {
-          :rows => 100000, :sort => 'title_display asc', :q => nil, :page => 1,
-          :fq => "author_uni:\"author_uni:#{uni}\"", :fl => "title_display,id,handle,doi,genre_facet"
-        }
-      end
-      let(:solr_response) do
-        {
-          'response' => {
-            'docs' => [
-              { 'id' => pid, 'title_display' => 'First Test Document',
-                'handle' => '', 'doi' => '', 'genre_facet' => '' },
-              ]
-            }
-          }
-      end
       let(:results) { usage_stats.results }
       let(:stats)   { usage_stats.stats }
       let(:totals)  { usage_stats.totals }
@@ -157,22 +157,6 @@ RSpec.describe AcademicCommons::UsageStatistics do
   describe '.to_csv_by_month' do
     let(:pid) { 'actest:1' }
     let(:uni) { 'abc123' }
-    let(:solr_params) do
-      {
-        :rows => 100000, :sort => 'title_display asc', :q => nil, :page => 1,
-        :fq => "author_uni:\"author_uni:#{uni}\"", :fl => "title_display,id,handle,doi,genre_facet"
-      }
-    end
-    let(:solr_response) do
-      {
-        'response' => {
-          'docs' => [
-            { 'id' => pid, 'title_display' => 'First Test Document',
-              'handle' => '', 'doi' => '', 'genre_facet' => '' },
-            ]
-          }
-        }
-    end
     let(:expected_csv) do
       [
         ["Author UNI/Name:", "author_uni:abc123"],
@@ -230,6 +214,50 @@ RSpec.describe AcademicCommons::UsageStatistics do
       expect(
         usage_stats.instance_eval { month_column_headers }
       ).to eq ['Dec-2015', 'Jan-2016', 'Feb-2016', 'Mar-2016', 'Apr-2016']
+    end
+  end
+
+  describe '.get_stat_for' do
+    let(:usage_stats) do
+      AcademicCommons::UsageStatistics.new(Date.parse('Dec 2015'), Date.parse('Apr 2016'),
+      "author_uni:abc123", 'author_uni', nil, per_month: true)
+    end
+
+    before :each do
+      FactoryGirl.create(:view_stat, at_time: Date.parse('Jan 15, 2016'))
+      FactoryGirl.create(:view_stat, at_time: Date.parse('March 9, 2016'))
+      FactoryGirl.create(:download_stat, at_time: Date.parse('April 2, 2016'))
+      FactoryGirl.create(:download_stat, at_time: Date.parse('April 2, 2016'))
+      FactoryGirl.create(:streaming_stat, at_time: Date.parse('May 3, 2015'))
+
+      allow(Blacklight.default_index).to receive(:search)
+        .with(solr_params).and_return(solr_response)
+    end
+
+    it 'return correct value for view period stats' do
+      expect(usage_stats.get_stat_for(pid, 'View')).to eql 2
+    end
+
+    it 'returns correct value for view month stats' do
+      expect(usage_stats.get_stat_for(pid, 'View', 'Jan 2016')).to eql 1
+    end
+
+    it 'returns correct value of Lifetime download stats' do
+      expect(usage_stats.get_stat_for(pid, 'Download', 'Lifetime')).to eql 2
+    end
+
+    it 'returns correct value of download April 2016 stats' do
+      expect(usage_stats.get_stat_for(pid, 'Download', 'Apr 2016')).to eql 2
+    end
+
+    it 'returns error if month and year are not part of the period' do
+      expect {
+        usage_stats.get_stat_for(pid, 'View', 'May 2017')
+      }.to raise_error 'View May 2017 not part of stats. Check parameters.'
+    end
+
+    it 'returns 0 if id not present' do
+      expect(usage_stats.get_stat_for('actest:2', 'View', "Jan 2016")).to eql 0
     end
   end
 end
