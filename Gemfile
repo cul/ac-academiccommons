@@ -30,8 +30,6 @@ gem 'dotenv-rails'
 # Locked at jquery-1.7.2; could potentially be updated later.
 gem 'jquery-rails', '2.0.3'
 
-gem 'font-awesome-rails'
-
 # Used in helper classes.
 # TODO: Confirm that this is needed and used by the application.
 gem 'fancybox2-rails'
