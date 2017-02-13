@@ -41,26 +41,16 @@ module AcademicCommons::Statistics
       csv.add_row [ "Title", "Content Type", "Persistent URL", "Publisher DOI", "Reporting Period Total #{category}"].concat(month_column_headers)
 
       self.results.each do |item|
+        id = item['id']
+        monthly_stats = self.months_list.map { |m| self.get_stat_for(id, key, m.strftime(MONTH_KEY)) }
         csv.add_row [
-          item["title_display"], item["genre_facet"].first, item["handle"], item["doi"],
-          self.stats["#{key} Period"][item["id"]].nil? ? 0 : self.stats["#{key} Period"][item["id"]]
-        ].concat(make_month_line_stats(key, item["id"]))
+          item["title_display"],
+          item["genre_facet"].first,
+          item["handle"],
+          item["doi"],
+          self.get_stat_for(id, key, "Period")
+        ].concat(monthly_stats)
       end
-    end
-
-    # Populated statistics for each month.
-    #
-    # @param Array<Array<String>> stats
-    def make_month_line_stats(key, id)
-     self.months_list.map do |month|
-       hash_key = "#{key} #{month.strftime(MONTH_KEY)}"
-      #  if key == 'Download'
-      #    download_id = self.download_ids[id]
-      #    stats[hash_key][download_id[0]].nil? ? 0 : stats[hash_key][download_id[0]]
-      #  else
-         stats[hash_key][id].nil? ? 0 : stats[hash_key][id]
-      #  end
-     end
     end
 
     # Makes column headers of all months represented in this csv.

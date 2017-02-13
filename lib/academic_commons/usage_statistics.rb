@@ -1,10 +1,10 @@
 module AcademicCommons
   class UsageStatistics
-    include AcademicCommons::Statistics::OutputCSV
     include AcademicCommons::Listable
+    include AcademicCommons::Statistics::OutputCSV
 
-    attr_reader :start_date, :end_date, :months_list, :facet, :query
-    attr_accessor :stats, :totals, :results, :download_ids, :ids, :options
+    attr_reader :start_date, :end_date, :months_list, :facet, :query, :ids
+    attr_accessor :stats, :totals, :results, :download_ids, :options
 
     DEFAULT_OPTIONS = {
       include_zeroes: true, include_streaming: false, per_month: false, recent_first: false
@@ -27,7 +27,7 @@ module AcademicCommons
     # @param [Date] end_date
     # @param [String] query solr query
     # @param [String] facet
-    # @param [String] order_by
+    # @param [String] order_by by most number of downloads or views
     # @param [Hash] options options to use when creating/rendering stats
     # @option options [Boolean] :include_zeroes flag to indicate whether records with no usage stats should be included
     # @option options [Boolean] :include_streaming
@@ -43,16 +43,19 @@ module AcademicCommons
       generate_stats(query, facet, order_by)
     end
 
-    # This will convert aggregator pids to asset pids for downloads? maybe?
-
     def get_stat_for(id, event, time='Period') # time can be Lifetime, Period, month-year
       unless /Lifetime|Period|\w{3} \d{4}/.match(time)
         # Mon year format can only be used if per_month is true
-        raise 'time must be in Lifetime, Period or Mon Year'
+        raise 'time must be Lifetime, Period or Mon Year'
+      end
+
+      # Check that id given is in ids.
+      unless self.ids.include?(id)
+        raise 'id given not part of results'
       end
 
       key = "#{event} #{time}"
-      if self.stats[key].present?
+      if self.stats.key?(key)
         self.stats[key][id] || 0
       else
         raise "#{key} not part of stats. Check parameters."
@@ -71,27 +74,23 @@ module AcademicCommons
 
       return if self.results.nil?
 
-      init_holders(self.results)
+      process_stats()
 
-      Rails.logger.debug "#{ids.count} results after init_holders"
-
-      process_stats(self.start_date, self.end_date)
-
-      self.results.reject! { |r| (self.stats['View'][r['id']] || 0) == 0 &&  (self.stats['Download'][r['id']] || 0) == 0 } unless options[:include_zeroes]
+      unless options[:include_zeroes]
+        self.results.reject! { |r| self.get_stat_for(r['id'], VIEW).zero? && self.get_stat_for(r['id'], DOWNLOAD).zero? }
+        @ids = results.collect { |r| r['id'].to_s.strip } # Get all the aggregator pids.
+      end
 
       if order_by == 'views' || order_by == 'downloads'
         self.results.sort! do |x,y|
-          if order_by == 'downloads'
-            result = (stats['Download'][y['id']] || 0) <=> (self.stats['Download'][x['id']] || 0)
-          elsif order_by == 'views'
-            result = (self.stats['View'][y['id']] || 0) <=> (self.stats['View'][x['id']] || 0)
-          end
-          result
+          event = if order_by == 'downloads'
+                    DOWNLOAD
+                  elsif order_by == 'views'
+                    VIEW
+                  end
+          self.get_stat_for(y['id'], event) <=> self.get_stat_for(x['id'], event)
+          # sort_by title
         end
-      end
-
-      if options[:per_month]
-        process_stats_by_month(self.stats, self.totals, self.ids, self.download_ids)
       end
     end
 
@@ -110,55 +109,34 @@ module AcademicCommons
       (recent_first) ? months.reverse : months
     end
 
-    # Generates base line objects to hold usage statistic information.
-    #
-    # @param [] results solr results from query
-    # @return [Hash] stats hash keeping track of item views and downloads
-    # @return [Hash] totals
-    # @return [Array<String>] id all aggregator pids
-    # @return [Hash] download_ids all downloadable item pids
-    def init_holders(results)
-      self.ids = results.collect { |r| r['id'].to_s.strip } # Get all the aggregator pids.
-
-      self.download_ids = {}
+    def process_stats
+      @ids = results.collect { |r| r['id'].to_s.strip } # Get all the aggregator pids.
 
       # Get pid of most downloaded file for each resource/item.
-      self.ids.each do |id|
-        self.download_ids[id] = most_downloaded_asset(id)
-      end
+      self.download_ids = ids.map { |id| [id, most_downloaded_asset(id)] }.to_h
 
-      self.stats = Hash.new { |h,k| h[k] = Hash.new { |h,k| h[k] = 0 }}
-      self.totals = Hash.new { |h,k| h[k] = 0 }
-    end
+      self.stats = Hash.new { |h,k| h[k] = Hash.new { |h,k| h[k] = 0 } }
+      self.totals = {}
 
-    def process_stats(startdate, enddate)
-      Rails.logger.debug "In process_stats for #{ids}"
+      self.stats["View #{PERIOD}"] = Statistic.event_count(ids, Statistic::VIEW_EVENT, start_date: start_date, end_date: end_date)
+      self.stats["View #{LIFETIME}"] = Statistic.event_count(ids, Statistic::VIEW_EVENT)
 
-      self.stats["View #{PERIOD}"] = Statistic.event_count(self.ids, Statistic::VIEW_EVENT, start_date: startdate, end_date: end_date)
-      self.stats["Streaming #{PERIOD}"] = Statistic.event_count(self.ids, Statistic::STREAM_EVENT, start_date: startdate, end_date: enddate)
-
-      stats_downloads = Statistic.event_count(self.download_ids.values, Statistic::DOWNLOAD_EVENT, start_date: startdate, end_date: enddate)
-
-      self.download_ids.each_pair do |id, asset_id|
-        self.stats["Download #{PERIOD}"][id] = stats_downloads[asset_id] || 0
-      end
-
-      self.stats["View #{PERIOD}"] = convert_ordered_hash(self.stats["View #{PERIOD}"])
-
-      self.stats["View #{LIFETIME}"] = Statistic.event_count(self.ids, Statistic::VIEW_EVENT)
-      self.stats["Streaming #{LIFETIME}"] = Statistic.event_count(self.ids, Statistic::STREAM_EVENT)
+      stats_downloads = Statistic.event_count(self.download_ids.values, Statistic::DOWNLOAD_EVENT, start_date: start_date, end_date: end_date)
+      self.stats["Download #{PERIOD}"] = map_download_stats_to_aggregator(stats_downloads)
 
       stats_lifetime_downloads = Statistic.event_count(self.download_ids.values, Statistic::DOWNLOAD_EVENT)
+      self.stats["Download #{LIFETIME}"] = map_download_stats_to_aggregator(stats_lifetime_downloads)
 
-      self.download_ids.each_pair do |id, asset_id|
-        self.stats['Download Lifetime'][id] = stats_lifetime_downloads[asset_id] || 0
+      if options[:include_streaming]
+        self.stats["Streaming #{PERIOD}"] = Statistic.event_count(ids, Statistic::STREAM_EVENT, start_date: start_date, end_date: end_date)
+        self.stats["Streaming #{LIFETIME}"] = Statistic.event_count(ids, Statistic::STREAM_EVENT)
       end
 
-      self.stats.keys.each { |key| self.totals[key] = self.stats[key].values.sum }
+      self.stats.each { |key, value| self.totals[key] = value.values.sum }
 
-      self.stats['View Lifetime'] = convert_ordered_hash(stats['View Lifetime'])
-
-      Rails.logger.debug("statistics hash: #{self.stats.inspect}")
+      if options[:per_month]
+        process_stats_by_month(self.stats, self.totals, ids, self.download_ids)
+      end
     end
 
     # For each month get the number of view and downloads for each id and populate
@@ -169,15 +147,26 @@ module AcademicCommons
         final = Date.new(date.year, date.month, -1)
         month_key = start.strftime(MONTH_KEY)
 
-        self.stats["#{VIEW} #{month_key}"] = Statistic.event_count(self.ids, Statistic::VIEW_EVENT, start_date: start, end_date: final)
+        self.stats["#{VIEW} #{month_key}"] = Statistic.event_count(ids, Statistic::VIEW_EVENT, start_date: start, end_date: final)
 
-        download_stats = Statistic.event_count(self.download_ids.values, Statistic::DOWNLOAD_EVENT, start_date: start, end_date: final)
-        self.download_ids.each_pair do |id, asset_id|
-          self.stats["#{DOWNLOAD} #{month_key}"][id] = download_stats[asset_id] || 0
+        if options[:include_streaming]
+          self.stats["#{STREAMING} #{month_key}"] = Statistic.event_count(ids, Statistic::STREAM_EVENT, start_date: start, end_date: final)
         end
 
-        self.stats["#{STREAMING} #{month_key}"] = Statistic.event_count(self.ids, Statistic::STREAM_EVENT, start_date: start, end_date: final)
+        download_stats = Statistic.event_count(self.download_ids.values, Statistic::DOWNLOAD_EVENT, start_date: start, end_date: final)
+        self.stats["#{DOWNLOAD} #{month_key}"] = map_download_stats_to_aggregator(download_stats)
       end
+    end
+
+    # Maps download stats from asset pids to aggregator pids.
+    def map_download_stats_to_aggregator(download_stats)
+      downloads = {}
+      self.download_ids.each_pair do |id, asset_id|
+        if num = download_stats[asset_id]
+          downloads[id] = num
+        end
+      end
+      downloads
     end
 
     def parse_search_query(search_query)
@@ -229,13 +218,6 @@ module AcademicCommons
         :rows => 100000, :sort => sort, :q => q, :fq => facet_query,
         :fl => "title_display,id,handle,doi,genre_facet", :page => 1
       )["response"]["docs"]
-    end
-
-    def convert_ordered_hash(ohash)
-      a =  ohash.to_a
-      oh = {}
-      a.each{|x|  oh[x[0]] = x[1]}
-      oh
     end
 
     # Most downloaded asset over entire lifetime.

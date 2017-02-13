@@ -3,6 +3,7 @@ require 'rails_helper'
 RSpec.describe AcademicCommons::UsageStatistics, integration: true do
   let(:uni) { 'abc123' }
   let(:pid) { 'actest:1' }
+  let(:pid2) { 'actest:5' }
   let(:empty_response) { { 'response' => { 'docs' => [] } } }
   let(:usage_stats) { AcademicCommons::UsageStatistics.new('', '', '', '', '') }
   let(:solr_params) do
@@ -15,8 +16,10 @@ RSpec.describe AcademicCommons::UsageStatistics, integration: true do
     {
       'response' => {
         'docs' => [
+          { 'id' => pid2, 'title_display' => 'Second Test Document',
+           'handle' => '', 'doi' => '', 'genre_facet' => ''},
           { 'id' => pid, 'title_display' => 'First Test Document',
-            'handle' => '', 'doi' => '', 'genre_facet' => '' },
+            'handle' => '', 'doi' => '', 'genre_facet' => '' }
           ]
         }
       }
@@ -84,7 +87,7 @@ RSpec.describe AcademicCommons::UsageStatistics, integration: true do
         it 'returns empty stats' do
           expect(stats).to match(
             'View Period' => {},
-            'Download Period' => { "#{pid}" => 0 },
+            'Download Period' => {},
             'Streaming Period' => {},
             'View Lifetime' => { "#{pid}" => 2 },
             'Download Lifetime' => { "#{pid}" => 1 },
@@ -99,6 +102,18 @@ RSpec.describe AcademicCommons::UsageStatistics, integration: true do
         end
 
         it 'returns correct stats when ommitting streaming views'
+      end
+
+      context 'when requesting stats without zeroes' do
+        let(:usage_stats) do
+          AcademicCommons::UsageStatistics.new(Date.today - 2.month, Date.today - 1.month,
+          "author_uni:abc123", 'author_uni', nil, include_zeroes: true, include_streaming: true)
+        end
+
+        it 'results does not include records with zero for view and download stats' do
+          ids = results.map { |r| r['id'] }
+          expect(results).not_to include 'actest:5'
+        end
       end
     end
   end
@@ -154,7 +169,7 @@ RSpec.describe AcademicCommons::UsageStatistics, integration: true do
     end
   end
 
-  describe '.to_csv_by_month' do
+  describe '#to_csv_by_month' do
     let(:pid) { 'actest:1' }
     let(:uni) { 'abc123' }
     let(:expected_csv) do
@@ -170,16 +185,21 @@ RSpec.describe AcademicCommons::UsageStatistics, integration: true do
         ["Total for period:", "2", "", "", "", "Views by Month"],
         ["Title", "Content Type", "Persistent URL", "Publisher DOI", "Reporting Period Total Views", "Jan-2015", "Feb-2015", "Mar-2015", "Apr-2015", "May-2015", "Jun-2015", "Jul-2015", "Aug-2015", "Sep-2015", "Oct-2015", "Nov-2015", "Dec-2015", "Jan-2016", "Feb-2016", "Mar-2016", "Apr-2016", "May-2016", "Jun-2016", "Jul-2016", "Aug-2016", "Sep-2016", "Oct-2016", "Nov-2016", "Dec-2016"],
         ["First Test Document", "", "", "", "2", "1", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "1", "0", "0", "0", "0", "0", "0", "0", "0", "0"],
+        ["Second Test Document", "", "", "", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0"],
+
         [], [],
         ["STREAMS REPORT:"],
         ["Total for period:", "1", "", "", "", "Streams by Month"],
         ["Title", "Content Type", "Persistent URL", "Publisher DOI", "Reporting Period Total Streams", "Jan-2015", "Feb-2015", "Mar-2015", "Apr-2015", "May-2015", "Jun-2015", "Jul-2015", "Aug-2015", "Sep-2015", "Oct-2015", "Nov-2015", "Dec-2015", "Jan-2016", "Feb-2016", "Mar-2016", "Apr-2016", "May-2016", "Jun-2016", "Jul-2016", "Aug-2016", "Sep-2016", "Oct-2016", "Nov-2016", "Dec-2016"],
         ["First Test Document", "", "", "", "1", "0", "0", "0", "0", "1", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0"],
+        ["Second Test Document", "", "", "", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0"],
+
         [], [],
         ["DOWNLOADS REPORT:"],
         ["Total for period:", "2", "", "", "", "Downloads by Month"],
         ["Title", "Content Type", "Persistent URL", "Publisher DOI", "Reporting Period Total Downloads", "Jan-2015", "Feb-2015", "Mar-2015", "Apr-2015", "May-2015", "Jun-2015", "Jul-2015", "Aug-2015", "Sep-2015", "Oct-2015", "Nov-2015", "Dec-2015", "Jan-2016", "Feb-2016", "Mar-2016", "Apr-2016", "May-2016", "Jun-2016", "Jul-2016", "Aug-2016", "Sep-2016", "Oct-2016", "Nov-2016", "Dec-2016"],
-        ["First Test Document", "", "", "", "2", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "2", "0", "0", "0", "0", "0", "0", "0", "0"]
+        ["First Test Document", "", "", "", "2", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "2", "0", "0", "0", "0", "0", "0", "0", "0"],
+        ["Second Test Document", "", "", "", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0"]
       ]
     end
     let(:usage_stats) do
@@ -204,7 +224,7 @@ RSpec.describe AcademicCommons::UsageStatistics, integration: true do
     end
   end
 
-  describe '.month_column_headers' do
+  describe '#month_column_headers' do
     let(:usage_stats) do
       AcademicCommons::UsageStatistics.new(Date.parse('Dec 2015'), Date.parse('Apr 2016'),
       '', '', '', per_month: true)
@@ -216,7 +236,7 @@ RSpec.describe AcademicCommons::UsageStatistics, integration: true do
     end
   end
 
-  describe '.get_stat_for' do
+  describe '#get_stat_for' do
     let(:usage_stats) do
       AcademicCommons::UsageStatistics.new(Date.parse('Dec 2015'), Date.parse('Apr 2016'),
       "author_uni:abc123", 'author_uni', nil, per_month: true)
@@ -255,12 +275,18 @@ RSpec.describe AcademicCommons::UsageStatistics, integration: true do
       }.to raise_error 'View May 2017 not part of stats. Check parameters.'
     end
 
-    it 'returns 0 if id not present' do
-      expect(usage_stats.get_stat_for('actest:2', 'View', "Jan 2016")).to eql 0
+    it 'returns error if id not part of results' do
+      expect {
+        usage_stats.get_stat_for('actest:134', 'View', 'Jan 2016')
+      }.to raise_error 'id given not part of results'
+    end
+
+    it 'returns 0 if id not present, but id part of results' do
+      expect(usage_stats.get_stat_for('actest:5', 'View', "Jan 2016")).to eql 0
     end
   end
 
-  describe '.most_downloaded_asset' do
+  describe '#most_downloaded_asset' do
     let(:pid1) { 'actest:2' }
     let(:pid2) { 'actest:4' }
 
