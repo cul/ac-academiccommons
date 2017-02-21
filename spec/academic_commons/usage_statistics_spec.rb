@@ -224,18 +224,6 @@ RSpec.describe AcademicCommons::UsageStatistics, integration: true do
     end
   end
 
-  describe '#month_column_headers' do
-    let(:usage_stats) do
-      AcademicCommons::UsageStatistics.new(Date.parse('Dec 2015'), Date.parse('Apr 2016'),
-      '', '', per_month: true)
-    end
-    it 'returns correct values' do
-      expect(
-        usage_stats.instance_eval { month_column_headers }
-      ).to eq ['Dec-2015', 'Jan-2016', 'Feb-2016', 'Mar-2016', 'Apr-2016']
-    end
-  end
-
   describe '#get_stat_for' do
     let(:usage_stats) do
       AcademicCommons::UsageStatistics.new(Date.parse('Dec 2015'), Date.parse('Apr 2016'),

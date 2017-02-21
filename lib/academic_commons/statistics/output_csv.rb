@@ -38,6 +38,7 @@ module AcademicCommons::Statistics
       csv.add_row []
       csv.add_row [ "#{category} report:".upcase ]
       csv.add_row [ "Total for period:", self.totals["#{key} Period"].to_s,  "", "", "", "#{category} by Month"]
+      month_column_headers = self.months_list.map { |m| m.strftime("%b-%Y") }
       csv.add_row [ "Title", "Content Type", "Persistent URL", "Publisher DOI", "Reporting Period Total #{category}"].concat(month_column_headers)
 
       self.results.each do |item|
@@ -51,11 +52,6 @@ module AcademicCommons::Statistics
           self.get_stat_for(id, key, "Period")
         ].concat(monthly_stats)
       end
-    end
-
-    # Makes column headers of all months represented in this csv.
-    def month_column_headers
-      self.months_list.map { |m| m.strftime("%b-%Y") }
     end
   end
 end
