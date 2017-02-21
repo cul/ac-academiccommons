@@ -7,7 +7,8 @@ module AcademicCommons
     attr_accessor :stats, :totals, :results, :download_ids, :options
 
     DEFAULT_OPTIONS = {
-      include_zeroes: true, include_streaming: false, per_month: false, recent_first: false
+      include_zeroes: true, include_streaming: false, per_month: false,
+      recent_first: false, order_by: 'title'
     }
     VIEW = 'View'
     DOWNLOAD = 'Download'
@@ -27,20 +28,20 @@ module AcademicCommons
     # @param [Date] end_date
     # @param [String] query solr query
     # @param [String] facet
-    # @param [String] order_by by most number of downloads or views
     # @param [Hash] options options to use when creating/rendering stats
     # @option options [Boolean] :include_zeroes flag to indicate whether records with no usage stats should be included
     # @option options [Boolean] :include_streaming
     # @option options [Boolean] :per_month flag to organize/calculate statistics by month
     # @option options [Boolean] :recent_first if true, when listing months list most recent month first
-    def initialize(start_date, end_date, query, facet, order_by, options = {})
+    # @option options [String] :order_by most number of downloads or views
+    def initialize(start_date, end_date, query, facet, options = {})
       @start_date = start_date
       @end_date = end_date
       @query = query
       @facet = facet
       self.options = DEFAULT_OPTIONS.merge(options)
       @months_list = (options[:per_month]) ? make_months_list(options[:recent_first]) : nil
-      generate_stats(query, facet, order_by)
+      generate_stats(query, facet)
     end
 
     def get_stat_for(id, event, time='Period') # time can be Lifetime, Period, month-year
@@ -65,7 +66,7 @@ module AcademicCommons
     private
 
     # Returns statistics for all the items returned by a solr query
-    def generate_stats(query, facet, order_by)
+    def generate_stats(query, facet)
       Rails.logger.debug "In generate_stats for #{query}"
       return if query.blank?
 
@@ -81,11 +82,11 @@ module AcademicCommons
         @ids = results.collect { |r| r['id'].to_s.strip } # Get all the aggregator pids.
       end
 
-      if order_by == 'views' || order_by == 'downloads'
+      if options[:order_by] == 'views' || options[:order_by] == 'downloads'
         self.results.sort! do |x,y|
-          event = if order_by == 'downloads'
+          event = if options[:order_by] == 'downloads'
                     DOWNLOAD
-                  elsif order_by == 'views'
+                  elsif options[:order_by] == 'views'
                     VIEW
                   end
           self.get_stat_for(y['id'], event) <=> self.get_stat_for(x['id'], event)

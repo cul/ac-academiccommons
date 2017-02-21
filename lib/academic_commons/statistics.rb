@@ -306,7 +306,7 @@ module AcademicCommons
           enddate = Date.new(startdate.year, startdate.month, -1) # end_date needs to be last day of month
 
           usage_stats = AcademicCommons::UsageStatistics.new(
-            startdate, enddate, author_id, 'author_uni', params[:order_by],
+            startdate, enddate, author_id, 'author_uni', order_by: params[:order_by],
             include_zeroes: params[:include_zeroes], include_streaming: false,
           )
           @results = usage_stats.results

@@ -119,7 +119,7 @@ class StatisticsController < ApplicationController
       log_statistics_usage(startdate, enddate, params)
       usage_stats =  AcademicCommons::UsageStatistics.new(
         startdate, enddate, params[:search_criteria], params[:facet],
-        params[:order_by], include_zeroes: params[:include_zeroes],
+        order_by: params[:order_by], include_zeroes: params[:include_zeroes],
         include_streaming: params[:include_streaming_views]
       )
       @results = usage_stats.results
@@ -140,7 +140,7 @@ class StatisticsController < ApplicationController
     if params[:commit] == "Download CSV report"
        usage_stats = AcademicCommons::UsageStatistics.new(
          startdate, enddate, params[:search_criteria], params[:facet],
-         params[:order_by], include_zeroes: params[:include_zeroes],
+         order_by: params[:order_by], include_zeroes: params[:include_zeroes],
          include_streaming: params[:include_streaming_views],
          recent_first: params[:recent_first], per_month: true
        )

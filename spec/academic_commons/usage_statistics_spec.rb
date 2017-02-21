@@ -5,7 +5,7 @@ RSpec.describe AcademicCommons::UsageStatistics, integration: true do
   let(:pid) { 'actest:1' }
   let(:pid2) { 'actest:5' }
   let(:empty_response) { { 'response' => { 'docs' => [] } } }
-  let(:usage_stats) { AcademicCommons::UsageStatistics.new('', '', '', '', '') }
+  let(:usage_stats) { AcademicCommons::UsageStatistics.new('', '', '', '') }
   let(:solr_params) do
     {
       :rows => 100000, :sort => 'title_display asc', :q => nil, :page => 1,
@@ -46,7 +46,7 @@ RSpec.describe AcademicCommons::UsageStatistics, integration: true do
       context 'when requesting stats for current month' do
         let(:usage_stats) do
           AcademicCommons::UsageStatistics.new(Date.today - 1.month, Date.today,
-          "author_uni:abc123", 'author_uni', nil, include_zeroes: true, include_streaming: true)
+          "author_uni:abc123", 'author_uni', include_zeroes: true, include_streaming: true)
         end
 
         it 'returns correct results' do
@@ -77,7 +77,7 @@ RSpec.describe AcademicCommons::UsageStatistics, integration: true do
       context 'when requesting stats for previous month' do
         let(:usage_stats) do
           AcademicCommons::UsageStatistics.new(Date.today - 2.month, Date.today - 1.month,
-          "author_uni:abc123", 'author_uni', nil, include_zeroes: true, include_streaming: true)
+          "author_uni:abc123", 'author_uni', include_zeroes: true, include_streaming: true)
         end
 
         it 'returns correct results' do
@@ -107,7 +107,7 @@ RSpec.describe AcademicCommons::UsageStatistics, integration: true do
       context 'when requesting stats without zeroes' do
         let(:usage_stats) do
           AcademicCommons::UsageStatistics.new(Date.today - 2.month, Date.today - 1.month,
-          "author_uni:abc123", 'author_uni', nil, include_zeroes: true, include_streaming: true)
+          "author_uni:abc123", 'author_uni', include_zeroes: true, include_streaming: true)
         end
 
         it 'results does not include records with zero for view and download stats' do
@@ -122,7 +122,7 @@ RSpec.describe AcademicCommons::UsageStatistics, integration: true do
     let(:dates) do
       ['Dec-2015', 'Jan-2016', 'Feb-2016', 'Mar-2016', 'Apr-2016'].map { |d| Date.parse(d) }
     end
-    let(:usage_stats) { AcademicCommons::UsageStatistics.new(dates[0], dates[4], '', '', '') }
+    let(:usage_stats) { AcademicCommons::UsageStatistics.new(dates.first, dates.last, '', '') }
 
     it 'returns correct list' do
       result = usage_stats.instance_eval { make_months_list }
@@ -204,7 +204,7 @@ RSpec.describe AcademicCommons::UsageStatistics, integration: true do
     end
     let(:usage_stats) do
       AcademicCommons::UsageStatistics.new(Date.parse('Jan 2015'), Date.parse('Dec 2016'),
-      "author_uni:abc123", 'author_uni', 'views', include_zeroes: true, include_streaming: true, per_month: true)
+      "author_uni:abc123", 'author_uni', order_by: 'views', include_zeroes: true, include_streaming: true, per_month: true)
     end
 
     before :each do
@@ -227,7 +227,7 @@ RSpec.describe AcademicCommons::UsageStatistics, integration: true do
   describe '#month_column_headers' do
     let(:usage_stats) do
       AcademicCommons::UsageStatistics.new(Date.parse('Dec 2015'), Date.parse('Apr 2016'),
-      '', '', '', per_month: true)
+      '', '', per_month: true)
     end
     it 'returns correct values' do
       expect(
@@ -239,7 +239,7 @@ RSpec.describe AcademicCommons::UsageStatistics, integration: true do
   describe '#get_stat_for' do
     let(:usage_stats) do
       AcademicCommons::UsageStatistics.new(Date.parse('Dec 2015'), Date.parse('Apr 2016'),
-      "author_uni:abc123", 'author_uni', nil, per_month: true)
+      "author_uni:abc123", 'author_uni', per_month: true)
     end
 
     before :each do
