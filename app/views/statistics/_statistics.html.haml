@@ -97,10 +97,10 @@
 
       %div{:style => "display: table-cell;", :class => "result-cell-head"}
       %div{:style => "display: table-cell; text-align: center;", :class => "result-cell"}Totals for #{params[:month_from]} #{params[:year_from]} - #{params[:month_to]} #{params[:year_to]} period:
-      %div{:style => "display: table-cell; text-align: center;", :class => "result-cell"}= @totals["View"] || 0
+      %div{:style => "display: table-cell; text-align: center;", :class => "result-cell"}= @totals["View Period"] || 0
       -if params[:include_streaming_views]
-        %div{:style => "display: table-cell; text-align: center;", :class => "result-cell"}= @totals["Streaming"] || 0
-      %div{:style => "display: table-cell; text-align: center;", :class => "result-cell"}= @totals["Download"] || 0
+        %div{:style => "display: table-cell; text-align: center;", :class => "result-cell"}= @totals["Streaming Period"] || 0
+      %div{:style => "display: table-cell; text-align: center;", :class => "result-cell"}= @totals["Download Period"] || 0
 
       %div{:style => "display: table-row;"}
 
@@ -118,7 +118,7 @@
 
         %div{:style => "display: table-cell;", :class => "result-cell"}= row_counter
         %div{:style => "display: table-cell;", :class => "result-cell"}= link_to item["title_display"], catalog_path(item["id"])
-        %div{:style => "display: table-cell; text-align: center;", :class => "result-cell"}= @stats["View"][item["id"]] || 0
+        %div{:style => "display: table-cell; text-align: center;", :class => "result-cell"}= @stats["View Period"][item["id"]] || 0
         -if params[:include_streaming_views]
-          %div{:style => "display: table-cell; text-align: center;", :class => "result-cell"}= @stats["Streaming"][item["id"]] || 0
-        %div{:style => "display: table-cell; text-align: center;", :class => "result-cell"}= @stats["Download"][item["id"]] || 0
+          %div{:style => "display: table-cell; text-align: center;", :class => "result-cell"}= @stats["Streaming Period"][item["id"]] || 0
+        %div{:style => "display: table-cell; text-align: center;", :class => "result-cell"}= @stats["Download Period"][item["id"]] || 0
