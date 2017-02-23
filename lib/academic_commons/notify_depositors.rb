@@ -1,18 +1,5 @@
-require 'item_class'
 module AcademicCommons
   module NotifyDepositors
-    def self.of_new_embargoed_items(pids)
-      depositors = get_depositors_to_notify(pids)
-
-      Rails.logger.info "====== Notifying Depositors of New Embargoed Item ======"
-
-      depositors.each do |depositor|
-        Rails.logger.info "=== Notifying #{depositor.name}(#{depositor.uni}) at #{depositor.email} ==="
-
-        Notifier.depositor_embargoed_notification(depositor).deliver_now
-      end
-    end
-
     # Notifies depositors when deposited items are available. Sends email to each
     # depositor listing the new titles available. Two emails are sent if there
     # are both embargoed items and unembargoed items.
