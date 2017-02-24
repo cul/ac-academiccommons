@@ -1,6 +1,8 @@
 require "ac_indexing"
 
 module DepositorHelper
+  include AcademicCommons::NewItemNotification
+  
   AC_COLLECTION_NAME = 'collection:3'
 
   def process_indexing(params)
@@ -69,7 +71,7 @@ module DepositorHelper
             Notifier.reindexing_results(indexing_results[:errors].size.to_s, indexing_results[:indexed_count].to_s, indexing_results[:new_items].size.to_s, time_id).deliver
           end
 
-          AcademicCommons::NotifyDepositors.of_new_items(indexing_results[:new_items])
+          notify_authors_of_new_items(indexing_results[:new_items])
           expire_fragment('repository_statistics')
         rescue => e
           logger.fatal "Error Indexing: #{e.message}"
