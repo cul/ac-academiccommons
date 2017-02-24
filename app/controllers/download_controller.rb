@@ -1,8 +1,6 @@
 class DownloadController < ApplicationController
-
-#  after_filter :record_stats
-
   include LogsHelper
+  include AcademicCommons::Embargoes
 
   before_filter :require_admin!, only: :download_log
 
@@ -103,17 +101,6 @@ class DownloadController < ApplicationController
      logger.info "=========== " + url
 
     return uri
-  end
-
-  # copied from AcademicCommons::Indexable
-  # TODO: DRY this logic
-  def free_to_read?(document)
-    return false unless document['object_state_ssi'] == 'A'
-    free_to_read_start_date = document[:free_to_read_start_date]
-    return true unless free_to_read_start_date
-    embargo_release_date = Date.strptime(free_to_read_start_date, '%Y-%m-%d')
-    current_date = Date.strptime(Time.now.strftime('%Y-%m-%d'), '%Y-%m-%d')
-    current_date > embargo_release_date
   end
 
   def any_free_to_read?(ids)

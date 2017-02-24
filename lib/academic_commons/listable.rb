@@ -1,5 +1,7 @@
 module AcademicCommons
   module Listable
+    include Embargoes
+
     def build_resource_list(document, include_inactive = false)
       return [] unless free_to_read?(document)
       obj_display = document.fetch("id", [])
