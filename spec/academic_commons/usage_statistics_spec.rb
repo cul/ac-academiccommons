@@ -13,25 +13,22 @@ RSpec.describe AcademicCommons::UsageStatistics, integration: true do
     }
   end
   let(:solr_response) do
-    {
-      'response' => {
-        'docs' => [
-          { 'id' => pid2, 'title_display' => 'Second Test Document',
-           'handle' => 'http://dx.doi.org/10.7916/TESTDOC2', 'doi' => '', 'genre_facet' => ''},
-          { 'id' => pid, 'title_display' => 'First Test Document',
-            'handle' => 'http://dx.doi.org/10.7916/TESTDOC1', 'doi' => '', 'genre_facet' => '' }
-          ]
-        }
-      }
+    Blacklight::Solr::Response.new(
+      {
+        'response' => {
+          'docs' => [
+            { 'id' => pid2, 'title_display' => 'Second Test Document',
+             'handle' => 'http://dx.doi.org/10.7916/TESTDOC2', 'doi' => '', 'genre_facet' => ''},
+            { 'id' => pid, 'title_display' => 'First Test Document',
+              'handle' => 'http://dx.doi.org/10.7916/TESTDOC1', 'doi' => '', 'genre_facet' => '' }
+            ]
+          }
+        }, {}
+    )
   end
 
   describe '.new' do
     context 'when requesting usage stats for author' do
-      let(:results) { usage_stats.results }
-      let(:stats)   { usage_stats.stats }
-      let(:totals)  { usage_stats.totals }
-      let(:download_ids) { usage_stats.download_ids}
-
       before :each do
         # Add records for a pid view and download
         FactoryGirl.create(:view_stat)
@@ -44,89 +41,66 @@ RSpec.describe AcademicCommons::UsageStatistics, integration: true do
       end
 
       context 'when requesting stats for current month' do
-        let(:usage_stats) do
+       subject do
           AcademicCommons::UsageStatistics.new(Date.today - 1.month, Date.today,
           "author_uni:abc123", 'author_uni', include_zeroes: true, include_streaming: true)
         end
 
         it 'returns correct results' do
-          expect(results).to eq solr_response['response']['docs']
-        end
-        it 'returns correct stats' do
-          expect(stats).to match(
-            'View Period' => { "#{pid}" => 2 },
-            'Download Period' => { "#{pid}" => 1 },
-            'Streaming Period' => { "#{pid}" => 1 },
-            'View Lifetime' => { "#{pid}" => 2 },
-            'Download Lifetime' => { "#{pid}" => 1 },
-            'Streaming Lifetime' => { "#{pid}" => 1 }
-          )
+          expect(subject.map(&:document)).to eq solr_response['response']['docs']
         end
         it 'returns correct totals' do
-          expect(totals).to match(
-            'View Period' => 2, 'Download Period' => 1, 'Streaming Period' => 1, 'View Lifetime' => 2,
-            'Download Lifetime' => 1, 'Streaming Lifetime' => 1
-          )
-        end
-        it 'returns correct download_ids' do
-          expect(download_ids).to include(pid)
-          expect(download_ids[pid]).to eql 'actest:2'
+          expect(subject.total_for(Statistic::VIEW_EVENT, 'Period')).to eq 2
+          expect(subject.total_for(Statistic::DOWNLOAD_EVENT, 'Period')).to eq 1
+          expect(subject.total_for(Statistic::STREAM_EVENT, 'Period')).to eql 1
+          expect(subject.total_for(Statistic::VIEW_EVENT, 'Lifetime')).to eq 2
+          expect(subject.total_for(Statistic::DOWNLOAD_EVENT, 'Lifetime')).to eq 1
+          expect(subject.total_for(Statistic::STREAM_EVENT, 'Lifetime')).to eql 1
         end
       end
 
       context 'when requesting stats for previous month' do
-        let(:usage_stats) do
+        subject do
           AcademicCommons::UsageStatistics.new(Date.today - 2.month, Date.today - 1.month,
           "author_uni:abc123", 'author_uni', include_zeroes: true, include_streaming: true)
         end
 
         it 'returns correct results' do
-          expect(results).to eq solr_response['response']['docs']
+          expect(subject.map(&:document)).to eq solr_response['response']['docs']
         end
 
-        it 'returns empty stats' do
-          expect(stats).to match(
-            'View Period' => {},
-            'Download Period' => {},
-            'Streaming Period' => {},
-            'View Lifetime' => { "#{pid}" => 2 },
-            'Download Lifetime' => { "#{pid}" => 1 },
-            'Streaming Lifetime' => { "#{pid}" => 1 }
-          )
-        end
         it 'returns correct totals' do
-          expect(totals).to match(
-            'View Period' => 0, 'Download Period' => 0, 'Streaming Period' => 0, 'View Lifetime' => 2,
-            'Download Lifetime' => 1, 'Streaming Lifetime' => 1
-          )
+          expect(subject.total_for(Statistic::VIEW_EVENT, 'Period')).to eq 0
+          expect(subject.total_for(Statistic::DOWNLOAD_EVENT, 'Period')).to eq 0
+          expect(subject.total_for(Statistic::STREAM_EVENT, 'Period')).to eql 0
+          expect(subject.total_for(Statistic::VIEW_EVENT, 'Lifetime')).to eq 2
+          expect(subject.total_for(Statistic::DOWNLOAD_EVENT, 'Lifetime')).to eq 1
+          expect(subject.total_for(Statistic::STREAM_EVENT, 'Lifetime')).to eql 1
         end
       end
 
       context 'when requesting stats without streaming' do
-        let(:usage_stats) do
+        subject do
           AcademicCommons::UsageStatistics.new(Date.today - 1.month, Date.today,
           "author_uni:abc123", 'author_uni', include_zeroes: true)
         end
 
-        it 'returns correct stats' do
-          expect(stats).to match(
-            'View Period' => { "#{pid}" => 2 },
-            'Download Period' => { "#{pid}" => 1 },
-            'View Lifetime' => { "#{pid}" => 2 },
-            'Download Lifetime' => { "#{pid}" => 1 },
-          )
+        it 'returns correct totals' do
+          expect(subject.total_for('View', 'Period')).to eq 2
+          expect(subject.total_for('Download', 'Period')).to eq 1
+          expect(subject.total_for('View', 'Lifetime')).to eq 2
+          expect(subject.total_for('Download', 'Lifetime')).to eq 1
         end
       end
 
       context 'when requesting stats without zeroes' do
-        let(:usage_stats) do
+        subject do
           AcademicCommons::UsageStatistics.new(Date.today - 2.month, Date.today - 1.month,
-          "author_uni:abc123", 'author_uni', include_zeroes: true, include_streaming: true)
+          "author_uni:abc123", 'author_uni', include_zeroes: false, include_streaming: true)
         end
 
         it 'results does not include records with zero for view and download stats' do
-          ids = results.map { |r| r['id'] }
-          expect(results).not_to include 'actest:5'
+          expect(subject.map(&:id)).not_to include 'actest:5'
         end
       end
     end
@@ -239,7 +213,7 @@ RSpec.describe AcademicCommons::UsageStatistics, integration: true do
   end
 
   describe '#get_stat_for' do
-    let(:usage_stats) do
+    subject do
       AcademicCommons::UsageStatistics.new(Date.parse('Dec 2015'), Date.parse('Apr 2016'),
       "author_uni:abc123", 'author_uni', per_month: true)
     end
@@ -256,35 +230,35 @@ RSpec.describe AcademicCommons::UsageStatistics, integration: true do
     end
 
     it 'return correct value for view period stats' do
-      expect(usage_stats.get_stat_for(pid, 'View')).to eql 2
+      expect(subject.get_stat_for(pid, 'View')).to eql 2
     end
 
     it 'returns correct value for view month stats' do
-      expect(usage_stats.get_stat_for(pid, 'View', 'Jan 2016')).to eql 1
+      expect(subject.get_stat_for(pid, 'View', 'Jan 2016')).to eql 1
     end
 
     it 'returns correct value of Lifetime download stats' do
-      expect(usage_stats.get_stat_for(pid, 'Download', 'Lifetime')).to eql 2
+      expect(subject.get_stat_for(pid, 'Download', 'Lifetime')).to eql 2
     end
 
     it 'returns correct value of download April 2016 stats' do
-      expect(usage_stats.get_stat_for(pid, 'Download', 'Apr 2016')).to eql 2
+      expect(subject.get_stat_for(pid, 'Download', 'Apr 2016')).to eql 2
     end
 
     it 'returns error if month and year are not part of the period' do
       expect {
-        usage_stats.get_stat_for(pid, 'View', 'May 2017')
+        subject.get_stat_for(pid, 'View', 'May 2017')
       }.to raise_error 'View May 2017 not part of stats. Check parameters.'
     end
 
     it 'returns error if id not part of results' do
       expect {
-        usage_stats.get_stat_for('actest:134', 'View', 'Jan 2016')
-      }.to raise_error 'id given not part of results'
+        subject.get_stat_for('actest:134', 'View', 'Jan 2016')
+      }.to raise_error 'Could not find actest:134'
     end
 
     it 'returns 0 if id not present, but id part of results' do
-      expect(usage_stats.get_stat_for('actest:5', 'View', "Jan 2016")).to eql 0
+      expect(subject.get_stat_for('actest:5', 'View', "Jan 2016")).to eql 0
     end
   end
 

@@ -8,7 +8,7 @@ module AcademicCommons::Statistics
     # @param [User] requested_by user the report was requested by
     def to_csv_by_month(requested_by: nil) # Monthly breakdown of stats
       # Can only be generated with the per month flag is on
-      if self.results.blank?
+      if self.count.zero?
       #  set_message_and_variables
        return
       end
@@ -37,19 +37,17 @@ module AcademicCommons::Statistics
       csv.add_row []
       csv.add_row []
       csv.add_row [ "#{category} report:".upcase ]
-      csv.add_row [ "Total for period:", self.totals["#{key} Period"].to_s,  "", "", "", "#{category} by Month"]
+      csv.add_row [ "Total for period:", total_for(key, "Period").to_s,  "", "", "", "#{category} by Month"]
       month_column_headers = self.months_list.map { |m| m.strftime("%b-%Y") }
       csv.add_row [ "Title", "Content Type", "Persistent URL", "Publisher DOI", "Reporting Period Total #{category}"].concat(month_column_headers)
 
-      self.results.each do |item|
-        id = item['id']
-        monthly_stats = self.months_list.map { |m| self.get_stat_for(id, key, m.strftime(MONTH_KEY)) }
+      self.each do |item_stat|
+        id = item_stat.id
+        monthly_stats = self.months_list.map { |m| item_stat.get_stat(key, m.strftime(MONTH_KEY)) }
+        document = item_stat.document
         csv.add_row [
-          item["title_display"],
-          item["genre_facet"].first,
-          item["handle"],
-          item["doi"],
-          self.get_stat_for(id, key, "Period")
+          document["title_display"], document["genre_facet"].first, document["handle"],
+          document["doi"], item_stat.get_stat(key, "Period")
         ].concat(monthly_stats)
       end
     end
