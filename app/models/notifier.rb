@@ -3,33 +3,28 @@
 class Notifier < ActionMailer::Base
   MAX_FILE_SIZE = 1024 * 1024 * 25 # Max file size (25 MB) that can be emailed in KB.
 
-  def statistics_by_search(to_address, author_id, start_date, end_date, results, stats, totals, request, show_streams)
-    statistics_report(to_address, author_id, start_date, end_date, results, stats, totals, request, show_streams, nil)
+  def statistics_by_search(to_address, author_id, usage_stats, request, show_streams)
+    statistics_report(to_address, author_id, usage_stats, request, show_streams, nil)
   end
 
-  def author_monthly(to_address, author_id, start_date, end_date, results, stats, totals, show_streams, optional_note)
-    statistics_report(to_address, author_id, start_date, end_date, results, stats, totals, '', show_streams, optional_note)
+  def author_monthly(to_address, author_id, usage_stats, show_streams, optional_note)
+    statistics_report(to_address, author_id, usage_stats, '', show_streams, optional_note)
   end
 
-  def statistics_report(to_address, author_id, start_date, end_date, results, stats, totals, request, show_streams, optional_note)
+  def statistics_report(to_address, author_id, usage_stats, request, show_streams, optional_note)
     @request = request
     @author_id = author_id
-    @stats = stats
-    @totals = totals
-    @results = results
-    @start_date = start_date.strftime("%b %Y")
-    @end_date = end_date.strftime("%b %Y")
+    @usage_stats = usage_stats
     recipients = to_address
     from = Rails.application.config.emails['mail_deliverer']
     full_from = "\"Academic Commons\" <#{from}>"
 
 
     subject = "Academic Commons Monthly Download Report for #{@start_date} - #{@end_date}"
-    content_type = 'text/html'
     @streams = show_streams
     @optional_note = optional_note
 
-    mail(:to => recipients, :from => full_from, :subject => subject, :content_type => content_type)
+    mail(:to => recipients, :from => full_from, :subject => subject)
 
     logger.debug("Report sent for: " + author_id + " to: " + to_address)
   end
