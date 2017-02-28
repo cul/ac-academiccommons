@@ -309,19 +309,16 @@ module AcademicCommons
             startdate, enddate, author_id, 'author_uni', order_by: params[:order_by],
             include_zeroes: params[:include_zeroes], include_streaming: false,
           )
-          @results = usage_stats.results
-          @stats = usage_stats.stats
-          @totals = usage_stats.totals
 
           email = designated_recipient || author[:email]
           raise "no email address found" if email.nil?
 
-          if @totals.values.sum != 0 || params[:include_zeroes]
+          if usage_stats.none?(&:zero?) || params[:include_zeroes]
             sent_counter += 1
             if(params[:do_not_send_email])
               test_msg = ' (this is test - email was not sent)'
             else
-              Notifier.author_monthly(email, author_id, startdate, enddate, @results, @stats, @totals, false, params[:optional_note]).deliver
+              Notifier.author_monthly(email, author_id, usage_stats, false, params[:optional_note]).deliver
               test_msg = ''
             end
 

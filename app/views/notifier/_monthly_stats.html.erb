@@ -4,25 +4,21 @@
 
 <br/>
 
-<div>
-  Usage Statistics for <%= @author_id %>:
-</div>
+<div>Usage Statistics for <%= @author_id %>:</div>
 
-<% unless @results.empty? %>
-  <% start_date = usage_stats.start_date.strftime("%b %Y") %>
-  <% end_date = usage_stats.end_date.strftime("%b %Y") %>
+<% unless @usage_stats.empty? %>
   <table>
     <% if lifetime %>
       <% if @streams %>
         <tr>
           <td></td>
-          <td colspan="3" align="center"><%="#{start_date} - #{end_date}"%></td>
+          <td colspan="3" align="center"><%="#{@start_date} - #{@end_date}"%></td>
           <td colspan="3" align="center">Lifetime</td>
         </tr>
       <% else %>
         <tr>
           <td></td>
-          <td colspan="2" align="center"><%="#{start_date} - #{end_date}"%></td>
+          <td colspan="2" align="center"><%="#{@start_date} - #{@end_date}"%></td>
           <td colspan="2" align="center">Lifetime</td>
         </tr>
       <% end %>
@@ -44,7 +40,7 @@
       <% end %>
     </tr>
 
-    <% @usage_stats do |item| %>
+    <% @usage_stats.each do |item| %>
       <tr>
         <td><%= link_to item.document["title_display"], url_for(only_path: false, controller: :catalog, action: :show, id: item.id) %></td>
         <td class="cell"><%= item.get_stat('View', 'Period') %></td>
@@ -65,19 +61,19 @@
 
     <tr>
       <td><b>Totals:</b></td>
-      <td class="cell"><b><%= usage_stats.total_for('View', 'Period') %></b></td>
+      <td class="cell"><b><%= @usage_stats.total_for('View', 'Period') %></b></td>
       <% if @streams %>
-        <td class="cell"><b><%= usage_stats.total_for('Streaming', 'Period') %></b></td>
+        <td class="cell"><b><%= @usage_stats.total_for('Streaming', 'Period') %></b></td>
       <% end %>
-      <td class="cell"><b><%= usage_stats.total_for("Download", "Period") %></b></td>
+      <td class="cell"><b><%= @usage_stats.total_for("Download", "Period") %></b></td>
       <% if lifetime %>
-        <td style="padding: 0px 10px 0px 20px"><b><%= @totals["View Lifetime"] %></b></td>
+        <td style="padding: 0px 10px 0px 20px"><b><%= @usage_stats.total_for('View', 'Lifetime') %></b></td>
         <% if @streams %>
           <td style="padding: 0px 10px 0px">
-            <td><b><%= usage_stats.total_for("Streaming", "Lifetime") %></b></td>
+            <td><b><%= @usage_stats.total_for("Streaming", "Lifetime") %></b></td>
           </td>
         <% end %>
-        <td class="cell"><b><%= usage_stats.total_for("Download", "Lifetime") %></b></td>
+        <td class="cell"><b><%= @usage_stats.total_for("Download", "Lifetime") %></b></td>
       <% end %>
     </tr>
   </table>

@@ -11,22 +11,23 @@ class Notifier < ActionMailer::Base
     statistics_report(to_address, author_id, usage_stats, '', show_streams, optional_note)
   end
 
-  def statistics_report(to_address, author_id, usage_stats, request, show_streams, optional_note)
+  def statistics_report(to_address, author_id, usage_stats, request, show_streams, optional_note) #can remove show_streams and read from options
     @request = request
     @author_id = author_id
     @usage_stats = usage_stats
+    @start_date = usage_stats.start_date.strftime("%b %Y")
+    @end_date = usage_stats.end_date.strftime("%b %Y")
     recipients = to_address
     from = Rails.application.config.emails['mail_deliverer']
     full_from = "\"Academic Commons\" <#{from}>"
 
-
     subject = "Academic Commons Monthly Download Report for #{@start_date} - #{@end_date}"
-    @streams = show_streams
+    @streams = @usage_stats.options[:include_streaming]
     @optional_note = optional_note
 
-    mail(:to => recipients, :from => full_from, :subject => subject)
+    mail(to: recipients, from: full_from, subject: subject)
 
-    logger.debug("Report sent for: " + author_id + " to: " + to_address)
+    logger.debug("Report sent for: #{author_id} to: #{to_address}")
   end
 
   def new_deposit(root_url, deposit, attach_file = true)
