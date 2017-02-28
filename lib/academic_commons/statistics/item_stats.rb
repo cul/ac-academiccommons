@@ -4,7 +4,7 @@ module AcademicCommons::Statistics
     attr_reader :id, :document, :stats
 
     def initialize(document)
-      @id = document[:id]
+      @id = document[:id] || document['id']
       @document = document
       @stats = { Statistic::VIEW_EVENT => {}, Statistic::DOWNLOAD_EVENT => {}, Statistic::STREAM_EVENT => {} }
     end
@@ -25,6 +25,11 @@ module AcademicCommons::Statistics
     def add_stat(event, time, value)
       raise 'Not a valid event' unless Statistic.valid_event?(event)
       stats[event][time] = value
+    end
+
+    # return true if all the stats are 0
+    def zero?
+      @stats.values.map(&:values).flatten.sum.zero?
     end
   end
 end

@@ -37,4 +37,22 @@ RSpec.describe AcademicCommons::Statistics::ItemStats do
       )
     end
   end
+
+  describe '#zero?' do
+    context 'when there are stats present when all stats are 0' do
+      before :each do
+        subject.add_stat('View', 'Lifetime', 14)
+      end
+
+      it 'returns false' do
+        expect(subject.zero?).to eq false
+      end
+    end
+
+    context 'when all stats are 0' do
+      it 'return false' do
+        expect(subject.zero?).to eq true
+      end
+    end
+  end
 end
