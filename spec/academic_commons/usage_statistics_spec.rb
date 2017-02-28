@@ -5,11 +5,12 @@ RSpec.describe AcademicCommons::UsageStatistics, integration: true do
   let(:pid) { 'actest:1' }
   let(:pid2) { 'actest:5' }
   let(:empty_response) { { 'response' => { 'docs' => [] } } }
-  let(:usage_stats) { AcademicCommons::UsageStatistics.new('', '', '', '') }
+  let(:usage_stats) { AcademicCommons::UsageStatistics.new('', '', '') }
+  let(:solr_request) { { q: nil, fq: "author_uni:\"#{uni}\""} }
   let(:solr_params) do
     {
       :rows => 100000, :sort => 'title_display asc', :q => nil, :page => 1,
-      :fq => "author_uni:\"author_uni:#{uni}\"", :fl => "title_display,id,handle,doi,genre_facet"
+      :fq => "author_uni:\"#{uni}\"", :fl => "title_display,id,handle,doi,genre_facet"
     }
   end
   let(:solr_response) do
@@ -41,9 +42,9 @@ RSpec.describe AcademicCommons::UsageStatistics, integration: true do
       end
 
       context 'when requesting stats for current month' do
-       subject do
+        subject do
           AcademicCommons::UsageStatistics.new(Date.today - 1.month, Date.today,
-          "author_uni:abc123", 'author_uni', include_zeroes: true, include_streaming: true)
+          solr_request, include_zeroes: true, include_streaming: true)
         end
 
         it 'returns correct results' do
@@ -62,7 +63,7 @@ RSpec.describe AcademicCommons::UsageStatistics, integration: true do
       context 'when requesting stats for previous month' do
         subject do
           AcademicCommons::UsageStatistics.new(Date.today - 2.month, Date.today - 1.month,
-          "author_uni:abc123", 'author_uni', include_zeroes: true, include_streaming: true)
+          solr_request, include_zeroes: true, include_streaming: true)
         end
 
         it 'returns correct results' do
@@ -82,7 +83,7 @@ RSpec.describe AcademicCommons::UsageStatistics, integration: true do
       context 'when requesting stats without streaming' do
         subject do
           AcademicCommons::UsageStatistics.new(Date.today - 1.month, Date.today,
-          "author_uni:abc123", 'author_uni', include_zeroes: true)
+          solr_request, include_zeroes: true)
         end
 
         it 'returns correct totals' do
@@ -96,7 +97,7 @@ RSpec.describe AcademicCommons::UsageStatistics, integration: true do
       context 'when requesting stats without zeroes' do
         subject do
           AcademicCommons::UsageStatistics.new(Date.today - 2.month, Date.today - 1.month,
-          "author_uni:abc123", 'author_uni', include_zeroes: false, include_streaming: true)
+          solr_request, include_zeroes: false, include_streaming: true)
         end
 
         it 'results does not include records with zero for view and download stats' do
@@ -110,7 +111,7 @@ RSpec.describe AcademicCommons::UsageStatistics, integration: true do
     let(:dates) do
       ['Dec-2015', 'Jan-2016', 'Feb-2016', 'Mar-2016', 'Apr-2016'].map { |d| Date.parse(d) }
     end
-    let(:usage_stats) { AcademicCommons::UsageStatistics.new(dates.first, dates.last, '', '') }
+    let(:usage_stats) { AcademicCommons::UsageStatistics.new(dates.first, dates.last, '') }
 
     it 'returns correct list' do
       result = usage_stats.instance_eval { make_months_list }
@@ -122,47 +123,12 @@ RSpec.describe AcademicCommons::UsageStatistics, integration: true do
     end
   end
 
-  describe '#make_solr_request' do
-    context 'searching by facet' do
-      let(:solr_params) do
-        {
-          :rows => 100000, :sort => "title_display asc", :q => nil, :fq => 'author_uni:"xyz123"',
-          :fl => "title_display,id,handle,doi,genre_facet", :page => 1
-        }
-      end
-
-      it 'makes correct solr request' do
-        expect(Blacklight.default_index).to receive(:search).with(solr_params).and_return(empty_response)
-        usage_stats.instance_eval { make_solr_request('author_uni', 'xyz123') }
-      end
-    end
-
-    context 'searching by query' do
-      let(:test_params) { { 'f' => 'department_facet:Columbia College', 'q' => '', 'sort' => 'author_sort asc'} }
-      let(:solr_params) do
-        {
-          :rows => 100000, :sort => 'author_sort asc', :q => '', :fq => 'department_facet:Columbia College',
-          :fl => "title_display,id,handle,doi,genre_facet", :page => 1
-        }
-      end
-
-      before :each do
-        allow(usage_stats).to receive(:parse_search_query).and_return(test_params)
-      end
-
-      it 'makes correct solr request' do
-        expect(Blacklight.default_index).to receive(:search).with(solr_params).and_return(empty_response)
-        usage_stats.instance_eval { make_solr_request('search_query', 'author_uni=xyz123') }
-      end
-    end
-  end
-
   describe '#to_csv_by_month' do
     let(:pid) { 'actest:1' }
     let(:uni) { 'abc123' }
     let(:expected_csv) do
       [
-        ["Author UNI/Name:", "author_uni:abc123"],
+        ["{:q=>nil, :fq=>\"author_uni:\\\"abc123\\\"\"}"],
         [],
         ["Period Covered by Report", "Jan 2015 to Dec 2016"],
         [],
@@ -192,7 +158,7 @@ RSpec.describe AcademicCommons::UsageStatistics, integration: true do
     end
     let(:usage_stats) do
       AcademicCommons::UsageStatistics.new(Date.parse('Jan 2015'), Date.parse('Dec 2016'),
-      "author_uni:abc123", 'author_uni', order_by: 'views', include_zeroes: true, include_streaming: true, per_month: true)
+      solr_request, order_by: 'views', include_zeroes: true, include_streaming: true, per_month: true)
     end
 
     before :each do
@@ -215,7 +181,7 @@ RSpec.describe AcademicCommons::UsageStatistics, integration: true do
   describe '#get_stat_for' do
     subject do
       AcademicCommons::UsageStatistics.new(Date.parse('Dec 2015'), Date.parse('Apr 2016'),
-      "author_uni:abc123", 'author_uni', per_month: true)
+      solr_request, per_month: true)
     end
 
     before :each do

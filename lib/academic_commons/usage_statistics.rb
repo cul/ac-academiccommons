@@ -4,12 +4,12 @@ module AcademicCommons
     include AcademicCommons::Listable
     include AcademicCommons::Statistics::OutputCSV
 
-    attr_reader :start_date, :end_date, :months_list, :facet, :query,
+    attr_reader :start_date, :end_date, :months_list, :solr_params,
                 :options, :item_stats
 
     DEFAULT_OPTIONS = {
       include_zeroes: true, include_streaming: false, per_month: false,
-      recent_first: false, order_by: 'title'
+      recent_first: false, order_by: nil
     }
     VIEW = 'View'
     DOWNLOAD = 'Download'
@@ -27,22 +27,20 @@ module AcademicCommons
     #
     # @param [Date] start_date
     # @param [Date] end_date
-    # @param [String] query solr query
-    # @param [String] facet
+    # @param [Hash] solr_params parameters to conduct solr query with
     # @param [Hash] options options to use when creating/rendering stats
     # @option options [Boolean] :include_zeroes flag to indicate whether records with no usage stats should be included
     # @option options [Boolean] :include_streaming
     # @option options [Boolean] :per_month flag to organize/calculate statistics by month
     # @option options [Boolean] :recent_first if true, when listing months list most recent month first
     # @option options [String] :order_by most number of downloads or views
-    def initialize(start_date, end_date, query, facet, options = {})
+    def initialize(start_date, end_date, solr_params, options = {})
       @start_date = start_date
       @end_date = end_date
-      @query = query
-      @facet = facet
+      @solr_params = solr_params
       @options = DEFAULT_OPTIONS.merge(options)
       @totals = { Statistic::VIEW_EVENT => {}, Statistic::DOWNLOAD_EVENT => {}, Statistic::STREAM_EVENT => {} }
-      generate_stats(query, facet)
+      generate_stats
     end
 
     def get_stat_for(id, event, time='Period') # time can be Lifetime, Period, month-year
@@ -68,17 +66,17 @@ module AcademicCommons
     private
 
     # Returns statistics for all the items returned by the given solr query.
-    def generate_stats(query, facet)
-      Rails.logger.debug "In generate_stats for #{query}"
-      return if query.blank?
+    def generate_stats
+      Rails.logger.debug "In generate_stats for #{solr_params.inspect}"
+      return if solr_params.blank?
 
-      results = make_solr_request(facet, query)
+      results = get_solr_documents(solr_params)
       Rails.logger.debug "Solr request returned #{results.count} results."
       @item_stats = results.map{ |doc| AcademicCommons::Statistics::ItemStats.new(doc) }
 
-      return if @item_stats.count.zero?
+      return if @item_stats.empty?
 
-      process_stats()
+      process_stats
 
       unless options[:include_zeroes]
         @item_stats.reject! { |i| i.get_stat(VIEW, PERIOD).zero? && i.get_stat(DOWNLOAD, PERIOD).zero? }
@@ -118,8 +116,6 @@ module AcademicCommons
         i.add_stat(event, time, value)
       end
     end
-
-
 
     def process_stats
       ids = @item_stats.collect(&:id) # Get all the aggregator pids.
@@ -163,7 +159,6 @@ module AcademicCommons
         final = Date.new(date.year, date.month, -1)
         month_key = start.strftime(AcademicCommons::Statistics::ItemStats::MONTH_KEY)
 
-        # @stats["#{VIEW} #{month_key}"] = Statistic.event_count(ids, Statistic::VIEW_EVENT, start_date: start, end_date: final)
         views = Statistic.event_count(ids, Statistic::VIEW_EVENT, start_date: start, end_date: final)
         add_item_stats(Statistic::VIEW_EVENT, month_key, views)
 
@@ -189,56 +184,62 @@ module AcademicCommons
       downloads
     end
 
-    def parse_search_query(search_query)
-      search_query = URI.unescape(search_query)
-      search_query = search_query.gsub(/\+/, ' ')
+    # def parse_search_query(search_query)
+    #   search_query = URI.unescape(search_query)
+    #   search_query = search_query.gsub(/\+/, ' ')
+    #
+    #   params = Hash.new
+    #
+    #   if search_query.include? '?'
+    #     search_query = search_query[search_query.index("?") + 1, search_query.length]
+    #   end
+    #
+    #   search_query.split('&').each do |value|
+    #     key_value = value.split('=')
+    #
+    #     if(key_value[0].start_with?("f[") )
+    #       if(params.has_key?("f"))
+    #         array = params["f"]
+    #       else
+    #         array = Array.new
+    #       end
+    #
+    #       value = key_value[0].gsub(/f\[/, '').gsub(/\]\[\]/, '') + ":\"" + key_value[1] + "\""
+    #       array.push(value)
+    #       params.store("f", array)
+    #     else
+    #       params.store(key_value[0], key_value[1])
+    #     end
+    #   end
+    #
+    #   return params
+    # end
 
-      params = Hash.new
-
-      if search_query.include? '?'
-        search_query = search_query[search_query.index("?") + 1, search_query.length]
-      end
-
-      search_query.split('&').each do |value|
-        key_value = value.split('=')
-
-        if(key_value[0].start_with?("f[") )
-          if(params.has_key?("f"))
-            array = params["f"]
-          else
-            array = Array.new
-          end
-
-          value = key_value[0].gsub(/f\[/, '').gsub(/\]\[\]/, '') + ":\"" + key_value[1] + "\""
-          array.push(value)
-          params.store("f", array)
-        else
-          params.store(key_value[0], key_value[1])
-        end
-      end
-
-      return params
+    def get_solr_documents(params)
+      default_solr_params = {
+        rows: 100000, page: 1, fl: 'title_display,id,handle,doi,genre_facet'
+      }
+      params = params.merge(default_solr_params)
+      params[:sort] = 'title_display asc' if(params[:sort].blank? || options[:order_by] == 'title')
+      Blacklight.default_index.search(params)['response']['docs']
     end
 
-    def make_solr_request(facet, query)
-      Rails.logger.debug "In make_solr_request for query: #{query}"
-      if facet == "search_query"
-        solr_params = parse_search_query(query)
-        facet_query = solr_params["f"]
-        q = solr_params["q"]
-        sort = solr_params["sort"]
-      else
-        facet_query = "#{facet}:\"#{query}\""
-        sort = "title_display asc"
-      end
-
-      return if facet_query.nil? && q.nil?
-
-      Blacklight.default_index.search(
-        :rows => 100000, :sort => sort, :q => q, :fq => facet_query,
-        :fl => "title_display,id,handle,doi,genre_facet", :page => 1
-      )["response"]["docs"]
-    end
+    # def make_solr_request(facet, query)
+    #   Rails.logger.debug "In make_solr_request for query: #{query}"
+    #   if facet == "search_query"
+    #     solr_params = parse_search_query(query)
+    #     facet_query = solr_params["f"]
+    #     q = solr_params["q"]
+    #     sort = solr_params["sort"]
+    #   else
+    #     facet_query = "#{facet}:\"#{query}\""
+    #     sort = "title_display asc"
+    #   end
+    #
+    #   return if facet_query.nil? && q.nil?
+    #
+    #   get_solr_documents({ sort: sort, q: q, fq: facet_query })
+    # end
 
     # Most downloaded asset over entire lifetime.
     # Eventually may have to reevaluate this for queries that are for a specific

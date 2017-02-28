@@ -8,8 +8,10 @@ module AcademicCommons::Statistics
     # @param [User] requested_by user the report was requested by
     def to_csv_by_month(requested_by: nil) # Monthly breakdown of stats
       # Can only be generated with the per month flag is on
+
       CSV.generate do |csv|
-        csv.add_row [facet.in?('author_facet', 'author_uni') ? 'Author UNI/Name:' : 'Search criteria:', self.query]
+        # csv.add_row [facet.in?('author_facet', 'author_uni') ? 'Author UNI/Name:' : 'Search criteria:', self.query]
+        csv.add_row [self.solr_params.inspect]
         csv.add_row []
         csv.add_row ['Period Covered by Report', "#{self.start_date.strftime("%b %Y")} to #{self.end_date.strftime("%b %Y")}"]
         csv.add_row []

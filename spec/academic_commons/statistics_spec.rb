@@ -189,4 +189,41 @@ RSpec.describe AcademicCommons::Statistics do
       statistics.instance_eval { facet_items('author_facet') }
     end
   end
+
+  describe '#detail_report_solr_params' do
+    context 'searching by facet' do
+      # let(:solr_params) do
+      #   {
+      #     :rows => 100000, :sort => "title_display asc", :q => nil, :fq => 'author_uni:"xyz123"',
+      #     :fl => "title_display,id,handle,doi,genre_facet", :page => 1
+      #   }
+      # end
+
+      it 'makes correct solr request' do
+        # expect(Blacklight.default_index).to receive(:search).with(solr_params).and_return(empty_response)
+        params = statistics.instance_eval { detail_report_solr_params('author_uni', 'xyz123') }
+        expect(params).to match(q: nil, fq: 'author_uni:"xyz123"', sort: "title_display asc")
+      end
+    end
+
+    context 'searching by query' do
+      let(:test_params) { { 'f' => 'department_facet:Columbia College', 'q' => '', 'sort' => 'author_sort asc'} }
+      # let(:solr_params) do
+      #   {
+      #     :rows => 100000, :sort => 'author_sort asc', :q => '', :fq => 'department_facet:Columbia College',
+      #     :fl => "title_display,id,handle,doi,genre_facet", :page => 1
+      #   }
+      # end
+
+      before :each do
+        allow(statistics).to receive(:parse_search_query).and_return(test_params)
+      end
+
+      it 'makes correct solr request' do
+        # expect(Blacklight.default_index).to receive(:search).with(solr_params).and_return(empty_response)
+        params = statistics.instance_eval { detail_report_solr_params('search_query', 'author_uni=xyz123') }
+        expect(params).to match(q: '', fq: 'department_facet:Columbia College', sort: 'author_sort asc')
+      end
+    end
+  end
 end

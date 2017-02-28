@@ -92,17 +92,18 @@ module AcademicCommons
       results
     end
 
-
-    def get_pids_by_query_facets(query)
+    def query_to_facets(query)
       facets_query = query.map do |param|
         facet = param[0]
         facet_item = param[1][0].to_s
         (facet_item.blank? || facet_item == 'undefined') ? nil : "{!raw f=#{facet}}#{facet_item}"
       end.compact
+    end
 
+    def get_pids_by_query_facets(query)
       query_params = {
         "qt" => "search", "rows" => 20000, "facet.field" => ["pid"],
-        "fq" => facets_query
+        "fq" => query_to_facets(query)
       }
       Blacklight.default_index.search(query_params)["response"]["docs"]
     end
@@ -294,8 +295,9 @@ module AcademicCommons
           startdate = Date.parse(params[:month] + " " + params[:year])
           enddate = Date.new(startdate.year, startdate.month, -1) # end_date needs to be last day of month
 
+          solr_params = { q: nil, fq: "author_uni:\"#{author_id}\"" }
           usage_stats = AcademicCommons::UsageStatistics.new(
-            startdate, enddate, author_id, 'author_uni', order_by: params[:order_by],
+            startdate, enddate, solr_params, order_by: params[:order_by],
             include_zeroes: params[:include_zeroes], include_streaming: false,
           )
 
@@ -342,6 +344,54 @@ module AcademicCommons
       params[:test_users] = nil
       params[:designated_recipient] = nil
       params[:one_report_email] = nil
+    end
+
+    def detail_report_solr_params(facet, query)
+      Rails.logger.debug "In make_solr_request for query: #{query}"
+      if facet == "search_query"
+        solr_params = parse_search_query(query)
+        facet_query = solr_params["f"]
+        q = solr_params["q"]
+        sort = solr_params["sort"]
+      else
+        facet_query = "#{facet}:\"#{query}\""
+        sort = "title_display asc"
+      end
+
+      return if facet_query.nil? && q.nil?
+
+      { sort: sort, q: q, fq: facet_query }
+    end
+
+    def parse_search_query(search_query)
+      search_query = URI.unescape(search_query)
+      search_query = search_query.gsub(/\+/, ' ')
+
+      params = Hash.new
+
+      if search_query.include? '?'
+        search_query = search_query[search_query.index("?") + 1, search_query.length]
+      end
+
+      search_query.split('&').each do |value|
+        key_value = value.split('=')
+
+        if(key_value[0].start_with?("f[") )
+          if(params.has_key?("f"))
+            array = params["f"]
+          else
+            array = Array.new
+          end
+
+          value = key_value[0].gsub(/f\[/, '').gsub(/\]\[\]/, '') + ":\"" + key_value[1] + "\""
+          array.push(value)
+          params.store("f", array)
+        else
+          params.store(key_value[0], key_value[1])
+        end
+      end
+
+      return params
     end
   end
 end

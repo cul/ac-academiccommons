@@ -213,7 +213,7 @@ describe StatisticsController, :type => :controller, integration: true do
   end
 
   # Does not require user login.
-  describe 'unsubscribe_monthly' do
+  describe 'GET unsubscribe_monthly' do
     let(:uni) { 'abc123' }
     context 'does not add email preference' do
       it 'when author missing' do

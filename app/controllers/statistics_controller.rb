@@ -115,10 +115,12 @@ class StatisticsController < ApplicationController
     enddate = Date.parse(params[:month_to] + " " + params[:year_to])
     enddate = Date.new(enddate.year, enddate.month, -1) # needs to be the last day of month
 
+    solr_params = detail_report_solr_params(params[:facet], params[:search_criteria])
+
     if params[:commit].in?('View', "Email", "Get Usage Stats", "keyword search")
       log_statistics_usage(startdate, enddate, params)
       @usage_stats = AcademicCommons::UsageStatistics.new(
-        startdate, enddate, params[:search_criteria], params[:facet],
+        startdate, enddate, solr_params,
         order_by: params[:order_by], include_zeroes: params[:include_zeroes],
         include_streaming: params[:include_streaming_views]
       )
@@ -142,7 +144,7 @@ class StatisticsController < ApplicationController
 
     if params[:commit] == "Download CSV report"
        usage_stats = AcademicCommons::UsageStatistics.new(
-         startdate, enddate, params[:search_criteria], params[:facet],
+         startdate, enddate, solr_params,
          order_by: params[:order_by], include_zeroes: params[:include_zeroes],
          include_streaming: params[:include_streaming_views],
          recent_first: params[:recent_first], per_month: true
