@@ -4,7 +4,7 @@ RSpec.describe Notifier, type: :mailer do
 
   describe '.author_monthly' do
     let(:mail) {
-      Notifier.author_monthly('abc123@columbia.edu', 'abc123', nil, '', '')
+      Notifier.author_monthly('abc123@columbia.edu', 'abc123', nil, '')
     }
 
     it 'contains correct unsubscribe link' do

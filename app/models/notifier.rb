@@ -3,15 +3,15 @@
 class Notifier < ActionMailer::Base
   MAX_FILE_SIZE = 1024 * 1024 * 25 # Max file size (25 MB) that can be emailed in KB.
 
-  def statistics_by_search(to_address, author_id, usage_stats, request, show_streams)
-    statistics_report(to_address, author_id, usage_stats, request, show_streams, nil)
+  def statistics_by_search(to_address, author_id, usage_stats, request)
+    statistics_report(to_address, author_id, usage_stats, request, nil)
   end
 
-  def author_monthly(to_address, author_id, usage_stats, show_streams, optional_note)
-    statistics_report(to_address, author_id, usage_stats, '', show_streams, optional_note)
+  def author_monthly(to_address, author_id, usage_stats, optional_note)
+    statistics_report(to_address, author_id, usage_stats, '', optional_note)
   end
 
-  def statistics_report(to_address, author_id, usage_stats, request, show_streams, optional_note) #can remove show_streams and read from options
+  def statistics_report(to_address, author_id, usage_stats, request, optional_note)
     @request = request
     @author_id = author_id
     @usage_stats = usage_stats

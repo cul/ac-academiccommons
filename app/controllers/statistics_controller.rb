@@ -122,14 +122,14 @@ class StatisticsController < ApplicationController
         order_by: params[:order_by], include_zeroes: params[:include_zeroes],
         include_streaming: params[:include_streaming_views]
       )
-      
-      if @usage_stats.count.zero?
+
+      if usage_stats.count.zero?
         set_message_and_variables
         return
       end
 
       if params[:commit] == "Email"
-        Notifier.statistics_by_search(params[:email_destination], params[:search_criteria], usage_stats, request, params[:include_streaming_views]).deliver
+        Notifier.statistics_by_search(params[:email_destination], params[:search_criteria], usage_stats, request).deliver
         flash.now[:notice] = "The report for: " + params[:search_criteria] + " was sent to: " + params[:email_destination]
       end
     end
