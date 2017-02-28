@@ -129,11 +129,29 @@ RSpec.describe AcademicCommons::NewItemNotification do
 
     subject { dummy_class.get_item(pid) }
 
-    its(:pid) { is_expected.to eql pid }
-    its(:title) { is_expected.to eql "Alice's Adventures in Wonderland" }
-    its(:handle) { is_expected.to eql 'http://dx.doi.org/10.7916/ALICE' }
-    its(:authors_uni) { is_expected.to eql ['abc123', 'xyz123']}
-    its(:free_to_read_start_date) { is_expected.to eql(Date.today - 1.month) }
+    context 'when free_to_read_start_date present' do
+      its(:pid) { is_expected.to eql pid }
+      its(:title) { is_expected.to eql "Alice's Adventures in Wonderland" }
+      its(:handle) { is_expected.to eql 'http://dx.doi.org/10.7916/ALICE' }
+      its(:authors_uni) { is_expected.to eql ['abc123', 'xyz123']}
+      its(:free_to_read_start_date) { is_expected.to eql(Date.today - 1.month) }
+    end
+
+    context 'when free_to_read_start_date not present' do
+      let(:solr_response) do
+        Blacklight::Solr::Response.new({
+          'response' => {
+            'docs' => [
+              { "id" => pid, "handle" => "http://dx.doi.org/10.7916/ALICE",
+                "title_display" => "Alice's Adventures in Wonderland",
+                'author_uni' => [uni, 'xyz123'] }
+            ]
+          }
+        }, {})
+      end
+
+      its(:free_to_read_start_date) { is_expected.to eql nil }
+    end
   end
 
   describe 'clean_authors_array' do

@@ -51,11 +51,14 @@ module AcademicCommons
       extra_params = { fl: 'author_uni,id,handle,title_display,free_to_read_start_date' }
       result = Blacklight.default_index.find(pid, extra_params).docs.first
 
+      date = result[:free_to_read_start_date] || nil
+      date = Date.strptime(date, '%Y-%m-%d') if date
+
       item = OpenStruct.new(
         pid: result[:id],
         title: result[:title_display],
         handle: result[:handle],
-        free_to_read_start_date: Date.strptime(result[:free_to_read_start_date], '%Y-%m-%d'),
+        free_to_read_start_date: date,
         authors_uni: clean_authors_array(result[:author_uni])
       )
     end
