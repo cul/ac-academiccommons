@@ -85,9 +85,10 @@ RSpec.describe AcademicCommons::NewItemNotification do
       its(:bcc) { is_expected.to include 'example@columbia.edu' }
 
       it 'body contains correct item details' do
-        expect(subject.body.to_s).to include 'http://dx.doi.org/10.7916/ALICE'
-        expect(subject.body.to_s).to include CGI::escapeHTML('Alice\'s Adventures in Wonderland')
-        puts subject.body.to_s
+        body = subject.body.to_s
+        expect(body).to include 'http://dx.doi.org/10.7916/ALICE'
+        expect(body).to include CGI::escapeHTML('Alice\'s Adventures in Wonderland')
+        expect(body).not_to include 'embargoed'
       end
     end
 
@@ -117,6 +118,7 @@ RSpec.describe AcademicCommons::NewItemNotification do
         expect(body).to include 'The following records are embargoed'
         expect(body).to include 'http://dx.doi.org/10.7916/ALICE'
         expect(body).to include CGI::escapeHTML('Alice\'s Adventures in Wonderland')
+        expect(body).not_to include 'The following items are available in Academic Commons:'
       end
     end
   end

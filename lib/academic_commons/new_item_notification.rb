@@ -36,7 +36,7 @@ module AcademicCommons
             )
           end
 
-          if item[:free_to_read_start_date] && available_today?(item[:free_to_read_start_date])
+          if item.free_to_read_start_date.blank? || available_today?(item.free_to_read_start_date)
             depositors_to_notify[uni].new_items << item
           else
             depositors_to_notify[uni].embargoed_items << item
