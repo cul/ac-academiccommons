@@ -8,11 +8,6 @@ module AcademicCommons::Statistics
     # @param [User] requested_by user the report was requested by
     def to_csv_by_month(requested_by: nil) # Monthly breakdown of stats
       # Can only be generated with the per month flag is on
-      if self.count.zero?
-      #  set_message_and_variables
-       return
-      end
-
       CSV.generate do |csv|
         csv.add_row [facet.in?('author_facet', 'author_uni') ? 'Author UNI/Name:' : 'Search criteria:', self.query]
         csv.add_row []

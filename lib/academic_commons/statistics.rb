@@ -36,25 +36,14 @@ module AcademicCommons
       Array.new(Date::ABBR_MONTHNAMES).drop(1)
     end
 
-    def set_message_and_variables
-      @results = nil
-      @stats = nil
-      @totals = nil
-      if (params[:facet] != "text")
-        @message = "first_message"
-        params[:facet] = "text"
-      else
-        @message = "second_message"
-        params[:facet] = "text"
-      end
-    end
-
     def log_statistics_usage(startdate, enddate, params)
-      eventlog = Eventlog.create(:event_name => 'statistics',
-      :user_name  => current_user == nil ? "N/A" : current_user.to_s,
-      :uid        => current_user == nil ? "N/A" : current_user.uid.to_s,
-      :ip         => request.remote_ip,
-      :session_id => request.session_options[:id])
+      eventlog = Eventlog.create(
+        event_name: 'statistics',
+        user_name:  current_user == nil ? "N/A" : current_user.to_s,
+        uid:        current_user == nil ? "N/A" : current_user.uid.to_s,
+        ip:         request.remote_ip,
+        session_id: request.session_options[:id]
+      )
 
       eventlog.logvalues.create(:param_name => "startdate", :value => startdate.to_s)
       eventlog.logvalues.create(:param_name => "enddate", :value => enddate.to_s)
