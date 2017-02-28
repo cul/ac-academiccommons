@@ -10,14 +10,14 @@
     <td>Dear <%= (@depositor.name.nil?) ? @depositor.uni : @depositor.name %>,</td>
   </tr>
 
-  <tr><td>
-    <td>Your recent deposit to Academic Commons is now available on <%= link_to 'academiccommons.columbia.edu', 'academiccommons.columbia.edu' %>.
+  <tr><td class="box">
+    Your recent deposit to Academic Commons is now available on <%= link_to 'academiccommons.columbia.edu', 'academiccommons.columbia.edu' %>.
     <% if @embargoed_items %>If any of your items are under embargo, only their metadata will be displayed.<% end %>
   </td></tr>
 
   <% unless @embargoed_items.blank? %>
     <tr><td class="box">
-      <strong>The following records are embargoed:</strong>
+      <strong>The following records are embargoed:</strong><br/>
       <i>(The files themselves are not available on Academic Commons at this time. They will become available on the dates listed below.)</i>
     </td></tr>
 
