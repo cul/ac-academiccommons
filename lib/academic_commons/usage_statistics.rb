@@ -61,6 +61,10 @@ module AcademicCommons
       @totals[event][time] = @item_stats.reduce(0) { |sum, i| sum + i.get_stat(event, time) }
     end
 
+    def empty?
+      @item_stats.count.zero?
+    end
+
     private
 
     # Returns statistics for all the items returned by the given solr query.
