@@ -1,35 +1,15 @@
-
-<style type="text/css">
-	.table-cell {
-		padding: 2px 5px;
-	}
-
-	.result-cell-bold {
-		padding: 2px 5px;
-		font-weight: bold;
-	}
-
-	.result-cell {
-		padding: 2px 5px;
-	}
-</style>
-
-<%= render :partial=>'admin_sidebar' %>
+<%= render partial: 'admin_sidebar' %>
 
 <div>
-	<div>
-	  <script type="text/javascript">
-	    if(history.length > 1){
-	      document.write('');
-	    }
-      </script>
-    </div>
-
+  <div>
+    <script type="text/javascript">
+      if(history.length > 1){
+        document.write('');
+      }
+    </script>
+  </div>
 </div>
+
 <div class='box clearfix'>
-
-
-<%= render :partial=>'statistics' %>
-
-
+  <%= render partial: 'statistics' %>
 </div>

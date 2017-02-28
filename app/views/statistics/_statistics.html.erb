@@ -1,69 +1,92 @@
+<style type="text/css">
+	.table-cell {
+		padding: 2px 5px;
+    display: table-cell;
+	}
+
+	.result-cell-bold {
+		padding: 2px 5px;
+		font-weight: bold;
+    display: table-cell;
+	}
+
+	.result-cell {
+		padding: 2px 5px;
+    display: table-cell;
+	}
+
+  .center {
+    text-align: center;
+  }
+</style>
+
+
 <div>
   <h2>Detail Report</h2>
 </div>
 
 <div class="split_form">
-  <%= form_tag url_for(controller: => :statistics, :action => :detail_report) do %>
+  <%= form_tag url_for(controller: :statistics, action: :detail_report) do %>
     <input type="hidden" id="email_template" name="email_template" value="Normal">
     <div style="padding: 5px 10px;">
       <div style="display: table;">
         <div style="display: table-row;"></div>
-        <div class="table-cell" style="display: table-cell;">Get Report for:</div>
+        <div class="table-cell">Get Report for:</div>
         <div style="display: table-row;"></div>
-        <div class="table-cell" style="display: table-cell;">
+        <div class="table-cell">
           <div class="value">
-            <%= text_field_tag :search_criteria, params[:search_criteria], :style => "width: 300px;" %>
+            <%= text_field_tag :search_criteria, params[:search_criteria], style: "width: 300px;" %>
           </div>
         </div>
-        <div class="table-cell" style="display: table-cell;">
+        <div class="table-cell">
           <div class="value">
             <%= select_tag :facet, options_for_select([["UNI", "author_uni"], ["Author Name", "author_facet"], ["Department", "department_facet"], ["Content Type", "genre_facet"], ["Keyword", "text"], ["Search by query", "search_query"]], params[:facet]) %>
           </div>
         </div>
         <div style="display: table;"></div>
         <div style="display: table-row;"></div>
-        <div class="table-cell" style="display: table-cell;">
+        <div class="table-cell">
           <div class="label">Report from:</div>
         </div>
-        <div class="table-cell" style="display: table-cell;">
+        <div class="table-cell">
           <div class="value">
             <%= select_tag :month_from, options_for_select(Date::ABBR_MONTHNAMES, params[:month_from] || (Date.today - 1.months).strftime("%b")) %>
             <%= select_tag :year_from, options_for_select((2011..Date.today.year), params[:year_from]) %>
           </div>
         </div>
         <div style="display: table-row;"></div>
-        <div class="table-cell" style="display: table-cell;">
+        <div class="table-cell">
           <div class="label">Report to:</div>
         </div>
-        <div class="table-cell" style="display: table-cell;">
+        <div class="table-cell">
           <div class="value">
             <%= select_tag :month_to, options_for_select(Date::ABBR_MONTHNAMES, params[:month_to] || (Date.today - 1.months).strftime("%b")) %>
             <%= select_tag :year_to, options_for_select((2011..Date.today.year), params[:year_to]) %>
           </div>
         </div>
         <div style="display: table-row;"></div>
-        <div class="table-cell" style="display: table-cell;">
+        <div class="table-cell">
           <div class="label">Include zeroes?</div>
         </div>
-        <div class="table-cell" style="display: table-cell;">
+        <div class="table-cell">
           <div class="value">
             <%= check_box_tag :include_zeroes, "true", params[:include_zeroes] %>
           </div>
         </div>
         <div style="display: table-row;"></div>
-        <div class="table-cell" style="display: table-cell;">
+        <div class="table-cell">
           <div class="label">Include streaming views?</div>
         </div>
-        <div class="table-cell" style="display: table-cell;">
+        <div class="table-cell">
           <div class="value">
             <%= check_box_tag :include_streaming_views, "true", params[:include_streaming_views] %>
           </div>
         </div>
         <div style="display: table-row;"></div>
-        <div class="table-cell" style="display: table-cell;">
+        <div class="table-cell">
           <div class="label">Order by:</div>
         </div>
-        <div class="table-cell" style="display: table-cell;">
+        <div class="table-cell">
           <div class="value">
             <%= select_tag :order_by, options_for_select([["Titles", "titles"], ["Views", "views"], ["Downloads", "downloads"]], params[:order_by]) %>
           </div>
@@ -79,23 +102,23 @@
             <%= submit_tag "Download CSV report" %>
           </div>
           <div style="display: table-cell; padding: 0px 0px 0px 60px;">
-            <%= text_field_tag :email_destination, params[:email_destination], :size => 30, :value => "email to", :onFocus => "this.value=''" %>
-            <%= submit_tag "Email", :id => "sendStatistics" %>
+            <%= text_field_tag :email_destination, params[:email_destination], size: 30, value: "email to", onFocus: "this.value=''" %>
+            <%= submit_tag "Email", id: "sendStatistics" %>
           </div>
         </div>
       </div>
-      <% if @results == nil %>
-        <div style="height: 20px; border: 0px solid #aaa; text-align: center; padding: 15px 0px 0px 0px;">
+      <% if @usage_stats.nil? || @usage_stats.empty? %>
+        <div class="center" style="height: 20px; border: 0px solid #aaa; padding: 15px 0px 0px 0px;">
           <% if @message == "first_message" %>
             Sorry, that search didn't return any results. Would you like to try it as a
-            <%= submit_tag "keyword search", :style => "border:none; padding:0; color: rgb(49, 78, 131); font: inherit; background: none;" %>
+            <%= submit_tag "keyword search", style: "border:none; padding:0; color: rgb(49, 78, 131); font: inherit; background: none;" %>
             ?
           <% end %>
           <% if @message == "second_message" %>
             Sorry, that search didn't return any results. Perhaps you'd like to return to our
-            <%= link_to "Homepage".html_safe, root_url, :style => "color: rgb(49, 78, 131);" %>
+            <%= link_to "Homepage".html_safe, root_url, style: "color: rgb(49, 78, 131);" %>
             and
-            <%= link_to "start over".html_safe, root_url, :style => "color: rgb(49, 78, 131);" %>
+            <%= link_to "start over".html_safe, root_url, style: "color: rgb(49, 78, 131);" %>
             ?
           <% end %>
         </div>
@@ -103,51 +126,51 @@
     </div>
   <% end %>
 </div>
-<% if @results %>
+
+<% if !@usage_stats.nil? && !@usage_stats.empty? %>
   <% row_counter = 0 %>
   <div style="border: 1px solid #aaa; padding: 5px; margin-top: 5px;">
     <div style="display: table;">
       <div style="display: table-row;"></div>
       <div class="result-cell-head" style="display: table-cell;"></div>
-      <div class="result-cell" style="display: table-cell; text-align: center;">Totals for #{params[:month_from]} #{params[:year_from]} - #{params[:month_to]} #{params[:year_to]} period:</div>
-      <div class="result-cell" style="display: table-cell; text-align: center;">
-        <%= @totals["View Period"] || 0 %>
+      <div class="result-cell center">Totals for <%= "#{params[:month_from]} #{params[:year_from]} - #{params[:month_to]} #{params[:year_to]}" %> period:</div>
+      <div class="result-cell center">
+        <%= @usage_stats.total_for('View', 'Period') %>
       </div>
       <% if params[:include_streaming_views] %>
-        <div class="result-cell" style="display: table-cell; text-align: center;">
-          <%= @totals["Streaming Period"] || 0 %>
+        <div class="result-cell center">
+          <%= @usage_stats.total_for('Streaming', 'Period') %>
         </div>
       <% end %>
-      <div class="result-cell" style="display: table-cell; text-align: center;">
-        <%= @totals["Download Period"] || 0 %>
+      <div class="result-cell center">
+        <%= @usage_stats.total_for("Download", "Period") %>
       </div>
       <div style="display: table-row;"></div>
-      <div class="result-cell-bold" style="display: table-cell;">#</div>
-      <div class="result-cell-bold" style="display: table-cell; text-align: center; width: 100%;">Title</div>
-      <div class="result-cell-bold" style="display: table-cell;">Views</div>
+      <div class="result-cell-bold">#</div>
+      <div class="result-cell-bold center" style="width: 100%;">Title</div>
+      <div class="result-cell-bold">Views</div>
       <% if params[:include_streaming_views] %>
-        <div class="result-cell-bold" style="display: table-cell;">Streams</div>
+        <div class="result-cell-bold">Streams</div>
       <% end %>
-      <div class="result-cell-bold" style="display: table-cell;">Downloads</div>
-      <% @results.each do |item| %>
-        <% row_counter += 1 %>
+      <div class="result-cell-bold">Downloads</div>
+      <% @usage_stats.each_with_index do |item, idx| %>
         <div style="display: table-row;"></div>
-        <div class="result-cell" style="display: table-cell;">
-          <%= row_counter %>
+        <div class="result-cell">
+          <%= idx + 1 %>
         </div>
-        <div class="result-cell" style="display: table-cell;">
-          <%= link_to item["title_display"], catalog_path(item["id"]) %>
+        <div class="result-cell">
+          <%= link_to item.document["title_display"], catalog_path(item.id) %>
         </div>
-        <div class="result-cell" style="display: table-cell; text-align: center;">
-          <%= @stats["View Period"][item["id"]] || 0 %>
+        <div class="result-cell center">
+          <%= item.get_stat('View', 'Period') %>
         </div>
         <% if params[:include_streaming_views] %>
-          <div class="result-cell" style="display: table-cell; text-align: center;">
-            <%= @stats["Streaming Period"][item["id"]] || 0 %>
+          <div class="result-cell center">
+            <%= item.get_stat('Streaming', 'Period') %>
           </div>
         <% end %>
-        <div class="result-cell" style="display: table-cell; text-align: center;">
-          <%= @stats["Download Period"][item["id"]] || 0 %>
+        <div class="result-cell center">
+          <%= item.get_stat('Download', 'Period') %>
         </div>
       <% end %>
     </div>

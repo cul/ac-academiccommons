@@ -117,19 +117,25 @@ class StatisticsController < ApplicationController
 
     if params[:commit].in?('View', "Email", "Get Usage Stats", "keyword search")
       log_statistics_usage(startdate, enddate, params)
-      usage_stats =  AcademicCommons::UsageStatistics.new(
+      @usage_stats = AcademicCommons::UsageStatistics.new(
         startdate, enddate, params[:search_criteria], params[:facet],
         order_by: params[:order_by], include_zeroes: params[:include_zeroes],
         include_streaming: params[:include_streaming_views]
       )
 
-      if usage_stats.count.zero?
-        set_message_and_variables
+      if @usage_stats.empty?
+        if (params[:facet] != "text")
+          @message = "first_message"
+          params[:facet] = "text"
+        else
+          @message = "second_message"
+          params[:facet] = "text"
+        end
         return
       end
 
       if params[:commit] == "Email"
-        Notifier.statistics_by_search(params[:email_destination], params[:search_criteria], usage_stats, request).deliver
+        Notifier.statistics_by_search(params[:email_destination], params[:search_criteria], @usage_stats, request).deliver
         flash.now[:notice] = "The report for: " + params[:search_criteria] + " was sent to: " + params[:email_destination]
       end
     end

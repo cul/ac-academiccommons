@@ -69,9 +69,7 @@
       <% if lifetime %>
         <td style="padding: 0px 10px 0px 20px"><b><%= @usage_stats.total_for('View', 'Lifetime') %></b></td>
         <% if @streams %>
-          <td style="padding: 0px 10px 0px">
-            <td><b><%= @usage_stats.total_for("Streaming", "Lifetime") %></b></td>
-          </td>
+          <td class="cell"><b><%= @usage_stats.total_for("Streaming", "Lifetime") %></b></td>
         <% end %>
         <td class="cell"><b><%= @usage_stats.total_for("Download", "Lifetime") %></b></td>
       <% end %>
