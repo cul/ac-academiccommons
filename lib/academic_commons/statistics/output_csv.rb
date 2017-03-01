@@ -4,16 +4,17 @@ module AcademicCommons::Statistics
   module OutputCSV
     MONTH_KEY = '%b %Y'
 
+    # CSV with monthly breakdown of stats for each event.
     #
     # @param [User] requested_by user the report was requested by
-    def to_csv_by_month(requested_by: nil) # Monthly breakdown of stats
+    def to_csv_by_month(requested_by: nil)
       # Can only be generated with the per month flag is on
 
       CSV.generate do |csv|
         # csv.add_row [facet.in?('author_facet', 'author_uni') ? 'Author UNI/Name:' : 'Search criteria:', self.query]
         csv.add_row [self.solr_params.inspect]
         csv.add_row []
-        csv.add_row ['Period Covered by Report', "#{self.start_date.strftime("%b %Y")} to #{self.end_date.strftime("%b %Y")}"]
+        csv.add_row ['Period Covered by Report', time_period]
         csv.add_row []
         csv.add_row ['Report created by:', requested_by.nil? ? "N/A" : "#{requested_by} (#{requested_by.uid})"]
         csv.add_row ['Report created on:', Time.new.strftime("%Y-%m-%d") ]
@@ -24,7 +25,46 @@ module AcademicCommons::Statistics
       end
     end
 
+    # Creates CSV with usage stats for the time period given. If a start and end
+    # date were not specified Lifetime stats are displayed.
     def to_csv
+      CSV.generate do |csv|
+        csv.add_row [ 'Time Period:', time_period]
+        csv.add_row []
+
+        # csv.add_row [ 'FACET', 'ITEM']
+        # params[:f].each do |key, value|
+        #   csv.add_row [facet_names[key.to_s], value.first]
+        # end
+        # csv.add_row []
+
+        csv.add_row ['Query:', solr_params.inspect] # TODO: Pretty print for solr params.
+        time = lifetime_only? ? 'Lifetime' : 'Period'
+
+        totals_row = [self.count, '', '', total_for('View', time), total_for('Download', time)]
+        totals_row << total_for('Streaming', time) if options[:include_streaming]
+        # csv.add_row [self.count, '', '', total_for('View', time), total_for('Download', time), total_for('Streaming', time)]
+        csv.add_row totals_row
+
+        heading = ['#', 'TITLE', 'GENRE', 'VIEWS', 'DOWNLOADS', 'DEPOSIT DATE', 'HANDLE / DOI']
+        heading.insert(5, 'STREAMS') if options[:include_streaming]
+        # csv.add_row ['#', 'TITLE', 'GENRE', 'VIEWS', 'DOWNLOADS', 'STREAMS', 'DEPOSIT DATE', 'HANDLE / DOI']
+        csv.add_row heading
+
+        self.each_with_index do |item, idx|
+          document = item.document
+          item_row = [
+            idx + 1, document['title_display'],
+            document.fetch('genre_facet', []).first,
+            item.get_stat('View', time),
+            item.get_stat('Download', time),
+            Date.strptime(document['record_creation_date']).strftime('%m/%d/%Y'),
+            document['handle']
+          ]
+          item_row.insert(5, item.get_stat('Streaming', time)) if options[:include_streaming]
+          csv.add_row item_row
+        end
+      end
     end
 
     private

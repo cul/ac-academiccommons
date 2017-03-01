@@ -159,26 +159,6 @@ RSpec.describe AcademicCommons::Statistics do
     end
   end
 
-  describe '.get_time_period' do
-    let(:test_params) do
-      { month_from:'Jan' , year_from: '2015', month_to: 'Dec',  year_to: '2016' }
-    end
-
-    before :each do
-      allow(statistics).to receive(:params).and_return(:test_params)
-    end
-
-    it 'return correct time period when dates available' do
-      allow(statistics).to receive(:params).and_return(test_params)
-      expect(statistics.instance_eval{ get_time_period }).to eq 'Jan 2015 - Dec 2016'
-    end
-
-    it 'return lifetime when time period dates are not available' do
-      allow(statistics).to receive(:params).and_return({})
-      expect(statistics.instance_eval{ get_time_period }).to eq 'Lifetime'
-    end
-  end
-
   describe '.facet_items' do
     it 'creates correct solr query' do
       empty_response = Blacklight::Solr::Response.new(

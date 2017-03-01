@@ -10,7 +10,7 @@ RSpec.describe AcademicCommons::UsageStatistics, integration: true do
   let(:solr_params) do
     {
       :rows => 100000, :sort => 'title_display asc', :q => nil, :page => 1,
-      :fq => "author_uni:\"#{uni}\"", :fl => "title_display,id,handle,doi,genre_facet"
+      :fq => "author_uni:\"#{uni}\"", :fl => "title_display,id,handle,doi,genre_facet,record_creation_date"
     }
   end
   let(:solr_response) do
@@ -43,8 +43,8 @@ RSpec.describe AcademicCommons::UsageStatistics, integration: true do
 
       context 'when requesting stats for current month' do
         subject do
-          AcademicCommons::UsageStatistics.new(Date.today - 1.month, Date.today,
-          solr_request, include_zeroes: true, include_streaming: true)
+          AcademicCommons::UsageStatistics.new(solr_request, Date.today - 1.month, Date.today,
+          include_zeroes: true, include_streaming: true)
         end
 
         it 'returns correct results' do
@@ -62,8 +62,8 @@ RSpec.describe AcademicCommons::UsageStatistics, integration: true do
 
       context 'when requesting stats for previous month' do
         subject do
-          AcademicCommons::UsageStatistics.new(Date.today - 2.month, Date.today - 1.month,
-          solr_request, include_zeroes: true, include_streaming: true)
+          AcademicCommons::UsageStatistics.new(solr_request, Date.today - 2.month, Date.today - 1.month,
+          include_zeroes: true, include_streaming: true)
         end
 
         it 'returns correct results' do
@@ -82,8 +82,8 @@ RSpec.describe AcademicCommons::UsageStatistics, integration: true do
 
       context 'when requesting stats without streaming' do
         subject do
-          AcademicCommons::UsageStatistics.new(Date.today - 1.month, Date.today,
-          solr_request, include_zeroes: true)
+          AcademicCommons::UsageStatistics.new(solr_request, Date.today - 1.month, Date.today,
+          include_zeroes: true)
         end
 
         it 'returns correct totals' do
@@ -96,8 +96,8 @@ RSpec.describe AcademicCommons::UsageStatistics, integration: true do
 
       context 'when requesting stats without zeroes' do
         subject do
-          AcademicCommons::UsageStatistics.new(Date.today - 2.month, Date.today - 1.month,
-          solr_request, include_zeroes: false, include_streaming: true)
+          AcademicCommons::UsageStatistics.new(solr_request, Date.today - 2.month, Date.today - 1.month,
+          include_zeroes: false, include_streaming: true)
         end
 
         it 'results does not include records with zero for view and download stats' do
@@ -111,7 +111,7 @@ RSpec.describe AcademicCommons::UsageStatistics, integration: true do
     let(:dates) do
       ['Dec-2015', 'Jan-2016', 'Feb-2016', 'Mar-2016', 'Apr-2016'].map { |d| Date.parse(d) }
     end
-    let(:usage_stats) { AcademicCommons::UsageStatistics.new(dates.first, dates.last, '') }
+    let(:usage_stats) { AcademicCommons::UsageStatistics.new({}, dates.first, dates.last) }
 
     it 'returns correct list' do
       result = usage_stats.instance_eval { make_months_list }
@@ -130,7 +130,7 @@ RSpec.describe AcademicCommons::UsageStatistics, integration: true do
       [
         ["{:q=>nil, :fq=>\"author_uni:\\\"abc123\\\"\"}"],
         [],
-        ["Period Covered by Report", "Jan 2015 to Dec 2016"],
+        ["Period Covered by Report", "Jan 2015 - Dec 2016"],
         [],
         ["Report created by:", "N/A"],
         ["Report created on:", Time.new.strftime("%Y-%m-%d")],
@@ -157,8 +157,8 @@ RSpec.describe AcademicCommons::UsageStatistics, integration: true do
       ]
     end
     let(:usage_stats) do
-      AcademicCommons::UsageStatistics.new(Date.parse('Jan 2015'), Date.parse('Dec 2016'),
-      solr_request, order_by: 'views', include_zeroes: true, include_streaming: true, per_month: true)
+      AcademicCommons::UsageStatistics.new(solr_request, Date.parse('Jan 2015'), Date.parse('Dec 2016'),
+      order_by: 'views', include_zeroes: true, include_streaming: true, per_month: true)
     end
 
     before :each do
@@ -180,8 +180,8 @@ RSpec.describe AcademicCommons::UsageStatistics, integration: true do
 
   describe '#get_stat_for' do
     subject do
-      AcademicCommons::UsageStatistics.new(Date.parse('Dec 2015'), Date.parse('Apr 2016'),
-      solr_request, per_month: true)
+      AcademicCommons::UsageStatistics.new(solr_request, Date.parse('Dec 2015'), Date.parse('Apr 2016'),
+      per_month: true)
     end
 
     before :each do
@@ -271,6 +271,26 @@ RSpec.describe AcademicCommons::UsageStatistics, integration: true do
       it 'returns first pid' do
         expect(subject).to eql pid1
       end
+    end
+  end
+
+  describe '.time_period' do
+    subject{ usage_stats.instance_eval{ time_period } }
+
+    context 'when start and end date available' do
+      let(:usage_stats) { AcademicCommons::UsageStatistics.new(solr_params, Date.parse("Jan 2015"), Date.parse("Dec 2016")) }
+      it { is_expected.to eq 'Jan 2015 - Dec 2016' }
+    end
+
+    context 'when start and end date not available' do
+      let(:usage_stats) { AcademicCommons::UsageStatistics.new(solr_params, '', '') }
+      it { is_expected.to eq 'Lifetime' }
+    end
+
+    context 'when stats are for one month' do
+      let(:date) { Date.today }
+      let(:usage_stats) { AcademicCommons::UsageStatistics.new(solr_params, date, date) }
+      it { is_expected.to eq date.strftime("%b %Y") }
     end
   end
 end

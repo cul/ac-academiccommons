@@ -154,43 +154,29 @@ module AcademicCommons
       key
     end
 
+    def start_date(month, year)
+      Date.parse("#{month} #{year}")
+    end
+
+    def end_date(month, year) # end_date needs to be last day of month
+      date = Date.parse("#{month} #{year}")
+      Date.new(date.year, date.month, -1)
+    end
+
     def get_res_list
       query = params[:f]
 
       return [] if query.blank?
 
-      docs = get_pids_by_query_facets(query)
+      start_date, end_date = nil, nil
 
-      results = Array.new
-
-      docs.each do |doc|
-        item = Hash.new
-
-        if(params[:month_from] && params[:year_from] && params[:month_to] && params[:year_to] )
-          startdate = Date.parse(params[:month_from] + " " + params[:year_from])
-          enddate = Date.parse(params[:month_to] + " " + params[:year_to])
-
-          item.store('views', count_pids_statistic_by_dates([doc], Statistic::VIEW_EVENT, startdate, enddate))
-          item.store('downloads', count_pids_statistic_by_dates([doc], Statistic::DOWNLOAD_EVENT, startdate, enddate))
-          item.store('streams', count_pids_statistic_by_dates([doc], Statistic::STREAM_EVENT, startdate, enddate))
-          item.store('doc', doc)
-
-          results << item
-        else
-
-          item.store('views', count_pids_statistic([doc], Statistic::VIEW_EVENT))
-          item.store('downloads', count_pids_statistic([doc], Statistic::DOWNLOAD_EVENT))
-          item.store('streams', count_pids_statistic([doc], Statistic::STREAM_EVENT))
-          item.store('doc', doc)
-          results << item
-        end
+      if params[:month_from] && params[:year_from] && params[:month_to] && params[:year_to]
+        startdate = start_date(params[:month_from], params[:year_from])
+        enddate = end_date(params[:month_to], params[:year_to])
       end
 
-      results.sort! do |x,y|
-        x['doc']['title_display']<=> y['doc']['title_display']
-      end
-
-      return results
+      solr_params = { fq: query_to_facets(query) }
+      AcademicCommons::UsageStatistics.new(solr_params, startdate, enddate, include_streaming: true, order_by: 'title')
     end
 
     def get_docs_size_by_query_facets
@@ -201,55 +187,6 @@ module AcademicCommons
       else
         get_pids_by_query_facets(query)
       end
-    end
-
-    def get_time_period
-      if(params[:month_from] && params[:year_from] && params[:month_to] && params[:year_to])
-        startdate = Date.parse(params[:month_from] + " " + params[:year_from])
-        enddate = Date.parse(params[:month_to] + " " + params[:year_to])
-        "#{startdate.strftime("%b %Y")} - #{enddate.strftime("%b %Y")}"
-      else
-        'Lifetime'
-      end
-    end
-
-    def create_common_statistics_csv(res_list)
-      count = 0
-      csv = ''
-
-      csv += CSV.generate_line( [ 'time period: ', get_time_period, '', '', '', '', '', '' ])
-      csv += CSV.generate_line( [ '', '', '', '', '', '', '', ''])
-
-      query = params[:f]
-      views_stats = get_facet_stats_by_event(query, Statistic::VIEW_EVENT)
-      downloads_stats = get_facet_stats_by_event(query, Statistic::DOWNLOAD_EVENT)
-      streams_stats = get_facet_stats_by_event(query, Statistic::STREAM_EVENT)
-
-      csv += CSV.generate_line( [ 'FACET', 'ITEM', '', '', '', '', '', ''])
-      query.each do |key, value|
-        csv += CSV.generate_line( [ facet_names[key.to_s], value.first.to_s, '', '', '', '', '', ''])
-      end
-      csv += CSV.generate_line( [ '', '', '', '', '', '', '', '' ])
-
-      csv += CSV.generate_line( [ res_list.size.to_s, '', '', views_stats['statistic'].to_s, downloads_stats['statistic'].to_s, streams_stats['statistic'].to_s, '', '' ])
-      csv += CSV.generate_line( [ '#', 'TITLE', 'GENRE', 'VIEWS', 'DOWNLOADS', 'STREAMS', 'DEPOSIT DATE', 'HANDLE / DOI' ])
-
-      res_list.each do |item|
-        count = count + 1
-
-        csv += CSV.generate_line( [
-          count,
-          item['doc']['title_display'],
-          item['doc']['genre_facet'].first,
-          item['views'],
-          item['downloads'],
-          item['streams'],
-          Date.strptime(item['doc']['record_creation_date']).strftime('%m/%d/%Y'),
-          item['doc']['handle']
-          ])
-        end
-
-      return csv
     end
 
     def get_facet_stats_by_event(query, event)
@@ -297,7 +234,7 @@ module AcademicCommons
 
           solr_params = { q: nil, fq: "author_uni:\"#{author_id}\"" }
           usage_stats = AcademicCommons::UsageStatistics.new(
-            startdate, enddate, solr_params, order_by: params[:order_by],
+            solr_params, startdate, enddate, order_by: params[:order_by],
             include_zeroes: params[:include_zeroes], include_streaming: false,
           )
 

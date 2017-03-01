@@ -6,8 +6,7 @@ class StatisticsController < ApplicationController
 
   require "csv"
 
-  helper_method :facet_names, :facet_items, :get_res_list, :get_docs_size_by_query_facets,
-                :get_time_period, :months
+  helper_method :facet_names, :facet_items, :months
 
   def unsubscribe_monthly
     author_id = params[:author_id].to_s
@@ -120,7 +119,7 @@ class StatisticsController < ApplicationController
     if params[:commit].in?('View', "Email", "Get Usage Stats", "keyword search")
       log_statistics_usage(startdate, enddate, params)
       @usage_stats = AcademicCommons::UsageStatistics.new(
-        startdate, enddate, solr_params,
+        solr_params, startdate, enddate,
         order_by: params[:order_by], include_zeroes: params[:include_zeroes],
         include_streaming: params[:include_streaming_views]
       )
@@ -144,7 +143,7 @@ class StatisticsController < ApplicationController
 
     if params[:commit] == "Download CSV report"
        usage_stats = AcademicCommons::UsageStatistics.new(
-         startdate, enddate, solr_params,
+         solr_params, startdate, enddate,
          order_by: params[:order_by], include_zeroes: params[:include_zeroes],
          include_streaming: params[:include_streaming_views],
          recent_first: params[:recent_first], per_month: true
@@ -237,12 +236,12 @@ class StatisticsController < ApplicationController
   end
 
   def common_statistics_csv
-    res_list = get_res_list
+    usage_stats = get_res_list
 
-    if(res_list.size != 0)
-      csv = create_common_statistics_csv(res_list)
+    unless usage_stats.empty?
+      csv = usage_stats.to_csv
 
-      send_data csv, :type=>"application/csv", :filename => "common_statistics.csv"
+      send_data csv, type: "application/csv", filename: "common_statistics.csv"
     end
   end
 
@@ -250,7 +249,9 @@ class StatisticsController < ApplicationController
 
   def school_statistics; end
 
-  def statistic_res_list; end
+  def statistic_res_list
+    @usage_stats = get_res_list
+  end
 
   def send_csv_report
     params.each do |key, value|
@@ -263,7 +264,7 @@ class StatisticsController < ApplicationController
     message = params[:email_message]
 
     prepared_attachments = Hash.new
-    csv = create_common_statistics_csv(get_res_list)
+    csv = get_res_list.to_csv
     prepared_attachments.store('statistics.csv', csv)
 
     Notifier.statistics_report_with_csv_attachment(recipients, from, subject, message, prepared_attachments).deliver
