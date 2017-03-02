@@ -90,6 +90,34 @@ describe StatisticsController, :type => :controller, integration: true do
     end
   end
 
+  describe 'GET total_usage_stats' do
+    include_examples 'authorization required' do
+      let(:http_request) { get :total_usage_stats, format: :json }
+    end
+
+    context 'when admin user makes a request' do
+      include_context 'mock admin user'
+
+      before :each do
+        FactoryGirl.create(:view_stat)
+        FactoryGirl.create(:download_stat)
+        FactoryGirl.create(:streaming_stat)
+      end
+
+      subject { get :total_usage_stats, { q: "{!raw f=id}#{pid}", format: :json } }
+
+      it 'return correct json response' do
+        json = JSON.parse(subject.body)
+        expect(json).to include(
+          'View' => 1,
+          'Download' => 1,
+          'Streaming' => 1,
+          'Records' => 1
+        )
+      end
+    end
+  end
+
   describe 'GET single_pid_stats' do
     include_examples 'authorization required' do
       let(:http_request) { get :single_pid_stats }

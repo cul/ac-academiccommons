@@ -200,6 +200,32 @@ class StatisticsController < ApplicationController
     end
   end
 
+  def total_usage_stats
+    solr_params = {
+      q: params.fetch(:q, nil), # needs to be raw query
+      fq: query_to_facets(params.fetch(:f, []))
+    }
+
+    s, e = nil, nil
+    if params[:month_from] && params[:year_from] && params[:month_to] && params[:year_to]
+      s = start_date(params[:month_from], params[:year_from])
+      e = end_date(params[:month_to], params[:year_to])
+    end
+
+    usage_stats = AcademicCommons::UsageStatistics.new(solr_params, s, e, include_streaming: true)
+
+    time = (usage_stats.lifetime_only?) ? 'Lifetime' : 'Period'
+
+    json = { "Records" => usage_stats.count } # Number of records.
+    [Statistic::VIEW_EVENT, Statistic::DOWNLOAD_EVENT, Statistic::STREAM_EVENT].each do |event|
+      json[event] = usage_stats.total_for(event, time)
+    end
+
+    respond_to do |f|
+      f.json { render json: json }
+    end
+  end
+
   def single_pid_count
     query_params = { qt: "standard", q:"pid:\"" + params[:pid] + "\"" }
     count = Blacklight.default_index.search(query_params)["response"]["numFound"]

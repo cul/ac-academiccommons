@@ -53,7 +53,8 @@ AcademicCommons::Application.routes.draw do
   get '/statistics/docs_size_by_query_facets', :to => 'statistics#docs_size_by_query_facets'
   get '/statistics/common_statistics_csv',  :to => 'statistics#common_statistics_csv'
   get '/statistics/unsubscribe_monthly',    :to => 'statistics#unsubscribe_monthly'
-  get '/statistics/statistic_res_list',    :to => 'statistics#statistic_res_list'
+  get '/statistics/statistic_res_list',     :to => 'statistics#statistic_res_list'
+  get '/statistics/total_usage_stats',      to: 'statistics#total_usage_stats'
 
   match '/deposit/submit', :to => 'deposit#submit', via: [:get, :post]
   get '/deposit', :to => 'deposit#index', :as => 'deposit'
