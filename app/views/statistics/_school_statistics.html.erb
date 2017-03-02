@@ -1,215 +1,111 @@
 <script>
   $(document).ready(function(){
-    $.ajax({url: '/statistics/stats_by_event/?event=View',
-    success: function(data) {
-      $('#all-views-size').html(data);
-    }
-  });
-  });
-
-  $(document).ready(function(){
-    $.ajax({url: '/statistics/stats_by_event/?event=Download',
-    success: function(data) {
-      $('#all-downloads-size').html(data);
-    }
-  });
+    $.ajax({
+      url: '/statistics/stats_by_event/?event=View',
+      success: function(data) {
+        $('#all-views-size').html(data);
+      }
+    });
   });
 
   $(document).ready(function(){
-    $.ajax({url: '/statistics/stats_by_event/?event=Streaming',
-    success: function(data) {
-      $('#all-streams-size').html(data);
-    }
-  });
+    $.ajax({
+      url: '/statistics/stats_by_event/?event=Download',
+      success: function(data) {
+        $('#all-downloads-size').html(data);
+      }
+    });
   });
 
   $(document).ready(function(){
-    $.ajax({url: '/statistics/school_docs_size/?school=Teachers College,Union Theological Seminary,Jewish Theological Seminary,Barnard College,Columbia University',
-    success: function(data) {
-      $('#all-school-docs-size').html(data);
-    }
+    $.ajax({
+      url: '/statistics/stats_by_event/?event=Streaming',
+      success: function(data) {
+        $('#all-streams-size').html(data);
+      }
+    });
   });
+
+  $(document).ready(function(){
+    $.ajax({
+      url: '/statistics/total_usage_stats/?q={!raw f=organization_facet}Teachers College,Union Theological Seminary,Jewish Theological Seminary,Barnard College,Columbia University',
+      dataType: 'json',
+      success: function(data) {
+        $('#all-school-docs-size').html(data.records);
+      }
+    });
   });
 
   // -------- Teachers College ---------------------
   $(document).ready(function(){
-    $.ajax({url: '/statistics/school_docs_size/?school=Teachers College',
-    success: function(data) {
-      $('#teachers-school-docs-size').html(data);
-    }
+    $.ajax({
+      url: '/statistics/total_usage_stats/?q={!raw f=organization_facet}Teachers College',
+      dataType: 'json',
+      success: function(data) {
+        $('#teachers-school-docs-size').html(data.records);
+        $('#teachers-school-downloads').html(data.download);
+        $('#teachers-school-views').html(data.view);
+        $('#teachers-school-streams').html(data.streaming);
+      }
+    });
   });
-  });
-
-  $(document).ready(function(){
-    $.ajax({url: '/statistics/school_stats/?event=Download&school=Teachers College',
-    success: function(data) {
-      $('#teachers-school-downloads').html(data);
-    }
-  });
-  });
-
-
-  $(document).ready(function(){
-    $.ajax({url: '/statistics/school_stats/?event=View&school=Teachers College',
-    success: function(data) {
-      $('#teachers-school-views').html(data);
-    }
-  });
-  });
-
-
-  $(document).ready(function(){
-    $.ajax({url: '/statistics/school_stats/?event=Streaming&school=Teachers College',
-    success: function(data) {
-      $('#teachers-school-streams').html(data);
-    }
-  });
-  });
-
 
   // -------- Union Theological Seminary ---------------------
   $(document).ready(function(){
-    $.ajax({url: '/statistics/school_docs_size/?school=Union Theological Seminary',
-    success: function(data) {
-      $('#t-seminary-docs-size').html(data);
-    }
+    $.ajax({
+      url: '/statistics/total_usage_stats/?q={!raw f=organization_facet}Union Theological Seminary',
+      dataType: 'json',
+      success: function(data) {
+        $('#t-seminary-docs-size').html(data.records);
+        $('#t-seminary-downloads').html(data.download);
+        $('#t-seminary-views').html(data.view);
+        $('#t-seminary-streams').html(data.streaming);
+      }
+    });
   });
-  });
-
-  $(document).ready(function(){
-    $.ajax({url: '/statistics/school_stats/?event=Download&school=Union Theological Seminary',
-    success: function(data) {
-      $('#t-seminary-downloads').html(data);
-    }
-  });
-  });
-
-
-  $(document).ready(function(){
-    $.ajax({url: '/statistics/school_stats/?event=View&school=Union Theological Seminary',
-    success: function(data) {
-      $('#t-seminary-views').html(data);
-    }
-  });
-  });
-
-
-  $(document).ready(function(){
-    $.ajax({url: '/statistics/school_stats/?event=Streaming&school=Union Theological Seminary',
-    success: function(data) {
-      $('#t-seminary-streams').html(data);
-    }
-  });
-  });
-
 
   // -------- Jewish Theological Seminary ---------------------
   $(document).ready(function(){
-    $.ajax({url: '/statistics/school_docs_size/?school=Jewish Theological Seminary',
-    success: function(data) {
-      $('#j-seminary-docs-size').html(data);
-    }
-  });
-  });
-
-  $(document).ready(function(){
-    $.ajax({url: '/statistics/school_stats/?event=Download&school=Jewish Theological Seminary',
-    success: function(data) {
-      $('#j-seminary-downloads').html(data);
-    }
-  });
-  });
-
-
-  $(document).ready(function(){
-    $.ajax({url: '/statistics/school_stats/?event=View&school=Jewish Theological Seminary',
-    success: function(data) {
-      $('#j-seminary-views').html(data);
-    }
-  });
-  });
-
-
-  $(document).ready(function(){
-    $.ajax({url: '/statistics/school_stats/?event=Streaming&school=Jewish Theological Seminary',
-    success: function(data) {
-      $('#j-seminary-streams').html(data);
-    }
-  });
+    $.ajax({
+      url: '/statistics/total_usage_stats/?q={!raw f=organization_facet}Jewish Theological Seminary',
+      dataType: 'json',
+      success: function(data) {
+        $('#j-seminary-docs-size').html(data.records);
+        $('#j-seminary-downloads').html(data.download);
+        $('#j-seminary-views').html(data.view);
+        $('#j-seminary-streams').html(data.streaming);
+      }
+    });
   });
 
 
   // -------- Barnard College ---------------------
   $(document).ready(function(){
-    $.ajax({url: '/statistics/school_docs_size/?school=Barnard College',
-    success: function(data) {
-      $('#barnard-college-docs-size').html(data);
-    }
+    $.ajax({
+      url: '/statistics/total_usage_stats/?q={!raw f=organization_facet}Barnard College',
+      dataType: 'json',
+      success: function(data) {
+        $('#barnard-college-docs-size').html(data.records);
+        $('#barnard-college-downloads').html(data.download);
+        $('#barnard-college-views').html(data.view);
+        $('#barnard-college-streams').html(data.streaming);
+      }
+    });
   });
-  });
-
-  $(document).ready(function(){
-    $.ajax({url: '/statistics/school_stats/?event=Download&school=Barnard College',
-    success: function(data) {
-      $('#barnard-college-downloads').html(data);
-    }
-  });
-  });
-
-
-  $(document).ready(function(){
-    $.ajax({url: '/statistics/school_stats/?event=View&school=Barnard College',
-    success: function(data) {
-      $('#barnard-college-views').html(data);
-    }
-  });
-  });
-
-
-  $(document).ready(function(){
-    $.ajax({url: '/statistics/school_stats/?event=Streaming&school=Barnard College',
-    success: function(data) {
-      $('#barnard-college-streams').html(data);
-    }
-  });
-  });
-
 
   // -------- Columbia University ---------------------
   $(document).ready(function(){
-    $.ajax({url: '/statistics/school_docs_size/?school=Columbia University',
-    success: function(data) {
-      $('#cu-docs-size').html(data);
-    }
+    $.ajax({
+      url: '/statistics/total_usage_stats/?q={!raw f=organization_facet}Columbia University',
+      dataType: 'json',
+      success: function(data) {
+        $('#cu-docs-size').html(data.records);
+        $('#cu-downloads').html(data.download);
+        $('#cu-views').html(data.view);
+        $('#cu-streams').html(data.streaming);
+      }
+    });
   });
-  });
-
-  $(document).ready(function(){
-    $.ajax({url: '/statistics/school_stats/?event=Download&school=Columbia University',
-    success: function(data) {
-      $('#cu-downloads').html(data);
-    }
-  });
-  });
-
-
-  $(document).ready(function(){
-    $.ajax({url: '/statistics/school_stats/?event=View&school=Columbia University',
-    success: function(data) {
-      $('#cu-views').html(data);
-    }
-  });
-  });
-
-
-  $(document).ready(function(){
-    $.ajax({url: '/statistics/school_stats/?event=Streaming&school=Columbia University',
-    success: function(data) {
-      $('#cu-streams').html(data);
-    }
-  });
-  });
-
 
 </script>
 
@@ -397,6 +293,5 @@
     </div>
   </div>
 </div>
-
 
 <br style="clear:both"/>
