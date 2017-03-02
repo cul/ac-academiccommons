@@ -1,40 +1,16 @@
 <script>
-  $(document).ready(function(){
-    $.ajax({
-      url: '/statistics/stats_by_event/?event=View',
-      success: function(data) {
-        $('#all-views-size').html(data);
-      }
-    });
-  });
-
-  $(document).ready(function(){
-    $.ajax({
-      url: '/statistics/stats_by_event/?event=Download',
-      success: function(data) {
-        $('#all-downloads-size').html(data);
-      }
-    });
-  });
-
-  $(document).ready(function(){
-    $.ajax({
-      url: '/statistics/stats_by_event/?event=Streaming',
-      success: function(data) {
-        $('#all-streams-size').html(data);
-      }
-    });
-  });
-
-  $(document).ready(function(){
-    $.ajax({
-      url: '/statistics/total_usage_stats/?q={!raw f=organization_facet}Teachers College,Union Theological Seminary,Jewish Theological Seminary,Barnard College,Columbia University',
-      dataType: 'json',
-      success: function(data) {
-        $('#all-school-docs-size').html(data.records);
-      }
-    });
-  });
+  // Use something like this, if want total stats for all organizations.
+  // $(document).ready(function(){
+  //   $.ajax({
+  //     url: '/statistics/total_usage_stats/?q=',
+  //     dataType: 'json',
+  //     success: function(data) {
+  //       $('#all-views-size').html(data.view);
+  //       $('#all-downloads-size').html(data.download);
+  //       $('#all-streams-size').html(data.streaming);
+  //       $('#all-school-docs-size').html(data.records);
+  //   });
+  // });
 
   // -------- Teachers College ---------------------
   $(document).ready(function(){
@@ -266,7 +242,7 @@
         </div>
       </div>
     </div>
-
+<!--
     <div style='display: table-row; width: 100%;'>
       <div class='table-cell g_stat_head_cell' style='display: table-cell; min-width: 210px; padding: 20px 15px 15px 10px;'>
         TOTALS:
@@ -291,6 +267,7 @@
         </div>
       </div>
     </div>
+--->
   </div>
 </div>
 
