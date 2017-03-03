@@ -1,317 +1,304 @@
 
- <script src="/assets/statistics/statistics.js" type="text/javascript"></script>
+<script src="/assets/statistics.js" type="text/javascript"></script>
 
-  <%
-    authors = facet_items('author_facet')
-    dates = facet_items('pub_date_facet')
-    genre = facet_items('genre_facet')
-    subject = facet_items('subject_facet')
-    resource_type = facet_items('type_of_resource_facet')
-    media_type = facet_items('media_type_facet')
-    organization = facet_items('organization_facet')
-    department = facet_items('department_facet')
-    series = facet_items('series_facet')
-    non_cu_series = facet_items('non_cu_series_facet')
-  %>
+<%
+  authors = facet_items('author_facet')
+  dates = facet_items('pub_date_facet')
+  genre = facet_items('genre_facet')
+  subject = facet_items('subject_facet')
+  resource_type = facet_items('type_of_resource_facet')
+  media_type = facet_items('media_type_facet')
+  organization = facet_items('organization_facet')
+  department = facet_items('department_facet')
+  series = facet_items('series_facet')
+  non_cu_series = facet_items('non_cu_series_facet')
+%>
 
-    <style>
-       .facet_items {
-           width: 450px;
-       }
+<style>
+  .facet_items {
+    width: 450px;
+  }
+  .facet_name {
+    padding: 0 0 0 0;
+  }
+  .facet_num {
+    text-align: right;
+    padding: 0 40px 0 0;
+  }
 
-       .facet_name {
-       		padding: 0 0 0 0;
-       }
-
-       .facet_num {
-       		text-align: right;
-       		padding: 0 40px 0 0;
-       }
-
-    .facet_res_cell {
-		font-weight: 500;
-		//padding: 10px 15px 15px 10px;
-		//float: left;
-		//border: 1px solid black;
-		width: 100px;
-		text-align: center;
-	}
-
-	.facet_res_link {
-		min-width: 240px;
-		padding: 0px 0px 0px 0px;
-		//border: 1px solid black;
-		//text-align: center;
-        visibility: hidden;
-	}
-
-    </style>
+  .facet_res_cell {
+    font-weight: 500;
+    /*//padding: 10px 15px 15px 10px;
+    //float: left;
+    //border: 1px solid black;*/
+    width: 100px;
+    text-align: center;
+  }
+  .facet_res_link {
+    min-width: 240px;
+    padding: 0px 0px 0px 0px;
+    /*//border: 1px solid black;
+    //text-align: center;*/
+    visibility: hidden;
+  }
+</style>
 
 <div style='float:left;'><h3>Summary Reports</h3></div>
 
 <br style="clear:both"/>
 
 <div style='padding: 0px 0px;'>
-    <div style='display: table; width: 100%;'>
+  <div style='display: table; width: 100%;'>
 
-      <div style='display: table-row; width: 100%;'>
-        <div class='table-cell g_stat_head_cell' style='display: table-cell; min-width: 210px; padding: 20px 15px 15px 10px;'>
-
-        </div>
-        <div class='table-cell' style='display: table-cell;  '>
-        	<div style='display: table; width: ;'>
-        		<div style='display: table-row;'>
-					<div class='table-cell g_stat_head_cell' style='display: table-cell;'>
-						    DOCS
-					</div>
-				 	<div class='table-cell g_stat_head_cell' style='display: table-cell;'>
-				            VIEWS
-					</div>
-					<div class='table-cell g_stat_head_cell' style='display: table-cell;'>
-				            DOWNLOADS
-					</div>
-					<div class='table-cell g_stat_head_cell' style='display: table-cell;'>
-				            STREAMS
-					</div>
-
-				</div>
-			</div>
-		</div>
+    <div style='display: table-row; width: 100%;'>
+      <div class='table-cell g_stat_head_cell' style='display: table-cell; min-width: 210px; padding: 20px 15px 15px 10px; text-align: left; font-weight: bold;'>
+        STATISTICS BY PID
       </div>
-
-       <div style='display: table-row; width: 100%;'>
-        <div class='table-cell g_stat_head_cell' style='display: table-cell; min-width: 230px; padding: 20px 5px 15px 0px;'>
-        	<nobr>
-        	PID:
-        	&nbsp;
-        	<input type="text" style="width:80px; text-align:center" id="single-pid">
-        	&nbsp;
-        	<input type="submit" id="pid-statistics-button" value=" get statistics: " onclick="get_single_stats();">
-        	</nobr>
+      <div class='table-cell' style='display: table-cell;  '>
+        <div style='display: table; width: ;'>
+          <div style='display: table-row;'>
+            <div class='table-cell g_stat_head_cell' style='display: table-cell;'>DOCS</div>
+            <div class='table-cell g_stat_head_cell' style='display: table-cell;'>VIEWS</div>
+            <div class='table-cell g_stat_head_cell' style='display: table-cell;'>DOWNLOADS</div>
+            <div class='table-cell g_stat_head_cell' style='display: table-cell;'>STREAMS</div>
+          </div>
         </div>
-        <div class='table-cell' style='display: table-cell;  '>
-        	<div style='display: table; width: ;'>
-        		<div style='display: table-row;'>
-					<div id='pid-docs-size' class='table-cell g_stat_head_cell' style='display: table-cell;'>
-
-					</div>
-				 	<div id='pid-views-size' class='table-cell g_stat_head_cell' style='display: table-cell;'>
-
-					</div>
-					<div id='pid-downloads-size' class='table-cell g_stat_head_cell' style='display: table-cell;'>
-
-					</div>
-					<div id='pid-streams-size' class='table-cell g_stat_head_cell' style='display: table-cell;'>
-
-					</div>
-
-				</div>
-			</div>
-		</div>
       </div>
-
-        <div style='display: table-row; width: 100%;'>
-	        <div class='table-cell' style='display: table-cell;'>
-				<hr>
-	        </div>
-            <div class='table-cell' style='display: table-cell;'>
-				<hr>
-	        </div>
-		</div>
-
-        <div style='display: table-row; width: 100%;'>
-	        <div class='table-cell' style='display: table-cell;'>
-
-	        </div>
-            <div id="resut_period" class='table-cell' style='display: table-cell; text-align: center; visibility: hidden; padding: 0 0 20px 0;'>
-				lifetime
-	        </div>
-		</div>
-
-	</div>
-
-	<div style=' height: 30px'>
-        <div class='table-cell' style='display: table-cell;  '>
-        	<div style='display: table; width: ;'>
-        		<div style='display: table-row;'>
-
-			        <div class='table-cell facet_res_link' style='display: table-cell;'>
-			        	<a id="search_link" href="">search-link</a>
-			            &nbsp;&nbsp;&nbsp; <a id="statistic_res_list_link" href="">view-list</a>
-			            &nbsp;&nbsp;&nbsp; <a id="csv_link" href="">CSV</a>
-			            &nbsp;&nbsp;&nbsp;<a id="csv_email_link">email</a>
-			        </div>
-
-					<div id='facet-docs-size' class='table-cell facet_res_cell' style='display: table-cell;' title="docs queried">
-
-					</div>
-				 	<div id='facet-views-size' class='table-cell facet_res_cell' style='display: table-cell;' title="viewed">
-
-					</div>
-					<div id='facet-downloads-size' class='table-cell facet_res_cell' style='display: table-cell;'  title="downloaded">
-
-					</div>
-					<div id='facet-streams-size' class='table-cell facet_res_cell' style='display: table-cell;' title="streamed">
-
-					</div>
-
-				</div>
-			</div>
-		</div>
-	</div>
-
-
     </div>
 
-
-     <div style='display: table; width: 100%;'>
-
-      <div style='display: table-row; width: 100%;'>
-        <div class='table-cell facet_name' style='display: table-cell;'>
-			Author
-		</div>
-        <div class='table-cell facet_num' style='display: table-cell;'>
-			(<%= (authors.size - 1).to_s %>)
-		</div>
-        <div class='table-cell' style='display: table-cell;'>
- 			<%= select_tag 'author_facet', options_for_select(authors), :class => 'facet_items', :onChange=>"javascript: hide_facet_results();" %>
-		</div>
+    <div style='display: table-row; width: 100%;'>
+      <div class='table-cell g_stat_head_cell' style='display: table-cell; min-width: 230px; padding: 20px 5px 15px 0px;'>
+        <nobr>
+          PID:
+          &nbsp;
+          <input type="text" style="width:80px; text-align:center" id="single-pid">
+          &nbsp;
+          <input type="submit" id="pid-statistics-button" value="Get Statistics" onclick="get_single_stats();">
+        </nobr>
       </div>
+      <div class='table-cell' style='display: table-cell;  '>
+        <div style='display: table; width: ;'>
+          <div style='display: table-row;'>
+            <div id='pid-docs-size' class='table-cell g_stat_head_cell' style='display: table-cell;'>
 
-      <div style='display: table-row; width: 100%;'>
-        <div class='table-cell facet_name' style='display: table-cell;'>
-			Date
-		</div>
-        <div class='table-cell facet_num' style='display: table-cell;'>
-			(<%= (dates.size - 1).to_s %>)
-		</div>
-        <div class='table-cell' style='display: table-cell;  '>
- 			<%= select_tag 'pub_date_facet', options_for_select(dates), :class => 'facet_items', :onChange=>"javascript: hide_facet_results();" %>
-		</div>
+            </div>
+            <div id='pid-views-size' class='table-cell g_stat_head_cell' style='display: table-cell;'>
+
+            </div>
+            <div id='pid-downloads-size' class='table-cell g_stat_head_cell' style='display: table-cell;'>
+
+            </div>
+            <div id='pid-streams-size' class='table-cell g_stat_head_cell' style='display: table-cell;'>
+
+            </div>
+
+          </div>
+        </div>
       </div>
-
-      <div style='display: table-row; width: 100%;'>
-        <div class='table-cell facet_name' style='display: table-cell;  '>
-			Content Type
-		</div>
-		 <div class='table-cell facet_num' style='display: table-cell;  '>
-			(<%= (genre.size - 1).to_s %>)
-		</div>
-        <div class='table-cell' style='display: table-cell;  '>
- 			<%= select_tag 'genre_facet', options_for_select(genre), :class => 'facet_items', :onChange=>"javascript: hide_facet_results();" %>
-		</div>
-      </div>
-
-      <div style='display: table-row; width: 100%;'>
-        <div class='table-cell facet_name' style='display: table-cell;  '>
-			Subject
-		</div>
-		<div class='table-cell facet_num' style='display: table-cell;  '>
-			(<%= (subject.size - 1).to_s %>)
-		</div>
-        <div class='table-cell' style='display: table-cell;  '>
- 			<%= select_tag 'subject_facet', options_for_select(subject), :class => 'facet_items', :onChange=>"javascript: hide_facet_results();" %>
-		</div>
-      </div>
-
-      <div style='display: table-row; width: 100%;'>
-        <div class='table-cell facet_name' style='display: table-cell;  '>
-			Resource Type
-		</div>
-		<div class='table-cell facet_num' style='display: table-cell;  '>
-			(<%= (resource_type.size - 1).to_s %>)
-		</div>
-
-        <div class='table-cell' style='display: table-cell;  '>
- 			<%= select_tag 'type_of_resource_facet', options_for_select(resource_type), :class => 'facet_items', :onChange=>"javascript: hide_facet_results();" %>
-		</div>
-      </div>
-
-      <div style='display: table-row; width: 100%;'>
-        <div class='table-cell facet_name' style='display: table-cell;  '>
-			Media Type
-		</div>
-		<div class='table-cell facet_num' style='display: table-cell;  '>
-			(<%= (media_type.size - 1).to_s %>)
-		</div>
-        <div class='table-cell' style='display: table-cell;  '>
- 			<%= select_tag 'media_type_facet', options_for_select(media_type), :class => 'facet_items', :onChange=>"javascript: hide_facet_results();" %>
-		</div>
-      </div>
-
-      <div style='display: table-row; width: 100%;'>
-        <div class='table-cell facet_name' style='display: table-cell;  '>
-			Organization
-		</div>
-		<div class='table-cell facet_num' style='display: table-cell;  '>
-			(<%= (organization.size - 1).to_s %>)
-		</div>
-        <div class='table-cell' style='display: table-cell;  '>
- 			<%= select_tag 'organization_facet', options_for_select(organization), :class => 'facet_items', :onChange=>"javascript: hide_facet_results();" %>
-		</div>
-      </div>
-
-      <div style='display: table-row; width: 100%;'>
-        <div class='table-cell facet_name' style='display: table-cell;  '>
-			Department
-		</div>
-		<div class='table-cell facet_num' style='display: table-cell;  '>
-			(<%= (department.size - 1).to_s %>)
-		</div>
-        <div class='table-cell' style='display: table-cell;  '>
- 			<%= select_tag 'department_facet', options_for_select(department), :class => 'facet_items', :onChange=>"javascript: hide_facet_results();" %>
-		</div>
-      </div>
-
-      <div style='display: table-row; width: 100%;'>
-        <div class='table-cell facet_name' style='display: table-cell;  '>
-			Series
-		</div>
-		<div class='table-cell facet_num' style='display: table-cell;  '>
-			(<%= (series.size - 1).to_s %>)
-		</div>
-        <div class='table-cell' style='display: table-cell;  '>
- 			<%= select_tag 'series_facet', options_for_select(series), :class => 'facet_items', :onChange=>"javascript: hide_facet_results();" %>
-		</div>
-      </div>
-
-      <div style='display: table-row; width: 100%;'>
-        <div class='table-cell facet_name' style='display: table-cell;  '>
-			Non CU Series
-		</div>
-		<div class='table-cell facet_num' style='display: table-cell;'>
-			(<%= (non_cu_series.size - 1).to_s %>)
-		</div>
-        <div class='table-cell' style='display: table-cell; '>
- 			<%= select_tag 'non_cu_series_facet', options_for_select(non_cu_series), :class => 'facet_items', :onChange=>"javascript: hide_facet_results();" %>
-		</div>
-      </div>
-
     </div>
+
+    <div style='display: table-row; width: 100%;'>
+      <div class='table-cell' style='display: table-cell;'>
+        <hr>
+      </div>
+      <div class='table-cell' style='display: table-cell;'>
+        <hr>
+      </div>
+    </div>
+
+    <div style='display: table-row; width: 100%;'>
+      <div class='table-cell' style='display: table-cell; font-weight: bold;'>
+        STATISTICS BY FACET
+      </div>
+      <div id="resut_period" class='table-cell' style='display: table-cell; text-align: center; visibility: hidden; padding: 0 0 20px 0;'>
+        lifetime
+      </div>
+    </div>
+
+  </div>
+
+  <div style=' height: 30px'>
+    <div class='table-cell' style='display: table-cell;  '>
+      <div style='display: table; width: ;'>
+        <div style='display: table-row;'>
+
+          <div class='table-cell facet_res_link' style='display: table-cell;'>
+            <a id="search_link" href="">search-link</a>
+            &nbsp;&nbsp;&nbsp; <a id="statistic_res_list_link" href="">view-list</a>
+            &nbsp;&nbsp;&nbsp; <a id="csv_link" href="">CSV</a>
+            &nbsp;&nbsp;&nbsp;<a id="csv_email_link">email</a>
+          </div>
+
+          <div id='facet-docs-size' class='table-cell facet_res_cell' style='display: table-cell;' title="docs queried">
+
+          </div>
+          <div id='facet-views-size' class='table-cell facet_res_cell' style='display: table-cell;' title="viewed">
+
+          </div>
+          <div id='facet-downloads-size' class='table-cell facet_res_cell' style='display: table-cell;'  title="downloaded">
+
+          </div>
+          <div id='facet-streams-size' class='table-cell facet_res_cell' style='display: table-cell;' title="streamed">
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+</div>
+
+
+<div style='display: table; width: 100%;'>
+
+  <div style='display: table-row; width: 100%;'>
+    <div class='table-cell facet_name' style='display: table-cell;'>
+      Author
+    </div>
+    <div class='table-cell facet_num' style='display: table-cell;'>
+      (<%= (authors.size - 1).to_s %>)
+    </div>
+    <div class='table-cell' style='display: table-cell;'>
+      <%= select_tag 'author_facet', options_for_select(authors), :class => 'facet_items', :onChange=>"javascript: hide_facet_results();" %>
+    </div>
+  </div>
+
+  <div style='display: table-row; width: 100%;'>
+    <div class='table-cell facet_name' style='display: table-cell;'>
+      Date
+    </div>
+    <div class='table-cell facet_num' style='display: table-cell;'>
+      (<%= (dates.size - 1).to_s %>)
+    </div>
+    <div class='table-cell' style='display: table-cell;  '>
+      <%= select_tag 'pub_date_facet', options_for_select(dates), :class => 'facet_items', :onChange=>"javascript: hide_facet_results();" %>
+    </div>
+  </div>
+
+  <div style='display: table-row; width: 100%;'>
+    <div class='table-cell facet_name' style='display: table-cell;  '>
+      Content Type
+    </div>
+    <div class='table-cell facet_num' style='display: table-cell;  '>
+      (<%= (genre.size - 1).to_s %>)
+    </div>
+    <div class='table-cell' style='display: table-cell;  '>
+      <%= select_tag 'genre_facet', options_for_select(genre), :class => 'facet_items', :onChange=>"javascript: hide_facet_results();" %>
+    </div>
+  </div>
+
+  <div style='display: table-row; width: 100%;'>
+    <div class='table-cell facet_name' style='display: table-cell;  '>
+      Subject
+    </div>
+    <div class='table-cell facet_num' style='display: table-cell;  '>
+      (<%= (subject.size - 1).to_s %>)
+    </div>
+    <div class='table-cell' style='display: table-cell;  '>
+      <%= select_tag 'subject_facet', options_for_select(subject), :class => 'facet_items', :onChange=>"javascript: hide_facet_results();" %>
+    </div>
+  </div>
+
+  <div style='display: table-row; width: 100%;'>
+    <div class='table-cell facet_name' style='display: table-cell;  '>
+      Resource Type
+    </div>
+    <div class='table-cell facet_num' style='display: table-cell;  '>
+      (<%= (resource_type.size - 1).to_s %>)
+    </div>
+
+    <div class='table-cell' style='display: table-cell;  '>
+      <%= select_tag 'type_of_resource_facet', options_for_select(resource_type), :class => 'facet_items', :onChange=>"javascript: hide_facet_results();" %>
+    </div>
+  </div>
+
+  <div style='display: table-row; width: 100%;'>
+    <div class='table-cell facet_name' style='display: table-cell;  '>
+      Media Type
+    </div>
+    <div class='table-cell facet_num' style='display: table-cell;  '>
+      (<%= (media_type.size - 1).to_s %>)
+    </div>
+    <div class='table-cell' style='display: table-cell;  '>
+      <%= select_tag 'media_type_facet', options_for_select(media_type), :class => 'facet_items', :onChange=>"javascript: hide_facet_results();" %>
+    </div>
+  </div>
+
+  <div style='display: table-row; width: 100%;'>
+    <div class='table-cell facet_name' style='display: table-cell;  '>
+      Organization
+    </div>
+    <div class='table-cell facet_num' style='display: table-cell;  '>
+      (<%= (organization.size - 1).to_s %>)
+    </div>
+    <div class='table-cell' style='display: table-cell;  '>
+      <%= select_tag 'organization_facet', options_for_select(organization), :class => 'facet_items', :onChange=>"javascript: hide_facet_results();" %>
+    </div>
+  </div>
+
+  <div style='display: table-row; width: 100%;'>
+    <div class='table-cell facet_name' style='display: table-cell;  '>
+      Department
+    </div>
+    <div class='table-cell facet_num' style='display: table-cell;  '>
+      (<%= (department.size - 1).to_s %>)
+    </div>
+    <div class='table-cell' style='display: table-cell;  '>
+      <%= select_tag 'department_facet', options_for_select(department), :class => 'facet_items', :onChange=>"javascript: hide_facet_results();" %>
+    </div>
+  </div>
+
+  <div style='display: table-row; width: 100%;'>
+    <div class='table-cell facet_name' style='display: table-cell;  '>
+      Series
+    </div>
+    <div class='table-cell facet_num' style='display: table-cell;  '>
+      (<%= (series.size - 1).to_s %>)
+    </div>
+    <div class='table-cell' style='display: table-cell;  '>
+      <%= select_tag 'series_facet', options_for_select(series), :class => 'facet_items', :onChange=>"javascript: hide_facet_results();" %>
+    </div>
+  </div>
+
+  <div style='display: table-row; width: 100%;'>
+    <div class='table-cell facet_name' style='display: table-cell;  '>
+      Non CU Series
+    </div>
+    <div class='table-cell facet_num' style='display: table-cell;'>
+      (<%= (non_cu_series.size - 1).to_s %>)
+    </div>
+    <div class='table-cell' style='display: table-cell; '>
+      <%= select_tag 'non_cu_series_facet', options_for_select(non_cu_series), :class => 'facet_items', :onChange=>"javascript: hide_facet_results();" %>
+    </div>
+  </div>
+
+</div>
 
 <br style="clear:both"/>
 
-	<div style='display: table; width: 100%;'>
-      <div style='display: table-row; width: 100%;'>
-        <div class='table-cell' style='display: table-cell;'>
-			<input id="facet-statistics-button" type="submit" value=" get statistics: " onclick="get_facet_stats();">
-		</div>
-		<div class='table-cell' style='display: table-cell;'>
-			lifetime <%= check_box_tag :lifetime, "true", params[:lifetime], :checked => "checked", :onchange => "datepickers();" %>
-		</div>
+<div style='display: table; width: 100%;'>
+  <div style='display: table-row; width: 100%;'>
+    <div class='table-cell' style='display: table-cell;'>
+      <input id="facet-statistics-button" type="submit" value="Get Statistics" onclick="get_facet_stats();">
+    </div>
+    <div class='table-cell' style='display: table-cell;'>
+      lifetime <%= check_box_tag :lifetime, "true", params[:lifetime], :checked => "checked", :onchange => "datepickers();" %>
+    </div>
 
-		<div id="date_from_div" class='table-cell' style='display: table-cell; visibility: hidden;'>
-			From:
-			<%= select_tag 'month_from', options_for_select(months, params[:month_from]) %>
-			<%= select_tag 'year_from', options_for_select((2011..Date.today.year), params[:year_from]) %>
-		</div>
-		<div id="date_to_div" class='table-cell' style='display: table-cell; visibility: hidden;'>
-			To:
-			<%= select_tag 'month_to', options_for_select(months, params[:month_to] || (Date.today - 1.months).strftime("%b")) %>
-			<%= select_tag 'year_to', options_for_select((2011..Date.today.year), params[:year_to] || Date.today.year) %>
-		</div>
-     </div>
-	</div>
+    <div id="date_from_div" class='table-cell' style='display: table-cell; visibility: hidden;'>
+      From:
+      <%= select_tag 'month_from', options_for_select(months, params[:month_from]) %>
+      <%= select_tag 'year_from', options_for_select((2011..Date.today.year), params[:year_from]) %>
+    </div>
+    <div id="date_to_div" class='table-cell' style='display: table-cell; visibility: hidden;'>
+      To:
+      <%= select_tag 'month_to', options_for_select(months, params[:month_to] || (Date.today - 1.months).strftime("%b")) %>
+      <%= select_tag 'year_to', options_for_select((2011..Date.today.year), params[:year_to] || Date.today.year) %>
+    </div>
+  </div>
+</div>
 
 </div>
 

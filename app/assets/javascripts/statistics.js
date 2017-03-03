@@ -125,10 +125,10 @@ function get_facet_stats(){
     url: "/statistics/total_usage_stats/?" + search_params,
     dataType: 'json',
     success: function(data){
-      $("#facet-docs-size").html(data.records)
-      $("#facet-views-size").html(data.view);
-      $("#facet-downloads-size").html(data.download);
-      $("#facet-streams-size").html(data.streaming);
+      $("#facet-docs-size").html("docs: " + data.records)
+      $("#facet-views-size").html("views: " + data.view);
+      $("#facet-downloads-size").html("downloads: " + data.download);
+      $("#facet-streams-size").html("streams: " + data.streaming);
 
       if(data.records != 0){
         document.getElementById( "search_link" ).style.visibility ='visible';
