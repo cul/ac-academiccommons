@@ -40,7 +40,7 @@ module AcademicCommons
     # @option options [Boolean] :per_month flag to organize/calculate statistics by month
     # @option options [Boolean] :recent_first if true, when listing months list most recent month first
     # @option options [String] :order_by most number of downloads or views
-    def initialize(solr_params, start_date = nil, end_date = nil, options = {})
+    def initialize(solr_params, start_date = nil, end_date = nil, **options)
       @start_date = start_date
       @end_date = end_date
       @solr_params = solr_params
@@ -210,6 +210,7 @@ module AcademicCommons
     def get_solr_documents(params)
       params = params.merge(DEFAULT_SOLR_PARAMS)
       params[:sort] = 'title_display asc' if(params[:sort].blank? || options[:order_by] == 'title')
+      # params.fetch(:fq, []) << "has_model_ssim:\"#{ContentAggregator.to_class_uri}\""
       Blacklight.default_index.search(params)['response']['docs']
     end
 

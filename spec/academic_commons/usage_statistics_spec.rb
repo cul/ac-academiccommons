@@ -5,7 +5,7 @@ RSpec.describe AcademicCommons::UsageStatistics, integration: true do
   let(:pid) { 'actest:1' }
   let(:pid2) { 'actest:5' }
   let(:empty_response) { { 'response' => { 'docs' => [] } } }
-  let(:usage_stats) { AcademicCommons::UsageStatistics.new('', '', '') }
+  let(:usage_stats) { AcademicCommons::UsageStatistics.new({}, nil, nil) }
   let(:solr_request) { { q: nil, fq: "author_uni:\"#{uni}\""} }
   let(:solr_params) do
     {
@@ -39,6 +39,32 @@ RSpec.describe AcademicCommons::UsageStatistics, integration: true do
 
         allow(Blacklight.default_index).to receive(:search)
           .with(solr_params).and_return(solr_response)
+      end
+
+      context 'when request lifetime stats' do
+        before :each do
+          FactoryGirl.create(:view_stat, at_time: Date.new(2001, 4, 12))
+        end
+
+        subject do
+          AcademicCommons::UsageStatistics.new(solr_request, include_streaming: true)
+        end
+
+        it 'returns correct results' do
+          expect(subject.map(&:document)).to eq solr_response['response']['docs']
+        end
+
+        it 'returns correct totals for lifetime' do
+          expect(subject.total_for(Statistic::VIEW_EVENT, 'Lifetime')).to eq 3
+          expect(subject.total_for(Statistic::DOWNLOAD_EVENT, 'Lifetime')).to eq 1
+          expect(subject.total_for(Statistic::STREAM_EVENT, 'Lifetime')).to eql 1
+        end
+
+        it 'returns error if period stats are requested' do
+          expect{
+            subject.total_for(Statistic::VIEW_EVENT, 'Period')
+          }.to raise_error 'View Period not part of stats. Check parameters.'
+        end
       end
 
       context 'when requesting stats for current month' do
@@ -283,7 +309,7 @@ RSpec.describe AcademicCommons::UsageStatistics, integration: true do
     end
 
     context 'when start and end date not available' do
-      let(:usage_stats) { AcademicCommons::UsageStatistics.new(solr_params, '', '') }
+      let(:usage_stats) { AcademicCommons::UsageStatistics.new(solr_params) }
       it { is_expected.to eq 'Lifetime' }
     end
 

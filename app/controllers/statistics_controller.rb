@@ -157,49 +157,6 @@ class StatisticsController < ApplicationController
     end
   end
 
-  def school_docs_size
-    schools = params[:school]
-
-    schools_arr = schools.split(',')
-
-    count = 0
-    schools_arr.each do |school|
-      count = count + get_school_docs_size(school)
-    end
-
-    respond_to do |format|
-      format.html { render :text => count.to_s }
-    end
-  end
-
-  def stats_by_event
-    event = params[:event]
-    count = Statistic.where(event: event).count
-
-    respond_to do |format|
-      format.html { render :text => count.to_s }
-    end
-  end
-
-  def docs_size_by_query_facets
-    respond_to do |format|
-      format.html { render :text => get_docs_size_by_query_facets().size.to_s}
-    end
-  end
-
-  def facetStatsByEvent
-    query = params[:f]
-    event = params[:event]
-
-    stuts_result = get_facet_stats_by_event(query, event)
-
-    result = stuts_result['docs_size'].to_s + ' ( ' + stuts_result['statistic'].to_s + ' )'
-
-    respond_to do |format|
-      format.html { render :text => result.to_s }
-    end
-  end
-
   def total_usage_stats
     solr_params = {
       q: params.fetch(:q, nil), # needs to be raw query
@@ -223,41 +180,6 @@ class StatisticsController < ApplicationController
 
     respond_to do |f|
       f.json { render json: json }
-    end
-  end
-
-  def single_pid_count
-    query_params = { qt: "standard", q:"pid:\"" + params[:pid] + "\"" }
-    count = Blacklight.default_index.search(query_params)["response"]["numFound"]
-
-    respond_to do |format|
-      format.html { render :text => count.to_s }
-    end
-  end
-
-  def single_pid_stats
-    event = params[:event]
-    pid = params[:pid]
-
-    pids_array = [ { "id" => pid }.with_indifferent_access ]
-
-    count = count_pids_statistic(pids_array, event)
-
-    respond_to do |format|
-      format.html { render :text => count.to_s }
-    end
-  end
-
-  def school_stats
-    school = params[:school]
-    event = params[:event]
-
-    pids_by_institution = school_pids(school)
-
-    count = count_pids_statistic(pids_by_institution, event)
-
-    respond_to do |format|
-      format.html { render :text => count.to_s }
     end
   end
 

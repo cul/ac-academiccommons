@@ -21,12 +21,6 @@ module AcademicCommons
 
     private
 
-    # Copied from Catalog Helper.
-    # TODO: Needs to be in a more centralized place.
-    def get_count(query_params)
-      Blacklight.default_index.search(query_params)["response"]["numFound"]
-    end
-
     def facet_names
       FACET_NAMES
     end
@@ -59,18 +53,6 @@ module AcademicCommons
       [{ id: author_id, email: email }]
     end
 
-    def school_pids(school)
-      Blacklight.default_index.search(
-        'qt' => "search", 'rows'=> 20000, 'facet.field'=>["pid"],
-        'fq' => ["{!raw f=organization_facet}#{school}"]
-      )["response"]["docs"]
-    end
-
-    def get_school_docs_size(school)
-      query_params = {:qt=>"standard", :q=>'{!raw f=organization_facet}' + school}
-      return get_count(query_params)
-    end
-
     def facet_items(facet)
       query_params = {:q => "", :rows => 0, 'facet.limit' => -1, 'facet.field' => [facet]}
       solr_results = Blacklight.default_index.search(query_params)
@@ -100,60 +82,6 @@ module AcademicCommons
       end.compact
     end
 
-    def get_pids_by_query_facets(query)
-      query_params = {
-        "qt" => "search", "rows" => 20000, "facet.field" => ["pid"],
-        "fq" => query_to_facets(query)
-      }
-      Blacklight.default_index.search(query_params)["response"]["docs"]
-    end
-
-    def count_pids_statistic(pids_collection, event)
-      Statistic.where("identifier in (?) and event = ?", collect_asset_pids(pids_collection, event), event).count
-    end
-
-    def count_pids_statistic_by_dates(pids_collection, event, startdate, enddate)
-      Statistic.where("identifier in (?) and event = ? and at_time BETWEEN ? and ?", collect_asset_pids(pids_collection, event), event, startdate, enddate).count
-    end
-
-    def count_docs_by_event(pids_collection, event)
-      Statistic.group(:identifier).where("identifier in (?) and event = ? ", collect_asset_pids(pids_collection, event), event).count
-    end
-
-    def count_docs_by_event_and_dates(pids_collection, event, startdate, enddate)
-      Statistic.group(:identifier).where("identifier in (?) and event = ? and at_time BETWEEN ? and ? ", collect_asset_pids(pids_collection, event), event, startdate, enddate).count
-    end
-
-    # Maps a collection of Item/Aggregator PIDs to File/Asset PIDs
-    def collect_asset_pids(pids_collection, event)
-      pids_collection.map do |pid|
-        pid[:id] ||= pid[:pid] # facet doc may be submitted with only pid value
-        if(event == Statistic::DOWNLOAD_EVENT)
-          most_downloaded_asset(pid) # Chooses most downloaded over lifetime.
-        else
-          pid[:id]
-        end
-      end.flatten.compact.uniq
-    end
-
-    # Most downloaded asset over entire lifetime.
-    # Eventually may have to reevaluate this for queries that are for a specific
-    # time range. For now, we are okay with this assumption.
-    def most_downloaded_asset(pid)
-      asset_pids = build_resource_list(pid).map { |doc| doc[:pid] }
-      return asset_pids.first if asset_pids.count == 1
-
-      # Get the higest value stored here.
-      counts = Statistic.event_count(asset_pids, Statistic::DOWNLOAD_EVENT)
-
-      # Return first pid, if items have never been downloaded.
-      return asset_pids.first if counts.empty?
-
-      # Get key of most downloaded asset.
-      key, value = counts.max_by{ |_,v| v }
-      key
-    end
-
     def start_date(month, year)
       Date.parse("#{month} #{year}")
     end
@@ -177,40 +105,6 @@ module AcademicCommons
 
       solr_params = { fq: query_to_facets(query) }
       AcademicCommons::UsageStatistics.new(solr_params, startdate, enddate, include_streaming: true, order_by: 'title')
-    end
-
-    def get_docs_size_by_query_facets
-      query = params[:f]
-
-      if query == nil || query.empty?
-        []
-      else
-        get_pids_by_query_facets(query)
-      end
-    end
-
-    def get_facet_stats_by_event(query, event)
-      if( query == nil || query.empty? )
-        downloads = 0
-        docs = Hash.new
-      else
-        pids_collection = get_pids_by_query_facets(query)
-
-        if(params[:month_from] && params[:year_from] && params[:month_to] && params[:year_to] )
-          startdate = Date.parse(params[:month_from] + " " + params[:year_from])
-          enddate = Date.parse(params[:month_to] + " " + params[:year_to])
-          count = count_pids_statistic_by_dates(pids_collection, event, startdate, enddate)
-          docs = count_docs_by_event_and_dates(pids_collection, event, startdate, enddate)
-        else
-          count = count_pids_statistic(pids_collection, event)
-          docs = count_docs_by_event(pids_collection, event)
-        end
-      end
-
-      result = Hash.new
-      result.store('docs_size', docs.size.to_s)
-      result.store('statistic', count.to_s)
-      result
     end
 
     def send_authors_reports(processed_authors, designated_recipient)

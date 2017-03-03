@@ -69,27 +69,6 @@ describe StatisticsController, :type => :controller, integration: true do
     end
   end
 
-  describe 'GET school_docs_size' do
-    include_examples 'authorization required' do
-      let(:http_request) { get :school_docs_size, :school => 'Columbia University' }
-    end
-  end
-
-  describe 'GET single_pid_count' do
-    include_examples 'authorization required' do
-      let(:http_request) { get :single_pid_count, :pid => 'actest:1' }
-    end
-
-    context 'when admin user makes request' do
-      include_context 'mock admin user'
-
-      it 'returns correct number of docs' do
-        get :single_pid_count, :pid => 'actest:1'
-        expect(response.body).to eq '1'
-      end
-    end
-  end
-
   describe 'GET total_usage_stats' do
     include_examples 'authorization required' do
       let(:http_request) { get :total_usage_stats, format: :json }
@@ -109,92 +88,12 @@ describe StatisticsController, :type => :controller, integration: true do
       it 'return correct json response' do
         json = JSON.parse(subject.body)
         expect(json).to include(
-          'View' => 1,
-          'Download' => 1,
-          'Streaming' => 1,
-          'Records' => 1
+          'view' => 1,
+          'download' => 1,
+          'streaming' => 1,
+          'records' => 1
         )
       end
-    end
-  end
-
-  describe 'GET single_pid_stats' do
-    include_examples 'authorization required' do
-      let(:http_request) { get :single_pid_stats }
-    end
-
-    context 'when admin user makes request' do
-      include_context 'mock admin user'
-
-      before :each do
-        FactoryGirl.create(:view_stat)
-        FactoryGirl.create(:download_stat)
-        FactoryGirl.create(:streaming_stat)
-      end
-
-      it 'returns correct number of views' do
-        get :single_pid_stats, :pid => pid, :event => 'View'
-        expect(response.body).to eq '1'
-      end
-
-      it 'returns correct number of downloads' do
-        get :single_pid_stats, :pid => pid, :event => 'Download'
-        expect(response.body).to eq '1'
-      end
-
-      it 'returns correct number of streams' do
-        get :single_pid_stats, :pid => pid, :event => 'Streaming'
-        expect(response.body).to eq '1'
-      end
-
-      it 'numbers of view increment with item viewed' do
-        FactoryGirl.create(:view_stat)
-        get :single_pid_stats, pid: pid, event: 'View'
-        expect(response.body).to eq '2'
-      end
-    end
-  end
-
-  describe 'GET school_stats' do
-    include_examples 'authorization required' do
-      let(:http_request) { get :school_stats, :school => 'Columbia University' }
-    end
-  end
-
-  describe 'GET stats_by_event' do
-    include_examples 'authorization required' do
-      let(:http_request) { get :stats_by_event, :event => 'View' }
-    end
-
-    context 'when admin user makes request' do
-      include_context 'mock admin user'
-
-      before :each do
-        FactoryGirl.create(:view_stat)
-        FactoryGirl.create(:download_stat)
-      end
-
-      it 'returns total number of views' do
-        get :stats_by_event, event: 'View'
-        expect(response.body).to eql '1'
-      end
-
-      it 'returns total number of downloads' do
-        get :stats_by_event, event: 'Download'
-        expect(response.body).to eql '1'
-      end
-    end
-  end
-
-  describe 'GET docs_size_by_query_facets' do
-    include_examples 'authorization required' do
-      let(:http_request) { get :docs_size_by_query_facets }
-    end
-  end
-
-  describe 'GET facetStatsByEvent' do
-    include_examples 'authorization required' do
-      let(:http_request) { get :facetStatsByEvent }
     end
   end
 
