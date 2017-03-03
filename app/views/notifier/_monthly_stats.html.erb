@@ -12,13 +12,13 @@
       <% if @streams %>
         <tr>
           <td></td>
-          <td colspan="3" align="center"><%="#{@start_date} - #{@end_date}"%></td>
+          <td colspan="3" align="center"><%= @usage_stats.time_period %></td>
           <td colspan="3" align="center">Lifetime</td>
         </tr>
       <% else %>
         <tr>
           <td></td>
-          <td colspan="2" align="center"><%="#{@start_date} - #{@end_date}"%></td>
+          <td colspan="2" align="center"><%= @usage_stats.time_period %></td>
           <td colspan="2" align="center">Lifetime</td>
         </tr>
       <% end %>

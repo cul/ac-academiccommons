@@ -15,13 +15,11 @@ class Notifier < ActionMailer::Base
     @request = request
     @author_id = author_id
     @usage_stats = usage_stats
-    @start_date = usage_stats.start_date.strftime("%b %Y")
-    @end_date = usage_stats.end_date.strftime("%b %Y")
     recipients = to_address
     from = Rails.application.config.emails['mail_deliverer']
     full_from = "\"Academic Commons\" <#{from}>"
 
-    subject = "Academic Commons Monthly Download Report for #{@start_date} - #{@end_date}"
+    subject = "Academic Commons Monthly Download Report for #{@usage_stats.time_period}"
     @streams = @usage_stats.options[:include_streaming]
     @optional_note = optional_note
 

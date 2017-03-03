@@ -57,7 +57,7 @@ RSpec.describe AcademicCommons::Statistics do
       end
 
       it 'with expected subject' do
-        expect(email.subject).to eql "Academic Commons Monthly Download Report for #{test_params[:month]} #{test_params[:year]} - #{test_params[:month]} #{test_params[:year]}"
+        expect(email.subject).to eql "Academic Commons Monthly Download Report for #{test_params[:month]} #{test_params[:year]}"
       end
 
       it 'with appropriate title' do
