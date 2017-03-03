@@ -6,11 +6,12 @@ RSpec.describe AcademicCommons::UsageStatistics, integration: true do
   let(:pid2) { 'actest:5' }
   let(:empty_response) { { 'response' => { 'docs' => [] } } }
   let(:usage_stats) { AcademicCommons::UsageStatistics.new({}, nil, nil) }
-  let(:solr_request) { { q: nil, fq: "author_uni:\"#{uni}\""} }
+  let(:solr_request) { { q: nil, fq: ["author_uni:\"#{uni}\""] } }
   let(:solr_params) do
     {
       :rows => 100000, :sort => 'title_display asc', :q => nil, :page => 1,
-      :fq => "author_uni:\"#{uni}\"", :fl => "title_display,id,handle,doi,genre_facet,record_creation_date"
+      :fq => ["author_uni:\"#{uni}\"", "has_model_ssim:\"info:fedora/ldpd:ContentAggregator\""],
+      :fl => "title_display,id,handle,doi,genre_facet,record_creation_date"
     }
   end
   let(:solr_response) do
@@ -154,7 +155,7 @@ RSpec.describe AcademicCommons::UsageStatistics, integration: true do
     let(:uni) { 'abc123' }
     let(:expected_csv) do
       [
-        ["{:q=>nil, :fq=>\"author_uni:\\\"abc123\\\"\"}"],
+        ["{:q=>nil, :fq=>[\"author_uni:\\\"abc123\\\"\"]}"],
         [],
         ["Period Covered by Report", "Jan 2015 - Dec 2016"],
         [],

@@ -210,7 +210,8 @@ module AcademicCommons
     def get_solr_documents(params)
       params = params.merge(DEFAULT_SOLR_PARAMS)
       params[:sort] = 'title_display asc' if(params[:sort].blank? || options[:order_by] == 'title')
-      # params.fetch(:fq, []) << "has_model_ssim:\"#{ContentAggregator.to_class_uri}\""
+      params[:fq] = params.fetch(:fq, []).clone << "has_model_ssim:\"#{ContentAggregator.to_class_uri}\""
+      # Add filter to remove embargoed items, free_to_read date must be equal to or less than Date.today
       Blacklight.default_index.search(params)['response']['docs']
     end
 

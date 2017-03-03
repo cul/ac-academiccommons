@@ -4,11 +4,12 @@ RSpec.describe Notifier, type: :mailer do
 
   describe '.author_monthly' do
     let(:uni) { 'abc123' }
-    let(:solr_request) { { q: nil, fq: "author_uni:\"#{uni}\""} }
+    let(:solr_request) { { q: nil, fq: ["author_uni:\"#{uni}\""] } }
     let(:solr_params) do
       {
         :rows => 100000, :sort => 'title_display asc', :q => nil, :page => 1,
-        :fq => "author_uni:\"#{uni}\"", :fl => "title_display,id,handle,doi,genre_facet,record_creation_date"
+        :fq => ["author_uni:\"#{uni}\"", "has_model_ssim:\"info:fedora/ldpd:ContentAggregator\""],
+        :fl => "title_display,id,handle,doi,genre_facet,record_creation_date"
       }
     end
     let(:solr_response) do

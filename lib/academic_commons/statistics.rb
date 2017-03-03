@@ -126,7 +126,7 @@ module AcademicCommons
           startdate = Date.parse(params[:month] + " " + params[:year])
           enddate = Date.new(startdate.year, startdate.month, -1) # end_date needs to be last day of month
 
-          solr_params = { q: nil, fq: "author_uni:\"#{author_id}\"" }
+          solr_params = { q: nil, fq: ["author_uni:\"#{author_id}\""] }
           usage_stats = AcademicCommons::UsageStatistics.new(
             solr_params, startdate, enddate, order_by: params[:order_by],
             include_zeroes: params[:include_zeroes], include_streaming: false,
@@ -181,11 +181,11 @@ module AcademicCommons
       Rails.logger.debug "In make_solr_request for query: #{query}"
       if facet == "search_query"
         solr_params = parse_search_query(query)
-        facet_query = solr_params["f"]
+        facet_query = solr_params["f"] || []
         q = solr_params["q"]
         sort = solr_params["sort"]
       else
-        facet_query = "#{facet}:\"#{query}\""
+        facet_query = ["#{facet}:\"#{query}\""]
         sort = "title_display asc"
       end
 

@@ -26,7 +26,8 @@ RSpec.describe AcademicCommons::Statistics do
     let(:author_search) do
       {
         rows: 100000, sort: 'title_display asc', q: nil, page: 1,
-        fq: "author_uni:\"abc123\"", fl: "title_display,id,handle,doi,genre_facet,record_creation_date"
+        fq: ["author_uni:\"abc123\"", "has_model_ssim:\"info:fedora/ldpd:ContentAggregator\""],
+        fl: "title_display,id,handle,doi,genre_facet,record_creation_date"
       }
     end
     let(:author_docs) do
@@ -116,20 +117,14 @@ RSpec.describe AcademicCommons::Statistics do
     context 'searching by facet' do
       it 'makes correct solr request' do
         params = statistics.instance_eval { detail_report_solr_params('author_uni', 'xyz123') }
-        expect(params).to match(q: nil, fq: 'author_uni:"xyz123"', sort: "title_display asc")
+        expect(params).to match(q: nil, fq: ['author_uni:"xyz123"'], sort: "title_display asc")
       end
     end
 
     context 'searching by query' do
-      let(:test_params) { { 'f' => 'department_facet:Columbia College', 'q' => '', 'sort' => 'author_sort asc'} }
-
-      before :each do
-        allow(statistics).to receive(:parse_search_query).and_return(test_params)
-      end
-
       it 'makes correct solr request' do
-        params = statistics.instance_eval { detail_report_solr_params('search_query', 'author_uni=xyz123') }
-        expect(params).to match(q: '', fq: 'department_facet:Columbia College', sort: 'author_sort asc')
+        params = statistics.instance_eval { detail_report_solr_params('search_query', 'q=xyz123&sort=author_sort+asc') }
+        expect(params).to match(q: 'xyz123', fq: [], sort: 'author_sort asc')
       end
     end
   end

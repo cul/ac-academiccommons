@@ -70,8 +70,28 @@ describe StatisticsController, :type => :controller, integration: true do
   end
 
   describe 'GET total_usage_stats' do
-    include_examples 'authorization required' do
-      let(:http_request) { get :total_usage_stats, format: :json }
+    context "without being logged in" do
+      before do
+        allow(controller).to receive(:current_user).and_return(nil)
+        get :total_usage_stats, format: :json
+      end
+
+      it "returns 401" do # Can't redirect because its a json request.
+        expect(response.status).to eql(401)
+      end
+    end
+
+    context "logged in as a non-admin user" do
+      include_context 'mock non-admin user'
+
+      before do
+        get :total_usage_stats, format: :json
+      end
+
+      it "fails" do
+        expect(response.status).to eql(302)
+        expect(response.headers['Location']).to eql(access_denied_url)
+      end
     end
 
     context 'when admin user makes a request' do
