@@ -19,7 +19,7 @@ RSpec.describe Statistic, type: :model do
         FactoryGirl.create_list(:view_stat, 3, identifier: 'actest:1')
         FactoryGirl.create(:view_stat, identifier: 'actest:2')
         expect(
-          Statistic.event_count(['actest:1', 'actest:2', 'actest:3'], Statistic::VIEW_EVENT)
+          Statistic.event_count(['actest:1', 'actest:2', 'actest:3'], Statistic::VIEW)
         ).to match('actest:1' => 3, 'actest:2' => 1)
       end
     end
@@ -36,19 +36,19 @@ RSpec.describe Statistic, type: :model do
 
       it 'returns correct counts for Jan 2015' do
         expect(
-          Statistic.event_count('actest:1', Statistic::VIEW_EVENT, start_date: Date.civil(2015, 1), end_date: Date.civil(2015, 1, -1))
+          Statistic.event_count('actest:1', Statistic::VIEW, start_date: Date.civil(2015, 1), end_date: Date.civil(2015, 1, -1))
         ).to match('actest:1' => 3)
       end
 
       it 'returns correct counts for Feb 2015' do
         expect(
-          Statistic.event_count('actest:1', Statistic::VIEW_EVENT, start_date: Date.civil(2015, 2), end_date: Date.civil(2015, 2, -1))
+          Statistic.event_count('actest:1', Statistic::VIEW, start_date: Date.civil(2015, 2), end_date: Date.civil(2015, 2, -1))
         ).to match('actest:1' => 1)
       end
 
       it 'returns correct counts for Dec 2015' do
         expect(
-          Statistic.event_count(['actest:1', 'actest:2'], Statistic::VIEW_EVENT, start_date: Date.civil(2015, 12), end_date: Date.civil(2015, 12, -1))
+          Statistic.event_count(['actest:1', 'actest:2'], Statistic::VIEW, start_date: Date.civil(2015, 12), end_date: Date.civil(2015, 12, -1))
         ).to match('actest:1' => 1, 'actest:2' => 1)
       end
     end

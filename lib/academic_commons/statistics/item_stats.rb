@@ -6,7 +6,7 @@ module AcademicCommons::Statistics
     def initialize(document)
       @id = document[:id] || document['id']
       @document = document
-      @stats = { Statistic::VIEW_EVENT => {}, Statistic::DOWNLOAD_EVENT => {}, Statistic::STREAM_EVENT => {} }
+      @stats = { Statistic::VIEW => {}, Statistic::DOWNLOAD => {}, Statistic::STREAM => {} }
     end
 
     def get_stat(event, time='Period') # time can be Lifetime, Period, month-year

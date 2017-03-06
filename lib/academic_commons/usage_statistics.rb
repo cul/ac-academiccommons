@@ -45,7 +45,7 @@ module AcademicCommons
       @end_date = end_date
       @solr_params = solr_params
       @options = DEFAULT_OPTIONS.merge(options)
-      @totals = { Statistic::VIEW_EVENT => {}, Statistic::DOWNLOAD_EVENT => {}, Statistic::STREAM_EVENT => {} }
+      @totals = { Statistic::VIEW => {}, Statistic::DOWNLOAD => {}, Statistic::STREAM => {} }
       generate_stats
     end
 
@@ -144,26 +144,26 @@ module AcademicCommons
       download_ids_map = ids.map { |id| [id, most_downloaded_asset(id)] }.to_h
 
       # lifetime
-      add_item_stats(Statistic::VIEW_EVENT, LIFETIME, Statistic.event_count(ids, Statistic::VIEW_EVENT))
+      add_item_stats(Statistic::VIEW, LIFETIME, Statistic.event_count(ids, Statistic::VIEW))
 
-      lifetime_downloads = Statistic.event_count(download_ids_map.values, Statistic::DOWNLOAD_EVENT)
+      lifetime_downloads = Statistic.event_count(download_ids_map.values, Statistic::DOWNLOAD)
       lifetime_downloads = map_download_stats_to_aggregator(lifetime_downloads, download_ids_map)
-      add_item_stats(Statistic::DOWNLOAD_EVENT, LIFETIME, lifetime_downloads)
+      add_item_stats(Statistic::DOWNLOAD, LIFETIME, lifetime_downloads)
 
-      add_item_stats(Statistic::STREAM_EVENT, LIFETIME, Statistic.event_count(ids, Statistic::STREAM_EVENT)) if options[:include_streaming]
+      add_item_stats(Statistic::STREAM, LIFETIME, Statistic.event_count(ids, Statistic::STREAM)) if options[:include_streaming]
 
       # Period (if start and end date provided)
       unless lifetime_only?
-        view_period = Statistic.event_count(ids, Statistic::VIEW_EVENT, start_date: start_date, end_date: end_date)
-        add_item_stats(Statistic::VIEW_EVENT, PERIOD, view_period)
+        view_period = Statistic.event_count(ids, Statistic::VIEW, start_date: start_date, end_date: end_date)
+        add_item_stats(Statistic::VIEW, PERIOD, view_period)
 
-        period_downloads = Statistic.event_count(download_ids_map.values, Statistic::DOWNLOAD_EVENT, start_date: start_date, end_date: end_date)
+        period_downloads = Statistic.event_count(download_ids_map.values, Statistic::DOWNLOAD, start_date: start_date, end_date: end_date)
         period_downloads = map_download_stats_to_aggregator(period_downloads, download_ids_map)
-        add_item_stats(Statistic::DOWNLOAD_EVENT, PERIOD, period_downloads)
+        add_item_stats(Statistic::DOWNLOAD, PERIOD, period_downloads)
 
         if options[:include_streaming]
-          period_streams = Statistic.event_count(ids, Statistic::STREAM_EVENT, start_date: start_date, end_date: end_date)
-          add_item_stats(Statistic::STREAM_EVENT, PERIOD, period_streams)
+          period_streams = Statistic.event_count(ids, Statistic::STREAM, start_date: start_date, end_date: end_date)
+          add_item_stats(Statistic::STREAM, PERIOD, period_streams)
         end
       end
 
@@ -182,17 +182,17 @@ module AcademicCommons
         final = Date.new(date.year, date.month, -1)
         month_key = start.strftime(AcademicCommons::Statistics::ItemStats::MONTH_KEY)
 
-        views = Statistic.event_count(ids, Statistic::VIEW_EVENT, start_date: start, end_date: final)
-        add_item_stats(Statistic::VIEW_EVENT, month_key, views)
+        views = Statistic.event_count(ids, Statistic::VIEW, start_date: start, end_date: final)
+        add_item_stats(Statistic::VIEW, month_key, views)
 
         if options[:include_streaming]
-          streams = Statistic.event_count(ids, Statistic::STREAM_EVENT, start_date: start, end_date: final)
-          add_item_stats(Statistic::STREAM_EVENT, month_key, streams)
+          streams = Statistic.event_count(ids, Statistic::STREAM, start_date: start, end_date: final)
+          add_item_stats(Statistic::STREAM, month_key, streams)
         end
 
-        download_stats = Statistic.event_count(download_ids_map.values, Statistic::DOWNLOAD_EVENT, start_date: start, end_date: final)
+        download_stats = Statistic.event_count(download_ids_map.values, Statistic::DOWNLOAD, start_date: start, end_date: final)
         download_stats = map_download_stats_to_aggregator(download_stats, download_ids_map)
-        add_item_stats(Statistic::DOWNLOAD_EVENT, month_key, download_stats)
+        add_item_stats(Statistic::DOWNLOAD, month_key, download_stats)
       end
     end
 
@@ -223,7 +223,7 @@ module AcademicCommons
       return asset_pids.first if asset_pids.count == 1
 
       # Get the higest value stored here.
-      counts = Statistic.event_count(asset_pids, Statistic::DOWNLOAD_EVENT)
+      counts = Statistic.event_count(asset_pids, Statistic::DOWNLOAD)
 
       # Return first pid, if items have never been downloaded.
       return asset_pids.first if counts.empty?

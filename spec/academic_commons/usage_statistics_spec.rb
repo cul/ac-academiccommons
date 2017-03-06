@@ -56,14 +56,14 @@ RSpec.describe AcademicCommons::UsageStatistics, integration: true do
         end
 
         it 'returns correct totals for lifetime' do
-          expect(subject.total_for(Statistic::VIEW_EVENT, 'Lifetime')).to eq 3
-          expect(subject.total_for(Statistic::DOWNLOAD_EVENT, 'Lifetime')).to eq 1
-          expect(subject.total_for(Statistic::STREAM_EVENT, 'Lifetime')).to eql 1
+          expect(subject.total_for(Statistic::VIEW, 'Lifetime')).to eq 3
+          expect(subject.total_for(Statistic::DOWNLOAD, 'Lifetime')).to eq 1
+          expect(subject.total_for(Statistic::STREAM, 'Lifetime')).to eql 1
         end
 
         it 'returns error if period stats are requested' do
           expect{
-            subject.total_for(Statistic::VIEW_EVENT, 'Period')
+            subject.total_for(Statistic::VIEW, 'Period')
           }.to raise_error 'View Period not part of stats. Check parameters.'
         end
       end
@@ -78,12 +78,12 @@ RSpec.describe AcademicCommons::UsageStatistics, integration: true do
           expect(subject.map(&:document)).to eq solr_response['response']['docs']
         end
         it 'returns correct totals' do
-          expect(subject.total_for(Statistic::VIEW_EVENT, 'Period')).to eq 2
-          expect(subject.total_for(Statistic::DOWNLOAD_EVENT, 'Period')).to eq 1
-          expect(subject.total_for(Statistic::STREAM_EVENT, 'Period')).to eql 1
-          expect(subject.total_for(Statistic::VIEW_EVENT, 'Lifetime')).to eq 2
-          expect(subject.total_for(Statistic::DOWNLOAD_EVENT, 'Lifetime')).to eq 1
-          expect(subject.total_for(Statistic::STREAM_EVENT, 'Lifetime')).to eql 1
+          expect(subject.total_for(Statistic::VIEW, 'Period')).to eq 2
+          expect(subject.total_for(Statistic::DOWNLOAD, 'Period')).to eq 1
+          expect(subject.total_for(Statistic::STREAM, 'Period')).to eql 1
+          expect(subject.total_for(Statistic::VIEW, 'Lifetime')).to eq 2
+          expect(subject.total_for(Statistic::DOWNLOAD, 'Lifetime')).to eq 1
+          expect(subject.total_for(Statistic::STREAM, 'Lifetime')).to eql 1
         end
       end
 
@@ -98,12 +98,12 @@ RSpec.describe AcademicCommons::UsageStatistics, integration: true do
         end
 
         it 'returns correct totals' do
-          expect(subject.total_for(Statistic::VIEW_EVENT, 'Period')).to eq 0
-          expect(subject.total_for(Statistic::DOWNLOAD_EVENT, 'Period')).to eq 0
-          expect(subject.total_for(Statistic::STREAM_EVENT, 'Period')).to eql 0
-          expect(subject.total_for(Statistic::VIEW_EVENT, 'Lifetime')).to eq 2
-          expect(subject.total_for(Statistic::DOWNLOAD_EVENT, 'Lifetime')).to eq 1
-          expect(subject.total_for(Statistic::STREAM_EVENT, 'Lifetime')).to eql 1
+          expect(subject.total_for(Statistic::VIEW, 'Period')).to eq 0
+          expect(subject.total_for(Statistic::DOWNLOAD, 'Period')).to eq 0
+          expect(subject.total_for(Statistic::STREAM, 'Period')).to eql 0
+          expect(subject.total_for(Statistic::VIEW, 'Lifetime')).to eq 2
+          expect(subject.total_for(Statistic::DOWNLOAD, 'Lifetime')).to eq 1
+          expect(subject.total_for(Statistic::STREAM, 'Lifetime')).to eql 1
         end
       end
 

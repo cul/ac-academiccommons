@@ -1,9 +1,9 @@
 class Statistic < ActiveRecord::Base
-  VIEW_EVENT = 'View'
-  DOWNLOAD_EVENT = 'Download'
-  STREAM_EVENT = 'Streaming'
+  VIEW = 'View'
+  DOWNLOAD = 'Download'
+  STREAM = 'Streaming'
 
-  EVENTS = [VIEW_EVENT, DOWNLOAD_EVENT, STREAM_EVENT]
+  EVENTS = [VIEW, DOWNLOAD, STREAM]
 
   # Calculate the number of times the event given has occured for all the given
   # pids. If start and end date are given, the query is limited to that time period.

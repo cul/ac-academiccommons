@@ -174,7 +174,7 @@ class StatisticsController < ApplicationController
     time = (usage_stats.lifetime_only?) ? 'Lifetime' : 'Period'
 
     json = { "records" => usage_stats.count } # Number of records.
-    [Statistic::VIEW_EVENT, Statistic::DOWNLOAD_EVENT, Statistic::STREAM_EVENT].each do |event|
+    [Statistic::VIEW, Statistic::DOWNLOAD, Statistic::STREAM].each do |event|
       json[event.downcase] = usage_stats.total_for(event, time)
     end
 
