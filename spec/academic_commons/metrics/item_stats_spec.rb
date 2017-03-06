@@ -1,10 +1,10 @@
 require 'rails_helper'
 
-RSpec.describe AcademicCommons::Statistics::ItemStats do
+RSpec.describe AcademicCommons::Metrics::ItemStats do
   let(:pid) { 'actest:1' }
   let(:doc) { SolrDocument.new(id: pid) }
 
-  subject { AcademicCommons::Statistics::ItemStats.new(doc) }
+  subject { AcademicCommons::Metrics::ItemStats.new(doc) }
 
   describe '.new' do
     its(:document) { is_expected.to eq doc }

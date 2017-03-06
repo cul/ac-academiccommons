@@ -1,6 +1,6 @@
 require 'csv'
 
-module AcademicCommons::Statistics
+module AcademicCommons::Metrics
   module OutputCSV
     MONTH_KEY = '%b %Y'
 

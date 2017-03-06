@@ -24,7 +24,7 @@ RSpec.describe Notifier, type: :mailer do
           }, {}
       )
     end
-    let(:usage_stats) { AcademicCommons::UsageStatistics.new(solr_request, Date.new(2017, 1, 1), Date.new(2017, 1, 31)) }
+    let(:usage_stats) { AcademicCommons::Metrics::UsageStatistics.new(solr_request, Date.new(2017, 1, 1), Date.new(2017, 1, 31)) }
     let(:mail) {
       Notifier.author_monthly('abc123@columbia.edu', 'abc123', usage_stats, '')
     }

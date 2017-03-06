@@ -118,7 +118,7 @@ class StatisticsController < ApplicationController
 
     if params[:commit].in?('View', "Email", "Get Usage Stats", "keyword search")
       log_statistics_usage(startdate, enddate, params)
-      @usage_stats = AcademicCommons::UsageStatistics.new(
+      @usage_stats = AcademicCommons::Metrics::UsageStatistics.new(
         solr_params, startdate, enddate,
         order_by: params[:order_by], include_zeroes: params[:include_zeroes],
         include_streaming: params[:include_streaming_views]
@@ -142,7 +142,7 @@ class StatisticsController < ApplicationController
     end
 
     if params[:commit] == "Download CSV report"
-       usage_stats = AcademicCommons::UsageStatistics.new(
+       usage_stats = AcademicCommons::Metrics::UsageStatistics.new(
          solr_params, startdate, enddate,
          order_by: params[:order_by], include_zeroes: params[:include_zeroes],
          include_streaming: params[:include_streaming_views],
@@ -169,7 +169,7 @@ class StatisticsController < ApplicationController
       e = end_date(params[:month_to], params[:year_to])
     end
 
-    usage_stats = AcademicCommons::UsageStatistics.new(solr_params, s, e, include_streaming: true)
+    usage_stats = AcademicCommons::Metrics::UsageStatistics.new(solr_params, s, e, include_streaming: true)
 
     time = (usage_stats.lifetime_only?) ? 'Lifetime' : 'Period'
 

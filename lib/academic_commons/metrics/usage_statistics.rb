@@ -1,8 +1,8 @@
-module AcademicCommons
+module AcademicCommons::Metrics
   class UsageStatistics
     include Enumerable
     include AcademicCommons::Listable
-    include AcademicCommons::Statistics::OutputCSV
+    include AcademicCommons::Metrics::OutputCSV
 
     attr_reader :start_date, :end_date, :months_list, :solr_params,
                 :options, :item_stats
@@ -87,7 +87,7 @@ module AcademicCommons
 
       results = get_solr_documents(solr_params)
       Rails.logger.debug "Solr request returned #{results.count} results."
-      @item_stats = results.map{ |doc| AcademicCommons::Statistics::ItemStats.new(doc) }
+      @item_stats = results.map{ |doc| AcademicCommons::Metrics::ItemStats.new(doc) }
 
       return if @item_stats.empty?
 
@@ -176,7 +176,7 @@ module AcademicCommons
       self.months_list.each do |date|
         start = Date.new(date.year, date.month, 1)
         final = Date.new(date.year, date.month, -1)
-        month_key = start.strftime(AcademicCommons::Statistics::ItemStats::MONTH_KEY)
+        month_key = start.strftime(AcademicCommons::Metrics::ItemStats::MONTH_KEY)
 
         views = Statistic.event_count(ids, Statistic::VIEW, start_date: start, end_date: final)
         add_item_stats(Statistic::VIEW, month_key, views)

@@ -1,4 +1,4 @@
-module AcademicCommons::Statistics
+module AcademicCommons::Metrics
   class ItemStats
     MONTH_KEY = '%b %Y'
     attr_reader :id, :document, :stats

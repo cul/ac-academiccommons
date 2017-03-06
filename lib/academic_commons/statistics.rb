@@ -1,5 +1,3 @@
-require 'csv'
-require 'uri'
 module AcademicCommons
   module Statistics
     include AcademicCommons::Listable
@@ -101,7 +99,7 @@ module AcademicCommons
       end
 
       solr_params = { fq: query_to_facets(query) }
-      AcademicCommons::UsageStatistics.new(solr_params, startdate, enddate, include_streaming: true, order_by: 'title')
+      AcademicCommons::Metrics::UsageStatistics.new(solr_params, startdate, enddate, include_streaming: true, order_by: 'title')
     end
 
     def send_authors_reports(processed_authors, designated_recipient)
@@ -124,7 +122,7 @@ module AcademicCommons
           enddate = Date.new(startdate.year, startdate.month, -1) # end_date needs to be last day of month
 
           solr_params = { q: nil, fq: ["author_uni:\"#{author_id}\""] }
-          usage_stats = AcademicCommons::UsageStatistics.new(
+          usage_stats = AcademicCommons::Metrics::UsageStatistics.new(
             solr_params, startdate, enddate, order_by: params[:order_by],
             include_zeroes: params[:include_zeroes], include_streaming: false,
           )
