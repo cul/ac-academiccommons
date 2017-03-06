@@ -4,16 +4,16 @@ FactoryGirl.define do
     at_time    Time.now
 
     factory :view_stat do
-      event      'View'
+      event  Statistic::VIEW
     end
 
      factory :streaming_stat do
-       event 'Streaming'
+       event Statistic::STREAM
      end
 
     factory :download_stat do
       identifier 'actest:2'
-      event 'Download'
+      event Statistic::DOWNLOAD
     end
   end
 end

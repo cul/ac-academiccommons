@@ -135,15 +135,15 @@
       <div class="result-cell-head" style="display: table-cell;"></div>
       <div class="result-cell center">Totals for <%= "#{params[:month_from]} #{params[:year_from]} - #{params[:month_to]} #{params[:year_to]}" %> period:</div>
       <div class="result-cell center">
-        <%= @usage_stats.total_for('View', 'Period') %>
+        <%= @usage_stats.total_for(Statistic::VIEW, 'Period') %>
       </div>
       <% if params[:include_streaming_views] %>
         <div class="result-cell center">
-          <%= @usage_stats.total_for('Streaming', 'Period') %>
+          <%= @usage_stats.total_for(Statistic::STREAM, 'Period') %>
         </div>
       <% end %>
       <div class="result-cell center">
-        <%= @usage_stats.total_for("Download", "Period") %>
+        <%= @usage_stats.total_for(Statistic::DOWNLOAD, "Period") %>
       </div>
       <div style="display: table-row;"></div>
       <div class="result-cell-bold">#</div>
@@ -162,15 +162,15 @@
           <%= link_to item.document["title_display"], catalog_path(item.id) %>
         </div>
         <div class="result-cell center">
-          <%= item.get_stat('View', 'Period') %>
+          <%= item.get_stat(Statistic::VIEW, 'Period') %>
         </div>
         <% if params[:include_streaming_views] %>
           <div class="result-cell center">
-            <%= item.get_stat('Streaming', 'Period') %>
+            <%= item.get_stat(Statistic::STREAM, 'Period') %>
           </div>
         <% end %>
         <div class="result-cell center">
-          <%= item.get_stat('Download', 'Period') %>
+          <%= item.get_stat(Statistic::DOWNLOAD, 'Period') %>
         </div>
       <% end %>
     </div>

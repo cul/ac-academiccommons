@@ -19,9 +19,9 @@ module AcademicCommons::Statistics
         csv.add_row ['Report created by:', requested_by.nil? ? "N/A" : "#{requested_by} (#{requested_by.uid})"]
         csv.add_row ['Report created on:', Time.new.strftime("%Y-%m-%d") ]
 
-        add_usage_category(csv, "Views", "View")
-        add_usage_category(csv, "Streams", "Streaming") if (options[:include_streaming])
-        add_usage_category(csv, "Downloads", "Download")
+        add_usage_category(csv, "Views", Statistic::VIEW)
+        add_usage_category(csv, "Streams", Statistic::STREAM) if (options[:include_streaming])
+        add_usage_category(csv, "Downloads", Statistic::DOWNLOAD)
       end
     end
 
@@ -41,14 +41,12 @@ module AcademicCommons::Statistics
         csv.add_row ['Query:', solr_params.inspect] # TODO: Pretty print for solr params.
         time = lifetime_only? ? 'Lifetime' : 'Period'
 
-        totals_row = [self.count, '', '', total_for('View', time), total_for('Download', time)]
-        totals_row << total_for('Streaming', time) if options[:include_streaming]
-        # csv.add_row [self.count, '', '', total_for('View', time), total_for('Download', time), total_for('Streaming', time)]
+        totals_row = [self.count, '', '', total_for(Statistic::VIEW, time), total_for(Statistic::DOWNLOAD, time)]
+        totals_row << total_for(Statistic::STREAM, time) if options[:include_streaming]
         csv.add_row totals_row
 
         heading = ['#', 'TITLE', 'GENRE', 'VIEWS', 'DOWNLOADS', 'DEPOSIT DATE', 'HANDLE / DOI']
         heading.insert(5, 'STREAMS') if options[:include_streaming]
-        # csv.add_row ['#', 'TITLE', 'GENRE', 'VIEWS', 'DOWNLOADS', 'STREAMS', 'DEPOSIT DATE', 'HANDLE / DOI']
         csv.add_row heading
 
         self.each_with_index do |item, idx|
@@ -56,12 +54,12 @@ module AcademicCommons::Statistics
           item_row = [
             idx + 1, document['title_display'],
             document.fetch('genre_facet', []).first,
-            item.get_stat('View', time),
-            item.get_stat('Download', time),
+            item.get_stat(Statistic::VIEW, time),
+            item.get_stat(Statistic::DOWNLOAD, time),
             Date.strptime(document['record_creation_date']).strftime('%m/%d/%Y'),
             document['handle']
           ]
-          item_row.insert(5, item.get_stat('Streaming', time)) if options[:include_streaming]
+          item_row.insert(5, item.get_stat(Statistic::STREAM, time)) if options[:include_streaming]
           csv.add_row item_row
         end
       end

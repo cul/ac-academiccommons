@@ -114,10 +114,10 @@ RSpec.describe AcademicCommons::UsageStatistics, integration: true do
         end
 
         it 'returns correct totals' do
-          expect(subject.total_for('View', 'Period')).to eq 2
-          expect(subject.total_for('Download', 'Period')).to eq 1
-          expect(subject.total_for('View', 'Lifetime')).to eq 2
-          expect(subject.total_for('Download', 'Lifetime')).to eq 1
+          expect(subject.total_for(Statistic::VIEW, 'Period')).to eq 2
+          expect(subject.total_for(Statistic::DOWNLOAD, 'Period')).to eq 1
+          expect(subject.total_for(Statistic::VIEW, 'Lifetime')).to eq 2
+          expect(subject.total_for(Statistic::DOWNLOAD, 'Lifetime')).to eq 1
         end
       end
 
@@ -223,35 +223,35 @@ RSpec.describe AcademicCommons::UsageStatistics, integration: true do
     end
 
     it 'return correct value for view period stats' do
-      expect(subject.get_stat_for(pid, 'View')).to eql 2
+      expect(subject.get_stat_for(pid, Statistic::VIEW)).to eql 2
     end
 
     it 'returns correct value for view month stats' do
-      expect(subject.get_stat_for(pid, 'View', 'Jan 2016')).to eql 1
+      expect(subject.get_stat_for(pid, Statistic::VIEW, 'Jan 2016')).to eql 1
     end
 
     it 'returns correct value of Lifetime download stats' do
-      expect(subject.get_stat_for(pid, 'Download', 'Lifetime')).to eql 2
+      expect(subject.get_stat_for(pid, Statistic::DOWNLOAD, 'Lifetime')).to eql 2
     end
 
     it 'returns correct value of download April 2016 stats' do
-      expect(subject.get_stat_for(pid, 'Download', 'Apr 2016')).to eql 2
+      expect(subject.get_stat_for(pid, Statistic::DOWNLOAD, 'Apr 2016')).to eql 2
     end
 
     it 'returns error if month and year are not part of the period' do
       expect {
-        subject.get_stat_for(pid, 'View', 'May 2017')
+        subject.get_stat_for(pid, Statistic::VIEW, 'May 2017')
       }.to raise_error 'View May 2017 not part of stats. Check parameters.'
     end
 
     it 'returns error if id not part of results' do
       expect {
-        subject.get_stat_for('actest:134', 'View', 'Jan 2016')
+        subject.get_stat_for('actest:134', Statistic::VIEW, 'Jan 2016')
       }.to raise_error 'Could not find actest:134'
     end
 
     it 'returns 0 if id not present, but id part of results' do
-      expect(subject.get_stat_for('actest:5', 'View', "Jan 2016")).to eql 0
+      expect(subject.get_stat_for('actest:5', Statistic::VIEW, "Jan 2016")).to eql 0
     end
   end
 

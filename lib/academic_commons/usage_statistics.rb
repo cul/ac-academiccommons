@@ -16,10 +16,6 @@ module AcademicCommons
       rows: 100000, page: 1, fl: 'title_display,id,handle,doi,genre_facet,record_creation_date'
     }
 
-    VIEW = 'View'
-    DOWNLOAD = 'Download'
-    STREAMING = 'Streaming'
-
     PERIOD = 'Period'
     LIFETIME = 'Lifetime'
     MONTH_KEY = '%b %Y'
@@ -98,15 +94,15 @@ module AcademicCommons
       process_stats
 
       unless options[:include_zeroes]
-        @item_stats.reject! { |i| i.get_stat(VIEW, PERIOD).zero? && i.get_stat(DOWNLOAD, PERIOD).zero? }
+        @item_stats.reject! { |i| i.get_stat(Statistic::VIEW, PERIOD).zero? && i.get_stat(Statistic::DOWNLOAD, PERIOD).zero? }
       end
 
       if options[:order_by] == 'views' || options[:order_by] == 'downloads'
         @item_stats.sort! do |x,y|
           event = if options[:order_by] == 'downloads'
-                    DOWNLOAD
+                    Statistic::DOWNLOAD
                   elsif options[:order_by] == 'views'
-                    VIEW
+                    Statistic::VIEW
                   end
           y.get_stat(event, PERIOD) <=> x.get_stat(event, PERIOD)
           # sort_by title

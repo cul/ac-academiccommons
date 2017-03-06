@@ -69,9 +69,9 @@
               Statistics:
             </div>
             <div id='facet-docs-size' class='table-cell' style='display: table-cell;' title="">
-              views (<%= item.get_stat('View', time) %>),
-              downloads (<%= item.get_stat('Download', time) %>),
-              streams (<%= item.get_stat('Streaming', time) %>)
+              views (<%= item.get_stat(Statistic::VIEW, time) %>),
+              downloads (<%= item.get_stat(Statistic::DOWNLOAD, time) %>),
+              streams (<%= item.get_stat(Statistic::STREAM, time) %>)
             </div>
           </div>
         </div>

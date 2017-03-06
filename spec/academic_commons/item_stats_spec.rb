@@ -13,27 +13,27 @@ RSpec.describe AcademicCommons::Statistics::ItemStats do
 
   describe '#get_stat' do
     before :each do
-      subject.add_stat('View', 'Jan 2001', 178)
+      subject.add_stat(Statistic::VIEW, 'Jan 2001', 178)
     end
 
     it 'returns correct value' do
-      expect(subject.get_stat('View', 'Jan 2001')).to eq 178
+      expect(subject.get_stat(Statistic::VIEW, 'Jan 2001')).to eq 178
     end
 
     it 'returns error if parameters not valid' do
       expect{
-        subject.get_stat('View', 'Feb 2001')
+        subject.get_stat(Statistic::VIEW, 'Feb 2001')
       }.to raise_error 'View Feb 2001 not part of stats. Check parameters.'
     end
   end
 
   describe '#add_stat' do
     it 'updates stats hash' do
-      subject.add_stat('Download', 'June 2003', 14)
+      subject.add_stat(Statistic::DOWNLOAD, 'June 2003', 14)
       expect(subject.stats).to match(
-        'View' => {},
-        'Download' => { 'June 2003' => 14 },
-        'Streaming' => {}
+        Statistic::VIEW => {},
+        Statistic::DOWNLOAD => { 'June 2003' => 14 },
+        Statistic::STREAM => {}
       )
     end
   end
@@ -41,7 +41,7 @@ RSpec.describe AcademicCommons::Statistics::ItemStats do
   describe '#zero?' do
     context 'when there are stats present when all stats are 0' do
       before :each do
-        subject.add_stat('View', 'Lifetime', 14)
+        subject.add_stat(Statistic::VIEW, 'Lifetime', 14)
       end
 
       it 'returns false' do
