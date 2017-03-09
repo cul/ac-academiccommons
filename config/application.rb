@@ -53,12 +53,6 @@ module AcademicCommons
     # Use default logging formatter so that PID and timestamp are not suppressed.
     config.log_formatter = ::Logger::Formatter.new
 
-    # Customize log rotation.
-    # With this configuration we cannot leverage tagged logging.
-    custom_logger = ActiveSupport::Logger.new(config.paths['log'].first, 50, 2.megabytes)
-    custom_logger.formatter = config.log_formatter
-    config.logger = custom_logger
-
     # Always throw errors if there is a problem sending an email.
     config.action_mailer.raise_delivery_errors = true
 

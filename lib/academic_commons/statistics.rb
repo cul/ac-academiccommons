@@ -105,11 +105,13 @@ module AcademicCommons
     def send_authors_reports(processed_authors, designated_recipient)
       start_time = Time.new
       time_id = start_time.strftime("%Y%m%d-%H%M%S")
-      log_path = File.join(Rails.root, 'log', 'monthly_reports')
-      logger = Logger.new(File.join(log_path, "#{time_id}.tmp"))
 
-      logger.info "=== All Authors Monthly Reports ==="
-      logger.info "Started at: " + start_time.strftime("%Y-%m-%d %H:%M")
+      log_path = File.join(Rails.root, 'log', 'monthly_reports')
+      reports_logger = ActiveSupport::Logger.new(File.join(log_path, "#{time_id}.tmp"))
+      reports_logger.formatter = Rails.application.config.log_formatter
+
+      reports_logger.info "\n=== All Authors Monthly Reports ==="
+      reports_logger.info "\nStarted at: " + start_time.strftime("%Y-%m-%d %H:%M") + "\n"
 
       sent_counter = 0
       skipped_counter = 0
@@ -139,30 +141,30 @@ module AcademicCommons
               test_msg = ''
             end
 
-            logger.info "Report for '#{author_id}' was sent to #{email} at " + Time.new.strftime("%Y-%m-%d %H:%M") + test_msg
+            reports_logger.info "Report for '#{author_id}' was sent to #{email} at " + Time.new.strftime("%Y-%m-%d %H:%M") + test_msg
           else
-            skipped_counter += 1
-            logger.info "Report for '#{author_id}' was skipped"
+            skipped_counter = skipped_counter + 1
+            reports_logger.info "Report for '#{author_id}' was skipped"
           end
-
         rescue Exception => e
-          logger.error "For #{author_id}, email: #{author[:email]}"
-          logger.error "#{e}\n\t#{e.backtrace.join("\n\t")}"
+          reports_logger.error "For #{author_id}, email: #{author[:email]}"
+          reports_logger.error "#{e}\n\t#{e.backtrace.join("\n\t")}"
           sent_exceptions += 1
         end
       end
 
       finish_time = Time.new
-      logger.info "Number of emails"
-      logger.info "\tsent: #{sent_counter}, skipped: #{skipped_counter}, errors: #{sent_exceptions}"
-      logger.info "Finished at: " + finish_time.strftime("%Y-%m-%d %H:%M")
+      reports_logger.info "Number of emails"
+      reports_logger.info "\tsent: #{sent_counter}, skipped: #{skipped_counter}, errors: #{sent_exceptions}"
+      reports_logger.info "Finished at: " + finish_time.strftime("%Y-%m-%d %H:%M")
 
       seconds_spent = finish_time - start_time
       readble_time_spent = Time.at(seconds_spent).utc.strftime("%H hours, %M minutes, %S seconds")
 
-      logger.info "Time spent: #{readble_time_spent}"
+      reports_logger.info "Time spent: #{readble_time_spent}"
 
       File.rename(File.join(log_path, "#{time_id}.tmp"), File.join(log_path, "#{time_id}.log"))
+      reports_logger.close
     end
 
     def clean_params(params)

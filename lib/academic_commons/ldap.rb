@@ -4,7 +4,7 @@ module AcademicCommons
     # uni and leaves the rest of fields blank.
     #
     # @param [String] uni
-    # @return [OpenStruc] containing person's uni, email, last name, first name, and full name
+    # @return [OpenStruct] containing person's uni, email, last name, first name, and full name
     def self.find_by_uni(uni)
       # Returns [] if there are no valid entries.
       entries = Net::LDAP.new({:host => "ldap.columbia.edu", :port => 389})

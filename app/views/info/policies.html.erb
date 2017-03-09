@@ -2,7 +2,15 @@
 <%= render partial: 'sidebar_all' %>
 
 <div id="static-text">
-  <h1>Terms of Use</h1>
+  <h1>Policies</h1>
+  <p class="anchor-links">
+  <%= link_to 'Terms of Use', '#terms-of-use' %>
+    | <%= link_to 'Copyright', '#copyright' %>
+    | <%= link_to 'Private Policy', '#private-policy' %>
+  </p>
+
+  <a id="terms-of-use" class="anchor"></a>
+  <h2>Terms of Use</h2>
   <p>
     By using <%= link_to 'Academic Commons', root_path %> or any of its
     content, you agree to accept and be bound by the following Terms of Use.
@@ -15,7 +23,8 @@
 
   <br/>
 
-  <h1>Copyright</h1>
+  <a id="copyright" class="anchor"></a>
+  <h2>Copyright</h2>
   <p>Works in Academic Commons are protected by copyright, with all rights reserved, unless otherwise indicated. The copyright for any work included in Academic Commons is retained by the copyright owner. Academic Commons does not own copyrights.</p>
   <p>Works are made available in Academic Commons at the direction of contributors (an author/creator or originating department, center, program, or school at Columbia or its affiliates) according to their understanding of their rights in that material. Works are added to Academic Commons when contributors affirm that they own the rights or have authority to contribute the works. Columbia University makes no representation or warranty about the appropriateness of the contribution or whether the contributor continues to own rights in the works.</p>
   <p>Users of Academic Commons are responsible for determining whether a work is protected by copyright, the identity of the copyright owner, and the means for appropriately using the work.</p>
@@ -42,26 +51,28 @@
 
   <br/>
 
-  <h2>Special Cases</h2>
+  <h3>Special Cases</h3>
 
   <br/>
 
-  <h3>Data and Datasets</h3>
+  <h4>Data and Datasets</h4>
   <p>In general, facts and collections of facts do not have copyright protection under U.S. copyright law. However, some data and data collections may have sufficient originality to be copyrightable. Users of data found in Academic Commons are responsible for determining any legal protection associated with the materials and reviewing any statements from the contributor about appropriate uses.</p>
 
-  <h3>Videos of Speakers</h3>
+  <h4>Videos of Speakers</h4>
   <p>Academic Commons includes videos, many of guest speakers at Columbia University events. For many such videos, rights in the visual images are owned by Columbia University, while the words and other content are the work of the speaker and rights may be retained by the speaker. Users may need to contact the speaker, and the office at Columbia that created the video, for further information.</p>
 
-  <h3>Submitting a Copyright Infringement Notice</h3>
+  <h4>Submitting a Copyright Infringement Notice</h4>
   <p>If you believe that you are the copyright owner of a work that is improperly included in Academic Commons, you may submit a notice of copyright infringement using the form here: <a href="http://academiccommons.columbia.edu/copyright_infringement_notice">http://academiccommons.columbia.edu/copyright_infringement_notice</a>.</p>
 
-  <h3>More Information</h3>
+  <h4>More Information</h4>
   <p>For general information about copyright, fair use, and permissions, please visit the <a href="https://copyright.columbia.edu/">Columbia University Copyright Advisory Office website</a>.</p>
   <p>If you have comments or questions about Academic Commons, please contact the Academic Commons staff at <%= mail_to "ac@columbia.edu" %>.</p>
 
   <br/>
 
-  <h1>Privacy Policy</h1>
+  <a id="private-policy" class="anchor"></a>
+
+  <h2>Privacy Policy</h2>
   <p>Academic Commons complies with the Columbia University Libraries <a href="http://library.columbia.edu/about/policies/confidentiality.html" target="_blank">Confidentiality of Library Records Policy</a>. We will not share any information about your use of Academic Commons except as required by the Confidentiality policy, though we may save the information described below for an indefinite period.</p>
 
   <h3>Users</h3>

@@ -191,7 +191,6 @@ class ACIndexing
     readable_time_spent = Time.at(seconds_spent).utc.strftime("%H hours, %M minutes, %S seconds")
 
     reindex_logger.info "Time spent: " + readable_time_spent
-    Rails.cache.delete('repository_statistics')
     reindex_logger.close
 
     return results

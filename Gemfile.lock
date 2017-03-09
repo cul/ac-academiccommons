@@ -160,8 +160,6 @@ GEM
     faraday_middleware (0.10.1)
       faraday (>= 0.7.4, < 1.0)
     ffi (1.9.14)
-    font-awesome-rails (4.7.0.1)
-      railties (>= 3.2, < 5.1)
     globalid (0.3.7)
       activesupport (>= 4.1.0)
     haml (4.0.7)
@@ -378,7 +376,7 @@ GEM
       mime-types
       nokogiri
       rest-client
-    rubyzip (1.2.0)
+    rubyzip (1.2.1)
     sass (3.4.22)
     sass-rails (5.0.6)
       railties (>= 4.0.0, < 6)
@@ -469,7 +467,6 @@ DEPENDENCIES
   dotenv-rails
   factory_girl_rails
   fancybox2-rails
-  font-awesome-rails
   haml (>= 4.0.7)
   httpclient (~> 2.6)
   jettywrapper (>= 1.4.0)!
@@ -497,4 +494,4 @@ DEPENDENCIES
   unicode
 
 BUNDLED WITH
-   1.13.6
+   1.13.7

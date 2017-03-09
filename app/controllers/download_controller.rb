@@ -1,8 +1,6 @@
 class DownloadController < ApplicationController
-
-#  after_filter :record_stats
-
   include LogsHelper
+  include AcademicCommons::Embargoes
 
   before_filter :require_admin!, only: :download_log
 
@@ -105,17 +103,6 @@ class DownloadController < ApplicationController
     return uri
   end
 
-  # copied from AcademicCommons::Indexable
-  # TODO: DRY this logic
-  def free_to_read?(document)
-    return false unless document['object_state_ssi'] == 'A'
-    free_to_read_start_date = document[:free_to_read_start_date]
-    return true unless free_to_read_start_date
-    embargo_release_date = Date.strptime(free_to_read_start_date, '%Y-%m-%d')
-    current_date = Date.strptime(Time.now.strftime('%Y-%m-%d'), '%Y-%m-%d')
-    current_date > embargo_release_date
-  end
-
   def any_free_to_read?(ids)
     return false if ids.blank?
     repository = Blacklight.default_index.connection
@@ -131,7 +118,8 @@ class DownloadController < ApplicationController
 
   # TODO: Remove after Hyacinth migration.
   def is_metadata?(doc)
-    doc['has_model_ssim'] && doc['has_model_ssim'].include?('info:fedora/ldpd:MODSMetadata')
+    doc = ActiveFedora::Base.find(params['uri']).to_solr if doc.nil?
+    (doc['has_model_ssim'] && doc['has_model_ssim'].include?('info:fedora/ldpd:MODSMetadata'))
   end
 
   def record_stats

@@ -102,18 +102,11 @@ end
 <div class="container clearfix" id="main" >
   <div class="header-utils">
 
-
+    <%= link_to(image_tag("icon-home.png", :style => "float:left;", :alt => "Home") + "Home", root_path, :class => 'icon-home')  %>
 
     <div style="float:right;" class="float-right">
-
       <%= render :partial=>'/catalog/search_box' %>
-
     </div>
-
-
-    <%=  link_to(raw("<i class='fa fa-home'></i>&nbsp; Home"), root_path)  %>
-
-
 
   </div>
 

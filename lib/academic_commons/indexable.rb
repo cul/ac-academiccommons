@@ -1,5 +1,6 @@
 module AcademicCommons
   module Indexable
+    include Embargoes
 
     AUTHOR_ROLES = %w(author creator speaker moderator interviewee interviewer contributor).freeze
     ADVISOR_ROLES = ["thesis advisor"].freeze
@@ -403,7 +404,7 @@ module AcademicCommons
 
       begin
 
-        if(!check_if_free_to_read(free_to_read_start_date))
+        if(!available_today?(free_to_read_start_date))
           return
         end
 
@@ -422,13 +423,6 @@ module AcademicCommons
         logger.error e.message
         logger.error e.backtrace
       end
-
-    end
-
-    def check_if_free_to_read(free_to_read_start_date)
-      embargo_release_date = Date.strptime(free_to_read_start_date, '%Y-%m-%d')
-      current_date = Date.strptime(Time.now.strftime('%Y-%m-%d'), '%Y-%m-%d')
-      return current_date > embargo_release_date
     end
 
     # If there a namePart element with no type attribute use that name, otherwise

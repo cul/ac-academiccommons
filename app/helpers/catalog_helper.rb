@@ -6,6 +6,7 @@ module CatalogHelper
   include Blacklight::CatalogHelperBehavior
   include ApplicationHelper
   include AcademicCommons::Listable
+  include AcademicCommons::Embargoes
 
   delegate :repository, :to => :controller
 
@@ -62,17 +63,6 @@ module CatalogHelper
     else
       results
     end
-  end
-
-  # copied from AcademicCommons::Indexable
-  # TODO: DRY this logic
-  def free_to_read?(document)
-    return false unless document['object_state_ssi'] == 'A'
-    free_to_read_start_date = document[:free_to_read_start_date]
-    return true unless free_to_read_start_date
-    embargo_release_date = Date.strptime(free_to_read_start_date, '%Y-%m-%d')
-    current_date = Date.strptime(Time.now.strftime('%Y-%m-%d'), '%Y-%m-%d')
-    current_date > embargo_release_date
   end
 
   # TODO: Move to a browse controller
