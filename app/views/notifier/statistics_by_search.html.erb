@@ -1,0 +1,20 @@
+<div>Dear Academic Commons Depositor,</div>
+<br/>
+<div>
+   Here are the updated monthly and lifetime use statistics for your deposits to
+   <%= link_to "Academic Commons", "http://academiccommons.columbia.edu" %>,
+   the digital research repository of Columbia University and its affiliates.
+</div>
+
+<%= render partial: "monthly_stats", locals: { lifetime: true } %>
+
+<div>
+   If you have new material for deposit—anything from published articles, to presentation slides, to performance video,
+   to datasets, and beyond—please send it to us at
+   <%= link_to "self-deposit form", "http://academiccommons.columbia.edu/deposit" %>
+   including basic descriptive information such as the title, the names of any collaborators, the URL or DOI for the published version,
+   and if there is any special software required to view or otherwise make use of the file. Remember: we use the
+   information you provide to enhance the searchability of your work, increasing the number of times it is accessed and downloaded.
+</div>
+
+<%= render partial: "monthly_footer" %>

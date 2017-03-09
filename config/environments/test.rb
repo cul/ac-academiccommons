@@ -16,8 +16,8 @@ AcademicCommons::Application.configure do
   # Print deprecation notices to the Rails logger
   config.active_support.deprecation = :log
 
-# Do not compress assets
-  #config.assets.compress = false
+  # Do not compress assets
+  # config.assets.compress = false
 
   # Expands the lines which load the assets
   config.assets.debug = true
@@ -27,4 +27,6 @@ AcademicCommons::Application.configure do
 
   # Setting host so that url helpers can be used in mailer views.
   config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
+
+  config.base_path = "localhost:3000"
 end

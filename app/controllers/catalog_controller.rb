@@ -319,7 +319,7 @@ class CatalogController < ApplicationController
 
   def streaming
     logger.info "RECORDING STREAMING EVENT"
-    record_stats(params["id"], "Streaming")
+    record_stats(params["id"], Statistic::STREAM)
     render :nothing => true
   end
 
@@ -327,7 +327,7 @@ class CatalogController < ApplicationController
   private
 
   def record_view_stats
-    record_stats(params["id"], "View")
+    record_stats(params["id"], Statistic::VIEW)
   end
 
   def record_stats(id, event)

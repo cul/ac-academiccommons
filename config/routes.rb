@@ -42,17 +42,12 @@ AcademicCommons::Application.routes.draw do
   match '/statistics/detail_report',        :to => 'statistics#detail_report', via: [:get, :post]
   match '/statistics/all_author_monthlies', :to => 'statistics#all_author_monthlies', via: [:get, :post]
   get '/statistics/generic_statistics',     :to => 'statistics#generic_statistics'
-  get '/statistics/single_pid_stats',       :to => 'statistics#single_pid_stats'
-  get '/statistics/single_pid_count',       :to => 'statistics#single_pid_count'
   get '/statistics/send_csv_report',        :to => 'statistics#send_csv_report'
-  get '/statistics/school_stats',           :to => 'statistics#school_stats'
-  get '/statistics/stats_by_event',         :to => 'statistics#stats_by_event'
-  get '/statistics/school_docs_size',       :to => 'statistics#school_docs_size'
-  get '/statistics/facetStatsByEvent',      :to => 'statistics#facetStatsByEvent'
   get '/statistics/school_statistics',      :to => 'statistics#school_statistics'
-  get '/statistics/docs_size_by_query_facets', :to => 'statistics#docs_size_by_query_facets'
   get '/statistics/common_statistics_csv',  :to => 'statistics#common_statistics_csv'
   get '/statistics/unsubscribe_monthly',    :to => 'statistics#unsubscribe_monthly'
+  get '/statistics/statistic_res_list',     :to => 'statistics#statistic_res_list'
+  get '/statistics/total_usage_stats',      to: 'statistics#total_usage_stats'
 
   match '/deposit/submit', :to => 'deposit#submit', via: [:get, :post]
   get '/deposit', :to => 'deposit#index', :as => 'deposit'

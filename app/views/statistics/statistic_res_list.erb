@@ -1,4 +1,83 @@
-<%= render :partial=>'admin_sidebar' %>
+<style>
+  .names {
+    padding: 0 10px 0 0;
+  }
+</style>
+
+<%= render partial: 'admin_sidebar' %>
+
 <div id="content" class="box">
-<%= render :partial=>'statistic_res_list' %>
+  <%= @usage_stats.count %> items found for [<%= @usage_stats.time_period %>] period
+
+  <br><br>
+  FACETS:
+  <br>
+
+  <% params[:f].each do |key, value| %>
+    <%= facet_names[key.to_s] + " = " + value.first.to_s %> <br>
+  <% end %>
+
+  <br>
+  <hr>
+
+  <% @usage_stats.each_with_index do |item, idx| %>
+    <div style=' height: ;'>
+      <div class='table-cell' style='display: table-cell;  '>
+        <div style='display: table; width: ;'>
+
+          <div style='display: table-row;'>
+            <div id='facet-docs-size' class='table-cell' style='display: table-cell;' title="">
+              <%= idx + 1 %>
+            </div>
+            <div id='facet-docs-size' class='table-cell' style='display: table-cell;' title="">
+
+            </div>
+          </div>
+
+          <div style='display: table-row;'>
+            <div id='facet-docs-size' class='table-cell' style='display: table-cell;' title="">
+              Title:
+            </div>
+            <div id='facet-docs-size' class='table-cell' style='display: table-cell;' title="">
+              <a href="/catalog/<%= item.id %>">
+                <%= item.document['title_display'] %>
+              </a>
+            </div>
+          </div>
+
+          <div style='display: table-row;'>
+            <div id='facet-docs-size' class='table-cell names' style='display: table-cell;' title="">
+              Genre:
+            </div>
+            <div id='facet-docs-size' class='table-cell names' style='display: table-cell;' title="">
+              <%= item.document.fetch('genre_facet', []).first %>
+            </div>
+          </div>
+
+          <div style='display: table-row;'>
+            <div id='facet-docs-size' class='table-cell names' style='display: table-cell;' title="">
+              Created:
+            </div>
+            <div id='facet-docs-size' class='table-cell' style='display: table-cell;' title="">
+              <%= Date.strptime(item.document['record_creation_date']).strftime('%m/%d/%Y') %>
+            </div>
+          </div>
+
+          <div style='display: table-row;'>
+            <% time = (@usage_stats.lifetime_only?) ? 'Lifetime' : 'Period' %>
+            <div id='facet-docs-size' class='table-cell names' style='display: table-cell;' title="">
+              Statistics:
+            </div>
+            <div id='facet-docs-size' class='table-cell' style='display: table-cell;' title="">
+              views (<%= item.get_stat(Statistic::VIEW, time) %>),
+              downloads (<%= item.get_stat(Statistic::DOWNLOAD, time) %>),
+              streams (<%= item.get_stat(Statistic::STREAM, time) %>)
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <br>
+    <hr>
+  <% end %>
 </div>

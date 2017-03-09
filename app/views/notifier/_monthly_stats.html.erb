@@ -1,0 +1,100 @@
+<style>
+  .cell { padding: 0px 10px 0px }
+</style>
+
+<br/>
+
+<div>Usage Statistics for <%= @author_id %>:</div>
+
+<% unless @usage_stats.empty? %>
+  <table>
+    <% if lifetime %>
+      <% if @streams %>
+        <tr>
+          <td></td>
+          <td colspan="3" align="center"><%= @usage_stats.time_period %></td>
+          <td colspan="3" align="center">Lifetime</td>
+        </tr>
+      <% else %>
+        <tr>
+          <td></td>
+          <td colspan="2" align="center"><%= @usage_stats.time_period %></td>
+          <td colspan="2" align="center">Lifetime</td>
+        </tr>
+      <% end %>
+    <% end %>
+    <tr>
+      <td></td>
+      <td class="cell"><b>Views</b></td>
+      <% if @streams %>
+        <td class="cell"><b>Streams</b></td>
+      <% end %>
+      <td class="cell"><b>Downloads</b></td>
+      <% if lifetime %>
+        <td style="padding: 0px 10px 0px 20px">
+          <b>Views</b>
+        <% if @streams %>
+          <td class="cell"><b>Streams</b></td>
+        <% end %>
+        <td class="cell"><b>Downloads</b></td>
+      <% end %>
+    </tr>
+
+    <% @usage_stats.each do |item| %>
+      <tr>
+        <td><%= link_to item.document["title_display"], url_for(only_path: false, controller: :catalog, action: :show, id: item.id) %></td>
+        <td class="cell"><%= item.get_stat(Statistic::VIEW, 'Period') %></td>
+        <% if @streams %>
+          <td class="cell"><%= item.get_stat(Statistic::STREAM, 'Period') %></td>
+        <% end %>
+        <td class="cell"><%= item.get_stat(Statistic::DOWNLOAD, 'Period') %></td>
+
+        <% if lifetime %>
+          <td style="padding: 0px 10px 0px 20px"><%= item.get_stat(Statistic::VIEW, 'Lifetime') %></td>
+          <% if @streams %>
+            <td class="cell"><%= item.get_stat(Statistic::STREAM, 'Lifetime') %></td>
+          <% end %>
+          <td class="cell"><%= item.get_stat(Statistic::DOWNLOAD, 'Lifetime') %></td>
+        <% end %>
+      </tr>
+    <% end %>
+
+    <tr>
+      <td><b>Totals:</b></td>
+      <td class="cell"><b><%= @usage_stats.total_for(Statistic::VIEW, 'Period') %></b></td>
+      <% if @streams %>
+        <td class="cell"><b><%= @usage_stats.total_for(Statistic::STREAM, 'Period') %></b></td>
+      <% end %>
+      <td class="cell"><b><%= @usage_stats.total_for(Statistic::DOWNLOAD, "Period") %></b></td>
+      <% if lifetime %>
+        <td style="padding: 0px 10px 0px 20px"><b><%= @usage_stats.total_for(Statistic::VIEW, 'Lifetime') %></b></td>
+        <% if @streams %>
+          <td class="cell"><b><%= @usage_stats.total_for(Statistic::STREAM, "Lifetime") %></b></td>
+        <% end %>
+        <td class="cell"><b><%= @usage_stats.total_for(Statistic::DOWNLOAD, "Lifetime") %></b></td>
+      <% end %>
+    </tr>
+  </table>
+  <br/>
+
+  <div>
+    <b>Views</b> are the number of times someone has looked at the record for the item in Academic Commons.
+  </div>
+  <% if @streams %>
+    <div>
+      <b>Streams</b> are the number of times someone has looked at the deposited file on the Academic Commons site.
+    </div>
+  <% end %>
+  <div>
+    <b>Downloads</b> are the number of times someone has made a local copy of the deposited file.
+  </div>
+
+  <br/>
+
+<% else %>
+  <br/>
+  No views or downloads for your items during this time period.
+  <br/>
+<% end %>
+
+<br/>
