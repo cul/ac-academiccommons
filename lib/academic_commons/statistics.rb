@@ -110,8 +110,8 @@ module AcademicCommons
       reports_logger = ActiveSupport::Logger.new(File.join(log_path, "#{time_id}.tmp"))
       reports_logger.formatter = Rails.application.config.log_formatter
 
-      reports_logger.info "\n=== All Authors Monthly Reports ==="
-      reports_logger.info "\nStarted at: " + start_time.strftime("%Y-%m-%d %H:%M") + "\n"
+      reports_logger.info "=== All Authors Monthly Reports ==="
+      reports_logger.info "Started at: " + start_time.strftime("%Y-%m-%d %H:%M")
 
       sent_counter = 0
       skipped_counter = 0
