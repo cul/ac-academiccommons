@@ -6,19 +6,19 @@
     <mods:name type="personal">
         <mods:namePart>Carroll, Lewis</mods:namePart>
         <mods:role>
-            <mods:roleTerm type="text">author</mods:roleTerm>
+            <mods:roleTerm type="text">Author</mods:roleTerm>
         </mods:role>
     </mods:name>
     <mods:name type="corporate">
         <mods:namePart>Oxford University. Bucolic Literary Society.</mods:namePart>
         <mods:role>
-            <mods:roleTerm type="text">originator</mods:roleTerm>
+            <mods:roleTerm type="text">Originator</mods:roleTerm>
         </mods:role>
     </mods:name>
     <mods:name type="corporate">
         <mods:namePart>Weird Old Guys.</mods:namePart>
         <mods:role>
-            <mods:roleTerm type="text">author</mods:roleTerm>
+            <mods:roleTerm type="text">Author</mods:roleTerm>
         </mods:role>
     </mods:name>
     <mods:typeOfResource>text</mods:typeOfResource>

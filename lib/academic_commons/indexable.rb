@@ -41,7 +41,7 @@ module AcademicCommons
       locationIndexing(mods, add_field)
       languageIndexing(mods, add_field)
       originInfoIndexing(mods, add_field)
-      roleIndexing(mods, add_field)
+      solr_doc['role'] = roleIndexing(mods, add_field)
       identifierIndexing(mods, add_field)
       locationUrlIndexing(mods, add_field)
       embargo_release_date_indexing(mods, add_field)
@@ -58,7 +58,7 @@ module AcademicCommons
         fullname = get_fullname(name_node)
         note_org = false
 
-        if name_node.css("role>roleTerm").collect(&:content).any? { |role| AUTHOR_ROLES.include?(role) }
+        if name_node.css("role>roleTerm").collect(&:content).any? { |role| AUTHOR_ROLES.include?(role.downcase) }
 
           note_org = true
           all_author_names << fullname
@@ -79,7 +79,7 @@ module AcademicCommons
           add_field.call("author_search", fullname.downcase)
           add_field.call("author_facet", fullname)
 
-        elsif name_node.css("role>roleTerm").collect(&:content).any? { |role| ADVISOR_ROLES.include?(role) }
+        elsif name_node.css("role>roleTerm").collect(&:content).any? { |role| ADVISOR_ROLES.include?(role.downcase) }
 
           note_org = true
           first_role = name_node.at_css("role>roleTerm").text
@@ -103,7 +103,7 @@ module AcademicCommons
       end
 
       mods.css("name[@type='corporate']").each do |corp_name_node|
-        if((!corp_name_node["ID"].nil? && corp_name_node["ID"].include?("originator")) || corp_name_node.css("role>roleTerm").collect(&:content).any? { |role| CORPORATE_DEPARTMENT_ROLES.include?(role) })
+        if((!corp_name_node["ID"].nil? && corp_name_node["ID"].include?("originator")) || corp_name_node.css("role>roleTerm").collect(&:content).any? { |role| CORPORATE_DEPARTMENT_ROLES.include?(role.downcase) })
           name_part = corp_name_node.at_css("namePart").text
           if(name_part.include?(". "))
             name_part_split = name_part.split(". ")
@@ -112,7 +112,7 @@ module AcademicCommons
             originator_department = name_part_split[1].strip
           end
         end
-        if corp_name_node.css("role>roleTerm").collect(&:content).any? { |role| CORPORATE_AUTHOR_ROLES.include?(role) }
+        if corp_name_node.css("role>roleTerm").collect(&:content).any? { |role| CORPORATE_AUTHOR_ROLES.include?(role.downcase) }
           display_form = corp_name_node.at_css("displayForm")
           if(!display_form.nil?)
             fullname = display_form.text
@@ -336,11 +336,13 @@ module AcademicCommons
     end
 
     def roleIndexing(mods, add_field)
+      roles = []
       mods.css("role > roleTerm").each do |role|
         if(!role.nil? && role.text.length != 0)
-          add_field.call("role", role)
+          roles << role.text.downcase
         end
       end
+      roles
     end
 
     def identifierIndexing(mods, add_field)
