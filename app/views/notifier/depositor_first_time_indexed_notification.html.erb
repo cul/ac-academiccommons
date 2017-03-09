@@ -1,41 +1,56 @@
 
 <style>
-	.box{
-		padding: 10px 0 0 0;
-	}
+  .box { padding: 10px 0 0 0; }
+  .title { padding: 10px 0 0 15px; }
+  .item-detail { padding: 0 0 0 15px; }
 </style>
 
 <table>
+  <tr>
+    <td>Dear <%= (@depositor.name.nil?) ? @depositor.uni : @depositor.name %>,</td>
+  </tr>
 
-<tr><td>
-	<%if(@depositor.name == nil)%>
-		Dear author [<%= @depositor.uni %>],
-	<% else %>
-		Dear <%= @depositor.name %>,
-	<% end %>
-</td></tr>
-<tr><td class="box">
-	Your recent deposit to Academic Commons is now live on academiccommons.columbia.edu.
-</td></tr>
+  <tr><td class="box">
+    Your recent deposit to Academic Commons is now available on <%= link_to 'academiccommons.columbia.edu', 'academiccommons.columbia.edu' %>.
+    <% if @embargoed_items %>If any of your items are under embargo, only their metadata will be displayed.<% end %>
+  </td></tr>
 
-<tr><td style="padding: 10px 0 5px 0;">The persistent URLs for the newly posted items are:</td></tr>
+  <% unless @embargoed_items.blank? %>
+    <tr><td class="box">
+      <strong>The following records are embargoed:</strong><br/>
+      <i>(The files themselves are not available on Academic Commons at this time. They will become available on the dates listed below.)</i>
+    </td></tr>
 
-	<% @depositor.items_list.each do | item | %>
-	   <tr><td style="padding: 5px 0 0 0;"><%= item.title %></td></tr>
-	   <tr><td style="padding: 0 0 5px 0;"><a href="<%= item.handle %>"><%= item.handle %></a> </td></tr>
-	<% end %>
+    <% @embargoed_items.each do |item| %>
+      <tr><td class="title"><%= item.title %></td></tr>
+    	<tr><td class="item-detail"><%= link_to item.handle, item.handle %></td></tr>
+    	<tr><td class="item-detail">Release date: <%= item.free_to_read_start_date %></td></tr>
+    <% end %>
+  <% end %>
 
-<tr><td class="box">
-Please use these URLs when linking on the web or citing your work.<br>
-Thank you for contributing to Academic Commons. If you have any questions about your deposit, you can reach us by replying to this email.
-</td></tr>
-<tr><td class="box">
+  <% unless @new_items.blank? %>
+    <tr>
+      <td class="box"><strong>The following items are available in Academic Commons:</strong></td>
+    </tr>
 
-Sincerely,<br>
-The Academic Commons Team,<br>
-<a href="http://cdrs.columbia.edu">Center for Digital Research and Scholarship</a><br>
-Columbia University Libraries / Information Services
+    <% @new_items.each do |item| %>
+      <tr><td class="title"><%= item.title %></td></tr>
+      <tr><td class="item-detail"><%= link_to item.handle, item.handle %></td></tr>
+    <% end %>
 
-</td></tr>
+    <tr><td class="box">Please use these URLs when linking or citing your work.</td></tr>
+  <% end %>
 
+  <tr>
+    <td class="box">Thank you for contributing to Academic Commons. If you have any questions about your deposit, you can reach us by replying to this email.</td>
+  </tr>
+
+  <tr>
+    <td class="box">
+      Sincerely,<br><br>
+      The Academic Commons Team<br>
+      <a href="http://cdrs.columbia.edu">Center for Digital Research and Scholarship</a><br>
+      Columbia University Libraries
+    </td>
+  </tr>
 </table>

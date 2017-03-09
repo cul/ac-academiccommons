@@ -5,6 +5,7 @@ describe CatalogHelper do
     let(:document) do
       SolrDocument.new({
         id: 'test:obj',
+        free_to_read_start_date: Date.today.strftime('%Y-%m-%d'),
         object_state_ssi: 'A'
       })
     end

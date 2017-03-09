@@ -11,7 +11,7 @@
 
       <div class="title"><%= link_to resource[:filename], resource[:download_path] if resource[:download_path] %></div>
       <% end %>
-  <% elsif (@document[:free_to_read_start_date] && Time.now.strftime("%Y-%m-%d") < @document[:free_to_read_start_date]) %>
+  <% elsif (@document[:free_to_read_start_date] && !available_today?(@document[:free_to_read_start_date])) %>
     <div class="content embargo_content">
       <em>
         <%= "This item is currently under embargo. It will be available starting #{@document[:free_to_read_start_date]}"%>
