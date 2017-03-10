@@ -1,6 +1,7 @@
 module AcademicCommons::Metrics
   class UsageStatistics
     include Enumerable
+    include AcademicCommons::Embargoes
     include AcademicCommons::Listable
     include AcademicCommons::Metrics::OutputCSV
 
@@ -13,7 +14,8 @@ module AcademicCommons::Metrics
     }
 
     DEFAULT_SOLR_PARAMS = {
-      rows: 100000, page: 1, fl: 'title_display,id,handle,doi,genre_facet,record_creation_date'
+      rows: 100000, page: 1,
+      fl: 'title_display,id,handle,doi,genre_facet,record_creation_date,object_state_ssi,free_to_read_start_date'
     }
 
     PERIOD = 'Period'
@@ -137,7 +139,7 @@ module AcademicCommons::Metrics
       ids = @item_stats.collect(&:id)
 
       # Get pid of most downloaded file for each resource/item.
-      download_ids_map = ids.map { |id| [id, most_downloaded_asset(id)] }.to_h
+      download_ids_map = @item_stats.map { |item| [item.id, most_downloaded_asset(item.document)] }.to_h
 
       # lifetime
       add_item_stats(Statistic::VIEW, LIFETIME, Statistic.event_count(ids, Statistic::VIEW))
@@ -214,8 +216,8 @@ module AcademicCommons::Metrics
     # Most downloaded asset over entire lifetime.
     # Eventually may have to reevaluate this for queries that are for a specific
     # time range. For now, we are okay with this assumption.
-    def most_downloaded_asset(pid)
-      asset_pids = build_resource_list({ 'id' => pid }).map { |doc| doc[:pid] }
+    def most_downloaded_asset(doc)
+      asset_pids = build_resource_list(doc).map { |doc| doc[:pid] }
       return asset_pids.first if asset_pids.count == 1
 
       # Get the higest value stored here.
@@ -227,10 +229,6 @@ module AcademicCommons::Metrics
       # Get key of most downloaded asset.
       key, value = counts.max_by{ |_,v| v }
       key
-    end
-
-    def free_to_read?(document) # free_to_read not relevant here
-      true
     end
   end
 end

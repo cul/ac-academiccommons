@@ -27,14 +27,14 @@ RSpec.describe AcademicCommons::Statistics do
       {
         rows: 100000, sort: 'title_display asc', q: nil, page: 1,
         fq: ["author_uni:\"abc123\"", "has_model_ssim:\"info:fedora/ldpd:ContentAggregator\""],
-        fl: "title_display,id,handle,doi,genre_facet,record_creation_date"
+        fl: "title_display,id,handle,doi,genre_facet,record_creation_date,object_state_ssi,free_to_read_start_date"
       }
     end
     let(:author_docs) do
       {
         'response' => {
           'docs' => [
-            { 'id' => pid, 'title_display' => 'First Test Document',
+            { 'id' => pid, 'title_display' => 'First Test Document', 'object_state_ssi' => 'A',
               'handle' => '', 'doi' => '', 'genre_facet' => '' },
           ]
         }
