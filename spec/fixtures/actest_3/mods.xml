@@ -31,7 +31,14 @@
     <mods:language>
         <mods:languageTerm type="text">English</mods:languageTerm>
     </mods:language>
-    <abstract>Background -  Alice is feeling bored and drowsy while sitting on the riverbank with her older sister, who is reading a book with no pictures or conversations.</abstract>
+    <mods:abstract>
+      Background -  Alice is feeling bored and drowsy while sitting on the riverbank with her older sister, who is reading a book with no pictures or conversations.
+    </mods:abstract>
+    <mods:relatedItem type="host" displayLabel="Project">
+      <mods:titleInfo>
+        <mods:title>Academic Commons</mods:title>
+      </mods:titleInfo>
+    </mods:relatedItem>
     <mods:subject>
         <mods:topic>Tea Parties</mods:topic>
     </mods:subject>
@@ -67,7 +74,7 @@
         <mods:identifier type="doi">10.1378/wonderland.01-2345</mods:identifier>
         <mods:identifier type="issn">0123-4567</mods:identifier>
     </mods:relatedItem>
-    <mods:identifier type="CDRS doi">http://dx.doi.org/10.7916/ALICE</mods:identifier>
+    <mods:identifier type="DOI">10.7916/ALICE</mods:identifier>
 
     <mods:location>
         <mods:physicalLocation authority="marcorg">NNC</mods:physicalLocation>
