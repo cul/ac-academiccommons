@@ -11,7 +11,7 @@ RSpec.describe AcademicCommons::Metrics::UsageStatistics, integration: true do
     {
       :rows => 100000, :sort => 'title_display asc', :q => nil, :page => 1,
       :fq => ["author_uni:\"#{uni}\"", "has_model_ssim:\"info:fedora/ldpd:ContentAggregator\""],
-      :fl => "title_display,id,handle,doi,genre_facet,record_creation_date"
+      :fl => "title_display,id,handle,doi,genre_facet,record_creation_date,object_state_ssi,free_to_read_start_date"
     }
   end
   let(:solr_response) do
@@ -19,9 +19,9 @@ RSpec.describe AcademicCommons::Metrics::UsageStatistics, integration: true do
       {
         'response' => {
           'docs' => [
-            { 'id' => pid2, 'title_display' => 'Second Test Document',
+            { 'id' => pid2, 'title_display' => 'Second Test Document', 'object_state_ssi' => 'A',
              'handle' => 'http://dx.doi.org/10.7916/TESTDOC2', 'doi' => '', 'genre_facet' => ''},
-            { 'id' => pid, 'title_display' => 'First Test Document',
+            { 'id' => pid, 'title_display' => 'First Test Document', 'object_state_ssi' => 'A',
               'handle' => 'http://dx.doi.org/10.7916/TESTDOC1', 'doi' => '', 'genre_facet' => '' }
             ]
           }
@@ -40,6 +40,40 @@ RSpec.describe AcademicCommons::Metrics::UsageStatistics, integration: true do
 
         allow(Blacklight.default_index).to receive(:search)
           .with(solr_params).and_return(solr_response)
+      end
+
+      context 'when requesting stats for an author with embargoed material' do
+        let(:solr_response) do
+          Blacklight::Solr::Response.new(
+            {
+              'response' => {
+                'docs' => [
+                  { 'id' => pid2, 'title_display' => 'Second Test Document', 'object_state_ssi' => 'A',
+                   'handle' => 'http://dx.doi.org/10.7916/TESTDOC2', 'doi' => '', 'genre_facet' => ''},
+                  { 'id' => pid, 'title_display' => 'First Test Document', 'object_state_ssi' => 'A',
+                    'handle' => 'http://dx.doi.org/10.7916/TESTDOC1', 'doi' => '', 'genre_facet' => '' },
+                  { 'id' => 'actest:10', 'title_display' => 'First Test Document', 'object_state_ssi' => 'A',
+                    'handle' => 'http://dx.doi.org/10.7916/TESTDOC1', 'doi' => '', 'genre_facet' => '',
+                    'free_to_read_start_date' => Date.tomorrow.strftime('%Y-%m-%d') }
+                  ]
+                }
+              }, {}
+          )
+        end
+
+        subject do
+          AcademicCommons::Metrics::UsageStatistics.new(solr_request)
+        end
+
+        it 'removes embargoed material' do
+          expect(subject.count).to eq 2
+          expect(subject.find{ |i| i.id == 'actest:10' }).to eq nil
+        end
+
+        it 'calculates stats for available material' do
+          expect(subject.total_for(Statistic::VIEW, 'Lifetime')).to eq 2
+          expect(subject.total_for(Statistic::DOWNLOAD, 'Lifetime')).to eq 1
+        end
       end
 
       context 'when request lifetime stats' do
@@ -260,7 +294,12 @@ RSpec.describe AcademicCommons::Metrics::UsageStatistics, integration: true do
     let(:pid2) { 'actest:4' }
 
     subject {
-      usage_stats.instance_eval{ most_downloaded_asset('actest:1') }
+      usage_stats.instance_eval{
+        most_downloaded_asset(
+          { 'id' => 'actest:1', 'title_display' => 'Second Test Document', 'object_state_ssi' => 'A',
+            'handle' => 'http://dx.doi.org/10.7916/TESTDOC2', 'doi' => '', 'genre_facet' => '' }
+        )
+      }
     }
 
     it 'returns error when pid not provided' do
