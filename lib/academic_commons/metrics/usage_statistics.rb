@@ -89,6 +89,9 @@ module AcademicCommons::Metrics
 
       results = get_solr_documents(solr_params)
       Rails.logger.debug "Solr request returned #{results.count} results."
+
+      # Filtering out embargoed material
+      results.reject! { |doc| !free_to_read?(doc) }
       @item_stats = results.map{ |doc| AcademicCommons::Metrics::ItemStats.new(doc) }
 
       return if @item_stats.empty?

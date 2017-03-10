@@ -42,6 +42,40 @@ RSpec.describe AcademicCommons::Metrics::UsageStatistics, integration: true do
           .with(solr_params).and_return(solr_response)
       end
 
+      context 'when requesting stats for an author with embargoed material' do
+        let(:solr_response) do
+          Blacklight::Solr::Response.new(
+            {
+              'response' => {
+                'docs' => [
+                  { 'id' => pid2, 'title_display' => 'Second Test Document', 'object_state_ssi' => 'A',
+                   'handle' => 'http://dx.doi.org/10.7916/TESTDOC2', 'doi' => '', 'genre_facet' => ''},
+                  { 'id' => pid, 'title_display' => 'First Test Document', 'object_state_ssi' => 'A',
+                    'handle' => 'http://dx.doi.org/10.7916/TESTDOC1', 'doi' => '', 'genre_facet' => '' },
+                  { 'id' => 'actest:10', 'title_display' => 'First Test Document', 'object_state_ssi' => 'A',
+                    'handle' => 'http://dx.doi.org/10.7916/TESTDOC1', 'doi' => '', 'genre_facet' => '',
+                    'free_to_read_start_date' => Date.tomorrow.strftime('%Y-%m-%d') }
+                  ]
+                }
+              }, {}
+          )
+        end
+
+        subject do
+          AcademicCommons::Metrics::UsageStatistics.new(solr_request)
+        end
+
+        it 'removes embargoed material' do
+          expect(subject.count).to eq 2
+          expect(subject.find{ |i| i.id == 'actest:10' }).to eq nil
+        end
+
+        it 'calculates stats for available material' do
+          expect(subject.total_for(Statistic::VIEW, 'Lifetime')).to eq 2
+          expect(subject.total_for(Statistic::DOWNLOAD, 'Lifetime')).to eq 1
+        end
+      end
+
       context 'when request lifetime stats' do
         before :each do
           FactoryGirl.create(:view_stat, at_time: Date.new(2001, 4, 12))
