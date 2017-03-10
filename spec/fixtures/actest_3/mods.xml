@@ -25,7 +25,7 @@
     <mods:genre>Articles</mods:genre>
 
     <mods:originInfo>
-        <mods:dateIssued encoding="w3cdtf" keyDate="yes">1865</mods:dateIssued>
+        <mods:dateIssued encoding="w3cdtf">1865</mods:dateIssued>
     </mods:originInfo>
 
     <mods:language>

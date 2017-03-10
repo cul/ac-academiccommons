@@ -127,7 +127,7 @@ module AcademicCommons
       end
 
       add_field.call("author_display",all_author_names.join("; "))
-      add_field.call("pub_date_facet", mods.at_css("*[@keyDate='yes']"))
+      add_field.call("pub_date_facet", mods.at_css(">originInfo>dateIssued"))
 
       mods.css("genre").each do |genre_node|
         add_field.call("genre_facet", genre_node)
