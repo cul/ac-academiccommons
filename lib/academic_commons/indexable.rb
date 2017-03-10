@@ -1,7 +1,5 @@
 module AcademicCommons
   module Indexable
-    include Embargoes
-
     AUTHOR_ROLES = %w(author creator speaker moderator interviewee interviewer contributor).freeze
     ADVISOR_ROLES = ["thesis advisor"].freeze
     CORPORATE_AUTHOR_ROLES = ["author"].freeze
@@ -41,15 +39,18 @@ module AcademicCommons
       locationIndexing(mods, add_field)
       languageIndexing(mods, add_field)
       originInfoIndexing(mods, add_field)
-      roleIndexing(mods, add_field)
+      solr_doc['role'] = roleIndexing(mods, add_field)
+      solr_doc['handle'] = [persistent_uri(mods)]
       identifierIndexing(mods, add_field)
       locationUrlIndexing(mods, add_field)
       embargo_release_date_indexing(mods, add_field)
 
-      title = mods.css("titleInfo>title").first.text
-      title_search = normalize_space.call(mods.css("titleInfo>nonSort,title").collect(&:content).join(" "))
+      title = mods.css(">titleInfo>title")
+      related_titles = mods.css("relatedItem[@type='host']:not([displayLabel=Project])>titleInfo").css(">nonSort,title")
 
-      add_field.call("title_display", title)
+      title_search = normalize_space.call((title + related_titles).collect(&:content).join(" "))
+
+      add_field.call("title_display", title.first.text)
       add_field.call("title_search", title_search)
 
       all_author_names = []
@@ -58,7 +59,7 @@ module AcademicCommons
         fullname = get_fullname(name_node)
         note_org = false
 
-        if name_node.css("role>roleTerm").collect(&:content).any? { |role| AUTHOR_ROLES.include?(role) }
+        if name_node.css("role>roleTerm").collect(&:content).any? { |role| AUTHOR_ROLES.include?(role.downcase) }
 
           note_org = true
           all_author_names << fullname
@@ -79,7 +80,7 @@ module AcademicCommons
           add_field.call("author_search", fullname.downcase)
           add_field.call("author_facet", fullname)
 
-        elsif name_node.css("role>roleTerm").collect(&:content).any? { |role| ADVISOR_ROLES.include?(role) }
+        elsif name_node.css("role>roleTerm").collect(&:content).any? { |role| ADVISOR_ROLES.include?(role.downcase) }
 
           note_org = true
           first_role = name_node.at_css("role>roleTerm").text
@@ -103,7 +104,7 @@ module AcademicCommons
       end
 
       mods.css("name[@type='corporate']").each do |corp_name_node|
-        if((!corp_name_node["ID"].nil? && corp_name_node["ID"].include?("originator")) || corp_name_node.css("role>roleTerm").collect(&:content).any? { |role| CORPORATE_DEPARTMENT_ROLES.include?(role) })
+        if((!corp_name_node["ID"].nil? && corp_name_node["ID"].include?("originator")) || corp_name_node.css("role>roleTerm").collect(&:content).any? { |role| CORPORATE_DEPARTMENT_ROLES.include?(role.downcase) })
           name_part = corp_name_node.at_css("namePart").text
           if(name_part.include?(". "))
             name_part_split = name_part.split(". ")
@@ -112,7 +113,7 @@ module AcademicCommons
             originator_department = name_part_split[1].strip
           end
         end
-        if corp_name_node.css("role>roleTerm").collect(&:content).any? { |role| CORPORATE_AUTHOR_ROLES.include?(role) }
+        if corp_name_node.css("role>roleTerm").collect(&:content).any? { |role| CORPORATE_AUTHOR_ROLES.include?(role.downcase) }
           display_form = corp_name_node.at_css("displayForm")
           if(!display_form.nil?)
             fullname = display_form.text
@@ -126,7 +127,7 @@ module AcademicCommons
       end
 
       add_field.call("author_display",all_author_names.join("; "))
-      add_field.call("pub_date_facet", mods.at_css("*[@keyDate='yes']"))
+      add_field.call("pub_date_facet", mods.at_css(">originInfo>dateIssued"))
 
       mods.css("genre").each do |genre_node|
         add_field.call("genre_facet", genre_node)
@@ -152,14 +153,12 @@ module AcademicCommons
 
       mods.css("note").each { |note| add_field.call("notes", note) }
 
-      if (related_host = mods.at_css("relatedItem[@type='host']"))
+      if related_host = mods.at_css("relatedItem[@type='host']:not([displayLabel=Project])")
         book_journal_title = related_host.at_css("titleInfo>title")
 
         if book_journal_title
           book_journal_subtitle = mods.at_css("name>titleInfo>subTitle")
-
           book_journal_title = book_journal_title.content + ": " + book_journal_subtitle.content.to_s if book_journal_subtitle
-
         end
 
         if(volume = related_host.at_css("part>detail[@type='volume']>number"))
@@ -308,7 +307,6 @@ module AcademicCommons
     end
 
     def originInfoIndexing(mods, add_field)
-
       if(publisher = mods.at_css("originInfo > publisher"))
         if(!publisher.nil? && publisher.text.length != 0)
           add_field.call("publisher", publisher)
@@ -332,35 +330,38 @@ module AcademicCommons
           add_field.call("edition", edition)
         end
       end
-
     end
 
     def roleIndexing(mods, add_field)
+      roles = []
       mods.css("role > roleTerm").each do |role|
         if(!role.nil? && role.text.length != 0)
-          add_field.call("role", role)
+          roles << role.text.downcase
         end
+      end
+      roles
+    end
+
+    # Returns persistent uri which could be a doi(with no prefix),
+    # doi(with prefix) or a handle.
+    def persistent_uri(mods)
+      if (uri = mods.at_css("identifier[@type='DOI']")) && !uri.text.blank?
+        "http://dx.doi.org/#{uri.text}" # add DOI prefix. TODO: After hyacinth migration, this can be moved to the view layer.
+      elsif (uri = mods.at_css("identifier[@type='CDRS doi']")) && !uri.text.blank?
+        uri.text
+      else
+        mods.at_css("identifier[@type='hdl']").text
       end
     end
 
     def identifierIndexing(mods, add_field)
-
-      if(handle = mods.at_css("identifier[@type='CDRS doi']"))
-        if(!handle.nil? && handle.text.length != 0)
-          add_field.call("handle", handle)
-        else
-          add_field.call("handle", mods.at_css("identifier[@type='hdl']"))
-        end
-      else
-        add_field.call("handle", mods.at_css("identifier[@type='hdl']"))
-      end
-
       if(isbn = mods.at_css("identifier[@type='isbn']"))
         if(!isbn.nil? && isbn.text.length != 0)
           add_field.call("isbn", isbn)
         end
       end
 
+      # Publisher DOI
       if(doi = mods.at_css("identifier[@type='doi']"))
         if(!doi.nil? && doi.text.length != 0)
           add_field.call("doi", doi)
@@ -378,7 +379,6 @@ module AcademicCommons
           add_field.call("issn", issn)
         end
       end
-
     end
 
     def locationUrlIndexing(mods, add_field)
@@ -394,34 +394,8 @@ module AcademicCommons
         if(free_to_read_start_date = mods.at_css("free_to_read")['start_date'])
           if(!free_to_read_start_date.nil? && free_to_read_start_date.length != 0)
              add_field.call("free_to_read_start_date", free_to_read_start_date)
-             process_resource_activation(free_to_read_start_date, @pid)
           end
         end
-      end
-    end
-
-    def process_resource_activation(free_to_read_start_date, aggregator_pid)
-
-      begin
-
-        if(!available_today?(free_to_read_start_date))
-          return
-        end
-
-        resource_pid = get_resource_pid(aggregator_pid)
-
-        if(check_if_resouce_is_available(resource_pid))
-          return
-        end
-
-        make_resource_active(resource_pid)
-
-        logger.info "=== " + resource_pid + " is activated, as part of aggregator: " + aggregator_pid
-
-      rescue Exception => e
-        logger.error "=== process_resource() error for #{pid}==="
-        logger.error e.message
-        logger.error e.backtrace
       end
     end
 
