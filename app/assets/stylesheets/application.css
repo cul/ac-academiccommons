@@ -1559,7 +1559,6 @@ div.g_stat_head_cell {
 	font-weight: 500;
 	padding: 20px 15px 15px 10px;
 	float: left;
-	border: 1px solid black;
 	width: 74px;
 	text-align: center;
 }
@@ -1579,7 +1578,6 @@ div.g_stat_cell_vspace {
 div.g_stat_cell {
 	padding: 22px 15px 4px 10px;
 	float: left;
-	border: 1px solid black;
 	width: 74px;
 	text-align: center;
 	height: 38px;
