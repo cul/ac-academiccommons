@@ -1,18 +1,8 @@
 require 'rails_rinku'
 
 module ApplicationHelper
-  def document_type
-    @document[CatalogController.blacklight_config[:show][:genre]]
-  end
-
   def document_author
     @document[CatalogController.blacklight_config[:show][:author]]
-  end
-
-  def render_document_heading
-    heading = ""
-    heading += '<h1 class="document_title">' + (document_heading || "") + '</h1>'
-    heading.html_safe
   end
 
   def suggested_citation(document)
@@ -20,12 +10,12 @@ module ApplicationHelper
     citation << first_names_then_last(document_author || "", ", ")
 
     unless document["pub_date_facet"].blank? || document['pub_date_facet'][0].blank?
-      citation << document_render_field_value("pub_date_facet", document["pub_date_facet"][0])
+      citation << render_document_show_field_value(document, "pub_date_facet")
     end
 
-    citation << document_render_field_value("title_display", document["title_display"])
+    citation << render_document_show_field_value(document, "title_display")
     citation << 'Columbia University Academic Commons'
-    citation << document_render_field_value("handle", document["handle"]) unless document["handle"].blank?
+    citation << render_document_show_field_value(document, "handle") unless document["handle"].blank?
     citation.reject(&:blank?).join(', ').concat('.').html_safe
   end
 
@@ -68,26 +58,6 @@ module ApplicationHelper
       end
     end
     words
-  end
-
-  def document_show_fields_linked(name)
-    CatalogController.blacklight_config.show_fields[name][:linked]
-  end
-
-  def document_render_field_value(field_name, value)
-    if(document_show_fields_linked(field_name))
-      if(document_show_fields_linked(field_name) == "facet")
-        value = '<a href="' + '/catalog?f[' + field_name + '][]=' + value + '">' + value + '</a>'
-      elsif(document_show_fields_linked(field_name) == "url")
-        value = '<a href="' + value + '">' + value + '</a>'
-      end
-    end
-
-    if(field_name == "url")
-      value = '<a class="fancybox-counter" href="' + value + '">' + value + '</a>'
-    end
-
-    return auto_link(value).html_safe
   end
 
   def metaheader_fix_if_needed(name, content)

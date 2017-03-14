@@ -2131,6 +2131,7 @@ div.header-utils a {
 div.header-utils {
 	height: 30px;
 	border-bottom: dotted 1px #aaa;
+  margin-bottom: 2.5em;
 }
 
 div.sticky-wrapper {

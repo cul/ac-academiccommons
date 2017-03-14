@@ -138,31 +138,39 @@ describe CatalogController, :type => :feature do
     end
 
     it "has publication date" do
-      expect(page).to have_xpath("//dd[@itemprop='datePublished']", :text => "1865")
+      expect(page).to have_xpath("//dd/span[@itemprop='datePublished']", :text => "1865")
     end
 
     it "has title" do
-      expect(page).to have_css(".document_title", :text => "Alice's Adventures in Wonderland")
+      expect(page).to have_css("div.document-heading/h1", :text => "Alice's Adventures in Wonderland")
     end
 
     it "has abstract" do
-      expect(page).to have_xpath("//dd[@itemprop='description']", :text => "Background - Alice is feeling bored and drowsy while sitting on the riverbank with her older sister, who is reading a book with no pictures or conversations.")
+      expect(page).to have_xpath("//dd/span[@itemprop='description']", text: "Background - Alice is feeling bored and drowsy while sitting on the riverbank with her older sister, who is reading a book with no pictures or conversations.")
     end
 
     it "has volume" do
-      expect(page).to have_xpath("//dt[contains(text(),'Volume:')]/following-sibling::dd", :text => "7")
+      expect(page).to have_xpath("//dt[contains(text(),'Volume:')]/following-sibling::dd", text: "7")
+    end
+
+    it "has linked persistent url" do
+      expect(page).to have_xpath("//a[@href='http://dx.doi.org/10.7916/ALICE']", text: 'http://dx.doi.org/10.7916/ALICE')
     end
 
     it "has doi" do
-      expect(page).to have_xpath("//dt[contains(text(),'Publisher DOI:')]/following-sibling::dd", :text => "10.1378/wonderland.01-2345")
+      expect(page).to have_xpath("//dt[contains(text(),'Publisher DOI:')]/following-sibling::dd", text: "10.1378/wonderland.01-2345")
     end
 
     it "has journal title" do
-      expect(page).to have_xpath("//dt[contains(text(),'Book/Journal Title:')]/following-sibling::dd", :text => "Project Gutenberg")
+      expect(page).to have_xpath("//dt[contains(text(),'Book/Journal Title:')]/following-sibling::dd", text: "Project Gutenberg")
+    end
+
+    it "has linked subject" do
+      expect(page).to have_xpath("//a[@href='/?f%5Bsubject_facet%5D%5B%5D=Tea+Parties']", text: 'Tea Parties')
     end
 
     it "has item views" do
-      expect(page).to have_xpath("//dt[contains(text(),'Item views')]/following-sibling::dd", :text => "0")
+      expect(page).to have_xpath("//dt[contains(text(),'Item views')]/following-sibling::dd", text: "0")
     end
 
     it "has suggested citation" do

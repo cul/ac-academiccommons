@@ -12,6 +12,7 @@ class CatalogController < ApplicationController
   layout "sidebar_right", only: [:show]
 
   configure_blacklight do |config|
+    config.document_presenter_class = DocumentPresenter
 
     config.default_solr_params = {
       :qt => "search",
@@ -82,38 +83,38 @@ class CatalogController < ApplicationController
     # solr fields to be displayed in the index (search results) view
     #   The ordering of the field names is the order of the display
 
-    config.add_index_field 'author_display', :label => 'Author(s)'
-    config.add_index_field 'pub_date_facet', :label => 'Date'
-    config.add_index_field 'subject_facet',  :label => 'Subject'
-    config.add_index_field 'genre_facet',    :label => 'Content Type'
-    config.add_index_field 'publisher',      :label => 'Publisher'
-    config.add_index_field 'handle',         :label => 'Persistent URL',   :itemprops => 'url',           :linked => 'url'
+    config.add_index_field 'author_display', label: 'Author(s)'
+    config.add_index_field 'pub_date_facet', label: 'Date'
+    config.add_index_field 'subject_facet',  label: 'Subject', separator: ', '
+    config.add_index_field 'genre_facet',    label: 'Content Type'
+    config.add_index_field 'publisher',      label: 'Publisher'
+    config.add_index_field 'handle',         label: 'Persistent URL', itemprop: 'url', helper_method: :persistent_url
 
 
-    config.add_show_field 'title_display',           :label => 'Title',             :itemprops => 'name'
-    config.add_show_field 'author_facet',            :label => 'Author(s)',         :itemprops => 'creator',       :linked => 'facet'
-    config.add_show_field 'thesis_advisor',          :label => 'Thesis Advisor(s)'
-    config.add_show_field 'pub_date_facet',          :label => 'Date',              :itemprops => 'datePublished'
-    config.add_show_field 'genre_facet',             :label => 'Type',              :itemprops => 'genre',         :linked => 'facet'
-    config.add_show_field 'department_facet',        :label => 'Department(s)',                                    :linked => 'facet'
-    config.add_show_field 'volume',                  :label => 'Volume'
-    config.add_show_field 'handle',                  :label => 'Persistent URL',     :itemprops => 'url',           :linked => 'url'
-    config.add_show_field 'url',                     :label => 'Streaming URL'
-    config.add_show_field 'series_facet',            :label => 'Series',                                           :linked => 'facet'
-    config.add_show_field 'part_number',             :label => 'Part Number'
-    config.add_show_field 'book_journal_title',      :label => 'Book/Journal Title'
-    config.add_show_field 'media_type_facet',        :label => 'Media Type'
-    config.add_show_field 'table_of_contents',       :label => 'Table of Contents'
-    config.add_show_field 'geographic_area_display', :label => 'Geographic Area'
-    config.add_show_field 'book_author',             :label => 'Book Author'
-    config.add_show_field 'format',                  :label => 'Format'
-    config.add_show_field 'notes',                   :label => 'Notes'
-    config.add_show_field 'publisher',               :label => 'Publisher'
-    config.add_show_field 'publisher_location',      :label => 'Publisher Location'
-    config.add_show_field 'abstract',                :label => 'Abstract',           :itemprops => 'description'
-    config.add_show_field 'subject_facet',           :label => 'Subject(s)',         :itemprops => 'keywords',      :linked => 'facet'
-    config.add_show_field 'isbn',                    :label => 'ISBN'
-    config.add_show_field 'doi',                     :label => 'Publisher DOI'
+    config.add_show_field 'title_display',           label: 'Title',            itemprop: 'name'
+    config.add_show_field 'author_facet',            label: 'Author(s)',        itemprop: 'creator',      link_to_search: 'author_facet'
+    config.add_show_field 'thesis_advisor',          label: 'Thesis Advisor(s)'
+    config.add_show_field 'pub_date_facet',          label: 'Date',             itemprop: 'datePublished'
+    config.add_show_field 'genre_facet',             label: 'Type',             itemprop: 'genre',        link_to_search: 'genre_facet'
+    config.add_show_field 'department_facet',        label: 'Department(s)',                              link_to_search: 'department_facet'
+    config.add_show_field 'volume',                  label: 'Volume'
+    config.add_show_field 'handle',                  label: 'Persistent URL',   itemprop: 'url',          helper_method: :persistent_url
+    config.add_show_field 'url',                     label: 'Streaming URL'
+    config.add_show_field 'series_facet',            label: 'Series',                                     link_to_search: 'series_facet'
+    config.add_show_field 'part_number',             label: 'Part Number'
+    config.add_show_field 'book_journal_title',      label: 'Book/Journal Title'
+    config.add_show_field 'media_type_facet',        label: 'Media Type'
+    config.add_show_field 'table_of_contents',       label: 'Table of Contents'
+    config.add_show_field 'geographic_area_display', label: 'Geographic Area'
+    config.add_show_field 'book_author',             label: 'Book Author'
+    config.add_show_field 'format',                  label: 'Format'
+    config.add_show_field 'notes',                   label: 'Notes'
+    config.add_show_field 'publisher',               label: 'Publisher'
+    config.add_show_field 'publisher_location',      label: 'Publisher Location'
+    config.add_show_field 'abstract',                label: 'Abstract',         itemprop: 'description'
+    config.add_show_field 'subject_facet',           label: 'Subject(s)',       itemprop: 'keywords',    link_to_search: 'subject_facet'
+    config.add_show_field 'isbn',                    label: 'ISBN'
+    config.add_show_field 'doi',                     label: 'Publisher DOI'
 
 
     # "fielded" search configuration. Used by pulldown among other places.

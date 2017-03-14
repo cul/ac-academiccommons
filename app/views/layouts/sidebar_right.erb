@@ -6,7 +6,7 @@
 
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"> <!-- render with chromeframe plugin on IE where available -->
 
-  <title><%= h(@page_title || application_name) %></title>
+  <title><%= @page_title || application_name %></title>
 
   <meta name="bitly-verification" content="35191b8f3154"/>
 
@@ -112,7 +112,7 @@ end
 
   <div class="span-19 prepend-3 document-heading">
     <%  if(@document != nil) %>
-    <%= render_document_heading %>
+    <%= render_document_heading(tag: :h1) %>
     <% else %>
     <h2>Item Removed</h2>
     <% end %>

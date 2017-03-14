@@ -10,8 +10,18 @@ module CatalogHelper
 
   delegate :repository, :to => :controller
 
-  def standard_count_query
-    {:qt=>"standard", :q=>"*:*", :fq => ["has_model_ssim:\"#{ContentAggregator.to_class_uri}\""]}
+  # Adds handle or doi prefix if necessary. Makes field a clickable link.
+  def persistent_url(**options)
+    value = case options[:value]
+            when /^(AC:P:\d+)$/
+              "http://hdl.handle.net/10022/#{$1}"
+            when /^(10\.7916\/*+)$/
+              "http://dx.doi.org/#{$1}"
+            else
+              options[:value]
+            end
+
+    link_to value, value
   end
 
   def get_total_count
@@ -30,12 +40,7 @@ module CatalogHelper
     @date_trend ||= AcademicCommons::DateTrend.new("record_creation_date", ContentAggregator)
   end
 
-  def get_count(query_params)
-    results = repository.search(query_params)
-    return results["response"]["numFound"]
-  end
-
-  def build_recent_updated_list()
+  def build_recent_updated_list
     query_params = {
       :q => "", :fl => "title_display, id, author_facet, record_creation_date",
       :sort => "record_creation_date desc",
@@ -156,16 +161,6 @@ module CatalogHelper
     return results
   end
 
-  def get_http_client
-   hc = HTTPClient.new(:force_basic_auth => true)
-   hc.ssl_config.verify_mode = OpenSSL::SSL::VERIFY_NONE
-   domain = fedora_config["url"]
-   user = fedora_config["user"]
-   password = fedora_config["password"]
-   hc.set_auth(domain, user, password)
-   hc
-  end
-
   ############### Copied from Blacklight CatalogHelper #####################
 
   # Pass in an RSolr::Response (or duck-typed similar) object,
@@ -242,14 +237,9 @@ module CatalogHelper
     render :partial => 'show_sidebar'
   end
 
-  def has_search_parameters?
-    !params[:q].blank? or !params[:f].blank? or !params[:search_field].blank?
-  end
-
   def pdf_urls
     urls = []
     if(@document != nil)
-
       resource_list = build_resource_list(@document)
       resource_list.each do |resource|
            urls.push( "http://" + request.host_with_port + resource[:download_path] )
@@ -258,17 +248,12 @@ module CatalogHelper
      return urls
   end
 
-  def itemprop_attribute(name)
-    blacklight_config.show_fields[name][:itemprops]
-  end
-
   def itemscope_itemtype
-
     url_from_map = blacklight_config[:itemscope][:itemtypes][@document["genre_facet"]]
-    if(url_from_map == nil)
-      return "http://schema.org/CreativeWork"
+    if url_from_map.nil?
+      "http://schema.org/CreativeWork"
     else
-      return url_from_map
+      url_from_map
     end
   end
 
@@ -278,38 +263,37 @@ module CatalogHelper
 
   # override of blacklight method - when a request for /catalog/BAD_SOLR_ID is made, this method is executed...
   def invalid_solr_id_error
-      index
-      render "tombstone", :status => 404
+    index
+    render "tombstone", :status => 404
   end
 
- def facet_list_limit
-   10
- end
+  def facet_list_limit
+    10
+  end
 
- # Overriding Blacklight helper method.
- #
- # Standard display of a SELECTED facet value, no link, special span
- # with class, and 'remove' button.
- def render_selected_facet_value(facet_solr_field, item)
-   render = link_to((item.value + render_facet_count(item.hits)).html_safe, search_action_path(remove_facet_params(facet_solr_field, item.value, params)), :class=>"facet_deselect")
-   render = render + render_subfacets(facet_solr_field, item)
-   render.html_safe
- end
+  # Overriding Blacklight helper method.
+  #
+  # Standard display of a SELECTED facet value, no link, special span
+  # with class, and 'remove' button.
+  def render_selected_facet_value(facet_solr_field, item)
+    render = link_to((item.value + render_facet_count(item.hits)).html_safe, search_action_path(remove_facet_params(facet_solr_field, item.value, params)), :class=>"facet_deselect")
+    render = render + render_subfacets(facet_solr_field, item)
+    render.html_safe
+  end
 
- def render_subfacets(facet_solr_field, item, options ={})
-   render = ''
-   if (item.instance_variables.include? "@subfacets")
-     render = '<span class="toggle">[+/-]</span><ul>'
-     item.subfacets.each do |subfacet|
-       if facet_in_params?(facet_solr_field, subfacet.value)
-         render += '<li>' + render_selected_facet_value(facet_solr_field, subfacet) + '</li>'
-       else
-         render += '<li>' + render_facet_value(facet_solr_field, subfacet,options) + '</li>'
-       end
-     end
-     render += '</ul>'
-     end
-     render.html_safe
- end
-
+  def render_subfacets(facet_solr_field, item, options ={})
+    render = ''
+    if (item.instance_variables.include? "@subfacets")
+      render = '<span class="toggle">[+/-]</span><ul>'
+      item.subfacets.each do |subfacet|
+        if facet_in_params?(facet_solr_field, subfacet.value)
+          render += '<li>' + render_selected_facet_value(facet_solr_field, subfacet) + '</li>'
+        else
+          render += '<li>' + render_facet_value(facet_solr_field, subfacet,options) + '</li>'
+        end
+      end
+      render += '</ul>'
+    end
+    render.html_safe
+  end
 end
