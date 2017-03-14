@@ -32,7 +32,6 @@ RSpec.describe AcademicCommons::Indexable do
   # migration to Hyacinth.
   context 'when mods from Hyacinth' do
     let(:mods_fixture) { File.read('spec/fixtures/actest_3/mods.xml') }
-
     include_examples 'indexing mods'
   end
 
@@ -40,6 +39,7 @@ RSpec.describe AcademicCommons::Indexable do
   # completely transition over to Hyacinth.
   context 'when mods from Hypatia' do
     let(:mods_fixture) { File.read('spec/fixtures/hypatia_mods.xml') }
+    let(:expected_json) { JSON.load File.read('spec/fixtures/hypatia_to_solr.json') }
     include_examples 'indexing mods'
   end
 end

@@ -40,7 +40,7 @@ module AcademicCommons
       languageIndexing(mods, add_field)
       originInfoIndexing(mods, add_field)
       solr_doc['role'] = roleIndexing(mods, add_field)
-      solr_doc['handle'] = [persistent_uri(mods)]
+      persistent_uri(mods, add_field)
       identifierIndexing(mods, add_field)
       locationUrlIndexing(mods, add_field)
       embargo_release_date_indexing(mods, add_field)
@@ -344,14 +344,15 @@ module AcademicCommons
 
     # Returns persistent uri which could be a doi(with no prefix),
     # doi(with prefix) or a handle.
-    def persistent_uri(mods)
-      if (uri = mods.at_css("identifier[@type='DOI']")) && !uri.text.blank?
-        "http://dx.doi.org/#{uri.text}" # add DOI prefix. TODO: After hyacinth migration, this can be moved to the view layer.
-      elsif (uri = mods.at_css("identifier[@type='CDRS doi']")) && !uri.text.blank?
-        uri.text
-      else
-        mods.at_css("identifier[@type='hdl']").text
-      end
+    def persistent_uri(mods, add_field)
+      field = if (uri = mods.at_css("identifier[@type='DOI']")) && !uri.text.blank?
+                uri
+              elsif (uri = mods.at_css("identifier[@type='CDRS doi']")) && !uri.text.blank?
+                uri
+              else
+                mods.at_css("identifier[@type='hdl']").text
+              end
+      add_field.call('handle', field)
     end
 
     def identifierIndexing(mods, add_field)
