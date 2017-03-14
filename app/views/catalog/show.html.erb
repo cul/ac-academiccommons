@@ -1,4 +1,4 @@
-<% @page_title = "#{document_show_html_title} - #{application_name}" %>
+<% @page_title = "#{document_show_html_title} - #{application_name}".html_safe %>
 
 <% content_for :head do %>
   <%= render_link_rel_alternates %>

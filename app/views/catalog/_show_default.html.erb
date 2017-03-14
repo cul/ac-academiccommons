@@ -9,18 +9,9 @@
 
           <% unless document[solr_fname].empty? %>
             <%# Field display names %>
-            <dt><%= render_document_show_field_label document, :field => solr_fname %></dt>
-
+            <dt><%= render_document_show_field_label document, field: solr_fname %></dt>
             <%# Field display values %>
-            <dd <%= "itemprop=#{itemprop_attribute(solr_fname)}" if (itemprop_attribute(solr_fname) != nil) %> >
-              <% if document[solr_fname].is_a?(Array)%>
-                <% document[solr_fname].each do |val| %>
-                  <%= document_render_field_value(solr_fname, val) %><%= "<br/>".html_safe unless val == document[solr_fname].last %>
-                <% end %>
-              <% else %>
-                <%= document_render_field_value(solr_fname, document[solr_fname]) %>
-              <% end %>
-            </dd>
+            <dd><%= render_document_show_field_value document, field: solr_fname %></dd>
           <% end -%>
         <% end -%>
       <% end -%>
@@ -46,7 +37,7 @@
           <em>Additional metadata is currently unavailable for this item.</em>
         <% end -%>
       </dd>
-      
+
       <dt>Suggested Citation: </dt>
       <dd><%= suggested_citation(document) %></dd>
     </dl>
