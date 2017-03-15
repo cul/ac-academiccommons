@@ -173,6 +173,10 @@ describe CatalogController, :type => :feature do
       expect(page).to have_xpath("//dt[contains(text(),'Item views')]/following-sibling::dd", text: "0")
     end
 
+    it "has linked publisher doi" do
+      expect(page).to have_xpath("//a[@href='http://dx.doi.org/10.1378/wonderland.01-2345']", text: 'http://dx.doi.org/10.1378/wonderland.01-2345')
+    end
+
     it "has suggested citation" do
       expect(page).to have_xpath("//dt[contains(text(),'Suggested Citation')]/following-sibling::dd",
         text: 'Lewis Carroll, Weird Old Guys., 1865, Alice\'s Adventures in Wonderland, Columbia University Academic Commons, http://dx.doi.org/10.7916/ALICE.')
@@ -188,6 +192,7 @@ describe CatalogController, :type => :feature do
       click_on 'alice_in_wonderland.pdf'
       expect(page.response_headers['X-Accel-Redirect']).to match /\/repository_download\/.*\/actest:2\/datastreams\/CONTENT\/content$/
     end
+
     it "links to the non-pdf download" do
       click_on 'to_solr.json'
       expect(page.response_headers['X-Accel-Redirect']).to match /\/repository_download\/.*\/actest:4\/datastreams\/content\/content$/

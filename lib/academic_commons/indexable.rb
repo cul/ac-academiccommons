@@ -135,7 +135,6 @@ module AcademicCommons
       end
 
       add_field.call("abstract", mods.at_css("abstract"))
-      #add_field.call("handle", mods.at_css("identifier[@type='hdl']"))
 
       mods.css("subject").each do |subject_node|
         attri = subject_node.attributes
