@@ -88,7 +88,7 @@ class CatalogController < ApplicationController
     config.add_index_field 'subject_facet',  label: 'Subject', separator: ', '
     config.add_index_field 'genre_facet',    label: 'Content Type'
     config.add_index_field 'publisher',      label: 'Publisher'
-    config.add_index_field 'handle',         label: 'Persistent URL', itemprop: 'url', helper_method: :persistent_url
+    config.add_index_field 'handle',         label: 'Persistent URL', itemprop: 'url', helper_method: :link_identifier
 
 
     config.add_show_field 'title_display',           label: 'Title',            itemprop: 'name'
@@ -98,7 +98,7 @@ class CatalogController < ApplicationController
     config.add_show_field 'genre_facet',             label: 'Type',             itemprop: 'genre',        link_to_search: 'genre_facet'
     config.add_show_field 'department_facet',        label: 'Department(s)',                              link_to_search: 'department_facet'
     config.add_show_field 'volume',                  label: 'Volume'
-    config.add_show_field 'handle',                  label: 'Persistent URL',   itemprop: 'url',          helper_method: :persistent_url
+    config.add_show_field 'handle',                  label: 'Persistent URL',   itemprop: 'url',          helper_method: :link_identifier
     config.add_show_field 'url',                     label: 'Streaming URL'
     config.add_show_field 'series_facet',            label: 'Series',                                     link_to_search: 'series_facet'
     config.add_show_field 'part_number',             label: 'Part Number'
@@ -114,7 +114,7 @@ class CatalogController < ApplicationController
     config.add_show_field 'abstract',                label: 'Abstract',         itemprop: 'description'
     config.add_show_field 'subject_facet',           label: 'Subject(s)',       itemprop: 'keywords',    link_to_search: 'subject_facet'
     config.add_show_field 'isbn',                    label: 'ISBN'
-    config.add_show_field 'doi',                     label: 'Publisher DOI'
+    config.add_show_field 'doi',                     label: 'Publisher DOI',                             helper_method: :link_identifier
 
 
     # "fielded" search configuration. Used by pulldown among other places.

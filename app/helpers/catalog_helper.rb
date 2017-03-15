@@ -11,11 +11,11 @@ module CatalogHelper
   delegate :repository, :to => :controller
 
   # Adds handle or doi prefix if necessary. Makes field a clickable link.
-  def persistent_url(**options)
+  def link_identifier(**options)
     value = case options[:value]
             when /^(AC:P:\d+)$/
               "http://hdl.handle.net/10022/#{$1}"
-            when /^(10\.7916\/*+)$/
+            when /^(10.+)$/
               "http://dx.doi.org/#{$1}"
             else
               options[:value]
