@@ -84,7 +84,7 @@ module AcademicCommons
 
           note_org = true
           first_role = name_node.at_css("role>roleTerm").text
-          add_field.call(first_role.gsub(/\s/, '_'), fullname)
+          add_field.call(first_role.downcase.gsub(/\s/, '_'), fullname)
 
           add_field.call("advisor_uni", name_node["ID"])
           add_field.call("advisor_search", fullname.downcase)
