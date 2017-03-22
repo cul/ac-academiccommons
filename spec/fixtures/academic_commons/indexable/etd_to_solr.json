@@ -1,0 +1,118 @@
+{
+  "id": [
+    "actest:1"
+  ],
+  "internal_h": [
+    "collection:3/"
+  ],
+  "pid": [
+    "actest:1"
+  ],
+  "member_of": [
+    "collection:3"
+  ],
+  "record_creation_date": [
+    "2016-09-14T16:31:33Z"
+  ],
+  "record_change_date": [
+    "2016-09-14T16:48:05Z"
+  ],
+  "record_language_of_catalog": [
+    "eng"
+  ],
+  "advisor_search": [
+    "smith, alan"
+  ],
+  "advisor_uni": [
+    "as000"
+  ],
+  "language": [
+    "English"
+  ],
+  "date_issued": [
+    "2015"
+  ],
+  "role": [
+    "author",
+    "thesis advisor",
+    "originator"
+  ],
+  "handle": [
+    "10.7916/TEST123"
+  ],
+  "title_display": [
+    "Test Dissertation"
+  ],
+  "title_search": [
+    "Test Dissertation"
+  ],
+  "author_info": [
+    "Doe, Ashley :  :"
+  ],
+  "author_search": [
+    "doe, ashley"
+  ],
+  "author_facet": [
+    "Doe, Ashley"
+  ],
+  "thesis_advisor": [
+    "Smith, Alan"
+  ],
+  "author_display": [
+    "Doe, Ashley"
+  ],
+  "pub_date_facet": [
+    "2015"
+  ],
+  "genre_facet": [
+    "Thesis"
+  ],
+  "genre_search": [
+    "Thesis"
+  ],
+  "abstract": [
+    "This dissertation focuses on the testing of a dissertation record."
+  ],
+  "keyword_search": [
+   "persona (literature)",
+   "influence (literary, artistic, etc.)"
+  ],
+  "subject_facet": [
+    "Persona (Literature)",
+    "Influence (Literary, artistic, etc.)"
+  ],
+  "subject_search": [
+    "Persona (Literature)",
+    "Influence (Literary, artistic, etc.)"
+  ],
+  "originator_department": [
+    "English and Comparative Literature"
+  ],
+  "table_of_contents": [
+    ""
+  ],
+  "type_of_resource_mods": [
+    "text"
+  ],
+  "type_of_resource_facet": [
+    "Text"
+  ],
+  "organization_facet": [
+    "Columbia University"
+  ],
+  "department_facet": [
+    "English and Comparative Literature"
+  ],
+  "described_by_ssim": [
+    "info:fedora/actest:1/test_ds"
+  ],
+  "free_to_read_start_date": [
+    "2015-04-09"
+  ],
+  "degree_grantor_ssim": [
+    "Columbia University"
+  ],
+  "degree_name_ssim": [
+    "Ph.D."
+  ]
+}

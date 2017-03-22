@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<mods:mods xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:mods="http://www.loc.gov/mods/v3" version="3.6" xsi:schemaLocation="http://www.loc.gov/mods/v3 http://www.loc.gov/standards/mods/v3/mods-3-6.xsd">
+   <mods:titleInfo>
+      <mods:title>Test Dissertation</mods:title>
+   </mods:titleInfo>
+   <mods:abstract>This dissertation focuses on the testing of a dissertation record.</mods:abstract>
+   <mods:relatedItem type="host" displayLabel="Project">
+      <mods:titleInfo>
+         <mods:title>Academic Commons</mods:title>
+      </mods:titleInfo>
+   </mods:relatedItem>
+   <mods:name type="personal" valueURI="temp:fc669aef5f12ea515ae82b75f11b77b8fe24c20f067c8c790943f5acafeceb3b">
+      <mods:namePart>Doe, Ashley</mods:namePart>
+      <mods:role>
+         <mods:roleTerm type="text" valueURI="http://id.loc.gov/vocabulary/relators/aut" authority="marcrelator">Author</mods:roleTerm>
+      </mods:role>
+   </mods:name>
+   <mods:name type="personal" ID="as000" valueURI="temp:fb4e2d1fce9d57eb34473a9092805b1835425d9dca3e6eaedef3ad688e4fb740">
+      <mods:namePart>Smith, Alan</mods:namePart>
+      <mods:role>
+         <mods:roleTerm type="text" valueURI="http://id.loc.gov/vocabulary/relators/ths" authority="marcrelator">Thesis advisor</mods:roleTerm>
+      </mods:role>
+   </mods:name>
+   <mods:name type="corporate" valueURI="temp:ea1cc077df24fbc74a96019811e6546692848b85a63cf6189c3d45b7bbdeaf17">
+      <mods:namePart>Columbia University. English and Comparative Literature</mods:namePart>
+      <mods:role>
+         <mods:roleTerm type="text" valueURI="http://id.loc.gov/vocabulary/relators/org" authority="marcrelator">Originator</mods:roleTerm>
+      </mods:role>
+   </mods:name>
+   <mods:genre type="text" valueURI="http://vocab.getty.edu/aat/300028028">Thesis</mods:genre>
+   <mods:subject valueURI="http://id.worldcat.org/fast/911989">
+      <mods:topic>English literature</mods:topic>
+   </mods:subject>
+   <mods:subject authority="fast" valueURI="http://id.worldcat.org/fast/1058561">
+      <mods:topic>Persona (Literature)</mods:topic>
+   </mods:subject>
+   <mods:subject authority="fast" valueURI="http://id.worldcat.org/fast/972484">
+      <mods:topic>Influence (Literary, artistic, etc.)</mods:topic>
+   </mods:subject>
+   <mods:language>
+     <mods:languageTerm type="text" valueURI="http://id.loc.gov/vocabulary/iso639-2/eng" authority="iso639-2b">English</mods:languageTerm>
+   </mods:language>
+   <mods:typeOfResource>text</mods:typeOfResource>
+   <mods:originInfo>
+      <mods:dateIssued encoding="w3cdtf">2015</mods:dateIssued>
+   </mods:originInfo>
+   <mods:recordInfo>
+     <mods:recordCreationDate encoding="w3cdtf">2016-09-14T16:31:33Z</mods:recordCreationDate>
+     <mods:recordChangeDate encoding="w3cdtf">2016-09-14T16:48:05Z</mods:recordChangeDate>
+      <mods:languageOfCataloging>
+         <mods:languageTerm valueUri="http://id.loc.gov/vocabulary/iso639-2/eng" authority="iso639-2b">eng</mods:languageTerm>
+      </mods:languageOfCataloging>
+   </mods:recordInfo>
+   <mods:identifier type="Hypatia ID">1963542</mods:identifier>
+   <mods:identifier type="DOI">10.7916/TEST123</mods:identifier>
+   <mods:extension xmlns:etdms="http://www.ndltd.org/standards/metadata/etdms/1.1/" xsi:schemaLocation="http://www.ndltd.org/standards/metadata/etdms/1.1/">
+      <etdms:degree>
+         <etdms:name>Ph.D.</etdms:name>
+         <etdms:level>2</etdms:level>
+         <etdms:discipline>English and Comparative Literature</etdms:discipline>
+         <etdms:grantor>Columbia University</etdms:grantor>
+      </etdms:degree>
+   </mods:extension>
+   <mods:extension xmlns:ali="http://www.niso.org/schemas/ali/1.0/" xsi:schemaLocation="http://www.niso.org/schemas/ali/1.0/ali.xsd">
+     <ali:free_to_read start_date="2015-04-09"/>
+   </mods:extension>
+</mods:mods>
