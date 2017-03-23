@@ -1,13 +1,6 @@
 <% unless has_search_parameters?  %>
   <%# if there are no input/search related params, display the "home" partial -%>
-
-  <div class="span-17">
-    <div id='most-recent' class='box clearfix'>
-      <%= render partial: "most_recent_updated" %>
-    </div>
-  </div>
-
-  <%= render partial: 'sidebar_all' %>
+  <%= render 'home' %>
 <% else %>
 	<% @page_title = "Search Results | " + application_name  %>
 
@@ -31,7 +24,6 @@
     <div class="result-set-tools">
       <%= render partial: 'pagination' %>
     </div>
-
    </div>
 
 	<% content_for :sidebar do %>

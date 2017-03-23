@@ -91,20 +91,8 @@
   </div>
 
   <div class="container clearfix" id="main" >
-    <%- if page_location == "home" || page_location == "browse_view" -%>
-      <div id="home-search" class="span-16 prepend-4">
-        <%= render partial: '/catalog/search_box' %>
-      </div>
 
-      <% if !alert_msg.empty? %>
-        <div style="height: 100px;"></div>
-        <%= render partial: "/catalog/alert_box" %>
-      <% end %>
-    <% end %>
-
-    <%- if page_location == "home" -%>
-      <%= render partial: '/catalog/home_text' %>
-    <% end %>
+    <%= yield :top_content %>
 
     <div id="sidebar" class="span-7">
       <div id="util_links" class='box'>
@@ -117,13 +105,12 @@
     <div id="content" class="span-17 last">
       <%= render partial: '/flash_msg' %>
 
-      <%= yield %>
+      <%= content_for?(:content) ? yield(:content) : yield %>
     </div>
 
     <footer class="span-24 append-bottom">
       <div id="footer"><%= @footer %></div>
     </footer>
-
   </div>
 
   <div class="container">
@@ -150,7 +137,7 @@
     </script>
   <% end %>
 
-  <%= render partial: 'layouts/cul_banner' %>
+  <%= render 'layouts/cul_banner' %>
 
 </body>
 </html>

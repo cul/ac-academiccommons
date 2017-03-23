@@ -45,11 +45,10 @@
   </div>
 
   <div class="container clearfix" id="main" >
-    <%- if page_location == "home" || page_location == "browse_view" -%>
-      <div id="home-search" class="span-16 prepend-4">
-        <%= render partial: '/catalog/search_box' %>
-      </div>
-    <% end %>
+    <div id="home-search" class="span-16 prepend-4">
+      <%= render partial: '/catalog/search_box' %>
+    </div>
+
 
     <div id="browse" class="span-24">
       <%= render partial: '/flash_msg' %>

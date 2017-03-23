@@ -1,20 +1,20 @@
 <%= content_for :top_content do %>
   <div id="home-search" class="span-16 prepend-4">
-    <%= render partial: '/catalog/search_box' %>
+    <%= render 'search_box' %>
   </div>
 
   <% if !alert_msg.empty? %>
     <div style="height: 100px;"></div>
-    <%= render partial: "/catalog/alert_box" %>
+    <%= render "alert_box" %>
   <% end %>
 
-  <%= render partial: '/catalog/home_text' %>
+  <%= render 'home_text' %>
 <% end %>
 
-<%= render partial: 'sidebar_all' %>
+<%= render 'sidebar_all' %>
 
 <div class="span-17">
   <div id='most-recent' class='box clearfix'>
-    <%= render partial: "most_recent_updated" %>
+    <%= render "most_recent_updated" %>
   </div>
 </div>
