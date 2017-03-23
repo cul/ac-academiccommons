@@ -14,6 +14,10 @@
   <%#= FIXME: did_you_mean is disabled until rsolr-ext is fixed. see http://jira.projectblacklight.org/jira/browse/CODEBASE-241 %>
   <%#= render :partial => 'did_you_mean' %>
 
+  <div id = "search-breadcrumbs">
+    <%= render partial: 'constraints' %>
+  </div>
+
   <div id="results-list-wrapper">
     <div class="result-set-tools">
       <%= render partial: 'pagination' %>

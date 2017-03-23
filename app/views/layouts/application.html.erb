@@ -117,12 +117,6 @@
     <div id="content" class="span-17 last">
       <%= render partial: '/flash_msg' %>
 
-      <%- if page_location == "search_results" -%>
-        <div id = "search-breadcrumbs">
-          <%= render partial: '/catalog/constraints' %>
-        </div>
-      <% end %>
-
       <%= yield %>
     </div>
 
