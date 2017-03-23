@@ -1,41 +1,25 @@
 <!doctype html>
 <html lang="en" class="no-js">
 <head>
-<meta charset="utf-8">
-<!--[if IE]><![endif]-->
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"> <!-- render with chromeframe plugin on IE where available -->
 
-<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"> <!-- render with chromeframe plugin on IE where available -->
+  <title><%= h(@page_title || application_name) %></title>
 
-<title><%= h(@page_title || application_name) %></title>
+  <meta name="description" content="Academic Commons is Columbia University's digital repository for academic research and scholarship produced by the university community.">
+  <meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0;">
 
-<meta name="description" content="Academic Commons is Columbia University's digital repository for academic research and scholarship produced by the university community.">
+  <%= favicon_link_tag 'favicon-crown.png', :media => "screen,projection", :type => "text/css" %>
+  <%= stylesheet_link_tag "//fonts.googleapis.com/css?family=Open+Sans:400italic,400,300,600&subset=latin-ext,latin", :media => "screen,projection", :rel => "stylesheet", :type => "text/css" %>
+  <%= stylesheet_link_tag "blueprint/screen", :media => "screen,projection"  %>
+  <%= stylesheet_link_tag "application" %>
 
-<!--  <meta name="author" content=""> -->
+  <link href="<%= url_for :controller=>:catalog,:action => :opensearch, :format => 'xml', :only_path => false %>" title="<%= application_name%>" type="application/opensearchdescription+xml" rel="search"/>
+  <!-- [if lt IE8] <%= stylesheet_link_tag "compiled/ie.css", :media => "screen, projection" %> -->
 
-<meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0;">
+  <%= javascript_include_tag "application" %>
 
-<%= favicon_link_tag 'favicon-crown.png', :media => "screen,projection", :type => "text/css" %>
-<%= stylesheet_link_tag "//fonts.googleapis.com/css?family=Open+Sans:400italic,400,300,600&subset=latin-ext,latin", :media => "screen,projection", :rel => "stylesheet", :type => "text/css" %>
-<%= stylesheet_link_tag "blueprint/screen", :media => "screen,projection"  %>
-<%= stylesheet_link_tag "application" %>
-
-
-
-<!--  <link rel="shortcut icon" href="/favicon.ico"> -->
-
-<!--  <link rel="apple-touch-icon" href="/apple-touch-icon.png"> -->
-
-
-<link href="<%= url_for :controller=>:catalog,:action => :opensearch, :format => 'xml', :only_path => false %>" title="<%= application_name%>" type="application/opensearchdescription+xml" rel="search"/>
-    <%#= stylesheet_link_tag 'compiled/screen.css', :media => 'screen, projection' %>
-    <%#= stylesheet_link_tag 'compiled/print.css', :media => "print" %>
-    <!-- [if lt IE8] <%= stylesheet_link_tag "compiled/ie.css", :media => "screen, projection" %> -->
-
-    <%= javascript_include_tag "application" %>
-
-    <%= yield :head %>
-
-    <!-- will revert link to native function when done editing stylesheets -->
+  <%= yield :head %>
 </head>
 
 
@@ -54,90 +38,55 @@
 <% end %>
 
 
-<div  class="container" id="header">
+  <div  class="container" id="header">
+    <header>
+      <h1 class="site_title"><%= link_to application_name, root_path %></h1>
+    </header>
+  </div>
 
+  <div class="container clearfix" id="main" >
+    <%- if page_location == "home" || page_location == "browse_view" -%>
+      <div id="home-search" class="span-16 prepend-4">
+        <%= render partial: '/catalog/search_box' %>
+      </div>
+    <% end %>
 
+    <div id="browse" class="span-24">
+      <%= render partial: '/flash_msg' %>
 
+      <%= yield %>
+    </div>
 
-<header>
+    <footer class="span-24 append-bottom">
+      <div id="footer"><%= @footer %></div>
+    </footer>
+  </div>
 
-		<h1 class="site_title"><%= link_to application_name, root_path %></h1>
+  <div class="container">
+    <div id="colophon" class="span-24 append-bottom">
+      <%= render partial: 'layouts/footer_line' %>
+    </div>
+  </div>
 
-</header>
-</div>
+  <%- if Rails.application.config.analytics_enabled == true -%>
+    <script type="text/javascript">
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-10481105-1']);
+      _gaq.push(['_trackPageview'],
+    ['aggregate._setAccount', 'UA-7973988-3'],
+    ['aggregate._trackPageview']
+    );
 
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
 
-<div class="container clearfix" id="main" >
+    </script>
+  <% end %>
 
-
-	<%- if page_location == "home" || page_location == "browse_view" -%>
-
-	<div id="home-search" class="span-16 prepend-4">
-	    <%= render :partial=>'/catalog/search_box' %>
-	</div>
-
-
-
-
-		<% end %>
-
-
-
-
-
-
-	<div id="browse" class="span-24">
-
-	<%= render :partial=>'/flash_msg' %>
-
-
-
-
-
-		<%= yield %>
-	</div>
-
-
-
-<footer class="span-24 append-bottom">
-
-	<div id="footer">
-
-		<%= @footer %>
-
-	</div>
-
-</footer>
-
-</div>  <!-- div#container -->
-
-<div class="container">
-
-<div id="colophon" class="span-24 append-bottom">
-<%= render :partial=>'layouts/footer_line' %>
-</div>
-
-</div>
-
-<%- if Rails.application.config.analytics_enabled == true -%>
-<script type="text/javascript">
-
-  var _gaq = _gaq || [];
-  _gaq.push(['_setAccount', 'UA-10481105-1']);
-  _gaq.push(['_trackPageview'],
-['aggregate._setAccount', 'UA-7973988-3'],
-['aggregate._trackPageview']
-);
-
-  (function() {
-    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-  })();
-
-</script> <% end %>
-
-<%= render :partial=>'layouts/cul_banner' %>
+  <%= render partial: 'layouts/cul_banner' %>
 
 </body>
 </html>
