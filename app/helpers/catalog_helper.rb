@@ -261,12 +261,6 @@ module CatalogHelper
     'blacklight-' + document.get(blacklight_config.view_config(document_index_view_type_field).display_type_field).parameterize rescue nil
   end
 
-  # override of blacklight method - when a request for /catalog/BAD_SOLR_ID is made, this method is executed...
-  def invalid_solr_id_error
-    index
-    render "tombstone", :status => 404
-  end
-
   def facet_list_limit
     10
   end

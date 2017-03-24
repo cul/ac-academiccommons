@@ -1,0 +1,22 @@
+<% content_for :sidebar do %>
+  <h3>Helpful Links</h3>
+  <div class="sidebar-content">
+    <%= link_to "About", about_path, class: "nav-link" %>
+    <%= link_to "Frequently Asked Questions", faq_path, class: "nav-link" %>
+    <hr>
+    <%= link_to "Browse Departments", departments_browse_path, class: "nav-link" %>
+    <%= link_to "Browse Subjects", subjects_browse_path, class: "nav-link" %>
+  </div>
+<% end %>
+
+<h2>Record Not Found</h2>
+
+<p>This item does not exist in Academic Commons or may have been removed.</p>
+
+<p class="list_title">If this item was removed, it may have been removed:</p>
+  <ul>
+    <li>at the request of the author or copyright holder (if other than the author).</li>
+    <li>at the request of the originating department.</li>
+  </ul>
+
+<p>For more information about this item, contact Academic Commons administrators at <%= mail_to "ac@columbia.edu" %>.</p>

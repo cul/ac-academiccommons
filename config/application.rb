@@ -62,5 +62,11 @@ module AcademicCommons
     # Analytics disabled by default. Google analytics should be enabled in a
     # per-environment basis.
     config.analytics_enabled = false
+
+    # Mapping errors
+    config.action_dispatch.rescue_responses.merge!(
+      'Blacklight::Exceptions::RecordNotFound' => :record_not_found,
+    )
+
   end
 end
