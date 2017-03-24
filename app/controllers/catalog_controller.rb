@@ -96,6 +96,7 @@ class CatalogController < ApplicationController
     config.add_show_field 'thesis_advisor',          label: 'Thesis Advisor(s)'
     config.add_show_field 'pub_date_facet',          label: 'Date',             itemprop: 'datePublished'
     config.add_show_field 'genre_facet',             label: 'Type',             itemprop: 'genre',        link_to_search: 'genre_facet'
+    config.add_show_field 'degree_name_ssim',        label: 'Degree',                                     helper_method: :concat_grantor
     config.add_show_field 'department_facet',        label: 'Department(s)',                              link_to_search: 'department_facet'
     config.add_show_field 'volume',                  label: 'Volume'
     config.add_show_field 'handle',                  label: 'Persistent URL',   itemprop: 'url',          helper_method: :link_identifier

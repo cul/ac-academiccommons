@@ -33,13 +33,21 @@ RSpec.describe AcademicCommons::Indexable do
   context 'when mods from Hyacinth' do
     let(:mods_fixture) { File.read('spec/fixtures/actest_3/mods.xml') }
     include_examples 'indexing mods'
+
+    context 'contains degree information' do
+      let(:mods_fixture) { File.read('spec/fixtures/academic_commons/indexable/etd_mods.xml') }
+      let(:expected_json) { JSON.load File.read('spec/fixtures/academic_commons/indexable/etd_to_solr.json') }
+
+      include_examples 'indexing mods'
+    end
   end
+
 
   # TODO: This can test and its associated fixture can be removed when we
   # completely transition over to Hyacinth.
   context 'when mods from Hypatia' do
-    let(:mods_fixture) { File.read('spec/fixtures/hypatia_mods.xml') }
-    let(:expected_json) { JSON.load File.read('spec/fixtures/hypatia_to_solr.json') }
+    let(:mods_fixture) { File.read('spec/fixtures/academic_commons/indexable/hypatia_mods.xml') }
+    let(:expected_json) { JSON.load File.read('spec/fixtures/academic_commons/indexable/hypatia_to_solr.json') }
     include_examples 'indexing mods'
   end
 end

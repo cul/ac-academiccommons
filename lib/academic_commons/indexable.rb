@@ -44,6 +44,7 @@ module AcademicCommons
       identifierIndexing(mods, add_field)
       locationUrlIndexing(mods, add_field)
       embargo_release_date_indexing(mods, add_field)
+      degree_indexing(mods, add_field)
 
       title = mods.css(">titleInfo>title")
       related_titles = mods.css("relatedItem[@type='host']:not([displayLabel=Project])>titleInfo").css(">nonSort,title")
@@ -84,7 +85,7 @@ module AcademicCommons
 
           note_org = true
           first_role = name_node.at_css("role>roleTerm").text
-          add_field.call(first_role.gsub(/\s/, '_'), fullname)
+          add_field.call(first_role.downcase.gsub(/\s/, '_'), fullname)
 
           add_field.call("advisor_uni", name_node["ID"])
           add_field.call("advisor_search", fullname.downcase)
@@ -395,6 +396,18 @@ module AcademicCommons
           if(!free_to_read_start_date.nil? && free_to_read_start_date.length != 0)
              add_field.call("free_to_read_start_date", free_to_read_start_date)
           end
+        end
+      end
+    end
+
+    def degree_indexing(mods, add_field)
+      if degree = mods.at_css("> extension > degree")
+        if (name = degree.at_css("name")) && !name.text.blank?
+          add_field.call("degree_name_ssim", name)
+        end
+
+        if (grantor = degree.at_css("grantor")) && !name.text.blank?
+          add_field.call("degree_grantor_ssim", grantor)
         end
       end
     end
