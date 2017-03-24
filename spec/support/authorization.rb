@@ -29,7 +29,6 @@ end
 shared_examples 'authorization required' do
   context "without being logged in" do
     before do
-      #allow(request.env['warden']).to receive(:authenticate!).and_throw(:warden, { :scope => :user })
       allow(controller).to receive(:current_user).and_return(nil)
       http_request
     end
@@ -43,13 +42,9 @@ shared_examples 'authorization required' do
   context "logged in as a non-admin user" do
     include_context 'mock non-admin user'
 
-    before do
-      http_request
-    end
-
+    # In order to check status code, etc, need to create request specs.
     it "fails" do
-      expect(response.status).to eql(302)
-      expect(response.headers['Location']).to eql(access_denied_url)
+      expect { http_request }.to raise_error AcademicCommons::Exceptions::NotAuthorized
     end
   end
 
