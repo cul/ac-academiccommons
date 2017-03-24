@@ -35,8 +35,6 @@ AcademicCommons::Application.routes.draw do
 
   get '/download/download_log/:id', :to => 'download#download_log', :as => 'download_log'
 
-  get '/access_denied', :to => 'application#access_denied', :as => 'access_denied'
-
   get '/ingest_monitor/:id', :to => 'ingest_monitor#show', :as => 'ingest_monitor'
 
   match '/statistics/detail_report',        :to => 'statistics#detail_report', via: [:get, :post]

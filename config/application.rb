@@ -65,8 +65,8 @@ module AcademicCommons
 
     # Mapping errors
     config.action_dispatch.rescue_responses.merge!(
-      'Blacklight::Exceptions::RecordNotFound' => :record_not_found,
+      'Blacklight::Exceptions::RecordNotFound'       => :record_not_found,
+      'AcademicCommons::Exceptions::NotAuthorized'   => :forbidden
     )
-
   end
 end

@@ -2,6 +2,8 @@ class ApplicationController < ActionController::Base
   include Blacklight::Controller
   include Devise::Controllers::Helpers
 
+  class NotAuthorized < StandardError; end
+
   protect_from_forgery
 
   layout "application"
@@ -13,14 +15,6 @@ class ApplicationController < ActionController::Base
     @fedora_config ||= Rails.configuration.fedora
   end
 
-  # def store_location
-  #   session[:return_to] = request.fullpath
-  # end
-
-  def access_denied
-    render :template => 'access_denied'
-  end
-
   # Authenticate a user using Devise and then check that the user is an
   # administrator. If user not an admin, user gets redirected to access_denied_url
   # denied page.
@@ -28,7 +22,7 @@ class ApplicationController < ActionController::Base
     authenticate_user!
 
     if !user_signed_in? || !current_user.admin
-      redirect_to access_denied_url
+      raise AcademicCommons::Exceptions::NotAuthorized
     end
   end
 
