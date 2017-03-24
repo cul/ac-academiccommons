@@ -70,4 +70,15 @@ namespace :deploy do
 
     system("git tag -a #{tag} -m 'auto-tagged' && git push origin --tags")
   end
+
+  desc "Generate dynamic 500.html"
+  task :generate_500_html do
+    on roles(:web) do |host|
+      public_500_html = File.join(release_path, "public", "500.html")
+      env = (fetch(:stage) == 'prod') ? '' : "-#{fetch(:stage)}.cdrs"
+      execute :curl, "https://#{fetch(:application)}#{env}.columbia.edu/500", "-o", public_500_html
+    end
+  end
+
+  after "deploy:published", :generate_500_html
 end

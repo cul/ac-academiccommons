@@ -74,6 +74,9 @@ AcademicCommons::Application.routes.draw do
   get '/policies', to: 'info#policies', as: 'policies'
   get '/faq', to: 'info#faq', as: 'faq'
 
+  # Route used to render error page.
+  get '/500', to: 'errors#internal_server_error'
+
   # Handle server redirects to /item/:id. This route will redirect those requests
   # to /catalog/:id.
   get '/item/:id', to: redirect('/catalog/%{id}')
