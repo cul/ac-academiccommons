@@ -7,7 +7,7 @@ AcademicCommons::Application.configure do
   config.cache_classes = false
 
   # Show full error reports and disable caching
-  config.consider_all_requests_local       = true
+  config.consider_all_requests_local       = false # Setting to false for error page tests
   #config.action_view.debug_rjs             = true
   config.action_controller.perform_caching = false
 
