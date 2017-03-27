@@ -113,10 +113,8 @@ end
   </div>
 
 
-  <%if !alert_msg.empty? %>
   <div style="height: 100px;"></div>
-  <%= render :partial => "/catalog/alert_box" %>
-  <%end%>
+  <%= render partial: "/application/alert_box" %>
 
   <% end %>
 
