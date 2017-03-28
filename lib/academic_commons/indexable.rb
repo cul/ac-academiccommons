@@ -409,6 +409,10 @@ module AcademicCommons
         if (grantor = degree.at_css("grantor")) && !name.text.blank?
           add_field.call("degree_grantor_ssim", grantor)
         end
+
+        if (level = degree.at_css("level")) && !level.text.blank?
+          add_field.call("degree_level_ssim", level)
+        end
       end
     end
 
