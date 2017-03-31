@@ -32,7 +32,12 @@ class SolrDocumentsController < ApplicationController
     end
     begin
       obj = ActiveFedora::Base.find(params[:id])
-      obj.update_index
+
+      # Using direct solr query to update document without soft commiting.
+      # autoCommit will take care of presisting the new document. This change
+      # was required in order to support multiple publishing requests from Hyacinth.
+      ActiveFedora::SolrService.add(obj.to_solr)
+
       expire_fragment('repository_statistics')
       location_url = obj.is_a?(ContentAggregator) ?
         catalog_url(params[:id]) :
