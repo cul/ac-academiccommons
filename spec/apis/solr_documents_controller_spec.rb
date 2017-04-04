@@ -24,6 +24,7 @@ describe SolrDocumentsController, type: :controller, integration: true do
       get :show, id: 'actest:1', format: 'json'
       expect(response.status).to eql(404)
       put :update, { id: 'actest:1' }
+      sleep(20) # It may take the solr document up to 15 min to show up
       expect(response.status).to eql(200)
       expect(response.headers['Location']).to eql("http://test.host/catalog/actest:1")
       get :show, id: 'actest:1', format: 'json'
@@ -32,6 +33,7 @@ describe SolrDocumentsController, type: :controller, integration: true do
       get :show, id: 'actest:2', format: 'json'
       expect(response.status).to eql(404)
       put :update, { id: 'actest:2' }
+      ActiveFedora::SolrService.commit # Force commit, since we are not using softCommit
       expect(response.headers['Location']).
         to eql("http://test.host/download/fedora_content/download/actest:2/CONTENT/alice_in_wonderland.pdf")
     end
@@ -39,6 +41,7 @@ describe SolrDocumentsController, type: :controller, integration: true do
       put :update, { id: 'actest:1' }
       put :update, { id: 'actest:2' }
       put :update, { id: 'actest:4' }
+      ActiveFedora::SolrService.commit # Force commit, since we are not using softCommit
     end
   end
   describe "destroy" do
@@ -58,6 +61,7 @@ describe SolrDocumentsController, type: :controller, integration: true do
       put :update, { id: 'actest:1' }
       put :update, { id: 'actest:2' }
       put :update, { id: 'actest:4' }
+      ActiveFedora::SolrService.commit # Force commit, since we are not using softCommit
     end
   end
 end
