@@ -31,17 +31,22 @@ class SolrDocumentsController < ApplicationController
       return
     end
     begin
+      # Check if document in solr index.
+      new_item = ActiveFedora::SolrService.query("{!raw f=id}#{params[:id]}").count.zero?
+
       obj = ActiveFedora::Base.find(params[:id])
 
       # Using direct solr query to update document without soft commiting.
       # autoCommit will take care of presisting the new document. This change
       # was required in order to support multiple publishing requests from Hyacinth.
-      ActiveFedora::SolrService.add(obj.to_solr)
+      solr_doc = obj.to_solr
+      ActiveFedora::SolrService.add(solr_doc)
 
       expire_fragment('repository_statistics')
-      location_url = obj.is_a?(ContentAggregator) ?
-        catalog_url(params[:id]) :
-        download_url(obj)
+      aggregator = obj.is_a?(ContentAggregator)
+      notify_authors_of_new_item(solr_doc) if new_item && aggregator
+
+      location_url = aggregator ? catalog_url(params[:id]) : download_url(obj)
       response.headers['Location'] = location_url
       render status: :ok, plain: ''
     rescue ActiveFedora::ObjectNotFoundError => e
@@ -82,6 +87,7 @@ class SolrDocumentsController < ApplicationController
   end
 
   private
+
   def download_url(af_obj)
     download_params = {
       block: nil,
@@ -96,4 +102,13 @@ class SolrDocumentsController < ApplicationController
     end
     fedora_content_url(download_params)
   end
+
+  def notify_authors_of_new_item(solr_doc)
+    solr_doc.fetch('author_uni', []).each do |uni|
+      depositor = AcademicCommons::LDAP.find_by_uni(uni)
+      doc = SolrDocument.new(solr_doc)
+      NotificationMailer.new_item_available(depositor, doc).deliver_now
+    end
+  end
+
 end

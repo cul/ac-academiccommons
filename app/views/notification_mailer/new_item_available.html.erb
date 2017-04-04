@@ -1,0 +1,46 @@
+
+<style>
+  .box { padding: 10px 0 0 0; }
+  .title { padding: 10px 0 0 15px; }
+  .item-detail { padding: 0 0 0 15px; }
+</style>
+
+<table>
+  <tr>
+    <td>Dear <%= (@depositor.name.blank?) ? @depositor.uni : @depositor.name %>,</td>
+  </tr>
+
+  <tr><td class="box">
+    A repository record for an item that you authored is now available on <%= link_to 'academiccommons.columbia.edu', 'academiccommons.columbia.edu' %>.
+  </td></tr>
+
+  <tr><td class="box">
+    <% if @solr_doc.embargoed? %>
+      The file for the following embargoed item is NOT available at this time,
+      though information about the item is displayed in the Academic Commons
+      record. The file will become available on the date listed below.
+    <% else %>
+      The following item is available in Academic Commons.
+    <% end %>
+  </td></tr>
+
+  <tr><td class="title"><%= @solr_doc[:title_display] %></td></tr>
+  <tr><td class="item-detail"><%= link_identifier(value: @solr_doc[:handle]) %></td></tr>
+  <% if @solr_doc.embargoed? %>
+    <tr><td class="item-detail">Release date: <%= @solr_doc[:free_to_read_start_date] %></td></tr>
+  <% end %>
+
+  <tr><td class="box">Please use these persistent URLs when linking to or citing your work in Academic Commons.</td></tr>
+
+  <tr>
+    <td class="box">Thank you for contributing to Academic Commons. If you have any questions about your deposit, you can reach us by replying to this email.</td>
+  </tr>
+
+  <tr>
+    <td class="box">
+      Sincerely,<br><br>
+      Academic Commons<br>
+      Columbia University Libraries
+    </td>
+  </tr>
+</table>

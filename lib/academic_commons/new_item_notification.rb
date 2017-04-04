@@ -64,7 +64,7 @@ module AcademicCommons
     end
 
     def clean_authors_array(authors_uni)
-      return nil if authors_uni.blank?
+      return [] if authors_uni.blank?
       authors_uni.map { |uni_str| uni_str.split(', ') }.flatten
     end
   end

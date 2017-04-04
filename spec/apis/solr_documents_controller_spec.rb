@@ -5,6 +5,7 @@ describe SolrDocumentsController, type: :controller, integration: true do
     @original_creds = Rails.application.secrets.index_api_key
     Rails.application.secrets.index_api_key = 'goodtoken'
     request.env['HTTP_AUTHORIZATION'] = api_key
+    allow(controller).to receive(:notify_authors_of_new_item)
   end
   after do
     Rails.application.secrets.index_api_key = @original_creds
@@ -17,8 +18,7 @@ describe SolrDocumentsController, type: :controller, integration: true do
 
   describe "update" do
     before do
-      # delete a fixture from the index so that the test is meaningful
-      delete :destroy, { id: 'actest:1' }
+      delete :destroy, { id: 'actest:1' } # delete a fixture from the index so that the test is meaningful
     end
     it do
       get :show, id: 'actest:1', format: 'json'

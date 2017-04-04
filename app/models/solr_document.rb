@@ -1,7 +1,7 @@
-# -*- encoding : utf-8 -*-
 class SolrDocument
-
   include Blacklight::Solr::Document
+  include AcademicCommons::Embargoes
+
   SolrDocument.use_extension( BlacklightOaiProvider::SolrDocumentExtension )
 
 
@@ -43,5 +43,7 @@ class SolrDocument
     Time.parse get('record_creation_date')
   end
 
-
+  def embargoed?
+    !free_to_read?(self)
+  end
 end

@@ -61,6 +61,7 @@ describe SolrDocumentsController, :type => :controller do
           allow(mock_object).to receive(:pid).and_return('good:id')
           allow(mock_object).to receive(:to_solr).and_return(Hash.new)
           expect(ActiveFedora::SolrService).to receive(:add).with(Hash.new)
+          expect(controller).to receive(:notify_authors_of_new_item)
         end
         it do
           expect(subject).to eql(200)
