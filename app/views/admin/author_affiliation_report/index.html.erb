@@ -1,0 +1,11 @@
+<%= render partial: 'admin_sidebar' %>
+
+<div id="content" class="box">
+
+  <h2>Author Affiliation Report</h2>
+  <p>(insert more information about report here)</p>
+
+  <%= form_tag("/admin/author_affliation_report/create", method: "get") do %>
+    <%= submit_tag("Generate Report") %>
+  <% end %>
+</div>
