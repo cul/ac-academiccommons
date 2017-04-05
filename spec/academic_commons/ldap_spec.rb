@@ -11,6 +11,8 @@ RSpec.describe AcademicCommons::LDAP do
       its(:first_name) { is_expected.to eql 'Jane' }
       its(:last_name)  { is_expected.to eql 'Doe' }
       its(:uni)        { is_expected.to eql uni }
+      its(:title)      { is_expected.to eql 'Librarian' }
+      its(:organizational_unit) { is_expected.to eql 'Columbia University Libraries' }
     end
 
     context 'when ldap does not have record for uni' do
@@ -21,16 +23,20 @@ RSpec.describe AcademicCommons::LDAP do
       its(:first_name) { is_expected.to eql nil }
       its(:last_name)  { is_expected.to eql nil }
       its(:uni)        { is_expected.to eql uni }
+      its(:title)      { is_expected.to eql nil }
+      its(:organizational_unit) { is_expected.to eql nil }
     end
 
     context 'when ldap does not have email' do #has names, but not email
-      let(:ldap_response) { [{ :sn => 'Doe', :givenname => 'Jane' }] }
+      let(:ldap_response) { [{ :sn => 'Doe', :givenname => 'Jane', :cn => 'Jane Doe' }] }
 
       its(:name)       { is_expected.to eql 'Jane Doe' }
       its(:email)      { is_expected.to eql "#{uni}@columbia.edu" }
       its(:first_name) { is_expected.to eql 'Jane' }
       its(:last_name)  { is_expected.to eql 'Doe' }
       its(:uni)        { is_expected.to eql uni }
+      its(:title)      { is_expected.to eql '' }
+      its(:organizational_unit) { is_expected.to eql '' }
     end
   end
 end

@@ -9,7 +9,10 @@ shared_context 'mock ldap request' do
   end
 
   let(:ldap_response) do
-    [{ :mail => 'janedoe@columbia.edu', :sn => 'Doe', :givenname => 'Jane' }]
+    [{
+      :mail => ['janedoe@columbia.edu'], :sn => ['Doe'], :givenname => ['Jane'],
+      :cn => ['Jane Doe'], :title => ['Librarian'], :ou => ['Columbia University Libraries']
+    }]
   end
 
   before :each do
