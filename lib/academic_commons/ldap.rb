@@ -22,7 +22,7 @@ module AcademicCommons
         p.title = (entry[:title].kind_of?(Array) ? entry[:title].first : entry[:title]).to_s
         p.organizational_unit = (entry[:ou].kind_of?(Array) ? entry[:ou].first : entry[:ou]).to_s
 
-        Rails.logger.info "Retriving user information via LDAP for #{p.name} (#{p.uid})"
+        Rails.logger.info "Retriving user information via LDAP for #{p.name} (#{p.uni})"
       end
 
       # Augment information if necessary.
