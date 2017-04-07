@@ -59,7 +59,8 @@ describe SolrDocumentsController, :type => :controller do
         before do
           allow(ActiveFedora::Base).to receive(:find).with('good:id').and_return(mock_object)
           allow(mock_object).to receive(:pid).and_return('good:id')
-          expect(mock_object).to receive(:update_index)
+          allow(mock_object).to receive(:to_solr).and_return(Hash.new)
+          expect(ActiveFedora::SolrService).to receive(:add).with(Hash.new)
         end
         it do
           expect(subject).to eql(200)
