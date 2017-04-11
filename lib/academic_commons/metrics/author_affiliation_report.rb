@@ -15,6 +15,7 @@ module AcademicCommons::Metrics
         'ldap organizational unit'
       ]
 
+      ldap_user = {} # Caching ldap user details.
       rows = []
       usage_stats.each do |item_stats|
         # retrieve entire solr document
@@ -45,7 +46,11 @@ module AcademicCommons::Metrics
           row['multi-author count'] = author_count
 
           # query ldap for more information about this author
-          person = AcademicCommons::LDAP.find_by_uni(uni)
+          person = ldap_user.fetch(uni, nil)
+          if person.nil?
+            person = AcademicCommons::LDAP.find_by_uni(uni)
+            ldap_user[uni] = person
+          end
 
           row['author name'] = person.name
           row['ldap author title'] = person.title
