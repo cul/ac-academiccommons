@@ -2,8 +2,6 @@ class ApplicationController < ActionController::Base
   include Blacklight::Controller
   include Devise::Controllers::Helpers
 
-  class NotAuthorized < StandardError; end
-
   protect_from_forgery
 
   layout "application"
