@@ -16,12 +16,16 @@ module CatalogHelper
             when /^(AC:P:\d+)$/
               "http://hdl.handle.net/10022/#{$1}"
             when /^(10.+)$/
-              "http://dx.doi.org/#{$1}"
+              "https://doi.org/#{$1}"
             else
               options[:value]
             end
 
     link_to value, value
+  end
+
+  def concat_grantor(**options)
+    [options[:value], options[:document]['degree_grantor_ssim']].join(", ")
   end
 
   def get_total_count

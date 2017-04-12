@@ -5,9 +5,7 @@
 <% end %>
 
 <div>
-  <%if !alert_msg.empty? %>
-    <%= render :partial => "/catalog/alert_box" %>
-  <%end%>
+  <%= render partial: "/application/alert_box" %>
 </div>
 
 <div id="document">

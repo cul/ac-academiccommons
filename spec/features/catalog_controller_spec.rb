@@ -174,7 +174,7 @@ describe CatalogController, :type => :feature do
     end
 
     it "has linked publisher doi" do
-      expect(page).to have_xpath("//a[@href='http://dx.doi.org/10.1378/wonderland.01-2345']", text: 'http://dx.doi.org/10.1378/wonderland.01-2345')
+      expect(page).to have_xpath("//a[@href='https://doi.org/10.1378/wonderland.01-2345']", text: 'https://doi.org/10.1378/wonderland.01-2345')
     end
 
     it "has suggested citation" do

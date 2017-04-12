@@ -20,6 +20,7 @@ class AdminController < ApplicationController
       else
         ContentBlock.create!(:title => "alert_message", :user => current_user, :data => params[:alert_message])
       end
+      expire_fragment('alert_message')
     end
 
     alert_message_model = ContentBlock.find_by_title("alert_message")
