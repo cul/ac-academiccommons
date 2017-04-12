@@ -2,7 +2,7 @@
   <%# if there are no input/search related params, display the "home" partial -%>
   <%= render 'home' %>
 <% else %>
-	<% @page_title = "Search Results | " + application_name  %>
+  <% @page_title = "Search Results | " + application_name  %>
 
   <%#= FIXME: did_you_mean is disabled until rsolr-ext is fixed. see http://jira.projectblacklight.org/jira/browse/CODEBASE-241 %>
   <%#= render :partial => 'did_you_mean' %>
@@ -26,7 +26,7 @@
     </div>
    </div>
 
-	<% content_for :sidebar do %>
-	  <%= render partial: 'facets' %>
-	<% end %>
+  <% content_for :sidebar do %>
+    <%= render partial: 'facets' %>
+  <% end %>
 <% end %>
