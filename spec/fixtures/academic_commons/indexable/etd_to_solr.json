@@ -1,51 +1,31 @@
 {
-  "id": [
-    "actest:1"
-  ],
+  "id": "actest:1",
   "internal_h": [
     "collection:3/"
   ],
-  "pid": [
-    "actest:1"
-  ],
+  "pid": "actest:1",
   "member_of": [
     "collection:3"
   ],
-  "record_creation_date": [
-    "2016-09-14T16:31:33Z"
-  ],
-  "record_change_date": [
-    "2016-09-14T16:48:05Z"
-  ],
-  "record_language_of_catalog": [
-    "eng"
-  ],
+  "record_creation_date": "2016-09-14T16:31:33Z",
+  "record_change_date": "2016-09-14T16:48:05Z",
+  "record_language_of_catalog": "eng",
   "advisor_search": [
     "smith, alan"
   ],
   "advisor_uni": [
     "as000"
   ],
-  "language": [
-    "English"
-  ],
-  "date_issued": [
-    "2015"
-  ],
+  "language": "English",
+  "date_issued": "2015",
   "role": [
     "author",
     "thesis advisor",
     "originator"
   ],
-  "handle": [
-    "10.7916/TEST123"
-  ],
-  "title_display": [
-    "Test Dissertation"
-  ],
-  "title_search": [
-    "Test Dissertation"
-  ],
+  "handle": "10.7916/TEST123",
+  "title_display": "Test Dissertation",
+  "title_search": "Test Dissertation",
   "author_info": [
     "Doe, Ashley :  :"
   ],
@@ -58,9 +38,7 @@
   "thesis_advisor": [
     "Smith, Alan"
   ],
-  "author_display": [
-    "Doe, Ashley"
-  ],
+  "author_display": "Doe, Ashley",
   "pub_date_facet": [
     "2015"
   ],
@@ -70,9 +48,7 @@
   "genre_search": [
     "Thesis"
   ],
-  "abstract": [
-    "This dissertation focuses on the testing of a dissertation record."
-  ],
+  "abstract": "This dissertation focuses on the testing of a dissertation record.",
   "keyword_search": [
    "persona (literature)",
    "influence (literary, artistic, etc.)"
@@ -85,12 +61,7 @@
     "Persona (Literature)",
     "Influence (Literary, artistic, etc.)"
   ],
-  "originator_department": [
-    "English and Comparative Literature"
-  ],
-  "table_of_contents": [
-    ""
-  ],
+  "originator_department": "English and Comparative Literature",
   "type_of_resource_mods": [
     "text"
   ],
@@ -106,9 +77,7 @@
   "described_by_ssim": [
     "info:fedora/actest:1/test_ds"
   ],
-  "free_to_read_start_date": [
-    "2015-04-09"
-  ],
+  "free_to_read_start_date": "2015-04-09",
   "degree_grantor_ssim": [
     "Columbia University"
   ],

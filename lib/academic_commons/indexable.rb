@@ -19,6 +19,16 @@ module AcademicCommons
     # this is documentary, and should go away when this module is a concern
     REQUIRED_METHODS = [:belongs_to, :descMetadata_content]
 
+    # Keeping track of multivalued fields until we move over to using dynamic
+    # field names. Once we make the switch this can be reduced.
+    MULTIVALUED_FIELDS = %w(
+      member_of internal_h author_uni advisor_uni author_search advisor_search
+      genre_search keyword_search subject_display subject_search notes
+      book_author geographic_area_display geographic_area_search role
+      affiliation_department type_of_resource_mods author_info thesis_advisor
+      \w+_ssm \w+_ssim \w+_facet \w+_s \w+_t
+    ).freeze
+
     def index_descMetadata(solr_doc={})
       raise "called index_descMetadata twice" if (@index_descMetadata ? (@index_descMetadata += 1) : (@index_descMetadata = 1)) > 1
 
@@ -31,8 +41,22 @@ module AcademicCommons
 
       collections = self.belongs_to
       normalize_space = lambda { |s| s.to_s.strip.gsub(/\s{2,}/," ") }
-      search_to_content = lambda { |x| x.kind_of?(Nokogiri::XML::Element) ? x.content.strip : x.to_s.strip }
-      add_field = lambda { |name, value| solr_doc[name] ? (solr_doc[name] << search_to_content.call(value)) : (solr_doc[name] = [search_to_content.call(value)]) }
+
+      # Adds value to solr doc hash, if there is a value present.
+      # Accepts String of Nokogiri::XML::Element as value
+      add_field = lambda { |name, value|
+        return if value.nil?
+        value = value.content if value.kind_of?(Nokogiri::XML::Element)
+        value = value.strip
+        return if value.blank?
+
+        if multivalued?(name)
+          solr_doc[name] = [] unless solr_doc[name]
+          solr_doc[name] << value
+        else
+          solr_doc[name] = value
+        end
+      }
 
       organizations = []
       departments = []
@@ -50,7 +74,7 @@ module AcademicCommons
       locationIndexing(mods, add_field)
       languageIndexing(mods, add_field)
       originInfoIndexing(mods, add_field)
-      solr_doc['role'] = roleIndexing(mods, add_field)
+      roleIndexing(mods, add_field)
       persistent_uri(mods, add_field)
       identifierIndexing(mods, add_field)
       locationUrlIndexing(mods, add_field)
@@ -72,7 +96,6 @@ module AcademicCommons
         note_org = false
 
         if name_node.css("role>roleTerm").collect(&:content).any? { |role| AUTHOR_ROLES.include?(role.downcase) }
-
           note_org = true
           all_author_names << fullname
           if(!name_node["ID"].nil?)
@@ -112,7 +135,6 @@ module AcademicCommons
             end
           end
         end
-
       end
 
       mods.css("name[@type='corporate']").each do |corp_name_node|
@@ -172,30 +194,14 @@ module AcademicCommons
           book_journal_title = book_journal_title.content + ": " + book_journal_subtitle.content.to_s if book_journal_subtitle
         end
 
-        if(volume = related_host.at_css("part>detail[@type='volume']>number"))
-          add_field.call("volume", volume)
-        end
-
-        if(issue = related_host.at_css("part>detail[@type='issue']>number"))
-          add_field.call("issue", issue)
-        end
-
-        if(start_page = related_host.at_css("part > extent[@unit='page'] > start"))
-          add_field.call("start_page", start_page)
-        end
-
-        if(end_page = related_host.at_css("part > extent[@unit='page'] > end"))
-          add_field.call("end_page", end_page)
-        end
-
-        if(date = related_host.at_css("part > date"))
-          add_field.call("date", date)
-        end
+        add_field.call("volume", related_host.at_css("part>detail[@type='volume']>number"))
+        add_field.call("issue", related_host.at_css("part>detail[@type='issue']>number"))
+        add_field.call("start_page", related_host.at_css("part > extent[@unit='page'] > start"))
+        add_field.call("end_page", related_host.at_css("part > extent[@unit='page'] > end"))
+        add_field.call("date", related_host.at_css("part > date"))
 
         add_field.call("book_journal_title", book_journal_title)
-
         add_field.call("book_author", get_fullname(related_host.at_css("name")))
-
       end
 
       if(related_series = mods.at_css("relatedItem[@type='series']"))
@@ -271,17 +277,13 @@ module AcademicCommons
     end
 
     def recordInfoIndexing(mods, add_field)
-
-      if(record_content_source = mods.at_css("recordInfo>recordContentSource"))
-        add_field.call("record_content_source", record_content_source)
-      end
+      add_field.call("record_content_source", mods.at_css("recordInfo>recordContentSource"))
 
       if(record_creation_date = mods.at_css("recordInfo>recordCreationDate"))
         record_creation_date = DateTime.parse(record_creation_date.text.gsub("UTC", "").strip)
         add_field.call("record_creation_date", record_creation_date.strftime("%Y-%m-%dT%H:%M:%SZ"))
 
         Rails.logger.info "====== record_creation_date: " + record_creation_date.strftime("%Y-%m-%dT%H:%M:%SZ")
-
       end
 
       if(record_change_date = mods.at_css("recordInfo>recordChangeDate"))
@@ -289,68 +291,37 @@ module AcademicCommons
         add_field.call("record_change_date", record_change_date.strftime("%Y-%m-%dT%H:%M:%SZ"))
       end
 
-      if(record_identifier = mods.at_css("recordInfo>recordIdentifier"))
-        add_field.call("record_identifier", record_identifier)
-      end
-
-      if(record_language_of_catalog = mods.at_css("recordInfo>languageOfCataloging>languageTerm"))
-        add_field.call("record_language_of_catalog", record_language_of_catalog)
-      end
+      add_field.call("record_identifier", mods.at_css("recordInfo>recordIdentifier"))
+      add_field.call("record_language_of_catalog", mods.at_css("recordInfo>languageOfCataloging>languageTerm"))
 
       if(record_creation_date.nil? && !record_change_date.nil?)
         add_field.call("record_creation_date", record_change_date.strftime("%Y-%m-%dT%H:%M:%SZ"))
 
         logger.info "====== record_creation_date: " + record_change_date.strftime("%Y-%m-%dT%H:%M:%SZ")
       end
-
     end
 
     def locationIndexing(mods, add_field)
-      if(physicalLocation = mods.at_css("location>physicalLocation"))
-        add_field.call("physical_location", physicalLocation)
-      end
+      add_field.call("physical_location", mods.at_css("location>physicalLocation"))
     end
 
     def languageIndexing(mods, add_field)
-      if(language = mods.at_css("language>languageTerm"))
-        add_field.call("language", language)
-      end
+      add_field.call("language", mods.at_css("language>languageTerm"))
     end
 
     def originInfoIndexing(mods, add_field)
-      if(publisher = mods.at_css("originInfo > publisher"))
-        if(!publisher.nil? && publisher.text.length != 0)
-          add_field.call("publisher", publisher)
-        end
-      end
-
-      if(location = mods.at_css("originInfo>place>placeTerm"))
-        if(!location.nil? && location.text.length != 0)
-          add_field.call("publisher_location", location)
-        end
-      end
-
-      if(dateIssued = mods.at_css("originInfo>dateIssued"))
-        if(!dateIssued.nil? && dateIssued.text.length != 0)
-          add_field.call("date_issued", dateIssued)
-        end
-      end
-
-      if(edition = mods.at_css("originInfo>edition"))
-        if(!edition.nil? && edition.text.length != 0)
-          add_field.call("edition", edition)
-        end
-      end
+      add_field.call("publisher", mods.at_css("originInfo > publisher"))
+      add_field.call("publisher_location", mods.at_css("originInfo>place>placeTerm"))
+      add_field.call("date_issued", mods.at_css("originInfo>dateIssued"))
+      add_field.call("edition", mods.at_css("originInfo>edition"))
     end
 
     def roleIndexing(mods, add_field)
-      roles = []
       mods.css("role > roleTerm").each do |role|
         if(!role.nil? && role.text.length != 0)
-          roles << role.text.downcase
+          add_field.call('role', role.text.downcase)
         end
       end
-      roles
     end
 
     # Returns persistent uri which could be a doi(with no prefix),
@@ -367,38 +338,14 @@ module AcademicCommons
     end
 
     def identifierIndexing(mods, add_field)
-      if(isbn = mods.at_css("identifier[@type='isbn']"))
-        if(!isbn.nil? && isbn.text.length != 0)
-          add_field.call("isbn", isbn)
-        end
-      end
-
-      # Publisher DOI
-      if(doi = mods.at_css("identifier[@type='doi']"))
-        if(!doi.nil? && doi.text.length != 0)
-          add_field.call("doi", doi)
-        end
-      end
-
-      if(uri = mods.at_css("identifier[@type='uri']"))
-        if(!uri.nil? && uri.text.length != 0)
-          add_field.call("uri", uri)
-        end
-      end
-
-      if(issn = mods.at_css("identifier[@type='issn']"))
-        if(!issn.nil? && issn.text.length != 0)
-          add_field.call("issn", issn)
-        end
-      end
+      add_field.call("isbn", mods.at_css("identifier[@type='isbn']"))
+      add_field.call("doi", mods.at_css("identifier[@type='doi']")) # Publisher DOI
+      add_field.call("uri", mods.at_css("identifier[@type='uri']"))
+      add_field.call("issn", mods.at_css("identifier[@type='issn']"))
     end
 
     def locationUrlIndexing(mods, add_field)
-      if(locationUrl = mods.at_css("location > url"))
-        if(!locationUrl.nil? && locationUrl.text.length != 0)
-          add_field.call("url", locationUrl)
-        end
-      end
+      add_field.call("url", mods.at_css("location > url"))
     end
 
     def embargo_release_date_indexing(mods, add_field)
@@ -413,17 +360,9 @@ module AcademicCommons
 
     def degree_indexing(mods, add_field)
       if degree = mods.at_css("> extension > degree")
-        if (name = degree.at_css("name")) && !name.text.blank?
-          add_field.call("degree_name_ssim", name)
-        end
-
-        if (grantor = degree.at_css("grantor")) && !name.text.blank?
-          add_field.call("degree_grantor_ssim", grantor)
-        end
-
-        if (level = degree.at_css("level")) && !level.text.blank?
-          add_field.call("degree_level_ssim", level)
-        end
+        add_field.call("degree_name_ssim", degree.at_css("name"))
+        add_field.call("degree_grantor_ssim",  degree.at_css("grantor"))
+        add_field.call("degree_level_ssim", degree.at_css("level"))
       end
     end
 
@@ -437,6 +376,10 @@ module AcademicCommons
       else
         (node.css("namePart[@type='family']").collect(&:content) | node.css("namePart[@type='given']").collect(&:content)).join(', ')
       end
+    end
+
+    def multivalued?(field)
+      !MULTIVALUED_FIELDS.map { |f| /^#{f}$/.match field }.compact.empty?
     end
   end
 end
