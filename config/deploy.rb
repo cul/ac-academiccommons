@@ -1,5 +1,4 @@
-lock '3.4.0'
-
+lock '3.8.0'
 
 set :department, 'ac'
 set :instance, fetch(:department)
@@ -16,19 +15,13 @@ set :repo_url,  "git@github.com:cul/#{fetch(:repo_name)}.git"
 
 set :remote_user, "#{fetch(:instance)}serv"
 
-
 # Default deploy_to directory is /var/www/:application
-# set :deploy_to, '/var/www/my_app_name'
 set :deploy_to,   "/opt/passenger/#{fetch(:instance)}/#{fetch(:deploy_name)}"
 
-
-#set :scm, :git
-
-# Default value for :format is :pretty
-# set :format, :pretty
+# Default value for :format is :airbrussh
+# set :format, :airbrussh
 
 # Default value for :log_level is :debug
-# set :log_level, :debug
 set :log_level, :info
 
 # Default value for linked_dirs is []
@@ -76,7 +69,7 @@ namespace :deploy do
     on roles(:web) do |host|
       public_500_html = File.join(release_path, "public", "500.html")
       env = (fetch(:stage) == 'prod') ? '' : "-#{fetch(:stage)}.cdrs"
-      execute :curl, "https://#{fetch(:application)}#{env}.columbia.edu/500", "-o", public_500_html
+      execute :curl, "https://#{fetch(:application)}#{env}.columbia.edu/500", "-sS", "-o", public_500_html
     end
   end
 
