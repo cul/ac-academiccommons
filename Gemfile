@@ -33,6 +33,7 @@ gem 'sass-rails'
 gem "therubyracer"
 gem 'uglifier'
 gem 'unicode'
+gem 'whenever', require: false
 
 group :development do
   gem 'spring'
