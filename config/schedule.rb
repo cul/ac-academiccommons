@@ -1,20 +1,24 @@
 # Use this file to easily define all of your cron jobs.
-#
-# It's helpful, but not entirely necessary to understand cron before proceeding.
-# http://en.wikipedia.org/wiki/Cron
-
-# Example:
-#
-# set :output, "/path/to/my/cron_log.log"
-#
-# every 2.hours do
-#   command "/usr/bin/some_great_command"
-#   runner "MyModel.some_method"
-#   rake "some:great:rake:task"
-# end
-#
-# every 4.days do
-#   runner "AnotherModel.prune_old_records"
-# end
-
 # Learn more: http://github.com/javan/whenever
+
+# Load rails environment
+require File.expand_path('../config/environment', __dir__)
+
+# Set environment to current environment.
+set :environment, Rails.env
+
+# Our job template wraps the cron job in a script that emails out any errors.
+# This is a CUL provided script. More details can be found here:
+# https://wiki.library.columbia.edu/display/USGSERVICES/Cron+Management
+# Errors will be emailed out to email specified in secrets.yml.
+set :email_subject, "Cron"
+set :error_recipient, Rails.application.secrets[:cron_errors]
+set :job_template, "/usr/local/bin/mailifrc -s 'Error - :email_subject' :error_recipient -- /bin/bash -l -c ':job'"
+
+# Overriding to remove output redirection option.
+job_type :rake, "cd :path && :environment_variable=:environment bundle exec rake :task"
+
+# Delete searches table weekly.
+every :day, at: '5am' do
+  rake "blacklight:delete_old_searches[7]", email_subject: 'Weekly searches table cleanout'
+end

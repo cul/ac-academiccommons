@@ -42,6 +42,8 @@ set :linked_files, fetch(:linked_files, []).push(
   "public/robots.txt",
 )
 
+# Namespace crontab based on app environment.
+set :whenever_identifier, ->{ fetch(:deploy_name) }
 
 namespace :deploy do
   desc "Report the environment"
