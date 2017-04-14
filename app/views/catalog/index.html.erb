@@ -1,50 +1,32 @@
-<% if params[:q].blank? and params[:f].blank? and params[:search_field].blank? %>
-	<%# if there are no input/search related params, display the "home" partial -%>
-
-	<div class="span-17">
-		<div id='most-recent' class='box clearfix'>
-			<%= render :partial=>"most_recent_updated" %>
-		</div>
-	</div>
-
-	<%= render :partial=>'sidebar_all' %>
+<% unless has_search_parameters?  %>
+  <%# if there are no input/search related params, display the "home" partial -%>
+  <%= render 'home' %>
 <% else %>
+  <% @page_title = "Search Results | " + application_name  %>
 
-	<% @page_title = "Search Results | " + application_name  %>
+  <%#= FIXME: did_you_mean is disabled until rsolr-ext is fixed. see http://jira.projectblacklight.org/jira/browse/CODEBASE-241 %>
+  <%#= render :partial => 'did_you_mean' %>
 
-	<%#= FIXME: did_you_mean is disabled until rsolr-ext is fixed. see http://jira.projectblacklight.org/jira/browse/CODEBASE-241 %>
-	<%#= render :partial => 'did_you_mean' %>
+  <div id = "search-breadcrumbs">
+    <%= render partial: 'constraints' %>
+  </div>
 
-    <div id="results-list-wrapper">
-
+  <div id="results-list-wrapper">
     <div class="result-set-tools">
-
-    <%= render :partial=>'pagination' %>
-	<%= render :partial=>'sort_and_per_page' %>
-
-	</div>
-
-	<div class="results-set-list">
-
-
-	<%= render :partial=>'document_list' %>
+      <%= render partial: 'pagination' %>
+      <%= render partial: 'sort_and_per_page' %>
     </div>
 
-     <div class="result-set-tools">
+    <div class="results-set-list">
+      <%= render partial: 'document_list' %>
+    </div>
 
-    <%= render :partial=>'pagination' %>
+    <div class="result-set-tools">
+      <%= render partial: 'pagination' %>
+    </div>
+   </div>
 
-
-	</div>
-
-  	</div>
-
-	<% content_for :sidebar do %>
-	  <%= render :partial=>'facets' %>
-	<% end %>
-
-	<%= render :partial=>'solr_request' %>
-
-
-
+  <% content_for :sidebar do %>
+    <%= render partial: 'facets' %>
+  <% end %>
 <% end %>

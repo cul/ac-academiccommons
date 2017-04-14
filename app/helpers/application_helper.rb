@@ -73,24 +73,4 @@ module ApplicationHelper
 
     return content
   end
-
-  def page_location
-    if params[:controller] == 'catalog'
-      if params[:action] == 'index' and params[:q].to_s.blank? and params[:f].to_s.blank? && params[:search_field].to_s.blank?
-        return "home"
-      elsif params[:action] == 'index'
-        return "search_results"
-      elsif params[:action] == 'show'
-        return "record_view"
-      elsif params[:action] == 'browse' || params[:action] == 'browse_department' || params[:action] == 'browse_subject'
-        return "browse_view"
-      end
-    elsif params[:controller] == 'advanced'
-      return "advanced"
-    elsif params[:controller] == 'search_history'
-      return "search_history"
-    else
-      return "unknown"
-    end
-  end
 end

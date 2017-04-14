@@ -1,0 +1,12 @@
+<% @page_title = "Error! - #{application_name}" %>
+
+<% content_for :content do %>
+  <div id="static-text">
+    <h1>Error!</h1>
+
+    <%= yield %>
+
+  </div>
+<% end %>
+
+<%= render template: "layouts/application" %>

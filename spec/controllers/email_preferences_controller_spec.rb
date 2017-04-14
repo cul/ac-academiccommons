@@ -41,13 +41,8 @@ describe EmailPreferencesController, :type => :controller do
     context "logged in as a non-admin user" do
       include_context 'mock non-admin user'
 
-      before do
-        http_request
-      end
-
       it "fails" do
-        expect(response.status).to eql(302)
-        expect(response.headers['Location']).to eql(access_denied_url)
+        expect { http_request }.to raise_error AcademicCommons::Exceptions::NotAuthorized
       end
     end
 
@@ -88,13 +83,8 @@ describe EmailPreferencesController, :type => :controller do
     context "logged in as a non-admin user" do
       include_context 'mock non-admin user'
 
-      before do
-        http_request
-      end
-
       it "fails" do
-        expect(response.status).to eql(302)
-        expect(response.headers['Location']).to eql(access_denied_url)
+        expect { http_request }.to raise_error AcademicCommons::Exceptions::NotAuthorized
       end
     end
 
@@ -133,13 +123,8 @@ describe EmailPreferencesController, :type => :controller do
     context "logged in as a non-admin user" do
       include_context 'mock non-admin user'
 
-      before do
-        http_request
-      end
-
       it "fails" do
-        expect(response.status).to eql(302)
-        expect(response.headers['Location']).to eql(access_denied_url)
+        expect { http_request }.to raise_error AcademicCommons::Exceptions::NotAuthorized
       end
     end
 

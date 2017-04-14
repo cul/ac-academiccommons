@@ -35,8 +35,6 @@ AcademicCommons::Application.routes.draw do
 
   get '/download/download_log/:id', :to => 'download#download_log', :as => 'download_log'
 
-  get '/access_denied', :to => 'application#access_denied', :as => 'access_denied'
-
   get '/ingest_monitor/:id', :to => 'ingest_monitor#show', :as => 'ingest_monitor'
 
   match '/statistics/detail_report',        :to => 'statistics#detail_report', via: [:get, :post]
@@ -73,6 +71,9 @@ AcademicCommons::Application.routes.draw do
   get '/about', to: 'info#about', as: 'about'
   get '/policies', to: 'info#policies', as: 'policies'
   get '/faq', to: 'info#faq', as: 'faq'
+
+  # Route used to render error page.
+  get '/500', to: 'errors#internal_server_error'
 
   # Handle server redirects to /item/:id. This route will redirect those requests
   # to /catalog/:id.

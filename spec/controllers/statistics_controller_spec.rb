@@ -84,13 +84,10 @@ describe StatisticsController, :type => :controller, integration: true do
     context "logged in as a non-admin user" do
       include_context 'mock non-admin user'
 
-      before do
-        get :total_usage_stats, format: :json
-      end
-
       it "fails" do
-        expect(response.status).to eql(302)
-        expect(response.headers['Location']).to eql(access_denied_url)
+        expect {
+          get :total_usage_stats, format: :json
+        }.to raise_error AcademicCommons::Exceptions::NotAuthorized
       end
     end
 

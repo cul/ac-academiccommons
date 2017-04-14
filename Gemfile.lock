@@ -160,6 +160,8 @@ GEM
     faraday_middleware (0.10.1)
       faraday (>= 0.7.4, < 1.0)
     ffi (1.9.14)
+    gaffe (1.2.0)
+      rails (>= 4.0.0)
     globalid (0.3.7)
       activesupport (>= 4.1.0)
     haml (4.0.7)
@@ -467,6 +469,7 @@ DEPENDENCIES
   dotenv-rails
   factory_girl_rails
   fancybox2-rails
+  gaffe
   haml (>= 4.0.7)
   httpclient (~> 2.6)
   jettywrapper (>= 1.4.0)!
