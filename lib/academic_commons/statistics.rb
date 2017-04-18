@@ -132,7 +132,7 @@ module AcademicCommons
           email = designated_recipient || author[:email]
           raise "no email address found" if email.nil?
 
-          if usage_stats.none?(&:zero?) || params[:include_zeroes]
+          if (!usage_stats.empty?) && (usage_stats.none?(&:zero?) || params[:include_zeroes])
             sent_counter += 1
             if(params[:do_not_send_email])
               test_msg = ' (this is test - email was not sent)'
