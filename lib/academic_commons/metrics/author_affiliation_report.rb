@@ -28,7 +28,7 @@ module AcademicCommons::Metrics
 
         start_of_row = [
           doc[:id],
-          doc[:handle],
+          AcademicCommons.identifier_url(doc[:handle]),
           item_stats.get_stat(Statistic::DOWNLOAD, UsageStatistics::LIFETIME),
           item_stats.get_stat(Statistic::VIEW, UsageStatistics::LIFETIME),
           doc.fetch(:department_facet, []).join(", "),
