@@ -30,16 +30,6 @@ RSpec.describe AcademicCommons::Statistics do
         fl: "title_display,id,handle,doi,genre_facet,record_creation_date,object_state_ssi,free_to_read_start_date"
       }
     end
-    let(:author_docs) do
-      {
-        'response' => {
-          'docs' => [
-            { 'id' => pid, 'title_display' => 'First Test Document', 'object_state_ssi' => 'A',
-              'handle' => '', 'doi' => '', 'genre_facet' => '' },
-          ]
-        }
-      }
-    end
 
     before :each do
       FactoryGirl.create_list(:view_stat, 5)
@@ -50,23 +40,55 @@ RSpec.describe AcademicCommons::Statistics do
       statistics.instance_eval{ send_authors_reports(authors, nil) }
     end
 
+    subject { ActionMailer::Base.deliveries.pop }
+
     context 'sends email' do
-      let(:email) { ActionMailer::Base.deliveries.pop }
+      let(:author_docs) do
+        Blacklight::Solr::Response.new(
+          {
+            'response' => {
+               'docs' => [
+                 { 'id' => pid, 'title_display' => 'First Test Document', 'object_state_ssi' => 'A',
+                   'handle' => '', 'doi' => '', 'genre_facet' => '' },
+               ]
+            }
+          }, {}
+        )
+      end
 
       it 'to correct author' do
-        expect(email.to).to contain_exactly 'abc123@columbia.edu'
+        expect(subject.to).to contain_exactly 'abc123@columbia.edu'
       end
 
       it 'with expected subject' do
-        expect(email.subject).to eql "Academic Commons Monthly Download Report for #{test_params[:month]} #{test_params[:year]}"
+        expect(subject.subject).to eql "Academic Commons Monthly Download Report for #{test_params[:month]} #{test_params[:year]}"
       end
 
       it 'with appropriate title' do
-        expect(email.body.to_s).to match /Usage Statistics for abc123/
+        expect(subject.body.to_s).to match /Usage Statistics for abc123/
       end
 
       it 'with correct documents' do
-        expect(email.body.to_s).to match /First Test Document/
+        expect(subject.body.to_s).to match /First Test Document/
+      end
+    end
+
+    context 'when all items embargoed' do
+      let(:author_docs) do
+        Blacklight::Solr::Response.new(
+          {
+            'response' => {
+               'docs' => [
+                 { 'id' => pid, 'title_display' => 'First Test Document', 'object_state_ssi' => 'A',
+                   'handle' => '', 'doi' => '', 'genre_facet' => '', 'free_to_read_start_date' => Date.tomorrow.strftime('%Y-%m-%d') },
+               ]
+            }
+          }, {}
+        )
+      end
+
+      it 'does not send an email' do
+        expect(subject).to be nil
       end
     end
   end
