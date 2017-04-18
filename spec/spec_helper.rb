@@ -102,6 +102,11 @@ RSpec.configure do |config|
   # as the one that triggered the failure.
   # Kernel.srand config.seed
 
+  # CLearing emails before the start of each new tests.
+  config.before(:each) do
+    ActionMailer::Base.deliveries.clear
+  end
+
   # Configuration for use of DatabaseCleaner.
   #
   # All tests except feature tests, use the transaction strategy to clean the
