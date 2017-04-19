@@ -1,9 +1,11 @@
 
-<style>
-  .box { padding: 10px 0 0 0; }
-  .title { padding: 10px 0 0 15px; }
-  .item-detail { padding: 0 0 0 15px; }
-</style>
+<% content_for :head do %>
+  <style type="text/css">
+    .box { padding: 10px 0 0 0; }
+    .title { padding: 10px 0 0 15px; }
+    .item-detail { padding: 0 0 0 15px; }
+  </style>
+<% end %>
 
 <table>
   <tr>
@@ -11,7 +13,7 @@
   </tr>
 
   <tr><td class="box">
-    A repository record for an item that you authored is now available on <%= link_to 'academiccommons.columbia.edu', 'academiccommons.columbia.edu' %>.
+    Thank you for contributing to <%= link_to 'Academic Commons', 'academiccommons.columbia.edu' %>, Columbia’s online research repository.
   </td></tr>
 
   <tr><td class="box">
@@ -20,7 +22,7 @@
       though information about the item is displayed in the Academic Commons
       record. The file will become available on the date listed below.
     <% else %>
-      The following item is available in Academic Commons.
+      The following item is now available.
     <% end %>
   </td></tr>
 
@@ -30,15 +32,17 @@
     <tr><td class="item-detail">Release date: <%= @solr_doc[:free_to_read_start_date] %></td></tr>
   <% end %>
 
-  <tr><td class="box">Please use these persistent URLs when linking to or citing your work in Academic Commons.</td></tr>
+  <tr><td class="box">
+    Please use this persistent URL when linking to or citing your work in Academic Commons.
+  </td></tr>
 
   <tr>
-    <td class="box">Thank you for contributing to Academic Commons. If you have any questions about your deposit, you can reach us by replying to this email.</td>
+    <td class="box">If you have any questions about your deposit, you can reach us by replying to this email.</td>
   </tr>
 
   <tr>
     <td class="box">
-      Sincerely,<br><br>
+      Sincerely,<br>
       Academic Commons<br>
       Columbia University Libraries
     </td>
