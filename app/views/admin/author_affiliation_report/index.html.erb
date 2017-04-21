@@ -1,0 +1,19 @@
+<%= render partial: 'admin_sidebar' %>
+
+<div id="content" class="box">
+
+  <h2>Author Affiliation Report</h2>
+  <p>
+    This page generates a report that details the affiliate status and
+    department for each Columbia author who is associated with each item. The
+    goal is to capture Columbia author affiliation and status while they are
+    still listed in the Columbia directory, as this information is not recorded
+    (status) or may not be recorded consistently (department) in AC. The report
+    should be run once a semester, archived, and made available for use in
+    assessment.
+  </p>
+
+  <%= form_tag(admin_author_affiliation_report_create_path, method: "get") do %>
+    <%= submit_tag("Generate Report") %>
+  <% end %>
+</div>

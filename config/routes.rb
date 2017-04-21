@@ -57,8 +57,14 @@ AcademicCommons::Application.routes.draw do
   get '/admin/deposits/:id', :to => 'admin#show_deposit', :as => 'show_deposit'
   get '/admin/deposits/:id/file', :to => 'admin#download_deposit_file', :as => 'download_deposit_file'
   get '/admin/agreements', :to => 'admin#agreements'
+
   match '/admin/ingest', :to => 'admin#ingest', via: [:get, :post]
   match '/admin/edit_alert_message', :to => 'admin#edit_alert_message', via: [:get, :post]
+
+  namespace :admin do
+    get 'author_affiliation_report/index'
+    get 'author_affiliation_report/create'
+  end
 
   get '/emails/get_csv_email_form', :to => 'emails#get_csv_email_form'
 

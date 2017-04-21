@@ -1,6 +1,4 @@
-require 'cgi'
-require 'rsolr'
-require 'json'
+require 'academic_commons'
 
 module CatalogHelper
   include Blacklight::CatalogHelperBehavior
@@ -12,16 +10,8 @@ module CatalogHelper
 
   # Adds handle or doi prefix if necessary. Makes field a clickable link.
   def link_identifier(**options)
-    value = case options[:value]
-            when /^(AC:P:\d+)$/
-              "http://hdl.handle.net/10022/#{$1}"
-            when /^(10.+)$/
-              "https://doi.org/#{$1}"
-            else
-              options[:value]
-            end
-
-    link_to value, value
+    url = AcademicCommons.identifier_url(options[:value])
+    link_to url, url
   end
 
   def concat_grantor(**options)

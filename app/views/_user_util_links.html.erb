@@ -4,7 +4,7 @@
   | <%= link_to('View your last search', catalog_index_path(current_user.last_search_url)) %>
   <% end %>
   <% if current_user.admin? %>
-    | <%= link_to("Admin", :controller => :admin) %>
+    <%= link_to("Admin", admin_path) %>
   <% end %>
 <% else %>
   <%= link_to 'Login', user_saml_omniauth_authorize_url(return_to: request.original_url) %>
