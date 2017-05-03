@@ -19,36 +19,10 @@ jQuery(document).ready(function() {
     });
 
 
-
-
   // adds classes for zebra striping table rows
   $('table.zebra tr:even').addClass('zebra_stripe');
   $('ul.zebra li:even').addClass('zebra_stripe');
 
-  //add highlight to search results
- /*
- var q = $("#q")
-
-  if(q != null && q != undefined && q != " ")
-  {
-	  q = q.val();
-	  $(".document *").each
-	  (
-		  function()
-		  {
-			  console.debug($(this));
-
-
-			  if($(this).children().length == 0)
-		      {
-				  var re = new RegExp(q, "ig");
-				  console.debug($(this).text());
-				  $(this).html($(this).text().replace(re, "<span class=\"highlight\">$&</span>"));
-		      }
-		  }
-	  );
-  }
-*/
 
 /*************
  * Facet more dialog. Uses JQuery UI Dialog. Use crazy closure technique.
@@ -136,49 +110,6 @@ jQuery(document).ready(function() {
    },function(){
      $(this).parents("li").removeClass("highlight");
    });
-
-
-/* keep facet boxes visible after page scroll   */
-/*var placeholder = $( "#facet-wrapper" );
-var sb = $( "#facets" );
- var sc = $("#hd-mini");
-var view = $( window );
-view.bind(
-"scroll resize",
-function(){
-
-    var placeholderTop = placeholder.offset().top;
-
-    var viewTop = view.scrollTop();
-
-  if (
-    (viewTop > placeholderTop) &&
-    !sb.is( ".facets-fixed" )
-  ){
-
-
-    placeholder.height(placeholder.height());
-
-
-    sb.addClass( "facets-fixed" );
-
-
-
-
-} else if (
-(viewTop <= placeholderTop) &&
-sb.is( ".facets-fixed" )
-){
-
-
-placeholder.css( "height", "auto" );
-
-sb.removeClass( "facets-fixed" );
-sc.removeClass("visible");
-
-}
-}
-);*/
 
 
     $("#split_button").toggle();
