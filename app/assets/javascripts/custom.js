@@ -129,51 +129,45 @@ jQuery(document).ready(function() {
 	  });
 	 });
 
+
+/*
+ * Reloads log content for the current index running. Once the index is done
+ * changes the cancel link to return to main admin indexing page.
+*/
 $("#ingest_monitor_content").each
-(
-	function()
-	{
-		$(this).val("Please wait, we'll start monitoring the log file shortly...");
-		var log_monitor_resource = $(this).attr("name");
-		var wait = null;
-		var intervalId = setInterval
-		(
-			function()
-			{
-				if(wait == true) return;
-				wait = true;
-				$.ajax
-				({
-					type: "GET",
-					url: log_monitor_resource,
-					dataType: "json",
-					processData: true,
-					success: function(data)
-					{
-						$("#ingest_monitor_content").val(data.log);
-						wait = false;
-						if(data.log.indexOf(':results') >= 0)
-						{
-							clearInterval(intervalId);
-							$("#cancel_ingest_link").attr("href", $("#cancel_ingest_link").attr("href").replace(/\?cancel=([0-9].*)/i, ""));
-							$("#cancel_ingest_link").html("Return to the Main Ingest Form");
-						}
-					},
-					error: function(data, text, error)
-					{
-						console.debug(text);
-						console.debug(error);
-						wait = false;
-					}
-				});
-			},
-			3000
-		)
-	}
-)
-
-
+  (function() {
+    $(this).val("Please wait, we'll start monitoring the log file shortly...");
+    var log_monitor_resource = $(this).attr("name");
+    var wait = null;
+    var intervalId = setInterval
+    (function() {
+      if(wait == true) return;
+      wait = true;
+      $.ajax ({
+        type: "GET",
+        url: log_monitor_resource,
+        dataType: "json",
+        processData: true,
+        success: function(data) {
+          $("#ingest_monitor_content").val(data.log);
+          wait = false;
+          if(data.log.indexOf('FINISHED') >= 0) {
+            clearInterval(intervalId);
+            $("#cancel_ingest_link").removeAttr("data-method");
+            $("#cancel_ingest_link").html("Return to the Main Ingest Form");
+          }
+        },
+        error: function(data, text, error){
+          console.debug(text);
+          console.debug(error);
+          wait = false;
+        }
+      });
+    }, 3000)
+  })
 });
+
+
 
 function $$archiveDeposit(url)
 {

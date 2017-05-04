@@ -1,17 +1,7 @@
 class AdminController < ApplicationController
-  include DepositorHelper
-
   before_filter :require_admin!
 
   layout "application"
-
-  def ingest
-    process_indexing(params)
-
-    if(params[:executed_by])
-      render nothing: true
-    end
-  end
 
   def edit_alert_message
     if params[:commit]

@@ -1,0 +1,48 @@
+<%= render partial: 'admin_sidebar' %>
+
+<div id="content" class="box" >
+  <h2>Index Records</h2>
+    <p>Admnistrative backend to index records into the Academic Commons.</p>
+  <% if @pid.nil? %>
+    <h3>Index <strong>ALL</strong> Records</h3>
+    <p>
+      A full collection index only indexes items currrently in the solr core.
+      This should be used when the metadata for each record needs to be
+      updated because of changes made in the AC code base. For example,
+      solr schema changes. Regenerating the MODS must be done via Hyacinth
+      (via a republish).
+    </p>
+    <%= form_tag(method: "post") do %>
+      <%= hidden_field_tag :all, 'true' %>
+      <center><%= submit_tag "Start" %></center>
+    <% end %>
+
+    <br/>
+    <hr/>
+    <br/>
+
+    <h3>Index Specificied Items</h3>
+    <p>
+      An item index will index the specificied pids without checking if they
+      are currently in the solr core. When we move completely to Hyacinth this
+      feature will be removed. Pids should be seperated by spaces.
+    </p>
+    <center>
+      <%= form_tag(method: "post") do %>
+        <%= text_area_tag :items, params[:items], size: "70x6" %>
+        <br/>
+        <%= submit_tag "Start" %>
+      <% end %>
+    </center>
+  <% else %>
+    <h3>An index is running:</h3>
+    <div>PID: <%= @pid %></div>
+    <div>Timestamp ID: <%= @timestamp %></div>
+     <p>
+       <textarea id="ingest_monitor_content" cols="85" rows="30"
+                 name=<%= "/admin/indexing/log_monitor/#{@timestamp}" %>>
+       </textarea>
+     </p>
+    <p><%= link_to("Cancel Index", admin_indexing_path, id: 'cancel_ingest_link', method: :delete) %></p>
+  <% end %>
+</div>

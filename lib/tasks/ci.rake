@@ -1,4 +1,3 @@
-require File.expand_path(File.dirname(__FILE__) + '../../../lib/ac_indexing.rb')
 namespace :ci do
   task :load_collection => :environment do
     fedora_config = Rails.application.config.fedora

@@ -16,7 +16,6 @@ module AcademicCommons
 
     # Reindexes all items that are currently in the solr core.
     def all_items
-      indexing_logger.info "This re-index executed by: #{executed_by}"
       indexing_logger.info "Indexing all items (aggregators) currently in the solr core..."
 
       # Solr query to retrieve all aggregators in solr core.
@@ -39,14 +38,14 @@ module AcademicCommons
       indexing_logger.info "Preparing to index #{items.size} items..."
 
       items.each do |pid|
-        indexing_logger.info "Indexing #{pid}..."
+        indexing_logger.info "Indexing aggregator #{pid}..."
 
         begin
           i = ActiveFedora::Base.find(pid)
-          i.update_index # Could leverage autoCommit here.
+          i.update_index
           i.list_members.each do |resource|
             next if only_in_solr && !solr_id_exists?(resource.id)
-            indexing_logger.info("indexing resource: ")
+            indexing_logger.info("Indexing resource: #{resource.id}")
             indexing_logger.info(resource.to_solr)
             resource.update_index
           end
@@ -79,7 +78,7 @@ module AcademicCommons
 
     # Helper to determain whether or not id exists in solr core.
     def solr_id_exists?(id)
-      response = rsolr.get('select', { q: "{!raw f=id}#{id}", rows: 0 })
+      response = rsolr.get('select', params: { q: "{!raw f=id}#{id}", rows: 0 })
       response['response']['numFound'].to_i == 1
     end
 

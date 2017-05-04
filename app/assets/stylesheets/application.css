@@ -2165,3 +2165,7 @@ a.icon-home img {
   margin-top: 6px;
   width: 13px;
 }
+
+#ingest_monitor_content {
+  font-family: monospace;
+}
