@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe 'Admin Ingest', type: :feature do
+RSpec.describe 'Admin Indexing', type: :feature do
   shared_context 'login admin user' do
     let(:uid) { 'abc123' }
     let(:saml_hash) do
@@ -29,38 +29,22 @@ RSpec.describe 'Admin Ingest', type: :feature do
     end
   end
 
-  describe "ingest page" do
+  describe "indexing page" do
     include_context 'login admin user'
     before :each do
-      visit 'admin/ingest'
+      visit 'admin/indexing'
     end
 
     it 'display ingest page' do
-      expect(page).to have_content 'Ingest/update data'
+      expect(page).to have_content 'Index Records'
     end
 
     context 'when submitting page' do
-      before :each do
-        allow(ACIndexing).to receive(:reindex).and_return({new_items: []})
-      end
-
-      it 'starts index of collection' do
-        fill_in 'collections', with: 'collection:3'
-        click_button 'Commit'
-        expect(page).to have_content 'An ingest is running'
-      end
-
-      it 'starts index of item' do
-        fill_in 'items', with: 'actest:1'
-        click_button 'Commit'
-        expect(page).to have_content 'An ingest is running'
-      end
-
-      it 'displays error if collection is not collection:3' do
-        fill_in 'collections', with: 'not-collection:3'
-        click_button 'Commit'
-        expect(page).to have_content 'not-collection:3 is not a collection used by Academic Commons.'
-        expect(page).not_to have_content 'Started ingest with PID'
+      it 'starts index of items in solr core' do
+        within('#index_all') do
+          click_button 'Start'
+        end
+        expect(page).to have_content 'An index is running:'
       end
     end
   end

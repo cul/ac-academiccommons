@@ -15,7 +15,7 @@ class Admin::IndexingController < ApplicationController
     if index_running?
       flash[:error] = "There is already an index process running. Please wait for the process to complete before starting a new one."
     else
-      items = params[:items].split(/\s/)
+      items = params.fetch(:items, '').split(/\s/)
       index_records(items: items, all: params[:all].eql?('true'))
     end
 

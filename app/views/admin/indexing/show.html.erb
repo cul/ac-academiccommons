@@ -12,7 +12,7 @@
       solr schema changes. Regenerating the MODS must be done via Hyacinth
       (via a republish).
     </p>
-    <%= form_tag(method: "post") do %>
+    <%= form_tag({ method: "post" }, { id: "index_all" }) do %>
       <%= hidden_field_tag :all, 'true' %>
       <center><%= submit_tag "Start" %></center>
     <% end %>
@@ -28,7 +28,7 @@
       feature will be removed. Pids should be seperated by spaces.
     </p>
     <center>
-      <%= form_tag(method: "post") do %>
+      <%= form_tag({ method: "post" }, { id: "index_items" }) do %>
         <%= text_area_tag :items, params[:items], size: "70x6" %>
         <br/>
         <%= submit_tag "Start" %>
