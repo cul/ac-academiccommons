@@ -3,7 +3,8 @@ module AcademicCommons
     TIMESTAMP = '%Y%m%d-%H%M%S'
     attr_reader :indexing_logger, :error, :success, :start
 
-    #
+    # Creates object that reindex all records currently in the solr core or
+    # individual items.
     #
     # @param [User|String] executed_by person running this index
     # @param [Time] start time indexing was started, defaults to Time.new
@@ -52,6 +53,7 @@ module AcademicCommons
           success.append(pid)
         rescue Exception => e
           indexing_logger.error e.message
+          indexing_logger.error e.backtrace.join("\n ")
           error.append(pid)
           next
         end
