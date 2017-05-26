@@ -27,7 +27,7 @@ AcademicCommons::Application.routes.draw do
   post '/copyright_infringement_notice', to: 'dmcas#create'
   get '/notice_received', to: 'dmcas#index'
 
-  resources :email_preferences, :reports
+  resources :email_preferences
 
   get '/download/fedora_content/:download_method/:uri/:block/:filename', :to => 'download#fedora_content', :as => "fedora_content",
     :block => /(DC|CONTENT|content|SOURCE|descMetadata)/,
