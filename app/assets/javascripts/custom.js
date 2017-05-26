@@ -19,36 +19,10 @@ jQuery(document).ready(function() {
     });
 
 
-
-
   // adds classes for zebra striping table rows
   $('table.zebra tr:even').addClass('zebra_stripe');
   $('ul.zebra li:even').addClass('zebra_stripe');
 
-  //add highlight to search results
- /*
- var q = $("#q")
-
-  if(q != null && q != undefined && q != " ")
-  {
-	  q = q.val();
-	  $(".document *").each
-	  (
-		  function()
-		  {
-			  console.debug($(this));
-
-
-			  if($(this).children().length == 0)
-		      {
-				  var re = new RegExp(q, "ig");
-				  console.debug($(this).text());
-				  $(this).html($(this).text().replace(re, "<span class=\"highlight\">$&</span>"));
-		      }
-		  }
-	  );
-  }
-*/
 
 /*************
  * Facet more dialog. Uses JQuery UI Dialog. Use crazy closure technique.
@@ -138,49 +112,6 @@ jQuery(document).ready(function() {
    });
 
 
-/* keep facet boxes visible after page scroll   */
-/*var placeholder = $( "#facet-wrapper" );
-var sb = $( "#facets" );
- var sc = $("#hd-mini");
-var view = $( window );
-view.bind(
-"scroll resize",
-function(){
-
-    var placeholderTop = placeholder.offset().top;
-
-    var viewTop = view.scrollTop();
-
-  if (
-    (viewTop > placeholderTop) &&
-    !sb.is( ".facets-fixed" )
-  ){
-
-
-    placeholder.height(placeholder.height());
-
-
-    sb.addClass( "facets-fixed" );
-
-
-
-
-} else if (
-(viewTop <= placeholderTop) &&
-sb.is( ".facets-fixed" )
-){
-
-
-placeholder.css( "height", "auto" );
-
-sb.removeClass( "facets-fixed" );
-sc.removeClass("visible");
-
-}
-}
-);*/
-
-
     $("#split_button").toggle();
    $('#hidden_search_field').attr("name","search_field");
 	 $('#hidden_search_field').attr("id","search_field");
@@ -198,51 +129,45 @@ sc.removeClass("visible");
 	  });
 	 });
 
+
+/*
+ * Reloads log content for the current index running. Once the index is done
+ * changes the cancel link to return to main admin indexing page.
+*/
 $("#ingest_monitor_content").each
-(
-	function()
-	{
-		$(this).val("Please wait, we'll start monitoring the log file shortly...");
-		var log_monitor_resource = $(this).attr("name");
-		var wait = null;
-		var intervalId = setInterval
-		(
-			function()
-			{
-				if(wait == true) return;
-				wait = true;
-				$.ajax
-				({
-					type: "GET",
-					url: log_monitor_resource,
-					dataType: "json",
-					processData: true,
-					success: function(data)
-					{
-						$("#ingest_monitor_content").val(data.log);
-						wait = false;
-						if(data.log.indexOf(':results') >= 0)
-						{
-							clearInterval(intervalId);
-							$("#cancel_ingest_link").attr("href", $("#cancel_ingest_link").attr("href").replace(/\?cancel=([0-9].*)/i, ""));
-							$("#cancel_ingest_link").html("Return to the Main Ingest Form");
-						}
-					},
-					error: function(data, text, error)
-					{
-						console.debug(text);
-						console.debug(error);
-						wait = false;
-					}
-				});
-			},
-			3000
-		)
-	}
-)
-
-
+  (function() {
+    $(this).val("Please wait, we'll start monitoring the log file shortly...");
+    var log_monitor_resource = $(this).attr("name");
+    var wait = null;
+    var intervalId = setInterval
+    (function() {
+      if(wait == true) return;
+      wait = true;
+      $.ajax ({
+        type: "GET",
+        url: log_monitor_resource,
+        dataType: "json",
+        processData: true,
+        success: function(data) {
+          $("#ingest_monitor_content").val(data.log);
+          wait = false;
+          if(data.log.indexOf('FINISHED') >= 0) {
+            clearInterval(intervalId);
+            $("#cancel_ingest_link").removeAttr("data-method");
+            $("#cancel_ingest_link").html("Return to the Main Ingest Form");
+          }
+        },
+        error: function(data, text, error){
+          console.debug(text);
+          console.debug(error);
+          wait = false;
+        }
+      });
+    }, 3000)
+  })
 });
+
+
 
 function $$archiveDeposit(url)
 {

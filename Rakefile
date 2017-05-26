@@ -67,7 +67,12 @@ begin
             tries += 1
           end
           raise "Never found collection members, check Solr" if (tries > 50)
-          Rake::Task["ac:reindex"].invoke('collection:3')
+
+          # Index into solr core
+          indexer = AcademicCommons::Indexer.new
+          indexer.items('actest:1', only_in_solr: false)
+          indexer.close
+
           Rake::Task["spec_all"].invoke
         end
         puts 'Stopping solr...'

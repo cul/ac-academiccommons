@@ -51,32 +51,25 @@ CURRENT RECOMMENDED VERSION OF RUBY: 2.3.3
 ## Populating your development instance with items
 If you need an object in AC to do further testing and development, add a collection and item with the following instructions.
 
-1. Start Fedora
+1. Clean out Solr and Fedora (only necessary if previously loaded items)
+   ```
+   solr_wrapper clean
+   rake jetty:clean
+   ```
+
+2. Start Fedora
    ```
    rake jetty:start
    ```
-   
-2. Start Solr
+
+2. Start Solr (Leave this command running in the background.)
    ```
    solr_wrapper
    ```
    
-   Leave this command running in the background.
 3. Load the collection and one item into Fedora.
    ```
-   rake ci:load_collection
-   rake ci:load_fixtures
-   ```
-   
-4. Index new items into Solr
-   ```
-   rake ac:reindex[collection:3]
-   ```
-   
-If you already have items in your development instance and wish to delete them run:
-   ```
-   rake jetty:clean
-   solr_wrapper clean
+   rake ac:populate_solr
    ```
 
 ## Running tests

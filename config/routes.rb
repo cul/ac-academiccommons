@@ -35,8 +35,6 @@ AcademicCommons::Application.routes.draw do
 
   get '/download/download_log/:id', :to => 'download#download_log', :as => 'download_log'
 
-  get '/ingest_monitor/:id', :to => 'ingest_monitor#show', :as => 'ingest_monitor'
-
   match '/statistics/detail_report',        :to => 'statistics#detail_report', via: [:get, :post]
   match '/statistics/all_author_monthlies', :to => 'statistics#all_author_monthlies', via: [:get, :post]
   get '/statistics/generic_statistics',     :to => 'statistics#generic_statistics'
@@ -58,12 +56,15 @@ AcademicCommons::Application.routes.draw do
   get '/admin/deposits/:id/file', :to => 'admin#download_deposit_file', :as => 'download_deposit_file'
   get '/admin/agreements', :to => 'admin#agreements'
 
-  match '/admin/ingest', :to => 'admin#ingest', via: [:get, :post]
   match '/admin/edit_alert_message', :to => 'admin#edit_alert_message', via: [:get, :post]
 
   namespace :admin do
     get 'author_affiliation_report/index'
     get 'author_affiliation_report/create'
+
+    resource :indexing, controller: :indexing, only: [:show, :create, :destroy] do
+      get 'log_monitor/:timestamp', action: :log_monitor, constraints: { timestamp: /[\d-]+/ }, as: 'log_monitor'
+    end
   end
 
   get '/emails/get_csv_email_form', :to => 'emails#get_csv_email_form'
