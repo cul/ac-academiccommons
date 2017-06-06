@@ -4,7 +4,18 @@ module AcademicCommons
     ADVISOR_ROLES = ["thesis advisor"].freeze
     CORPORATE_AUTHOR_ROLES = ["author"].freeze
     CORPORATE_DEPARTMENT_ROLES = ["originator"].freeze
-    RESOURCE_TYPES = {'text' => 'Text', 'moving image' => 'Video', 'sound recording--nonmusical' => 'Audio', 'software, multimedia' => 'software', 'still image' => 'Image'}.freeze
+    RESOURCE_TYPES = {
+      'text'                        => 'Text',
+      'notated music'               => 'Notated music',
+      'cartographic'                => 'Image',
+      'still image'                 => 'Image',
+      'sound recording-musical'     => 'Audio',
+      'sound recording-nonmusical'  => 'Audio',
+      'moving image'                => 'Video',
+      'three dimensional object'    => 'Other',
+      'software, multimedia'        => 'Software',
+      'mixed material'              => 'Mixed media'
+    }.freeze
     # this is documentary, and should go away when this module is a concern
     REQUIRED_METHODS = [:belongs_to, :descMetadata_content]
 
