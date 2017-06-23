@@ -325,7 +325,9 @@ module AcademicCommons
       if(free_to_read_start_date = mods.at_css("free_to_read"))
         if(free_to_read_start_date = mods.at_css("free_to_read")['start_date'])
           if(!free_to_read_start_date.nil? && free_to_read_start_date.length != 0)
+             # Date and string field available, eventually the string field can be removed.
              add_field.call("free_to_read_start_date", free_to_read_start_date)
+             add_field.call("free_to_read_start_date_dtsi", free_to_read_start_date)
           end
         end
       end

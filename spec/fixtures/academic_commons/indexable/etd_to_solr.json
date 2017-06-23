@@ -78,6 +78,7 @@
     "info:fedora/actest:1/test_ds"
   ],
   "free_to_read_start_date": "2015-04-09",
+  "free_to_read_start_date_dtsi": "2015-04-09",
   "degree_grantor_ssim": [
     "Columbia University"
   ],
