@@ -47,6 +47,13 @@ RSpec.describe AcademicCommons::Indexable do
 
       include_examples 'indexing mods'
     end
+
+    context 'contains subject titles and subject names' do
+      let(:mods_fixture) { File.read('spec/fixtures/academic_commons/indexable/subject_names_and_titles.xml') }
+      let(:expected_json) { JSON.load File.read('spec/fixtures/academic_commons/indexable/subject_names_and_titles.json') }
+
+      include_examples 'indexing mods'
+    end
   end
 
 

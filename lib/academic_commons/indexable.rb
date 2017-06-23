@@ -172,7 +172,7 @@ module AcademicCommons
       mods.css("subject").each do |subject_node|
         attri = subject_node.attributes
         if attri.count.zero? || (attri['authority'] && attri['authority'].value == 'fast')
-          subject_node.css("topic").each do |topic_node|
+          subject_node.css("topic,title,namePart").each do |topic_node|
             add_field.call("keyword_search", topic_node.content.downcase)
             add_field.call("subject_facet", topic_node)
             add_field.call("subject_search", topic_node)
