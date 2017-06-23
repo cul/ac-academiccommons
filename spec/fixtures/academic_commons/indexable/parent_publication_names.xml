@@ -46,7 +46,7 @@
          <mods:roleTerm type="text" valueURI="http://id.loc.gov/vocabulary/relators/org" authority="marcrelator">Originator</mods:roleTerm>
       </mods:role>
    </mods:name>
-   <mods:name type="personal" ID="daf5" valueURI="temp:0c2252a2c6ffde96114ccf51811b962b0ae06e39a6a94edb3eba449f3887ffba">
+   <mods:name type="personal" valueURI="temp:0c2252a2c6ffde96114ccf51811b962b0ae06e39a6a94edb3eba449f3887ffba">
       <mods:namePart>Freedberg, David A.</mods:namePart>
       <mods:role>
          <mods:roleTerm type="text" valueURI="http://id.loc.gov/vocabulary/relators/aut" authority="marcrelator">Author</mods:roleTerm>
