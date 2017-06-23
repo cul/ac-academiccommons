@@ -6,7 +6,7 @@ module AcademicCommons
     CORPORATE_DEPARTMENT_ROLES = ["originator"].freeze
     RESOURCE_TYPES = {
       'text'                        => 'Text',
-      'notated music'               => 'Notated music',
+      'notated music'               => 'Notated muesic',
       'cartographic'                => 'Image',
       'still image'                 => 'Image',
       'sound recording-musical'     => 'Audio',
@@ -90,7 +90,7 @@ module AcademicCommons
       add_field.call("title_search", title_search)
 
       all_author_names = []
-      mods.css("name[@type='personal']").each do |name_node|
+      mods.css(">name[@type='personal']").each do |name_node|
 
         fullname = get_fullname(name_node)
         note_org = false
@@ -116,7 +116,6 @@ module AcademicCommons
           add_field.call("author_facet", fullname)
 
         elsif name_node.css("role>roleTerm").collect(&:content).any? { |role| ADVISOR_ROLES.include?(role.downcase) }
-
           note_org = true
           first_role = name_node.at_css("role>roleTerm").text
           add_field.call(first_role.downcase.gsub(/\s/, '_'), fullname)
@@ -137,7 +136,7 @@ module AcademicCommons
         end
       end
 
-      mods.css("name[@type='corporate']").each do |corp_name_node|
+      mods.css(">name[@type='corporate']").each do |corp_name_node|
         if((!corp_name_node["ID"].nil? && corp_name_node["ID"].include?("originator")) || corp_name_node.css("role>roleTerm").collect(&:content).any? { |role| CORPORATE_DEPARTMENT_ROLES.include?(role.downcase) })
           name_part = corp_name_node.at_css("namePart").text
           if(name_part.include?(". "))
@@ -201,7 +200,10 @@ module AcademicCommons
         add_field.call("date", related_host.at_css("part > date"))
 
         add_field.call("book_journal_title", book_journal_title)
-        add_field.call("book_author", get_fullname(related_host.at_css("name")))
+
+        related_host.css("name").each do |book_author|
+          add_field.call("book_author", get_fullname(book_author))
+        end
       end
 
       if(related_series = mods.at_css("relatedItem[@type='series']"))
@@ -247,35 +249,6 @@ module AcademicCommons
       solr_doc
     end
 
-    def index_fulltext
-  # if(do_fulltext) ## ===   fulltext_processing === does not work correctly if move it to separate method
-  #
-      # Rails.logger.debug "======= fulltext started === "
-  #
-       # list_members.each_with_index do |member, i|
-  #
-          # begin
-  #
-          # resource_file = Rails.application.config.fedora['url'] + "/objects/#{member.pid}/datastreams/CONTENT/content"
-          # Rails.logger.debug "======= fulltext resource_file === " + resource_file
-  #
-          # text_extract_command = "java -jar " + Rails.application.secrets.full_text_indexing['text_extractor_jar_file'] + " -t #{resource_file}"
-          # Rails.logger.debug "======= fulltext text_extract_command === " + text_extract_command
-  #
-          # tika_result = `#{text_extract_command}`
-          # add_field.call("ac.fulltext_#{i}", tika_result)
-  #
-          # rescue Exception => e
-            # status = :error
-            # error_message += e.message
-            # Rails.logger.debug "======= fulltext indexing error: " + e.message
-          # end
-  #
-           # Rails.logger.debug "======= fulltext finished === "
-        # end
-    # end   ##========================  fulltext_processing end ======================== #
-    end
-
     def recordInfoIndexing(mods, add_field)
       add_field.call("record_content_source", mods.at_css("recordInfo>recordContentSource"))
 
@@ -317,7 +290,7 @@ module AcademicCommons
     end
 
     def roleIndexing(mods, add_field)
-      mods.css("role > roleTerm").each do |role|
+      mods.css(">name>role>roleTerm").each do |role|
         if(!role.nil? && role.text.length != 0)
           add_field.call('role', role.text.downcase)
         end
