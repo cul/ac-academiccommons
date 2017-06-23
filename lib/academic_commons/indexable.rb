@@ -6,7 +6,7 @@ module AcademicCommons
     CORPORATE_DEPARTMENT_ROLES = ["originator"].freeze
     RESOURCE_TYPES = {
       'text'                        => 'Text',
-      'notated music'               => 'Notated muesic',
+      'notated music'               => 'Notated music',
       'cartographic'                => 'Image',
       'still image'                 => 'Image',
       'sound recording-musical'     => 'Audio',
