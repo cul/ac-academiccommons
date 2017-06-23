@@ -102,6 +102,7 @@ class CatalogController < ApplicationController
     config.add_show_field 'handle',                  label: 'Persistent URL',   itemprop: 'url',          helper_method: :link_identifier
     config.add_show_field 'url',                     label: 'Streaming URL'
     config.add_show_field 'series_facet',            label: 'Series',                                     link_to_search: 'series_facet'
+    config.add_show_field 'non_cu_series_facet',     label: 'Series'
     config.add_show_field 'part_number',             label: 'Part Number'
     config.add_show_field 'book_journal_title',      label: 'Book/Journal Title'
     config.add_show_field 'media_type_facet',        label: 'Media Type'

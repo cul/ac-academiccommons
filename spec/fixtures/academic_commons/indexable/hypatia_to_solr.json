@@ -1,60 +1,30 @@
 {
-  "id": [
-    "actest:1"
-  ],
+  "id": "actest:1",
   "internal_h": [
     "collection:3/"
   ],
-  "pid": [
-    "actest:1"
-  ],
+  "pid": "actest:1",
   "member_of": [
     "collection:3"
   ],
-  "record_content_source": [
-    "NNC"
-  ],
-  "record_creation_date": [
-    "2016-09-14T16:31:33Z"
-  ],
-  "record_change_date": [
-    "2016-09-14T16:48:05Z"
-  ],
-  "record_identifier": [
-    "24815"
-  ],
-  "record_language_of_catalog": [
-    "eng"
-  ],
-  "physical_location": [
-    "NNC"
-  ],
-  "language": [
-    "English"
-  ],
-  "date_issued": [
-    "1865"
-  ],
+  "record_content_source": "NNC",
+  "record_creation_date": "2016-09-14T16:31:33Z",
+  "record_change_date": "2016-09-14T16:48:05Z",
+  "record_identifier": "24815",
+  "record_language_of_catalog": "eng",
+  "physical_location": "NNC",
+  "language": "English",
+  "date_issued": "1865",
   "role": [
     "author",
     "originator",
     "author"
   ],
-  "handle": [
-    "http://dx.doi.org/10.7916/ALICE"
-  ],
-  "doi": [
-    "10.1378/wonderland.01-2345"
-  ],
-  "issn": [
-    "0123-4567"
-  ],
-  "title_display": [
-    "Alice's Adventures in Wonderland"
-  ],
-  "title_search": [
-    "Alice's Adventures in Wonderland Project Gutenberg"
-  ],
+  "handle": "http://dx.doi.org/10.7916/ALICE",
+  "doi": "10.1378/wonderland.01-2345",
+  "issn": "0123-4567",
+  "title_display": "Alice's Adventures in Wonderland",
+  "title_search": "Alice's Adventures in Wonderland Project Gutenberg",
   "author_info": [
     "Carroll, Lewis :  :"
   ],
@@ -66,9 +36,7 @@
     "Carroll, Lewis",
     "Weird Old Guys."
   ],
-  "author_display": [
-    "Carroll, Lewis; Weird Old Guys."
-  ],
+  "author_display": "Carroll, Lewis; Weird Old Guys.",
   "pub_date_facet": [
     "1865"
   ],
@@ -78,9 +46,7 @@
   "genre_search": [
     "Articles"
   ],
-  "abstract": [
-    "Background -  Alice is feeling bored and drowsy while sitting on the riverbank with her older sister, who is reading a book with no pictures or conversations."
-  ],
+  "abstract": "Background -  Alice is feeling bored and drowsy while sitting on the riverbank with her older sister, who is reading a book with no pictures or conversations.",
   "keyword_search": [
     "tea parties",
     "wonderland",
@@ -102,33 +68,13 @@
     "Nonsense literature",
     "Bildungsromans"
   ],
-  "originator_department": [
-    "Bucolic Literary Society."
-  ],
-  "table_of_contents": [
-    ""
-  ],
-  "volume": [
-    "1"
-  ],
-  "issue": [
-    "2"
-  ],
-  "start_page": [
-    "1"
-  ],
-  "end_page": [
-    "69"
-  ],
-  "date": [
-    "June 2008"
-  ],
-  "book_journal_title": [
-    "Project Gutenberg"
-  ],
-  "book_author": [
-    ""
-  ],
+  "originator_department": "Bucolic Literary Society.",
+  "volume": "1",
+  "issue": "2",
+  "start_page": "1",
+  "end_page": "69",
+  "date": "June 2008",
+  "book_journal_title": "Project Gutenberg",
   "type_of_resource_mods": [
     "text"
   ],

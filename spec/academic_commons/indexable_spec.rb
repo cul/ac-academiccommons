@@ -40,6 +40,20 @@ RSpec.describe AcademicCommons::Indexable do
 
       include_examples 'indexing mods'
     end
+
+    context 'contains multiple parent publication authors' do
+      let(:mods_fixture) { File.read('spec/fixtures/academic_commons/indexable/parent_publication_names.xml', encoding: 'utf-8') }
+      let(:expected_json) { JSON.load File.read('spec/fixtures/academic_commons/indexable/parent_publication_names.json', encoding: 'utf-8') }
+
+      include_examples 'indexing mods'
+    end
+
+    context 'contains subject titles and subject names' do
+      let(:mods_fixture) { File.read('spec/fixtures/academic_commons/indexable/subject_names_and_titles.xml') }
+      let(:expected_json) { JSON.load File.read('spec/fixtures/academic_commons/indexable/subject_names_and_titles.json') }
+
+      include_examples 'indexing mods'
+    end
   end
 
 
