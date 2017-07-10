@@ -68,11 +68,15 @@ class CatalogController < ApplicationController
     config.add_facet_field 'department_facet',       :label => 'Department',   :limit => 2
     config.add_facet_field 'subject_facet',          :label => 'Subject',      :limit => 2
     config.add_facet_field 'genre_facet',            :label => 'Content Type', :limit => 2
+    config.add_facet_field 'degree_level_ssim', label: 'Degree Level', query: {
+      'Bachelor\'s' => { label: 'Bachelor\'s', fq: 'degree_level_ssim:0' },
+      'Master\'s'   => { label: 'Master\'s',   fq: 'degree_level_ssim:1' },
+      'Doctoral'    => { label: 'Doctoral',    fq: 'degree_level_ssim:2' }
+    }
     config.add_facet_field 'pub_date_facet',         :label => 'Date',         :limit => 2
     config.add_facet_field 'series_facet',           :label => 'Series',       :limit => 2
     config.add_facet_field 'language',               :label => 'Language'
     config.add_facet_field 'type_of_resource_facet', :label => 'Resource Type'
-
 
     # Have BL send all facet field names to Solr, which has been the default
     # previously. Simply remove these lines if you'd rather use Solr request

@@ -58,7 +58,7 @@ RSpec.describe CatalogController, type: :controller do
             "qt" => "search",
             "facet.field" =>
               ["author_facet", "department_facet", "subject_facet", "genre_facet", "pub_date_facet", "series_facet", "language", "type_of_resource_facet"],
-            "facet.query" => [],
+            "facet.query" => ["degree_level_ssim:0", "degree_level_ssim:1", "degree_level_ssim:2"],
             "facet.pivot" => [],
             "fq"=> ["has_model_ssim:\"info:fedora/ldpd:ContentAggregator\"", "{!raw f=organization_facet}Teachers College"],
             "hl.fl" => [],
