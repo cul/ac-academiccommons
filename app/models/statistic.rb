@@ -40,6 +40,25 @@ class Statistic < ActiveRecord::Base
     EVENTS.include?(e)
   end
 
+  def self.merge_stats(pid, duplicate_pid)
+     logger.warn "Merging statistics for #{duplicate_pid} with #{pid}..."
+
+     # Retrive solr document for both and check that they are both the same type
+     document = ActiveFedora::SolrService.query("{!raw f=id}#{pid}").first
+     duplicate_document = ActiveFedora::SolrService.query("{!raw f=id}#{duplicate_pid}").first
+
+     unless document['active_fedora_model_ssi'] == duplicate_document['active_fedora_model_ssi']
+       raise 'Records cannot be migrated because they are not of the same type.'
+     end
+
+     # Get all the stats records for duplicate_pid, update the identifier to be pid
+     stats = Statistic.where(identifier: duplicate_pid)
+     logger.warn "Duplicated record (#{duplicate_pid}) has #{stats.count} statistics."
+     logger.warn "Merging stats..."
+     stats.each { |stat| stat.update!(identifier: pid) }
+     logger.warn "Duplicate record has #{Statistic.where(identifier: duplicate_pid).count} stats"
+  end
+
   def self.reset_downloads
     Statistic.where(:event => "Download").each { |e| e.delete }
 
@@ -57,7 +76,6 @@ class Statistic < ActiveRecord::Base
           Statistic.create!(:event => "Download", :ip_address => ip, :identifier => pid, :at_time => datetime)
         end
       end
-
     end
   end
 end
