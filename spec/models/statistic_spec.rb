@@ -1,6 +1,28 @@
 require 'rails_helper'
 
 RSpec.describe Statistic, type: :model do
+
+  describe '.merge_stats' do
+    before :each do
+      FactoryGirl.create_list(:view_stat, 2)
+      FactoryGirl.create(:download_stat, identifier: 'actest:1')
+      FactoryGirl.create(:view_stat, identifier: 'ac:duplicate')
+      FactoryGirl.create(:download_stat, identifier: 'ac:duplicate')
+      solr_doc = double("SolrDocument")
+      allow(solr_doc).to receive(:[]).with('active_fedora_model_ssi').and_return('GenericAggregator')
+      allow(ActiveFedora::SolrService).to receive(:query).with("{!raw f=id}ac:duplicate").and_return([solr_doc])
+      allow(ActiveFedora::SolrService).to receive(:query).with("{!raw f=id}actest:1").and_return([solr_doc])
+    end
+
+    it 'merges statistics correctly' do
+      expect(Statistic.where(identifier: 'ac:duplicate').count).to eql 2
+      expect(Statistic.where(identifier: 'actest:1').count).to eql 3
+      Statistic.merge_stats('actest:1', 'ac:duplicate')
+      expect(Statistic.where(identifier: 'actest:1').count).to eql 5
+      expect(Statistic.where(identifier: 'ac:duplicate').count).to eql 0
+    end
+  end
+
   describe '.event_count' do
     it 'checks event param' do
       expect {
