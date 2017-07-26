@@ -28,6 +28,7 @@ gem 'multipart-post', '~>2.0.0'
 gem 'net-ldap', '0.3.1'
 gem 'nokogiri', '1.6.0'
 gem 'okcomputer'
+gem 'rainbow'
 gem 'rinku', '~> 1.3.0', :require => 'rails_rinku'
 gem 'sass-rails'
 gem "therubyracer"
