@@ -8,10 +8,6 @@ RSpec.describe Statistic, type: :model do
       FactoryGirl.create(:download_stat, identifier: 'actest:1')
       FactoryGirl.create(:view_stat, identifier: 'ac:duplicate')
       FactoryGirl.create(:download_stat, identifier: 'ac:duplicate')
-      solr_doc = double("SolrDocument")
-      allow(solr_doc).to receive(:[]).with('active_fedora_model_ssi').and_return('GenericAggregator')
-      allow(ActiveFedora::SolrService).to receive(:query).with("{!raw f=id}ac:duplicate").and_return([solr_doc])
-      allow(ActiveFedora::SolrService).to receive(:query).with("{!raw f=id}actest:1").and_return([solr_doc])
     end
 
     it 'merges statistics correctly' do
