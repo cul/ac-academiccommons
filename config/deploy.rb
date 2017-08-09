@@ -56,16 +56,6 @@ namespace :deploy do
     end
   end
 
-  desc "Add tag based on current version from VERSION file"
-  task :auto_tag do
-    current_version = "v#{IO.read("VERSION").strip}"
-
-    ask(:tag, current_version)
-    tag = fetch(:tag)
-
-    system("git tag -a #{tag} -m 'auto-tagged' && git push origin --tags")
-  end
-
   desc "Generate dynamic 500.html"
   task :generate_500_html do
     on roles(:web) do |host|
