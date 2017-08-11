@@ -44,7 +44,7 @@ group :development, :test do
   # Deploying by using Capistrano. Using rails, rvm and passenger cap gems as
   # required by our deployment environment.
   gem 'capistrano', '3.8', require: false
-  gem 'capistrano-cul'
+  gem 'capistrano-cul', require: false
   gem 'capistrano-rails', '~> 1.1', require: false
   gem 'capistrano-rvm', '~> 0.1', require: false
   gem 'capistrano-passenger', '~> 0.1', require: false
