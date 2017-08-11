@@ -2,4 +2,6 @@ language: ruby
 rvm:
   - 2.3.3
 cache: bundler
+before_script:
+  - "for c in config/*.template.yml; do cp $c ${c/template.}; done"
 script: bundle exec rake ci
