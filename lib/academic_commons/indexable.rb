@@ -328,7 +328,7 @@ module AcademicCommons
              # Date and string field available, eventually the string field can be removed.
              add_field.call("free_to_read_start_date", free_to_read_start_date)
 
-             free_to_read_time_formatted = Time.local(*free_to_read_start_date.split("-")).utc.strftime("%FT%TZ")
+             free_to_read_time_formatted = Time.zone.local(*free_to_read_start_date.split("-")).utc.strftime("%FT%TZ")
              add_field.call("free_to_read_start_date_dtsi", free_to_read_time_formatted)
           end
         end

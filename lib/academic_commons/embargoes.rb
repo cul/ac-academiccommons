@@ -22,7 +22,7 @@ module AcademicCommons
     def available_today?(date)
       raise 'Date must be a String or Date object' unless(date.is_a?(String) || date.is_a?(Date))
       date = Date.strptime(date, '%Y-%m-%d') if date.is_a?(String)
-      Date.today >= date
+      Date.current >= date
     end
   end
 end

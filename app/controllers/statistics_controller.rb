@@ -238,8 +238,8 @@ class StatisticsController < ApplicationController
 
       params[:month_from] = "Apr"
       params[:year_from] = "2011"
-      params[:month_to] = (Date.today - 1.months).strftime("%b")
-      params[:year_to] = (Date.today).strftime("%Y")
+      params[:month_to] = (Date.current - 1.months).strftime("%b")
+      params[:year_to] = (Date.current).strftime("%Y")
 
       params[:include_zeroes] = true
     end

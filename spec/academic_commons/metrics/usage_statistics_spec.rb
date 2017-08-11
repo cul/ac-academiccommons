@@ -104,7 +104,7 @@ RSpec.describe AcademicCommons::Metrics::UsageStatistics, integration: true do
 
       context 'when requesting stats for current month' do
         subject do
-          AcademicCommons::Metrics::UsageStatistics.new(solr_request, Date.today - 1.month, Date.today,
+          AcademicCommons::Metrics::UsageStatistics.new(solr_request, Date.current - 1.month, Date.current,
           include_zeroes: true, include_streaming: true)
         end
 
@@ -123,7 +123,7 @@ RSpec.describe AcademicCommons::Metrics::UsageStatistics, integration: true do
 
       context 'when requesting stats for previous month' do
         subject do
-          AcademicCommons::Metrics::UsageStatistics.new(solr_request, Date.today - 2.month, Date.today - 1.month,
+          AcademicCommons::Metrics::UsageStatistics.new(solr_request, Date.current - 2.month, Date.current - 1.month,
           include_zeroes: true, include_streaming: true)
         end
 
@@ -143,7 +143,7 @@ RSpec.describe AcademicCommons::Metrics::UsageStatistics, integration: true do
 
       context 'when requesting stats without streaming' do
         subject do
-          AcademicCommons::Metrics::UsageStatistics.new(solr_request, Date.today - 1.month, Date.today,
+          AcademicCommons::Metrics::UsageStatistics.new(solr_request, Date.current - 1.month, Date.current,
           include_zeroes: true)
         end
 
@@ -157,7 +157,7 @@ RSpec.describe AcademicCommons::Metrics::UsageStatistics, integration: true do
 
       context 'when requesting stats without zeroes' do
         subject do
-          AcademicCommons::Metrics::UsageStatistics.new(solr_request, Date.today - 2.month, Date.today - 1.month,
+          AcademicCommons::Metrics::UsageStatistics.new(solr_request, Date.current - 2.month, Date.current - 1.month,
           include_zeroes: false, include_streaming: true)
         end
 
@@ -354,7 +354,7 @@ RSpec.describe AcademicCommons::Metrics::UsageStatistics, integration: true do
     end
 
     context 'when stats are for one month' do
-      let(:date) { Date.today }
+      let(:date) { Date.current }
       let(:usage_stats) { AcademicCommons::Metrics::UsageStatistics.new(solr_params, date, date) }
       it { is_expected.to eq date.strftime("%b %Y") }
     end

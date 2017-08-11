@@ -50,8 +50,8 @@
         </div>
         <div class="table-cell">
           <div class="value">
-            <%= select_tag :month_from, options_for_select(Date::ABBR_MONTHNAMES, params[:month_from] || (Date.today - 1.months).strftime("%b")) %>
-            <%= select_tag :year_from, options_for_select((2011..Date.today.year), params[:year_from]) %>
+            <%= select_tag :month_from, options_for_select(Date::ABBR_MONTHNAMES, params[:month_from] || (Date.current - 1.months).strftime("%b")) %>
+            <%= select_tag :year_from, options_for_select((2011..Date.current.year), params[:year_from]) %>
           </div>
         </div>
         <div style="display: table-row;"></div>
@@ -60,8 +60,8 @@
         </div>
         <div class="table-cell">
           <div class="value">
-            <%= select_tag :month_to, options_for_select(Date::ABBR_MONTHNAMES, params[:month_to] || (Date.today - 1.months).strftime("%b")) %>
-            <%= select_tag :year_to, options_for_select((2011..Date.today.year), params[:year_to]) %>
+            <%= select_tag :month_to, options_for_select(Date::ABBR_MONTHNAMES, params[:month_to] || (Date.current - 1.months).strftime("%b")) %>
+            <%= select_tag :year_to, options_for_select((2011..Date.current.year), params[:year_to]) %>
           </div>
         </div>
         <div style="display: table-row;"></div>

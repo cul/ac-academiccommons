@@ -19,8 +19,8 @@ RSpec.describe AcademicCommons::Statistics do
     let(:test_params) do
       {
         include_zeroes: true,
-        year: Date.today.strftime("%Y"),
-        month: Date.today.strftime("%b"),
+        year: Date.current.strftime("%Y"),
+        month: Date.current.strftime("%b"),
       }
     end
     let(:author_search) do
