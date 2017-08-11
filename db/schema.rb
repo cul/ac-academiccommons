@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170526182052) do
+ActiveRecord::Schema.define(version: 20170811212042) do
 
   create_table "agreements", force: :cascade do |t|
     t.string   "uni",               limit: 255
@@ -82,6 +82,19 @@ ActiveRecord::Schema.define(version: 20170526182052) do
     t.string  "param_name",  limit: 255
     t.string  "value",       limit: 255
   end
+
+  create_table "notifications", force: :cascade do |t|
+    t.string   "identifier", null: false
+    t.string   "type",       null: false
+    t.string   "email"
+    t.string   "uni"
+    t.datetime "sent_at"
+    t.boolean  "success",    null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "notifications", ["identifier"], name: "index_notifications_on_identifier"
 
   create_table "searches", force: :cascade do |t|
     t.text     "query_params"
