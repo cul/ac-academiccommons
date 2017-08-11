@@ -1,5 +1,5 @@
 GIT
-  remote: git@github.com:cul/blacklight_oai_provider.git
+  remote: https://github.com/cul/cdrs_blacklight_oai_provider.git
   revision: 682c27f317c84b08979d412275199f8f2d5fbbec
   specs:
     blacklight_oai_provider (0.2.4)
@@ -508,4 +508,4 @@ DEPENDENCIES
   whenever
 
 BUNDLED WITH
-   1.14.6
+   1.15.3
