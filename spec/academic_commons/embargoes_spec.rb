@@ -14,32 +14,32 @@ RSpec.describe AcademicCommons::Embargoes do
     subject { dummy_class.free_to_read?(document) }
 
     context 'when free_to_read_state_date is today' do
-      let(:date) { Date.today.strftime('%Y-%m-%d') }
+      let(:date) { Date.current.strftime('%Y-%m-%d') }
       it { is_expected.to eql true}
     end
 
     context 'when free_to_read_state_date is after today' do
-      let(:date) { (Date.today + 1.day).strftime('%Y-%m-%d') }
+      let(:date) { (Date.current + 1.day).strftime('%Y-%m-%d') }
       it { is_expected.to eql false }
     end
 
     context 'when free_to_read_state_date is before today' do
-      let(:date) { (Date.today - 1.day).strftime('%Y-%m-%d') }
+      let(:date) { (Date.current - 1.day).strftime('%Y-%m-%d') }
       it { is_expected.to eql true }
     end
   end
 
   describe '#available_today?' do
     it 'when embargo date is today true is returned' do
-      expect(dummy_class.available_today?(Date.today)).to eq true
+      expect(dummy_class.available_today?(Date.current)).to eq true
     end
 
     it 'when embargo date is after today, false is returned' do
-      expect(dummy_class.available_today?(Date.today + 1.day)).to eq false
+      expect(dummy_class.available_today?(Date.current + 1.day)).to eq false
     end
 
     it 'when embargo date is before today, true is returned' do
-      expect(dummy_class.available_today?(Date.today - 1.day)).to eq true
+      expect(dummy_class.available_today?(Date.current - 1.day)).to eq true
     end
   end
 end

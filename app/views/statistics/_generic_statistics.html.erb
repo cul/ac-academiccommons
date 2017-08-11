@@ -290,12 +290,12 @@
     <div id="date_from_div" class='table-cell' style='display: table-cell; visibility: hidden;'>
       From:
       <%= select_tag 'month_from', options_for_select(months, params[:month_from]) %>
-      <%= select_tag 'year_from', options_for_select((2011..Date.today.year), params[:year_from]) %>
+      <%= select_tag 'year_from', options_for_select((2011..Date.current.year), params[:year_from]) %>
     </div>
     <div id="date_to_div" class='table-cell' style='display: table-cell; visibility: hidden;'>
       To:
-      <%= select_tag 'month_to', options_for_select(months, params[:month_to] || (Date.today - 1.months).strftime("%b")) %>
-      <%= select_tag 'year_to', options_for_select((2011..Date.today.year), params[:year_to] || Date.today.year) %>
+      <%= select_tag 'month_to', options_for_select(months, params[:month_to] || (Date.current - 1.months).strftime("%b")) %>
+      <%= select_tag 'year_to', options_for_select((2011..Date.current.year), params[:year_to] || Date.current.year) %>
     </div>
   </div>
 </div>

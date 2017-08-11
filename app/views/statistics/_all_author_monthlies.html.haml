@@ -15,11 +15,11 @@
           .label Report month:
         %div{:style => "display: table-cell;", :class=>"table-cell"}
           .value
-            = select_tag :month, options_for_select(Date::ABBR_MONTHNAMES, params[:month] || (Date.today - 1.months).strftime("%b"))
-            - if (Date.today - 1.months).strftime("%b") == 'Dec'
-              = select_tag :year, options_for_select((2011..Date.today.year), params[:year] || Date.today.year - 1)
+            = select_tag :month, options_for_select(Date::ABBR_MONTHNAMES, params[:month] || (Date.current - 1.months).strftime("%b"))
+            - if (Date.current - 1.months).strftime("%b") == 'Dec'
+              = select_tag :year, options_for_select((2011..Date.current.year), params[:year] || Date.current.year - 1)
             -else
-              = select_tag :year, options_for_select((2011..Date.today.year), params[:year] || Date.today.year)
+              = select_tag :year, options_for_select((2011..Date.current.year), params[:year] || Date.current.year)
 
         %div{:style => "display: table-row;"}
         %div{:style => "display: table-cell; padding: 2px 15px 2px 0px", :class=>"table-cell"}
