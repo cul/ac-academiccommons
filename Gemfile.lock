@@ -7,6 +7,13 @@ GIT
       rails (>= 3.2.13)
 
 GIT
+  remote: https://github.com/cul/cul-ldap.git
+  revision: e7e696763dcb30d608fe8b9ba34f1f3f6abe85ef
+  specs:
+    cul-ldap (0.0.1)
+      net-ldap (>= 0.16.0)
+
+GIT
   remote: https://github.com/projecthydra/jettywrapper.git
   revision: 862bb29a6b72a2507869786ea07da27e89d60365
   branch: master
@@ -227,7 +234,7 @@ GEM
     multipart-post (2.0.0)
     mysql2 (0.4.5)
     net-http-persistent (2.9.4)
-    net-ldap (0.3.1)
+    net-ldap (0.16.0)
     net-scp (1.2.1)
       net-ssh (>= 2.6.5)
     net-ssh (4.1.0)
@@ -472,6 +479,7 @@ DEPENDENCIES
   capistrano-rails (~> 1.1)
   capistrano-rvm (~> 0.1)
   capybara (~> 2.2)
+  cul-ldap!
   cul_omniauth
   database_cleaner
   devise
@@ -487,7 +495,7 @@ DEPENDENCIES
   mail_form
   multipart-post (~> 2.0.0)
   mysql2
-  net-ldap (= 0.3.1)
+  net-ldap
   nokogiri (= 1.6.0)
   oai
   okcomputer
