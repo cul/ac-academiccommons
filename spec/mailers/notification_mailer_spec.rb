@@ -3,8 +3,10 @@ require "rails_helper"
 RSpec.describe NotificationMailer, type: :mailer do
 
   describe 'new_item_available' do
-    let(:depositor) { OpenStruct.new(uni: 'abc123', name: 'Jane Doe', email: 'abc123@columbia.edu') }
-    let(:mail) { described_class.new_item_available(depositor, solr_doc).deliver_now }
+    let(:email) { 'abc123@columbia.edu' }
+    let(:uni) { 'abc123' }
+    let(:name) { 'Jane Doe' }
+    let(:mail) { described_class.new_item_available(solr_doc, uni, email, name).deliver_now }
 
     context 'when document embargoed' do
       let(:solr_doc) do

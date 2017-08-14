@@ -31,9 +31,6 @@ class SolrDocumentsController < ApplicationController
       return
     end
     begin
-      # Check if document in solr index.
-      new_item = ActiveFedora::SolrService.query("{!raw f=id}#{params[:id]}").count.zero?
-
       obj = ActiveFedora::Base.find(params[:id])
 
       # Using direct solr query to update document without soft commiting.
@@ -43,8 +40,9 @@ class SolrDocumentsController < ApplicationController
       ActiveFedora::SolrService.add(solr_doc)
 
       expire_fragment('repository_statistics')
+
       aggregator = obj.is_a?(ContentAggregator)
-      notify_authors_of_new_item(solr_doc) if new_item && aggregator
+      notify_authors_of_new_item(solr_doc) if aggregator
 
       location_url = aggregator ? catalog_url(params[:id]) : download_url(obj)
       response.headers['Location'] = location_url
@@ -103,12 +101,37 @@ class SolrDocumentsController < ApplicationController
     fedora_content_url(download_params)
   end
 
+  # Checks to see if new item notification has been sent to author. If one has
+  # already been sent does not sent another one.
   def notify_authors_of_new_item(solr_doc)
+    doc = SolrDocument.new(solr_doc)
+
     solr_doc.fetch('author_uni', []).each do |uni|
-      depositor = AcademicCommons::LDAP.find_by_uni(uni)
-      doc = SolrDocument.new(solr_doc)
-      NotificationMailer.new_item_available(depositor, doc).deliver_now
+      # Skip if notification was already sent.
+      next if Notification.sent_new_item_notification?(solr_doc['doi'], uni)
+
+      if author = Cul::LDAP.find_by_uni(uni)
+        email, name = author.email, author.name
+      else
+        email, name = "#{uni}@columbia.edu", nil
+      end
+      success = true
+
+      begin
+        NotificationMailer.new_item_available(doc, uni, email, name).deliver_now
+      rescue IOError, Net::SMTPAuthenticationError, Net::SMTPServerBusy,
+        Net::SMTPUnknownError, TimeoutError, Net::SMTPFatalError,
+        Net::SMTPSyntaxError => e
+        logger.error "Error Indexing: #{e.message}"
+        logger.error e.backtrace.join("\n ")
+        success = false
+      end
+
+      Notification.create(
+        type: Notification::NEW_ITEM, identifier: doc[:doi], email: email,
+        uni: uni, success: success
+      )
+      # Notifications.record_new_item_notification(doc[:doi], email, uni, success: success)
     end
   end
-
 end
