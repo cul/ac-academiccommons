@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170811212042) do
+ActiveRecord::Schema.define(version: 20170815201919) do
 
   create_table "agreements", force: :cascade do |t|
     t.string   "uni",               limit: 255
@@ -85,7 +85,7 @@ ActiveRecord::Schema.define(version: 20170811212042) do
 
   create_table "notifications", force: :cascade do |t|
     t.string   "identifier", null: false
-    t.string   "type",       null: false
+    t.string   "kind",       null: false
     t.string   "email"
     t.string   "uni"
     t.datetime "sent_at"
