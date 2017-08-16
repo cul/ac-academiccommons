@@ -3,10 +3,7 @@ class SolrDocumentsController < ApplicationController
   include Blacklight::Catalog
 
   def rsolr
-    @rsolr ||= begin
-      url = Rails.application.config.solr['url']
-      RSolr.connect(:url => url)
-    end
+    @rsolr ||= AcademicCommons::Utils.rsolr
   end
 
   def authenticate
