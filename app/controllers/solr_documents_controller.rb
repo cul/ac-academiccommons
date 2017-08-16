@@ -105,12 +105,13 @@ class SolrDocumentsController < ApplicationController
   # already been sent does not sent another one.
   def notify_authors_of_new_item(solr_doc)
     doc = SolrDocument.new(solr_doc)
+    ldap = Cul::LDAP.new
 
     solr_doc.fetch('author_uni', []).each do |uni|
       # Skip if notification was already sent.
-      next if Notification.sent_new_item_notification?(solr_doc['doi'], uni)
+      next if Notification.sent_new_item_notification?(solr_doc['handle'], uni)
 
-      if author = Cul::LDAP.find_by_uni(uni)
+      if author = ldap.find_by_uni(uni)
         email, name = author.email, author.name
       else
         email, name = "#{uni}@columbia.edu", nil
@@ -119,19 +120,13 @@ class SolrDocumentsController < ApplicationController
 
       begin
         NotificationMailer.new_item_available(doc, uni, email, name).deliver_now
-      rescue IOError, Net::SMTPAuthenticationError, Net::SMTPServerBusy,
-        Net::SMTPUnknownError, TimeoutError, Net::SMTPFatalError,
-        Net::SMTPSyntaxError => e
-        logger.error "Error Indexing: #{e.message}"
+      rescue Net::SMTPAuthenticationError, Net::SMTPServerBusy, Net::SMTPUnknownError,
+        Timeout::Error, Net::SMTPFatalError, IOError, Net::SMTPSyntaxError => e
+        logger.error "Error Sending Email: #{e.message}"
         logger.error e.backtrace.join("\n ")
         success = false
       end
-
-      Notification.create(
-        type: Notification::NEW_ITEM, identifier: doc[:doi], email: email,
-        uni: uni, success: success
-      )
-      # Notifications.record_new_item_notification(doc[:doi], email, uni, success: success)
+      Notification.record_new_item_notification(doc[:handle], email, uni, success)
     end
   end
 end

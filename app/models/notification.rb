@@ -1,12 +1,14 @@
 # This model keeps track of new item notifications that have been sent to users.
 # An item's DOI is used as its identifier.
 class Notification < ActiveRecord::Base
-  NEW_ITEM = :new_item
+  NEW_ITEM = 'new_item'
 
-  validates :type, :identifier, :success, presence: true
+  validates :kind, :identifier, presence: true
+  validates_inclusion_of :success, :in => [true, false]
 
   scope :successful, -> { where(success: true) }
-  scope :new_item_notification, -> { where(type: NEW_ITEM) }
+  scope :failed, -> { where(success: false) }
+  scope :new_item_notification, -> { where(kind: NEW_ITEM) }
   scope :to_author, ->(uni) { where(uni: uni) }
   scope :for_record, ->(i) { where(identifier: i) }
 
@@ -20,9 +22,10 @@ class Notification < ActiveRecord::Base
   end
 
   # Creates record of new_item notification just sent
-  def self.record_new_item_notification(doi, email, sent_at: Time.current)
-    Notification.create(
-      type: NEW_ITEM, identifier: doi, uni: uni, email: email, sent_at: sent_at, success: 'insert here'
+  def self.record_new_item_notification(doi, email, uni, s, sent_at: Time.current)
+    Notification.create!(
+      kind: NEW_ITEM, identifier: doi, uni: uni, email: email,
+      sent_at: sent_at, success: s
     )
   end
 end
