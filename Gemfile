@@ -15,6 +15,7 @@ gem 'sqlite3', '>= 1.3.5'
 
 gem 'bootstrap-sass'
 gem 'cul_omniauth'
+gem 'cul-ldap', git: 'https://github.com/cul/cul-ldap.git'
 gem 'devise'
 gem 'dotenv-rails'
 gem 'fancybox2-rails' # Used in helper classes. TODO: Confirm that this is needed and used by the application.
@@ -25,7 +26,7 @@ gem 'jquery-rails', '2.0.3' # Locked at jquery-1.7.2; could potentially be updat
 gem 'json'
 gem 'mail_form'
 gem 'multipart-post', '~>2.0.0'
-gem 'net-ldap', '0.3.1'
+gem 'net-ldap'
 gem 'nokogiri', '1.6.0'
 gem 'okcomputer'
 gem 'rainbow'

@@ -1,7 +1,7 @@
 namespace :duplicate_records do
   desc 'Removes solr document'
   task :delete_solr_document, [:pid] => :environment do |t, args|
-    rsolr = RSolr.connect(url: Rails.application.config.solr['url'])
+    rsolr = AcademicCommons::Utils.rsolr
     rsolr.delete_by_id(args[:pid])
     rsolr.commit
   end

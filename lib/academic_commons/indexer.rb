@@ -85,10 +85,7 @@ module AcademicCommons
     end
 
     def rsolr
-      @rsolr ||= begin
-        url = Rails.application.config_for(:solr)['url']
-        RSolr.connect(url: url)
-      end
+      @rsolr ||= AcademicCommons::Utils.rsolr
     end
 
     def setup_logger(time_id)

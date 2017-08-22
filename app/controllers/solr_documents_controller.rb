@@ -3,10 +3,7 @@ class SolrDocumentsController < ApplicationController
   include Blacklight::Catalog
 
   def rsolr
-    @rsolr ||= begin
-      url = Rails.application.config.solr['url']
-      RSolr.connect(:url => url)
-    end
+    @rsolr ||= AcademicCommons::Utils.rsolr
   end
 
   def authenticate
@@ -36,12 +33,15 @@ class SolrDocumentsController < ApplicationController
       # Using direct solr query to update document without soft commiting.
       # autoCommit will take care of presisting the new document. This change
       # was required in order to support multiple publishing requests from Hyacinth.
-      ActiveFedora::SolrService.add(obj.to_solr)
+      solr_doc = obj.to_solr
+      ActiveFedora::SolrService.add(solr_doc)
 
       expire_fragment('repository_statistics')
-      location_url = obj.is_a?(ContentAggregator) ?
-        catalog_url(params[:id]) :
-        download_url(obj)
+
+      aggregator = obj.is_a?(ContentAggregator)
+      notify_authors_of_new_item(solr_doc) if aggregator
+
+      location_url = aggregator ? catalog_url(params[:id]) : download_url(obj)
       response.headers['Location'] = location_url
       render status: :ok, plain: ''
     rescue ActiveFedora::ObjectNotFoundError => e
@@ -82,6 +82,7 @@ class SolrDocumentsController < ApplicationController
   end
 
   private
+
   def download_url(af_obj)
     download_params = {
       block: nil,
@@ -95,5 +96,34 @@ class SolrDocumentsController < ApplicationController
       download_params[:filename] = block_ds.label.blank? ? af_obj.label : block_ds.label
     end
     fedora_content_url(download_params)
+  end
+
+  # Checks to see if new item notification has been sent to author. If one has
+  # already been sent does not sent another one.
+  def notify_authors_of_new_item(solr_doc)
+    doc = SolrDocument.new(solr_doc)
+    ldap = Cul::LDAP.new
+
+    solr_doc.fetch('author_uni', []).each do |uni|
+      # Skip if notification was already sent.
+      next if Notification.sent_new_item_notification?(solr_doc['handle'], uni)
+
+      if author = ldap.find_by_uni(uni)
+        email, name = author.email, author.name
+      else
+        email, name = "#{uni}@columbia.edu", nil
+      end
+      success = true
+
+      begin
+        NotificationMailer.new_item_available(doc, uni, email, name).deliver_now
+      rescue Net::SMTPAuthenticationError, Net::SMTPServerBusy, Net::SMTPUnknownError,
+        Timeout::Error, Net::SMTPFatalError, IOError, Net::SMTPSyntaxError => e
+        logger.error "Error Sending Email: #{e.message}"
+        logger.error e.backtrace.join("\n ")
+        success = false
+      end
+      Notification.record_new_item_notification(doc[:handle], email, uni, success)
+    end
   end
 end
