@@ -4,7 +4,6 @@ module CatalogHelper
   include Blacklight::CatalogHelperBehavior
   include ApplicationHelper
   include AcademicCommons::Listable
-  include AcademicCommons::Embargoes
 
   delegate :repository, :to => :controller
 
