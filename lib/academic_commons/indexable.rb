@@ -80,6 +80,7 @@ module AcademicCommons
       locationUrlIndexing(mods, add_field)
       embargo_release_date_indexing(mods, add_field)
       degree_indexing(mods, add_field)
+      access_condition(mods, add_field)
 
       title = mods.css(">titleInfo>title")
       related_titles = mods.css("relatedItem[@type='host']:not([displayLabel=Project])>titleInfo").css(">nonSort,title")
@@ -340,6 +341,12 @@ module AcademicCommons
         add_field.call("degree_name_ssim", degree.at_css("name"))
         add_field.call("degree_grantor_ssim",  degree.at_css("grantor"))
         add_field.call("degree_level_ssim", degree.at_css("level"))
+      end
+    end
+
+    def access_condition(mods, add_field)
+      if restriction = mods.at_css("> accessCondition[@type='restriction on access']")
+        add_field.call('restriction_on_access_ss', restriction.text)
       end
     end
 

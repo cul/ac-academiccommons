@@ -54,8 +54,14 @@ RSpec.describe AcademicCommons::Indexable do
 
       include_examples 'indexing mods'
     end
-  end
 
+    context 'contains access restriction' do
+      let(:mods_fixture) { File.read('spec/fixtures/academic_commons/indexable/access_restriction.xml') }
+      let(:expected_json) { JSON.load File.read('spec/fixtures/academic_commons/indexable/access_restriction.json') }
+
+      include_examples 'indexing mods'
+    end
+  end
 
   # TODO: This can test and its associated fixture can be removed when we
   # completely transition over to Hyacinth.
