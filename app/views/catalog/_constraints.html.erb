@@ -1,56 +1,40 @@
-<% if (params[:f].to_s.empty?) and (params[:q].to_s.empty?) and (params[:search_field].to_s.empty?) %>
-<% render :nothing => true %>
+<% if query_has_constraints? %>
+  <% localized_params = params %>
 
-<%else-%>
+  <%= link_to "Start Search Over", catalog_index_path, id: "startOverLink" %>
 
-<%localized_params = params %>
+  <% if user_signed_in? && current_user.admin %>
+  	<%= link_to "Get Usage Stats", "/statistics/detail_report?commit=Get Usage Stats&facet=search_query&search_criteria=" + CGI::escape(request.fullpath), id: "startOverLink" %>
+  <% end %>
 
-<%=link_to "Start Search Over".html_safe, catalog_index_path, :id=>"startOverLink" %>
+  <%= render partial: '/catalog/search_box' %>
 
-<% if user_signed_in? && current_user.admin %>
-	<%=link_to "Get Usage Stats".html_safe, "/statistics/detail_report?commit=Get Usage Stats&facet=search_query&search_criteria=" + CGI::escape(request.fullpath), :id=>"startOverLink" %>
-<% end %>
+  <h2>Active Search Criteria:</h2>
 
+  <div id="breadcrumbs">
+    <ul class="breadcrumb query">
+      <h3>Keywords:</h3>
+      <%- if !localized_params[:q].blank? -%>
+        <%= render_constraint_element(search_field_label(localized_params),
+            localized_params[:q], classes: ["query"],
+            remove: catalog_index_path(localized_params.merge(q: nil, action: :index))) %>
+      <%- else %>
+        <li class="appliedFilter empty query">All Content</li>
+      <%- end -%>
+    </ul>
 
-<%- params[:sort]="record_creation_date desc" -%>
+    <br style="clear:both">
 
- <%= render :partial=>'/catalog/search_box' %>
-
-
-<h2>Active Search Criteria:
-
-
-</h2>
- <div id="breadcrumbs">
-  <ul class="breadcrumb query">
-     <h3>Keywords:</h3>
-<%- if (!localized_params[:q].blank?) -%>
-<%=render_constraint_element(search_field_label(localized_params),
-            localized_params[:q],
-            :classes => ["query"],
-            :remove => catalog_index_path(localized_params.merge(:q=>nil, :action=>:index)))%>
-
-<%- else%>
-<li class="appliedFilter empty query">All Content</li>
-<%- end -%>
-
- </ul>
-
- <br style="clear:both">
-
- <ul class="breadcrumb facet">
-    <h3>Limited to:</h3>
-<%- if !localized_params[:f].to_s.empty? -%>
-<%- localized_params[:f].each_pair do |facet,values| %>
-<%- values.each do |val| %>
-<%= render_constraint_element(facet_field_label(facet),val, :remove => catalog_index_path(remove_facet_params(facet, val, localized_params)),:classes => ["filter"] )%>
-
-<%= '<span class=\'join\'> + </span>'.html_safe unless val == values.last %>
-<%- end -%>
-
-</ul>
-  <%- end -%>
-
+    <ul class="breadcrumb facet">
+      <h3>Limited to:</h3>
+      <%- if !localized_params[:f].blank? -%>
+        <%- localized_params[:f].each_pair do |facet, values| %>
+          <%- values.each do |val| %>
+            <%= render_constraint_element(facet_field_label(facet), val, remove: catalog_index_path(remove_facet_params(facet, val, localized_params)), classes: ["filter"]) %>
+            <%= '<span class=\'join\'> + </span>'.html_safe unless val == values.last %>
+          <% end %>
+        </ul>
+        <%- end -%>
       <%- else -%>
         <ul class="breadcrumb facet">
           <li class="appliedFilter empty query">
@@ -58,12 +42,9 @@
           </li>
         </ul>
       <%- end -%>
-       <br style="clear:both">
 
+    <br style="clear:both">
 
-<%= link_to image_tag("rss.gif", :border=>0, :id=>"rssLink"), params.merge(:format => :rss), :class => "feed_link" %>
-
-     </div>
-
-
+    <%= link_to image_tag("rss.gif", border: 0, id: "rssLink"), params.merge(format: :rss), class: "feed_link" %>
+  </div>
 <% end -%>
