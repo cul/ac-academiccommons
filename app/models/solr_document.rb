@@ -46,4 +46,12 @@ class SolrDocument
   def embargoed?
     !free_to_read?(self)
   end
+
+  def restricted?
+    has?(:restriction_on_access_ss)
+  end
+
+  def access_restriction
+    fetch(:restriction_on_access_ss)
+  end
 end
