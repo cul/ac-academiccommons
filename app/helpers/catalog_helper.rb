@@ -207,16 +207,6 @@ module CatalogHelper
     "Showing item <b>#{session[:search][:counter].to_i} of #{number_with_delimiter(session[:search][:total])}</b> from your search.".html_safe
   end
 
-  # Look up search field user-displayable label
-  # based on params[:qt] and configuration.
-  def search_field_label(params)
-    if(params[:search_field].blank?)
-      h( "Keyword" )
-    else
-      h( Blacklight.label_for_search_field(params[:search_field]) )
-    end
-  end
-
   # Export to Refworks URL, called in _show_tools
   def refworks_export_url(document = @document)
     "http://www.refworks.com/express/expressimport.asp?vendor=#{CGI.escape(application_name)}&filter=MARC%20Format&encoding=65001&url=#{CGI.escape(catalog_path(document.id, :format => 'refworks_marc_txt', :only_path => false))}"

@@ -15,7 +15,7 @@
     <ul class="breadcrumb query">
       <h3>Keywords:</h3>
       <%- if !localized_params[:q].blank? -%>
-        <%= render_constraint_element(search_field_label(localized_params),
+        <%= render_constraint_element(constraint_query_label(localized_params),
             localized_params[:q], classes: ["query"],
             remove: catalog_index_path(localized_params.merge(q: nil, action: :index))) %>
       <%- else %>
