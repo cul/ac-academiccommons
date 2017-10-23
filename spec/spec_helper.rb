@@ -18,9 +18,19 @@
 # See http://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
 
 require 'capybara/rspec'
-require 'capybara/poltergeist'
+require 'selenium-webdriver'
 
-Capybara.javascript_driver = :poltergeist
+Capybara.javascript_driver = :headless_chrome
+
+Capybara.register_driver :headless_chrome do |app|
+  capabilities = Selenium::WebDriver::Remote::Capabilities.chrome(
+    chromeOptions: { args: %w[headless disable-gpu] }
+  )
+
+  Capybara::Selenium::Driver.new(app,
+                                 browser: :chrome,
+                                 desired_capabilities: capabilities)
+end
 
 RSpec.configure do |config|
   # rspec-expectations config goes here. You can use an alternate

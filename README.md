@@ -68,15 +68,15 @@ If you need an object in AC to do further testing and development, add a collect
    ```
    solr_wrapper
    ```
-   
+
 3. Load the collection and one item into Fedora.
    ```
    rake ac:populate_solr
    ```
 
 ## Running tests
-1. In order to run tests that require javascript you will need `phantomjs` installed. It can be installed using homebrew or macports.
-2. Run test locally by running `RAILS_ENV=test rake ci`.
+1. In order to run tests that require javascript you will might need `chrome` installed (needs to be tested).
+2. Run test locally by running `rake ci`.
 
 
 ## Deploying

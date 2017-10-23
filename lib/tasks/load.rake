@@ -1,14 +1,15 @@
-namespace :ci do
-  task :load_collection => :environment do
-    fedora_config = Rails.application.config.fedora
+namespace :load do
+  task :collection => :environment do
+    fedora_config = Rails.application.config_for(:fedora)
     fedora_server = ActiveFedora::Base.connection_for_pid("collection:3")
     # ingest the actest:1 aggregator
     path = "spec/fixtures/collection_3.xml"
     raise "#{path} does not exists" unless File.exists?(path)
     fedora_server.ingest(pid: "collection:3", file: File.read(path))
   end
-  task :load_fixtures => :environment do
-    fedora_config = Rails.application.config.fedora
+
+  task :fixtures => :environment do
+    fedora_config = Rails.application.config_for(:fedora)
     fedora_server = ActiveFedora::Base.connection_for_pid("actest:1")
     # ingest the actest:1 aggregator
     Dir.glob("spec/fixtures/actest_1/actest_*.xml") do |path|
