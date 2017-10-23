@@ -1,10 +1,19 @@
 require File.expand_path(File.dirname(__FILE__) + '../../../lib/james_monkeys.rb')
 
 namespace :ac do
-  desc "FOR DEVELOPMENT ONLY: Adds an item to repository."
+  desc "Adds item and collection to the repository."
   task :populate_solr => :environment do
-    Rake::Task["ci:load_collection"].invoke
-    Rake::Task["ci:load_fixtures"].invoke
+    Rake::Task["load:collection"].invoke
+    Rake::Task["load:fixtures"].invoke
+
+    collection = ActiveFedora::Base.find('collection:3')
+    tries = 0
+    while((length = collection.list_members(true).length) == 0 && tries < 50) do
+      puts "(collection:3).list_members was zero, waiting for buffer to flush"
+      sleep(1)
+      tries += 1
+    end
+    raise "Never found collection members, check Solr" if (tries > 50)
 
     index = AcademicCommons::Indexer.new
     index.items('actest:1', only_in_solr: false)
