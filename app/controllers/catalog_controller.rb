@@ -149,10 +149,20 @@ class CatalogController < ApplicationController
     # except in the relevancy case).
     # label is key, solr field is value
 
-    config.add_sort_field 'score desc, pub_date_sort desc, title_sort asc', :label => 'relevance'
-    config.add_sort_field 'pub_date_sort desc, title_sort asc', :label => 'year'
-    config.add_sort_field 'author_sort asc, title_sort asc', :label => 'author'
-    config.add_sort_field 'title_sort asc, pub_date_sort desc', :label => 'title'
+    config.add_sort_field('relevance') do |field|
+      field.sort = 'score desc, pub_date_sort desc, title_sort asc'
+      field.label = 'relevance'
+    end
+
+    config.add_sort_field('year') do |field|
+      field.sort = 'pub_date_sort desc, title_sort asc'
+      field.label = 'year'
+    end
+
+    config.add_sort_field('title') do |field|
+      field.sort = 'title_sort asc, pub_date_sort desc'
+      field.label = 'title'
+    end
 
     # If there are more than this many search results, no spelling ("did you
     # mean") suggestion is offered.
@@ -266,7 +276,6 @@ class CatalogController < ApplicationController
   end
 
   def index
-
     respond_to do |format|
       format.html { super }
       format.rss  { rss }
