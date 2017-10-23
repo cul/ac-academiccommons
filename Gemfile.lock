@@ -80,6 +80,8 @@ GEM
       public_suffix (~> 2.0, >= 2.0.2)
     airbrussh (1.2.0)
       sshkit (>= 1.6.1, != 1.7.0)
+    archive-zip (0.7.0)
+      io-like (~> 0.3.0)
     arel (6.0.4)
     autoprefixer-rails (6.5.4)
       execjs
@@ -125,8 +127,10 @@ GEM
       xpath (~> 2.0)
     childprocess (0.5.9)
       ffi (~> 1.0, >= 1.0.11)
+    chromedriver-helper (1.1.0)
+      archive-zip (~> 0.7.0)
+      nokogiri (~> 1.6)
     chronic (0.10.2)
-    cliver (0.3.2)
     concurrent-ruby (1.0.5)
     cul_omniauth (0.5.2)
       cancan
@@ -185,6 +189,7 @@ GEM
       domain_name (~> 0.5)
     httpclient (2.8.3)
     i18n (0.8.1)
+    io-like (0.3.0)
     jquery-rails (2.0.3)
       railties (>= 3.1.0, < 5.0)
       thor (~> 0.14)
@@ -263,10 +268,6 @@ GEM
       nokogiri (~> 1.5)
       omniauth (~> 1.2)
     orm_adapter (0.5.0)
-    poltergeist (1.12.0)
-      capybara (~> 2.1)
-      cliver (~> 0.3.1)
-      websocket-driver (>= 0.2.0)
     public_suffix (2.0.4)
     rack (1.6.5)
     rack-test (0.6.3)
@@ -399,6 +400,9 @@ GEM
       sprockets (>= 2.8, < 4.0)
       sprockets-rails (>= 2.0, < 4.0)
       tilt (>= 1.1, < 3)
+    selenium-webdriver (3.6.0)
+      childprocess (~> 0.5)
+      rubyzip (~> 1.0)
     solr_wrapper (0.19.0)
       faraday
       ruby-progressbar
@@ -455,9 +459,6 @@ GEM
     unicode (0.4.4.2)
     warden (1.2.6)
       rack (>= 1.0)
-    websocket-driver (0.6.4)
-      websocket-extensions (>= 0.1.0)
-    websocket-extensions (0.1.2)
     whenever (0.9.7)
       chronic (>= 0.6.3)
     xml-simple (1.1.5)
@@ -479,6 +480,7 @@ DEPENDENCIES
   capistrano-rails (~> 1.1)
   capistrano-rvm (~> 0.1)
   capybara (~> 2.2)
+  chromedriver-helper
   cul-ldap!
   cul_omniauth
   database_cleaner
@@ -499,7 +501,6 @@ DEPENDENCIES
   nokogiri (= 1.6.0)
   oai
   okcomputer
-  poltergeist
   rails (= 4.2.8)
   rainbow
   rinku (~> 1.3.0)
@@ -507,6 +508,7 @@ DEPENDENCIES
   rspec-its
   rspec-rails (~> 3.5)
   sass-rails
+  selenium-webdriver
   solr_wrapper (>= 0.18.0)
   spring
   sqlite3 (>= 1.3.5)

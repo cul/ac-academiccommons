@@ -55,7 +55,8 @@ group :development, :test do
   gem 'database_cleaner'
   gem 'factory_girl_rails'
   gem "jettywrapper", ">=1.4.0", git: 'https://github.com/projecthydra/jettywrapper.git', branch: "master"
-  gem 'poltergeist' # Used to run test with js.
+  gem 'selenium-webdriver'
+  gem 'chromedriver-helper'
   gem 'rspec-rails', '~> 3.5'
   gem 'rspec-its'
   gem 'solr_wrapper', '>= 0.18.0'
