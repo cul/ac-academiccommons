@@ -1,17 +1,19 @@
 GIT
-  remote: https://github.com/cul/cdrs_blacklight_oai_provider.git
-  revision: 682c27f317c84b08979d412275199f8f2d5fbbec
-  specs:
-    blacklight_oai_provider (0.2.4)
-      blacklight (>= 4.2.2)
-      rails (>= 3.2.13)
-
-GIT
   remote: https://github.com/cul/cul-ldap.git
   revision: e7e696763dcb30d608fe8b9ba34f1f3f6abe85ef
   specs:
     cul-ldap (0.0.1)
       net-ldap (>= 0.16.0)
+
+GIT
+  remote: https://github.com/projectblacklight/blacklight_oai_provider.git
+  revision: 8d7e869b3a5330a1c7dff8d4eb201f4274864112
+  branch: v5.0
+  specs:
+    blacklight_oai_provider (0.1.1)
+      blacklight (~> 5.0)
+      oai
+      rails (~> 4.0)
 
 GIT
   remote: https://github.com/projecthydra/jettywrapper.git
@@ -172,7 +174,7 @@ GEM
       railties (>= 3.1.0, < 5.0)
     faraday (0.10.0)
       multipart-post (>= 1.2, < 3)
-    faraday_middleware (0.10.1)
+    faraday_middleware (0.12.2)
       faraday (>= 0.7.4, < 1.0)
     ffi (1.9.14)
     gaffe (1.2.0)
@@ -471,7 +473,7 @@ PLATFORMS
 DEPENDENCIES
   active-fedora (~> 8.2)
   blacklight (~> 5.19.0)
-  blacklight_oai_provider (>= 0.2.4)!
+  blacklight_oai_provider!
   bootstrap-sass
   byebug
   capistrano (= 3.8)
@@ -499,7 +501,6 @@ DEPENDENCIES
   mysql2
   net-ldap
   nokogiri (= 1.6.0)
-  oai
   okcomputer
   rails (= 4.2.8)
   rainbow

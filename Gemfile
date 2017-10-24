@@ -6,8 +6,7 @@ gem 'rails', '4.2.8'
 gem 'active-fedora', '~>8.2'
 gem 'blacklight', '~> 5.19.0'
 gem 'rsolr-ext'
-gem 'blacklight_oai_provider', '>=0.2.4', git: 'https://github.com/cul/cdrs_blacklight_oai_provider.git'
-gem "oai" # This gem needs to be a requirement of blacklight_oai_provider
+gem 'blacklight_oai_provider', git: 'https://github.com/projectblacklight/blacklight_oai_provider.git', branch: 'v5.0'
 
 # Database
 gem 'mysql2'
