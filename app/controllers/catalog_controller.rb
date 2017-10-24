@@ -1,7 +1,7 @@
 # -*- encoding : utf-8 -*-
 class CatalogController < ApplicationController
   include Blacklight::Catalog
-  include BlacklightOaiProvider::ControllerExtension
+  include BlacklightOaiProvider::Controller
 
   before_filter :record_view_stats, :only => :show
 
@@ -182,18 +182,15 @@ class CatalogController < ApplicationController
 
     config.feed_rows = "500"
 
-
     config.oai = {
-      :provider => {
-        :repository_name => 'Columbia University Academic Commons',
-        :repository_url => 'http://academiccommons.columbia.edu/catalog/oai',
-        :record_prefix => 'academiccommons.columbia.edu',
-        :admin_email => 'ac@columbia.edu',
-        :deletion_support => 'persistent',
-        :sample_id => 'ac:109660'
+      provider: {
+        repository_name: 'Columbia University Academic Commons',
+        repository_url: 'http://academiccommons.columbia.edu/catalog/oai',
+        record_prefix: 'academiccommons.columbia.edu',
+        admin_email: 'ac@columbia.edu',
+        sample_id: 'ac:109660'
       },
       :document => {
-        :timestamp => 'record_creation_date',
         :limit => 25
       }
     }

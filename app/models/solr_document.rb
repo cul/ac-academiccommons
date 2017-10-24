@@ -1,9 +1,9 @@
 class SolrDocument
   include Blacklight::Solr::Document
+  include BlacklightOaiProvider::SolrDocument
   include AcademicCommons::Embargoes
 
-  SolrDocument.use_extension( BlacklightOaiProvider::SolrDocumentExtension )
-
+  self.timestamp_key = 'record_creation_date'
 
   # The following shows how to setup this blacklight document to display marc documents
   # extension_parameters[:marc_source_field] = :marc_display
@@ -24,24 +24,20 @@ class SolrDocument
   # and Blacklight::Solr::Document#to_semantic_values
   # Recommendation: Use field names from Dublin Core
   use_extension( Blacklight::Document::DublinCore)
+
   field_semantics.merge!(
-                         :title => "title_display",
-                         :author => "author_facet",
-                         :format => "format",
-			 :creator => "author_facet",
-			 :date => "date_issued",
-			 :type => "type_of_resource_mods",
-			 :publisher => "publisher",
-			 :subject => "subject_facet",
-			 :identifier => "handle",
-			 :description => "abstract",
-			 :language => "language"
-                         )
-
-
-  def record_creation_date
-    Time.parse get('record_creation_date')
-  end
+    title: "title_display",
+    author: "author_facet",
+    format: "format",
+	  creator: "author_facet",
+		date: "date_issued",
+		type: "type_of_resource_mods",
+		publisher: "publisher",
+		subject: "subject_facet",
+	  identifier: "handle",
+	  description: "abstract",
+	  language: "language"
+  )
 
   def embargoed?
     !free_to_read?(self)
