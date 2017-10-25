@@ -135,8 +135,8 @@ xsi:schemaLocation="info:fedora/fedora-system:def/foxml# http://www.fedora.info/
 
     <recordInfo>
         <recordContentSource authority="marcorg">NNC</recordContentSource>
-        <recordCreationDate encoding="w3cdtf">2016-09-14 16:31:33 -0400</recordCreationDate>
-        <recordChangeDate encoding="w3cdtf">2016-09-14 16:48:05 -0400</recordChangeDate>
+        <recordCreationDate encoding="w3cdtf">2017-09-14 16:31:33 -0400</recordCreationDate>
+        <recordChangeDate encoding="w3cdtf">2017-09-14 16:48:05 -0400</recordChangeDate>
         <recordIdentifier>24815</recordIdentifier>
         <languageOfCataloging>
             <languageTerm authority="iso639-2b">eng</languageTerm>
