@@ -70,6 +70,13 @@ describe CatalogController, :type => :feature do
         expect(page).to have_content("No items found")
       end
 
+      it "indicates active search in the form widget" do
+        visit catalog_index_path(q: "alice")
+        select("year", from: "sort")
+        click_on("sort results")
+        expect(page).to have_select("sort", selected: "year")
+      end
+
       context "expects query results page to" do
         before do
           visit catalog_index_path(q: "alice")
