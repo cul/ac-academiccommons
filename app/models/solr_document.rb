@@ -29,7 +29,7 @@ class SolrDocument
     title: "title_display",
     author: "author_facet",
 	  creator: "author_facet",
-		date: "date_issued",
+		date: "pub_date_facet",
     type: ["type_of_resource_facet", "genre_facet"],
 		publisher: "publisher",
 		subject: "subject_facet",
