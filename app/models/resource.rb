@@ -12,8 +12,8 @@ class Resource < ActiveFedora::Base
     solr_doc
   end
   def downloadable_content
-    return datastreams['CONTENT'] if (datastreams.has_key?('CONTENT'))
     return datastreams['content'] if (datastreams.has_key?('content'))
+    return datastreams['CONTENT'] if (datastreams.has_key?('CONTENT'))
     return nil
   end
 end
