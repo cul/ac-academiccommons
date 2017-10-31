@@ -30,8 +30,7 @@ class SolrDocument
     author: "author_facet",
 	  creator: "author_facet",
 		date: "date_issued",
-		type: "genre_facet",
-    type: "type_of_resource_facet",
+    type: ["type_of_resource_facet", "genre_facet"],
 		publisher: "publisher",
 		subject: "subject_facet",
 	  identifier: "handle",
@@ -49,5 +48,24 @@ class SolrDocument
 
   def access_restriction
     fetch(:restriction_on_access_ss)
+  end
+
+  # Overriding Blacklight v5.19.2 implementation of to_semantic_values to accept
+  # an array of solr fields instead of a singular solr field.
+  #
+  # This code was taken from Blacklight v6.11.1. When updating to Blacklight this
+  # code should be removed.
+  def to_semantic_values
+    @semantic_value_hash ||= self.class.field_semantics.each_with_object(Hash.new([])) do |(key, field_names), hash|
+      ##
+      # Handles single string field_name or an array of field_names
+      value = Array.wrap(field_names).map { |field_name| self[field_name] }.flatten.compact
+
+      # Make single and multi-values all arrays, so clients
+      # don't have to know.
+      hash[key] = value unless value.empty?
+    end
+
+    @semantic_value_hash ||= {}
   end
 end
