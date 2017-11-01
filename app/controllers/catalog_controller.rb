@@ -186,12 +186,12 @@ class CatalogController < ApplicationController
       provider: {
         repository_name: 'Columbia University Academic Commons',
         repository_url: 'http://academiccommons.columbia.edu/catalog/oai',
-        record_prefix: 'academiccommons.columbia.edu',
+        record_prefix: 'oai:academiccommons.columbia.edu',
         admin_email: 'ac@columbia.edu',
         sample_id: 'ac:109660'
       },
-      :document => {
-        :limit => 25
+      document: {
+        limit: 100
       }
     }
 
