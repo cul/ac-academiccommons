@@ -508,6 +508,7 @@ DEPENDENCIES
   database_cleaner
   devise
   dotenv-rails
+  equivalent-xml
   factory_girl_rails
   fancybox2-rails
   gaffe
