@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="/assets/blacklight_oai_provider/oai2-1af06cf5d63ebaab14633002db03fd7d3427a8424623e0deafe3362afeea2d28.xsl"?>
+<OAI-PMH xmlns="http://www.openarchives.org/OAI/2.0/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/ http://www.openarchives.org/OAI/2.0/OAI-PMH.xsd">
+  <responseDate>2017-11-01T18:35:49Z</responseDate>
+  <request metadataPrefix="oai_dc" verb="ListRecords">http://academiccommons.columbia.edu/catalog/oai</request>
+  <ListRecords>
+    <record>
+      <header>
+        <identifier>oai:academiccommons.columbia.edu:actest:1</identifier>
+        <datestamp>2017-09-14T16:31:33Z</datestamp>
+      </header>
+      <metadata>
+        <oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
+          <dc:title>Alice's Adventures in Wonderland</dc:title>
+          <dc:creator>Carroll, Lewis</dc:creator>
+          <dc:creator>Weird Old Guys.</dc:creator>
+          <dc:date>1865</dc:date>
+          <dc:type>Text</dc:type>
+          <dc:type>Articles</dc:type>
+          <dc:subject>Tea Parties</dc:subject>
+          <dc:subject>Wonderland</dc:subject>
+          <dc:subject>Rabbits</dc:subject>
+          <dc:subject>Nonsense literature</dc:subject>
+          <dc:subject>Bildungsromans</dc:subject>
+          <dc:identifier>http://dx.doi.org/10.7916/ALICE</dc:identifier>
+          <dc:description>Background -  Alice is feeling bored and drowsy while sitting on the riverbank with her older sister, who is reading a book with no pictures or conversations.</dc:description>
+          <dc:language>English</dc:language>
+        </oai_dc:dc>
+      </metadata>
+    </record>
+  </ListRecords>
+</OAI-PMH>

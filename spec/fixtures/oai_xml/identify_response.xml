@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="/assets/blacklight_oai_provider/oai2-1af06cf5d63ebaab14633002db03fd7d3427a8424623e0deafe3362afeea2d28.xsl"?>
+<OAI-PMH xmlns="http://www.openarchives.org/OAI/2.0/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/ http://www.openarchives.org/OAI/2.0/OAI-PMH.xsd">
+  <responseDate>2017-11-01T18:35:21Z</responseDate>
+  <request verb="Identify">http://academiccommons.columbia.edu/catalog/oai</request>
+  <Identify>
+    <repositoryName>Columbia University Academic Commons</repositoryName>
+    <baseURL>http://academiccommons.columbia.edu/catalog/oai</baseURL>
+    <protocolVersion>2.0</protocolVersion>
+    <adminEmail>ac@columbia.edu</adminEmail>
+    <earliestDatestamp>2017-09-14T16:31:33Z</earliestDatestamp>
+    <deletedRecord>transient</deletedRecord>
+    <granularity>YYYY-MM-DDThh:mm:ssZ</granularity>
+      <description>
+        <oai-identifier xmlns="http://www.openarchives.org/OAI/2.0/oai-identifier" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai-identifier http://www.openarchives.org/OAI/2.0/oai-identifier.xsd">
+          <scheme>oai</scheme>
+          <repositoryIdentifier>academiccommons.columbia.edu</repositoryIdentifier>
+          <delimiter>:</delimiter>
+          <sampleIdentifier>oai:academiccommons.columbia.edu:ac:109660</sampleIdentifier>
+        </oai-identifier>
+    </description>
+  </Identify>
+</OAI-PMH>
