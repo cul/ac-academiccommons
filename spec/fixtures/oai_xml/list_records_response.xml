@@ -2,7 +2,7 @@
 <?xml-stylesheet type="text/xsl" href="/assets/blacklight_oai_provider/oai2-1af06cf5d63ebaab14633002db03fd7d3427a8424623e0deafe3362afeea2d28.xsl"?>
 <OAI-PMH xmlns="http://www.openarchives.org/OAI/2.0/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/ http://www.openarchives.org/OAI/2.0/OAI-PMH.xsd">
   <responseDate>2017-11-01T18:35:49Z</responseDate>
-  <request metadataPrefix="oai_dc" verb="ListRecords">http://academiccommons.columbia.edu/catalog/oai</request>
+  <request metadataPrefix="oai_dc" verb="ListRecords">https://academiccommons.columbia.edu/catalog/oai</request>
   <ListRecords>
     <record>
       <header>

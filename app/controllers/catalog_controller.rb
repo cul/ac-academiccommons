@@ -185,7 +185,7 @@ class CatalogController < ApplicationController
     config.oai = {
       provider: {
         repository_name: 'Columbia University Academic Commons',
-        repository_url: 'http://academiccommons.columbia.edu/catalog/oai',
+        repository_url: 'https://academiccommons.columbia.edu/catalog/oai',
         record_prefix: 'oai:academiccommons.columbia.edu',
         admin_email: 'ac@columbia.edu',
         sample_id: 'ac:109660'
