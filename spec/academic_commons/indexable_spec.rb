@@ -1,6 +1,6 @@
 require 'rails_helper'
 RSpec.describe AcademicCommons::Indexable do
-  let(:expected_json) { JSON.load File.read('spec/fixtures/actest_1/to_solr.json') }
+  let(:expected_json) { fixture_to_json('actest_1/to_solr.json') }
   let(:indexable) do
     class_rig = Class.new
     class_rig.class_eval do
@@ -31,33 +31,33 @@ RSpec.describe AcademicCommons::Indexable do
   # Tests prefixed MODS with joined names. These changes were introduced with the
   # migration to Hyacinth.
   context 'when mods from Hyacinth' do
-    let(:mods_fixture) { File.read('spec/fixtures/actest_3/mods.xml') }
+    let(:mods_fixture) { fixture_to_str('actest_3/mods.xml') }
     include_examples 'indexing mods'
 
     context 'contains degree information' do
-      let(:mods_fixture) { File.read('spec/fixtures/academic_commons/indexable/etd_mods.xml') }
-      let(:expected_json) { JSON.load File.read('spec/fixtures/academic_commons/indexable/etd_to_solr.json') }
+      let(:mods_fixture) { fixture_to_str('academic_commons/indexable/etd_mods.xml') }
+      let(:expected_json) { fixture_to_json('academic_commons/indexable/etd_to_solr.json') }
 
       include_examples 'indexing mods'
     end
 
     context 'contains multiple parent publication authors' do
-      let(:mods_fixture) { File.read('spec/fixtures/academic_commons/indexable/parent_publication_names.xml', encoding: 'utf-8') }
-      let(:expected_json) { JSON.load File.read('spec/fixtures/academic_commons/indexable/parent_publication_names.json', encoding: 'utf-8') }
+      let(:mods_fixture) { fixture_to_str('academic_commons/indexable/parent_publication_names.xml') }
+      let(:expected_json) { fixture_to_json('academic_commons/indexable/parent_publication_names.json') }
 
       include_examples 'indexing mods'
     end
 
     context 'contains subject titles and subject names' do
-      let(:mods_fixture) { File.read('spec/fixtures/academic_commons/indexable/subject_names_and_titles.xml') }
-      let(:expected_json) { JSON.load File.read('spec/fixtures/academic_commons/indexable/subject_names_and_titles.json') }
+      let(:mods_fixture) { fixture_to_str('academic_commons/indexable/subject_names_and_titles.xml') }
+      let(:expected_json) { fixture_to_json('academic_commons/indexable/subject_names_and_titles.json') }
 
       include_examples 'indexing mods'
     end
 
     context 'contains access restriction' do
-      let(:mods_fixture) { File.read('spec/fixtures/academic_commons/indexable/access_restriction.xml') }
-      let(:expected_json) { JSON.load File.read('spec/fixtures/academic_commons/indexable/access_restriction.json') }
+      let(:mods_fixture) { fixture_to_str('academic_commons/indexable/access_restriction.xml') }
+      let(:expected_json) { fixture_to_json('academic_commons/indexable/access_restriction.json') }
 
       include_examples 'indexing mods'
     end
@@ -66,8 +66,9 @@ RSpec.describe AcademicCommons::Indexable do
   # TODO: This can test and its associated fixture can be removed when we
   # completely transition over to Hyacinth.
   context 'when mods from Hypatia' do
-    let(:mods_fixture) { File.read('spec/fixtures/academic_commons/indexable/hypatia_mods.xml') }
-    let(:expected_json) { JSON.load File.read('spec/fixtures/academic_commons/indexable/hypatia_to_solr.json') }
+    let(:mods_fixture) { fixture_to_str('academic_commons/indexable/hypatia_mods.xml') }
+    let(:expected_json) { fixture_to_json('academic_commons/indexable/hypatia_to_solr.json') }
+
     include_examples 'indexing mods'
   end
 end

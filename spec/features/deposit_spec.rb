@@ -51,7 +51,7 @@ RSpec.describe DepositController, :type => :feature do
           before do
             fill_in("name", :with => "John Doe")
             fill_in("email", :with => "xyz123@columbia.edu")
-            attach_file("file", File.join(Rails.root, "spec/fixtures/test_file.txt"))
+            attach_file("file", fixture("test_file.txt"))
             fill_in("title", :with => "Test Deposit")
             fill_in("author", :with => "John Doe")
             fill_in("abstr", :with => "Blah Blah Blah")
