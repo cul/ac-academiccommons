@@ -2,11 +2,11 @@
 # test is completed.
 shared_context 'log' do
   let(:id) { '20170101-000000' }
-  let(:fixture) { File.join(fixture_path, 'test_file.txt') }
+  let(:filepath) { fixture('test_file.txt') }
   let(:log_destination) { File.join(Rails.root, "log", "ac-indexing", "#{id}.log") }
 
   before do
-    FileUtils.cp(fixture, log_destination) # Create fake log.
+    FileUtils.cp(filepath, log_destination) # Create fake log.
   end
 
   after do

@@ -3,7 +3,7 @@ require 'rails_helper'
 
 describe AcademicCommons::DateTrend do
   let(:solr_fixture) do
-    erb = File.read('spec/fixtures/academic_commons/date_trend/solr_response.json.erb')
+    erb = fixture_to_str('academic_commons/date_trend/solr_response.json.erb')
     now = Time.now
     json = ERB.new(erb).result binding
     JSON.parse(json)
