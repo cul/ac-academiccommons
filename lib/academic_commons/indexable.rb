@@ -309,6 +309,7 @@ module AcademicCommons
                 mods.at_css("identifier[@type='hdl']").text
               end
       add_field.call('handle', field)
+      add_field.call('cul_doi_ssi', field)
     end
 
     def identifierIndexing(mods, add_field)
