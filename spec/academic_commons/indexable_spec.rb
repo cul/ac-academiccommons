@@ -62,13 +62,4 @@ RSpec.describe AcademicCommons::Indexable do
       include_examples 'indexing mods'
     end
   end
-
-  # TODO: This can test and its associated fixture can be removed when we
-  # completely transition over to Hyacinth.
-  context 'when mods from Hypatia' do
-    let(:mods_fixture) { fixture_to_str('academic_commons/indexable/hypatia_mods.xml') }
-    let(:expected_json) { fixture_to_json('academic_commons/indexable/hypatia_to_solr.json') }
-
-    include_examples 'indexing mods'
-  end
 end
