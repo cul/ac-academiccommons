@@ -31,7 +31,7 @@ RSpec.describe AcademicCommons::Indexable do
   # Tests prefixed MODS with joined names. These changes were introduced with the
   # migration to Hyacinth.
   context 'when mods from Hyacinth' do
-    let(:mods_fixture) { fixture_to_str('actest_3/mods.xml') }
+    let(:mods_fixture) { fixture_to_str('actest_1/mods.xml') }
     include_examples 'indexing mods'
 
     context 'contains degree information' do
