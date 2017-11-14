@@ -1,6 +1,6 @@
 require 'rails_helper'
 RSpec.describe AcademicCommons::Indexable do
-  let(:expected_json) { fixture_to_json('actest_1/to_solr.json') }
+  let(:expected_json) { fixture_to_json('fedora_objs/to_solr.json') }
   let(:indexable) do
     class_rig = Class.new
     class_rig.class_eval do
@@ -31,7 +31,7 @@ RSpec.describe AcademicCommons::Indexable do
   # Tests prefixed MODS with joined names. These changes were introduced with the
   # migration to Hyacinth.
   context 'when mods from Hyacinth' do
-    let(:mods_fixture) { fixture_to_str('actest_1/mods.xml') }
+    let(:mods_fixture) { fixture_to_str('fedora_objs/mods.xml') }
     include_examples 'indexing mods'
 
     context 'contains degree information' do
