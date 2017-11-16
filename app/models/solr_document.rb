@@ -33,7 +33,6 @@ class SolrDocument
     type: ["type_of_resource_facet", "genre_facet"],
 		publisher: "publisher",
 		subject: "subject_facet",
-	  identifier: "handle",
 	  description: "abstract",
 	  language: "language"
   )
@@ -67,5 +66,14 @@ class SolrDocument
     end
 
     @semantic_value_hash ||= {}
+
+    # Custom values.
+    @semantic_value_hash[:identifier] = full_doi
+
+    @semantic_value_hash
+  end
+
+  def full_doi
+    AcademicCommons.identifier_url(fetch(:handle, nil))
   end
 end

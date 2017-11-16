@@ -16,6 +16,11 @@ module AcademicCommons
       'software, multimedia'        => 'Software',
       'mixed material'              => 'Mixed media'
     }.freeze
+    DEGREE_LABELS = {
+      '0' => 'Bachelor\'s',
+      '1' => 'Master\'s',
+      '2' => 'Doctoral'
+    }.freeze
     # this is documentary, and should go away when this module is a concern
     REQUIRED_METHODS = [:belongs_to, :descMetadata_content]
 
@@ -309,6 +314,7 @@ module AcademicCommons
                 mods.at_css("identifier[@type='hdl']").text
               end
       add_field.call('handle', field)
+      add_field.call('cul_doi_ssi', field)
     end
 
     def identifierIndexing(mods, add_field)
@@ -340,7 +346,10 @@ module AcademicCommons
       if degree = mods.at_css("> extension > degree")
         add_field.call("degree_name_ssim", degree.at_css("name"))
         add_field.call("degree_grantor_ssim",  degree.at_css("grantor"))
-        add_field.call("degree_level_ssim", degree.at_css("level"))
+
+        level = degree.at_css("level").text
+        add_field.call("degree_level_ssim", level)
+        add_field.call("degree_level_name_ssim", DEGREE_LABELS[level]) if DEGREE_LABELS.key?(level)
       end
     end
 

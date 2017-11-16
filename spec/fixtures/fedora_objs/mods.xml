@@ -1,5 +1,4 @@
 <mods:mods xmlns:mods="http://www.loc.gov/mods/v3" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.loc.gov/mods/v3 http://www.loc.gov/standards/mods/v3/mods-3-4.xsd">
-
     <mods:titleInfo>
         <mods:title>Alice's Adventures in Wonderland</mods:title>
     </mods:titleInfo>
@@ -82,12 +81,11 @@
 
     <mods:recordInfo>
         <mods:recordContentSource authority="marcorg">NNC</mods:recordContentSource>
-        <mods:recordCreationDate encoding="w3cdtf">2016-09-14 16:31:33 -0400</mods:recordCreationDate>
-        <mods:recordChangeDate encoding="w3cdtf">2016-09-14 16:48:05 -0400</mods:recordChangeDate>
+        <mods:recordCreationDate encoding="w3cdtf">2017-09-14 16:31:33 -0400</mods:recordCreationDate>
+        <mods:recordChangeDate encoding="w3cdtf">2017-09-14 16:48:05 -0400</mods:recordChangeDate>
         <mods:recordIdentifier>24815</mods:recordIdentifier>
         <mods:languageOfCataloging>
             <mods:languageTerm authority="iso639-2b">eng</mods:languageTerm>
         </mods:languageOfCataloging>
     </mods:recordInfo>
-
 </mods:mods>

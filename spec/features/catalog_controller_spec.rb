@@ -161,7 +161,7 @@ describe CatalogController, :type => :feature do
     end
 
     it "has linked persistent url" do
-      expect(page).to have_xpath("//a[@href='http://dx.doi.org/10.7916/ALICE']", text: 'http://dx.doi.org/10.7916/ALICE')
+      expect(page).to have_xpath("//a[@href='https://doi.org/10.7916/ALICE']", text: 'https://doi.org/10.7916/ALICE')
     end
 
     it "has doi" do
@@ -186,12 +186,12 @@ describe CatalogController, :type => :feature do
 
     it "has suggested citation" do
       expect(page).to have_xpath("//dt[contains(text(),'Suggested Citation')]/following-sibling::dd",
-        text: 'Lewis Carroll, Weird Old Guys., 1865, Alice\'s Adventures in Wonderland, Columbia University Academic Commons, http://dx.doi.org/10.7916/ALICE.')
+        text: 'Lewis Carroll, Weird Old Guys., 1865, Alice\'s Adventures in Wonderland, Columbia University Academic Commons, https://doi.org/10.7916/ALICE.')
     end
 
     it "links to the MODS download" do
-      expect(page).to have_css("a[href=\"/download/fedora_content/show_pretty/actest:3/CONTENT/actest3_description.xml?data=meta\"]", :text => "text")
-      page.find("a[href=\"/download/fedora_content/show_pretty/actest:3/CONTENT/actest3_description.xml?data=meta\"]", :text => "text").click
+      expect(page).to have_css("a[href=\"/download/fedora_content/show_pretty/actest:1/descMetadata/actest1_description.xml?data=meta\"]", :text => "text")
+      page.find("a[href=\"/download/fedora_content/show_pretty/actest:1/descMetadata/actest1_description.xml?data=meta\"]", text: "text").click
       expect(page).to have_text("Alice's Adventures in Wonderland")
     end
 

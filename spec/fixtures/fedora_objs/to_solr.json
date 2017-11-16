@@ -6,8 +6,8 @@
     "collection:3"
   ],
   "record_content_source": "NNC",
-  "record_creation_date": "2016-09-14T16:31:33Z",
-  "record_change_date": "2016-09-14T16:48:05Z",
+  "record_creation_date": "2017-09-14T16:31:33Z",
+  "record_change_date": "2017-09-14T16:48:05Z",
   "record_identifier":  "24815",
   "record_language_of_catalog": "eng",
   "physical_location": "NNC",
@@ -19,6 +19,7 @@
     "author"
   ],
   "handle": "10.7916/ALICE",
+  "cul_doi_ssi": "10.7916/ALICE",
   "doi": "10.1378/wonderland.01-2345",
   "issn": "0123-4567",
   "title_display": "Alice's Adventures in Wonderland",
