@@ -85,3 +85,16 @@ If you need an object in AC to do further testing and development, add a collect
    cap test cul:auto_tag
    ```
    This will create a tag based on the version number (listed in `VERSION`).
+
+## API v1
+Documentation for the Academic Commons API can be found at `/api/v1/swagger_doc`. To view documentation in a swagger GUI, the following url has to be created:
+```
+http://petstore.swagger.io/?url=#{root_url}/api/v1/swagger_doc
+
+example: http://petstore.swagger.io/?url=http://www.example.com/api/v1/swagger_doc
+```
+
+## Improvements
+### Making Application Faster
+  1. We are only using one image from Font Awesome, instead we could be using a static image.
+  2. FancyBox2 (jquery plugin) may no longer be needed, but is still referenced in view helper code.
