@@ -1,11 +1,4 @@
 GIT
-  remote: https://github.com/cul/cul-ldap.git
-  revision: e7e696763dcb30d608fe8b9ba34f1f3f6abe85ef
-  specs:
-    cul-ldap (0.0.1)
-      net-ldap (>= 0.16.0)
-
-GIT
   remote: https://github.com/projectblacklight/blacklight_oai_provider.git
   revision: 1d00e8a51d809bcbd9f553d9dead20f9cfd9e1b8
   branch: v5.0
@@ -135,6 +128,8 @@ GEM
     chronic (0.10.2)
     concurrent-ruby (1.0.5)
     crass (1.0.2)
+    cul-ldap (0.0.1)
+      net-ldap (~> 0.16)
     cul_omniauth (0.5.2)
       cancan
       devise-guests (~> 0.3)
@@ -254,7 +249,7 @@ GEM
     multipart-post (2.0.0)
     mysql2 (0.4.5)
     net-http-persistent (2.9.4)
-    net-ldap (0.16.0)
+    net-ldap (0.16.1)
     net-scp (1.2.1)
       net-ssh (>= 2.6.5)
     net-ssh (4.1.0)
@@ -503,7 +498,7 @@ DEPENDENCIES
   capistrano-rvm (~> 0.1)
   capybara (~> 2.2)
   chromedriver-helper
-  cul-ldap!
+  cul-ldap
   cul_omniauth
   database_cleaner
   devise
@@ -540,4 +535,4 @@ DEPENDENCIES
   whenever
 
 BUNDLED WITH
-   1.15.3
+   1.16.0
