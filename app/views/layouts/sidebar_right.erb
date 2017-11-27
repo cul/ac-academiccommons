@@ -1,6 +1,8 @@
 <!doctype html>
 <html lang="en" class="no-js">
 <head>
+  <%= render 'layouts/google_analytics' %>
+
   <meta charset="utf-8">
   <!--[if IE]><![endif]-->
 
@@ -9,7 +11,6 @@
   <title><%= @page_title || application_name %></title>
 
   <meta name="bitly-verification" content="35191b8f3154"/>
-
 
   <%= favicon_link_tag 'favicon-crown.png', :media => "screen,projection", :type => "text/css" %>
   <%= stylesheet_link_tag "blueprint/screen", :media => "screen,projection"  %>
@@ -174,25 +175,6 @@ end
     <%= render :partial=>'layouts/footer_line' %>
   </div>
 </div>
-
-
-<%- if Rails.application.config.analytics_enabled == true -%>
-<script type="text/javascript">
-
-var _gaq = _gaq || [];
-_gaq.push(['_setAccount', 'UA-10481105-1']);
-_gaq.push(['_trackPageview'],
-['aggregate._setAccount', 'UA-7973988-3'],
-['aggregate._trackPageview']
-);
-
-(function() {
-  var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-  ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-  var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-})();
-
-</script> <% end %>
 
 <script type="text/javascript">
 
