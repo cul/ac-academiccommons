@@ -34,6 +34,7 @@ gem 'sass-rails'
 gem "therubyracer"
 gem 'uglifier'
 gem 'unicode'
+gem 'voight_kampff'
 gem 'whenever', require: false
 
 group :development do

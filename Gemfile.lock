@@ -474,6 +474,8 @@ GEM
       unf_ext
     unf_ext (0.0.7.2)
     unicode (0.4.4.2)
+    voight_kampff (1.1.1)
+      rack (>= 1.4, < 3.0)
     warden (1.2.6)
       rack (>= 1.0)
     whenever (0.9.7)
@@ -532,6 +534,7 @@ DEPENDENCIES
   therubyracer
   uglifier
   unicode
+  voight_kampff
   whenever
 
 BUNDLED WITH
