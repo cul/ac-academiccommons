@@ -384,6 +384,14 @@
     "source": "https://raw.githubusercontent.com/monperrus/crawler-user-agents/master/crawler-user-agents.json"
   },
   {
+    "pattern": "api scraper",
+    "addition_date": "2017-12-01",
+    "instances": [
+      "API scraper"
+    ],
+    "source": "config/custom_bots.json"
+  },
+  {
     "pattern": "apis-google",
     "addition_date": "2017/08/08",
     "url": "https://support.google.com/webmasters/answer/1061943?hl=en",
@@ -430,6 +438,14 @@
     "pattern": "arachmo",
     "last_changed": "2017-08-08",
     "source": "https://raw.githubusercontent.com/atmire/COUNTER-Robots/master/COUNTER_Robots_list.json"
+  },
+  {
+    "pattern": "arachni",
+    "addition_date": "2017-12-01",
+    "instances": [
+      "Arachni/v1.5.1"
+    ],
+    "source": "config/custom_bots.json"
   },
   {
     "pattern": "architext",
@@ -707,6 +723,14 @@
       "Buzzbot/1.0 (Buzzbot; http://www.buzzstream.com; buzzbot@buzzstream.com)"
     ],
     "source": "https://raw.githubusercontent.com/monperrus/crawler-user-agents/master/crawler-user-agents.json"
+  },
+  {
+    "pattern": "buzztalk",
+    "addition_date": "2017-12-01",
+    "instances": [
+      "buzztalk"
+    ],
+    "source": "config/custom_bots.json"
   },
   {
     "pattern": "bwh3_user_agent",
@@ -1488,6 +1512,14 @@
     "source": "https://raw.githubusercontent.com/monperrus/crawler-user-agents/master/crawler-user-agents.json"
   },
   {
+    "pattern": "g-i-g-a-b-o-t",
+    "addition_date": "2017-12-01",
+    "instances": [
+      "G-i-g-a-b-o-t"
+    ],
+    "source": "config/custom_bots.json"
+  },
+  {
     "pattern": "g00g1e.net",
     "addition_date": "2014/04/01",
     "url": "http://www.g00g1e.net/",
@@ -1495,6 +1527,14 @@
 
     ],
     "source": "https://raw.githubusercontent.com/monperrus/crawler-user-agents/master/crawler-user-agents.json"
+  },
+  {
+    "pattern": "gachecker",
+    "addition_date": "2017-12-01",
+    "instances": [
+      "GAChecker ( http://www.gachecker.com)"
+    ],
+    "source": "config/custom_bots.json"
   },
   {
     "pattern": "gaisbot",
@@ -1672,6 +1712,14 @@
     "source": "https://raw.githubusercontent.com/monperrus/crawler-user-agents/master/crawler-user-agents.json"
   },
   {
+    "pattern": "grammarly",
+    "addition_date": "2017-12-01",
+    "instances": [
+      "Grammarly/1.0 (http://www.grammarly.com)"
+    ],
+    "source": "config/custom_bots.json"
+  },
+  {
     "pattern": "grapeshotcrawler",
     "addition_date": "2014/04/01",
     "url": "http://www.grapeshot.co.uk/crawler.php",
@@ -1679,6 +1727,14 @@
       "Mozilla/5.0 (compatible; GrapeshotCrawler/2.0; +http://www.grapeshot.co.uk/crawler.php)"
     ],
     "source": "https://raw.githubusercontent.com/monperrus/crawler-user-agents/master/crawler-user-agents.json"
+  },
+  {
+    "pattern": "grouphigh",
+    "addition_date": "2017-12-01",
+    "instances": [
+      "Mozilla/5.0 (compatible; GroupHigh/1.0; http://www.grouphigh.com/)"
+    ],
+    "source": "config/custom_bots.json"
   },
   {
     "pattern": "grub",
@@ -2525,6 +2581,14 @@
     "source": "config/custom_bots.json"
   },
   {
+    "pattern": "monitis",
+    "addition_date": "2017-12-01",
+    "instances": [
+      "Mozilla/5.0 (compatible; monitis - premium monitoring service; http://www.monitis.com)"
+    ],
+    "source": "config/custom_bots.json"
+  },
+  {
     "pattern": "motor",
     "last_changed": "2017-08-08",
     "source": "https://raw.githubusercontent.com/atmire/COUNTER-Robots/master/COUNTER_Robots_list.json"
@@ -3112,6 +3176,14 @@
     "pattern": "scooter",
     "last_changed": "2017-08-08",
     "source": "https://raw.githubusercontent.com/atmire/COUNTER-Robots/master/COUNTER_Robots_list.json"
+  },
+  {
+    "pattern": "scoutjet",
+    "addition_date": "2017-12-01",
+    "instances": [
+      "Mozilla/5.0 (compatible; ScoutJet; http://www.scoutjet.com/)"
+    ],
+    "source": "config/custom_bots.json"
   },
   {
     "pattern": "scrapy",
