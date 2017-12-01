@@ -1,0 +1,179 @@
+[
+  {
+    "pattern": "Demo\\sBot"
+  },
+  {
+    "pattern": "FDM(\\s|\\+)1"
+  },
+  {
+    "pattern": "Googlebot"
+  },
+  {
+    "pattern": "LWP\:\:Simple"
+  },
+  {
+    "pattern": "Milbot"
+  },
+  {
+    "pattern": "NABOT"
+  },
+  {
+    "pattern": "NaverBot"
+  },
+  {
+    "pattern": "T-H-U-N-D-E-R-S-T-O-N-E"
+  },
+  {
+    "pattern": "Xenu(\\s|\\+)Link(\\s|\\+)Sleuth"
+  },
+  {
+    "pattern": "[\\+:,\\.;\\/\\-]bot"
+  },
+  {
+    "pattern": "acme\\.spider"
+  },
+  {
+    "pattern": "autoemailspider"
+  },
+  {
+    "pattern": "awbot"
+  },
+  {
+    "pattern": "bbot"
+  },
+  {
+    "pattern": "biadu"
+  },
+  {
+    "pattern": "blaiz-bee"
+  },
+  {
+    "pattern": "boitho\\.com-dc"
+  },
+  {
+    "pattern": "bookmark-manager"
+  },
+  {
+    "pattern": "bot[\\+:,\\.;\\/\\-]"
+  },
+  {
+    "pattern": "bspider"
+  },
+  {
+    "pattern": "cfnetwork|checkbot"
+  },
+  {
+    "pattern": "crawler"
+  },
+  {
+    "pattern": "dtSearchSpider"
+  },
+  {
+    "pattern": "dumbot"
+  },
+  {
+    "pattern": "feedfetcher-google"
+  },
+  {
+    "pattern": "gaisbot"
+  },
+  {
+    "pattern": "girafabot"
+  },
+  {
+    "pattern": "gnodspider"
+  },
+  {
+    "pattern": "hl_ftien_spider"
+  },
+  {
+    "pattern": "httpget-5\\.2\\.2"
+  },
+  {
+    "pattern": "httpget\\?5\\.2\\.2"
+  },
+  {
+    "pattern": "java\\/"
+  },
+  {
+    "pattern": "libwww-perl"
+  },
+  {
+    "pattern": "linkbot"
+  },
+  {
+    "pattern": "linkcheck"
+  },
+  {
+    "pattern": "linkchecker"
+  },
+  {
+    "pattern": "lmspider"
+  },
+  {
+    "pattern": "lwp-request"
+  },
+  {
+    "pattern": "lwp-tivial"
+  },
+  {
+    "pattern": "lwp-trivial"
+  },
+  {
+    "pattern": "lycos[_+]"
+  },
+  {
+    "pattern": "mojeekbot"
+  },
+  {
+    "pattern": "momspider"
+  },
+  {
+    "pattern": "msiecrawler"
+  },
+  {
+    "pattern": "qihoobot"
+  },
+  {
+    "pattern": "redalert|robozilla"
+  },
+  {
+    "pattern": "robot"
+  },
+  {
+    "pattern": "robots"
+  },
+  {
+    "pattern": "spiderman"
+  },
+  {
+    "pattern": "spiderview"
+  },
+  {
+    "pattern": "superbot"
+  },
+  {
+    "pattern": "technoratibot"
+  },
+  {
+    "pattern": "virus[_+]detector"
+  },
+  {
+    "pattern": "w3c-checklink"
+  },
+  {
+    "pattern": "yahoo-mmcrawler"
+  },
+  {
+    "pattern": "yahoofeedseeker"
+  },
+  {
+    "pattern": "yahooseeker"
+  },
+  {
+    "pattern": "yodaobot"
+  },
+  {
+    "pattern": "zealbot"
+  }
+]
