@@ -1,14 +1,4 @@
 GIT
-  remote: https://github.com/projectblacklight/blacklight_oai_provider.git
-  revision: 1d00e8a51d809bcbd9f553d9dead20f9cfd9e1b8
-  branch: v5.0
-  specs:
-    blacklight_oai_provider (4.1.0.pre1)
-      blacklight (~> 5.0)
-      oai
-      rails (~> 4.0)
-
-GIT
   remote: https://github.com/projecthydra/jettywrapper.git
   revision: 862bb29a6b72a2507869786ea07da27e89d60365
   branch: master
@@ -78,7 +68,7 @@ GEM
     archive-zip (0.7.0)
       io-like (~> 0.3.0)
     arel (6.0.4)
-    autoprefixer-rails (7.1.6)
+    autoprefixer-rails (7.2.3)
       execjs
     bcp47 (0.3.3)
       i18n
@@ -90,6 +80,10 @@ GEM
       nokogiri (~> 1.6)
       rails (>= 3.2.6, < 5)
       rsolr (~> 1.0, >= 1.0.11)
+    blacklight_oai_provider (5.1.0)
+      blacklight (~> 5.13)
+      oai (~> 0.4)
+      rails (~> 4.0)
     bootstrap-sass (3.3.7)
       autoprefixer-rails (>= 5.2.1)
       sass (>= 3.3.4)
@@ -127,7 +121,7 @@ GEM
       nokogiri (~> 1.6)
     chronic (0.10.2)
     concurrent-ruby (1.0.5)
-    crass (1.0.2)
+    crass (1.0.3)
     cul-ldap (0.0.1)
       net-ldap (~> 0.16)
     cul_omniauth (0.5.2)
@@ -186,7 +180,7 @@ GEM
     http-cookie (1.0.3)
       domain_name (~> 0.5)
     httpclient (2.8.3)
-    i18n (0.9.0)
+    i18n (0.9.1)
       concurrent-ruby (~> 1.0)
     io-like (0.3.0)
     jquery-rails (2.0.3)
@@ -242,7 +236,7 @@ GEM
     mime-types (3.1)
       mime-types-data (~> 3.2015)
     mime-types-data (3.2016.0521)
-    mini_mime (0.1.4)
+    mini_mime (1.0.0)
     mini_portile (0.5.3)
     minitest (5.10.3)
     multi_json (1.12.1)
@@ -295,8 +289,8 @@ GEM
       sprockets-rails
     rails-deprecated_sanitizer (1.0.3)
       activesupport (>= 4.2.0.alpha)
-    rails-dom-testing (1.0.8)
-      activesupport (>= 4.2.0.beta, < 5.0)
+    rails-dom-testing (1.0.9)
+      activesupport (>= 4.2.0, < 5.0)
       nokogiri (~> 1.6)
       rails-deprecated_sanitizer (>= 1.0.1)
     rails-html-sanitizer (1.0.3)
@@ -308,7 +302,7 @@ GEM
       thor (>= 0.18.1, < 2.0)
     rainbow (2.2.2)
       rake
-    rake (12.2.1)
+    rake (12.3.0)
     rb-fsevent (0.10.2)
     rb-inotify (0.9.10)
       ffi (>= 0.5.0, < 2)
@@ -406,7 +400,7 @@ GEM
       nokogiri
       rest-client
     rubyzip (1.2.1)
-    sass (3.5.3)
+    sass (3.5.4)
       sass-listen (~> 4.0.0)
     sass-listen (4.0.0)
       rb-fsevent (~> 0.9, >= 0.9.4)
@@ -490,7 +484,7 @@ PLATFORMS
 DEPENDENCIES
   active-fedora (~> 8.2)
   blacklight (~> 5.19.0)
-  blacklight_oai_provider!
+  blacklight_oai_provider
   bootstrap-sass
   byebug
   capistrano (= 3.8)
