@@ -191,7 +191,10 @@ class CatalogController < ApplicationController
         sample_id: 'ac:109660'
       },
       document: {
-        limit: 100
+        limit: 100,
+        set_fields: [
+          { label: 'degree_level', solr_field: 'degree_level_name_ssim' }
+        ]
       }
     }
 
