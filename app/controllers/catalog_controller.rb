@@ -15,9 +15,10 @@ class CatalogController < ApplicationController
     config.document_presenter_class = DocumentPresenter
 
     config.default_solr_params = {
-      :qt => "search",
-      :fq => ["has_model_ssim:\"#{ContentAggregator.to_class_uri}\""],
-      :rows => 10
+      qt: "search",
+      fq: ["has_model_ssim:\"#{ContentAggregator.to_class_uri}\""],
+      rows: 10,
+      fl: '*' # Return all fields
     }
 
     # solr field configuration for search results/index views
