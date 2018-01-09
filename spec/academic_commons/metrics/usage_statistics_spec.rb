@@ -33,10 +33,10 @@ RSpec.describe AcademicCommons::Metrics::UsageStatistics, integration: true do
     context 'when requesting usage stats for author' do
       before :each do
         # Add records for a pid view and download
-        FactoryGirl.create(:view_stat)
-        FactoryGirl.create(:view_stat)
-        FactoryGirl.create(:download_stat)
-        FactoryGirl.create(:streaming_stat)
+        FactoryBot.create(:view_stat)
+        FactoryBot.create(:view_stat)
+        FactoryBot.create(:download_stat)
+        FactoryBot.create(:streaming_stat)
 
         allow(Blacklight.default_index).to receive(:search)
           .with(solr_params).and_return(solr_response)
@@ -78,7 +78,7 @@ RSpec.describe AcademicCommons::Metrics::UsageStatistics, integration: true do
 
       context 'when request lifetime stats' do
         before :each do
-          FactoryGirl.create(:view_stat, at_time: Date.new(2001, 4, 12))
+          FactoryBot.create(:view_stat, at_time: Date.new(2001, 4, 12))
         end
 
         subject do
@@ -223,11 +223,11 @@ RSpec.describe AcademicCommons::Metrics::UsageStatistics, integration: true do
     end
 
     before :each do
-      FactoryGirl.create(:view_stat, at_time: Date.parse('Jan 15, 2015'))
-      FactoryGirl.create(:view_stat, at_time: Date.parse('March 9, 2016'))
-      FactoryGirl.create(:download_stat, at_time: Date.parse('April 2, 2016'))
-      FactoryGirl.create(:download_stat, at_time: Date.parse('April 2, 2016'))
-      FactoryGirl.create(:streaming_stat, at_time: Date.parse('May 3, 2015'))
+      FactoryBot.create(:view_stat, at_time: Date.parse('Jan 15, 2015'))
+      FactoryBot.create(:view_stat, at_time: Date.parse('March 9, 2016'))
+      FactoryBot.create(:download_stat, at_time: Date.parse('April 2, 2016'))
+      FactoryBot.create(:download_stat, at_time: Date.parse('April 2, 2016'))
+      FactoryBot.create(:streaming_stat, at_time: Date.parse('May 3, 2015'))
 
       allow(Blacklight.default_index).to receive(:search)
         .with(solr_params).and_return(solr_response)
@@ -246,11 +246,11 @@ RSpec.describe AcademicCommons::Metrics::UsageStatistics, integration: true do
     end
 
     before :each do
-      FactoryGirl.create(:view_stat, at_time: Date.parse('Jan 15, 2016'))
-      FactoryGirl.create(:view_stat, at_time: Date.parse('March 9, 2016'))
-      FactoryGirl.create(:download_stat, at_time: Date.parse('April 2, 2016'))
-      FactoryGirl.create(:download_stat, at_time: Date.parse('April 2, 2016'))
-      FactoryGirl.create(:streaming_stat, at_time: Date.parse('May 3, 2015'))
+      FactoryBot.create(:view_stat, at_time: Date.parse('Jan 15, 2016'))
+      FactoryBot.create(:view_stat, at_time: Date.parse('March 9, 2016'))
+      FactoryBot.create(:download_stat, at_time: Date.parse('April 2, 2016'))
+      FactoryBot.create(:download_stat, at_time: Date.parse('April 2, 2016'))
+      FactoryBot.create(:streaming_stat, at_time: Date.parse('May 3, 2015'))
 
       allow(Blacklight.default_index).to receive(:search)
         .with(solr_params).and_return(solr_response)
@@ -323,9 +323,9 @@ RSpec.describe AcademicCommons::Metrics::UsageStatistics, integration: true do
 
     context 'when item has more than one asset' do
       before :each do
-        FactoryGirl.create(:download_stat)
-        FactoryGirl.create(:download_stat, identifier: pid2)
-        FactoryGirl.create(:download_stat, identifier: pid2)
+        FactoryBot.create(:download_stat)
+        FactoryBot.create(:download_stat, identifier: pid2)
+        FactoryBot.create(:download_stat, identifier: pid2)
       end
 
       it 'returns most downloaded' do

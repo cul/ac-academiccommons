@@ -32,7 +32,7 @@ RSpec.describe AcademicCommons::Statistics do
     end
 
     before :each do
-      FactoryGirl.create_list(:view_stat, 5)
+      FactoryBot.create_list(:view_stat, 5)
       allow(statistics).to receive(:params).and_return(test_params)
       allow(Blacklight.default_index).to receive(:search)
         .with(author_search).and_return(author_docs)
