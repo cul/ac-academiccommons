@@ -2,6 +2,8 @@ language: ruby
 rvm:
   - 2.3.3
 cache: bundler
+addons:
+  chrome: stable
 before_script:
   - "for c in config/*.template.yml; do cp $c ${c/template.}; done"
 script:
