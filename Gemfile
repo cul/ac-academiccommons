@@ -54,7 +54,7 @@ group :development, :test do
   gem 'capybara', '~>2.2'
   gem 'database_cleaner'
   gem 'equivalent-xml'
-  gem 'factory_girl_rails'
+  gem 'factory_bot_rails'
   gem "jettywrapper", ">=1.4.0", git: 'https://github.com/projecthydra/jettywrapper.git', branch: "master"
   gem 'selenium-webdriver'
   gem 'chromedriver-helper'
