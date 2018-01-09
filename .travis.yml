@@ -2,6 +2,7 @@ language: ruby
 rvm:
   - 2.3.3
 cache: bundler
+sudo: required # Patch to fix chrome errors, more information here: https://github.com/travis-ci/travis-ci/issues/8836#issuecomment-356004275
 addons:
   chrome: stable
 before_script:
