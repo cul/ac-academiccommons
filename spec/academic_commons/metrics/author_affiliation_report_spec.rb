@@ -45,8 +45,8 @@ RSpec.describe AcademicCommons::Metrics::AuthorAffiliationReport do
   end
 
   before :each do
-    FactoryGirl.create(:view_stat, identifier: 'actest:6')
-    FactoryGirl.create(:download_stat, identifier: 'actest:7')
+    FactoryBot.create(:view_stat, identifier: 'actest:6')
+    FactoryBot.create(:download_stat, identifier: 'actest:7')
 
     allow(Blacklight.default_index).to receive(:search).with(any_args).and_return(solr_response)
     allow(Blacklight.default_index).to receive(:find).with('actest:6').and_return(solr_doc_alice)

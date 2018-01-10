@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :statistic do
     identifier 'actest:1'
     at_time    Time.now

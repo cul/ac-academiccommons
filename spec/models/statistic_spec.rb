@@ -4,10 +4,10 @@ RSpec.describe Statistic, type: :model do
 
   describe '.merge_stats' do
     before :each do
-      FactoryGirl.create_list(:view_stat, 2)
-      FactoryGirl.create(:download_stat, identifier: 'actest:1')
-      FactoryGirl.create(:view_stat, identifier: 'ac:duplicate')
-      FactoryGirl.create(:download_stat, identifier: 'ac:duplicate')
+      FactoryBot.create_list(:view_stat, 2)
+      FactoryBot.create(:download_stat, identifier: 'actest:1')
+      FactoryBot.create(:view_stat, identifier: 'ac:duplicate')
+      FactoryBot.create(:download_stat, identifier: 'ac:duplicate')
     end
 
     it 'merges statistics correctly' do
@@ -34,8 +34,8 @@ RSpec.describe Statistic, type: :model do
 
     context 'when query is not limited by date' do
       it 'returns correct counts' do
-        FactoryGirl.create_list(:view_stat, 3, identifier: 'actest:1')
-        FactoryGirl.create(:view_stat, identifier: 'actest:2')
+        FactoryBot.create_list(:view_stat, 3, identifier: 'actest:1')
+        FactoryBot.create(:view_stat, identifier: 'actest:2')
         expect(
           Statistic.event_count(['actest:1', 'actest:2', 'actest:3'], Statistic::VIEW)
         ).to match('actest:1' => 3, 'actest:2' => 1)
@@ -44,12 +44,12 @@ RSpec.describe Statistic, type: :model do
 
     context 'when query is limited by date' do
       before :each do
-        FactoryGirl.create(:view_stat, at_time: Time.local(2015, 12, 31, 23, 00))
-        FactoryGirl.create(:view_stat, at_time: Time.local(2015, 1, 1))
-        FactoryGirl.create(:view_stat, at_time: Time.local(2015, 1, 31, 23, 00))
-        FactoryGirl.create(:view_stat, at_time: Time.local(2015, 1, 21, 4, 00))
-        FactoryGirl.create(:view_stat, at_time: Time.local(2015, 2, 1))
-        FactoryGirl.create(:view_stat, identifier: 'actest:2', at_time: Time.local(2015, 12, 5))
+        FactoryBot.create(:view_stat, at_time: Time.local(2015, 12, 31, 23, 00))
+        FactoryBot.create(:view_stat, at_time: Time.local(2015, 1, 1))
+        FactoryBot.create(:view_stat, at_time: Time.local(2015, 1, 31, 23, 00))
+        FactoryBot.create(:view_stat, at_time: Time.local(2015, 1, 21, 4, 00))
+        FactoryBot.create(:view_stat, at_time: Time.local(2015, 2, 1))
+        FactoryBot.create(:view_stat, identifier: 'actest:2', at_time: Time.local(2015, 12, 5))
       end
 
       it 'returns correct counts for Jan 2015' do

@@ -95,9 +95,9 @@ describe StatisticsController, :type => :controller, integration: true do
       include_context 'mock admin user'
 
       before :each do
-        FactoryGirl.create(:view_stat)
-        FactoryGirl.create(:download_stat)
-        FactoryGirl.create(:streaming_stat)
+        FactoryBot.create(:view_stat)
+        FactoryBot.create(:download_stat)
+        FactoryBot.create(:streaming_stat)
       end
 
       subject { get :total_usage_stats, { q: "{!raw f=id}#{pid}", format: :json } }
