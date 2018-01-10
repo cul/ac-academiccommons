@@ -6,7 +6,7 @@ gem 'rails', '4.2.8'
 gem 'active-fedora', '~>8.2'
 gem 'blacklight', '~> 5.19.0'
 gem 'rsolr-ext'
-gem 'blacklight_oai_provider', git: 'https://github.com/projectblacklight/blacklight_oai_provider.git', branch: 'v5.0'
+gem 'blacklight_oai_provider'
 
 # Database
 gem 'mysql2'
