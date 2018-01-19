@@ -28,13 +28,18 @@ class SolrDocument
   field_semantics.merge!(
     title: "title_display",
     author: "author_facet",
-	  creator: "author_facet",
-		date: "pub_date_facet",
+    creator: "author_facet",
+    date: "pub_date_facet",
     type: ["type_of_resource_facet", "genre_facet"],
-		publisher: "publisher",
-		subject: "subject_facet",
-	  description: "abstract",
-	  language: "language"
+    publisher: "publisher",
+    subject: "subject_facet",
+    description: "abstract",
+    language: "language",
+    # specific fields for api
+    id: 'id',
+    abstract: "abstract",
+    department: "department_facet",
+    genre: "genre_facet"
   )
 
   def embargoed?
@@ -69,11 +74,18 @@ class SolrDocument
 
     # Custom values.
     @semantic_value_hash[:identifier] = full_doi
+    @semantic_value_hash[:persistent_url] = full_doi
 
     @semantic_value_hash
   end
 
   def full_doi
     AcademicCommons.identifier_url(fetch(:handle, nil))
+  end
+
+  def to_ac_json_api
+    fields = [:id, :title, :author, :abstract, :department, :date, :subject, :genre, :persistent_url]
+    semantics_hash = to_semantic_values
+    fields.map { |f| [f, semantics_hash[f]] }.to_h
   end
 end
