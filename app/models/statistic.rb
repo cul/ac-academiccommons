@@ -27,12 +27,18 @@ class Statistic < ActiveRecord::Base
       if start_date.respond_to?(:to_time) && end_date.respond_to?(:to_time)
         start_date = start_date.to_time.beginning_of_day
         end_date = end_date.to_time.end_of_day
-        group(:identifier).where("identifier IN (?) and event = ? AND at_time BETWEEN ? and ?", pids, event, start_date, end_date).count
+        pids.each_slice(5000).each_with_object({}) do |ids, hash|
+          hash.merge!(
+            group(:identifier).where("identifier IN (?) and event = ? AND at_time BETWEEN ? and ?", ids, event, start_date, end_date).count
+          )
+        end
       else
         raise 'start_date and end_date must respond to :to_time'
       end
     else
-      group(:identifier).where("identifier IN (?) and event = ?", pids, event).count
+      pids.each_slice(5000).each_with_object({}) do |ids, hash|
+        hash.merge!(group(:identifier).where("identifier IN (?) and event = ?", ids, event).count)
+      end
     end
   end
 
