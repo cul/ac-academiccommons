@@ -55,23 +55,23 @@ describe CatalogController, :type => :feature do
 
     context "search query" do
       it "finds by title" do
-        visit catalog_index_path(q: "alice")
+        visit search_catalog_path(q: "alice")
         expect(page).to have_css("a[href=\"/catalog/actest:1\"]", :text => "Alice's Adventures in Wonderland")
       end
 
       it "finds by author" do
-        visit catalog_index_path(q: "lewis carroll")
+        visit search_catalog_path(q: "lewis carroll")
         expect(page).to have_content("Carroll, Lewis")
         expect(page).to have_css("a[href=\"/catalog/actest:1\"]", :text => "Alice's Adventures in Wonderland")
       end
 
       it "returns nothing when search query is not a match" do
-        visit catalog_index_path(q: "nothing")
+        visit search_catalog_path(q: "nothing")
         expect(page).to have_content("No items found")
       end
 
       it "indicates active search in the form widget" do
-        visit catalog_index_path(q: "alice")
+        visit search_catalog_path(q: "alice")
         select("year", from: "sort")
         click_on("sort results")
         expect(page).to have_select("sort", selected: "year")
@@ -79,7 +79,7 @@ describe CatalogController, :type => :feature do
 
       context "expects query results page to" do
         before do
-          visit catalog_index_path(q: "alice")
+          visit search_catalog_path(q: "alice")
         end
 
         it "have facets for subjects" do
@@ -137,7 +137,7 @@ describe CatalogController, :type => :feature do
 
   describe "show" do
     before do
-      visit catalog_path("actest:1")
+      visit solr_document_path("actest:1")
     end
 
     it "has the fixture object" do

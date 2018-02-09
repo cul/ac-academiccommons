@@ -1,7 +1,7 @@
 <% if query_has_constraints? %>
   <% localized_params = params %>
 
-  <%= link_to "Start Search Over", catalog_index_path, id: "startOverLink" %>
+  <%= link_to "Start Search Over", search_catalog_path, id: "startOverLink" %>
 
   <% if user_signed_in? && current_user.admin %>
   	<%= link_to "Get Usage Stats", "/statistics/detail_report?commit=Get Usage Stats&facet=search_query&search_criteria=" + CGI::escape(request.fullpath), id: "startOverLink" %>
@@ -17,7 +17,7 @@
       <%- if !localized_params[:q].blank? -%>
         <%= render_constraint_element(constraint_query_label(localized_params),
             localized_params[:q], classes: ["query"],
-            remove: catalog_index_path(localized_params.merge(q: nil, action: :index))) %>
+            remove: search_catalog_path(localized_params.merge(q: nil, action: :index))) %>
       <%- else %>
         <li class="appliedFilter empty query">All Content</li>
       <%- end -%>
@@ -30,7 +30,7 @@
       <%- if !localized_params[:f].blank? -%>
         <%- localized_params[:f].each_pair do |facet, values| %>
           <%- values.each do |val| %>
-            <%= render_constraint_element(facet_field_label(facet), val, remove: catalog_index_path(remove_facet_params(facet, val, localized_params)), classes: ["filter"]) %>
+            <%= render_constraint_element(facet_field_label(facet), val, remove: search_catalog_path(remove_facet_params(facet, val, localized_params)), classes: ["filter"]) %>
             <%= '<span class=\'join\'> + </span>'.html_safe unless val == values.last %>
           <% end %>
         </ul>

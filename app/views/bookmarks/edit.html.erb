@@ -1,4 +1,4 @@
-<h2>Editing Bookmark for "<%= link_to @bookmark.title, catalog_path(@bookmark.document_id) %>"</h2>
+<h2>Editing Bookmark for "<%= link_to @bookmark.title, solr_document_path(@bookmark.document_id) %>"</h2>
 
 <% content_for :sidebar do %>
   <%= link_to '<< back to my bookmarks', bookmarks_path %>
