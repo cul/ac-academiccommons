@@ -3,8 +3,9 @@ class ApplicationController < ActionController::Base
   include Devise::Controllers::Helpers
 
   protect_from_forgery
+  
+  layout 'blacklight'
 
-  layout "application"
 
   helper :all # include all helpers, all the time
   helper_method :fedora_config # share some methods w/ views via helpers

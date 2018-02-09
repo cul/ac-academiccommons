@@ -16,6 +16,9 @@ AcademicCommons::Application.routes.draw do
   get '/catalog/streaming/:id', :to => 'catalog#streaming', :as => 'streaming'
   get '/catalog/browse' => redirect('/catalog/browse/subjects')
 
+
+  mount Blacklight::Engine => '/'
+
   # Blacklight routes
   concern :searchable, Blacklight::Routes::Searchable.new
   concern :exportable, Blacklight::Routes::Exportable.new

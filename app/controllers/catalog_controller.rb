@@ -1,4 +1,3 @@
-# -*- encoding : utf-8 -*-
 class CatalogController < ApplicationController
   include Blacklight::Catalog
   include BlacklightOaiProvider::Controller
@@ -8,8 +7,6 @@ class CatalogController < ApplicationController
   before_filter :url_decode_f
 
   helper_method :url_encode_resource, :url_decode_resource
-
-  layout "sidebar_right", only: [:show]
 
   configure_blacklight do |config|
     config.document_presenter_class = DocumentPresenter
@@ -169,9 +166,9 @@ class CatalogController < ApplicationController
     # mean") suggestion is offered.
     config.spell_max = 5
 
-    # For the most-recent list, this is the max number displayed
-    config.max_most_recent = 10
-    #config[:max_most_recent] = 10
+    # Configuration for autocomplete suggestor
+    config.autocomplete_enabled = true
+    config.autocomplete_path = 'suggest'
 
     # Add documents to the list of object formats that are supported for all objects.
     # This parameter is a hash, identical to the Blacklight::Solr::Document#export_formats
@@ -182,6 +179,7 @@ class CatalogController < ApplicationController
     }
 
     config.feed_rows = "500"
+    config.max_most_recent = 5
 
     config.oai = {
       provider: {
@@ -274,24 +272,6 @@ class CatalogController < ApplicationController
   def url_decode_resource(value)
     value = value.gsub(/%252f/i, '%2F').gsub(/%2e/i, '.')
     value = CGI::unescape(value)
-  end
-
-  def index
-    respond_to do |format|
-      format.html { super }
-      format.rss  { rss }
-      format.atom { atom }
-    end
-  end
-
-  def rss
-    (@response, @document_list) = custom_results()
-    render :template => 'catalog/index.rss.builder'
-  end
-
-  def atom
-    (@response, @document_list) = custom_results()
-    render :template => 'catalog/index.atom.builder'
   end
 
   def streaming
