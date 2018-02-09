@@ -20,7 +20,7 @@ AcademicCommons::Application.routes.draw do
   concern :searchable, Blacklight::Routes::Searchable.new
   concern :exportable, Blacklight::Routes::Exportable.new
 
-  resource :catalog, only: [:index] do
+  resource :catalog, only: [:index], controller: 'catalog' do
     concerns :searchable
   end
 
