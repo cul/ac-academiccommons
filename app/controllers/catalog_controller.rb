@@ -239,12 +239,6 @@ class CatalogController < ApplicationController
 
   end
 
-  # displays values and pagination links for a single facet field
-  def facet
-    @pagination = get_facet_pagination(params[:id], params)
-    render :layout => false
-  end
-
   def browse_department
     render :layout => "catalog_browse"
   end
