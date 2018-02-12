@@ -17,9 +17,9 @@ AcademicCommons::Application.routes.draw do
   get '/catalog/browse' => redirect('/catalog/browse/subjects')
 
 
+  # Blacklight routes
   mount Blacklight::Engine => '/'
 
-  # Blacklight routes
   concern :searchable, Blacklight::Routes::Searchable.new
   concern :exportable, Blacklight::Routes::Exportable.new
 
@@ -29,6 +29,15 @@ AcademicCommons::Application.routes.draw do
 
   resources :solr_documents, only: [:show], controller: 'catalog' do
     concerns :exportable
+  end
+
+  # Adding bookmarks temporarily
+  resources :bookmarks do
+    concerns :exportable
+
+    collection do
+      delete 'clear'
+    end
   end
 
   # RESTful routes for reindex API, working around Blacklight route camping
