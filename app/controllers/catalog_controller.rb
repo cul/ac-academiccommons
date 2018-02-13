@@ -9,6 +9,17 @@ class CatalogController < ApplicationController
   helper_method :url_encode_resource, :url_decode_resource
 
   configure_blacklight do |config|
+    # Delete default blacklight components we aren't using
+    config.index.document_actions.delete(:bookmark)
+
+    config.show.document_actions.delete(:bookmark)
+    config.show.document_actions.delete(:sms)
+    config.show.document_actions.delete(:citation)
+
+    config.navbar.partials.delete(:bookmark)
+    config.navbar.partials.delete(:saved_searches)
+    config.navbar.partials.delete(:search_history)
+
     config.document_presenter_class = DocumentPresenter
 
     config.default_solr_params = {
