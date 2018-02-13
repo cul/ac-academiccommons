@@ -31,6 +31,7 @@ gem 'rainbow'
 gem 'rinku', '~> 1.3.0', :require => 'rails_rinku'
 gem 'sass-rails'
 gem "therubyracer"
+gem 'turbolinks'
 gem 'uglifier'
 gem 'unicode'
 gem 'voight_kampff'

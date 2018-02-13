@@ -5,3 +5,4 @@
 //= require jquery
 //= require blacklight/blacklight
 //= require jquery_ujs
+//= require turbolinks
