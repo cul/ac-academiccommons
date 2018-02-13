@@ -31,15 +31,6 @@ AcademicCommons::Application.routes.draw do
     concerns :exportable
   end
 
-  # Adding bookmarks temporarily
-  resources :bookmarks do
-    concerns :exportable
-
-    collection do
-      delete 'clear'
-    end
-  end
-
   # RESTful routes for reindex API, working around Blacklight route camping
   delete '/solr_documents/:id', to: 'solr_documents#destroy'
   put '/solr_documents/:id', to: 'solr_documents#update'
