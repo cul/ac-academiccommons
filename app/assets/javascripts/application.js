@@ -2,5 +2,6 @@
 // This file is automatically included by javascript_include_tag :defaults
 //
 
+//= require jquery
 //= require blacklight/blacklight
 //= require jquery_ujs
