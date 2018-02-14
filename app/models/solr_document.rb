@@ -25,6 +25,7 @@ class SolrDocument
   # Recommendation: Use field names from Dublin Core
   use_extension( Blacklight::Document::DublinCore)
 
+  # Normalized field names
   field_semantics.merge!(
     title: "title_display",
     author: "author_facet",
@@ -75,6 +76,7 @@ class SolrDocument
     # Custom values.
     @semantic_value_hash[:identifier] = full_doi
     @semantic_value_hash[:persistent_url] = full_doi
+    @semantic_value_hash[:created_at] = self[:record_creation_date]
 
     @semantic_value_hash
   end
@@ -84,7 +86,7 @@ class SolrDocument
   end
 
   def to_ac_json_api
-    fields = [:id, :title, :author, :abstract, :department, :date, :subject, :genre, :persistent_url]
+    fields = [:id, :title, :author, :abstract, :department, :date, :subject, :genre, :persistent_url, :created_at]
     semantics_hash = to_semantic_values
     fields.map { |f| [f, semantics_hash[f]] }.to_h
   end

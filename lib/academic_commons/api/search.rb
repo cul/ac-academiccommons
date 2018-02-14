@@ -1,5 +1,6 @@
 module AcademicCommons::API
   class Search
+    VALID_SEARCH_TYPES = %w(keyword title subject)
     VALID_FILTERS = %w(author author_id date department subject type series)
     VALID_SORT    = %w(best_match date title created_at)
     VALID_FORMATS = %w(json rss)
@@ -10,10 +11,18 @@ module AcademicCommons::API
     MAX_PER_PAGE = 100
 
     SORT_TO_SOLR_SORT = {
-      'best_match'      => { 'desc' => 'score desc, pub_date_sort desc, title_sort asc', 'asc'=> '' },
-      'date'            => { 'desc' => 'pub_date_sort desc, title_sort asc', 'asc'=> '' },
-      'title'           => { 'desc' => '', 'asc'=> 'title_sort asc, pub_date_sort desc' },
-      'record_creation' => { 'desc' => 'record_creation desc', 'asc'=> 'record_creation desc' }
+      'best_match' => {
+        'asc'  => 'score desc, pub_date_sort desc, title_sort asc',
+        'desc' => 'score desc, pub_date_sort desc, title_sort asc'
+      },
+      'date' => {
+        'asc'  => 'pub_date_sort asc, title_sort asc',
+        'desc' => 'pub_date_sort desc, title_sort asc'
+      },
+      'title' => {
+        'asc'  => 'title_sort asc, pub_date_sort desc',
+        'desc' => 'title_sort desc, pub_date_sort desc'
+      }
     }
 
     DEFAULT_PARAMS = {
@@ -33,10 +42,9 @@ module AcademicCommons::API
       @errors = []
 
       @response = if params_valid?
-                    query_params = parameters.reverse_merge(DEFAULT_PARAMS)
+                    @parameters = parameters.reverse_merge(DEFAULT_PARAMS)
                     connection = AcademicCommons::Utils.rsolr
-                    solr_response = connection.get('select', params: convert_to_solr_params(query_params))
-
+                    solr_response = connection.get('select', params: solr_parameters)
                     SuccessResponse.new(parameters, solr_response: solr_response)
                   else
                     ErrorResponse.new(parameters[:format], errors, :bad_request)
@@ -45,14 +53,14 @@ module AcademicCommons::API
 
     private
 
-    def convert_to_solr_params(parameters)
+    def solr_parameters
        filters = VALID_FILTERS.map do |filter|
          parameters.fetch(filter, []).map { |value| "#{KEY_TO_SOLR_FIELD[filter.to_sym]}:\"#{value}\"" }
        end.flatten
 
       solr_params = {
         q: parameters[:q],
-        sort: 'score desc, pub_date_sort desc, title_sort asc',
+        sort: SORT_TO_SOLR_SORT[parameters[:sort]][parameters[:order]],
         start: (parameters[:page].to_i - 1) * parameters[:per_page].to_i,
         rows: parameters[:per_page].to_i,
         fq: ["has_model_ssim:\"#{ContentAggregator.to_class_uri}\""].concat(filters),
@@ -64,6 +72,7 @@ module AcademicCommons::API
     end
 
     def params_valid?
+      valid_value(:search_type, VALID_SEARCH_TYPES)
       valid_value(:sort, VALID_SORT)
       valid_value(:format, VALID_FORMATS)
       valid_value(:order, VALID_ORDER)
