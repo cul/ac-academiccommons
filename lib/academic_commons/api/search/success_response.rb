@@ -30,11 +30,8 @@ module AcademicCommons::API
         json[:params][:filters] = @parameters.select{ |k, _| VALID_FILTERS.include?(k) }
 
         # add records
-        json[:records] = documents.map do |doc|
-          fields = [:id, :title, :author, :abstract, :department, :date, :subject, :genre, :language, :persistent_url, :created_at]
-          semantics_hash = doc.to_semantic_values
-          fields.map { |f| [f, semantics_hash[f]] }.to_h
-        end
+        json[:records] = semantic_documents
+
         json
       end
 
@@ -48,22 +45,21 @@ module AcademicCommons::API
             xml.description("Academic Commons Search Results")
             xml.language('en-us')
 
-            documents.each do |doc|
-              semantic = doc.to_semantic_values
+            semantic_documents.each do |doc|
               xml.item do
-                xml.title semantic[:title].first if semantic.key?(:title)
-                xml.link semantic[:persistent_url]
+                xml.title doc[:title] if doc.key?(:title)
+                xml.link doc[:persistent_url]
 
-                xml.tag!('dc:creator', semantic[:author].join('; ')) if semantic.key?(:author)
+                xml.tag!('dc:creator', doc[:author].join('; ')) if doc.key?(:author)
 
-                xml.guid semantic[:identifier]                       if semantic.key?(:identifier)
-                xml.pubDate doc.timestamp.rfc822
-                xml.tag!('dc:date', semantic[:date].first)           if semantic.key?(:date)
-                xml.description semantic[:description].first         if semantic.key?(:description)
+                xml.guid doc[:identifier]                  if doc.key?(:identifier)
+                xml.pubDate doc[:created_at] #.rfc822
+                xml.tag!('dc:date', doc[:date])           if doc.key?(:date)
+                xml.description doc[:description]         if doc.key?(:description)
 
-                xml.tag!('dc:subject', semantic[:subject].join(', '))           if semantic.key?(:subject)
-                xml.tag!('dc:type', semantic[:content_type].join(', ')) if semantic.key?(:content_type)
-                xml.tag!('vivo:Department', semantic[:departments].join(', '))    if semantic.key?(:departments)
+                xml.tag!('dc:subject', doc[:subject].join(', '))           if doc.key?(:subject)
+                xml.tag!('dc:type', doc[:content_type].join(', ')) if doc.key?(:content_type)
+                xml.tag!('vivo:Department', doc[:department].join(', '))    if doc.key?(:departments)
               end
             end
           }
@@ -72,8 +68,8 @@ module AcademicCommons::API
 
       private
 
-        def documents
-          @solr_response['response']['docs'].map { |d| SolrDocument.new(d) }
+        def semantic_documents
+          @solr_response['response']['docs'].map { |d| SolrDocument.new(d).to_ac_api }
         end
     end
   end

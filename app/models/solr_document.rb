@@ -40,7 +40,8 @@ class SolrDocument
     id: 'id',
     abstract: "abstract",
     department: "department_facet",
-    genre: "genre_facet"
+    genre: "genre_facet",
+    created_at: "record_creation_date"
   )
 
   def embargoed?
@@ -76,7 +77,6 @@ class SolrDocument
     # Custom values.
     @semantic_value_hash[:identifier] = full_doi
     @semantic_value_hash[:persistent_url] = full_doi
-    @semantic_value_hash[:created_at] = self[:record_creation_date]
 
     @semantic_value_hash
   end
@@ -85,9 +85,13 @@ class SolrDocument
     AcademicCommons.identifier_url(fetch(:handle, nil))
   end
 
-  def to_ac_json_api
-    fields = [:id, :title, :author, :abstract, :department, :date, :subject, :genre, :persistent_url, :created_at]
-    semantics_hash = to_semantic_values
-    fields.map { |f| [f, semantics_hash[f]] }.to_h
+  # Returns normalized fields in json, to be used by api rendering code.
+  def to_ac_api
+    singular_fields = [:id, :title, :date, :abstract, :created_at]
+    fields = [:id, :title, :author, :abstract, :department, :date, :subject, :genre, :language, :persistent_url, :created_at]
+
+    json = to_semantic_values.keep_if { |f, _| fields.include?(f) }
+    json.each { |k, v| json[k] = v.first if singular_fields.include?(k) }
+    json
   end
 end
