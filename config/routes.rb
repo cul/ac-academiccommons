@@ -8,8 +8,7 @@ AcademicCommons::Application.routes.draw do
 
   root :to => "catalog#index"
 
-  get '/api/v1/search(/:search_type)', to: 'api/search#search'
-
+  get '/api/v1/search(/:search_type)', to: 'api#search'
 
   get "info/about"
 

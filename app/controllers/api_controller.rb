@@ -1,4 +1,4 @@
-class Api::SearchController < ActionController::Base
+class ApiController
 
   # GET /api/v1/search(/:type_of_search)
   def search
@@ -7,8 +7,28 @@ class Api::SearchController < ActionController::Base
     respond_to do |f|
       f.json { render json: api_response.body, status: api_response.status }
       f.rss  { render plain: api_response.body, status: api_response.status, content_type: 'application/rss+xml' }
-      # f.rss  { render rss: api_response.body, status: api_response.status }
     end
+  end
+
+  # GET /api/v1/feed(/:id)
+  def feed
+    # authorized = valid_api_key?
+    # f = feed_params[:format] || :json
+    # api_response = AcademicCommons::API.feed(feed_params[:key], feed_params[:format], authorized)
+
+    # respond_to do |f|
+    #   f.json { render json: api_response.body, status: api_response.status }
+    # end
+  end
+
+  private
+
+  def valid_api_key?
+    true
+  end
+
+  def feed_params
+    params.permit(:key, :format)
   end
 
   def search_params
