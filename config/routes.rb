@@ -22,8 +22,10 @@ AcademicCommons::Application.routes.draw do
 
   concern :searchable, Blacklight::Routes::Searchable.new
   concern :exportable, Blacklight::Routes::Exportable.new
+  concern :oai_provider, BlacklightOaiProvider::Routes.new
 
   resource :catalog, only: [:index], controller: 'catalog' do
+    concerns :oai_provider
     concerns :searchable
   end
 
