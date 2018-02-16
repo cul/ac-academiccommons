@@ -9,8 +9,8 @@ module CatalogHelper
 
   # Adds handle or doi prefix if necessary. Makes field a clickable link.
   def link_identifier(**options)
-    url = AcademicCommons.identifier_url(options[:value])
-    link_to url, url
+    # url = AcademicCommons.identifier_url(options[:value])
+    # link_to url, url
   end
 
   def concat_grantor(**options)
@@ -124,10 +124,6 @@ module CatalogHelper
     filename.to_s.split(".").last.strip
   end
 
-  def doc_object_method(doc, method)
-    doc["object_display"].first + method.to_s
-  end
-
   def get_metadata_list(doc)
     #catch any error and return an error message that resources are unavailable
     #this prevents fedora server outages from making ac2 item page inaccessible
@@ -156,70 +152,6 @@ module CatalogHelper
 
   ############### Copied from Blacklight CatalogHelper #####################
 
-  # Pass in an RSolr::Response (or duck-typed similar) object,
-  # it translates to a Kaminari-paginatable
-  # object, with the keys Kaminari views expect.
-  def paginate_params(response)
-    per_page = response.rows
-    per_page = 1 if per_page < 1
-    current_page = (response.start / per_page).ceil + 1
-    num_pages = (response.total / per_page.to_f).ceil
-    Struct.new(:current_page, :num_pages, :limit_value, :total_pages).new(current_page, num_pages, per_page, num_pages)
-  end
-
-  # Equivalent to kaminari "paginate", but takes an RSolr::Response as first argument.
-  # Will convert it to something kaminari can deal with (using #paginate_params), and
-  # then call kaminari paginate with that. Other arguments (options and block) same as
-  # kaminari paginate, passed on through.
-  # will output HTML pagination controls.
-  def paginate_rsolr_response(response, options = {}, &block)
-    paginate paginate_params(response), options, &block
-  end
-
-  # Pass in an RSolr::Response. Displays the "showing X through Y of N" message.
-  def render_pagination_info(response, options = {})
-      page_info = paginate_params(response)
-
-      start_num = number_with_delimiter(response.start + 1)
-      end_num = number_with_delimiter(response.start + response.docs.length)
-      total_num = number_with_delimiter(response.total)
-
-      entry_name = options[:entry_name] ||
-        (response.empty? ? 'entry' : response.docs.first.class.name.underscore.sub('_', ' '))
-
-      if page_info.num_pages < 2
-        case response.docs.length
-        when 0; "No #{h(entry_name.pluralize)} found".html_safe
-        when 1; "Displaying <b>1</b> #{h(entry_name)}".html_safe
-        else;   "Displaying <b>all #{total_num}</b> #{entry_name.pluralize}".html_safe
-        end
-      else
-        "Displaying #{h(entry_name.pluralize)} <b>#{start_num} - #{end_num}</b> of <b>#{total_num}</b>".html_safe
-      end
-  end
-
-  # Like  #render_pagination_info above, but for an individual
-  # item show page. Displays "showing X of Y items" message. Actually takes
-  # data from session though (not a great design).
-  # Code should call this method rather than interrogating session directly,
-  # because implementation of where this data is stored/retrieved may change.
-  def item_page_entry_info
-    "Showing item <b>#{session[:search][:counter].to_i} of #{number_with_delimiter(session[:search][:total])}</b> from your search.".html_safe
-  end
-
-  # Export to Refworks URL, called in _show_tools
-  def refworks_export_url(document = @document)
-    "http://www.refworks.com/express/expressimport.asp?vendor=#{CGI.escape(application_name)}&filter=MARC%20Format&encoding=65001&url=#{CGI.escape(catalog_path(document.id, :format => 'refworks_marc_txt', :only_path => false))}"
-  end
-
-  def render_document_class(document = @document)
-   'blacklight-' + document.get(blacklight_config[:index][:record_display_type]).parameterize rescue nil
-  end
-
-  def render_document_sidebar_partial(document = @document)
-    render :partial => 'show_sidebar'
-  end
-
   def pdf_urls
     urls = []
     if(@document != nil)
@@ -238,39 +170,5 @@ module CatalogHelper
     else
       url_from_map
     end
-  end
-
-  def render_document_class(document = @document)
-    'blacklight-' + document.get(blacklight_config.view_config(document_index_view_type_field).display_type_field).parameterize rescue nil
-  end
-
-  def facet_list_limit
-    10
-  end
-
-  # Overriding Blacklight helper method.
-  #
-  # Standard display of a SELECTED facet value, no link, special span
-  # with class, and 'remove' button.
-  def render_selected_facet_value(facet_solr_field, item)
-    render = link_to((item.value + render_facet_count(item.hits)).html_safe, search_action_path(remove_facet_params(facet_solr_field, item.value, params)), :class=>"facet_deselect")
-    render = render + render_subfacets(facet_solr_field, item)
-    render.html_safe
-  end
-
-  def render_subfacets(facet_solr_field, item, options ={})
-    render = ''
-    if (item.instance_variables.include? "@subfacets")
-      render = '<span class="toggle">[+/-]</span><ul>'
-      item.subfacets.each do |subfacet|
-        if facet_in_params?(facet_solr_field, subfacet.value)
-          render += '<li>' + render_selected_facet_value(facet_solr_field, subfacet) + '</li>'
-        else
-          render += '<li>' + render_facet_value(facet_solr_field, subfacet,options) + '</li>'
-        end
-      end
-      render += '</ul>'
-    end
-    render.html_safe
   end
 end

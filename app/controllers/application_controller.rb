@@ -4,7 +4,8 @@ class ApplicationController < ActionController::Base
 
   protect_from_forgery
 
-  layout "application"
+  layout 'application'
+
 
   helper :all # include all helpers, all the time
   helper_method :fedora_config # share some methods w/ views via helpers

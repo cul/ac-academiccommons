@@ -16,7 +16,20 @@ AcademicCommons::Application.routes.draw do
   get '/catalog/streaming/:id', :to => 'catalog#streaming', :as => 'streaming'
   get '/catalog/browse' => redirect('/catalog/browse/subjects')
 
-  blacklight_for :catalog
+
+  # Blacklight routes
+  mount Blacklight::Engine => '/'
+
+  concern :searchable, Blacklight::Routes::Searchable.new
+  concern :exportable, Blacklight::Routes::Exportable.new
+
+  resource :catalog, only: [:index], controller: 'catalog' do
+    concerns :searchable
+  end
+
+  resources :solr_documents, only: [:show], controller: 'catalog' do
+    concerns :exportable
+  end
 
   # RESTful routes for reindex API, working around Blacklight route camping
   delete '/solr_documents/:id', to: 'solr_documents#destroy'

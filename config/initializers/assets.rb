@@ -8,11 +8,4 @@ Rails.application.config.assets.version = '2.0'
 
 # Precompile additional assets.
 # application.js, application.css, and all non-JS/CSS in app/assets folder are already added.
-Rails.application.config.assets.precompile += %w( compiled/ie.css
-                                                  blueprint/screen.css
-                                                  jquery.validate.min.js
-                                                  jquery.replaceholder.min.js
-                                                  jquery.getUrlParam.js
-                                                  self-deposit.js
-                                                  waypoints.min.js
-                                                  waypoints-sticky.min.js)
+Rails.application.config.assets.precompile += %w(self-deposit.js)

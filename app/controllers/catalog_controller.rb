@@ -1,4 +1,3 @@
-# -*- encoding : utf-8 -*-
 class CatalogController < ApplicationController
   include Blacklight::Catalog
   include BlacklightOaiProvider::Controller
@@ -9,9 +8,18 @@ class CatalogController < ApplicationController
 
   helper_method :url_encode_resource, :url_decode_resource
 
-  layout "sidebar_right", only: [:show]
-
   configure_blacklight do |config|
+    # Delete default blacklight components we aren't using
+    config.index.document_actions.delete(:bookmark)
+
+    config.show.document_actions.delete(:bookmark)
+    config.show.document_actions.delete(:sms)
+    config.show.document_actions.delete(:citation)
+
+    config.navbar.partials.delete(:bookmark)
+    config.navbar.partials.delete(:saved_searches)
+    config.navbar.partials.delete(:search_history)
+
     config.document_presenter_class = DocumentPresenter
 
     config.default_solr_params = {
@@ -169,9 +177,9 @@ class CatalogController < ApplicationController
     # mean") suggestion is offered.
     config.spell_max = 5
 
-    # For the most-recent list, this is the max number displayed
-    config.max_most_recent = 10
-    #config[:max_most_recent] = 10
+    # Configuration for autocomplete suggestor
+    config.autocomplete_enabled = true
+    config.autocomplete_path = 'suggest'
 
     # Add documents to the list of object formats that are supported for all objects.
     # This parameter is a hash, identical to the Blacklight::Solr::Document#export_formats
@@ -182,6 +190,7 @@ class CatalogController < ApplicationController
     }
 
     config.feed_rows = "500"
+    config.max_most_recent = 5
 
     config.oai = {
       provider: {
@@ -241,12 +250,6 @@ class CatalogController < ApplicationController
 
   end
 
-  # displays values and pagination links for a single facet field
-  def facet
-    @pagination = get_facet_pagination(params[:id], params)
-    render :layout => false
-  end
-
   def browse_department
     render :layout => "catalog_browse"
   end
@@ -274,24 +277,6 @@ class CatalogController < ApplicationController
   def url_decode_resource(value)
     value = value.gsub(/%252f/i, '%2F').gsub(/%2e/i, '.')
     value = CGI::unescape(value)
-  end
-
-  def index
-    respond_to do |format|
-      format.html { super }
-      format.rss  { rss }
-      format.atom { atom }
-    end
-  end
-
-  def rss
-    (@response, @document_list) = custom_results()
-    render :template => 'catalog/index.rss.builder'
-  end
-
-  def atom
-    (@response, @document_list) = custom_results()
-    render :template => 'catalog/index.atom.builder'
   end
 
   def streaming
