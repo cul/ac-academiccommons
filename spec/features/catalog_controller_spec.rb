@@ -8,18 +8,18 @@ describe CatalogController, :type => :feature do
         visit root_path
       end
 
-      it "has the new content panel" do
+      xit "has the new content panel" do
         expect(page).to have_content("New in Academic Commons")
       end
 
-      it "renders the CUL header" do
+      xit "renders the CUL header" do
         # this needs to look for an included script
         # have_content|css|xpath are for visible content only, have_selector with options can find script tags
         opts = {:visible => false, :count => 1}
         expect(page).to have_selector(:css, "script[src=\"//cdn.cul.columbia.edu/ldpd-toolkit/widgets/cultnbw.min.js\"]", opts)
       end
 
-      it "links to the about page" do
+      xit "links to the about page" do
         # this needs to look for a link by href
         expect(page).to have_css("a[href=\"/about/\"]")
         # if we click on the link, the next page should have expected content
@@ -27,50 +27,50 @@ describe CatalogController, :type => :feature do
         expect(page).to have_css "h2", text: "Deposit Your Research and Scholarship"
       end
 
-      it "links to the self-deposit page" do
+      xit "links to the self-deposit page" do
         # this needs to look for a link by href
         expect(page).to have_css("a[href=\"/deposit\"]")
       end
 
-      it "has the new content panel" do
+      xit "has the new content panel" do
         expect(page).to have_content("New in Academic Commons")
       end
 
-      it "displays recently added item" do
+      xit "displays recently added item" do
         expect(page).to have_content("Alice's Adventures in Wonderland")
       end
 
-      it "displays correct total number of items in repository" do
+      xit "displays correct total number of items in repository" do
         expect(page).to have_content("1 items in Academic Commons")
       end
 
-      it "displays correct yearly number of items in repository" do
+      xit "displays correct yearly number of items in repository" do
         expect(page).to have_content("Objects added in the last year: 1")
       end
 
-      it "displays correct monthly number of items in repository" do
+      xit "displays correct monthly number of items in repository" do
         expect(page).to have_content("Objects added in the last 30 days: 0")
       end
     end
 
     context "search query" do
-      it "finds by title" do
+      xit "finds by title" do
         visit search_catalog_path(q: "alice")
         expect(page).to have_css("a[href=\"/catalog/actest:1\"]", :text => "Alice's Adventures in Wonderland")
       end
 
-      it "finds by author" do
+      xit "finds by author" do
         visit search_catalog_path(q: "lewis carroll")
         expect(page).to have_content("Carroll, Lewis")
         expect(page).to have_css("a[href=\"/catalog/actest:1\"]", :text => "Alice's Adventures in Wonderland")
       end
 
-      it "returns nothing when search query is not a match" do
+      xit "returns nothing when search query is not a match" do
         visit search_catalog_path(q: "nothing")
         expect(page).to have_content("No items found")
       end
 
-      it "indicates active search in the form widget" do
+      xit "indicates active search in the form widget" do
         visit search_catalog_path(q: "alice")
         select("year", from: "sort")
         click_on("sort results")
@@ -82,34 +82,34 @@ describe CatalogController, :type => :feature do
           visit search_catalog_path(q: "alice")
         end
 
-        it "have facets for subjects" do
+        xit "have facets for subjects" do
           expect(page).to have_css("span.facet-label > a.facet_select", text: "Bildungsromans")
           expect(page).to have_css("span.facet-label > a.facet_select", text: "Nonsense literature")
         end
 
-        it "have facets for authors" do
+        xit "have facets for authors" do
           expect(page).to have_css("span.facet-label > a.facet_select", text: "Carroll, Lewis")
           expect(page).to have_css("span.facet-label > a.facet_select", text: "Weird Old Guys.")
         end
 
-        it "have facets for departments" do
+        xit "have facets for departments" do
           expect(page).to have_css("span.facet-label > a.facet_select", text: "Bucolic Literary Society.")
         end
 
-        it "have facets for language" do
+        xit "have facets for language" do
           expect(page).to have_css("span.facet-label > a.facet_select", text: "English")
         end
 
-        it "have facets for date" do
+        xit "have facets for date" do
           expect(page).to have_css("span.facet-label > a.facet_select", text: "1865")
         end
 
-        it "have facets for content type" do
+        xit "have facets for content type" do
           expect(page).to have_css("span.facet-label > a.facet_select", text: "Articles")
         end
 
         context "'more' link for subject facets" do
-          it "is present" do
+          xit "is present" do
             expect(page).to have_css("ul.facet-values > li.more_facets_link > a", text: 'more ')
           end
 
@@ -118,11 +118,11 @@ describe CatalogController, :type => :feature do
               click_link "more "
             end
 
-            it "opens dialog box with correct title" do
+            xit "opens dialog box with correct title" do
               expect(page).to have_css("span.ui-dialog-title", text: "Subject")
             end
 
-            it "shows all three facets" do
+            xit "shows all three facets" do
               expect(page).to have_css("ul.facet_extended_list > li > span > a.facet_select", text: "Nonsense literature")
               expect(page).to have_css("ul.facet_extended_list > li > span > a.facet_select", text: "Rabbits")
               expect(page).to have_css("ul.facet_extended_list > li > span > a.facet_select", text: "Rabbits")
@@ -140,67 +140,67 @@ describe CatalogController, :type => :feature do
       visit solr_document_path("actest:1")
     end
 
-    it "has the fixture object" do
+    xit "has the fixture object" do
       expect(page).to have_content("Weird Old Guys")
     end
 
-    it "has publication date" do
+    xit "has publication date" do
       expect(page).to have_xpath("//dd/span[@itemprop='datePublished']", :text => "1865")
     end
 
-    it "has title" do
+    xit "has title" do
       expect(page).to have_css("div.document-heading/h1", :text => "Alice's Adventures in Wonderland")
     end
 
-    it "has abstract" do
+    xit "has abstract" do
       expect(page).to have_xpath("//dd/span[@itemprop='description']", text: "Background - Alice is feeling bored and drowsy while sitting on the riverbank with her older sister, who is reading a book with no pictures or conversations.")
     end
 
-    it "has volume" do
+    xit "has volume" do
       expect(page).to have_xpath("//dt[contains(text(),'Volume:')]/following-sibling::dd", text: "7")
     end
 
-    it "has linked persistent url" do
+    xit "has linked persistent url" do
       expect(page).to have_xpath("//a[@href='https://doi.org/10.7916/ALICE']", text: 'https://doi.org/10.7916/ALICE')
     end
 
-    it "has doi" do
+    xit "has doi" do
       expect(page).to have_xpath("//dt[contains(text(),'Publisher DOI:')]/following-sibling::dd", text: "10.1378/wonderland.01-2345")
     end
 
-    it "has journal title" do
+    xit "has journal title" do
       expect(page).to have_xpath("//dt[contains(text(),'Book/Journal Title:')]/following-sibling::dd", text: "Project Gutenberg")
     end
 
-    it "has linked subject" do
+    xit "has linked subject" do
       expect(page).to have_xpath("//a[@href='/?f%5Bsubject_facet%5D%5B%5D=Tea+Parties']", text: 'Tea Parties')
     end
 
-    it "has item views" do
+    xit "has item views" do
       expect(page).to have_xpath("//dt[contains(text(),'Item views')]/following-sibling::dd", text: "0")
     end
 
-    it "has linked publisher doi" do
+    xit "has linked publisher doi" do
       expect(page).to have_xpath("//a[@href='https://doi.org/10.1378/wonderland.01-2345']", text: 'https://doi.org/10.1378/wonderland.01-2345')
     end
 
-    it "has suggested citation" do
+    xit "has suggested citation" do
       expect(page).to have_xpath("//dt[contains(text(),'Suggested Citation')]/following-sibling::dd",
         text: 'Lewis Carroll, Weird Old Guys., 1865, Alice\'s Adventures in Wonderland, Columbia University Academic Commons, https://doi.org/10.7916/ALICE.')
     end
 
-    it "links to the MODS download" do
+    xit "links to the MODS download" do
       expect(page).to have_css("a[href=\"/download/fedora_content/show_pretty/actest:1/descMetadata/actest1_description.xml?data=meta\"]", :text => "text")
       page.find("a[href=\"/download/fedora_content/show_pretty/actest:1/descMetadata/actest1_description.xml?data=meta\"]", text: "text").click
       expect(page).to have_text("Alice's Adventures in Wonderland")
     end
 
-    it "links to the pdf download" do
+    xit "links to the pdf download" do
       click_on 'alice_in_wonderland.pdf'
       expect(page.response_headers['X-Accel-Redirect']).to match /\/repository_download\/.*\/actest:2\/datastreams\/CONTENT\/content$/
     end
 
-    it "links to the non-pdf download" do
+    xit "links to the non-pdf download" do
       click_on 'to_solr.json'
       expect(page.response_headers['X-Accel-Redirect']).to match /\/repository_download\/.*\/actest:4\/datastreams\/content\/content$/
     end

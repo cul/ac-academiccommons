@@ -7,15 +7,15 @@ RSpec.describe DepositController, :type => :feature do
       visit deposit_path
     end
 
-    it "renders title" do
+    xit "renders title" do
       expect(page).to have_content "Academic Commons Self-Deposit"
     end
 
-    it "contains a Start Here button" do
+    xit "contains a Start Here button" do
       expect(page).to have_button("Start Here")
     end
 
-    it "does not display the user agreement" do
+    xit "does not display the user agreement" do
       expect(page).not_to have_content "Read and Accept Author Agreement"
     end
 
@@ -24,7 +24,7 @@ RSpec.describe DepositController, :type => :feature do
         click_button "Start Here"
       end
 
-      it "cannot continue until user has agreed" do
+      xit "cannot continue until user has agreed" do
         click_button "Continue"
         expect(page).to have_content "You must accept the Author Rights Agreement to continue."
         expect(page).to have_content "Step 1 of 3"
@@ -36,12 +36,12 @@ RSpec.describe DepositController, :type => :feature do
           click_button "Continue"
         end
 
-        it "renders next page" do
+        xit "renders next page" do
           expect(page).to have_content "Required Information"
           expect(page).to have_content "Step 2 of 3"
         end
 
-        it 'cannot continue until all required information is entered' do
+        xit 'cannot continue until all required information is entered' do
           click_button "Continue"
           expect(page).to have_content "Please enter the title."
           expect(page).to have_content "Step 2 of 3"
@@ -58,7 +58,7 @@ RSpec.describe DepositController, :type => :feature do
             click_button "Continue"
           end
 
-          it "renders information to review" do
+          xit "renders information to review" do
             expect(page).to have_content "Review and Submit"
           end
 
@@ -71,11 +71,11 @@ RSpec.describe DepositController, :type => :feature do
               FileUtils.rm(File.join(Rails.root, Deposit.first.file_path)) # Remove file deposited
             end
 
-            it 'renders submission confirmation' do
+            xit 'renders submission confirmation' do
               expect(page).to have_content "We Have Received Your Submission"
             end
 
-            it "creates deposit record" do
+            xit "creates deposit record" do
               expect(Deposit.count).to eq 1
             end
           end

@@ -19,14 +19,14 @@ RSpec.describe CatalogController, type: :controller do
           }
         end
 
-        it "correctly creates solr query" do
+        xit "correctly creates solr query" do
           expect(@controller.repository).to receive(:send_and_receive)
             .with('select', hash_including(expected_params))
             .and_return(empty_response)
           get :index, q: query, format: 'rss'
         end
 
-        it 'returns rss feed with appropriate information'
+        xit 'returns rss feed with appropriate information'
       end
 
       context "search query with row limit" do
@@ -43,7 +43,7 @@ RSpec.describe CatalogController, type: :controller do
           }
         end
 
-        it "correctly creates solr query" do
+        xit "correctly creates solr query" do
           expect(@controller.repository).to receive(:send_and_receive)
             .with('select', hash_including(expected_params))
             .and_return(empty_response)
@@ -76,7 +76,7 @@ RSpec.describe CatalogController, type: :controller do
           }
         end
 
-        it 'correctly creates solr query' do
+        xit 'correctly creates solr query' do
           expect(@controller.repository).to receive(:send_and_receive)
             .with('select', expected_params)
             .and_return(empty_response)
@@ -101,7 +101,7 @@ RSpec.describe CatalogController, type: :controller do
           }
         end
 
-        it 'merges :fq parameter' do
+        xit 'merges :fq parameter' do
           expect(@controller.repository).to receive(:send_and_receive)
             .with('select', hash_including(expected_params))
             .and_return(empty_response)
@@ -130,7 +130,7 @@ RSpec.describe CatalogController, type: :controller do
         allow(@controller).to receive(:params).and_return( { fq: uni_filter } )
       end
 
-      it 'correctly merges :fq parameters' do
+      xit 'correctly merges :fq parameters' do
         expect(@controller.repository).to receive(:send_and_receive)
           .with('select', expected_params)
           .and_return(empty_response)
