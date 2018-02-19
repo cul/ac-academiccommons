@@ -40,7 +40,7 @@ CURRENT RECOMMENDED VERSION OF RUBY: 2.3.3
    rake jetty:start
    ```
 
-7. Start your local solr instance with a development core.
+7. Start your local solr instance with a development core. (Leave this command running in the background)
    ```
    solr_wrapper
    ```
@@ -64,7 +64,7 @@ If you need an object in AC to do further testing and development, add a collect
    rake jetty:start
    ```
 
-2. Start Solr (Leave this command running in the background.)
+2. Start Solr (Leave this command running in the background)
    ```
    solr_wrapper
    ```
