@@ -1,7 +1,7 @@
 cache(@sitemap_cache_key) do
   # this is the upper limit for a single sitemap, see sitemap.org
   solr_response = controller.fetch_latest(50000, @latest_doc['record_creation_date'])
-  docs = solr_response.docs.collect {|doc| SolrDocument.new(doc, solr_response)}
+  docs = solr_response.docs
 
   xml.instruct! :xml, :version=>"1.0", :encoding=>"utf-8"
 
