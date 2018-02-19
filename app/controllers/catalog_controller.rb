@@ -20,7 +20,7 @@ class CatalogController < ApplicationController
     config.navbar.partials.delete(:saved_searches)
     config.navbar.partials.delete(:search_history)
 
-    config.document_presenter_class = DocumentPresenter
+    config.show.presenter_class = DocumentPresenter
 
     config.default_solr_params = {
       qt: "search",
