@@ -36,8 +36,7 @@ class SitemapController < ApplicationController
   end
 
   def latest_doc
-    solr_response = fetch_latest(1)
-    SolrDocument.new(solr_response.docs.first, solr_response)
+    fetch_latest(1).docs.first
   end
 
   def sweep_matcher

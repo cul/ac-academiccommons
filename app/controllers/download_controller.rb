@@ -29,7 +29,6 @@ class DownloadController < ApplicationController
     docs = solr_results['response']['docs']
     # did the resource doc exist? is it active?
     resource_doc = docs.first
-    resource_doc = SolrDocument.new(resource_doc) if resource_doc
     fail_fast = resource_doc.nil? || !free_to_read?(resource_doc)
 
     if !fail_fast
@@ -110,7 +109,7 @@ class DownloadController < ApplicationController
       q: "id:(#{ids.join(' OR ')})"
     )
     solr_results = repository.get("select", params: search_params)
-    docs = solr_results['response']['docs'].map { |d| SolrDocument.new(d) }
+    docs = solr_results['response']['docs']
     docs.detect { |d| free_to_read?(d) }
   end
 
