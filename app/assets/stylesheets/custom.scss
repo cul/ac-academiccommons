@@ -1,0 +1,17 @@
+/* header */
+
+#header-navbar {
+  .navbar-brand {
+    background-size: 100%;
+    background-position: center;
+    margin: 0 10px;
+    width: 320px;
+
+    @media screen and (min-width: $screen-sm ) {
+      height: 75px;
+      margin: 0;
+      max-width: 100%;
+      width: 600px;
+    }
+  }
+}
