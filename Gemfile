@@ -50,6 +50,8 @@ group :development, :test do
   gem 'capistrano-rvm', '~> 0.1', require: false
   gem 'capistrano-passenger', '~> 0.1', require: false
 
+  gem 'rubocop', '~> 0.52.1', require: false
+
   gem 'byebug'
   gem 'capybara', '~>2.2'
   gem 'database_cleaner'
