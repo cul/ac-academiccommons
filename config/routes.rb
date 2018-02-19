@@ -29,7 +29,8 @@ AcademicCommons::Application.routes.draw do
     concerns :searchable
   end
 
-  resources :solr_documents, only: [:show], controller: 'catalog' do
+  # Routes for solr document
+  resources :catalog, only: [:show], controller: 'catalog' do
     concerns :exportable
   end
 

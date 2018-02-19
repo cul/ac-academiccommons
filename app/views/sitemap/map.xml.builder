@@ -8,7 +8,7 @@ cache(@sitemap_cache_key) do
   xml.urlset(:xmlns=>"http://www.sitemaps.org/schemas/sitemap/0.9") do
     docs.each do |doc|
       xml.url do
-        xml.loc(solr_document_url(doc[:id]))
+        xml.loc(catalog_url(doc[:id]))
         xml.lastmod(doc[:record_creation_date][0])
         xml.changefreq("yearly")
         xml.priority("0.5")
