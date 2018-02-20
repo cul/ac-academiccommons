@@ -22,7 +22,7 @@ module AcademicCommons
       '2' => 'Doctoral'
     }.freeze
     # this is documentary, and should go away when this module is a concern
-    REQUIRED_METHODS = [:belongs_to, :descMetadata_content]
+    REQUIRED_METHODS = [:belongs_to, :descMetadata_content].freeze
 
     # Keeping track of multivalued fields until we move over to using dynamic
     # field names. Once we make the switch this can be reduced.

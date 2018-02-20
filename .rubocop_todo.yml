@@ -1034,22 +1034,6 @@ Style/MultipleComparison:
   Exclude:
     - 'app/models/dmca.rb'
 
-# Offense count: 18
-# Cop supports --auto-correct.
-Style/MutableConstant:
-  Exclude:
-    - 'Rakefile'
-    - 'app/controllers/deposit_controller.rb'
-    - 'app/controllers/download_controller.rb'
-    - 'app/models/concerns/academic_commons/aggregator.rb'
-    - 'app/models/notification.rb'
-    - 'app/models/statistic.rb'
-    - 'lib/academic_commons/indexable.rb'
-    - 'lib/academic_commons/indexer.rb'
-    - 'lib/academic_commons/metrics/item_stats.rb'
-    - 'lib/academic_commons/metrics/output_csv.rb'
-    - 'lib/academic_commons/metrics/usage_statistics.rb'
-
 # Offense count: 5
 # Cop supports --auto-correct.
 # Configuration parameters: EnforcedStyle.

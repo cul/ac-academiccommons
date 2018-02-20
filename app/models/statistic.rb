@@ -1,9 +1,9 @@
 class Statistic < ActiveRecord::Base
-  VIEW = 'View'
-  DOWNLOAD = 'Download'
-  STREAM = 'Streaming'
+  VIEW = 'View'.freeze
+  DOWNLOAD = 'Download'.freeze
+  STREAM = 'Streaming'.freeze
 
-  EVENTS = [VIEW, DOWNLOAD, STREAM]
+  EVENTS = [VIEW, DOWNLOAD, STREAM].freeze
 
   # Calculate the number of times the event given has occured for all the given
   # pids. If start and end date are given, the query is limited to that time period.

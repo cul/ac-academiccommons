@@ -1,6 +1,6 @@
 module AcademicCommons
   class Indexer
-    TIMESTAMP = '%Y%m%d-%H%M%S'
+    TIMESTAMP = '%Y%m%d-%H%M%S'.freeze
     attr_reader :indexing_logger, :error, :success, :start
 
     # Creates object that reindex all records currently in the solr core or

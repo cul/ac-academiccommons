@@ -2,7 +2,7 @@ require 'csv'
 
 module AcademicCommons::Metrics
   module OutputCSV
-    MONTH_KEY = '%b %Y'
+    MONTH_KEY = '%b %Y'.freeze
 
     # CSV with monthly breakdown of stats for each event.
     #

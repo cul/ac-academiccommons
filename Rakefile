@@ -6,7 +6,7 @@ Rails.application.load_tasks
 begin
   # configure the release versions of jettywrapper to use with CI
   require 'jettywrapper'
-  JETTY_ZIP_BASENAME = 'hyacinth-fedora-3.8.1-no-solr'
+  JETTY_ZIP_BASENAME = 'hyacinth-fedora-3.8.1-no-solr'.freeze
   Jettywrapper.url = "https://github.com/cul/hydra-jetty/archive/#{JETTY_ZIP_BASENAME}.zip"
 
   require 'rspec/core/rake_task'

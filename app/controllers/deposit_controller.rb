@@ -1,7 +1,7 @@
 class DepositController < ApplicationController
   include Blacklight::SearchHelper
 
-  SELF_DEPOSIT_DIR = 'data/self-deposit-uploads'
+  SELF_DEPOSIT_DIR = 'data/self-deposit-uploads'.freeze
 
   def submit
     if params[:acceptedAgreement] == 'agree'

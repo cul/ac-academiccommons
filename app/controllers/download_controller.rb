@@ -9,7 +9,7 @@ class DownloadController < ApplicationController
     fl: '*',
     fq: [],
     facet: false
-  }
+  }.freeze
 
   def download_log
     headers['Content-Type'] = 'application/octet-stream'

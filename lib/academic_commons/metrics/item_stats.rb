@@ -1,6 +1,6 @@
 module AcademicCommons::Metrics
   class ItemStats
-    MONTH_KEY = '%b %Y'
+    MONTH_KEY = '%b %Y'.freeze
     attr_reader :id, :document, :stats
 
     def initialize(document)

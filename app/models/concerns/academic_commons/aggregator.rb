@@ -5,7 +5,7 @@ module AcademicCommons::Aggregator
     include AcademicCommons::Resource
   end
 
-  URI_TO_PID = 'info:fedora/'
+  URI_TO_PID = 'info:fedora/'.freeze
 
   def pid_escaped
     "\"#{self.pid}\""
