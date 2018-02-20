@@ -8,16 +8,23 @@
     margin: 0 10px;
     width: 320px;
 
-    @media screen and (min-width: $screen-sm ) {
-      height: 75px;
+    @media screen and (min-width: $screen-md ) {
+      height: 80px;
       margin: 0;
-      max-width: 100%;
+      max-width: 600px;
       width: 600px;
     }
   }
 
   & .navbar-nav {
-    padding: 12px 0 0 0;
+
+    @media screen and (min-width: $screen-md ) {
+      padding: 17px 0 0 0;
+    }
+
+    & li a {
+      margin-left: 10px;
+    }
   }
 
   & .share-button {
@@ -26,12 +33,21 @@
     color: $brand-primary;
     font-size: 1.5rem;
     font-weight: bold;
-    margin: 6px 0;
+    margin: 8px;
     padding: 5px 10px;
+
+    @media screen and (min-width: $screen-md ) {
+      margin: 7px 0;
+    }
 
     &:hover {
       border-color: $link-hover-color;
       color: $link-hover-color;
     }
   }
+
+}
+
+#search-navbar {
+  background: $body-bg;
 }
