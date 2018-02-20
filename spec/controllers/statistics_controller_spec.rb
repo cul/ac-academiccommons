@@ -77,7 +77,7 @@ describe StatisticsController, type: :controller, integration: true do
       end
 
       it 'returns 401' do # Can't redirect because its a json request.
-        expect(response.status).to eql(401)
+        expect(response.status).to be 401
       end
     end
 

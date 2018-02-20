@@ -13,13 +13,13 @@ describe SitemapController, type: :feature do
 
   it 'should return fresh results if it is stale' do
     visit '/sitemap.xml'
-    expect(page.status_code).to eql(200)
+    expect(page.status_code).to be 200
     expect(page).to have_selector('urlset')
   end
 
   it 'should return a not modified response if not stale' do
     Capybara.current_session.driver.header 'If-Modified-Since', @lmd
     Capybara.current_session.visit '/sitemap.xml'
-    expect(page.status_code).to eql(304)
+    expect(page.status_code).to be 304
   end
 end

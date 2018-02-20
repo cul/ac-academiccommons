@@ -33,7 +33,7 @@ describe EmailPreferencesController, type: :controller do
       end
 
       it 'redirects to new_user_session_path' do
-        expect(response.status).to eql(302)
+        expect(response.status).to be 302
         expect(response.headers['Location']).to eql(new_user_session_url)
       end
     end
@@ -75,7 +75,7 @@ describe EmailPreferencesController, type: :controller do
       end
 
       it 'redirects to new_user_session_path' do
-        expect(response.status).to eql(302)
+        expect(response.status).to be 302
         expect(response.headers['Location']).to eql(new_user_session_url)
       end
     end
@@ -115,7 +115,7 @@ describe EmailPreferencesController, type: :controller do
       end
 
       it 'redirects to new_user_session_path' do
-        expect(response.status).to eql(302)
+        expect(response.status).to be 302
         expect(response.headers['Location']).to eql(new_user_session_url)
       end
     end

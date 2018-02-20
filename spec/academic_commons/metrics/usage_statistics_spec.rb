@@ -90,9 +90,9 @@ RSpec.describe AcademicCommons::Metrics::UsageStatistics, integration: true do
         end
 
         it 'returns correct totals for lifetime' do
-          expect(subject.total_for(Statistic::VIEW, 'Lifetime')).to eq 3
-          expect(subject.total_for(Statistic::DOWNLOAD, 'Lifetime')).to eq 1
-          expect(subject.total_for(Statistic::STREAM, 'Lifetime')).to eql 1
+          expect(subject.total_for(Statistic::VIEW, 'Lifetime')).to be 3
+          expect(subject.total_for(Statistic::DOWNLOAD, 'Lifetime')).to be 1
+          expect(subject.total_for(Statistic::STREAM, 'Lifetime')).to be 1
         end
 
         it 'returns error if period stats are requested' do
@@ -112,12 +112,12 @@ RSpec.describe AcademicCommons::Metrics::UsageStatistics, integration: true do
           expect(subject.map(&:document)).to eq solr_response['response']['docs']
         end
         it 'returns correct totals' do
-          expect(subject.total_for(Statistic::VIEW, 'Period')).to eq 2
-          expect(subject.total_for(Statistic::DOWNLOAD, 'Period')).to eq 1
-          expect(subject.total_for(Statistic::STREAM, 'Period')).to eql 1
-          expect(subject.total_for(Statistic::VIEW, 'Lifetime')).to eq 2
-          expect(subject.total_for(Statistic::DOWNLOAD, 'Lifetime')).to eq 1
-          expect(subject.total_for(Statistic::STREAM, 'Lifetime')).to eql 1
+          expect(subject.total_for(Statistic::VIEW, 'Period')).to be 2
+          expect(subject.total_for(Statistic::DOWNLOAD, 'Period')).to be 1
+          expect(subject.total_for(Statistic::STREAM, 'Period')).to be 1
+          expect(subject.total_for(Statistic::VIEW, 'Lifetime')).to be 2
+          expect(subject.total_for(Statistic::DOWNLOAD, 'Lifetime')).to be 1
+          expect(subject.total_for(Statistic::STREAM, 'Lifetime')).to be 1
         end
       end
 
@@ -132,12 +132,12 @@ RSpec.describe AcademicCommons::Metrics::UsageStatistics, integration: true do
         end
 
         it 'returns correct totals' do
-          expect(subject.total_for(Statistic::VIEW, 'Period')).to eq 0
-          expect(subject.total_for(Statistic::DOWNLOAD, 'Period')).to eq 0
-          expect(subject.total_for(Statistic::STREAM, 'Period')).to eql 0
-          expect(subject.total_for(Statistic::VIEW, 'Lifetime')).to eq 2
-          expect(subject.total_for(Statistic::DOWNLOAD, 'Lifetime')).to eq 1
-          expect(subject.total_for(Statistic::STREAM, 'Lifetime')).to eql 1
+          expect(subject.total_for(Statistic::VIEW, 'Period')).to be 0
+          expect(subject.total_for(Statistic::DOWNLOAD, 'Period')).to be 0
+          expect(subject.total_for(Statistic::STREAM, 'Period')).to be 0
+          expect(subject.total_for(Statistic::VIEW, 'Lifetime')).to be 2
+          expect(subject.total_for(Statistic::DOWNLOAD, 'Lifetime')).to be 1
+          expect(subject.total_for(Statistic::STREAM, 'Lifetime')).to be 1
         end
       end
 
@@ -148,10 +148,10 @@ RSpec.describe AcademicCommons::Metrics::UsageStatistics, integration: true do
         end
 
         it 'returns correct totals' do
-          expect(subject.total_for(Statistic::VIEW, 'Period')).to eq 2
-          expect(subject.total_for(Statistic::DOWNLOAD, 'Period')).to eq 1
-          expect(subject.total_for(Statistic::VIEW, 'Lifetime')).to eq 2
-          expect(subject.total_for(Statistic::DOWNLOAD, 'Lifetime')).to eq 1
+          expect(subject.total_for(Statistic::VIEW, 'Period')).to be 2
+          expect(subject.total_for(Statistic::DOWNLOAD, 'Period')).to be 1
+          expect(subject.total_for(Statistic::VIEW, 'Lifetime')).to be 2
+          expect(subject.total_for(Statistic::DOWNLOAD, 'Lifetime')).to be 1
         end
       end
 
@@ -257,19 +257,19 @@ RSpec.describe AcademicCommons::Metrics::UsageStatistics, integration: true do
     end
 
     it 'return correct value for view period stats' do
-      expect(subject.get_stat_for(pid, Statistic::VIEW)).to eql 2
+      expect(subject.get_stat_for(pid, Statistic::VIEW)).to be 2
     end
 
     it 'returns correct value for view month stats' do
-      expect(subject.get_stat_for(pid, Statistic::VIEW, 'Jan 2016')).to eql 1
+      expect(subject.get_stat_for(pid, Statistic::VIEW, 'Jan 2016')).to be 1
     end
 
     it 'returns correct value of Lifetime download stats' do
-      expect(subject.get_stat_for(pid, Statistic::DOWNLOAD, 'Lifetime')).to eql 2
+      expect(subject.get_stat_for(pid, Statistic::DOWNLOAD, 'Lifetime')).to be 2
     end
 
     it 'returns correct value of download April 2016 stats' do
-      expect(subject.get_stat_for(pid, Statistic::DOWNLOAD, 'Apr 2016')).to eql 2
+      expect(subject.get_stat_for(pid, Statistic::DOWNLOAD, 'Apr 2016')).to be 2
     end
 
     it 'returns error if month and year are not part of the period' do
@@ -285,7 +285,7 @@ RSpec.describe AcademicCommons::Metrics::UsageStatistics, integration: true do
     end
 
     it 'returns 0 if id not present, but id part of results' do
-      expect(subject.get_stat_for('actest:5', Statistic::VIEW, 'Jan 2016')).to eql 0
+      expect(subject.get_stat_for('actest:5', Statistic::VIEW, 'Jan 2016')).to be 0
     end
   end
 

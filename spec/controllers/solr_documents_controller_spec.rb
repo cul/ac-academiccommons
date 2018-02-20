@@ -40,19 +40,19 @@ describe SolrDocumentsController, type: :controller do
     context 'no api key' do
       let(:api_key) { nil }
       let(:params) { { id: 'good:id' } }
-      it { is_expected.to eql(401) }
+      it { is_expected.to be 401 }
     end
     context 'invalid api_key' do
       include_context 'bad api key'
 
       let(:params) { { id: 'good:id' } }
-      it { is_expected.to eql(403) }
+      it { is_expected.to be 403 }
     end
     context 'valid api key' do
       include_context 'good api key'
       context 'bad doc id' do
         let(:params) { { id: 'baad:id' } }
-        it { is_expected.to eql(404) }
+        it { is_expected.to be 404 }
       end
       context 'good doc id' do
         let(:mock_object) do
@@ -67,7 +67,7 @@ describe SolrDocumentsController, type: :controller do
           expect(controller).to receive(:notify_authors_of_new_item)
         end
         it do
-          expect(subject).to eql(200)
+          expect(subject).to be 200
         end
       end
     end
@@ -94,12 +94,12 @@ describe SolrDocumentsController, type: :controller do
     context 'no api key' do
       let(:api_key) { nil }
       let(:params) { { id: 'good:id' } }
-      it { is_expected.to eql(401) }
+      it { is_expected.to be 401 }
     end
     context 'invalid api_key' do
       include_context 'bad api key'
       let(:params) { { id: 'good:id' } }
-      it { is_expected.to eql(403) }
+      it { is_expected.to be 403 }
     end
     context 'valid api key' do
       include_context 'good api key'
@@ -110,11 +110,11 @@ describe SolrDocumentsController, type: :controller do
       end
       context 'bad doc id' do
         let(:params) { { id: 'baad:id' } }
-        it { is_expected.to eql(200) }
+        it { is_expected.to be 200 }
       end
       context 'good doc id' do
         let(:params) { { id: 'good:id' } }
-        it { is_expected.to eql(200) }
+        it { is_expected.to be 200 }
       end
     end
   end
@@ -162,7 +162,7 @@ describe SolrDocumentsController, type: :controller do
       end
 
       it 'does not sent any notifications' do
-        expect(ActionMailer::Base.deliveries.count).to eql 0
+        expect(ActionMailer::Base.deliveries.count).to be 0
       end
     end
 
@@ -172,7 +172,7 @@ describe SolrDocumentsController, type: :controller do
       end
 
       it 'sends two notifications' do
-        expect(ActionMailer::Base.deliveries.count).to eql 2
+        expect(ActionMailer::Base.deliveries.count).to be 2
       end
 
       it 'sends notification to each author' do
@@ -195,7 +195,7 @@ describe SolrDocumentsController, type: :controller do
       end
 
       it 'sends one notification' do
-        expect(ActionMailer::Base.deliveries.count).to eql 1
+        expect(ActionMailer::Base.deliveries.count).to be 1
       end
 
       it 'does not sent notification for first author' do
@@ -218,7 +218,7 @@ describe SolrDocumentsController, type: :controller do
       end
 
       it 'sents to email based on uni' do
-        expect(ActionMailer::Base.deliveries.count).to eql 2
+        expect(ActionMailer::Base.deliveries.count).to be 2
         expect(sent_to).to include email_author_one
       end
     end
@@ -232,13 +232,13 @@ describe SolrDocumentsController, type: :controller do
       end
 
       it 'does not sent any emails' do
-        expect(ActionMailer::Base.deliveries.count).to eql 0
+        expect(ActionMailer::Base.deliveries.count).to be 0
       end
 
       it 'records failure in database' do
-        expect(Notification.count).to eql 2
-        expect(Notification.failed.new_item_notification.to_author(author_one).for_record(doi).count).to eql 1
-        expect(Notification.failed.new_item_notification.to_author(author_two).for_record(doi).count).to eql 1
+        expect(Notification.count).to be 2
+        expect(Notification.failed.new_item_notification.to_author(author_one).for_record(doi).count).to be 1
+        expect(Notification.failed.new_item_notification.to_author(author_two).for_record(doi).count).to be 1
       end
     end
   end

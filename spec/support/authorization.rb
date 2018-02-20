@@ -34,7 +34,7 @@ shared_examples 'authorization required' do
     end
 
     it 'redirects to new_user_session_path' do
-      expect(response.status).to eql(302)
+      expect(response.status).to be 302
       expect(response).to redirect_to new_user_session_url
     end
   end
@@ -56,7 +56,7 @@ shared_examples 'authorization required' do
     end
 
     it 'succeeds' do
-      expect(response.status).to eql(200)
+      expect(response.status).to be 200
     end
   end
 end

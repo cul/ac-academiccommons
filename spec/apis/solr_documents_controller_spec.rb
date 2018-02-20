@@ -22,16 +22,16 @@ describe SolrDocumentsController, type: :controller, integration: true do
     end
     it do
       get :show, id: 'actest:1', format: 'json'
-      expect(response.status).to eql(404)
+      expect(response.status).to be 404
       put :update, { id: 'actest:1' }
       sleep(20) # It may take the solr document up to 15 min to show up
-      expect(response.status).to eql(200)
+      expect(response.status).to be 200
       expect(response.headers['Location']).to eql('http://test.host/catalog/actest:1')
       get :show, id: 'actest:1', format: 'json'
-      expect(response.status).to eql(200)
+      expect(response.status).to be 200
       # publish does not cascade
       get :show, id: 'actest:2', format: 'json'
-      expect(response.status).to eql(404)
+      expect(response.status).to be 404
       put :update, { id: 'actest:2' }
       ActiveFedora::SolrService.commit # Force commit, since we are not using softCommit
       expect(response.headers['Location'])
@@ -47,14 +47,14 @@ describe SolrDocumentsController, type: :controller, integration: true do
   describe 'destroy' do
     it do
       get :show, id: 'actest:1', format: 'json'
-      expect(response.status).to eql(200)
+      expect(response.status).to be 200
       delete :destroy, { id: 'actest:1' }
-      expect(response.status).to eql(200)
+      expect(response.status).to be 200
       get :show, id: 'actest:1', format: 'json'
-      expect(response.status).to eql(404)
+      expect(response.status).to be 404
       # unpublish cascades
       get :show, id: 'actest:2', format: 'json'
-      expect(response.status).to eql(404)
+      expect(response.status).to be 404
     end
     after do
       # reindex the fixture so that other tests can run
