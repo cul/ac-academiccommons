@@ -452,11 +452,6 @@ Lint/EndAlignment:
     - 'app/helpers/catalog_helper.rb'
 
 # Offense count: 1
-Lint/HandleExceptions:
-  Exclude:
-    - 'Rakefile'
-
-# Offense count: 1
 Lint/LiteralAsCondition:
   Exclude:
     - 'lib/tasks/ac.rake'
@@ -492,7 +487,6 @@ Lint/StringConversionInInterpolation:
 # Configuration parameters: IgnoreEmptyBlocks, AllowUnusedKeywordArguments.
 Lint/UnusedBlockArgument:
   Exclude:
-    - 'Rakefile'
     - 'app/controllers/solr_documents_controller.rb'
     - 'app/controllers/statistics_controller.rb'
     - 'app/helpers/catalog_helper.rb'
