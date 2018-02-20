@@ -16,12 +16,12 @@ module AcademicCommons::Metrics
         csv.add_row []
         csv.add_row ['Period Covered by Report', time_period]
         csv.add_row []
-        csv.add_row ['Report created by:', requested_by.nil? ? "N/A" : "#{requested_by} (#{requested_by.uid})"]
-        csv.add_row ['Report created on:', Time.new.strftime("%Y-%m-%d") ]
+        csv.add_row ['Report created by:', requested_by.nil? ? 'N/A' : "#{requested_by} (#{requested_by.uid})"]
+        csv.add_row ['Report created on:', Time.new.strftime('%Y-%m-%d') ]
 
-        add_usage_category(csv, "Views", Statistic::VIEW)
-        add_usage_category(csv, "Streams", Statistic::STREAM) if (options[:include_streaming])
-        add_usage_category(csv, "Downloads", Statistic::DOWNLOAD)
+        add_usage_category(csv, 'Views', Statistic::VIEW)
+        add_usage_category(csv, 'Streams', Statistic::STREAM) if (options[:include_streaming])
+        add_usage_category(csv, 'Downloads', Statistic::DOWNLOAD)
       end
     end
 
@@ -72,17 +72,17 @@ module AcademicCommons::Metrics
       csv.add_row []
       csv.add_row []
       csv.add_row [ "#{category} report:".upcase ]
-      csv.add_row [ "Total for period:", total_for(key, "Period").to_s,  "", "", "", "#{category} by Month"]
-      month_column_headers = self.months_list.map { |m| m.strftime("%b-%Y") }
-      csv.add_row [ "Title", "Content Type", "Persistent URL", "Publisher DOI", "Reporting Period Total #{category}"].concat(month_column_headers)
+      csv.add_row [ 'Total for period:', total_for(key, 'Period').to_s,  '', '', '', "#{category} by Month"]
+      month_column_headers = self.months_list.map { |m| m.strftime('%b-%Y') }
+      csv.add_row [ 'Title', 'Content Type', 'Persistent URL', 'Publisher DOI', "Reporting Period Total #{category}"].concat(month_column_headers)
 
       self.each do |item_stat|
         id = item_stat.id
         monthly_stats = self.months_list.map { |m| item_stat.get_stat(key, m.strftime(MONTH_KEY)) }
         document = item_stat.document
         csv.add_row [
-          document["title_display"], document["genre_facet"].first, document["handle"],
-          document["doi"], item_stat.get_stat(key, "Period")
+          document['title_display'], document['genre_facet'].first, document['handle'],
+          document['doi'], item_stat.get_stat(key, 'Period')
         ].concat(monthly_stats)
       end
     end

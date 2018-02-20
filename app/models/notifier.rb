@@ -39,33 +39,33 @@ class Notifier < ActionMailer::Base
     @url = deposit.url
     @doi_pmcid = deposit.doi_pmcid
     @notes = deposit.notes
-    @record_url = root_url + "admin/deposits/" + deposit.id.to_s
+    @record_url = root_url + 'admin/deposits/' + deposit.id.to_s
 
     filepath = File.join(Rails.root, deposit.file_path)
     if attach_file && File.size(filepath) < MAX_FILE_SIZE  # Tries to attach file if under 25MB.
       attachments[File.basename(filepath)] = File.read(filepath)
     end
 
-    @file_download_url = root_url + "admin/deposits/" + deposit.id.to_s + "/file"
+    @file_download_url = root_url + 'admin/deposits/' + deposit.id.to_s + '/file'
     recipients = Rails.application.config.emails['mail_deposit_recipients']
     from = Rails.application.config.emails['mail_deliverer']
-    subject = "SD"
+    subject = 'SD'
     subject.concat(" #{@uni} -") if @uni
     subject.concat(" #{@title.truncate(50)}")
 
-    mail(:to => recipients, :from => from, :subject => subject)
+    mail(to: recipients, from: from, subject: subject)
   end
 
   def new_author_agreement(request)
     @name = request[:name]
     @email = request[:email]
-    @agreement_version = request["AC-agreement-version"]
+    @agreement_version = request['AC-agreement-version']
     recipients = Rails.application.config.emails['new_agreement_notification']
     from = Rails.application.config.emails['mail_deliverer']
-    subject = "Academic Commons Author Agreement Accepted"
+    subject = 'Academic Commons Author Agreement Accepted'
     content_type = 'text/html'
 
-    mail(:to => recipients, :from => from, :subject => subject, :content_type => content_type)
+    mail(to: recipients, from: from, subject: subject, content_type: content_type)
   end
 
   def statistics_report_with_csv_attachment(recipients, from, subject, message, prepared_attachments)
@@ -74,8 +74,8 @@ class Notifier < ActionMailer::Base
     attachments.inline[file_name] = {mime_type: 'text/csv', content: content }
    end
 
-    mail(:to => recipients, :from => from, :subject => subject) do |f|
-      f.text { render :text => message }
+    mail(to: recipients, from: from, subject: subject) do |f|
+      f.text { render text: message }
     end
   end
 
@@ -89,11 +89,11 @@ class Notifier < ActionMailer::Base
       log[:hour] = time_id[9..10].to_i
       log[:minute] = time_id[11..12].to_i
       log[:second] = time_id[13..14].to_i
-      log[:time] = Time.mktime(log[:year], log[:month], log[:day], log[:hour], log[:minute], log[:second]).strftime("%B %e, %Y %r")
+      log[:time] = Time.mktime(log[:year], log[:month], log[:day], log[:hour], log[:minute], log[:second]).strftime('%B %e, %Y %r')
 
       recipients = Rails.application.config.emails['indexing_report_recipients']
       from = Rails.application.config.emails['mail_deliverer']
-      subject = "Academic Commons - Daily Reindexing Report"
+      subject = 'Academic Commons - Daily Reindexing Report'
       content_type = 'text/html'
 
       @errors_count = errors_count
@@ -102,8 +102,7 @@ class Notifier < ActionMailer::Base
       @time_id = time_id
       @existing_time = log[:time]
 
-      mail(:to => recipients, :from => from, :subject => subject, :content_type => content_type)
-
+      mail(to: recipients, from: from, subject: subject, content_type: content_type)
   end
 
 
@@ -111,7 +110,7 @@ class Notifier < ActionMailer::Base
 
       recipients = Rails.application.config.emails['indexing_report_recipients']
       from = Rails.application.config.emails['mail_deliverer']
-      subject = "Academic Commons - Daily Reindexing Summary Report"
+      subject = 'Academic Commons - Daily Reindexing Summary Report'
       content_type = 'text/html'
 
       @params = params
@@ -121,7 +120,7 @@ class Notifier < ActionMailer::Base
       @failed = params[:failed] == nil ? [] : params[:failed].split(',')
       @time_id = time_id
 
-      mail(:to => recipients, :from => from, :subject => subject, :content_type => content_type)
+      mail(to: recipients, from: from, subject: subject, content_type: content_type)
   end
 
   def depositor_first_time_indexed_notification(depositor, new_items, embargoed_items)

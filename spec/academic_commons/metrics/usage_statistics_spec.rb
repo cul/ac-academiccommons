@@ -9,9 +9,9 @@ RSpec.describe AcademicCommons::Metrics::UsageStatistics, integration: true do
   let(:solr_request) { { q: nil, fq: ["author_uni:\"#{uni}\""] } }
   let(:solr_params) do
     {
-      :rows => 100000, :sort => 'title_display asc', :q => nil, :page => 1,
-      :fq => ["author_uni:\"#{uni}\"", "has_model_ssim:\"info:fedora/ldpd:ContentAggregator\""],
-      :fl => "title_display,id,handle,doi,genre_facet,record_creation_date,object_state_ssi,free_to_read_start_date"
+      rows: 100_000, sort: 'title_display asc', q: nil, page: 1,
+      fq: ["author_uni:\"#{uni}\"", 'has_model_ssim:"info:fedora/ldpd:ContentAggregator"'],
+      fl: 'title_display,id,handle,doi,genre_facet,record_creation_date,object_state_ssi,free_to_read_start_date'
     }
   end
   let(:solr_response) do
@@ -189,32 +189,32 @@ RSpec.describe AcademicCommons::Metrics::UsageStatistics, integration: true do
     let(:uni) { 'abc123' }
     let(:expected_csv) do
       [
-        ["{:q=>nil, :fq=>[\"author_uni:\\\"abc123\\\"\"]}"],
+        ['{:q=>nil, :fq=>["author_uni:\\"abc123\\""]}'],
         [],
-        ["Period Covered by Report", "Jan 2015 - Dec 2016"],
+        ['Period Covered by Report', 'Jan 2015 - Dec 2016'],
         [],
-        ["Report created by:", "N/A"],
-        ["Report created on:", Time.new.strftime("%Y-%m-%d")],
+        ['Report created by:', 'N/A'],
+        ['Report created on:', Time.new.strftime('%Y-%m-%d')],
         [], [],
-        ["VIEWS REPORT:"],
-        ["Total for period:", "2", "", "", "", "Views by Month"],
-        ["Title", "Content Type", "Persistent URL", "Publisher DOI", "Reporting Period Total Views", "Jan-2015", "Feb-2015", "Mar-2015", "Apr-2015", "May-2015", "Jun-2015", "Jul-2015", "Aug-2015", "Sep-2015", "Oct-2015", "Nov-2015", "Dec-2015", "Jan-2016", "Feb-2016", "Mar-2016", "Apr-2016", "May-2016", "Jun-2016", "Jul-2016", "Aug-2016", "Sep-2016", "Oct-2016", "Nov-2016", "Dec-2016"],
-        ["First Test Document", "", "http://dx.doi.org/10.7916/TESTDOC1", "", "2", "1", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "1", "0", "0", "0", "0", "0", "0", "0", "0", "0"],
-        ["Second Test Document", "", "http://dx.doi.org/10.7916/TESTDOC2", "", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0"],
+        ['VIEWS REPORT:'],
+        ['Total for period:', '2', '', '', '', 'Views by Month'],
+        ['Title', 'Content Type', 'Persistent URL', 'Publisher DOI', 'Reporting Period Total Views', 'Jan-2015', 'Feb-2015', 'Mar-2015', 'Apr-2015', 'May-2015', 'Jun-2015', 'Jul-2015', 'Aug-2015', 'Sep-2015', 'Oct-2015', 'Nov-2015', 'Dec-2015', 'Jan-2016', 'Feb-2016', 'Mar-2016', 'Apr-2016', 'May-2016', 'Jun-2016', 'Jul-2016', 'Aug-2016', 'Sep-2016', 'Oct-2016', 'Nov-2016', 'Dec-2016'],
+        ['First Test Document', '', 'http://dx.doi.org/10.7916/TESTDOC1', '', '2', '1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '1', '0', '0', '0', '0', '0', '0', '0', '0', '0'],
+        ['Second Test Document', '', 'http://dx.doi.org/10.7916/TESTDOC2', '', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0'],
 
         [], [],
-        ["STREAMS REPORT:"],
-        ["Total for period:", "1", "", "", "", "Streams by Month"],
-        ["Title", "Content Type", "Persistent URL", "Publisher DOI", "Reporting Period Total Streams", "Jan-2015", "Feb-2015", "Mar-2015", "Apr-2015", "May-2015", "Jun-2015", "Jul-2015", "Aug-2015", "Sep-2015", "Oct-2015", "Nov-2015", "Dec-2015", "Jan-2016", "Feb-2016", "Mar-2016", "Apr-2016", "May-2016", "Jun-2016", "Jul-2016", "Aug-2016", "Sep-2016", "Oct-2016", "Nov-2016", "Dec-2016"],
-        ["First Test Document", "", "http://dx.doi.org/10.7916/TESTDOC1", "", "1", "0", "0", "0", "0", "1", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0"],
-        ["Second Test Document", "", "http://dx.doi.org/10.7916/TESTDOC2", "", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0"],
+        ['STREAMS REPORT:'],
+        ['Total for period:', '1', '', '', '', 'Streams by Month'],
+        ['Title', 'Content Type', 'Persistent URL', 'Publisher DOI', 'Reporting Period Total Streams', 'Jan-2015', 'Feb-2015', 'Mar-2015', 'Apr-2015', 'May-2015', 'Jun-2015', 'Jul-2015', 'Aug-2015', 'Sep-2015', 'Oct-2015', 'Nov-2015', 'Dec-2015', 'Jan-2016', 'Feb-2016', 'Mar-2016', 'Apr-2016', 'May-2016', 'Jun-2016', 'Jul-2016', 'Aug-2016', 'Sep-2016', 'Oct-2016', 'Nov-2016', 'Dec-2016'],
+        ['First Test Document', '', 'http://dx.doi.org/10.7916/TESTDOC1', '', '1', '0', '0', '0', '0', '1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0'],
+        ['Second Test Document', '', 'http://dx.doi.org/10.7916/TESTDOC2', '', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0'],
 
         [], [],
-        ["DOWNLOADS REPORT:"],
-        ["Total for period:", "2", "", "", "", "Downloads by Month"],
-        ["Title", "Content Type", "Persistent URL", "Publisher DOI", "Reporting Period Total Downloads", "Jan-2015", "Feb-2015", "Mar-2015", "Apr-2015", "May-2015", "Jun-2015", "Jul-2015", "Aug-2015", "Sep-2015", "Oct-2015", "Nov-2015", "Dec-2015", "Jan-2016", "Feb-2016", "Mar-2016", "Apr-2016", "May-2016", "Jun-2016", "Jul-2016", "Aug-2016", "Sep-2016", "Oct-2016", "Nov-2016", "Dec-2016"],
-        ["First Test Document", "", "http://dx.doi.org/10.7916/TESTDOC1", "", "2", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "2", "0", "0", "0", "0", "0", "0", "0", "0"],
-        ["Second Test Document", "", "http://dx.doi.org/10.7916/TESTDOC2", "", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0"]
+        ['DOWNLOADS REPORT:'],
+        ['Total for period:', '2', '', '', '', 'Downloads by Month'],
+        ['Title', 'Content Type', 'Persistent URL', 'Publisher DOI', 'Reporting Period Total Downloads', 'Jan-2015', 'Feb-2015', 'Mar-2015', 'Apr-2015', 'May-2015', 'Jun-2015', 'Jul-2015', 'Aug-2015', 'Sep-2015', 'Oct-2015', 'Nov-2015', 'Dec-2015', 'Jan-2016', 'Feb-2016', 'Mar-2016', 'Apr-2016', 'May-2016', 'Jun-2016', 'Jul-2016', 'Aug-2016', 'Sep-2016', 'Oct-2016', 'Nov-2016', 'Dec-2016'],
+        ['First Test Document', '', 'http://dx.doi.org/10.7916/TESTDOC1', '', '2', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '2', '0', '0', '0', '0', '0', '0', '0', '0'],
+        ['Second Test Document', '', 'http://dx.doi.org/10.7916/TESTDOC2', '', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0']
       ]
     end
     let(:usage_stats) do
@@ -285,7 +285,7 @@ RSpec.describe AcademicCommons::Metrics::UsageStatistics, integration: true do
     end
 
     it 'returns 0 if id not present, but id part of results' do
-      expect(subject.get_stat_for('actest:5', Statistic::VIEW, "Jan 2016")).to eql 0
+      expect(subject.get_stat_for('actest:5', Statistic::VIEW, 'Jan 2016')).to eql 0
     end
   end
 
@@ -344,7 +344,7 @@ RSpec.describe AcademicCommons::Metrics::UsageStatistics, integration: true do
     subject{ usage_stats.instance_eval{ time_period } }
 
     context 'when start and end date available' do
-      let(:usage_stats) { AcademicCommons::Metrics::UsageStatistics.new(solr_params, Date.parse("Jan 2015"), Date.parse("Dec 2016")) }
+      let(:usage_stats) { AcademicCommons::Metrics::UsageStatistics.new(solr_params, Date.parse('Jan 2015'), Date.parse('Dec 2016')) }
       it { is_expected.to eq 'Jan 2015 - Dec 2016' }
     end
 
@@ -356,7 +356,7 @@ RSpec.describe AcademicCommons::Metrics::UsageStatistics, integration: true do
     context 'when stats are for one month' do
       let(:date) { Date.current }
       let(:usage_stats) { AcademicCommons::Metrics::UsageStatistics.new(solr_params, date, date) }
-      it { is_expected.to eq date.strftime("%b %Y") }
+      it { is_expected.to eq date.strftime('%b %Y') }
     end
   end
 end

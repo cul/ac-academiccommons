@@ -44,10 +44,10 @@ RSpec.describe Statistic, type: :model do
 
     context 'when query is limited by date' do
       before :each do
-        FactoryBot.create(:view_stat, at_time: Time.local(2015, 12, 31, 23, 00))
+        FactoryBot.create(:view_stat, at_time: Time.local(2015, 12, 31, 23, 0))
         FactoryBot.create(:view_stat, at_time: Time.local(2015, 1, 1))
-        FactoryBot.create(:view_stat, at_time: Time.local(2015, 1, 31, 23, 00))
-        FactoryBot.create(:view_stat, at_time: Time.local(2015, 1, 21, 4, 00))
+        FactoryBot.create(:view_stat, at_time: Time.local(2015, 1, 31, 23, 0))
+        FactoryBot.create(:view_stat, at_time: Time.local(2015, 1, 21, 4, 0))
         FactoryBot.create(:view_stat, at_time: Time.local(2015, 2, 1))
         FactoryBot.create(:view_stat, identifier: 'actest:2', at_time: Time.local(2015, 12, 5))
       end

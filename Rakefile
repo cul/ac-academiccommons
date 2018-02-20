@@ -14,7 +14,7 @@ begin
   task(:spec).clear # get rid of the default task
 
   RSpec::Core::RakeTask.new(:spec) do |t|
-    t.rspec_opts = "--tag ~integration --tag ~type:feature"
+    t.rspec_opts = '--tag ~integration --tag ~type:feature'
   end
 
   RSpec::Core::RakeTask.new(:spec_all) do |t|
@@ -26,8 +26,8 @@ begin
     SolrWrapper.wrap do |solr_wrapper_instance|
       # Create collection
       solr_wrapper_instance.with_collection(name: 'test', dir: 'solr/conf') do |collection_name|
-        puts "I think Solr started hit space after you check:"
-        sleep 1 while $stdin.getch != " "
+        puts 'I think Solr started hit space after you check:'
+        sleep 1 while $stdin.getch != ' '
       end
       puts 'Stopping solr...'
     end
@@ -36,15 +36,15 @@ begin
 
   desc 'Run all tests regardless of tags'
   task :ci do
-    Rake::Task["jetty:clean"].invoke
+    Rake::Task['jetty:clean'].invoke
 
     jetty_params = Jettywrapper.load_config
 
     error = Jettywrapper.wrap(jetty_params) do
       SolrWrapper.wrap do |solr_wrapper_instance|
         solr_wrapper_instance.with_collection(name: 'test', dir: 'solr/conf') do |collection_name|
-          system "RAILS_ENV=test rake ac:populate_solr"
-          Rake::Task["spec_all"].invoke
+          system 'RAILS_ENV=test rake ac:populate_solr'
+          Rake::Task['spec_all'].invoke
         end
       end
     end

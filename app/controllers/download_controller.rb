@@ -12,9 +12,9 @@ class DownloadController < ApplicationController
   }
 
   def download_log
-    headers["Content-Type"] = "application/octet-stream"
-    headers["Content-Disposition"] = "attachment;filename=\"#{params[:id]}.log\""
-    render :text => getLogContent(params[:log_folder], params[:id])
+    headers['Content-Type'] = 'application/octet-stream'
+    headers['Content-Disposition'] = "attachment;filename=\"#{params[:id]}.log\""
+    render text: getLogContent(params[:log_folder], params[:id])
   end
 
   def fedora_content
@@ -25,7 +25,7 @@ class DownloadController < ApplicationController
     search_params = STANDARD_SEARCH_PARAMS.merge(
       q: "id:#{params[:uri].gsub(':','\:')}"
     )
-    solr_results = repository.get("select", params: search_params)
+    solr_results = repository.get('select', params: search_params)
     docs = solr_results['response']['docs']
     # did the resource doc exist? is it active?
     resource_doc = docs.first
@@ -38,7 +38,7 @@ class DownloadController < ApplicationController
       fail_fast = !any_free_to_read?(ids)
     end
 
-    url = fedora_config["url"] + "/objects/" + params[:uri] + "/datastreams/" + params[:block] + "/content"
+    url = fedora_config['url'] + '/objects/' + params[:uri] + '/datastreams/' + params[:block] + '/content'
 
     # Allow descMetadata downloads of resources regardless of embargo status.
     # Allow CONTENT downloads of metadata. # TODO: Remove after Hyacinth migration.
@@ -50,37 +50,37 @@ class DownloadController < ApplicationController
     fail_fast ||= (head_response.status != 200)
 
     if fail_fast
-      render :nothing => true, :status => 404
+      render nothing: true, status: 404
       return
     end
 
     case params[:download_method]
-    when "download"
-      if(params[:data] != "meta")
+    when 'download'
+      if(params[:data] != 'meta')
          record_stats
       end
       headers['X-Accel-Redirect'] = x_accel_url(url)
-      render :nothing => true
-    when "show_pretty"
-      h_ct = head_response.header["Content-Type"].to_s
+      render nothing: true
+    when 'show_pretty'
+      h_ct = head_response.header['Content-Type'].to_s
       text_result = nil
-      if h_ct.include?("xml")
-        xsl = Nokogiri::XSLT(File.read(Rails.root.to_s + "/app/tools/pretty-print.xsl"))
+      if h_ct.include?('xml')
+        xsl = Nokogiri::XSLT(File.read(Rails.root.to_s + '/app/tools/pretty-print.xsl'))
         xml = Nokogiri(http_client.get_content(url))
         text_result = xsl.apply_to(xml).to_s
       else
-        text_result = "Non-xml content streams cannot be pretty printed."
+        text_result = 'Non-xml content streams cannot be pretty printed.'
       end
       if params[:xml]
-        headers["Content-Type"] = "text/xml"
-        render :xml => text_result
+        headers['Content-Type'] = 'text/xml'
+        render xml: text_result
       else
-        headers["Content-Type"] = "text/plain"
-        render :text => text_result
+        headers['Content-Type'] = 'text/plain'
+        render text: text_result
       end
     else
       headers['X-Accel-Redirect'] = x_accel_url(url)
-      render :nothing => true
+      render nothing: true
     end
   end
 
@@ -97,9 +97,9 @@ class DownloadController < ApplicationController
     uri = "/repository_download/#{url.gsub(/https?\:\/\//, '')}"
     uri << "?#{file_name}" if file_name
 
-     logger.info "=========== " + url
+    logger.info '=========== ' + url
 
-    return uri
+    uri
   end
 
   def any_free_to_read?(ids)
@@ -108,7 +108,7 @@ class DownloadController < ApplicationController
     search_params = STANDARD_SEARCH_PARAMS.merge(
       q: "id:(#{ids.join(' OR ')})"
     )
-    solr_results = repository.get("select", params: search_params)
+    solr_results = repository.get('select', params: search_params)
     docs = solr_results['response']['docs']
     docs.detect { |d| free_to_read?(d) }
   end
@@ -126,7 +126,7 @@ class DownloadController < ApplicationController
     Statistic.create!(
       session_id: request.session_options[:id],
       ip_address: request.env['HTTP_X_FORWARDED_FOR'] || request.remote_addr,
-      event: "Download", identifier: params["uri"], at_time: Time.now()
+      event: 'Download', identifier: params['uri'], at_time: Time.now()
     )
   end
 end

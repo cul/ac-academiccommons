@@ -1,11 +1,11 @@
 require 'rails_helper'
 
-describe SolrDocumentsController, :type => :controller do
+describe SolrDocumentsController, type: :controller do
   shared_context 'good api key' do
-   let(:api_key) do
-     key = Rails.application.secrets.index_api_key
-     ActionController::HttpAuthentication::Token.encode_credentials(key)
-   end
+    let(:api_key) do
+      key = Rails.application.secrets.index_api_key
+      ActionController::HttpAuthentication::Token.encode_credentials(key)
+    end
   end
 
   shared_context 'bad api key' do
@@ -62,8 +62,8 @@ describe SolrDocumentsController, :type => :controller do
         before do
           allow(ActiveFedora::Base).to receive(:find).with('good:id').and_return(mock_object)
           allow(mock_object).to receive(:pid).and_return('good:id')
-          allow(mock_object).to receive(:to_solr).and_return(Hash.new)
-          expect(ActiveFedora::SolrService).to receive(:add).with(Hash.new)
+          allow(mock_object).to receive(:to_solr).and_return({})
+          expect(ActiveFedora::SolrService).to receive(:add).with({})
           expect(controller).to receive(:notify_authors_of_new_item)
         end
         it do
@@ -77,12 +77,12 @@ describe SolrDocumentsController, :type => :controller do
     include_context 'mock api key'
 
     let(:rsolr) { double('RSolr') }
-    #TODO: Determine if RSolr signals a missing id on delete
+    # TODO: Determine if RSolr signals a missing id on delete
     let(:bad_id_response) do
-      {"responseHeader"=>{"status"=>0, "QTime"=>41}}
+      { 'responseHeader' => { 'status' => 0, 'QTime' => 41 } }
     end
     let(:good_id_response) do
-      {"responseHeader"=>{"status"=>0, "QTime"=>41}}
+      { 'responseHeader' => { 'status' => 0, 'QTime' => 41 } }
     end
     before do
       allow(controller).to receive(:rsolr).and_return(rsolr)
@@ -124,18 +124,18 @@ describe SolrDocumentsController, :type => :controller do
     let(:author_two) { 'xyz123' }
     let(:email_author_one) { "#{author_one}@columbia.edu" }
     let(:email_author_two) { "#{author_two}@columbia.edu" }
-    let(:doi) { "10.7916/ALICE" }
-    let(:entry_for_author_one) {
-      double('ldap_author_one', email: email_author_one, name: 'Author One' )
-    }
-    let(:entry_for_author_two) {
-      double('ldap_author_two', email: email_author_two, name: 'Author Two' )
-    }
+    let(:doi) { '10.7916/ALICE' }
+    let(:entry_for_author_one) do
+      double('ldap_author_one', email: email_author_one, name: 'Author One')
+    end
+    let(:entry_for_author_two) do
+      double('ldap_author_two', email: email_author_two, name: 'Author Two')
+    end
 
     let(:sent_to) { ActionMailer::Base.deliveries.map(&:to).flatten }
 
     before :each do
-      Rails.application.config.prod_environment = true  # Pretend to be running in prod.
+      Rails.application.config.prod_environment = true # Pretend to be running in prod.
       allow_any_instance_of(Cul::LDAP).to receive(:find_by_uni).with(author_one).and_return(entry_for_author_one)
       allow_any_instance_of(Cul::LDAP).to receive(:find_by_uni).with(author_two).and_return(entry_for_author_two)
     end
@@ -146,8 +146,8 @@ describe SolrDocumentsController, :type => :controller do
 
     subject do
       solr_doc = {
-        "id" => 'actest:1', "handle" => doi,
-        "title_display" => "Alice's Adventures in Wonderland",
+        'id' => 'actest:1', 'handle' => doi,
+        'title_display' => 'Alice\'s Adventures in Wonderland',
         'author_uni' => [author_one, author_two],
         'free_to_read_start_date' => (Date.current - 1.month).to_s
       }
@@ -155,11 +155,11 @@ describe SolrDocumentsController, :type => :controller do
     end
 
     context 'when a notification for each author has previously been sent' do
-       before :each do
-         Notification.record_new_item_notification(doi, nil, author_one, true)
-         Notification.record_new_item_notification(doi, nil, author_two, true)
-         subject
-       end
+      before :each do
+        Notification.record_new_item_notification(doi, nil, author_one, true)
+        Notification.record_new_item_notification(doi, nil, author_two, true)
+        subject
+      end
 
       it 'does not sent any notifications' do
         expect(ActionMailer::Base.deliveries.count).to eql 0
@@ -176,7 +176,7 @@ describe SolrDocumentsController, :type => :controller do
       end
 
       it 'sends notification to each author' do
-       expect(sent_to).to include(email_author_one, email_author_two)
+        expect(sent_to).to include(email_author_one, email_author_two)
       end
 
       it 'records notification to first author was sent' do

@@ -4,7 +4,7 @@ class Notification < ActiveRecord::Base
   NEW_ITEM = 'new_item'
 
   validates :kind, :doi, presence: true
-  validates_inclusion_of :success, :in => [true, false]
+  validates_inclusion_of :success, in: [true, false]
 
   scope :successful, -> { where(success: true) }
   scope :failed, -> { where(success: false) }

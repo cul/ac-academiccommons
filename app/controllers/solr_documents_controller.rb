@@ -24,7 +24,7 @@ class SolrDocumentsController < ApplicationController
     end
     # if no id, return bad request (400)
     unless params[:id]
-      render plain: "missing id parameter", status: :bad_request
+      render plain: 'missing id parameter', status: :bad_request
       return
     end
     begin
@@ -73,7 +73,7 @@ class SolrDocumentsController < ApplicationController
       render status: status, plain: ''
       return
     end
-    doc = rsolr.find(filters: {id: "\"#{params[:id]}\""})["response"]["docs"].first
+    doc = rsolr.find(filters: {id: "\"#{params[:id]}\""})['response']['docs'].first
     if doc
       render json: doc
     else

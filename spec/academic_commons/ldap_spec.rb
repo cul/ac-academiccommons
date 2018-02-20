@@ -28,7 +28,7 @@ RSpec.describe AcademicCommons::LDAP do
     end
 
     context 'when ldap does not have email' do #has names, but not email
-      let(:ldap_response) { [{ :sn => 'Doe', :givenname => 'Jane', :cn => 'Jane Doe' }] }
+      let(:ldap_response) { [{ sn: 'Doe', givenname: 'Jane', cn: 'Jane Doe' }] }
 
       its(:name)       { is_expected.to eql 'Jane Doe' }
       its(:email)      { is_expected.to eql "#{uni}@columbia.edu" }

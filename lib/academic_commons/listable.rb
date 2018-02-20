@@ -4,24 +4,24 @@ module AcademicCommons
 
     def build_resource_list(document, include_inactive = false)
       return [] unless free_to_read?(document)
-      obj_display = document.fetch("id", [])
-      uri_prefix = "info:fedora/"
+      obj_display = document.fetch('id', [])
+      uri_prefix = 'info:fedora/'
 
       member_search = {
         q: '*:*',
         qt: 'standard',
         fl: '*',
         fq: ["cul_member_of_ssim:\"info:fedora/#{obj_display}\""],
-        rows: 10000,
+        rows: 10_000,
         facet: false
       }
-      member_search[:fq] << "object_state_ssi:A" unless include_inactive
+      member_search[:fq] << 'object_state_ssi:A' unless include_inactive
       response = Blacklight.default_index.connection.get 'select', params: member_search
       docs = response['response']['docs']
       docs.map do |member|
         res = {}
         member = SolrDocument.new(member)
-        member_pid = member["id"].sub(uri_prefix, "")
+        member_pid = member['id'].sub(uri_prefix, '')
 
         res[:pid] = member_pid
         res[:filename] = member['downloadable_content_label_ss']

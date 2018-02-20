@@ -23,7 +23,7 @@ RSpec.describe AcademicCommons::Indexable do
   shared_examples 'indexing mods' do
     subject { indexable.index_descMetadata }
 
-    describe "#index_descMetadata" do
+    describe '#index_descMetadata' do
       it  { is_expected.to eql(expected_json) }
     end
   end

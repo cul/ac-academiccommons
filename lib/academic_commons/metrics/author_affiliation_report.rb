@@ -31,8 +31,8 @@ module AcademicCommons::Metrics
           AcademicCommons.identifier_url(doc[:handle]),
           item_stats.get_stat(Statistic::DOWNLOAD, UsageStatistics::LIFETIME),
           item_stats.get_stat(Statistic::VIEW, UsageStatistics::LIFETIME),
-          doc.fetch(:department_facet, []).join(", "),
-          doc.fetch(:genre_facet, []).join(", "),
+          doc.fetch(:department_facet, []).join(', '),
+          doc.fetch(:genre_facet, []).join(', '),
           doc[:system_create_dtsi]
         ]
 

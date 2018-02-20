@@ -16,7 +16,7 @@ describe SolrDocumentsController, type: :controller, integration: true do
     ActionController::HttpAuthentication::Token.encode_credentials(key)
   end
 
-  describe "update" do
+  describe 'update' do
     before do
       delete :destroy, { id: 'actest:1' } # delete a fixture from the index so that the test is meaningful
     end
@@ -26,7 +26,7 @@ describe SolrDocumentsController, type: :controller, integration: true do
       put :update, { id: 'actest:1' }
       sleep(20) # It may take the solr document up to 15 min to show up
       expect(response.status).to eql(200)
-      expect(response.headers['Location']).to eql("http://test.host/catalog/actest:1")
+      expect(response.headers['Location']).to eql('http://test.host/catalog/actest:1')
       get :show, id: 'actest:1', format: 'json'
       expect(response.status).to eql(200)
       # publish does not cascade
@@ -34,8 +34,8 @@ describe SolrDocumentsController, type: :controller, integration: true do
       expect(response.status).to eql(404)
       put :update, { id: 'actest:2' }
       ActiveFedora::SolrService.commit # Force commit, since we are not using softCommit
-      expect(response.headers['Location']).
-        to eql("http://test.host/download/fedora_content/download/actest:2/CONTENT/alice_in_wonderland.pdf")
+      expect(response.headers['Location'])
+        .to eql('http://test.host/download/fedora_content/download/actest:2/CONTENT/alice_in_wonderland.pdf')
     end
     after do
       put :update, { id: 'actest:1' }
@@ -44,7 +44,7 @@ describe SolrDocumentsController, type: :controller, integration: true do
       ActiveFedora::SolrService.commit # Force commit, since we are not using softCommit
     end
   end
-  describe "destroy" do
+  describe 'destroy' do
     it do
       get :show, id: 'actest:1', format: 'json'
       expect(response.status).to eql(200)

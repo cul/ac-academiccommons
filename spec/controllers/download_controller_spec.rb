@@ -1,11 +1,11 @@
 require 'rails_helper'
 
-RSpec.describe DownloadController, :type => :controller do
+RSpec.describe DownloadController, type: :controller do
   describe 'GET download_log' do
     include_context 'log'
 
     include_examples 'authorization required' do
-      let(:http_request) { get :download_log, :log_folder => 'ac-indexing', :id => id }
+      let(:http_request) { get :download_log, log_folder: 'ac-indexing', id: id }
     end
   end
 
@@ -29,7 +29,7 @@ RSpec.describe DownloadController, :type => :controller do
         let(:mock_parent) { SolrDocument.new(object_state_ssi: 'A') }
         # it should work
         it do
-          expect(response.headers['X-Accel-Redirect']).to eql("/repository_download/localhost:8983/fedora/objects/good:id/datastreams/content/content")
+          expect(response.headers['X-Accel-Redirect']).to eql('/repository_download/localhost:8983/fedora/objects/good:id/datastreams/content/content')
         end
       end
       context 'resource is inactive, parent is active' do

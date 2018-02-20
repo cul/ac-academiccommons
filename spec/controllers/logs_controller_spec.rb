@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe LogsController, :type => :controller do
+describe LogsController, type: :controller do
   describe 'GET ingest_history' do
     include_examples 'authorization required' do
       let(:http_request) { get :ingest_history }
@@ -17,7 +17,7 @@ describe LogsController, :type => :controller do
     include_context 'log'
 
     include_examples 'authorization required' do
-      let(:http_request) { get :log_form, :log_id => id, :log_folder => 'ac-indexing' }
+      let(:http_request) { get :log_form, log_id: id, log_folder: 'ac-indexing' }
     end
   end
 end

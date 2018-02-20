@@ -21,15 +21,15 @@ class SolrDocument
   use_extension(Blacklight::Document::DublinCore)
 
   field_semantics.merge!(
-    title: "title_display",
-    author: "author_facet",
-	  creator: "author_facet",
-		date: "pub_date_facet",
-    type: ["type_of_resource_facet", "genre_facet"],
-		publisher: "publisher",
-		subject: "subject_facet",
-	  description: "abstract",
-	  language: "language"
+    title: 'title_display',
+    author: 'author_facet',
+	  creator: 'author_facet',
+		date: 'pub_date_facet',
+    type: ['type_of_resource_facet', 'genre_facet'],
+		publisher: 'publisher',
+		subject: 'subject_facet',
+	  description: 'abstract',
+	  language: 'language'
   )
 
   def embargoed?

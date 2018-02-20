@@ -19,15 +19,15 @@ RSpec.describe AcademicCommons::Statistics do
     let(:test_params) do
       {
         include_zeroes: true,
-        year: Date.current.strftime("%Y"),
-        month: Date.current.strftime("%b"),
+        year: Date.current.strftime('%Y'),
+        month: Date.current.strftime('%b'),
       }
     end
     let(:author_search) do
       {
-        rows: 100000, sort: 'title_display asc', q: nil, page: 1,
-        fq: ["author_uni:\"abc123\"", "has_model_ssim:\"info:fedora/ldpd:ContentAggregator\""],
-        fl: "title_display,id,handle,doi,genre_facet,record_creation_date,object_state_ssi,free_to_read_start_date"
+        rows: 100_000, sort: 'title_display asc', q: nil, page: 1,
+        fq: ['author_uni:"abc123"', 'has_model_ssim:"info:fedora/ldpd:ContentAggregator"'],
+        fl: 'title_display,id,handle,doi,genre_facet,record_creation_date,object_state_ssi,free_to_read_start_date'
       }
     end
 
@@ -93,7 +93,7 @@ RSpec.describe AcademicCommons::Statistics do
     end
   end
 
-  describe ".query_to_facets" do
+  describe '.query_to_facets' do
     context 'when querying by two facets' do
       let(:fq) { ['{!raw f=Bears}Polar Bears', '{!raw f=Birds}Hummingbird'] }
 
@@ -129,7 +129,7 @@ RSpec.describe AcademicCommons::Statistics do
       empty_response = Blacklight::Solr::Response.new(
         { 'response' => { 'docs' => [] }, 'facet_counts' => { 'facet_fields' => { 'author_facet' => [] } } }, {}
       )
-      solr_params = { :q => "", :rows => 0, 'facet.limit' => -1, 'facet.field' => ['author_facet'] }
+      solr_params = { q: '', :rows => 0, 'facet.limit' => -1, 'facet.field' => ['author_facet'] }
       expect(Blacklight.default_index).to receive(:search).with(solr_params).and_return(empty_response)
       statistics.instance_eval { facet_items('author_facet') }
     end
@@ -139,7 +139,7 @@ RSpec.describe AcademicCommons::Statistics do
     context 'searching by facet' do
       it 'makes correct solr request' do
         params = statistics.instance_eval { detail_report_solr_params('author_uni', 'xyz123') }
-        expect(params).to match(q: nil, fq: ['author_uni:"xyz123"'], sort: "title_display asc")
+        expect(params).to match(q: nil, fq: ['author_uni:"xyz123"'], sort: 'title_display asc')
       end
     end
 

@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe StatisticsController, :type => :controller, integration: true do
+describe StatisticsController, type: :controller, integration: true do
   let(:pid) { 'actest:1' }
 
   describe 'GET all_author_monthlies' do
@@ -25,8 +25,8 @@ describe StatisticsController, :type => :controller, integration: true do
     #
     #   let(:author_search) do
     #     {
-    #       :rows => 100000, :sort => 'title_display asc', :q => nil, :page => 1,
-    #       :fq => "author_uni:\"author_uni:abc123\"", :fl => "title_display,id,handle,doi,genre_facet"
+    #       :rows => 100000, sort: 'title_display asc', q: nil, :page => 1,
+    #       :fq => "author_uni:\"author_uni:abc123\"", fl: "title_display,id,handle,doi,genre_facet"
     #     }
     #   end
     #   let(:author_docs) do
@@ -70,21 +70,21 @@ describe StatisticsController, :type => :controller, integration: true do
   end
 
   describe 'GET total_usage_stats' do
-    context "without being logged in" do
+    context 'without being logged in' do
       before do
         allow(controller).to receive(:current_user).and_return(nil)
         get :total_usage_stats, format: :json
       end
 
-      it "returns 401" do # Can't redirect because its a json request.
+      it 'returns 401' do # Can't redirect because its a json request.
         expect(response.status).to eql(401)
       end
     end
 
-    context "logged in as a non-admin user" do
+    context 'logged in as a non-admin user' do
       include_context 'mock non-admin user'
 
-      it "fails" do
+      it 'fails' do
         expect {
           get :total_usage_stats, format: :json
         }.to raise_error AcademicCommons::Exceptions::NotAuthorized
@@ -100,7 +100,7 @@ describe StatisticsController, :type => :controller, integration: true do
         FactoryBot.create(:streaming_stat)
       end
 
-      subject { get :total_usage_stats, { q: "{!raw f=id}#{pid}", format: :json } }
+      subject { get :total_usage_stats, q: "{!raw f=id}#{pid}", format: :json }
 
       it 'return correct json response' do
         json = JSON.parse(subject.body)
@@ -116,7 +116,7 @@ describe StatisticsController, :type => :controller, integration: true do
 
   describe 'GET common_statistics_csv' do
     include_examples 'authorization required' do
-      let(:http_request) { get :common_statistics_csv, :f => {"author_facet"=>["Carroll, Lewis"]} }
+      let(:http_request) { get :common_statistics_csv, f: { 'author_facet' => ['Carroll, Lewis'] } }
     end
   end
 
@@ -134,18 +134,20 @@ describe StatisticsController, :type => :controller, integration: true do
 
   describe 'GET send_csv_report' do
     include_examples 'authorization required' do
-      let(:http_request) {
-        get :send_csv_report, :f => {"author_facet"=>["Carroll, Lewis"]},
-            :email_to => 'example@example.com', :email_from => 'me@example.com'
-      }
+      let(:http_request) do
+        get :send_csv_report, f: { 'author_facet' => ['Carroll, Lewis'] },
+                              email_to: 'example@example.com',
+                              email_from: 'me@example.com'
+      end
     end
 
     context 'when admin makes request' do
       include_context 'mock admin user'
 
       before do
-        get :send_csv_report, :f => {"author_facet"=>["Carroll, Lewis."]},
-            :email_to => 'example@example.com', :email_from => 'me@example.com'
+        get :send_csv_report, f: { 'author_facet' => ['Carroll, Lewis.'] },
+                              email_to: 'example@example.com',
+                              email_from: 'me@example.com'
       end
 
       it 'sends email' do
