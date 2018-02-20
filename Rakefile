@@ -3,10 +3,11 @@ require 'rake'
 
 Rails.application.load_tasks
 
-# configure the release versions of jettywrapper to use with CI
-require 'jettywrapper'
-JETTY_ZIP_BASENAME = 'hyacinth-fedora-3.8.1-no-solr'.freeze
-Jettywrapper.url = "https://github.com/cul/hydra-jetty/archive/#{JETTY_ZIP_BASENAME}.zip"
+if Gem::Specification::find_all_by_name('jettywrapper').any?
+  require 'jettywrapper'
+  JETTY_ZIP_BASENAME = 'hyacinth-fedora-3.8.1-no-solr'.freeze
+  Jettywrapper.url = "https://github.com/cul/hydra-jetty/archive/#{JETTY_ZIP_BASENAME}.zip"
+end
 
 # RSpec rake tasks
 require 'rspec/core/rake_task'
