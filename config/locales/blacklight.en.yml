@@ -1,3 +1,6 @@
 en:
   blacklight:
     application_name: 'Academic Commons'
+
+    header_links:
+      share: 'Share Your Research'
