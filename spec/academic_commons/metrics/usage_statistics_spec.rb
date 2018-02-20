@@ -23,9 +23,9 @@ RSpec.describe AcademicCommons::Metrics::UsageStatistics, integration: true do
              'handle' => 'http://dx.doi.org/10.7916/TESTDOC2', 'doi' => '', 'genre_facet' => ''},
             { 'id' => pid, 'title_display' => 'First Test Document', 'object_state_ssi' => 'A',
               'handle' => 'http://dx.doi.org/10.7916/TESTDOC1', 'doi' => '', 'genre_facet' => '' }
-            ]
-          }
-        }, {}
+          ]
+        }
+      }, {}
     )
   end
 
@@ -55,9 +55,9 @@ RSpec.describe AcademicCommons::Metrics::UsageStatistics, integration: true do
                   { 'id' => 'actest:10', 'title_display' => 'First Test Document', 'object_state_ssi' => 'A',
                     'handle' => 'http://dx.doi.org/10.7916/TESTDOC1', 'doi' => '', 'genre_facet' => '',
                     'free_to_read_start_date' => Date.tomorrow.strftime('%Y-%m-%d') }
-                  ]
-                }
-              }, {}
+                ]
+              }
+            }, {}
           )
         end
 
