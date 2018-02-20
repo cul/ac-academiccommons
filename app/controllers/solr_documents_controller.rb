@@ -1,4 +1,3 @@
-# -*- encoding : utf-8 -*-
 class SolrDocumentsController < ApplicationController
   include Blacklight::Catalog
 

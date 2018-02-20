@@ -53,12 +53,6 @@ Layout/CommentIndentation:
     - 'app/controllers/download_controller.rb'
     - 'app/controllers/emails_controller.rb'
 
-# Offense count: 1
-# Cop supports --auto-correct.
-Layout/EmptyLineAfterMagicComment:
-  Exclude:
-    - 'app/controllers/solr_documents_controller.rb'
-
 # Offense count: 9
 # Cop supports --auto-correct.
 # Configuration parameters: AllowAdjacentOneLineDefs, NumberOfEmptyLines.
