@@ -345,6 +345,8 @@ GEM
       rainbow (>= 2.2.2, < 4.0)
       ruby-progressbar (~> 1.7)
       unicode-display_width (~> 1.0, >= 1.0.1)
+    rubocop-rspec (1.22.2)
+      rubocop (>= 0.52.1)
     ruby-progressbar (1.9.0)
     rubydora (2.0.0)
       activemodel
@@ -471,6 +473,7 @@ DEPENDENCIES
   rspec-its
   rspec-rails (~> 3.5)
   rubocop (~> 0.52.1)
+  rubocop-rspec (~> 1.22.2)
   sass-rails
   selenium-webdriver
   solr_wrapper (>= 0.18.0)

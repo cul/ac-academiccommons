@@ -51,6 +51,7 @@ group :development, :test do
   gem 'capistrano-passenger', '~> 0.1', require: false
 
   gem 'rubocop', '~> 0.52.1', require: false
+  gem 'rubocop-rspec', '~> 1.22.2', require: false
 
   gem 'byebug'
   gem 'capybara', '~>2.2'
