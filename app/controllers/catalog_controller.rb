@@ -20,8 +20,6 @@ class CatalogController < ApplicationController
     config.navbar.partials.delete(:saved_searches)
     config.navbar.partials.delete(:search_history)
 
-    config.show.presenter_class = DocumentPresenter
-
     config.default_solr_params = {
       qt: 'search',
       fq: ["has_model_ssim:\"#{ContentAggregator.to_class_uri}\""],
