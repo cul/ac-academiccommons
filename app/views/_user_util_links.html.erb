@@ -6,7 +6,7 @@
   </ul>
 
   <% if has_user_authentication_provider? %>
-    <ul class="nav navbar-nav">
+    <ul class="nav navbar-nav align-middle">
       <% if current_user %>
       <li>
         <%= link_to t('blacklight.header_links.logout'), destroy_user_session_path %>
@@ -24,10 +24,9 @@
       </ul>
   <% end %>
 
-  <ul class="nav navbar-nav">
-    <li class="share-button">
-      <%= link_to "Share Your Research", deposit_path, :class => "btn btn-primary" %>
+  <ul class="nav navbar-nav align-middle">
+    <li>
+      <%= link_to "Share Your Research", deposit_path, :class => "btn btn-primary share-button" %>
     </li>
   </ul>
-
 </div>

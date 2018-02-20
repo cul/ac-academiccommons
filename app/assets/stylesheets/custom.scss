@@ -2,7 +2,7 @@
 
 #header-navbar {
 
-  .navbar-brand {
+  & .navbar-brand {
     background-size: 100%;
     background-position: center;
     margin: 0 10px;
@@ -13,6 +13,25 @@
       margin: 0;
       max-width: 100%;
       width: 600px;
+    }
+  }
+
+  & .navbar-nav {
+    padding: 12px 0 0 0;
+  }
+
+  & .share-button {
+    background: $body-bg;
+    border: 2px solid $brand-primary;
+    color: $brand-primary;
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin: 6px 0;
+    padding: 5px 10px;
+
+    &:hover {
+      border-color: $link-hover-color;
+      color: $link-hover-color;
     }
   }
 }
