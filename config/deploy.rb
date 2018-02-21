@@ -1,9 +1,7 @@
 lock '3.8.0'
 
-set :department, 'ac'
-set :instance, fetch(:department)
+set :instance, 'ac'
 set :application, 'academiccommons'
-set :repo_name, "#{fetch(:department)}-#{fetch(:application)}"
 set :deploy_name, "#{fetch(:application)}_#{fetch(:stage)}"
 # used to run rake db:migrate, etc
 # Default value for :rails_env is fetch(:stage)
@@ -11,7 +9,7 @@ set :rails_env, fetch(:deploy_name)
 # use the rvm wrapper
 set :rvm_ruby_version, fetch(:deploy_name)
 
-set :repo_url,  "git@github.com:cul/#{fetch(:repo_name)}.git"
+set :repo_url,  "git@github.com:cul/ac-academiccommons.git"
 
 set :remote_user, "#{fetch(:instance)}serv"
 
