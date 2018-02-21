@@ -11,11 +11,11 @@ RSpec.describe Statistic, type: :model do
     end
 
     it 'merges statistics correctly' do
-      expect(Statistic.where(identifier: 'ac:duplicate').count).to eql 2
-      expect(Statistic.where(identifier: 'actest:1').count).to eql 3
+      expect(Statistic.where(identifier: 'ac:duplicate').count).to be 2
+      expect(Statistic.where(identifier: 'actest:1').count).to be 3
       Statistic.merge_stats('actest:1', 'ac:duplicate')
-      expect(Statistic.where(identifier: 'actest:1').count).to eql 5
-      expect(Statistic.where(identifier: 'ac:duplicate').count).to eql 0
+      expect(Statistic.where(identifier: 'actest:1').count).to be 5
+      expect(Statistic.where(identifier: 'ac:duplicate').count).to be 0
     end
   end
 
@@ -44,10 +44,10 @@ RSpec.describe Statistic, type: :model do
 
     context 'when query is limited by date' do
       before :each do
-        FactoryBot.create(:view_stat, at_time: Time.local(2015, 12, 31, 23, 00))
+        FactoryBot.create(:view_stat, at_time: Time.local(2015, 12, 31, 23, 0))
         FactoryBot.create(:view_stat, at_time: Time.local(2015, 1, 1))
-        FactoryBot.create(:view_stat, at_time: Time.local(2015, 1, 31, 23, 00))
-        FactoryBot.create(:view_stat, at_time: Time.local(2015, 1, 21, 4, 00))
+        FactoryBot.create(:view_stat, at_time: Time.local(2015, 1, 31, 23, 0))
+        FactoryBot.create(:view_stat, at_time: Time.local(2015, 1, 21, 4, 0))
         FactoryBot.create(:view_stat, at_time: Time.local(2015, 2, 1))
         FactoryBot.create(:view_stat, identifier: 'actest:2', at_time: Time.local(2015, 12, 5))
       end

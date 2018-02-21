@@ -1,10 +1,10 @@
 class StatisticsController < ApplicationController
-  layout "application"
-  before_filter :require_admin!, :except => :unsubscribe_monthly
+  layout 'application'
+  before_filter :require_admin!, except: :unsubscribe_monthly
   include Blacklight::SearchHelper
   include AcademicCommons::Statistics
 
-  require "csv"
+  require 'csv'
 
   helper_method :facet_names, :facet_items, :months
 
@@ -19,25 +19,25 @@ class StatisticsController < ApplicationController
       epref.monthly_opt_out = true
       epref.save!
 
-      flash[:success] = "Unsubscribe request successful"
+      flash[:success] = 'Unsubscribe request successful'
     rescue
-      flash[:error] = "There was an error with your unsubscribe request"
+      flash[:error] = 'There was an error with your unsubscribe request'
     end
 
     redirect_to root_url
   end
 
   def all_author_monthlies
-    commit_button_all = "Send To Authors"
-    commit_button_all_to_single = "Send All Reports To Single Email"
-    commit_button_aternate = "Test Alternate Email For Person"
-    commit_button_one_to_one = "Send Report For Single Person"
+    commit_button_all = 'Send To Authors'
+    commit_button_all_to_single = 'Send All Reports To Single Email'
+    commit_button_aternate = 'Test Alternate Email For Person'
+    commit_button_one_to_one = 'Send Report For Single Person'
 
-    params[:email_template] ||= "Normal"
+    params[:email_template] ||= 'Normal'
 
-    ids = repository.search(:rows => 100000, :page => 1, :fl => "author_uni")["response"]["docs"].collect { |f| f["author_uni"] }.flatten.compact.uniq - EmailPreference.where(monthly_opt_out: true).collect(&:author)
+    ids = repository.search(rows: 100_000, page: 1, fl: 'author_uni')['response']['docs'].collect { |f| f['author_uni'] }.flatten.compact.uniq - EmailPreference.where(monthly_opt_out: true).collect(&:author)
 
-    emails = EmailPreference.where("email is NOT NULL and monthly_opt_out = 0").collect
+    emails = EmailPreference.where('email is NOT NULL and monthly_opt_out = 0').collect
 
     alternate_emails = Hash.new
 
@@ -45,22 +45,22 @@ class StatisticsController < ApplicationController
       alternate_emails[ep.author] = ep.email;
     end
 
-    @authors = ids.collect { |id| {:id => id, :email => alternate_emails[id] || "#{id}@columbia.edu"}}
+    @authors = ids.collect { |id| {id: id, email: alternate_emails[id] || "#{id}@columbia.edu"}}
 
     if params[:commit]
 
       if params[:commit].in?(commit_button_all)
         processed_authors = @authors
-        final_notice = "All monthly reports processing was started."
+        final_notice = 'All monthly reports processing was started.'
       end
 
       if params[:commit].in?(commit_button_all_to_single)
         if params[:designated_recipient].empty?
-          flash.now[:error] = "Cannot 'Send All Reports To Single Email' - the destination email was not provided"
+          flash.now[:error] = 'Cannot \'Send All Reports To Single Email\' - the destination email was not provided'
           return
         end
         processed_authors = @authors
-        final_notice = "All monthly reports processing was started to be sent to " + params[:designated_recipient]
+        final_notice = 'All monthly reports processing was started to be sent to ' + params[:designated_recipient]
         designated_recipient = params[:designated_recipient]
       else
         params[:designated_recipient] = nil
@@ -68,38 +68,38 @@ class StatisticsController < ApplicationController
 
       if params[:commit].in?(commit_button_aternate)
         if params[:test_users].empty?
-          flash.now[:error] = "Could not get statistics. The UNI must be provided!"
+          flash.now[:error] = 'Could not get statistics. The UNI must be provided!'
           clean_params(params)
           return
         end
 
         email = alternate_emails[params[:test_users].to_s]
         if email.nil? || email.empty?
-          flash.now[:error] = "Could not get statistics for " + params[:test_users].to_s + ". The alternate email was not found!"
+          flash.now[:error] = 'Could not get statistics for ' + params[:test_users].to_s + '. The alternate email was not found!'
           clean_params(params)
           return
         end
         processed_authors = make_test_author(params[:test_users].to_s, alternate_emails[params[:test_users].to_s])
-        final_notice = "The monthly report for " + params[:test_users].to_s + " was sent to " + alternate_emails[params[:test_users].to_s]
+        final_notice = 'The monthly report for ' + params[:test_users].to_s + ' was sent to ' + alternate_emails[params[:test_users].to_s]
       end
 
       if params[:commit].in?(commit_button_one_to_one )
 
         if params[:one_report_uni].empty? || params[:one_report_email].empty?
-          flash.now[:error] = "Could not get statistics. The UNI and Email must be provided!"
+          flash.now[:error] = 'Could not get statistics. The UNI and Email must be provided!'
           return
         end
         processed_authors = make_test_author(params[:one_report_uni].to_s, params[:one_report_email])
-        final_notice = "The monthly report for " + params[:one_report_uni].to_s + " was sent to " + params[:one_report_email]
+        final_notice = 'The monthly report for ' + params[:one_report_uni].to_s + ' was sent to ' + params[:one_report_email]
       end
 
       if(!monthly_reports_in_process?)
         send_authors_reports(processed_authors, designated_recipient)
       else
-        final_notice = "The process is already running."
+        final_notice = 'The process is already running.'
       end
 
-      logger.info "============= final_notice: " + final_notice
+      logger.info '============= final_notice: ' + final_notice
 
       flash.now[:notice] = final_notice
 
@@ -110,13 +110,13 @@ class StatisticsController < ApplicationController
   def detail_report
     set_default_params(params)
 
-    startdate = Date.parse(params[:month_from] + " " + params[:year_from])
-    enddate = Date.parse(params[:month_to] + " " + params[:year_to])
+    startdate = Date.parse(params[:month_from] + ' ' + params[:year_from])
+    enddate = Date.parse(params[:month_to] + ' ' + params[:year_to])
     enddate = Date.new(enddate.year, enddate.month, -1) # needs to be the last day of month
 
     solr_params = detail_report_solr_params(params[:facet], params[:search_criteria])
 
-    if params[:commit].in?('View', "Email", "Get Usage Stats", "keyword search")
+    if params[:commit].in?('View', 'Email', 'Get Usage Stats', 'keyword search')
       log_statistics_usage(startdate, enddate, params)
       @usage_stats = AcademicCommons::Metrics::UsageStatistics.new(
         solr_params, startdate, enddate,
@@ -125,23 +125,23 @@ class StatisticsController < ApplicationController
       )
 
       if @usage_stats.empty?
-        if (params[:facet] != "text")
-          @message = "first_message"
-          params[:facet] = "text"
+        if (params[:facet] != 'text')
+          @message = 'first_message'
+          params[:facet] = 'text'
         else
-          @message = "second_message"
-          params[:facet] = "text"
+          @message = 'second_message'
+          params[:facet] = 'text'
         end
         return
       end
 
-      if params[:commit] == "Email"
+      if params[:commit] == 'Email'
         Notifier.statistics_by_search(params[:email_destination], params[:search_criteria], @usage_stats, request).deliver
-        flash.now[:notice] = "The report for: " + params[:search_criteria] + " was sent to: " + params[:email_destination]
+        flash.now[:notice] = 'The report for: ' + params[:search_criteria] + ' was sent to: ' + params[:email_destination]
       end
     end
 
-    if params[:commit] == "Download CSV report"
+    if params[:commit] == 'Download CSV report'
        usage_stats = AcademicCommons::Metrics::UsageStatistics.new(
          solr_params, startdate, enddate,
          order_by: params[:order_by], include_zeroes: params[:include_zeroes],
@@ -151,8 +151,8 @@ class StatisticsController < ApplicationController
       log_statistics_usage(startdate, enddate, params)
       csv_report = usage_stats.to_csv_by_month(requested_by: current_user)
 
-      if(csv_report != nil)
-        send_data csv_report, :type=>"application/csv", :filename=>params[:search_criteria] + "_monthly_statistics.csv"
+      if csv_report != nil
+        send_data csv_report, type: 'application/csv', filename: params[:search_criteria] + '_monthly_statistics.csv'
       end
     end
   end
@@ -173,7 +173,7 @@ class StatisticsController < ApplicationController
 
     time = (usage_stats.lifetime_only?) ? 'Lifetime' : 'Period'
 
-    json = { "records" => usage_stats.count } # Number of records.
+    json = { 'records' => usage_stats.count } # Number of records.
     [Statistic::VIEW, Statistic::DOWNLOAD, Statistic::STREAM].each do |event|
       json[event.downcase] = usage_stats.total_for(event, time)
     end
@@ -189,7 +189,7 @@ class StatisticsController < ApplicationController
     unless usage_stats.empty?
       csv = usage_stats.to_csv
 
-      send_data csv, type: "application/csv", filename: "common_statistics.csv"
+      send_data csv, type: 'application/csv', filename: 'common_statistics.csv'
     end
   end
 
@@ -203,7 +203,7 @@ class StatisticsController < ApplicationController
 
   def send_csv_report
     params.each do |key, value|
-      logger.info("pram: " + key + " = " + value.to_s)
+      logger.info('pram: ' + key + ' = ' + value.to_s)
     end
 
     recipients = params[:email_to]
@@ -217,7 +217,7 @@ class StatisticsController < ApplicationController
 
     Notifier.statistics_report_with_csv_attachment(recipients, from, subject, message, prepared_attachments).deliver
 
-    render :text => 'sent'
+    render text: 'sent'
   end
 
   def free_to_read?(doc)
@@ -236,10 +236,10 @@ class StatisticsController < ApplicationController
   def set_default_params(params)
     if (params[:month_from].nil? || params[:month_to].nil? || params[:year_from].nil? || params[:year_to].nil?)
 
-      params[:month_from] = "Apr"
-      params[:year_from] = "2011"
-      params[:month_to] = (Date.current - 1.months).strftime("%b")
-      params[:year_to] = (Date.current).strftime("%Y")
+      params[:month_from] = 'Apr'
+      params[:year_from] = '2011'
+      params[:month_to] = (Date.current - 1.months).strftime('%b')
+      params[:year_to] = (Date.current).strftime('%Y')
 
       params[:include_zeroes] = true
     end

@@ -8,7 +8,7 @@ module FixtureHelpers
   end
 
   def fixture_to_json(*path)
-    JSON.load(fixture_to_str(*path))
+    JSON.parse(fixture_to_str(*path))
   end
 
   def fixture_to_xml(*path)

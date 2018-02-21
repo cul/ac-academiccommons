@@ -7,7 +7,7 @@ class User < ActiveRecord::Base
   after_initialize :set_personal_info_via_ldap
 
   def admins
-    where(:admin => true)
+    where(admin: true)
   end
 
   def to_s

@@ -9,8 +9,8 @@ RSpec.describe 'DepositorHelper' do
     {
       'response' => {
         'docs' => [
-          { "id" => pid, "handle" => "https://doi.org/10.7916/ALICE",
-            "title_display" => "Alice's Adventures in Wonderland",
+          { 'id' => pid, 'handle' => 'https://doi.org/10.7916/ALICE',
+            'title_display' => 'Alice\'s Adventures in Wonderland',
             'author_uni' => [uni, 'xyz123'],
             'free_to_read_start_date' => (Date.current - 1.month).to_s },
         ]
@@ -21,7 +21,7 @@ RSpec.describe 'DepositorHelper' do
   describe 'process_indexing' do
     let(:params) do
       {
-        commit: "Commit",
+        commit: 'Commit',
         items: 'actest:1',
         overwrite: '1',
         metadata: '1',
@@ -32,7 +32,7 @@ RSpec.describe 'DepositorHelper' do
     end
 
     let(:reindex_result) do
-      { :new_items => ['actest:1'] }
+      { new_items: ['actest:1'] }
     end
 
     before :each do

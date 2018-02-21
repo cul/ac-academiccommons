@@ -7,8 +7,8 @@ module AcademicCommons
     # @return [OpenStruct] containing person's uni, email, last name, first name, full name, title and organizational unit
     def self.find_by_uni(uni)
       # Returns [] if there are no valid entries.
-      entries = Net::LDAP.new({:host => "ldap.columbia.edu", :port => 389})
-                  .search(:base => "o=Columbia University, c=US", :filter => Net::LDAP::Filter.eq("uid", uni))
+      entries = Net::LDAP.new({host: 'ldap.columbia.edu', port: 389})
+                  .search(base: 'o=Columbia University, c=US', filter: Net::LDAP::Filter.eq('uid', uni))
 
       Rails.logger.warn("LDAP record for #{uni} NOT found.") if entries.blank?
 

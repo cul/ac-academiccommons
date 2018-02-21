@@ -1,6 +1,6 @@
 module AcademicCommons
   class DateTrend
-    def initialize(date_field="record_creation_date", af_model=nil)
+    def initialize(date_field = 'record_creation_date', af_model = nil)
       @date_field = date_field.to_s
       if af_model
         @fq = ["has_model_ssim:\"#{af_model.to_class_uri}\""]
@@ -29,7 +29,7 @@ module AcademicCommons
       @counts ||= begin
         last_month = last_month = (Time.now - 1.month).getutc.to_s[0..6]
         repository = Blacklight.default_index.connection
-        solr_results = repository.get("select", params: search_params)
+        solr_results = repository.get('select', params: search_params)
         results = Hash.new(0)
         results[:total] = solr_results['response']['numFound']
         facets = solr_results['facet_counts']

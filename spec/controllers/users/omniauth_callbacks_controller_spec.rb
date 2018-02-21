@@ -8,24 +8,24 @@ RSpec.describe Users::OmniauthCallbacksController, type: :controller do
 
   let(:ldap_request) do
     {
-      :base => "o=Columbia University, c=US",
-      :filter => Net::LDAP::Filter.eq("uid", uid)
+      base: 'o=Columbia University, c=US',
+      filter: Net::LDAP::Filter.eq('uid', uid)
     }
   end
 
   let(:ldap_response) do
     [{
-      :mail      => 'abc123@columbia.edu',
-      :sn        => 'Doe',
-      :givenname => 'Jane'
+      mail:       'abc123@columbia.edu',
+      sn:         'Doe',
+      givenname:  'Jane'
     }]
   end
 
   before :each do
     OmniAuth.config.test_mode = true
     OmniAuth.config.mock_auth[:saml] = saml_hash
-    @request.env["devise.mapping"] = Devise.mappings[:user]
-    @request.env["omniauth.auth"] = OmniAuth.config.mock_auth[:saml]
+    @request.env['devise.mapping'] = Devise.mappings[:user]
+    @request.env['omniauth.auth'] = OmniAuth.config.mock_auth[:saml]
     allow_any_instance_of(Net::LDAP).to receive(:search).with(ldap_request).and_return(ldap_response)
   end
 

@@ -5,14 +5,14 @@ RSpec.describe 'error pages', type: :request do
 
   describe '/admin' do
     let(:uid) { 'abc123' }
-    let(:ldap_user) {
+    let(:ldap_user) do
       OpenStruct.new(uni: 'abc123', first_name: 'Jane', last_name: 'Doe')
-    }
+    end
 
     before :each do
       OmniAuth.config.test_mode = true
-      Rails.application.env_config["devise.mapping"] = Devise.mappings[:user]
-      Rails.application.env_config["omniauth.auth"] = OmniAuth.config.mock_auth[:saml]
+      Rails.application.env_config['devise.mapping'] = Devise.mappings[:user]
+      Rails.application.env_config['omniauth.auth'] = OmniAuth.config.mock_auth[:saml]
       expect(AcademicCommons::LDAP).to receive(:find_by_uni).with('abc123').and_return(ldap_user)
       login_as user
       get '/admin'
@@ -43,10 +43,10 @@ RSpec.describe 'error pages', type: :request do
     end
   end
 
-  describe '/catalog/NOT_VALID_ID' do
+  describe '/solr_document/NOT_VALID_ID' do
     context 'when solr document id not valid' do
       before :each do
-        get '/catalog/NOT_VALID_ID'
+        get '/solr_document/NOT_VALID_ID'
       end
 
       it 'returns 500 status code' do

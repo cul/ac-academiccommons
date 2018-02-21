@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe AdminController, :type => :controller do
+describe AdminController, type: :controller do
   let(:id) { 'foo' }
 
   shared_context 'mock_deposit' do

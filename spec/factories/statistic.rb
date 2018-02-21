@@ -4,12 +4,12 @@ FactoryBot.define do
     at_time    Time.now
 
     factory :view_stat do
-      event  Statistic::VIEW
+      event Statistic::VIEW
     end
 
-     factory :streaming_stat do
-       event Statistic::STREAM
-     end
+    factory :streaming_stat do
+      event Statistic::STREAM
+    end
 
     factory :download_stat do
       identifier 'actest:2'

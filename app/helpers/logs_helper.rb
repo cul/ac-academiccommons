@@ -17,7 +17,7 @@ module LogsHelper
       log[:hour] = time_id[9..10].to_i
       log[:minute] = time_id[11..12].to_i
       log[:second] = time_id[13..14].to_i
-      log[:time] = Time.mktime(log[:year], log[:month], log[:day], log[:hour], log[:minute], log[:second]).strftime("%B %e, %Y %r")
+      log[:time] = Time.mktime(log[:year], log[:month], log[:day], log[:hour], log[:minute], log[:second]).strftime('%B %e, %Y %r')
       logs << log
     end
 
@@ -29,5 +29,5 @@ module LogsHelper
 
   def getLogContent(log_folder, log_id)
     return File.open("#{Rails.root}/log/#{log_folder}/#{log_id}.log").read
-  end  
+  end
 end # ==================================================== #

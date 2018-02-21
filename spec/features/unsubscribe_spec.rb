@@ -7,7 +7,7 @@ RSpec.describe 'Unsubscribe' do
     let(:error) { 'There was an error with your unsubscribe request' }
 
     it 'author_id missing' do
-      visit "/statistics/unsubscribe_monthly?chk=foo"
+      visit '/statistics/unsubscribe_monthly?chk=foo'
       expect(page).to have_content error
     end
 

@@ -27,36 +27,36 @@ end
 #     let(:http_request) { get :index }
 #   end
 shared_examples 'authorization required' do
-  context "without being logged in" do
+  context 'without being logged in' do
     before do
       allow(controller).to receive(:current_user).and_return(nil)
       http_request
     end
 
-    it "redirects to new_user_session_path" do
-      expect(response.status).to eql(302)
+    it 'redirects to new_user_session_path' do
+      expect(response.status).to be 302
       expect(response).to redirect_to new_user_session_url
     end
   end
 
-  context "logged in as a non-admin user" do
+  context 'logged in as a non-admin user' do
     include_context 'mock non-admin user'
 
     # In order to check status code, etc, need to create request specs.
-    it "fails" do
+    it 'fails' do
       expect { http_request }.to raise_error AcademicCommons::Exceptions::NotAuthorized
     end
   end
 
-  context "logged in as an admin user" do
+  context 'logged in as an admin user' do
     include_context 'mock admin user'
 
     before do
       http_request
     end
 
-    it "succeeds" do
-      expect(response.status).to eql(200)
+    it 'succeeds' do
+      expect(response.status).to be 200
     end
   end
 end

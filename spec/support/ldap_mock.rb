@@ -3,15 +3,15 @@ shared_context 'mock ldap request' do
 
   let(:ldap_request) do
     {
-      :base => "o=Columbia University, c=US",
-      :filter => Net::LDAP::Filter.eq("uid", uni)
+      base: 'o=Columbia University, c=US',
+      filter: Net::LDAP::Filter.eq('uid', uni)
     }
   end
 
   let(:ldap_response) do
     [{
-      :mail => ['janedoe@columbia.edu'], :sn => ['Doe'], :givenname => ['Jane'],
-      :cn => ['Jane Doe'], :title => ['Librarian'], :ou => ['Columbia University Libraries']
+      mail: ['janedoe@columbia.edu'], sn: ['Doe'], givenname: ['Jane'],
+      cn: ['Jane Doe'], title: ['Librarian'], ou: ['Columbia University Libraries']
     }]
   end
 

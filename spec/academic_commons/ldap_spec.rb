@@ -18,17 +18,17 @@ RSpec.describe AcademicCommons::LDAP do
     context 'when ldap does not have record for uni' do
       let(:ldap_response) { [] }
 
-      its(:name)       { is_expected.to eql nil }
+      its(:name)       { is_expected.to be nil }
       its(:email)      { is_expected.to eql "#{uni}@columbia.edu" }
-      its(:first_name) { is_expected.to eql nil }
-      its(:last_name)  { is_expected.to eql nil }
-      its(:uni)        { is_expected.to eql uni }
-      its(:title)      { is_expected.to eql nil }
-      its(:organizational_unit) { is_expected.to eql nil }
+      its(:first_name) { is_expected.to be nil }
+      its(:last_name)  { is_expected.to be nil }
+      its(:uni)        { is_expected.to be uni }
+      its(:title)      { is_expected.to be nil }
+      its(:organizational_unit) { is_expected.to be nil }
     end
 
     context 'when ldap does not have email' do #has names, but not email
-      let(:ldap_response) { [{ :sn => 'Doe', :givenname => 'Jane', :cn => 'Jane Doe' }] }
+      let(:ldap_response) { [{ sn: 'Doe', givenname: 'Jane', cn: 'Jane Doe' }] }
 
       its(:name)       { is_expected.to eql 'Jane Doe' }
       its(:email)      { is_expected.to eql "#{uni}@columbia.edu" }

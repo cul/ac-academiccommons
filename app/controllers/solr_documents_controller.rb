@@ -1,4 +1,3 @@
-# -*- encoding : utf-8 -*-
 class SolrDocumentsController < ApplicationController
   include Blacklight::Catalog
 
@@ -24,7 +23,7 @@ class SolrDocumentsController < ApplicationController
     end
     # if no id, return bad request (400)
     unless params[:id]
-      render plain: "missing id parameter", status: :bad_request
+      render plain: 'missing id parameter', status: :bad_request
       return
     end
     begin
@@ -41,7 +40,7 @@ class SolrDocumentsController < ApplicationController
       aggregator = obj.is_a?(ContentAggregator)
       notify_authors_of_new_item(solr_doc) if aggregator
 
-      location_url = aggregator ? catalog_url(params[:id]) : download_url(obj)
+      location_url = aggregator ? solr_document_url(params[:id]) : download_url(obj)
       response.headers['Location'] = location_url
       render status: :ok, plain: ''
     rescue ActiveFedora::ObjectNotFoundError => e
@@ -73,7 +72,7 @@ class SolrDocumentsController < ApplicationController
       render status: status, plain: ''
       return
     end
-    doc = rsolr.find(filters: {id: "\"#{params[:id]}\""})["response"]["docs"].first
+    doc = rsolr.find(filters: {id: "\"#{params[:id]}\""})['response']['docs'].first
     if doc
       render json: doc
     else

@@ -1,9 +1,9 @@
 class Statistic < ActiveRecord::Base
-  VIEW = 'View'
-  DOWNLOAD = 'Download'
-  STREAM = 'Streaming'
+  VIEW = 'View'.freeze
+  DOWNLOAD = 'Download'.freeze
+  STREAM = 'Streaming'.freeze
 
-  EVENTS = [VIEW, DOWNLOAD, STREAM]
+  EVENTS = [VIEW, DOWNLOAD, STREAM].freeze
 
   # Calculate the number of times the event given has occured for all the given
   # pids. If start and end date are given, the query is limited to that time period.
@@ -29,7 +29,7 @@ class Statistic < ActiveRecord::Base
         end_date = end_date.to_time.end_of_day
         pids.each_slice(5000).each_with_object({}) do |ids, hash|
           hash.merge!(
-            group(:identifier).where("identifier IN (?) and event = ? AND at_time BETWEEN ? and ?", ids, event, start_date, end_date).count
+            group(:identifier).where('identifier IN (?) and event = ? AND at_time BETWEEN ? and ?', ids, event, start_date, end_date).count
           )
         end
       else
@@ -37,7 +37,7 @@ class Statistic < ActiveRecord::Base
       end
     else
       pids.each_slice(5000).each_with_object({}) do |ids, hash|
-        hash.merge!(group(:identifier).where("identifier IN (?) and event = ?", ids, event).count)
+        hash.merge!(group(:identifier).where('identifier IN (?) and event = ?', ids, event).count)
       end
     end
   end
@@ -52,20 +52,20 @@ class Statistic < ActiveRecord::Base
   end
 
   def self.reset_downloads
-    Statistic.where(:event => "Download").each { |e| e.delete }
+    Statistic.where(event: 'Download').each { |e| e.delete }
 
     fedora_download_match = /^([\d\.]+).+\[([^\]]+)\].+download\/fedora_content\/\w+\/([^\/]+)/
-    startdate = DateTime.parse("5/1/2011")
+    startdate = DateTime.parse('5/1/2011')
 
-    File.open(File.join("tmp", "access.log")).each_with_index do |line, i|
+    File.open(File.join('tmp', 'access.log')).each_with_index do |line, i|
 
       if (match = fedora_download_match.match(line))
-        pid = match[3].gsub("%3A", ":")
-        datetime = DateTime.parse(match[2].sub(":", " "))
+        pid = match[3].gsub('%3A', ':')
+        datetime = DateTime.parse(match[2].sub(':', ' '))
         ip = match[1]
 
-        if pid.include?("ac")
-          Statistic.create!(:event => "Download", :ip_address => ip, :identifier => pid, :at_time => datetime)
+        if pid.include?('ac')
+          Statistic.create!(event: 'Download', ip_address: ip, identifier: pid, at_time: datetime)
         end
       end
     end

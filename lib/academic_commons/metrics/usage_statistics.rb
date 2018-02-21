@@ -11,16 +11,16 @@ module AcademicCommons::Metrics
     DEFAULT_OPTIONS = {
       include_zeroes: true, include_streaming: false, per_month: false,
       recent_first: false, order_by: nil
-    }
+    }.freeze
 
     DEFAULT_SOLR_PARAMS = {
-      rows: 100000, page: 1,
+      rows: 100_000, page: 1,
       fl: 'title_display,id,handle,doi,genre_facet,record_creation_date,object_state_ssi,free_to_read_start_date'
-    }
+    }.freeze
 
-    PERIOD = 'Period'
-    LIFETIME = 'Lifetime'
-    MONTH_KEY = '%b %Y'
+    PERIOD = 'Period'.freeze
+    LIFETIME = 'Lifetime'.freeze
+    MONTH_KEY = '%b %Y'.freeze
 
     # Create statistics object that calculates usage statistics (views,
     # downloads, and streams) for all the items that match the solr query. If a
@@ -72,7 +72,7 @@ module AcademicCommons::Metrics
       if lifetime_only?
         LIFETIME
       else
-        [start_date.strftime("%b %Y"), end_date.strftime("%b %Y")].uniq.join(' - ')
+        [start_date.strftime('%b %Y'), end_date.strftime('%b %Y')].uniq.join(' - ')
       end
     end
 

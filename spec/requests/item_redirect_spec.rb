@@ -6,7 +6,7 @@ RSpec.describe 'item redirect', type: :request do
   describe '/item' do
     it 'redirects to /catalog' do
       get '/item/ac:010101'
-      expect(response).to redirect_to('/catalog/ac:010101')
+      expect(response).to redirect_to('/solr_document/ac:010101')
     end
   end
 end

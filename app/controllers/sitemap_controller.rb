@@ -1,21 +1,22 @@
 class SitemapController < ApplicationController
   include Blacklight::SearchHelper
-  after_filter :sweep_cache, :only => :index
-  def index
 
+  after_filter :sweep_cache, only: :index
+
+  def index
     @latest_doc = latest_doc
-    @latest_time = Time.zone.parse(@latest_doc["record_creation_date"])
-    if stale?(:etag => @latest_doc, :last_modified => @latest_time.utc)
+    @latest_time = Time.zone.parse(@latest_doc['record_creation_date'])
+    if stale?(etag: @latest_doc, last_modified: @latest_time.utc)
       key_parms = {
-        :controller => :sitemap, :action => :index,
-        :record_creation_date => @latest_time.to_i
+        controller: :sitemap, action: :index,
+        record_creation_date: @latest_time.to_i
       }
       @sitemap_cache_key = fragment_cache_key(key_parms)
       respond_to do |format|
         format.xml do
           headers['Content-Type'] = 'application/xml'
-          headers['Last-Modified-Date'] = Time.zone.parse(@latest_doc["record_creation_date"]).utc.httpdate
-          render :layout => false, :template => 'sitemap/map', :formats => :xml, :handlers => :builder
+          headers['Last-Modified-Date'] = Time.zone.parse(@latest_doc['record_creation_date']).utc.httpdate
+          render layout: false, template: 'sitemap/map', formats: :xml, handlers: :builder
         end
       end
     end
@@ -25,12 +26,12 @@ class SitemapController < ApplicationController
   # catalog_helper custom_results() - but that relies on params
   # and modifies pub_date
   def fetch_latest(rows = 1, latest = nil)
-    opts = {:rows => rows, :q => ''}
+    opts = { rows: rows, q: '' }
     if latest
       opts[:fq] = "record_creation_date:[* TO #{latest}]"
     end
-    opts[:fl] = "id, record_creation_date"
-    opts[:sort] = "record_creation_date desc"
+    opts[:fl] = 'id, record_creation_date'
+    opts[:sort] = 'record_creation_date desc'
     # this is the upper limit for a single sitemap, see sitemap.org
     repository.search(opts)
   end

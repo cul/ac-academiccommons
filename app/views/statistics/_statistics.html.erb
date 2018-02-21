@@ -159,7 +159,7 @@
           <%= idx + 1 %>
         </div>
         <div class="result-cell">
-          <%= link_to item.document["title_display"], catalog_path(item.id) %>
+          <%= link_to item.document["title_display"], solr_document_path(item.id) %>
         </div>
         <div class="result-cell center">
           <%= item.get_stat(Statistic::VIEW, 'Period') %>

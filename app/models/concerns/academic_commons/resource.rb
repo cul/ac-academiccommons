@@ -1,8 +1,8 @@
 module AcademicCommons::Resource
   extend ActiveSupport::Concern
 
-  CUL_MEMBER_OF = RDF::URI("http://purl.oclc.org/NET/CUL/memberOf")
-  CUL_METADATA_FOR = RDF::URI("http://purl.oclc.org/NET/CUL/metadataFor")
+  CUL_MEMBER_OF = RDF::URI('http://purl.oclc.org/NET/CUL/memberOf')
+  CUL_METADATA_FOR = RDF::URI('http://purl.oclc.org/NET/CUL/metadataFor')
 
   MAX_LIST_MEMBERS_PER_REQUEST = 500
 
@@ -27,8 +27,8 @@ module AcademicCommons::Resource
         rubydora = ActiveFedora::Base.connection_for_pid(pid)
         result = rubydora.risearch(riquery, options)
 
-        Nokogiri::XML(result).css("sparql>results>result>member").each do |result_node|
-          items << result_node.attributes["uri"].value.split('/').last
+        Nokogiri::XML(result).css('sparql>results>result>member').each do |result_node|
+          items << result_node.attributes['uri'].value.split('/').last
         end
         i = i + MAX_LIST_MEMBERS_PER_REQUEST
       end
@@ -61,10 +61,10 @@ module AcademicCommons::Resource
     offset = options.delete(:offset) || nil
 
     query = ["select $member from <#ri> where $member <#{predicate}> <fedora:#{pid}>"]
-    query << "order by $member" if limit || offset
+    query << 'order by $member' if limit || offset
     query << "limit #{limit}" if limit
     query << "offset #{offset}" if offset
-    query.join(" ")
+    query.join(' ')
   end
 
 end

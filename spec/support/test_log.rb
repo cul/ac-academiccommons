@@ -3,7 +3,7 @@
 shared_context 'log' do
   let(:id) { '20170101-000000' }
   let(:filepath) { fixture('test_file.txt') }
-  let(:log_destination) { File.join(Rails.root, "log", "ac-indexing", "#{id}.log") }
+  let(:log_destination) { File.join(Rails.root, 'log', 'ac-indexing', "#{id}.log") }
 
   before do
     FileUtils.cp(filepath, log_destination) # Create fake log.

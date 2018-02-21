@@ -1,6 +1,6 @@
 module AcademicCommons
   class Indexer
-    TIMESTAMP = '%Y%m%d-%H%M%S'
+    TIMESTAMP = '%Y%m%d-%H%M%S'.freeze
     attr_reader :indexing_logger, :error, :success, :start
 
     # Creates object that reindex all records currently in the solr core or
@@ -17,11 +17,11 @@ module AcademicCommons
 
     # Reindexes all items that are currently in the solr core.
     def all_items
-      indexing_logger.info "Indexing all items (aggregators) currently in the solr core..."
+      indexing_logger.info 'Indexing all items (aggregators) currently in the solr core...'
 
       # Solr query to retrieve all aggregators in solr core.
       solr_params = {
-        q: nil, fl: 'id', rows: 100000,
+        q: nil, fl: 'id', rows: 100_000,
         fq: ["has_model_ssim:\"#{ContentAggregator.to_class_uri}\""]
       }
       response = rsolr.get('select', params: solr_params)
@@ -63,9 +63,9 @@ module AcademicCommons
     def close
       # commit to solr RSolr.commit if doing autoCommit
       seconds_spent = Time.new - start
-      readable_time_spent = Time.at(seconds_spent).utc.strftime("%H hours, %M minutes, %S seconds")
+      readable_time_spent = Time.at(seconds_spent).utc.strftime('%H hours, %M minutes, %S seconds')
 
-      indexing_logger.info "FINISHED INDEXING"
+      indexing_logger.info 'FINISHED INDEXING'
       indexing_logger.info "Time spent: #{readable_time_spent}"
       indexing_logger.info "Successfully indexed #{success.count} item(s)."
       indexing_logger.info "The following #{error.count} item(s) returned errors #{error.join(", ")}" unless error.count.zero?

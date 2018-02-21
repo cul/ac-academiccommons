@@ -2,7 +2,7 @@ class CatalogController < ApplicationController
   include Blacklight::Catalog
   include BlacklightOaiProvider::Controller
 
-  before_filter :record_view_stats, :only => :show
+  before_filter :record_view_stats, only: :show
 
   before_filter :url_decode_f
 
@@ -20,20 +20,18 @@ class CatalogController < ApplicationController
     config.navbar.partials.delete(:saved_searches)
     config.navbar.partials.delete(:search_history)
 
-    config.show.presenter_class = DocumentPresenter
-
     config.default_solr_params = {
-      qt: "search",
+      qt: 'search',
       fq: ["has_model_ssim:\"#{ContentAggregator.to_class_uri}\""],
       rows: 10,
       fl: '*' # Return all fields
     }
 
     # solr field configuration for search results/index views
-    config.show.title_field = "title_display"
-    config.show.display_type_field = "format"
-    config.show.genre = "genre_facet"
-    config.show.author = "author_display"
+    config.show.title_field = 'title_display'
+    config.show.display_type_field = 'format'
+    config.show.genre = 'genre_facet'
+    config.show.author = 'author_display'
 
     ## Default parameters to send on single-document requests to Solr. These settings are the Blackligt defaults (see SolrHelper#solr_doc_params) or
     ## parameters included in the Blacklight-jetty document requestHandler.
@@ -41,9 +39,9 @@ class CatalogController < ApplicationController
     #config.default_document_solr_params = {
     # :qt => 'document',
     # ## These are hard-coded in the blacklight 'document' requestHandler
-    # # :fl => '*',
+    # # fl: '*',
     # # :rows => 1
-    # # :q => '{!raw f=id v=$id}'
+    # # q: '{!raw f=id v=$id}'
     #}
 
 
@@ -73,19 +71,19 @@ class CatalogController < ApplicationController
     # :show may be set to false if you don't want the facet to be drawn in the
     # facet bar
 
-    config.add_facet_field 'author_facet',           :label => 'Author',       :limit => 2
-    config.add_facet_field 'department_facet',       :label => 'Department',   :limit => 2
-    config.add_facet_field 'subject_facet',          :label => 'Subject',      :limit => 2
-    config.add_facet_field 'genre_facet',            :label => 'Content Type', :limit => 2
+    config.add_facet_field 'author_facet',           label: 'Author',       limit: 2
+    config.add_facet_field 'department_facet',       label: 'Department',   limit: 2
+    config.add_facet_field 'subject_facet',          label: 'Subject',      limit: 2
+    config.add_facet_field 'genre_facet',            label: 'Content Type', limit: 2
     config.add_facet_field 'degree_level_ssim', label: 'Degree Level', query: {
       'Bachelor\'s' => { label: 'Bachelor\'s', fq: 'degree_level_ssim:0' },
       'Master\'s'   => { label: 'Master\'s',   fq: 'degree_level_ssim:1' },
       'Doctoral'    => { label: 'Doctoral',    fq: 'degree_level_ssim:2' }
     }
-    config.add_facet_field 'pub_date_facet',         :label => 'Date',         :limit => 2
-    config.add_facet_field 'series_facet',           :label => 'Series',       :limit => 2
-    config.add_facet_field 'language',               :label => 'Language'
-    config.add_facet_field 'type_of_resource_facet', :label => 'Resource Type'
+    config.add_facet_field 'pub_date_facet',         label: 'Date',         limit: 2
+    config.add_facet_field 'series_facet',           label: 'Series',       limit: 2
+    config.add_facet_field 'language',               label: 'Language'
+    config.add_facet_field 'type_of_resource_facet', label: 'Resource Type'
 
     # Have BL send all facet field names to Solr, which has been the default
     # previously. Simply remove these lines if you'd rather use Solr request
@@ -150,7 +148,7 @@ class CatalogController < ApplicationController
     # solr request handler? The one set in config[:default_solr_parameters][:qt],
     # since we aren't specifying it otherwise.
 
-    config.add_search_field 'all_fields', :label => 'All Fields'
+    config.add_search_field 'all_fields', label: 'All Fields'
 
     # "sort results by" select (pulldown)
     # label in pulldown is followed by the name of the SOLR field to sort by and
@@ -186,10 +184,10 @@ class CatalogController < ApplicationController
     # output; keys are format short-names that can be exported. Hash includes:
     #    :content-type => mime-content-type
     config.unapi = {
-      'oai_dc_xml' => { :content_type => 'text/xml' }
+      'oai_dc_xml' => { content_type: 'text/xml' }
     }
 
-    config.feed_rows = "500"
+    config.feed_rows = '500'
     config.max_most_recent = 5
 
     config.oai = {
@@ -209,53 +207,53 @@ class CatalogController < ApplicationController
     }
 
     config.itemscope = {
-      :itemtypes => {
-        "Articles"                     => "http://schema.org/ScholarlyArticle",
-        "Working Papers"               => "http://schema.org/ScholarlyArticle",
-        "Technical reports"            => "http://schema.org/ScholarlyArticle",
-        "Reports"                      => "http://schema.org/CreativeWork",
-        "Dissertations"                => "http://schema.org/CreativeWork",
-        "Blog posts"                   => "http://schema.org/BlogPosting",
-        "Presentations"                => "http://schema.org/CreativeWork",
-        "Master's theses"              => "http://schema.org/CreativeWork",
-        "Undergraduate theses"         => "http://schema.org/CreativeWork",
-        "Book chapters"                => "http://schema.org/Book",
-        "Reviews"                      => "http://schema.org/CreativeWork",
-        "Interviews and roundtables"   => "http://schema.org/CreativeWork",
-        "Datasets"                     => "http://schema.org/CreativeWork",
-        "Fictional works"              => "http://schema.org/CreativeWork",
-        "Images"                       => "http://schema.org/ImageObject",
-        "Musical compositions"         => "http://schema.org/CreativeWork",
-        "Books"                        => "http://schema.org/Book",
-        "Abstracts"                    => "http://schema.org/CreativeWork",
-        "Working Paper"                => "http://schema.org/CreativeWork",
-        "Letters"                      => "http://schema.org/CreativeWork",
-        "Presentation"                 => "http://schema.org/CreativeWork",
-        "Article"                      => "http://schema.org/ScholarlyArticle",
-        "Conferences"                  => "http://schema.org/CreativeWork",
-        "article"                      => "http://schema.org/ScholarlyArticle",
-        "Unpublished papers"           => "http://schema.org/CreativeWork",
-        "Technical Report"             => "http://schema.org/ScholarlyArticle",
-        "Conference posters"           => "http://schema.org/CreativeWork",
-        "Promotional materials"        => "http://schema.org/CreativeWork",
-        "Programs"                     => "http://schema.org/CreativeWork",
-        "Journals"                     => "http://schema.org/CreativeWork",
-        "Preprint"                     => "http://schema.org/ScholarlyArticle",
-        "Papers"                       => "http://schema.org/ScholarlyArticle",
-        "Other"                        => "http://schema.org/CreativeWork",
-        "Notes"                        => "http://schema.org/CreativeWork",
-        "Conference proceedings"       => "http://schema.org/CreativeWork"
+      itemtypes: {
+        'Articles'                     => 'http://schema.org/ScholarlyArticle',
+        'Working Papers'               => 'http://schema.org/ScholarlyArticle',
+        'Technical reports'            => 'http://schema.org/ScholarlyArticle',
+        'Reports'                      => 'http://schema.org/CreativeWork',
+        'Dissertations'                => 'http://schema.org/CreativeWork',
+        'Blog posts'                   => 'http://schema.org/BlogPosting',
+        'Presentations'                => 'http://schema.org/CreativeWork',
+        'Master\'s theses'             => 'http://schema.org/CreativeWork',
+        'Undergraduate theses'         => 'http://schema.org/CreativeWork',
+        'Book chapters'                => 'http://schema.org/Book',
+        'Reviews'                      => 'http://schema.org/CreativeWork',
+        'Interviews and roundtables'   => 'http://schema.org/CreativeWork',
+        'Datasets'                     => 'http://schema.org/CreativeWork',
+        'Fictional works'              => 'http://schema.org/CreativeWork',
+        'Images'                       => 'http://schema.org/ImageObject',
+        'Musical compositions'         => 'http://schema.org/CreativeWork',
+        'Books'                        => 'http://schema.org/Book',
+        'Abstracts'                    => 'http://schema.org/CreativeWork',
+        'Working Paper'                => 'http://schema.org/CreativeWork',
+        'Letters'                      => 'http://schema.org/CreativeWork',
+        'Presentation'                 => 'http://schema.org/CreativeWork',
+        'Article'                      => 'http://schema.org/ScholarlyArticle',
+        'Conferences'                  => 'http://schema.org/CreativeWork',
+        'article'                      => 'http://schema.org/ScholarlyArticle',
+        'Unpublished papers'           => 'http://schema.org/CreativeWork',
+        'Technical Report'             => 'http://schema.org/ScholarlyArticle',
+        'Conference posters'           => 'http://schema.org/CreativeWork',
+        'Promotional materials'        => 'http://schema.org/CreativeWork',
+        'Programs'                     => 'http://schema.org/CreativeWork',
+        'Journals'                     => 'http://schema.org/CreativeWork',
+        'Preprint'                     => 'http://schema.org/ScholarlyArticle',
+        'Papers'                       => 'http://schema.org/ScholarlyArticle',
+        'Other'                        => 'http://schema.org/CreativeWork',
+        'Notes'                        => 'http://schema.org/CreativeWork',
+        'Conference proceedings'       => 'http://schema.org/CreativeWork'
       }
     }
 
   end
 
   def browse_department
-    render :layout => "catalog_browse"
+    render layout: 'catalog_browse'
   end
 
   def browse_subject
-    render :layout => "catalog_browse"
+    render layout: 'catalog_browse'
   end
 
   def url_decode_f
@@ -280,16 +278,16 @@ class CatalogController < ApplicationController
   end
 
   def streaming
-    logger.info "RECORDING STREAMING EVENT"
-    record_stats(params["id"], Statistic::STREAM)
-    render :nothing => true
+    logger.info 'RECORDING STREAMING EVENT'
+    record_stats(params['id'], Statistic::STREAM)
+    render nothing: true
   end
 
 
   private
 
   def record_view_stats
-    record_stats(params["id"], Statistic::VIEW)
+    record_stats(params['id'], Statistic::VIEW)
   end
 
   def record_stats(id, event)
@@ -311,12 +309,12 @@ class CatalogController < ApplicationController
 
    params[:page] = nil
    params[:q] = params[:q].to_s
-   params[:sort] = (params[:sort].nil?) ? "record_creation_date desc" : params[:sort].to_s
-   params[:rows] = (params[:rows].nil? || params[:rows].to_s == "") ? ((params[:id].nil?) ? blacklight_config[:feed_rows] : params[:id].to_s) : params[:rows].to_s
+   params[:sort] = (params[:sort].nil?) ? 'record_creation_date desc' : params[:sort].to_s
+   params[:rows] = (params[:rows].nil? || params[:rows].to_s == '') ? ((params[:id].nil?) ? blacklight_config[:feed_rows] : params[:id].to_s) : params[:rows].to_s
    params[:fq] = Array(params[:fq]).append("has_model_ssim:\"#{ContentAggregator.to_class_uri}\"")
 
    extra_params = {}
-   extra_params[:fl] = "title_display,id,author_facet,author_display,record_creation_date,handle,abstract,author_uni,subject_facet,department_facet,genre_facet"
+   extra_params[:fl] = 'title_display,id,author_facet,author_display,record_creation_date,handle,abstract,author_uni,subject_facet,department_facet,genre_facet'
 
    if (params[:f].nil?)
      solr_response = repository.search(params.merge(extra_params))

@@ -8,7 +8,7 @@ describe AcademicCommons::DateTrend do
     json = ERB.new(erb).result binding
     JSON.parse(json)
   end
-  let(:class_uri) { "info:fedora/cul:TestRig" }
+  let(:class_uri) { 'info:fedora/cul:TestRig' }
   let(:date_field) { 'some_date_field' }
   subject { described_class.new(date_field, model) }
   let(:model) do
@@ -45,6 +45,6 @@ describe AcademicCommons::DateTrend do
         .and_return(connection)
       allow(connection).to receive(:get).and_return(solr_fixture)
     end
-    it  { expect(subject.counts).to eql(last_month: 13779, last_year: 40047,total: 116471) }
+    it  { expect(subject.counts).to eql(last_month: 13_779, last_year: 40_047,total: 116_471) }
   end
 end

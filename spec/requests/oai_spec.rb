@@ -12,7 +12,7 @@ describe 'OAI endpoint', type: :request do
       end
 
       it 'responds with repository information' do
-        expect(response_xml).to be_equivalent_to(expected_xml).ignoring_content_of("responseDate")
+        expect(response_xml).to be_equivalent_to(expected_xml).ignoring_content_of('responseDate')
       end
     end
 
@@ -24,7 +24,7 @@ describe 'OAI endpoint', type: :request do
       end
 
       it 'responds with one item' do
-        expect(response_xml).to be_equivalent_to(expected_xml).ignoring_content_of("responseDate")
+        expect(response_xml).to be_equivalent_to(expected_xml).ignoring_content_of('responseDate')
       end
     end
   end

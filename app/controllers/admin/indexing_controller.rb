@@ -13,7 +13,7 @@ class Admin::IndexingController < ApplicationController
   # Performs an index of the items specificied.
   def create # collection or set of items
     if index_running?
-      flash[:error] = "There is already an index process running. Please wait for the process to complete before starting a new one."
+      flash[:error] = 'There is already an index process running. Please wait for the process to complete before starting a new one.'
     else
       items = params.fetch(:items, '').split(/\s/)
       index_records(items: items, all: params[:all].eql?('true'))
@@ -27,14 +27,14 @@ class Admin::IndexingController < ApplicationController
   def destroy
     if pid = index_running?
       time_id = log_timestamp(pid)
-      Process.kill "KILL", pid.to_i
+      Process.kill 'KILL', pid.to_i
       File.delete(pid_filepath(pid))
-      log_file = File.open("#{Rails.root}/log/ac-indexing/#{time_id}.log", "a")
-      log_file.write("CANCELLED")
+      log_file = File.open("#{Rails.root}/log/ac-indexing/#{time_id}.log", 'a')
+      log_file.write('CANCELLED')
       log_file.close
-      flash[:notice] = "Index has been cancelled."
+      flash[:notice] = 'Index has been cancelled.'
     else
-      flash[:error] = "An index is not currently running."
+      flash[:error] = 'An index is not currently running.'
     end
 
     redirect_to admin_indexing_url
@@ -44,7 +44,7 @@ class Admin::IndexingController < ApplicationController
   # Returns the last n lines from the running process
   def log_monitor
     # if there is a tmp pid file, read in time from the pid file and display the last n lines of log
-     raise "You must include the log ID" unless params[:timestamp]
+     raise 'You must include the log ID' unless params[:timestamp]
 
      #constraint id to contain numbers and -
 
@@ -64,11 +64,11 @@ class Admin::IndexingController < ApplicationController
     return if items.blank? && !all
 
     time = Time.new
-    time_id = time.strftime("%Y%m%d-%H%M%S")
+    time_id = time.strftime('%Y%m%d-%H%M%S')
     pid = nil
 
     pid = Process.fork do
-      logger.info "==== STARTED INDEXING ===="
+      logger.info '==== STARTED INDEXING ===='
 
       begin
         index = AcademicCommons::Indexer.new(executed_by: current_user, start: time)
@@ -76,7 +76,7 @@ class Admin::IndexingController < ApplicationController
         index.items(*items) unless items.blank?
         index.close
 
-        logger.info "==== FINISHED INDEXING ===="
+        logger.info '==== FINISHED INDEXING ===='
         expire_fragment('repository_statistics')
       rescue => e
         logger.fatal "Error Indexing: #{e.message}"
@@ -88,7 +88,7 @@ class Admin::IndexingController < ApplicationController
 
     logger.info "Started ingest with PID: #{pid} (#{time_id})"
 
-    tmp_pid_file = File.new(pid_filepath(pid), "w+")
+    tmp_pid_file = File.new(pid_filepath(pid), 'w+')
     tmp_pid_file.write(time_id)
     tmp_pid_file.close
   end
