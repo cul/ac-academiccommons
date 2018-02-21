@@ -9,7 +9,8 @@ module CatalogHelper
 
   # Adds handle or doi prefix if necessary. Makes field a clickable link.
   def link_identifier(**options)
-    url = AcademicCommons.identifier_url(options[:value].first)
+    value = (options[:value].is_a? Array) ? options[:value].first : options[:value]
+    url = AcademicCommons.identifier_url(options[:value])
     link_to url, url
   end
 
