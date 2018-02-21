@@ -30,7 +30,7 @@ AcademicCommons::Application.routes.draw do
   end
 
   # Routes for solr document
-  resources :catalog, only: [:show], controller: 'catalog' do
+  resources :solr_document, only: [:show], controller: 'catalog' do
     concerns :exportable
   end
 
@@ -100,5 +100,6 @@ AcademicCommons::Application.routes.draw do
 
   # Handle server redirects to /item/:id. This route will redirect those requests
   # to /catalog/:id.
-  get '/item/:id', to: redirect('/catalog/%{id}')
+  get '/item/:id', to: redirect('/solr_document/%{id}')
+  get '/catalog/:id', to: redirect('/solr_document/%{id}')
 end

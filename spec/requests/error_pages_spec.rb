@@ -43,10 +43,10 @@ RSpec.describe 'error pages', type: :request do
     end
   end
 
-  describe '/catalog/NOT_VALID_ID' do
+  describe '/solr_document/NOT_VALID_ID' do
     context 'when solr document id not valid' do
       before :each do
-        get '/catalog/NOT_VALID_ID'
+        get '/solr_document/NOT_VALID_ID'
       end
 
       it 'returns 500 status code' do

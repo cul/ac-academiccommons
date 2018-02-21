@@ -137,7 +137,7 @@ describe CatalogController, type: :feature do
 
   describe 'show' do
     before do
-      visit catalog_path('actest:1')
+      visit solr_document_path('actest:1')
     end
 
     xit 'has the fixture object' do

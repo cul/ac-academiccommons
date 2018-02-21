@@ -40,7 +40,7 @@ class SolrDocumentsController < ApplicationController
       aggregator = obj.is_a?(ContentAggregator)
       notify_authors_of_new_item(solr_doc) if aggregator
 
-      location_url = aggregator ? catalog_url(params[:id]) : download_url(obj)
+      location_url = aggregator ? solr_document_url(params[:id]) : download_url(obj)
       response.headers['Location'] = location_url
       render status: :ok, plain: ''
     rescue ActiveFedora::ObjectNotFoundError => e
