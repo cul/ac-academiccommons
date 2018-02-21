@@ -76,18 +76,12 @@ If you need an object in AC to do further testing and development, add a collect
 
 ## Running tests
 1. In order to run tests that require javascript you will might need `chrome` installed (needs to be tested).
-2. Run test locally by running `rake ci`.
-
+2. Run tests locally by running `rake ci`.
+3. Run tests and rubocop by running `rake` (this is the task used on each travis build).
 
 ## Deploying
 1. When deploying a new version of the application to test or prod, make sure to create a new tag by running:
    ```
-   cap test deploy:auto_tag
+   cap test cul:auto_tag
    ```
    This will create a tag based on the version number (listed in `VERSION`).
-
-
-## Improvements
-### Making Application Faster
-  1. We are only using one image from Font Awesome, instead we could be using a static image.
-  2. FancyBox2 (jquery plugin) may no longer be needed, but is still referenced in view helper code.
