@@ -18,7 +18,7 @@ RSpec.describe Notifier, type: :mailer do
           'response' => {
             'docs' => [
               { 'id' => 'actest:1', 'title_display' => 'First Test Document', 'object_state_ssi' => 'A',
-                'handle' => 'http://dx.doi.org/10.7916/TESTDOC1', 'doi' => '', 'genre_facet' => '' }
+                'handle' => 'https://doi.org/10.7916/TESTDOC1', 'doi' => '', 'genre_facet' => '' }
               ]
             }
           }, {}

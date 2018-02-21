@@ -20,9 +20,9 @@ RSpec.describe AcademicCommons::Metrics::UsageStatistics, integration: true do
         'response' => {
           'docs' => [
             { 'id' => pid2, 'title_display' => 'Second Test Document', 'object_state_ssi' => 'A',
-             'handle' => 'http://dx.doi.org/10.7916/TESTDOC2', 'doi' => '', 'genre_facet' => ''},
+             'handle' => 'https://doi.org/10.7916/TESTDOC2', 'doi' => '', 'genre_facet' => ''},
             { 'id' => pid, 'title_display' => 'First Test Document', 'object_state_ssi' => 'A',
-              'handle' => 'http://dx.doi.org/10.7916/TESTDOC1', 'doi' => '', 'genre_facet' => '' }
+              'handle' => 'https://doi.org/10.7916/TESTDOC1', 'doi' => '', 'genre_facet' => '' }
             ]
           }
         }, {}
@@ -49,11 +49,11 @@ RSpec.describe AcademicCommons::Metrics::UsageStatistics, integration: true do
               'response' => {
                 'docs' => [
                   { 'id' => pid2, 'title_display' => 'Second Test Document', 'object_state_ssi' => 'A',
-                   'handle' => 'http://dx.doi.org/10.7916/TESTDOC2', 'doi' => '', 'genre_facet' => ''},
+                   'handle' => 'https://doi.org/10.7916/TESTDOC2', 'doi' => '', 'genre_facet' => ''},
                   { 'id' => pid, 'title_display' => 'First Test Document', 'object_state_ssi' => 'A',
-                    'handle' => 'http://dx.doi.org/10.7916/TESTDOC1', 'doi' => '', 'genre_facet' => '' },
+                    'handle' => 'https://doi.org/10.7916/TESTDOC1', 'doi' => '', 'genre_facet' => '' },
                   { 'id' => 'actest:10', 'title_display' => 'First Test Document', 'object_state_ssi' => 'A',
-                    'handle' => 'http://dx.doi.org/10.7916/TESTDOC1', 'doi' => '', 'genre_facet' => '',
+                    'handle' => 'https://doi.org/10.7916/TESTDOC1', 'doi' => '', 'genre_facet' => '',
                     'free_to_read_start_date' => Date.tomorrow.strftime('%Y-%m-%d') }
                   ]
                 }
@@ -199,22 +199,22 @@ RSpec.describe AcademicCommons::Metrics::UsageStatistics, integration: true do
         ["VIEWS REPORT:"],
         ["Total for period:", "2", "", "", "", "Views by Month"],
         ["Title", "Content Type", "Persistent URL", "Publisher DOI", "Reporting Period Total Views", "Jan-2015", "Feb-2015", "Mar-2015", "Apr-2015", "May-2015", "Jun-2015", "Jul-2015", "Aug-2015", "Sep-2015", "Oct-2015", "Nov-2015", "Dec-2015", "Jan-2016", "Feb-2016", "Mar-2016", "Apr-2016", "May-2016", "Jun-2016", "Jul-2016", "Aug-2016", "Sep-2016", "Oct-2016", "Nov-2016", "Dec-2016"],
-        ["First Test Document", "", "http://dx.doi.org/10.7916/TESTDOC1", "", "2", "1", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "1", "0", "0", "0", "0", "0", "0", "0", "0", "0"],
-        ["Second Test Document", "", "http://dx.doi.org/10.7916/TESTDOC2", "", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0"],
+        ["First Test Document", "", "https://doi.org/10.7916/TESTDOC1", "", "2", "1", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "1", "0", "0", "0", "0", "0", "0", "0", "0", "0"],
+        ["Second Test Document", "", "https://doi.org/10.7916/TESTDOC2", "", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0"],
 
         [], [],
         ["STREAMS REPORT:"],
         ["Total for period:", "1", "", "", "", "Streams by Month"],
         ["Title", "Content Type", "Persistent URL", "Publisher DOI", "Reporting Period Total Streams", "Jan-2015", "Feb-2015", "Mar-2015", "Apr-2015", "May-2015", "Jun-2015", "Jul-2015", "Aug-2015", "Sep-2015", "Oct-2015", "Nov-2015", "Dec-2015", "Jan-2016", "Feb-2016", "Mar-2016", "Apr-2016", "May-2016", "Jun-2016", "Jul-2016", "Aug-2016", "Sep-2016", "Oct-2016", "Nov-2016", "Dec-2016"],
-        ["First Test Document", "", "http://dx.doi.org/10.7916/TESTDOC1", "", "1", "0", "0", "0", "0", "1", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0"],
-        ["Second Test Document", "", "http://dx.doi.org/10.7916/TESTDOC2", "", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0"],
+        ["First Test Document", "", "https://doi.org/10.7916/TESTDOC1", "", "1", "0", "0", "0", "0", "1", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0"],
+        ["Second Test Document", "", "https://doi.org/10.7916/TESTDOC2", "", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0"],
 
         [], [],
         ["DOWNLOADS REPORT:"],
         ["Total for period:", "2", "", "", "", "Downloads by Month"],
         ["Title", "Content Type", "Persistent URL", "Publisher DOI", "Reporting Period Total Downloads", "Jan-2015", "Feb-2015", "Mar-2015", "Apr-2015", "May-2015", "Jun-2015", "Jul-2015", "Aug-2015", "Sep-2015", "Oct-2015", "Nov-2015", "Dec-2015", "Jan-2016", "Feb-2016", "Mar-2016", "Apr-2016", "May-2016", "Jun-2016", "Jul-2016", "Aug-2016", "Sep-2016", "Oct-2016", "Nov-2016", "Dec-2016"],
-        ["First Test Document", "", "http://dx.doi.org/10.7916/TESTDOC1", "", "2", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "2", "0", "0", "0", "0", "0", "0", "0", "0"],
-        ["Second Test Document", "", "http://dx.doi.org/10.7916/TESTDOC2", "", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0"]
+        ["First Test Document", "", "https://doi.org/10.7916/TESTDOC1", "", "2", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "2", "0", "0", "0", "0", "0", "0", "0", "0"],
+        ["Second Test Document", "", "https://doi.org/10.7916/TESTDOC2", "", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0"]
       ]
     end
     let(:usage_stats) do
@@ -297,7 +297,7 @@ RSpec.describe AcademicCommons::Metrics::UsageStatistics, integration: true do
       usage_stats.instance_eval{
         most_downloaded_asset(
           { 'id' => 'actest:1', 'title_display' => 'Second Test Document', 'object_state_ssi' => 'A',
-            'handle' => 'http://dx.doi.org/10.7916/TESTDOC2', 'doi' => '', 'genre_facet' => '' }
+            'handle' => 'https://doi.org/10.7916/TESTDOC2', 'doi' => '', 'genre_facet' => '' }
         )
       }
     }
