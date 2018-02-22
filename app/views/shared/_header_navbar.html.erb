@@ -5,15 +5,15 @@
 %>
 
 <div id="header-navbar" class="navbar navbar-default navbar-static-top" role="navigation">
-  <div class="<%= container_classes %>">
+  <div class="container-fluid">
     <div class="navbar-header">
-    <button type="button" class="navbar-toggle btn collapsed" data-toggle="collapse" data-target="#user-util-collapse">
-      <span class="sr-only">Toggle navigation</span>
-      <span class="icon-bar"></span>
-      <span class="icon-bar"></span>
-      <span class="icon-bar"></span>
-    </button>
-    <%= link_to application_name, root_path, class: "navbar-brand" %>
+      <button type="button" class="navbar-toggle btn collapsed" data-toggle="collapse" data-target="#user-util-collapse">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <%= link_to application_name, root_path, class: "navbar-brand" %>
     </div>
 
     <div class="collapse navbar-collapse" id="user-util-collapse">
@@ -22,8 +22,17 @@
   </div>
 </div>
 
-<div id="search-navbar" class="navbar navbar-default navbar-static-top" role="navigation">
-  <div class="<%= container_classes %>">
-    <%= render_search_bar  %>
+<div id="search-navbar" class="" role="navigation">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-sm-4 about-links">
+          About |
+          FAQ |
+          Browse
+      </div>
+      <div class="col-sm-6 pull-right">
+        <%= render_search_bar %>
+      </div>
+    </div>
   </div>
 </div>

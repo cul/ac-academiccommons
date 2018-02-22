@@ -1,5 +1,9 @@
 /* header */
 
+.navbar {
+  margin-bottom: 0;
+}
+
 #header-navbar {
 
   & .navbar-brand {
@@ -19,7 +23,7 @@
   & .navbar-nav {
 
     @media screen and (min-width: $screen-md ) {
-      padding: 17px 0 0 0;
+      padding: 17px 15px 0 0;
     }
 
     & li a {
@@ -45,9 +49,29 @@
       color: $link-hover-color;
     }
   }
-
 }
 
 #search-navbar {
   background: $body-bg;
+  border-bottom: 1px solid $gray-lighter;
+  margin: 0 0 20px 0;
+
+  & .about-links {
+    line-height: 50px;
+  }
+
+  & .search-query-form {
+    padding-right: 0;
+  }
+
+  & .navbar-form {
+
+    & .form-control {
+      border-radius: 3px;
+    }
+
+    & .input-group-btn {
+      width: 1%;
+    }
+  }
 }
