@@ -1,17 +1,18 @@
 lock '3.8.0'
 
-set :department, 'ac'
-set :instance, fetch(:department)
+set :instance, 'ac'
 set :application, 'academiccommons'
-set :repo_name, "#{fetch(:department)}-#{fetch(:application)}"
-set :deploy_name, "#{fetch(:application)}_#{fetch(:stage)}"
+set :deploy_name do
+  stage = fetch(:stage)
+  (stage.match(/^ac4/)) ? stage : "#{fetch(:application)}_#{stage}"
+end
 # used to run rake db:migrate, etc
 # Default value for :rails_env is fetch(:stage)
 set :rails_env, fetch(:deploy_name)
 # use the rvm wrapper
 set :rvm_ruby_version, fetch(:deploy_name)
 
-set :repo_url,  "git@github.com:cul/#{fetch(:repo_name)}.git"
+set :repo_url,  "git@github.com:cul/ac-academiccommons.git"
 
 set :remote_user, "#{fetch(:instance)}serv"
 
@@ -60,8 +61,9 @@ namespace :deploy do
   task :generate_500_html do
     on roles(:web) do |host|
       public_500_html = File.join(release_path, "public", "500.html")
-      env = (fetch(:stage) == :prod) ? '' : "-#{fetch(:stage)}.cdrs"
-      execute :curl, "https://#{fetch(:application)}#{env}.columbia.edu/500", "-sS", "-o", public_500_html
+      sub_domain = fetch(:stage).match(/^ac4/) ? 'cul' : 'cdrs'
+      env = fetch(:stage) == :prod ? fetch(:application) : "#{fetch(:deploy_name).to_s.gsub('_', '-')}.#{sub_domain}"
+      execute :curl, "https://#{env}.columbia.edu/500", "-sS", "-o", public_500_html
     end
   end
 
