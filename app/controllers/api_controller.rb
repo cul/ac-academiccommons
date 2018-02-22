@@ -1,5 +1,4 @@
-class ApiController
-
+class ApiController < ApplicationController
   # GET /api/v1/search(/:type_of_search)
   def search
     api_response = AcademicCommons::API.search(search_params)
@@ -33,6 +32,6 @@ class ApiController
 
   def search_params
     filters = AcademicCommons::API::Search::VALID_FILTERS.map{ |f| [f, []] }.to_h
-    params.permit(:type_of_search, :q, :page, :per_page, :format, :sort, :order, filters)
+    params.permit(:search_type, :q, :page, :per_page, :format, :sort, :order, filters)
   end
 end

@@ -8,6 +8,11 @@ module AcademicCommons::API
     REQUIRED_FILTERS = ["has_model_ssim:\"#{ContentAggregator.to_class_uri}\""]
     KEY_TO_SOLR_FIELD = SolrDocument.field_semantics
 
+    SEARCH_TYPES_TO_QUERY = {
+      'title' => {'spellcheck.dictionary': 'title', qf: '${title_qf}', pf: '${title_pf}'},
+      'subject' => {'spellcheck.dictionary': 'subject', qf: '${subject_qf}', pf: '${subject_pf}'}
+    }
+
     MAX_PER_PAGE = 100
 
     SORT_TO_SOLR_SORT = {
@@ -67,7 +72,12 @@ module AcademicCommons::API
         fl: '*', # default blacklight solr param
         qt: 'search' # default blacklight solr param
       }
+
+      if SEARCH_TYPES_TO_QUERY.key? parameters[:search_type]
+        solr_params.merge!(SEARCH_TYPES_TO_QUERY[parameters[:search_type]])
+      end
       puts solr_params
+
       solr_params
     end
 
