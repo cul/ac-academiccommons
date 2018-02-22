@@ -4,6 +4,10 @@
   margin-bottom: 0;
 }
 
+.navbar-default {
+  border-color: $gray-lighter;
+}
+
 #header-navbar {
 
   & .navbar-brand {
@@ -57,7 +61,12 @@
   margin: 0 0 20px 0;
 
   & .about-links {
+    color: $gray-lighter;
     line-height: 50px;
+  }
+
+  & .about-links span {
+    margin: 0 3px;
   }
 
   & .search-query-form {
@@ -65,6 +74,11 @@
   }
 
   & .navbar-form {
+    margin: 0;
+
+    @media screen and (min-width: $screen-md ) {
+      margin: 7px 0;
+    }
 
     & .form-control {
       border-radius: 3px;

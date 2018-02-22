@@ -2,6 +2,8 @@
   Overriding blacklight v16.14.1 template.
 
   - Changes navbar-inverse class to navbar-default
+  - Adds links to about, faq, browse
+  - Modifies layout for search-navbar
 %>
 
 <div id="header-navbar" class="navbar navbar-default navbar-static-top" role="navigation">
@@ -26,8 +28,10 @@
   <div class="container-fluid">
     <div class="row">
       <div class="col-sm-4 about-links">
-          About |
-          FAQ |
+          <%= link_to t('blacklight.header_links.about'), about_path %>
+          <span>|</span>
+          <%= link_to t('blacklight.header_links.faq'), faq_path %>
+          <span>|</span>
           Browse
       </div>
       <div class="col-sm-6 pull-right">
