@@ -62,8 +62,8 @@ namespace :deploy do
     on roles(:web) do |host|
       public_500_html = File.join(release_path, "public", "500.html")
       sub_domain = fetch(:stage).match(/^ac4/) ? 'cul' : 'cdrs'
-      env = fetch(:stage) == :prod ? '' : "#{fetch(:deploy_name).to_s.gsub('_', '-')}.#{sub_domain}"
-      execute :curl, "https://#{fetch(:application)}#{env}.columbia.edu/500", "-sS", "-o", public_500_html
+      env = fetch(:stage) == :prod ? fetch(:application) : "#{fetch(:deploy_name).to_s.gsub('_', '-')}.#{sub_domain}"
+      execute :curl, "https://#{env}.columbia.edu/500", "-sS", "-o", public_500_html
     end
   end
 
