@@ -82,7 +82,8 @@ A _json_ response will contain the number of results, page number, query paramet
 
   "records": [
     {
-      "id": "ac:ksn02v6wz7",
+      "id": "10.7916/D82J6QBM",
+      "legacy_id": "ac:ksn02v6wz7",
       "title": "Approximating a Global Passive Adversary Against Tor",
       "authors": ["Chakravarty, Sambuddho", "Stavrou, Angelos", "Keromytis, Angelos D."],
       "abstract": "We present a novel, practical, and effective mechanism for identifying the IP address of Tor clients. We approximate an almost-global passive adversary (GPA) capable of eavesdropping anywhere in the network by using LinkWidth, a novel bandwidth-estimation technique.",
