@@ -31,7 +31,7 @@ class ApiController < ApplicationController
   end
 
   def search_params
-    filters = AcademicCommons::API::Search::VALID_FILTERS.map{ |f| [f, []] }.to_h
+    filters = AcademicCommons::API::Fields::FILTERS.map{ |f| [f, []] }.to_h
     params.permit(:search_type, :q, :page, :per_page, :format, :sort, :order, filters)
   end
 end

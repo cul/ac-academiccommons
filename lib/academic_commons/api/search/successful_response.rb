@@ -1,25 +1,27 @@
 require 'rss'
 
 module AcademicCommons::API
-  class Search
-    class SuccessResponse < Response
+  module Search
+    class SuccessfulResponse < BaseResponse
+      include Fields
+
       def initialize(parameters, solr_response: nil)
         @parameters = parameters
         @solr_response = solr_response
 
-        body = send("#{@parameters[:format]}_body")
-        headers = [] # need to generate link headers
-
-        super(:success, headers, body)
+        @body = send("#{@parameters[:format]}_body")
+        @headers = [] # need to generate link headers
+        @status = :ok
       end
 
       def json_body
         json = {
-          total_number_of_results: @solr_response['response']['numFound'],
+          total_number_of_results: @solr_response.dig('response', 'numFound'),
           page: @parameters[:page],
           per_page: @parameters[:per_page],
           params: {},
-          records: []
+          records: [],
+          facets: {}
         }
 
         [:q, :sort, :order, :search_type].each do |key|
@@ -27,10 +29,17 @@ module AcademicCommons::API
         end
 
         # add filters
-        json[:params][:filters] = @parameters.select{ |k, _| VALID_FILTERS.include?(k) }
+        json[:params][:filters] = @parameters.select{ |k, _| FILTERS.include?(k) }
 
         # add records
         json[:records] = semantic_documents
+
+        # add facets
+        facet_fields = @solr_response.dig('facet_counts', 'facet_fields')
+        FACETS.each do |facet|
+          fields = facet_fields[MAP_TO_SOLR_FIELD[facet.to_sym]]
+          json[:facets][facet] = Hash[*fields]
+        end
 
         json
       end

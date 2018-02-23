@@ -1,5 +1,5 @@
 module AcademicCommons::API
-  class ErrorResponse < Response
+  class ErrorResponse < BaseResponse
     attr_reader :body, :status, :headers
 
     def initialize(format, errors, status)
