@@ -27,6 +27,8 @@ class SolrDocument
 
   # Normalized field names
   field_semantics.merge!(
+    id: 'handle',
+    legacy_id: 'id',
     title: "title_display",
     author: "author_facet",
     creator: "author_facet",
@@ -37,8 +39,6 @@ class SolrDocument
     subject: "subject_facet",
     description: "abstract",
     language: "language",
-    # specific fields for api
-    id: 'id',
     abstract: "abstract",
     department: "department_facet",
     genre: "genre_facet",
@@ -88,8 +88,8 @@ class SolrDocument
 
   # Returns normalized fields in json, to be used by api rendering code.
   def to_ac_api
-    singular_fields = [:id, :title, :date, :abstract, :created_at]
-    fields = [:id, :title, :author, :abstract, :department, :date, :subject, :genre, :language, :persistent_url, :created_at]
+    singular_fields = [:id, :legacy_id, :title, :date, :abstract, :created_at]
+    fields = [:id, :legacy_id, :title, :author, :abstract, :department, :date, :subject, :genre, :language, :persistent_url, :created_at]
 
     json = to_semantic_values.keep_if { |f, _| fields.include?(f) }
     json.each { |k, v| json[k] = v.first if singular_fields.include?(k) }
