@@ -6,6 +6,7 @@ Rails:
   Enabled: true
 
 AllCops:
+  TargetRubyVersion: 2.3.3
   Include:
     - '**/Rakefile'
     - '**/config.ru'
@@ -16,4 +17,7 @@ AllCops:
     - 'vendor/**/*'
 
 Style/Documentation:
+  Enabled: false
+
+Style/FrozenStringLiteralComment:
   Enabled: false
