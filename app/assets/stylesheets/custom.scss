@@ -74,18 +74,14 @@
   }
 
   & .navbar-form {
-    margin: 0;
+    margin: 7px 0;
+  }
 
-    @media screen and (min-width: $screen-md ) {
-      margin: 7px 0;
-    }
+  & .navbar-form .form-control {
+    border-radius: 3px;
+  }
 
-    & .form-control {
-      border-radius: 3px;
-    }
-
-    & .input-group-btn {
-      width: 1%;
-    }
+  & .navbar-form .input-group-btn {
+    width: 1%;
   }
 }
