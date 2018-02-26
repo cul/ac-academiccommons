@@ -9,8 +9,8 @@ AcademicCommons::Application.routes.draw do
   root :to => "catalog#index"
 
   scope '/api/v1', controller: 'api' do
-    get 'search(/:search_type)', to: :search
-    get 'feed/:key', to: :feed
+    get 'search(/:search_type)', action: :search
+    get 'feed/:key', action: :feed
   end
 
   get "info/about"

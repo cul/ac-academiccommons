@@ -17,8 +17,6 @@ module AcademicCommons::API
       # Returns response object
       def initialize(params)
         @errors = []
-        # super
-
         @parameters = params
         with_facets = !params[:format].eql?('rss')
 

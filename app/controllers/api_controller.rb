@@ -13,7 +13,7 @@ class ApiController < ApplicationController
   def feed
     # authorized = valid_api_key?
     # f = feed_params[:format] || :json
-    # api_response = AcademicCommons::API.feed(feed_params[:key], feed_params[:format], authorized)
+    # api_response = AcademicCommons::API.feed(feed_params[:key], authorized)
 
     # respond_to do |f|
     #   f.json { render json: api_response.body, status: api_response.status }

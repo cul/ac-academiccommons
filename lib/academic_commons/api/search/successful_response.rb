@@ -14,6 +14,24 @@ module AcademicCommons::API
         @status = :ok
       end
 
+      def headers
+        params = parameters.clone # deep clone
+        # strip out default parameters from parameters
+        base_link = 'api/v1/search'
+        search_type = parameters.delete('search_type')
+        base_link = "/#{search_type}" if search_type
+        page = params.delete('page')
+        link = "?#{params.to_query}" #add query parameters
+
+        headers = []
+        # add page before
+
+        # add next page
+
+        # add last page
+
+      end
+
       def json_body
         json = {
           total_number_of_results: @solr_response.dig('response', 'numFound'),
