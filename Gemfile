@@ -19,6 +19,7 @@ gem 'devise'
 gem 'dotenv-rails'
 gem 'fancybox2-rails' # Used in helper classes. TODO: Confirm that this is needed and used by the application.
 gem 'gaffe'
+gem 'grape'
 gem 'haml', '>= 4.0.7'
 gem 'httpclient','~>2.6'
 gem 'jquery-rails', '2.0.3' # Locked at jquery-1.7.2; could potentially be updated later.
