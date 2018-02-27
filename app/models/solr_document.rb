@@ -42,7 +42,11 @@ class SolrDocument
     abstract: "abstract",
     department: "department_facet",
     genre: "genre_facet",
-    created_at: "record_creation_date"
+    created_at: "record_creation_date",
+    modified_at: 'record_change_date',
+    degree_name: 'degree_name_ssim',
+    degree_label: 'degree_level_name_ssim',
+    degree_grantor: 'degree_grantor_ssim'
   )
 
   def embargoed?
@@ -88,8 +92,9 @@ class SolrDocument
 
   # Returns normalized fields in json, to be used by api rendering code.
   def to_ac_api
-    singular_fields = [:id, :legacy_id, :title, :date, :abstract, :created_at]
-    fields = [:id, :legacy_id, :title, :author, :abstract, :department, :date, :subject, :type, :language, :persistent_url, :created_at]
+    singular_fields = [:id, :legacy_id, :title, :date, :abstract, :created_at, :modified_at, :degree_name, :degree_level_name, :degree_grantor]
+    multi_valued_fields = [:author, :abstract, :department, :subject, :type, :language, :persistent_url]
+    fields = singular_fields + multi_valued_fields
 
     json = to_semantic_values.keep_if { |f, _| fields.include?(f) }
     json.each { |k, v| json[k] = v.first if singular_fields.include?(k) }

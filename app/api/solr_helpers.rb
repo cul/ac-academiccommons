@@ -1,34 +1,34 @@
 module SolrHelpers
   extend Grape::API::Helpers
-    SEARCH_TYPES = %w(keyword title subject).freeze
-    FILTERS = %w(author author_id date department subject type series).freeze
-    SORT    = %w(best_match date title created_at).freeze
-    ORDER   = %w(desc asc).freeze
-    FACETS = %w(author date department subject type series).freeze
-    REQUIRED_FILTERS = ["has_model_ssim:\"#{ContentAggregator.to_class_uri}\""]
 
-    SEARCH_TYPES_TO_QUERY = {
-      'title' => { 'spellcheck.dictionary': 'title', qf: '${title_qf}', pf: '${title_pf}'},
-      'subject' => { 'spellcheck.dictionary': 'subject', qf: '${subject_qf}', pf: '${subject_pf}'}
-    }.freeze
+  SEARCH_TYPES = %w(keyword title subject).freeze
+  FILTERS = %w(author author_id date department subject type series).freeze
+  SORT    = %w(best_match date title created_at).freeze
+  ORDER   = %w(desc asc).freeze
+  FACETS = %w(author date department subject type series).freeze
+  REQUIRED_FILTERS = ["has_model_ssim:\"#{ContentAggregator.to_class_uri}\""]
 
-    SORT_TO_SOLR_SORT = {
-      'best_match' => {
-        'asc' => 'score desc, pub_date_sort desc, title_sort asc',
-        'desc' => 'score desc, pub_date_sort desc, title_sort asc'
-      },
-      'date' => {
-        'asc' => 'pub_date_sort asc, title_sort asc',
-        'desc' => 'pub_date_sort desc, title_sort asc'
-      },
-      'title' => {
-        'asc'  => 'title_sort asc, pub_date_sort desc',
-        'desc' => 'title_sort desc, pub_date_sort desc'
-      }
-    }.freeze
+  SEARCH_TYPES_TO_QUERY = {
+    'title' => { 'spellcheck.dictionary': 'title', qf: '${title_qf}', pf: '${title_pf}'},
+    'subject' => { 'spellcheck.dictionary': 'subject', qf: '${subject_qf}', pf: '${subject_pf}'}
+  }.freeze
 
-    MAP_TO_SOLR_FIELD = SolrDocument.field_semantics
+  SORT_TO_SOLR_SORT = {
+    'best_match' => {
+      'asc' => 'score desc, pub_date_sort desc, title_sort asc',
+      'desc' => 'score desc, pub_date_sort desc, title_sort asc'
+    },
+    'date' => {
+      'asc' => 'pub_date_sort asc, title_sort asc',
+      'desc' => 'pub_date_sort desc, title_sort asc'
+    },
+    'title' => {
+      'asc'  => 'title_sort asc, pub_date_sort desc',
+      'desc' => 'title_sort desc, pub_date_sort desc'
+    }
+  }.freeze
 
+  MAP_TO_SOLR_FIELD = SolrDocument.field_semantics
 
   def query_solr(params: {}, with_facets: true)
     connection = AcademicCommons::Utils.rsolr
@@ -67,6 +67,4 @@ module SolrHelpers
 
     solr_params
   end
-
-
 end
