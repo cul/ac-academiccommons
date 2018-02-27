@@ -1,3 +1,22 @@
+/* cul banner */
+
+.cul-banner {
+  background: $brand-dark;
+  padding: 8px 10px;
+
+  & .cul-banner-logo {
+    background: transparent $logo-cul-banner no-repeat top left;
+    background-size: contain;
+    display: inline-block;
+    width: 320px;
+  }
+
+  & .cul-banner-logo span {
+    display: block;
+    text-indent: -1000em;
+  }
+}
+
 /* header */
 
 .navbar {

@@ -6,6 +6,10 @@ $font-size-base: 16px;
 
 /* colors */
 
+$brand-primary: #4A90E2;
+
+$brand-dark: #002D63;
+
 $gray-base: #000;
 
 $gray-lighter: lighten($gray-base, 85%);
@@ -13,6 +17,8 @@ $gray-lighter: lighten($gray-base, 85%);
 /* header */
 
 $navbar-default-bg: #fff;
+
+$logo-cul-banner: image_url('logo-cul-banner.png');
 
 $logo-image: image_url('logo-ac.png');
 
