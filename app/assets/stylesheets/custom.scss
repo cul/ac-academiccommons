@@ -96,11 +96,11 @@
     margin: 7px 0;
   }
 
-  & .navbar-form .form-control {
-    border-radius: 3px;
-  }
-
   & .navbar-form .input-group-btn {
     width: 1%;
+  }
+
+  & .input-group-addon.for-search-field {
+    width: 10ch;
   }
 }
