@@ -1,3 +1,4 @@
+require 'academic_commons'
 class SolrDocument
   include Blacklight::Solr::Document
   include BlacklightOaiProvider::SolrDocument
@@ -34,7 +35,6 @@ class SolrDocument
     creator: "author_facet",
     date: "pub_date_facet",
     type: "genre_facet",
-    # type: ["type_of_resource_facet", "genre_facet"],
     publisher: "publisher",
     subject: "subject_facet",
     description: "abstract",
@@ -89,7 +89,7 @@ class SolrDocument
   # Returns normalized fields in json, to be used by api rendering code.
   def to_ac_api
     singular_fields = [:id, :legacy_id, :title, :date, :abstract, :created_at]
-    fields = [:id, :legacy_id, :title, :author, :abstract, :department, :date, :subject, :genre, :language, :persistent_url, :created_at]
+    fields = [:id, :legacy_id, :title, :author, :abstract, :department, :date, :subject, :type, :language, :persistent_url, :created_at]
 
     json = to_semantic_values.keep_if { |f, _| fields.include?(f) }
     json.each { |k, v| json[k] = v.first if singular_fields.include?(k) }
