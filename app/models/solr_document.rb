@@ -45,7 +45,7 @@ class SolrDocument
     created_at: "record_creation_date",
     modified_at: 'record_change_date',
     degree_name: 'degree_name_ssim',
-    degree_label: 'degree_level_name_ssim',
+    degree_level: 'degree_level_name_ssim',
     degree_grantor: 'degree_grantor_ssim'
   )
 

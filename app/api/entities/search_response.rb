@@ -36,7 +36,7 @@ module Entities
       facet_fields = solr_response.dig('facet_counts', 'facet_fields')
 
       SolrHelpers::FACETS.each_with_object({}) do |facet, hash|
-         fields = facet_fields[SolrHelpers::MAP_TO_SOLR_FIELD[facet.to_sym]]
+         fields = facet_fields[SolrHelpers::MAP_TO_SOLR_FIELD[facet]]
          hash[facet] = Hash[*fields] unless fields.blank?
       end
     end

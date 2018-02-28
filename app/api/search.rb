@@ -35,12 +35,12 @@ class Search < Grape::API
   default_format :json
 
   params do
-    optional :search_type, type: String, values: SolrHelpers::SEARCH_TYPES, default: 'keyword'
-    optional :q, type: String
-    optional :page,     type: Integer, default: 1, values: ->(v) { v.positive? }
-    optional :per_page, type: Integer, default: 25, values: 1..100
-    optional :sort,     type: String, default: 'best_match', values: SolrHelpers::SORT
-    optional :order,    type: String, default: 'desc', values: SolrHelpers::ORDER
+    optional :search_type, coerce: Symbol, default: :keyword,    values: SolrHelpers::SEARCH_TYPES
+    optional :q,           type: String
+    optional :page,        type: Integer,  default: 1,            values: ->(v) { v.positive? }
+    optional :per_page,    type: Integer,  default: 25,           values: 1..100
+    optional :sort,        coerce: Symbol, default: :best_match,  values: SolrHelpers::SORT
+    optional :order,       coerce: Symbol, default: :desc,        values: SolrHelpers::ORDER
 
     SolrHelpers::FILTERS.each do |filter|
       optional filter, type: Array[String]
