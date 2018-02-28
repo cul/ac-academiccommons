@@ -1,9 +1,20 @@
 <%#
   Overriding empty blacklight v16.14.1 template.
+
+  - adds links to about, faq, policies, cul
+  - adds ac email
 %>
 
-<p>
-  <a href="http://library.columbia.edu" target="_blank rel="noopener noreferrer">Columbia University Libraries</a>  |
-  <%= link_to t('blacklight.header_links.policies'), policies_path %> |
-  <%= link_to t('blacklight.header_links.faq'), faq_path %>
-</p>
+<div class="footer container-fluid">
+  <div class="row">
+    <div class="col-sm-8 footer-links">
+      <%= link_to t('blacklight.header_links.about'), about_path %> <span>|</span>
+      <%= link_to t('blacklight.header_links.faq'), faq_path %> <span>|</span>
+      <%= link_to t('blacklight.header_links.policies'), policies_path %> <span>|</span>
+      <a href="http://library.columbia.edu" target="_blank" rel="noopener noreferrer">Columbia University Libraries</a>
+    </div>
+    <div class="col-sm-4 contact">
+      <span class="glyphicon glyphicon-envelope"></span> <%= mail_to "ac@columbia.edu" %>
+    </div>
+  </div>
+</div>
