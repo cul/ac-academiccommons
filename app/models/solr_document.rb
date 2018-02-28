@@ -89,15 +89,4 @@ class SolrDocument
   def full_doi
     AcademicCommons.identifier_url(fetch(:handle, nil))
   end
-
-  # Returns normalized fields in json, to be used by api rendering code.
-  def to_ac_api
-    singular_fields = [:id, :legacy_id, :title, :date, :abstract, :created_at, :modified_at, :degree_name, :degree_level_name, :degree_grantor]
-    multi_valued_fields = [:author, :abstract, :department, :subject, :type, :language, :persistent_url]
-    fields = singular_fields + multi_valued_fields
-
-    json = to_semantic_values.keep_if { |f, _| fields.include?(f) }
-    json.each { |k, v| json[k] = v.first if singular_fields.include?(k) }
-    json
-  end
 end

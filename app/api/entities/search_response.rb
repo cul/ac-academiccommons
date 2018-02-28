@@ -28,8 +28,8 @@ module Entities
       options[:params]
     end
 
-    expose :records do |solr_response, options|
-      solr_response['response']['docs'].map { |d| SolrDocument.new(d).to_ac_api }
+    expose :records, using: Record do |solr_response, options|
+      solr_response['response']['docs'].map { |d| SolrDocument.new(d).to_semantic_values }
     end
 
     expose :facets do |solr_response, options|

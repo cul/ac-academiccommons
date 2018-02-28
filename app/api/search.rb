@@ -7,25 +7,25 @@ class Search < Grape::API
     xml.rss(version: '2.0', 'xmlns:dc': 'http://purl.org/dc/elements/1.1', 'xmlns:vivo': 'http://vivoweb.org/ontology/core') {
       xml.channel {
         xml.title('Academic Commons Search Results')
-        # xml.link(search_action_url(params))
+        xml.link(env['REQUEST_URI'])
         xml.description('Academic Commons Search Results')
         xml.language('en-us')
 
         object.value_for(:records).each do |doc|
           xml.item do
-            xml.title doc[:title] if doc.key?(:title)
-            xml.link doc[:persistent_url]
+            xml.title doc.value_for(:title)
+            xml.link doc.value_for(:persistent_url)
 
-            xml.tag!('dc:creator', doc[:author].join('; ')) if doc.key?(:author)
+            xml.tag!('dc:creator', doc.value_for(:author).join('; ')) if doc.value_for(:author).present?
 
-            xml.guid doc[:identifier]          if doc.key?(:identifier)
-            xml.pubDate doc[:created_at] #.rfc822
-            xml.tag!('dc:date', doc[:date])    if doc.key?(:date)
-            xml.description doc[:description]  if doc.key?(:description)
+            xml.guid doc.value_for(:persistent_url)
+            xml.pubDate doc.value_for(:created_at) #.rfc822
+            xml.tag!('dc:date', doc.value_for(:date))    if doc.value_for(:date).present?
+            xml.description doc.value_for(:abstract) if doc.value_for(:abstract).present?
 
-            xml.tag!('dc:subject', doc[:subject].join(', '))         if doc.key?(:subject)
-            xml.tag!('dc:type', doc[:content_type].join(', '))       if doc.key?(:content_type)
-            xml.tag!('vivo:Department', doc[:department].join(', ')) if doc.key?(:department)
+            xml.tag!('dc:subject', doc.value_for(:subject).join(', '))         if doc.value_for(:subject).present?
+            xml.tag!('dc:type', doc.value_for(:type).join(', '))       if doc.value_for(:type).present?
+            xml.tag!('vivo:Department', doc.value_for(:department).join(', ')) if doc.value_for(:department).present?
           end
         end
       }
@@ -35,12 +35,12 @@ class Search < Grape::API
   default_format :json
 
   params do
-    optional :search_type, values: SolrHelpers::SEARCH_TYPES, default: 'keyword'
-    optional :q
-    optional :page,     type: Integer, default: 1#, values: 1...
-    optional :per_page, type: Integer, default: 25,   values: 1..100
-    optional :sort,     default: 'best_match', values: SolrHelpers::SORT
-    optional :order,    default: 'desc', values: SolrHelpers::ORDER
+    optional :search_type, type: String, values: SolrHelpers::SEARCH_TYPES, default: 'keyword'
+    optional :q, type: String
+    optional :page,     type: Integer, default: 1, values: ->(v) { v.positive? }
+    optional :per_page, type: Integer, default: 25, values: 1..100
+    optional :sort,     type: String, default: 'best_match', values: SolrHelpers::SORT
+    optional :order,    type: String, default: 'desc', values: SolrHelpers::ORDER
 
     SolrHelpers::FILTERS.each do |filter|
       optional filter, type: Array[String]
