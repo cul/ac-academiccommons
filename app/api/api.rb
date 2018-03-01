@@ -1,3 +1,5 @@
+require 'grape-swagger'
+
 class API < Grape::API
   # Adding CORS headers.
   before do
@@ -12,4 +14,6 @@ class API < Grape::API
 
   mount Search
   mount DataFeed
+
+  add_swagger_documentation
 end

@@ -21,6 +21,7 @@ gem 'fancybox2-rails' # Used in helper classes. TODO: Confirm that this is neede
 gem 'gaffe'
 gem 'grape'
 gem 'grape-entity'
+gem 'grape-swagger'
 gem 'haml', '>= 4.0.7'
 gem 'httpclient','~>2.6'
 gem 'jquery-rails', '2.0.3' # Locked at jquery-1.7.2; could potentially be updated later.

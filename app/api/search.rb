@@ -48,7 +48,7 @@ class Search < Grape::API
   end
 
   desc 'Conduct searches through all Academic Commons records'
-  get '/search(/:search_type)' do
+  get '/search/:search_type' do
     solr_response = query_solr(params: params)
     present solr_response, with: Entities::SearchResponse, params: params
   end
