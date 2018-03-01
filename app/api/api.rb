@@ -17,6 +17,10 @@ class API < Grape::API
 
   add_swagger_documentation \
     info: {
-      title: "Academic Commons API"
-    }
+      title: "Academic Commons API v1"
+    },
+    tags: [
+      { name: 'search', description: 'Search for records' },
+      { name: 'data_feed', description: 'Returns non-paginated subset of records' }
+    ]
 end

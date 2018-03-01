@@ -35,25 +35,27 @@ module V1
 
     default_format :json
 
-    namespace :search do
-      params do
-        optional :search_type, coerce: Symbol, default: :keyword,     values: V1::Helpers::Solr::SEARCH_TYPES
-        optional :q,           type: String
-        optional :page,        type: Integer,  default: 1,            values: ->(v) { v.positive? }
-        optional :per_page,    type: Integer,  default: 25,           values: 1..100
-        optional :sort,        coerce: Symbol, default: :best_match,  values: V1::Helpers::Solr::SORT
-        optional :order,       coerce: Symbol, default: :desc,        values: V1::Helpers::Solr::ORDER
+    params do
+      optional :search_type, coerce: Symbol, default: :keyword,     values: V1::Helpers::Solr::SEARCH_TYPES
+      optional :q,           type: String
+      optional :page,        type: Integer,  default: 1,            values: ->(v) { v.positive? }
+      optional :per_page,    type: Integer,  default: 25,           values: 1..100
+      optional :sort,        coerce: Symbol, default: :best_match,  values: V1::Helpers::Solr::SORT
+      optional :order,       coerce: Symbol, default: :desc,        values: V1::Helpers::Solr::ORDER
 
-        Helpers::Solr::FILTERS.each do |filter|
-          optional filter, type: Array[String], documentation: { param_type: 'query' }
-        end
+      Helpers::Solr::FILTERS.each do |filter|
+        optional filter, type: Array[String], documentation: { param_type: 'query' }
       end
+    end
 
-      desc 'Conduct searches through all Academic Commons records'
-      get do
-        solr_response = query_solr(params: params)
-        present solr_response, with: Entities::SearchResponse, params: params
-      end
+    desc 'Conduct searches through all Academic Commons records',
+      success: { code: 202, message: 'successful response' },
+      failure: [
+        { code: 400, message: 'invalid parameters'}
+      ]
+    get :search do
+      solr_response = query_solr(params: params)
+      present solr_response, with: Entities::SearchResponse, params: params
     end
   end
 end
