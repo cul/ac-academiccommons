@@ -34,22 +34,24 @@ class Search < Grape::API
 
   default_format :json
 
-  params do
-    optional :search_type, coerce: Symbol, default: :keyword,    values: SolrHelpers::SEARCH_TYPES
-    optional :q,           type: String
-    optional :page,        type: Integer,  default: 1,            values: ->(v) { v.positive? }
-    optional :per_page,    type: Integer,  default: 25,           values: 1..100
-    optional :sort,        coerce: Symbol, default: :best_match,  values: SolrHelpers::SORT
-    optional :order,       coerce: Symbol, default: :desc,        values: SolrHelpers::ORDER
+  namespace :search do
+    params do
+      optional :search_type, coerce: Symbol, default: :keyword,     values: SolrHelpers::SEARCH_TYPES
+      optional :q,           type: String
+      optional :page,        type: Integer,  default: 1,            values: ->(v) { v.positive? }
+      optional :per_page,    type: Integer,  default: 25,           values: 1..100
+      optional :sort,        coerce: Symbol, default: :best_match,  values: SolrHelpers::SORT
+      optional :order,       coerce: Symbol, default: :desc,        values: SolrHelpers::ORDER
 
-    SolrHelpers::FILTERS.each do |filter|
-      optional filter, type: Array[String]
+      SolrHelpers::FILTERS.each do |filter|
+        optional filter, type: Array[String], documentation: { param_type: 'query' }
+      end
     end
-  end
 
-  desc 'Conduct searches through all Academic Commons records'
-  get '/search/:search_type' do
-    solr_response = query_solr(params: params)
-    present solr_response, with: Entities::SearchResponse, params: params
+    desc 'Conduct searches through all Academic Commons records'
+    get do
+      solr_response = query_solr(params: params)
+      present solr_response, with: Entities::SearchResponse, params: params
+    end
   end
 end

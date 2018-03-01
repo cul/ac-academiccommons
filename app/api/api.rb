@@ -15,5 +15,8 @@ class API < Grape::API
   mount Search
   mount DataFeed
 
-  add_swagger_documentation
+  add_swagger_documentation \
+    info: {
+      title: "Academic Commons API"
+    }
 end
