@@ -7,13 +7,13 @@ class API < Grape::API
     header['Access-Control-Request-Method'] = '*'
   end
 
-  version 'v1', using: :path
   prefix :api
+  version 'v1', using: :path
 
-  helpers SolrHelpers
+  helpers V1::Helpers::Solr
 
-  mount Search
-  mount DataFeed
+  mount V1::Search
+  mount V1::DataFeed
 
   add_swagger_documentation \
     info: {

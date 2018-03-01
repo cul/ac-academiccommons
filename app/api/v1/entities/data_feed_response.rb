@@ -1,4 +1,4 @@
-module Entities
+module V1::Entities
   class DataFeedResponse < Grape::Entity
     expose :total_number_of_results do |solr_response, options|
       solr_response.dig('response', 'numFound')

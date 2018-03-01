@@ -1,11 +1,11 @@
-module Entities
+module V1::Entities
   class Parameters < Grape::Entity
     [:q, :sort, :order, :search_type].each do |key|
       expose key
     end
 
     expose :filters do
-      SolrHelpers::FILTERS.each do |filter|
+      V1::Helpers::Solr::FILTERS.each do |filter|
         expose filter, expose_nil: false
       end
     end
@@ -35,8 +35,8 @@ module Entities
     expose :facets do |solr_response, options|
       facet_fields = solr_response.dig('facet_counts', 'facet_fields')
 
-      SolrHelpers::FACETS.each_with_object({}) do |facet, hash|
-         fields = facet_fields[SolrHelpers::MAP_TO_SOLR_FIELD[facet]]
+      V1::Helpers::Solr::FACETS.each_with_object({}) do |facet, hash|
+         fields = facet_fields[V1::Helpers::Solr::MAP_TO_SOLR_FIELD[facet]]
          hash[facet] = Hash[*fields] unless fields.blank?
       end
     end

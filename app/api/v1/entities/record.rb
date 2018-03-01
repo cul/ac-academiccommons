@@ -1,4 +1,4 @@
-module Entities
+module V1::Entities
   class Record < Grape::Entity
     format_with(:singular) { |v| v.first }
 
