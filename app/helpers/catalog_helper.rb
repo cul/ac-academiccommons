@@ -3,7 +3,6 @@ require 'academic_commons'
 module CatalogHelper
   include Blacklight::CatalogHelperBehavior
   include ApplicationHelper
-  include AcademicCommons::Listable
 
   delegate :repository, to: :controller
 
@@ -153,16 +152,16 @@ module CatalogHelper
 
   ############### Copied from Blacklight CatalogHelper #####################
 
-  def pdf_urls
-    urls = []
-    if(@document != nil)
-      resource_list = build_resource_list(@document)
-      resource_list.each do |resource|
-           urls.push( 'http://' + request.host_with_port + resource[:download_path] )
-       end
-     end
-     return urls
-  end
+  # def pdf_urls
+  #   urls = []
+  #   if(@document != nil)
+  #     resource_list = build_resource_list(@document)
+  #     resource_list.each do |resource|
+  #          urls.push( 'http://' + request.host_with_port + resource[:download_path] )
+  #      end
+  #    end
+  #    return urls
+  # end
 
   def itemscope_itemtype
     url_from_map = blacklight_config[:itemscope][:itemtypes][@document['genre_facet']]

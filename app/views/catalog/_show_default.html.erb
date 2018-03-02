@@ -36,19 +36,7 @@
 <% end -%>
 
 <%# Render asset information %>
-<div class="panel panel-default">
-  <div class="panel-heading">
-    <h3 class="panel-title"><%= t('blacklight.search.show.panels.files') %></h3>
-  </div>
-
-  <!-- List group -->
-  <ul class="list-group">
-    <li class="list-group-item">
-      <span>File 1</span><span>application/pdf</span><span>Download</span>
-    </li>
-    <li class="list-group-item">File 2</li>
-  </ul>
-</div>
+<%= render 'show_assets', document: document %>
 
 <%# Render more information %>
 <div class="panel panel-default">

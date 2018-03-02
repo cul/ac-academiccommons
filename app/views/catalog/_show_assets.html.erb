@@ -1,0 +1,26 @@
+<% asset_docs = document.assets %>
+
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h3 class="panel-title"><%= t('blacklight.search.show.panels.files') %></h3>
+  </div>
+  <ul class="list-group">
+    <% if document.restricted? %>
+      <em><%= document.access_restriction %></em>
+    <% elsif document.embargoed? %>
+      <em><%= t('blacklight.search.show.assets.embargoed', date: document[:free_to_read_start_date]) %></em>
+    <% elsif asset_docs.present? %>
+      <% asset_docs.each do |asset| %>
+        <li class="list-group-item">
+          <span><%= asset[:filename] %></span>
+          <span><%= asset[:content_type] %></span>
+          <span><%= link_to 'Download', asset[:download_path] %></span>
+        </li>
+      <% end %>
+    <% else %>
+      <li class="list-group-item">
+        <em><%= t('blacklight.search.show.assets.unavailable') %></em>
+      </li>
+    <% end %>
+  </ul>
+</div>
