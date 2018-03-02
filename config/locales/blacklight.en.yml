@@ -8,3 +8,11 @@ en:
       faq: 'FAQ'
       policies: 'Policies'
       browse: 'Browse'
+
+    search:
+      show:
+        label: '%{label}'
+        panels:
+          files: 'Files'
+          more_info: 'More Information'
+          notes: 'Notes'
