@@ -10,6 +10,8 @@ en:
       browse: 'Browse'
 
     search:
+      index:
+        label: ''
       show:
         label: '%{label}'
         panels:
