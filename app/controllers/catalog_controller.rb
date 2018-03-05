@@ -94,14 +94,14 @@ class CatalogController < ApplicationController
     # solr fields to be displayed in the index (search results) view
     #   The ordering of the field names is the order of the display
 
-    config.add_index_field 'author_facet', label: 'Authors'
+    config.add_index_field 'author_facet',   label: 'Authors'
     config.add_index_field 'pub_date_facet', label: 'Date'
     config.add_index_field 'genre_facet',    label: 'Type'
 
 
     # :display configuration is for our customized show view, it describes were on the page it should go.
     config.add_show_field 'pub_date_facet',          display: :tag,    itemprop: 'datePublished'
-    config.add_show_field 'genre_facet',             display: :tag,    itemprop: 'genre',        link_to_search: 'genre_facet'
+    config.add_show_field 'genre_facet',             display: :tag,    itemprop: 'genre'
     config.add_show_field 'degree_level_name_ssim',  display: :tag
 
     config.add_show_field 'author_facet',            display: :main_content,  itemprop: 'creator',      link_to_search: 'author_facet'
