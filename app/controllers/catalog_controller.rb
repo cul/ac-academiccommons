@@ -122,7 +122,6 @@ class CatalogController < ApplicationController
 
     config.add_show_field 'url',                     label: 'Related URL'
 
-
     config.add_show_field 'series_facet',            label: 'Series',                                     link_to_search: 'series_facet'
     config.add_show_field 'non_cu_series_facet',     label: 'Series'
     config.add_show_field 'part_number',             label: 'Part Number' #series part number

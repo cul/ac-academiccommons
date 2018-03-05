@@ -28,7 +28,9 @@
     <div class="subjects">
       <h4><%= render_document_show_field_label document, field: field_name %></h4>
       <ul>
-        <li class="blacklight-<%= field_name.parameterize %>"><%= doc_presenter.field_value field_name %></dd>
+        <% doc_presenter.field_value(field_name, join: false).each do |value| %>
+          <li><%= value %></li>
+        <% end %>
       </ul>
     </div>
   <% end -%>
@@ -47,7 +49,9 @@
       <% document_show_fields(document).select { |name, f| f[:display].blank? }.each do |field_name, field| -%>
          <% if should_render_show_field? document, field %>
            <dt><%= render_document_show_field_label document, field: field_name %></dt>
-           <dd><%= doc_presenter.field_value field_name %></dd>
+           <% doc_presenter.field_value(field_name, join: false).each do |value| %>
+             <dd><%= value %></dd>
+           <% end %>
          <% end -%>
       <% end -%>
     </dl>
