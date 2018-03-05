@@ -11,7 +11,7 @@ module V1
       'sort' => 'best_match', 'order': 'desc', 'page': 1, 'per_page': 100_000
     }
 
-    desc 'Retrieve data feed for key. Key maps to a set of preconfigured search results',
+    desc 'Retrieves data feed. Key maps to a set of preconfigured search results',
       success: { code: 202, message: 'successful response' },
       failure: [
         { code: 400, message: 'invalid parameter' },
