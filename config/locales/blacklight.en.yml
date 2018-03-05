@@ -8,3 +8,16 @@ en:
       faq: 'FAQ'
       policies: 'Policies'
       browse: 'Browse'
+
+    search:
+      index:
+        label: ''
+      show:
+        label: '%{label}'
+        panels:
+          files: 'Files'
+          more_info: 'More Information'
+          notes: 'Notes'
+        assets:
+          embargoed: 'This item is currently under embargo. It will be available starting %{date}.'
+          unavailable: 'Downloadable resources are currently unavailable for this item.'

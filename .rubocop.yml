@@ -21,3 +21,7 @@ Style/Documentation:
 
 Style/FrozenStringLiteralComment:
   Enabled: false
+
+Rails/OutputSafety:
+  Exclude:
+    - 'app/presentors/custom_join.rb'

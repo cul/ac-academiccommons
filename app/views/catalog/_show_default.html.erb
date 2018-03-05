@@ -1,0 +1,78 @@
+<%#
+  Overriding Blacklight v6.14.1 template.
+
+  - Adding our own customized panels to re-organize the item page.
+  - Separate sections for basic record information, subject (which are
+    organized in tables), files (assets), more information, and notes.
+%>
+
+<% doc_presenter = show_presenter(document) %>
+
+<%# Render tags under title %>
+<% document_show_fields(document).select { |name, f| f[:display] == :tag }.each do |field_name, field| -%>
+  <% if should_render_show_field? document, field %>
+    <span class="label label-default"><%= doc_presenter.field_value field_name %></span>
+  <% end -%>
+<% end -%>
+
+<%# Render author and abstract %>
+<% document_show_fields(document).select { |name, f| f[:display] == :main_content }.each do |field_name, field| -%>
+  <% if should_render_show_field? document, field %>
+    <p class="blacklight-<%= field_name.parameterize %>"><%= doc_presenter.field_value field_name %></p>
+  <% end -%>
+<% end -%>
+
+<%# Render table fields %>
+<% document_show_fields(document).select { |name, f| f[:display] == :table }.each do |field_name, field| -%>
+  <% if should_render_show_field? document, field %>
+    <div class="subjects">
+      <h4><%= render_document_show_field_label document, field: field_name %></h4>
+      <ul>
+        <% doc_presenter.field_value(field_name, join: false).each do |value| %>
+          <li><%= value %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end -%>
+<% end -%>
+
+<%# Render asset information %>
+<%= render 'show_assets', document: document %>
+
+<%# Render more information %>
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h3 class="panel-title"><%= t('blacklight.search.show.panels.more_info') %></h3>
+  </div>
+  <div class="panel-body">
+    <dl>
+      <% document_show_fields(document).select { |name, f| f[:display].blank? }.each do |field_name, field| -%>
+         <% if should_render_show_field? document, field %>
+           <dt><%= render_document_show_field_label document, field: field_name %></dt>
+           <% doc_presenter.field_value(field_name, join: false).each do |value| %>
+             <dd><%= value %></dd>
+           <% end %>
+         <% end -%>
+      <% end -%>
+    </dl>
+  </div>
+</div>
+
+<%# Render note %>
+<% note_fields = document_show_fields(document).select { |name, f| f[:display] == :note } -%>
+<% if note_fields.present? %>
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h3 class="panel-title"><%= t('blacklight.search.show.panels.notes') %></h3>
+    </div>
+    <div class="panel-body">
+      <% note_fields.each do |field_name, field| -%>
+         <% if should_render_show_field? document, field %>
+
+           <dt><%= render_document_show_field_label document, field: field_name %></dt>
+           <dd><%= doc_presenter.field_value field_name %></dd>
+         <% end -%>
+      <% end -%>
+    </div>
+  </div>
+<% end %>

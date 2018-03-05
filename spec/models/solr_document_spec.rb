@@ -1,15 +1,16 @@
 require 'rails_helper'
 
-describe CatalogHelper do
-  describe '#build_resource_list' do
+describe SolrDocument do
+  describe '#assets' do
     let(:document) do
-      SolrDocument.new(
-        id: 'test:obj',
-        free_to_read_start_date: Date.current.strftime('%Y-%m-%d'),
-        object_state_ssi: 'A'
+      described_class.new(
+        id: 'test:obj', object_state_ssi: 'A',
+        free_to_read_start_date: Date.current.strftime('%Y-%m-%d')
       )
     end
+
     let(:empty_response) { { 'response' => { 'docs' => [] } } }
+
     context 'defaults to non-active exclusion' do
       let(:expected_params) do
         {
@@ -18,6 +19,7 @@ describe CatalogHelper do
           rows: 10_000, facet: false
         }
       end
+
       let(:solr_response) do
         {
           'response' => {
@@ -38,26 +40,37 @@ describe CatalogHelper do
           }
         }
       end
+
+      let(:expected_doc_1) do
+        {
+          pid: 'actest:2', filename: 'alice_in_wonderland.pdf', content_type: 'application/pdf',
+          download_path: '/download/fedora_content/download/actest:2/CONTENT/alice_in_wonderland.pdf'
+        }
+      end
+
+      let(:expected_doc_2) do
+        {
+          pid: 'actest:10', filename: 'alice_in_wonderland_cover.png', content_type: 'image/png',
+          download_path: '/download/fedora_content/download/actest:10/CONTENT/alice_in_wonderland_cover.png'
+        }
+      end
+
       it 'calls solr with expected params' do
         expect(Blacklight.default_index.connection).to receive(:get)
           .with('select', params: expected_params)
           .and_return(empty_response)
-        helper.build_resource_list(document)
+        document.assets
       end
+
       it 'returns array with documents' do
         allow(Blacklight.default_index.connection).to receive(:get)
           .with('select', params: expected_params)
           .and_return(solr_response)
-        resource_list = helper.build_resource_list(document)
-        expect(resource_list.count).to eq 2
-        expect(resource_list).to contain_exactly(
-          { pid: 'actest:2', filename: 'alice_in_wonderland.pdf', content_type: 'application/pdf',
-            download_path: '/download/fedora_content/download/actest:2/CONTENT/alice_in_wonderland.pdf' },
-          { pid: 'actest:10', filename: 'alice_in_wonderland_cover.png', content_type: 'image/png',
-            download_path: '/download/fedora_content/download/actest:10/CONTENT/alice_in_wonderland_cover.png' }
-        )
+        expect(document.assets.count).to eq 2
+        expect(document.assets).to contain_exactly(expected_doc_1, expected_doc_2)
       end
     end
+
     context 'includes non-active' do
       let(:expected_params) do
         {
@@ -66,47 +79,54 @@ describe CatalogHelper do
           rows: 10_000, facet: false
         }
       end
+
       it 'calls solr with expected params' do
         expect(Blacklight.default_index.connection).to receive(:get)
           .with('select', params: expected_params)
           .and_return(:empty_response)
-        helper.build_resource_list(document, true)
+        document.assets(include_inactive: true)
       end
     end
+
     context 'parent doc is embargoed' do
       let(:document) do
-        SolrDocument.new(
+        described_class.new(
           id: 'test:obj',
           free_to_read_start_date: Date.tomorrow.strftime('%Y-%m-%d'),
           object_state_ssi: 'A'
         )
       end
+
       it 'calls solr with expected params' do
         expect(Blacklight.default_index.connection).not_to receive(:get)
-        helper.build_resource_list(document, true)
+        document.assets(include_inactive: true)
       end
     end
+
     context 'parent doc is inactive' do
       let(:document) do
-        SolrDocument.new(
+        described_class.new(
           id: 'test:obj',
           free_to_read_start_date: Date.current.prev_day.strftime('%Y-%m-%d'),
           object_state_ssi: 'I'
         )
       end
+
       it 'calls solr with expected params' do
         expect(Blacklight.default_index.connection).not_to receive(:get)
-        helper.build_resource_list(document, true)
+        document.assets(include_inactive: true)
       end
     end
+
     context 'parent doc was embargoed' do
       let(:document) do
-        SolrDocument.new(
+        described_class.new(
           id: 'test:obj',
           free_to_read_start_date: Date.current.prev_day.strftime('%Y-%m-%d'),
           object_state_ssi: 'A'
         )
       end
+
       let(:expected_params) do
         {
           q: '*:*', qt: 'standard', fl: '*',
@@ -114,11 +134,12 @@ describe CatalogHelper do
           rows: 10_000, facet: false
         }
       end
+
       it 'calls solr with expected params' do
         expect(Blacklight.default_index.connection).to receive(:get)
           .with('select', params: expected_params)
           .and_return(:empty_response)
-        helper.build_resource_list(document, true)
+        document.assets(include_inactive: true)
       end
     end
   end

@@ -2,6 +2,7 @@ class SolrDocument
   include Blacklight::Solr::Document
   include BlacklightOaiProvider::SolrDocument
   include AcademicCommons::Embargoes
+  include AcademicCommons::Listable
 
   # self.unique_key = 'id'
   self.timestamp_key = 'record_creation_date'
@@ -70,5 +71,9 @@ class SolrDocument
 
   def full_doi
     AcademicCommons.identifier_url(fetch(:handle, nil))
+  end
+
+  def assets(include_inactive: false)
+    build_resource_list(self, include_inactive)
   end
 end

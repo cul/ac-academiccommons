@@ -3,7 +3,6 @@ require 'academic_commons'
 module CatalogHelper
   include Blacklight::CatalogHelperBehavior
   include ApplicationHelper
-  include AcademicCommons::Listable
 
   delegate :repository, to: :controller
 
@@ -11,11 +10,11 @@ module CatalogHelper
   def link_identifier(**options)
     value = options[:value].is_a?(Array) ? options[:value].first : options[:value]
     url = AcademicCommons.identifier_url(value)
-    link_to url, url
+    [link_to(url, url)]
   end
 
   def concat_grantor(**options)
-    [options[:value], options[:document]['degree_grantor_ssim']].join(', ')
+    [[options[:value], options[:document]['degree_grantor_ssim']].join(', ')]
   end
 
   def get_total_count
@@ -103,28 +102,6 @@ module CatalogHelper
     end
   end
 
-  def thumbnail_for_resource(resource)
-    extension = get_file_extension(resource[:filename].to_s)
-    thumbnail_folder_path = Rails.root.to_s + '/app/assets/images/thumbnail_icons/'
-    if(!extension.nil? && !extension.empty?)
-      thumbnail_file_name = extension + '.png'
-    else
-      thumbnail_file_name = [:content_type]
-      thumbnail_file_name['/'] = '_'
-      thumbnail_file_name += '.png'
-    end
-
-    if(!File.file?(thumbnail_folder_path + thumbnail_file_name))
-      thumbnail_file_name = 'default.png'
-    end
-
-    return thumbnail_file_name
-  end
-
-  def get_file_extension(filename)
-    filename.to_s.split('.').last.strip
-  end
-
   def get_metadata_list(doc)
     #catch any error and return an error message that resources are unavailable
     #this prevents fedora server outages from making ac2 item page inaccessible
@@ -152,17 +129,6 @@ module CatalogHelper
   end
 
   ############### Copied from Blacklight CatalogHelper #####################
-
-  def pdf_urls
-    urls = []
-    if(@document != nil)
-      resource_list = build_resource_list(@document)
-      resource_list.each do |resource|
-           urls.push( 'http://' + request.host_with_port + resource[:download_path] )
-       end
-     end
-     return urls
-  end
 
   def itemscope_itemtype
     url_from_map = blacklight_config[:itemscope][:itemtypes][@document['genre_facet']]
