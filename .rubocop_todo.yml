@@ -889,11 +889,6 @@ Rails/HttpPositionalArguments:
     - 'spec/controllers/solr_documents_controller_spec.rb'
     - 'spec/controllers/statistics_controller_spec.rb'
 
-# Offense count: 6
-Rails/OutputSafety:
-  Exclude:
-    - 'app/helpers/application_helper.rb'
-
 # Offense count: 3
 # Cop supports --auto-correct.
 Rails/PluralizationGrammar:
