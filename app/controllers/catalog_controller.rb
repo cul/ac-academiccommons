@@ -103,12 +103,12 @@ class CatalogController < ApplicationController
 
 
     # :display configuration is for our customized show view, it describes were on the page it should go.
-    config.add_show_field 'pub_date_facet',          display: :tag, label: 'Date',   itemprop: 'datePublished'
-    config.add_show_field 'genre_facet',             display: :tag, label: 'Type',   itemprop: 'genre',        link_to_search: 'genre_facet'
+    config.add_show_field 'pub_date_facet',          display: :tag,    itemprop: 'datePublished'
+    config.add_show_field 'genre_facet',             display: :tag,    itemprop: 'genre',        link_to_search: 'genre_facet'
     config.add_show_field 'degree_level_name_ssim',  display: :tag
 
-    config.add_show_field 'author_facet',  display: :main_content,  itemprop: 'creator',      link_to_search: 'author_facet'
-    config.add_show_field 'abstract',      display: :main_content,  itemprop: 'description'
+    config.add_show_field 'author_facet',            display: :main_content,  itemprop: 'creator',      link_to_search: 'author_facet'
+    config.add_show_field 'abstract',                display: :main_content,  itemprop: 'description'
 
     config.add_show_field 'geographic_area_display', display: :table, label: 'Geographic Areas'
     config.add_show_field 'subject_facet',           display: :table, label: 'Subjects',       itemprop: 'keywords',    link_to_search: 'subject_facet'
@@ -126,19 +126,18 @@ class CatalogController < ApplicationController
     config.add_show_field 'url',                     label: 'Related URL'
 
 
-
     config.add_show_field 'series_facet',            label: 'Series',                                     link_to_search: 'series_facet'
     config.add_show_field 'non_cu_series_facet',     label: 'Series'
-    config.add_show_field 'part_number',            label: 'Part Number' #series part number
+    config.add_show_field 'part_number',             label: 'Part Number' #series part number
 
 
-    config.add_show_field 'department_facet',        label: 'Department(s)',                              link_to_search: 'department_facet'
+    config.add_show_field 'department_facet',        label: 'Academic Units',                              link_to_search: 'department_facet'
 
 
-    config.add_show_field 'thesis_advisor',          label: 'Thesis Advisor(s)' #not sure what part of the page this would go on.
+    config.add_show_field 'thesis_advisor',          label: 'Thesis Advisors' #not sure what part of the page this would go on.
     config.add_show_field 'degree_name_ssim',        label: 'Degree',                                     helper_method: :concat_grantor
 
-    config.add_show_field 'notes',                  display: :notes, label: 'Notes'
+    config.add_show_field 'notes',                   display: :notes, label: 'Notes'
 
     # config.add_show_field 'handle',                  label: 'Persistent URL',   itemprop: 'url',          helper_method: :link_identifier
 

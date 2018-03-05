@@ -7,7 +7,6 @@
 %>
 
 <% doc_presenter = show_presenter(document) %>
-<%# default partial to display solr document fields in catalog show view -%>
 
 <%# Render tags under title %>
 <% document_show_fields(document).select { |name, f| f[:display] == :tag }.each do |field_name, field| -%>
