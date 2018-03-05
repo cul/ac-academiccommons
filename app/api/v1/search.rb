@@ -36,23 +36,25 @@ module V1
     default_format :json
 
     params do
-      optional :search_type, coerce: Symbol, default: :keyword,     values: V1::Helpers::Solr::SEARCH_TYPES
-      optional :q,           type: String
-      optional :page,        type: Integer,  default: 1,            values: ->(v) { v.positive? }
-      optional :per_page,    type: Integer,  default: 25,           values: 1..100
-      optional :sort,        coerce: Symbol, default: :best_match,  values: V1::Helpers::Solr::SORT
-      optional :order,       coerce: Symbol, default: :desc,        values: V1::Helpers::Solr::ORDER
+      optional :search_type, coerce: Symbol, default: :keyword,     values: V1::Helpers::Solr::SEARCH_TYPES,
+                             desc: 'type of search to be conducted, in most cases a keyword search should be sufficient'
+      optional :q,           type: String, desc: 'query string'
+      optional :page,        type: Integer,  default: 1,            values: ->(v) { v.positive? }, desc: 'page number'
+      optional :per_page,    type: Integer,  default: 25,           values: 1..100, desc: 'number of results returned per page; the maximum number of results is 100'
+      optional :sort,        coerce: Symbol, default: :best_match,  values: V1::Helpers::Solr::SORT, desc: 'sorting of search results'
+      optional :order,       coerce: Symbol, default: :desc,        values: V1::Helpers::Solr::ORDER, desc: 'ordering of results'
 
       Helpers::Solr::FILTERS.each do |filter|
-        optional filter, type: Array[String], documentation: { param_type: 'query' }
+        optional filter, type: Array[String],  documentation: { desc: "#{filter} filter", param_type: 'query' }
       end
     end
 
-    desc 'Conduct searches through all Academic Commons records',
+    desc 'Query to conduct searches through all Academic Commons records',
       success: { code: 202, message: 'successful response' },
       failure: [
         { code: 400, message: 'invalid parameters'}
-      ]
+      ],
+      produces: ['application/json', 'application/rss+xml']
     get :search do
       solr_response = query_solr(params: params)
       present solr_response, with: Entities::SearchResponse, params: params
