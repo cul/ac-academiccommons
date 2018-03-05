@@ -46,7 +46,8 @@ class SolrDocument
     modified_at: 'record_change_date',
     degree_name: 'degree_name_ssim',
     degree_level: 'degree_level_name_ssim',
-    degree_grantor: 'degree_grantor_ssim'
+    degree_grantor: 'degree_grantor_ssim',
+    series: 'series_facet' # Only columbia series.
   )
 
   def embargoed?
