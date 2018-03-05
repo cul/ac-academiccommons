@@ -73,7 +73,7 @@ class SolrDocument
     AcademicCommons.identifier_url(fetch(:handle, nil))
   end
 
-  def assets
-    build_resource_list(self)
+  def assets(include_inactive: false)
+    build_resource_list(self, include_inactive)
   end
 end
