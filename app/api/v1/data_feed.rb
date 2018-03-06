@@ -22,7 +22,7 @@ module V1
       # error! 'Access Denied', 401 if credentials not valid
       feed = if params[:key] == 'doctoral'
                { 'type': ['Theses'], 'degree_level': ['Doctoral'] }
-             elsif params[:key] == 'master\'s'
+             elsif params[:key] == 'masters'
                { 'type': ['Theses'], 'degree_level': ['Master\'s'] }
              else
                error! 'Feed key invalid', 400
