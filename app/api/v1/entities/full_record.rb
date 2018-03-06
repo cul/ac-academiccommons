@@ -6,8 +6,9 @@ module V1::Entities
       expose :degree_grantor
       expose :embargo_end
 
-      expose :thesis_advisor
       expose :notes
     end
+
+    expose :thesis_advisor
   end
 end
