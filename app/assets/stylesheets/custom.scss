@@ -145,10 +145,8 @@
 #documents {
 
   & .document {
-    // box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.3);
-    // border-radius: 3px;
-    margin: 0 0 6px 0;
-    padding: 25px 25px 0 25px;
+    margin: 0;
+    padding: 25px;
   }
 
   & .document-counter {
@@ -166,6 +164,10 @@
     margin: 0;
   }
 
+  & dl {
+    margin: 0;
+  }
+
   & dd.blacklight-author_facet {
     margin: 0 0 13px 0;
   }
@@ -173,6 +175,11 @@
   & dd.blacklight-pub_date_facet,
   & dd.blacklight-genre_facet {
     @include label-plain;
+  }
+
+  & dt.blacklight-genre_facet,
+  & dt.blacklight-pub_date_facet {
+    display: none;
   }
 }
 
@@ -191,8 +198,13 @@
   & h2.facets-heading {
     font-size: 14px;
     font-weight: bold;
-    margin: 0;
     text-transform: uppercase;
+  }
+  
+  @media screen and (min-width: $screen-md ) {
+    & h2.facets-heading {
+      margin: 0;
+    }
   }
 
   & h3.facet-field-heading {
