@@ -17,6 +17,8 @@ module V1
         }
         solr_response = connection.get('select', params: solr_parameters)
         solr_response['response']['docs'].first
+      rescue StandardError
+        error! 'unexpected error', 500
       end
     end
 

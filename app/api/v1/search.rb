@@ -54,7 +54,8 @@ module V1
     desc 'Query to conduct searches through all Academic Commons records',
       success: { code: 202, message: 'successful response' },
       failure: [
-        { code: 400, message: 'invalid parameters'}
+        { code: 400, message: 'invalid parameters'},
+        { code: 500, message: 'unexpected error'}
       ],
       produces: ['application/json', 'application/rss+xml']
     get :search do

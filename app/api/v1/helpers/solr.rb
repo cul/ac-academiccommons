@@ -34,6 +34,8 @@ module V1::Helpers
     def query_solr(params: {}, with_facets: true)
       connection = AcademicCommons::Utils.rsolr
       solr_response = connection.get('select', params: solr_parameters(params, with_facets))
+    rescue StandardError
+      error! 'unexpected error', 500
     end
 
     def solr_parameters(parameters, with_facets)
