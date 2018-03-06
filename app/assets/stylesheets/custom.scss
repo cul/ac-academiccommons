@@ -113,9 +113,7 @@
 
 
 
-/* search results */
-
-/* main content */
+/* search results page */
 
 .well {
   background: $gray-lighter-custom;
@@ -131,8 +129,6 @@
 }
 
 #sortAndPerPage {
-  border: 0;
-  color: $gray-light;
   font-size: 14px;
   margin: 0;
   padding-bottom: 10px;
@@ -144,12 +140,13 @@
   font-size: 14px;
 }
 
+/* document lists */
+
 #documents {
 
   & .document {
-    border: 1px solid $gray-lighter;
-    box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.3);
-    border-radius: 3px;
+    // box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.3);
+    // border-radius: 3px;
     margin: 0 0 6px 0;
     padding: 25px 25px 0 25px;
   }
@@ -159,11 +156,12 @@
   }
 
   & .document .document-title-heading {
-    font-size: 19px;
+    font-size: 21px;
     margin: 0 0 10px 0;
   }
 
   & .document-metadata dd {
+    color: $gray-light;
     font-size: 14px;
     margin: 0;
   }
@@ -191,8 +189,9 @@
 #facets {
 
   & h2.facets-heading {
-    font-size: 15px;
+    font-size: 14px;
     font-weight: bold;
+    margin: 0;
     text-transform: uppercase;
   }
 
@@ -202,8 +201,15 @@
   }
 
   & .panel-heading {
-    background-color: $body-bg;
     padding-left: 15px;
+  }
+
+  & .facet_limit .panel-heading {
+    background: $body-bg;
+  }
+
+  & .facet_limit-active .panel-heading {
+    background: $gray-lighter-custom;
   }
 
   & .panel-group .panel-heading:hover {
@@ -228,7 +234,7 @@
   }
 
   & .facet-count {
-    width: 3em;
+    width: 2.5em;
   }
 
   & .remove .glyphicon {
