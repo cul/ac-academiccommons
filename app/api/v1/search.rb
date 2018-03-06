@@ -22,7 +22,7 @@ module V1
               xml.tag!('dc:creator', doc.value_for(:author).join('; ')) if doc.value_for(:author).present?
 
               xml.guid doc.value_for(:persistent_url)
-              xml.pubDate doc.value_for(:created_at) #.rfc822
+              xml.pubDate Time.zone.parse(doc.value_for(:created_at)).rfc822
               xml.tag!('dc:date', doc.value_for(:date))    if doc.value_for(:date).present?
               xml.description doc.value_for(:abstract) if doc.value_for(:abstract).present?
 
