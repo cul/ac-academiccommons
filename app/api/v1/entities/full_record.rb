@@ -1,5 +1,8 @@
 module V1::Entities
   class FullRecord < ShortRecord
+    expose :columbia_series
+    expose :thesis_advisor
+
     with_options(format_with: :singular) do
       expose :degree_name
       expose :degree_level
@@ -9,6 +12,5 @@ module V1::Entities
       expose :notes
     end
 
-    expose :thesis_advisor
   end
 end
