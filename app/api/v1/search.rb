@@ -8,7 +8,9 @@ module V1
       xml.rss(version: '2.0', 'xmlns:dc': 'http://purl.org/dc/elements/1.1', 'xmlns:vivo': 'http://vivoweb.org/ontology/core') {
         xml.channel {
           xml.title('Academic Commons Search Results')
-          xml.link(env['REQUEST_URI'])
+          xml.link(
+            env['rack.url_scheme'] + '://' + env['HTTP_HOST'] + env['ORIGINAL_FULLPATH']
+          )
           xml.description('Academic Commons Search Results')
           xml.language('en-us')
 
