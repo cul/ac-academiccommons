@@ -4,7 +4,7 @@ module V1::Entities
       solr_response.dig('response', 'numFound')
     end
 
-    expose :records, using: Record do |solr_response, options|
+    expose :records, using: FullRecord do |solr_response, options|
       solr_response['response']['docs'].map { |d| SolrDocument.new(d).to_semantic_values }
     end
   end

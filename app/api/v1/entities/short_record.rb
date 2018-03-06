@@ -1,5 +1,5 @@
 module V1::Entities
-  class Record < Grape::Entity
+  class ShortRecord < Grape::Entity
     format_with(:singular) { |v| v.first }
 
     with_options(format_with: :singular) do
@@ -22,9 +22,6 @@ module V1::Entities
     expose :persistent_url
 
     with_options(format_with: :singular) do
-      expose :degree_name
-      expose :degree_level
-      expose :degree_grantor
       expose :created_at
       expose :modified_at
     end

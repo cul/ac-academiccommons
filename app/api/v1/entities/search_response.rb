@@ -28,7 +28,7 @@ module V1::Entities
       options[:params]
     end
 
-    expose :records, using: Record do |solr_response, options|
+    expose :records, using: ShortRecord do |solr_response, options|
       solr_response['response']['docs'].map { |d| SolrDocument.new(d).to_semantic_values }
     end
 

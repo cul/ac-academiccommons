@@ -14,6 +14,7 @@ class API < Grape::API
 
   mount V1::Search
   mount V1::DataFeed
+  mount V1::Record
 
   add_swagger_documentation \
     info: {
@@ -33,6 +34,7 @@ class API < Grape::API
     },
     tags: [
       { name: 'search', description: 'Search for records' },
-      { name: 'data_feed', description: 'Returns non-paginated subset of records' }
+      { name: 'data_feed', description: 'Returns non-paginated subset of records' },
+      { name: 'record', description: 'Returns full record' }
     ]
 end
