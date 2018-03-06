@@ -6,7 +6,7 @@ module V1::Helpers
     FILTERS = %i(author author_id date department subject type columbia_series degree_level).freeze
     SORT    = %i(best_match date title created_at).freeze
     ORDER   = %i(desc asc).freeze
-    FACETS  = %i(author date department subject type series).freeze
+    FACETS  = %i(author date department subject type columbia_series).freeze
     REQUIRED_FILTERS = ["has_model_ssim:\"#{ContentAggregator.to_class_uri}\""]
 
     SEARCH_TYPES_TO_QUERY = {
