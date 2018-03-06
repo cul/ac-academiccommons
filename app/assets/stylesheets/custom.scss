@@ -106,8 +106,100 @@
 }
 
 
+/* work page */
+
+.pagination-search-widgets {
+  border: 0;
+  color: $gray-light;
+  font-size: 14px;
+
+  & .search-widgets {
+    margin: 0 15px 0 0;
+  }
+}
 
 
+/* documents */
+
+#document {
+
+  & h1 {
+    font-size: 36px;
+    font-weight: bold;
+    margin: 0 0 15px 0;
+  }
+
+  & .blacklight-author_facet {
+    color: $gray-light;
+    margin: 15px 0 30px 0;
+  }
+
+  & .blacklight-abstract {
+    font-size: 16px;
+    line-height: 1.6;
+    margin: 0 0 25px 0;
+    padding-right: 15%;
+  }
+
+  & .subjects h4 {
+    border-bottom: 1px dotted $gray-lighter;
+    font-size: 16px;
+    font-weight: bold;
+    padding-bottom: 10px;
+  }
+
+  & .subjects ul {
+    columns: 4;
+    margin: 0 0 25px 0;
+    padding: 0;
+  }
+
+  & .subjects li {
+    font-size: 14px;
+    list-style: none;
+    margin: 0 0 12px 0;
+  }
+
+  & .panel-title {
+    font-size: 16px;
+    font-weight: bold;
+  }
+
+  & .list-group {
+    border-bottom: 1px dotted $gray-lighter;
+  }
+
+  & .list-group:last-child {
+    border-bottom: 0;
+  }
+
+  & .list-group-item {
+    align-items: center;
+    border: 0;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  & .list-group-item span {
+    flex: 1 0 0;
+  }
+
+  & .list-group-item span.filename {
+    flex: 5 0 0;
+    font-weight: normal;
+  }
+
+  & .list-group-item span.mimetype {
+    color: $gray-light;
+    font-size: 14px;
+  }
+
+  & .list-group-item span.download {
+    font-size: 20px;
+    text-align: right;
+  }
+
+}
 
 
 
@@ -139,6 +231,12 @@
   color: $gray-base;
   font-size: 14px;
 }
+
+
+
+
+
+
 
 /* document lists */
 
@@ -200,7 +298,7 @@
     font-weight: bold;
     text-transform: uppercase;
   }
-  
+
   @media screen and (min-width: $screen-md ) {
     & h2.facets-heading {
       margin: 0;
