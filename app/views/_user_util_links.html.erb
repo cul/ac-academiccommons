@@ -4,15 +4,16 @@
   - Adds share button
 %>
 
-<div class="navbar-right">
-  <ul class="nav navbar-nav">
+<div class="pull-right">
+
+  <ul>
     <%= render_nav_actions do |config, action|%>
       <li><%= action %></li>
     <% end %>
   </ul>
 
   <% if has_user_authentication_provider? %>
-    <ul class="nav navbar-nav align-middle">
+    <ul>
       <% if current_user %>
       <li>
         <%= link_to t('blacklight.header_links.logout'), destroy_user_session_path %>
@@ -27,12 +28,13 @@
         <%= link_to t('blacklight.header_links.login'), new_user_session_path %>
       </li>
       <% end %>
-      </ul>
+    </ul>
   <% end %>
 
-  <ul class="nav navbar-nav align-middle">
+  <ul>
     <li>
       <%= link_to t('blacklight.header_links.share'), deposit_path, :class => "btn btn-primary share-button" %>
     </li>
   </ul>
+  
 </div>
