@@ -3,7 +3,6 @@
 
   - Changes navbar-inverse class to navbar-default
   - Adds links to about, faq, browse
-  - Modifies layout for search-navbar
   - Adds cul banner
 %>
 
@@ -13,43 +12,30 @@
   </a>
 </div>
 
-<div id="header-navbar" class="navbar navbar-default navbar-static-top" role="navigation">
-
+<div id="header-navbar" role="navigation">
   <div class="container-fluid">
-
     <div class="col-sm-8 logo">
       <%= link_to application_name, root_path, class: "navbar-brand" %>
     </div>
-
     <div class="col-sm-4 search-bar">
       <%= render_search_bar %>
     </div>
-
   </div>
-
 </div>
 
 <div id="links-navbar" class="" role="navigation">
-
   <div class="container-fluid">
     <div class="row">
-
       <div class="col-sm-6 about-links">
         <ul>
           <li><%= link_to t('blacklight.header_links.about'), about_path %></li>
           <li><%= link_to t('blacklight.header_links.faq'), faq_path %></li>
-          <li>Browse</li>
+          <li><a href="">Browse</a></li>
         </ul>
       </div>
-
-      <div class="col-sm-6" id="user-util-collapse">
+      <div class="col-sm-6 user-links" id="user-util-collapse">
         <%= render :partial=>'/user_util_links' %>
       </div>
-
-
-
-
     </div>
   </div>
-
 </div>

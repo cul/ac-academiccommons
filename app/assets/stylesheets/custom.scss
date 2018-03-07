@@ -3,6 +3,7 @@
 .cul-banner {
   background: $brand-dark;
   padding: 8px 10px;
+  text-align: center;
 
   & .cul-banner-logo {
     background: transparent $logo-cul-banner no-repeat top left;
@@ -17,31 +18,38 @@
   }
 }
 
+@media screen and (min-width: $screen-md ) {
+  .cul-banner {
+    text-align: left;
+  }
+}
 
 
+/* header */
 
 #header-navbar {
   border-bottom: 1px solid $gray-lighter;
   margin: 0;
-  padding: 20px 0;
+  padding: 20px 0 0 0;
 
   & .container-fluid {
-    padding-right: 0;
+    padding: 0;
   }
-
-  & .navbar {
-    margin: 0;
-  }
-
-
 
   & .navbar-brand {
     background-size: contain;
+    padding: 0;
     width: 100%;
   }
 
+  & .logo {
+    z-index: 1000;
+  }
 
   & .navbar-form {
+    border: 0;
+    margin: 0;
+    padding-left: 0;
     padding-right: 0;
   }
 
@@ -54,13 +62,33 @@
   & .input-group-btn {
     width: 1%;
   }
-
-
 }
+
+@media screen and (min-width: $screen-sm ) {
+
+  #header-navbar {
+    padding: 20px 0;
+
+    & .navbar-form {
+      margin: 7px 0;
+      padding: 0 0 0 15px;
+    }
+  }
+}
+
+
+
+
+
+/* links navbar */
 
 #links-navbar {
   border-bottom: 1px solid $gray-lighter;
+  color: $gray-lighter;
+  font-size: 14px;
+  line-height: 1;
   margin: 0 0 20px 0;
+  text-transform: uppercase;
 
   & ul {
     display: inline-block;
@@ -70,114 +98,66 @@
 
   & li {
     display: inline-block;
-    margin: 0 0 0 12px;
-    padding: 7px 0;
   }
 
-  & .about-links li {
-    margin: 0 12px 0 0;
-    padding: 10px 0;
+  & li a {
+    display: inline-block;
+    margin: 0 -4px;
+    padding: 11px 20px;
   }
 
-
-  & .share-button {
-    padding: 3px 12px;
+  & li a:hover {
+    background: $gray-lighter-custom;
+    text-decoration: none;
   }
 
+  & .about-links {
+    padding: 0 5px;
+  }
 
+  & .user-links {
+    border-top: 1px solid $gray-lighter;
+    padding: 0;
+  }
+}
+
+@media screen and (min-width: $screen-sm ) {
+
+  #links-navbar {
+    font-size: 16px;
+    text-transform: none;
+
+    & li a {
+      padding: 15px;
+    }
+
+    & .about-links {
+      text-align: left;
+    }
+
+    & .user-links {
+      border: none;
+      padding: 0 5px;
+      text-align: right;
+    }
+
+    & .share-button {
+      border: 1px solid $brand-primary;
+      border-radius: 3px;
+      margin: 0 10px;
+      padding: 5px 15px;
+    }
+
+    & .share-button:hover {
+      background: $brand-primary;
+      color: $body-bg;
+      text-decoration: none;
+    }
+  }
 }
 
 
 
-
-
-/* header */
-
-// .navbar {
-//   margin-bottom: 0;
-// }
-//
-// .navbar-default {
-//   border-color: $gray-lighter;
-// }
-
-// #header-navbar {
-//
-//   & .navbar-brand {
-//     background-size: 100%;
-//     background-position: center;
-//     margin: 0 10px;
-//     width: 320px;
-//
-//     @media screen and (min-width: $screen-md ) {
-//       height: 80px;
-//       margin: 0;
-//       max-width: 600px;
-//       width: 600px;
-//     }
-//   }
-//
-//   & .navbar-nav {
-//
-//     @media screen and (min-width: $screen-md ) {
-//       padding: 17px 15px 0 0;
-//     }
-//
-//     & li a {
-//       margin-left: 10px;
-//     }
-//   }
-//
-//   & .share-button {
-//     background: $body-bg;
-//     border: 2px solid $brand-primary;
-//     color: $brand-primary;
-//     font-size: 1.5rem;
-//     font-weight: bold;
-//     margin: 8px;
-//     padding: 5px 10px;
-//
-//     @media screen and (min-width: $screen-md ) {
-//       margin: 7px 0;
-//     }
-//
-//     &:hover {
-//       border-color: $link-hover-color;
-//       color: $link-hover-color;
-//     }
-//   }
-// }
-
-// #search-navbar {
-//   background: $body-bg;
-//   border-bottom: 1px solid $gray-lighter;
-//   margin: 0 0 20px 0;
-//
-//   & .about-links {
-//     color: $gray-lighter;
-//     line-height: 50px;
-//   }
-//
-//   & .about-links span {
-//     margin: 0 3px;
-//   }
-//
-//   & .search-query-form {
-//     padding-right: 0;
-//   }
-//
-//   & .navbar-form {
-//     margin: 7px 0;
-//   }
-//
-//   & .navbar-form .input-group-btn {
-//     width: 1%;
-//   }
-//
-//   & .input-group-addon.for-search-field {
-//     width: 10ch;
-//   }
-// }
 
 
 
@@ -198,6 +178,8 @@
     margin: 0 15px 0 0;
   }
 }
+
+
 
 
 /* documents */
@@ -221,12 +203,6 @@
     margin: 0 0 30px 0;
   }
 
-  @media screen and (min-width: $screen-md ) {
-    & .blacklight-abstract {
-      padding-right: 15%;
-    }
-  }
-
   & .subjects h4 {
     border-bottom: 1px dotted $gray-lighter;
     font-size: 16px;
@@ -239,12 +215,6 @@
     columns: 2;
     margin: 0 0 30px 0;
     padding: 0;
-  }
-
-  @media screen and (min-width: $screen-md ) {
-    & .subjects ul {
-      columns: 4;
-    }
   }
 
   & .subjects li {
@@ -309,7 +279,19 @@
 
 }
 
+@media screen and (min-width: $screen-md ) {
 
+  #document {
+
+    & .blacklight-abstract {
+      padding-right: 15%;
+    }
+
+    & .subjects ul {
+      columns: 4;
+    }
+  }
+}
 
 
 
@@ -407,12 +389,6 @@
     text-transform: uppercase;
   }
 
-  @media screen and (min-width: $screen-md ) {
-    & h2.facets-heading {
-      margin: 0;
-    }
-  }
-
   & h3.facet-field-heading {
     font-size: 14px;
     font-weight: normal;
@@ -465,7 +441,15 @@
 }
 
 
+@media screen and (min-width: $screen-md ) {
 
+  #facets {
+    
+    & h2.facets-heading {
+      margin: 0;
+    }
+  }
+}
 
 
 
