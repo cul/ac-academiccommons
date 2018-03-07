@@ -88,7 +88,8 @@
   font-size: 14px;
   line-height: 1;
   margin: 0 0 20px 0;
-  text-transform: uppercase;
+  text-align: center;
+
 
   & ul {
     display: inline-block;
@@ -103,7 +104,7 @@
   & li a {
     display: inline-block;
     margin: 0 -4px;
-    padding: 11px 20px;
+    padding: 11px 15px;
   }
 
   & li a:hover {
@@ -111,12 +112,16 @@
     text-decoration: none;
   }
 
+  & .about-links,
+  & .user-links {
+    display: inline;
+  }
+
   & .about-links {
-    padding: 0 5px;
+    padding: 0;
   }
 
   & .user-links {
-    border-top: 1px solid $gray-lighter;
     padding: 0;
   }
 }
@@ -125,7 +130,6 @@
 
   #links-navbar {
     font-size: 16px;
-    text-transform: none;
 
     & li a {
       padding: 15px;
@@ -444,7 +448,7 @@
 @media screen and (min-width: $screen-md ) {
 
   #facets {
-    
+
     & h2.facets-heading {
       margin: 0;
     }
