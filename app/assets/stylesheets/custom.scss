@@ -201,7 +201,7 @@
   font-size: 12px;
   letter-spacing: .2px;
   margin: 0 0 15px 0;
-  padding: 5px 0 15px 0;
+  padding: 0 0 15px 0;
   text-transform: uppercase;
 
   & a {
@@ -267,6 +267,10 @@
   & .panel-title {
     font-size: 16px;
     font-weight: bold;
+  }
+
+  & .panel p {
+    padding: 15px;
   }
 
   & .list-group {
@@ -390,7 +394,7 @@
   & .document .document-title-heading {
     font-size: 21px;
     letter-spacing: .2px;
-    line-height: 1.2;
+    line-height: 1.3;
     margin: 0 0 10px 0;
   }
 
