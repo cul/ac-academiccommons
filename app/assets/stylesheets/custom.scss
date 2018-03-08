@@ -208,12 +208,13 @@
   & h1 {
     font-size: 36px;
     font-weight: bold;
-    margin: 0 0 15px 0;
+    line-height: 1.15;
+    margin: 0 0 10px 0;
   }
 
   & .blacklight-author_facet {
     color: $gray-light;
-    margin: 15px 0 30px 0;
+    margin: 12px 0 30px 0;
   }
 
   & .blacklight-abstract {
@@ -303,7 +304,7 @@
   #document {
 
     & .blacklight-abstract {
-      padding-right: 15%;
+      padding-right: 10%;
     }
 
     & .subjects ul {
@@ -341,12 +342,6 @@
   font-size: 14px;
 }
 
-
-
-
-
-
-
 /* document lists */
 
 #documents {
@@ -362,6 +357,8 @@
 
   & .document .document-title-heading {
     font-size: 21px;
+    letter-spacing: .2px;
+    line-height: 1.2;
     margin: 0 0 10px 0;
   }
 
