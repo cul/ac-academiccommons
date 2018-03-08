@@ -37,7 +37,7 @@
 /* header */
 
 #header-navbar {
-  border-bottom: 1px solid $gray-lighter;
+  border-bottom: 1px dotted $gray-lighter;
   margin: 0;
   padding: 20px 0 0 0;
 
@@ -102,6 +102,7 @@
 
 #links-navbar {
   border-bottom: 1px solid $gray-lighter;
+  box-shadow: 0 1px 2px $gray-lighter;
   color: $gray-lighter;
   font-size: 14px;
   line-height: 1;
@@ -205,12 +206,17 @@
   text-transform: uppercase;
 
   & a {
-    color: $gray-light;
+    color: $gray-base;
+    font-weight: 500;
   }
 
   & .search-widgets {
     display: inline-block;
-    margin: 0 20px 0 0;
+    margin: 0 25px 0 0;
+  }
+
+  & .results-counter {
+    margin: 0 0 0 25px;
   }
 }
 
@@ -381,6 +387,7 @@
 /* document lists */
 
 #documents {
+  margin-bottom: 30px;
 
   & .document {
     margin: 0;

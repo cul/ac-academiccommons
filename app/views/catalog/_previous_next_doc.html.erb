@@ -18,10 +18,8 @@
   <% if @previous_document || @next_document %>
     <div class="page_links">
       <%= link_to_previous_document @previous_document %> |
-
-      <%= item_page_entry_info %> |
-
       <%= link_to_next_document @next_document %>
+      <span class="results-counter"><%= item_page_entry_info %></span>
     </div>
   <% end %>
 </div>
