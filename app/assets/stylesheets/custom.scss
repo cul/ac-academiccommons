@@ -284,18 +284,19 @@
   }
 
   & dl {
-    columns: 2;
     font-size: 14px;
     line-height: 1.7;
     margin: 0;
   }
 
   & dt {
-    margin: 0 0 3px 0;
+    float: left;
+    margin: 0 5px 0 0;
+    min-width: 25%;
   }
 
   & dd {
-    margin: 0 0 25px 0;
+    margin: 0 0 10px 10px;
   }
 
 }
