@@ -192,6 +192,7 @@
   border: 0;
   color: $gray-light;
   font-size: 14px;
+  margin: 0;
 
   & .search-widgets {
     display: inline-block;
@@ -290,15 +291,12 @@
   }
 
   & dt {
-    float: left;
-    margin: 0 5px 0 0;
-    min-width: 25%;
+    padding-top: 20px;
   }
 
-  & dd {
-    margin: 0 0 10px 10px;
+  & dt:first-child {
+    padding-top: 0;
   }
-
 }
 
 @media screen and (min-width: $screen-md ) {
@@ -312,8 +310,21 @@
     & .subjects ul {
       columns: 4;
     }
+
+    & dt,
+    & dt:first-child {
+      float: left;
+      padding: 5px 0;
+    }
+
+    & dd {
+      margin-left: 25%;
+      padding: 5px 0;
+    }
   }
 }
+
+
 
 
 
