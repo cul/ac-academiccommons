@@ -8,8 +8,9 @@
   & .cul-banner-logo {
     background: transparent $logo-cul-banner no-repeat top left;
     background-size: contain;
+    background-position: center;
     display: inline-block;
-    width: 320px;
+    width: 250px;
   }
 
   & .cul-banner-logo span {
@@ -19,10 +20,18 @@
 }
 
 @media screen and (min-width: $screen-md ) {
+
   .cul-banner {
     text-align: left;
+
+    & .cul-banner-logo {
+      width: 320px;
+    }
   }
 }
+
+
+
 
 
 /* header */
@@ -38,7 +47,7 @@
 
   & .navbar-brand {
     background-size: contain;
-    padding: 0;
+    background-position: top;
     width: 100%;
   }
 
@@ -69,6 +78,10 @@
   #header-navbar {
     padding: 20px 0;
 
+    & .navbar-brand {
+      background-position: left;
+    }
+
     & .navbar-form {
       margin: 7px 0;
       padding: 0 0 0 15px;
@@ -88,8 +101,8 @@
   font-size: 14px;
   line-height: 1;
   margin: 0 0 20px 0;
+  padding: 5px 0;
   text-align: center;
-
 
   & ul {
     display: inline-block;
@@ -130,12 +143,14 @@
 
   #links-navbar {
     font-size: 16px;
+    padding: 0;
 
     & li a {
-      padding: 15px;
+      padding: 15px 10px;
     }
 
     & .about-links {
+      padding-left: 10px;
       text-align: left;
     }
 
