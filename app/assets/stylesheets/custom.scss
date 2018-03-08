@@ -71,6 +71,7 @@
   & .form-control {
     border-right: 0;
     box-shadow: none;
+    font-weight: bold;
   }
 
   & .input-group-btn {
@@ -163,21 +164,22 @@
 
     & .user-links {
       border: none;
-      padding: 0 5px;
+      padding: 0;
       text-align: right;
     }
 
     & .share-button {
-      border: 1px solid $brand-primary;
-      border-radius: 3px;
+      // border: 1px solid $brand-primary;
+      // border-radius: 3px;
+      font-weight: bold;
       margin: 0 10px;
-      padding: 5px 10px;
+      // padding: 5px 10px;
     }
 
     & .share-button:hover {
-      background: $brand-primary;
-      color: $body-bg;
-      text-decoration: none;
+      // background: $brand-primary;
+      // color: $body-bg;
+      // text-decoration: none;
     }
   }
 }
@@ -201,8 +203,8 @@
   color: $gray-light;
   font-size: 12px;
   letter-spacing: .2px;
-  margin: 0 0 15px 0;
-  padding: 0 0 15px 0;
+  margin: 0 0 13px 0;
+  padding: 0 0 13px 0;
   text-transform: uppercase;
 
   & a {
@@ -231,7 +233,7 @@
     font-size: 33px;
     font-weight: bold;
     line-height: 1.2;
-    margin: 0 0 10px 0;
+    margin: 0 0 12px 0;
   }
 
   & .blacklight-author_facet {
@@ -300,6 +302,7 @@
 
   & .list-group-item span.filename {
     flex: 5 0 0;
+    font-size: 14px;
     font-weight: normal;
   }
 
