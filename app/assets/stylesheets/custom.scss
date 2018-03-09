@@ -71,7 +71,6 @@
   & .form-control {
     border-right: 0;
     box-shadow: none;
-    font-weight: bold;
   }
 
   & .input-group-btn {
@@ -255,7 +254,7 @@
 #document {
 
   & h1 {
-    font-size: 33px;
+    font-size: 26px;
     font-weight: bold;
     line-height: 1.2;
     margin: 0 0 12px 0;
@@ -411,6 +410,13 @@
 
   #document {
 
+    & h1 {
+      font-size: 31px;
+      font-weight: bold;
+      line-height: 1.25;
+      margin: 0 0 12px 0;
+    }
+
     & .blacklight-abstract {
       padding-right: 10%;
     }
@@ -512,7 +518,48 @@
 
 
 
+/* static pages */
 
+#static-text {
+  margin: 0 15px;
+
+  & h1,
+  & h2,
+  & h3 {
+    font-size: 33px;
+    font-weight: bold;
+    line-height: 1.4;
+    margin: 0 0 20px 0;
+  }
+
+  & h2 {
+    font-size: 29px;
+    font-weight: 500;
+    margin: 0 0 20px 0;
+  }
+
+  & h3 {
+    font-size: 17px;
+    font-weight: bold;
+    line-height: 1.6;
+    margin: 0 0 10px 0;
+    max-width: 700px;
+  }
+
+  & p,
+  & ul {
+    font-size: 17px;
+    font-weight: 300;
+    line-height: 1.6;
+    margin: 0 0 30px 0;
+    max-width: 700px;
+  }
+
+  & p.anchor-links {
+    color: $gray-light;
+    max-width: none;
+  }
+}
 
 
 
