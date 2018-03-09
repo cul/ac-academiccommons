@@ -2,13 +2,13 @@
 
 .cul-banner {
   background: $brand-dark;
-  padding: 8px 10px;
+  padding: 8px 0;
   text-align: center;
 
   & .cul-banner-logo {
     background: transparent $logo-cul-banner no-repeat top left;
     background-size: contain;
-    background-position: center;
+    background-position: left;
     display: inline-block;
     width: 250px;
   }
@@ -41,18 +41,18 @@
   margin: 0;
   padding: 20px 0 0 0;
 
-  & .container-fluid {
-    padding: 0;
-  }
-
   & .navbar-brand {
     background-size: contain;
-    background-position: top;
     width: 100%;
   }
 
   & .logo {
+    padding: 0;
     z-index: 1000;
+  }
+
+  & .search-bar {
+    padding: 0;
   }
 
   & .navbar-form {
@@ -83,6 +83,10 @@
 
   #header-navbar {
     padding: 20px 0;
+
+    & .search-bar {
+      padding-left: 15px;
+    }
 
     & .navbar-brand {
       background-position: left;
@@ -312,10 +316,12 @@
 
   & .list-group-item span.mimetype {
     color: $gray-light;
+    flex: 1 0 0;
     font-size: 14px;
   }
 
   & .list-group-item span.download {
+    flex: .5 0 0;
     font-size: 20px;
     text-align: right;
   }

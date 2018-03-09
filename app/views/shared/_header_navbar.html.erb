@@ -7,13 +7,15 @@
 %>
 
 <div class="cul-banner">
-  <a href="http://library.columbia.edu" class="cul-banner-logo">
-    <span>Columbia University Libraries</span>
-  </a>
+  <div class="<%= container_classes %>">
+    <a href="http://library.columbia.edu" class="cul-banner-logo">
+      <span>Columbia University Libraries</span>
+    </a>
+  </div>
 </div>
 
 <div id="header-navbar" role="navigation">
-  <div class="container-fluid">
+  <div class="<%= container_classes %>">
     <div class="col-sm-8 logo">
       <%= link_to application_name, root_path, class: "navbar-brand" %>
     </div>
@@ -24,7 +26,7 @@
 </div>
 
 <div id="links-navbar" class="" role="navigation">
-  <div class="container-fluid">
+  <div class="<%= container_classes %>">
     <div class="row">
       <div class="col-sm-6 about-links">
         <ul>
