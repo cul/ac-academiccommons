@@ -210,6 +210,7 @@
   margin: 0 0 13px 0;
   padding: 0 0 13px 0;
   text-transform: uppercase;
+  text-align: center;
 
   & a {
     color: $gray-base;
@@ -222,15 +223,28 @@
   }
 
   & .page_links {
+    display: inline;
     padding: 0;
   }
 
   & .results-counter {
-    margin: 0 0 0 25px;
+    display: block;
+    margin: 0 10px;
+    padding-top: 10px;
   }
 }
 
+@media screen and (min-width: $screen-md ) {
 
+  .pagination-search-widgets {
+    text-align: left;
+
+    & .results-counter {
+      margin: 0 0 0 25px;
+      padding: 0;
+    }
+  }
+}
 
 
 /* documents */
@@ -309,7 +323,7 @@
   }
 
   & .list-group-item span.filename {
-    flex: 5 0 0;
+    flex: 4 0 0;
     font-size: 14px;
     font-weight: normal;
   }
