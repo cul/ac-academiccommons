@@ -157,17 +157,17 @@
     padding: 0;
 
     & li a {
-      padding: 18px 10px;
+      padding: 18px 13px;
     }
 
     & .about-links {
-      padding-left: 10px;
+      padding-left: 7px;
       text-align: left;
     }
 
     & .user-links {
       border: none;
-      padding: 0;
+      padding-right: 7px;
       text-align: right;
     }
 
@@ -175,7 +175,6 @@
       // border: 1px solid $brand-primary;
       // border-radius: 3px;
       font-weight: bold;
-      margin: 0 10px;
       // padding: 5px 10px;
     }
 
@@ -544,7 +543,7 @@
   }
 
   & h2 {
-    font-size: 29px;
+    font-size: 27px;
     font-weight: 500;
     margin: 0 0 20px 0;
   }
@@ -568,6 +567,7 @@
 
   & p.anchor-links {
     color: $gray-light;
+    font-size: 15px;
     max-width: none;
   }
 }
