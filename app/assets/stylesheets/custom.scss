@@ -301,6 +301,17 @@
     font-weight: bold;
   }
 
+  & .panel-heading {
+    align-items: center;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  & .panel-heading .download-all {
+    display: inline-block;
+    font-weight: bold;
+  }
+
   & .panel p {
     padding: 15px;
   }
