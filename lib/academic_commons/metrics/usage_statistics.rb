@@ -2,7 +2,6 @@ module AcademicCommons::Metrics
   class UsageStatistics
     include Enumerable
     include AcademicCommons::Embargoes
-    include AcademicCommons::Listable
     include AcademicCommons::Metrics::OutputCSV
 
     attr_reader :start_date, :end_date, :months_list, :solr_params,
@@ -91,7 +90,7 @@ module AcademicCommons::Metrics
       Rails.logger.debug "Solr request returned #{results.count} results."
 
       # Filtering out embargoed material
-      results.reject! { |doc| !free_to_read?(doc) }
+      results.reject!(&:embargoed?)
       @item_stats = results.map{ |doc| AcademicCommons::Metrics::ItemStats.new(doc) }
 
       return if @item_stats.empty?
@@ -213,14 +212,15 @@ module AcademicCommons::Metrics
       params[:sort] = 'title_display asc' if(params[:sort].blank? || options[:order_by] == 'title')
       params[:fq] = params.fetch(:fq, []).clone << "has_model_ssim:\"#{ContentAggregator.to_class_uri}\""
       # Add filter to remove embargoed items, free_to_read date must be equal to or less than Date.current
-      Blacklight.default_index.search(params)['response']['docs']
+      Blacklight.default_index.search(params).documents
     end
 
     # Most downloaded asset over entire lifetime.
     # Eventually may have to reevaluate this for queries that are for a specific
     # time range. For now, we are okay with this assumption.
     def most_downloaded_asset(doc)
-      asset_pids = build_resource_list(doc).map { |doc| doc[:pid] }
+      asset_pids = doc.assets.map(&:id)
+
       return asset_pids.first if asset_pids.count == 1
 
       # Get the higest value stored here.

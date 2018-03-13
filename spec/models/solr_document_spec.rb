@@ -1,6 +1,22 @@
 require 'rails_helper'
 
 describe SolrDocument do
+  describe '#download_path' do
+    let(:document) do
+      described_class.new(
+        'id' => 'actest:2', 'pid' => 'actest:2',
+        'active_fedora_model_ssi' => 'GenericResource',
+        'downloadable_content_type_ssi' => 'application/pdf',
+        'downloadable_content_dsid_ssi' => 'CONTENT',
+        'downloadable_content_label_ss' => 'alice_in_wonderland.pdf'
+      )
+    end
+
+    it 'generates correct download_path' do
+      expect(document.download_path).to eql '/download/fedora_content/download/actest:2/CONTENT/alice_in_wonderland.pdf'
+    end
+  end
+
   describe '#assets' do
     let(:document) do
       described_class.new(
@@ -25,33 +41,19 @@ describe SolrDocument do
           'response' => {
             'docs' => [
               {
-                'id' => 'actest:2', 'pid' => 'actest:2',
+                'id' => 'actest:2',
                 'downloadable_content_type_ssi' => 'application/pdf',
                 'downloadable_content_dsid_ssi' => 'CONTENT',
                 'downloadable_content_label_ss' => 'alice_in_wonderland.pdf'
               },
               {
-                'id' => 'actest:10', 'pid' => 'actest:10',
+                'id' => 'actest:10',
                 'downloadable_content_type_ssi' => 'image/png',
                 'downloadable_content_dsid_ssi' => 'CONTENT',
                 'downloadable_content_label_ss' => 'alice_in_wonderland_cover.png'
               }
             ]
           }
-        }
-      end
-
-      let(:expected_doc_1) do
-        {
-          pid: 'actest:2', filename: 'alice_in_wonderland.pdf', content_type: 'application/pdf',
-          download_path: '/download/fedora_content/download/actest:2/CONTENT/alice_in_wonderland.pdf'
-        }
-      end
-
-      let(:expected_doc_2) do
-        {
-          pid: 'actest:10', filename: 'alice_in_wonderland_cover.png', content_type: 'image/png',
-          download_path: '/download/fedora_content/download/actest:10/CONTENT/alice_in_wonderland_cover.png'
         }
       end
 
@@ -67,7 +69,7 @@ describe SolrDocument do
           .with('select', params: expected_params)
           .and_return(solr_response)
         expect(document.assets.count).to eq 2
-        expect(document.assets).to contain_exactly(expected_doc_1, expected_doc_2)
+        expect(document.assets.map(&:id)).to match_array ['actest:2', 'actest:10']
       end
     end
 

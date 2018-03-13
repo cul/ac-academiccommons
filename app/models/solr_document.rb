@@ -2,7 +2,6 @@ class SolrDocument
   include Blacklight::Solr::Document
   include BlacklightOaiProvider::SolrDocument
   include AcademicCommons::Embargoes
-  include AcademicCommons::Listable
 
   # self.unique_key = 'id'
   self.timestamp_key = 'record_creation_date'
@@ -74,6 +73,46 @@ class SolrDocument
   end
 
   def assets(include_inactive: false)
-    build_resource_list(self, include_inactive)
+    return [] unless free_to_read?(self)
+    obj_display = fetch('id', [])
+
+    member_search = {
+      q: '*:*',
+      qt: 'standard',
+      fl: '*',
+      fq: ["cul_member_of_ssim:\"info:fedora/#{obj_display}\""],
+      rows: 10_000,
+      facet: false
+    }
+    member_search[:fq] << 'object_state_ssi:A' unless include_inactive
+    response = Blacklight.default_index.connection.get 'select', params: member_search
+    docs = response['response']['docs']
+    docs.map { |member| SolrDocument.new(member) }
+  rescue StandardError => e
+    Rails.logger.error e.message
+    return []
+  end
+
+  def thumbnail
+    return nil unless asset?
+    "https://derivativo-1.library.columbia.edu/iiif/2/#{fetch(:id)}/full/!256,256/0/native.jpg"
+  end
+
+  def filename
+    return nil unless asset?
+    fetch('downloadable_content_label_ss', nil)
+  end
+
+  def download_path
+    return nil unless asset?
+    Rails.application.routes.url_helpers.fedora_content_path(
+      :download, id,
+      fetch('downloadable_content_dsid_ssi'),
+      fetch('downloadable_content_label_ss')
+    )
+  end
+
+  def asset?
+    ['GenericResource', 'Resource'].include?(fetch(:active_fedora_model_ssi, nil))
   end
 end
