@@ -23,4 +23,5 @@ en:
           unavailable: 'Downloadable resources are currently unavailable for this item.'
 
     tools:
-      permanent-link: 'Permanent Link'
+      permanent_link: 'Permanent Link'
+      download_all: 'Download All'
