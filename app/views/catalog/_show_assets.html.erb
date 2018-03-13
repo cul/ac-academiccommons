@@ -3,6 +3,7 @@
 <div class="panel panel-default">
   <div class="panel-heading">
     <h3 class="panel-title"><%= t('blacklight.search.show.panels.files') %></h3>
+    <a class="download-all" href=""><%= t('blacklight.tools.download_all') %></a>
   </div>
     <% if document.restricted? %>
       <p><em><%= document.access_restriction %></em></p>
@@ -12,9 +13,9 @@
       <% asset_docs.each do |asset| %>
         <ul class="list-group">
           <li class="list-group-item">
-            <span><%= asset[:filename] %></span>
-            <span><%= asset[:content_type] %></span>
-            <span><%= link_to 'Download', asset[:download_path] %></span>
+            <span class="filename"><%= asset[:filename] %></span>
+            <span class="mimetype"><%= asset[:content_type] %></span>
+            <span class="download"><%= link_to ('<span class="glyphicon glyphicon-download"></span>').html_safe, asset[:download_path] %></span>
           </li>
         </ul>
       <% end %>

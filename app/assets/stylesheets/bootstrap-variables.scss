@@ -12,7 +12,11 @@ $brand-dark: #002D63;
 
 $gray-base: #000;
 
-$gray-lighter: lighten($gray-base, 85%);
+$gray-lighter: #ddd;
+
+$gray-lighter-custom: #f3f5f3;
+
+$state-success-text: #5cb85c;
 
 /* header */
 
@@ -23,3 +27,11 @@ $logo-cul-banner: image_url('logo-cul-banner.png');
 $logo-image: image_url('logo-ac.png');
 
 $navbar-inverse-link-hover-color: #333;
+
+/* wells */
+
+$well-bg: #fff;
+
+/* panels */
+
+$panel-default-heading-bg: $gray-lighter-custom;

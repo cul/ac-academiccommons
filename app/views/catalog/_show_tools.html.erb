@@ -1,0 +1,48 @@
+<%#
+  Overriding Blacklight v6.14.1 template.
+
+  - removes panel heading
+
+%>
+
+<%-
+  # Compare with render_document_functions_partial helper, and
+  # _document_functions partial. BL actually has two groups
+  # of document-related tools. "document functions" by default
+  # contains Bookmark functionality shown on both results and
+  # item view. While "document tools" contains external export type
+  # functions by default only on detail.
+
+-%>
+<% if show_doc_actions? %>
+  <div class="panel panel-default show-tools">
+    <div class="panel-body">
+      <ul>
+        <li><a href="" class="btn btn-primary download-button">Download</a></li>
+        <li>
+          <h4><%= t('blacklight.tools.permanent_link') %></h4>
+          <div class="permanent-link">
+
+            <!-- doi goes here -->
+
+            <textarea rows="1" readonly onclick="this.focus();this.select()">
+              https://doi.org/10.7916/D89G70BS/89G70BS89G70BS89G70BS
+            </textarea>
+
+          </div>
+        </li>
+      </ul>
+      <ul class="social-buttons">
+
+        <!-- social links here -->
+
+        <%= render_show_doc_actions @document do |config, inner| %>
+          <li class="<%= config.key %>">
+            <%= inner %>
+          </li>
+        <% end %>
+
+      </ul>
+    </div>
+  </div>
+<% end %>
