@@ -95,7 +95,7 @@ class SolrDocument
 
   def thumbnail
     return nil unless asset?
-    "https://derivativo-1.library.columbia.edu/iiif/2/#{fetch(:id)}/full/!256,256/0/native.jpg"
+    "https://derivativo-#{rand(1..4)}.library.columbia.edu/iiif/2/#{fetch(:id)}/full/!256,256/0/native.jpg"
   end
 
   def filename
