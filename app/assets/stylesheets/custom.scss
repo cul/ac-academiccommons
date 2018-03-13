@@ -76,6 +76,10 @@
   & .input-group-btn {
     width: 1%;
   }
+
+  & .submit-search-text {
+    display: none;
+  }
 }
 
 @media screen and (min-width: $screen-sm ) {
