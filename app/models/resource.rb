@@ -4,10 +4,12 @@ class Resource < ActiveFedora::Base
     solr_doc = super
     solr_doc['pid'] ||= self.pid
     content = downloadable_content
+
     if content
       solr_doc['downloadable_content_type_ssi'] = content.mimeType
       solr_doc['downloadable_content_dsid_ssi'] = content.dsid
       solr_doc['downloadable_content_label_ss'] = content.label.blank? ? this.label : content.label
+      solr_doc['downloadable_content_size_i']   = content.size
     end
     solr_doc
   end

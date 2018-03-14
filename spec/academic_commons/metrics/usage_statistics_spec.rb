@@ -61,9 +61,7 @@ RSpec.describe AcademicCommons::Metrics::UsageStatistics, integration: true do
           )
         end
 
-        subject do
-          AcademicCommons::Metrics::UsageStatistics.new(solr_request)
-        end
+        subject { AcademicCommons::Metrics::UsageStatistics.new(solr_request) }
 
         it 'removes embargoed material' do
           expect(subject.count).to eq 2
@@ -86,7 +84,7 @@ RSpec.describe AcademicCommons::Metrics::UsageStatistics, integration: true do
         end
 
         it 'returns correct results' do
-          expect(subject.map(&:document)).to eq solr_response['response']['docs']
+          expect(subject.map(&:document)).to eq solr_response.documents
         end
 
         it 'returns correct totals for lifetime' do
@@ -109,8 +107,9 @@ RSpec.describe AcademicCommons::Metrics::UsageStatistics, integration: true do
         end
 
         it 'returns correct results' do
-          expect(subject.map(&:document)).to eq solr_response['response']['docs']
+          expect(subject.map(&:document)).to eq solr_response.documents
         end
+
         it 'returns correct totals' do
           expect(subject.total_for(Statistic::VIEW, 'Period')).to be 2
           expect(subject.total_for(Statistic::DOWNLOAD, 'Period')).to be 1
@@ -128,7 +127,7 @@ RSpec.describe AcademicCommons::Metrics::UsageStatistics, integration: true do
         end
 
         it 'returns correct results' do
-          expect(subject.map(&:document)).to eq solr_response['response']['docs']
+          expect(subject.map(&:document)).to eq solr_response.documents
         end
 
         it 'returns correct totals' do
@@ -296,8 +295,10 @@ RSpec.describe AcademicCommons::Metrics::UsageStatistics, integration: true do
     subject {
       usage_stats.instance_eval{
         most_downloaded_asset(
-          { 'id' => 'actest:1', 'title_display' => 'Second Test Document', 'object_state_ssi' => 'A',
-            'handle' => 'http://dx.doi.org/10.7916/TESTDOC2', 'doi' => '', 'genre_facet' => '' }
+          SolrDocument.new(
+            'id' => 'actest:1', 'title_display' => 'Second Test Document', 'object_state_ssi' => 'A',
+            'handle' => 'http://dx.doi.org/10.7916/TESTDOC2', 'doi' => '', 'genre_facet' => ''
+          )
         )
       }
     }
@@ -309,13 +310,6 @@ RSpec.describe AcademicCommons::Metrics::UsageStatistics, integration: true do
     end
 
     context 'when item has one asset' do
-      let(:asset_pids_response) { [{ pid: pid1 }] }
-
-      before :each do
-        allow(usage_stats).to receive(:build_resource_list)
-          .with(any_args).and_return(asset_pids_response)
-      end
-
       it 'returns only asset' do
         expect(subject).to eql 'actest:2'
       end

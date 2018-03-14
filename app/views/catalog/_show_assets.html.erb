@@ -13,9 +13,11 @@
       <% asset_docs.each do |asset| %>
         <ul class="list-group">
           <li class="list-group-item">
-            <span class="filename"><%= asset[:filename] %></span>
-            <span class="mimetype"><%= asset[:content_type] %></span>
-            <span class="download"><%= link_to ('<span class="glyphicon glyphicon-download"></span>').html_safe, asset[:download_path] %></span>
+            <%= image_tag asset.thumbnail, height: 100, alt: "thumnail for #{asset.filename}" %>
+            <span class="filename"><%= asset.filename %></span>
+            <span class="mimetype"><%= asset.fetch(:downloadable_content_type_ssi, nil) %></span>
+            <span><%= number_to_human_size(asset.fetch(:downloadable_content_size_i, nil)) %></span>
+            <span class="download"><%= link_to ('<span class="glyphicon glyphicon-download"></span>').html_safe, asset.download_path %></span>
           </li>
         </ul>
       <% end %>
