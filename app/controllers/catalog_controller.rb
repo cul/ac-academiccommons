@@ -107,7 +107,7 @@ class CatalogController < ApplicationController
     config.add_show_field 'author_facet',            display: :main_content,  itemprop: 'creator',      link_to_search: 'author_facet'
     config.add_show_field 'abstract',                display: :main_content,  itemprop: 'description'
 
-    config.add_show_field 'geographic_area_display', display: :table, label: 'Geographic Areas'
+    config.add_show_field 'geographic_area_display', display: :table, label: 'Geographic Areas', link_to_search: 'geographic_area_display'
     config.add_show_field 'subject_facet',           display: :table, label: 'Subjects',       itemprop: 'keywords',    link_to_search: 'subject_facet'
 
 
