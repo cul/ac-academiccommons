@@ -1,23 +1,25 @@
 module AcademicCommons
   class Indexer
     TIMESTAMP = '%Y%m%d-%H%M%S'.freeze
-    attr_reader :indexing_logger, :error, :success, :start
+    attr_reader :indexing_logger, :error, :success, :start, :verbose
 
     # Creates object that reindex all records currently in the solr core or
     # individual items.
     #
     # @param [User|String] executed_by person running this index
     # @param [Time] start time indexing was started, defaults to Time.new
-    def initialize(executed_by: nil, start: nil) # eventually will have to add flag for full text indexing
-      @start = start || Time.new
+    def initialize(executed_by: nil, start: nil, verbose: false) # eventually will have to add flag for full text indexing
+      @start = start || Time.current
       @indexing_logger = setup_logger(start_timestamp)
       @error, @success = [], []
-      @indexing_logger.info "This re-index executed by: #{(executed_by || 'n/a').to_s}"
+      @verbose = verbose
+      log_info "This re-index executed by: #{(executed_by || 'n/a').to_s}"
+      log_info 'START REINDEX'
     end
 
     # Reindexes all items that are currently in the solr core.
     def all_items
-      indexing_logger.info 'Indexing all items (aggregators) currently in the solr core...'
+      log_info 'Indexing all items and assets currently in the solr core...'
 
       # Solr query to retrieve all aggregators in solr core.
       solr_params = {
@@ -36,24 +38,23 @@ module AcademicCommons
     # @param [Array<String>] items list of pids
     # @param [Boolean] only_in_solr only indexes resources (assets) already in solr
     def items(*items, only_in_solr: true)
-      indexing_logger.info "Preparing to index #{items.size} items..."
+      log_info "Preparing to index #{items.size} item(s):"
 
       items.each do |pid|
-        indexing_logger.info "Indexing aggregator #{pid}..."
+        log_info "Processing aggregator  #{pid}"
 
         begin
           i = ActiveFedora::Base.find(pid)
           i.update_index
           i.list_members.each do |resource|
             next if only_in_solr && !solr_id_exists?(resource.id)
-            indexing_logger.info("Indexing resource: #{resource.id}")
-            indexing_logger.info(resource.to_solr)
+            log_info("           child asset #{resource.id}")
             resource.update_index
           end
           success.append(pid)
         rescue Exception => e
-          indexing_logger.error e.message
-          indexing_logger.error e.backtrace.join("\n ")
+          log_error e.message
+          log_error e.backtrace.join("\n ")
           error.append(pid)
           next
         end
@@ -65,10 +66,10 @@ module AcademicCommons
       seconds_spent = Time.new - start
       readable_time_spent = Time.at(seconds_spent).utc.strftime('%H hours, %M minutes, %S seconds')
 
-      indexing_logger.info 'FINISHED INDEXING'
-      indexing_logger.info "Time spent: #{readable_time_spent}"
-      indexing_logger.info "Successfully indexed #{success.count} item(s)."
-      indexing_logger.info "The following #{error.count} item(s) returned errors #{error.join(", ")}" unless error.count.zero?
+      log_info 'FINISH REINDEX '
+      log_info "Time spent: #{readable_time_spent}"
+      log_info "Successfully indexed #{success.count} item(s)."
+      log_info "The following #{error.count} item(s) returned errors #{error.join(", ")}" unless error.count.zero?
       indexing_logger.close
     end
 
@@ -77,6 +78,18 @@ module AcademicCommons
     end
 
     private
+
+    # Writes errors to logger and stdout.
+    def log_error(string)
+      indexing_logger.error(string)
+      puts(Rainbow(string).red) if verbose
+    end
+
+    # Writes information to logger and stdout.
+    def log_info(string)
+      indexing_logger.info(string)
+      puts(string) if verbose
+    end
 
     # Helper to determain whether or not id exists in solr core.
     def solr_id_exists?(id)
