@@ -71,19 +71,15 @@ class CatalogController < ApplicationController
     # :show may be set to false if you don't want the facet to be drawn in the
     # facet bar
 
-    config.add_facet_field 'author_facet',           label: 'Author',       limit: 2
-    config.add_facet_field 'department_facet',       label: 'Department',   limit: 2
-    config.add_facet_field 'subject_facet',          label: 'Subject',      limit: 2
-    config.add_facet_field 'genre_facet',            label: 'Content Type', limit: 2
-    config.add_facet_field 'degree_level_ssim', label: 'Degree Level', query: {
-      'Bachelor\'s' => { label: 'Bachelor\'s', fq: 'degree_level_ssim:0' },
-      'Master\'s'   => { label: 'Master\'s',   fq: 'degree_level_ssim:1' },
-      'Doctoral'    => { label: 'Doctoral',    fq: 'degree_level_ssim:2' }
-    }
-    config.add_facet_field 'pub_date_facet',         label: 'Date',         limit: 2
-    config.add_facet_field 'series_facet',           label: 'Series',       limit: 2
-    config.add_facet_field 'language',               label: 'Language'
-    config.add_facet_field 'type_of_resource_facet', label: 'Resource Type'
+    config.add_facet_field 'author_facet',           label: 'Author',        limit: 5
+    config.add_facet_field 'department_facet',       label: 'Academic Unit', limit: 5
+    config.add_facet_field 'subject_facet',          label: 'Subject',       limit: 5
+    config.add_facet_field 'genre_facet',            label: 'Type',          limit: 5
+    config.add_facet_field 'degree_level_name_ssim', label: 'Degree Level',  limit: 5
+    config.add_facet_field 'pub_date_facet',         label: 'Date',          limit: 5
+    config.add_facet_field 'series_facet',           label: 'Series',        limit: 5
+    config.add_facet_field 'language',               label: 'Language',      limit: 5
+    # config.add_facet_field 'type_of_resource_facet', label: 'Resource Type', if: current_user.admin?
 
     # Have BL send all facet field names to Solr, which has been the default
     # previously. Simply remove these lines if you'd rather use Solr request
@@ -104,34 +100,27 @@ class CatalogController < ApplicationController
     config.add_show_field 'genre_facet',             display: :tag,    itemprop: 'genre'
     config.add_show_field 'degree_level_name_ssim',  display: :tag
 
-    config.add_show_field 'author_facet',            display: :main_content,  itemprop: 'creator',      link_to_search: 'author_facet'
+    config.add_show_field 'author_facet',            display: :main_content,  itemprop: 'creator',      link_to_search: 'author_facet',
+                                                     separator_options: { words_connector: '; ', two_words_connector: '; ', last_word_connector: '; ' }
     config.add_show_field 'abstract',                display: :main_content,  itemprop: 'description'
 
     config.add_show_field 'geographic_area_display', display: :table, label: 'Geographic Areas', link_to_search: 'geographic_area_display'
     config.add_show_field 'subject_facet',           display: :table, label: 'Subjects',       itemprop: 'keywords',    link_to_search: 'subject_facet'
 
-
-    config.add_show_field 'book_journal_title',      label: 'Book/Journal Title'
+    config.add_show_field 'book_journal_title',      label: 'Published In'
     config.add_show_field 'doi',                     label: 'Publisher DOI',                             helper_method: :link_identifier
     config.add_show_field 'volume',                  label: 'Volume'
-    # issue, start_page, end_page
-
-
+    config.add_show_field 'issue',                   label: 'Issue'
+    config.add_show_field 'pages',                   label: 'Pages', accessor: true, unless: ->(_, _, doc) { doc.pages.blank? }
     config.add_show_field 'publisher',               label: 'Publisher'
     config.add_show_field 'publisher_location',      label: 'Publication Origin'
-
-    config.add_show_field 'url',                     label: 'Related URL'
-
     config.add_show_field 'series_facet',            label: 'Series',                                     link_to_search: 'series_facet'
     config.add_show_field 'non_cu_series_facet',     label: 'Series'
     config.add_show_field 'part_number',             label: 'Part Number' #series part number
-
-
     config.add_show_field 'department_facet',        label: 'Academic Units',                              link_to_search: 'department_facet'
-
-
     config.add_show_field 'thesis_advisor',          label: 'Thesis Advisors' #not sure what part of the page this would go on.
-    config.add_show_field 'degree_name_ssim',        label: 'Degree',                                     helper_method: :concat_grantor
+    config.add_show_field 'degree',                  label: 'Degree', accessor: true, unless: ->(_, _, doc) { doc.degree.blank? }
+    config.add_show_field 'url',                     label: 'Related URL'
 
     config.add_show_field 'notes',                   display: :notes, label: 'Notes'
 
@@ -190,19 +179,29 @@ class CatalogController < ApplicationController
     # except in the relevancy case).
     # label is key, solr field is value
 
-    config.add_sort_field('relevance') do |field|
+    config.add_sort_field('Best Match') do |field|
       field.sort = 'score desc, pub_date_sort desc, title_sort asc'
-      field.label = 'relevance'
+      field.label = 'Best Match'
     end
 
-    config.add_sort_field('year') do |field|
+    config.add_sort_field('Published Latest') do |field|
       field.sort = 'pub_date_sort desc, title_sort asc'
-      field.label = 'year'
+      field.label = 'Published Latest'
     end
 
-    config.add_sort_field('title') do |field|
+    config.add_sort_field('Published Earliest') do |field|
+      field.sort = 'pub_date_sort asc, title_sort asc'
+      field.label = 'Published Earliest'
+    end
+
+    config.add_sort_field('Title A-Z') do |field|
       field.sort = 'title_sort asc, pub_date_sort desc'
-      field.label = 'title'
+      field.label = 'Title A-Z'
+    end
+
+    config.add_sort_field('Title Z-A') do |field|
+     field.sort = 'title_sort desc, pub_date_sort desc'
+     field.label = 'Title Z-A'
     end
 
     # If there are more than this many search results, no spelling ("did you
