@@ -115,4 +115,8 @@ class SolrDocument
   def asset?
     ['GenericResource', 'Resource'].include?(fetch(:active_fedora_model_ssi, nil))
   end
+
+  def pages
+    [fetch('start_page', nil), fetch('end_page', nil)].join(' - ')
+  end
 end

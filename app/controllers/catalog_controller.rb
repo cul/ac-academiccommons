@@ -111,9 +111,11 @@ class CatalogController < ApplicationController
     config.add_show_field 'subject_facet',           display: :table, label: 'Subjects',       itemprop: 'keywords',    link_to_search: 'subject_facet'
 
 
-    config.add_show_field 'book_journal_title',      label: 'Book/Journal Title'
+    config.add_show_field 'book_journal_title',      label: 'Published In'
     config.add_show_field 'doi',                     label: 'Publisher DOI',                             helper_method: :link_identifier
     config.add_show_field 'volume',                  label: 'Volume'
+    config.add_show_field 'issue',                   label: 'Issue'
+    config.add_show_field 'pages',                    label: 'Pages', accessor: true
     # issue, start_page, end_page
 
 
