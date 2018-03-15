@@ -13,10 +13,6 @@ module CatalogHelper
     [link_to(url, url)]
   end
 
-  def concat_grantor(**options)
-    [[options[:value], options[:document]['degree_grantor_ssim']].join(', ')]
-  end
-
   def get_total_count
     date_trend.counts[:total]
   end

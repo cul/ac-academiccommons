@@ -117,6 +117,12 @@ class SolrDocument
   end
 
   def pages
-    [fetch('start_page', nil), fetch('end_page', nil)].join(' - ')
+    fields = [fetch('start_page', nil), fetch('end_page', nil)].compact
+    (fields.blank?) ? nil : fields.join(' - ')
+  end
+
+  def degree
+    fields = [fetch('degree_name_ssim', nil), fetch('degree_grantor_ssim', nil)].compact
+    (fields.blank?) ? nil : fields.join(', ')
   end
 end
