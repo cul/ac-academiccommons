@@ -111,7 +111,7 @@ class CatalogController < ApplicationController
     config.add_show_field 'doi',                     label: 'Publisher DOI',                             helper_method: :link_identifier
     config.add_show_field 'volume',                  label: 'Volume'
     config.add_show_field 'issue',                   label: 'Issue'
-    config.add_show_field 'pages',                   label: 'Pages', accessor: true, unless: lambda { |_, _, doc| doc.pages.blank? }
+    config.add_show_field 'pages',                   label: 'Pages', accessor: true, unless: ->(_, _, doc) { doc.pages.blank? }
     config.add_show_field 'publisher',               label: 'Publisher'
     config.add_show_field 'publisher_location',      label: 'Publication Origin'
     config.add_show_field 'series_facet',            label: 'Series',                                     link_to_search: 'series_facet'
@@ -119,7 +119,7 @@ class CatalogController < ApplicationController
     config.add_show_field 'part_number',             label: 'Part Number' #series part number
     config.add_show_field 'department_facet',        label: 'Academic Units',                              link_to_search: 'department_facet'
     config.add_show_field 'thesis_advisor',          label: 'Thesis Advisors' #not sure what part of the page this would go on.
-    config.add_show_field 'degree',                  label: 'Degree', accessor: true, unless: lambda { |_, _, doc| doc.degree.blank? }
+    config.add_show_field 'degree',                  label: 'Degree', accessor: true, unless: ->(_, _, doc) { doc.degree.blank? }
     config.add_show_field 'url',                     label: 'Related URL'
 
     config.add_show_field 'notes',                   display: :notes, label: 'Notes'
