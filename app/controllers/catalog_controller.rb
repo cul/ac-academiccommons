@@ -179,19 +179,29 @@ class CatalogController < ApplicationController
     # except in the relevancy case).
     # label is key, solr field is value
 
-    config.add_sort_field('relevance') do |field|
+    config.add_sort_field('Best Match') do |field|
       field.sort = 'score desc, pub_date_sort desc, title_sort asc'
-      field.label = 'relevance'
+      field.label = 'Best Match'
     end
 
-    config.add_sort_field('year') do |field|
+    config.add_sort_field('Published Latest') do |field|
       field.sort = 'pub_date_sort desc, title_sort asc'
-      field.label = 'year'
+      field.label = 'Published Latest'
     end
 
-    config.add_sort_field('title') do |field|
+    config.add_sort_field('Published Earliest') do |field|
+      field.sort = 'pub_date_sort asc, title_sort asc'
+      field.label = 'Published Earliest'
+    end
+
+    config.add_sort_field('Title A-Z') do |field|
       field.sort = 'title_sort asc, pub_date_sort desc'
-      field.label = 'title'
+      field.label = 'Title A-Z'
+    end
+
+    config.add_sort_field('Title Z-A') do |field|
+     field.sort = 'title_sort desc, pub_date_sort desc'
+     field.label = 'Title Z-A'
     end
 
     # If there are more than this many search results, no spelling ("did you
