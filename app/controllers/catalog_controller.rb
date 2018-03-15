@@ -100,7 +100,8 @@ class CatalogController < ApplicationController
     config.add_show_field 'genre_facet',             display: :tag,    itemprop: 'genre'
     config.add_show_field 'degree_level_name_ssim',  display: :tag
 
-    config.add_show_field 'author_facet',            display: :main_content,  itemprop: 'creator',      link_to_search: 'author_facet'
+    config.add_show_field 'author_facet',            display: :main_content,  itemprop: 'creator',      link_to_search: 'author_facet',
+                                                     separator_options: { words_connector: '; ', two_words_connector: '; ', last_word_connector: '; ' }
     config.add_show_field 'abstract',                display: :main_content,  itemprop: 'description'
 
     config.add_show_field 'geographic_area_display', display: :table, label: 'Geographic Areas', link_to_search: 'geographic_area_display'
