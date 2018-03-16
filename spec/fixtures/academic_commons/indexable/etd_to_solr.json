@@ -1,12 +1,6 @@
 {
   "id": "actest:1",
-  "internal_h": [
-    "collection:3/"
-  ],
   "pid": "actest:1",
-  "member_of": [
-    "collection:3"
-  ],
   "record_creation_date": "2016-09-14T16:31:33Z",
   "record_change_date": "2016-09-14T16:48:05Z",
   "record_language_of_catalog": "eng",

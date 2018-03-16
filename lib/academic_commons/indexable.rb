@@ -27,7 +27,7 @@ module AcademicCommons
     # Keeping track of multivalued fields until we move over to using dynamic
     # field names. Once we make the switch this can be reduced.
     MULTIVALUED_FIELDS = %w(
-      member_of internal_h author_uni advisor_uni author_search advisor_search
+      member_of author_uni advisor_uni author_search advisor_search
       genre_search keyword_search subject_display subject_search notes
       book_author geographic_area_display geographic_area_search role
       affiliation_department type_of_resource_mods author_info thesis_advisor
@@ -69,9 +69,8 @@ module AcademicCommons
       # baseline blacklight fields: id is the unique identifier, format determines by default, what partials get called
       #TODO: Make sure access is indifferent
       add_field.call('id', self.pid) unless (solr_doc['id'] || solr_doc[:id])
-      add_field.call('internal_h',  collections.first.to_s + '/')
       add_field.call('pid', self.pid) unless (solr_doc['pid'] || solr_doc[:pid])
-      collections.each do |collection|
+      Array.wrap(collections).each do |collection|
         add_field.call('member_of', collection)
       end
 

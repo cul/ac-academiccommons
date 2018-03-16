@@ -11,7 +11,6 @@ RSpec.describe AcademicCommons::Indexable do
     end
     indexable = class_rig.new
     allow(indexable).to receive(:pid).and_return('actest:1')
-    allow(indexable).to receive(:belongs_to).and_return(['collection:3'])
 
     ds_fixture = ActiveFedora::Datastream.new(indexable, 'test_ds')
     allow(ds_fixture).to receive(:content).and_return mods_fixture

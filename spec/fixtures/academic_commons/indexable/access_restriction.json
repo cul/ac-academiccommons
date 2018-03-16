@@ -3,13 +3,7 @@
   "described_by_ssim": [
     "info:fedora/actest:1/test_ds"
   ],
-  "internal_h": [
-    "collection:3/"
-  ],
   "pid": "actest:1",
-  "member_of": [
-    "collection:3"
-  ],
   "record_creation_date": "2017-06-22T14:42:26Z",
   "record_change_date": "2017-06-22T16:37:46Z",
   "record_language_of_catalog": "eng",

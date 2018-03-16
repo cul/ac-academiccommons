@@ -1,15 +1,9 @@
 {
   "id": "actest:1",
-  "internal_h" : [
-    "collection:3/"
-  ],
   "described_by_ssim": [
     "info:fedora/actest:1/test_ds"
   ],
   "pid":"actest:1",
-  "member_of": [
-    "collection:3"
-  ],
   "record_creation_date": "2013-10-29T16:59:44Z",
   "record_change_date": "2018-02-17T01:34:32Z",
   "record_language_of_catalog": "eng",
