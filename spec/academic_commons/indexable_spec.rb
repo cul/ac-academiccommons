@@ -61,5 +61,12 @@ RSpec.describe AcademicCommons::Indexable do
 
       include_examples 'indexing mods'
     end
+
+    context 'contains multiple series' do
+      let(:mods_fixture) { fixture_to_str('academic_commons/indexable/multiple_series.xml') }
+      let(:expected_json) { fixture_to_json('academic_commons/indexable/multiple_series.json') }
+
+      include_examples 'indexing mods'
+    end
   end
 end
