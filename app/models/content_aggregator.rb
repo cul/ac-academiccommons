@@ -1,5 +1,4 @@
 class ContentAggregator < ActiveFedora::Base
-  include AcademicCommons::Indexable
   include AcademicCommons::Aggregator
 
   def descMetadata_datastream

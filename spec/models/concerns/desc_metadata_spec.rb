@@ -1,10 +1,10 @@
 require 'rails_helper'
-RSpec.describe AcademicCommons::Indexable do
+RSpec.describe AcademicCommons::DescMetadata do
   let(:expected_json) { fixture_to_json('fedora_objs/to_solr.json') }
   let(:indexable) do
     class_rig = Class.new
     class_rig.class_eval do
-      include AcademicCommons::Indexable
+      include AcademicCommons::DescMetadata
       def belongs_to; end
       def descMetadata_datastream; end
       def pid; end

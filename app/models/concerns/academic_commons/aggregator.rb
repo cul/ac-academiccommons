@@ -3,6 +3,7 @@ module AcademicCommons::Aggregator
 
   included do
     include AcademicCommons::Resource
+    include AcademicCommons::DescMetadata
   end
 
   URI_TO_PID = 'info:fedora/'.freeze

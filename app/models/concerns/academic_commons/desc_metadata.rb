@@ -1,5 +1,7 @@
 module AcademicCommons
-  module Indexable
+  module DescMetadata
+    extend ActiveSupport::Concern
+
     AUTHOR_ROLES = %w(author creator speaker moderator interviewee interviewer contributor).freeze
     ADVISOR_ROLES = ['thesis advisor'].freeze
     CORPORATE_AUTHOR_ROLES = ['author'].freeze
