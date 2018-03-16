@@ -99,7 +99,7 @@ module AcademicCommons
       all_author_names = []
       mods.css('>name[@type=\'personal\']').each do |name_node|
 
-        fullname = get_fullname(name_node)
+        fullname = name_node.at_css('namePart:not([type])')
         note_org = false
 
         if name_node.css('role>roleTerm').collect(&:content).any? { |role| AUTHOR_ROLES.include?(role.downcase) }
@@ -209,7 +209,7 @@ module AcademicCommons
         add_field.call('book_journal_title', book_journal_title)
 
         related_host.css('name').each do |book_author|
-          add_field.call('book_author', get_fullname(book_author))
+          add_field.call('book_author', book_author.at_css('namePart:not([type])')
         end
       end
 
@@ -366,18 +366,6 @@ module AcademicCommons
     def access_condition(mods, add_field)
       if restriction = mods.at_css('> accessCondition[@type=\'restriction on access\']')
         add_field.call('restriction_on_access_ss', restriction.text)
-      end
-    end
-
-    # If there a namePart element with no type attribute use that name, otherwise
-    # look for a first and last name and combine them.
-    # TODO: This logic can be simplified when we completely transition to Hyacinth.
-    def get_fullname(node)
-      return nil if node.nil?
-      if name = node.at_css('namePart:not([type])')
-        name.content
-      else
-        (node.css('namePart[@type=\'family\']').collect(&:content) | node.css('namePart[@type=\'given\']').collect(&:content)).join(', ')
       end
     end
 

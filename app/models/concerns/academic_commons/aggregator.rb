@@ -13,8 +13,9 @@ module AcademicCommons::Aggregator
   end
 
   def to_solr(solr_doc={}, options={})
-    solr_doc = super
-    return index_descMetadata(solr_doc)
+    super.tap do |solr_doc|
+      index_descMetadata(solr_doc)
+    end
   end
 
   def list_members(pids_only=false)
