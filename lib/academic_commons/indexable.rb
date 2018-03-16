@@ -212,13 +212,22 @@ module AcademicCommons
         end
       end
 
-      if(related_series = mods.at_css('relatedItem[@type=\'series\']'))
-        if(related_series.has_attribute?('ID'))
+      mods.css('relatedItem[@type=\'series\']').each do |related_series|
+        if related_series.has_attribute?('ID')
           add_field.call('series_facet', related_series.at_css('titleInfo>title'))
+          part_number = related_series.at_css('titleInfo>partNumber')
+          add_field.call(
+            'series_facet_part_number_ssim',
+            part_number ? part_number.content : 'NONE'
+          )
         else
           add_field.call('non_cu_series_facet', related_series.at_css('titleInfo>title'))
+          part_number = related_series.at_css('titleInfo>partNumber')
+          add_field.call(
+            'non_cu_series_facet_part_number_ssim',
+            part_number ? part_number.content : 'NONE'
+          )
         end
-        add_field.call('part_number', related_series.at_css('titleInfo>partNumber'))
       end
 
       mods.css('physicalDescription>internetMediaType').each { |mt| add_field.call('media_type_facet', mt) }
