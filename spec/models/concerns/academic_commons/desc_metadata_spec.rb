@@ -43,36 +43,36 @@ RSpec.describe AcademicCommons::DescMetadata do
     include_examples 'indexing mods'
 
     context 'contains degree information' do
-      let(:mods_fixture) { fixture_to_str('academic_commons/indexable/etd_mods.xml') }
-      let(:expected_json) { fixture_to_json('academic_commons/indexable/etd_to_solr.json') }
+      let(:mods_fixture) { fixture_to_str('desc_metadata/etd_mods.xml') }
+      let(:expected_json) { fixture_to_json('desc_metadata/etd_to_solr.json') }
 
       include_examples 'indexing mods'
     end
 
     context 'contains multiple parent publication authors' do
-      let(:mods_fixture) { fixture_to_str('academic_commons/indexable/parent_publication_names.xml') }
-      let(:expected_json) { fixture_to_json('academic_commons/indexable/parent_publication_names.json') }
+      let(:mods_fixture) { fixture_to_str('desc_metadata/parent_publication_names.xml') }
+      let(:expected_json) { fixture_to_json('desc_metadata/parent_publication_names.json') }
 
       include_examples 'indexing mods'
     end
 
     context 'contains subject titles and subject names' do
-      let(:mods_fixture) { fixture_to_str('academic_commons/indexable/subject_names_and_titles.xml') }
-      let(:expected_json) { fixture_to_json('academic_commons/indexable/subject_names_and_titles.json') }
+      let(:mods_fixture) { fixture_to_str('desc_metadata/subject_names_and_titles.xml') }
+      let(:expected_json) { fixture_to_json('desc_metadata/subject_names_and_titles.json') }
 
       include_examples 'indexing mods'
     end
 
     context 'contains access restriction' do
-      let(:mods_fixture) { fixture_to_str('academic_commons/indexable/access_restriction.xml') }
-      let(:expected_json) { fixture_to_json('academic_commons/indexable/access_restriction.json') }
+      let(:mods_fixture) { fixture_to_str('desc_metadata/access_restriction.xml') }
+      let(:expected_json) { fixture_to_json('desc_metadata/access_restriction.json') }
 
       include_examples 'indexing mods'
     end
 
     context 'contains multiple series' do
-      let(:mods_fixture) { fixture_to_str('academic_commons/indexable/multiple_series.xml') }
-      let(:expected_json) { fixture_to_json('academic_commons/indexable/multiple_series.json') }
+      let(:mods_fixture) { fixture_to_str('desc_metadata/multiple_series.xml') }
+      let(:expected_json) { fixture_to_json('desc_metadata/multiple_series.json') }
 
       include_examples 'indexing mods'
     end
