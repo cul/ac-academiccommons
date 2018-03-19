@@ -327,29 +327,34 @@
     align-items: center;
     border: 0;
     display: flex;
+    flex-wrap: wrap;
+    font-size: 14px;
     justify-content: space-between;
   }
 
   & .list-group-item span {
-    flex: 1 0 0;
+    padding: 3px 0;
+    width: 100%;
+  }
+
+  & .list-group-item span.image img {
+    border: 1px solid $gray-lighter;
+    margin-right: 10px;
+    max-height: 50px;
   }
 
   & .list-group-item span.filename {
-    flex: 4 0 0;
-    font-size: 14px;
-    font-weight: normal;
+    font-weight: 600;
+    word-break: break-all;
   }
 
+  & .list-group-item span.filesize,
   & .list-group-item span.mimetype {
     color: $gray-light;
-    flex: 1 0 0;
-    font-size: 14px;
   }
 
   & .list-group-item span.download {
-    flex: .5 0 0;
     font-size: 20px;
-    text-align: right;
   }
 
   & dl {
@@ -433,6 +438,27 @@
 
     & .subjects ul {
       columns: 4;
+    }
+
+    & .list-group-item span {
+      flex: .5 0 0;
+      padding: 0;
+      width: auto;
+    }
+
+    & .list-group-item span.filename {
+      flex: 3 0 0;
+      margin-right: 10px;
+    }
+
+    & .list-group-item span.filesize,
+    & .list-group-item span.mimetype {
+      margin: 0 10px;
+    }
+
+    & .list-group-item span.download {
+      flex: .3 0 0;
+      text-align: right;
     }
 
     & dt,
