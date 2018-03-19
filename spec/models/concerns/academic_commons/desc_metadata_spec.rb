@@ -8,7 +8,7 @@ RSpec.describe AcademicCommons::DescMetadata do
 
       def belongs_to; end
 
-      def descMetadata_datastream; end
+      def descmetadata_datastream; end
 
       def pid; end
     end
@@ -17,7 +17,7 @@ RSpec.describe AcademicCommons::DescMetadata do
 
     ds_fixture = ActiveFedora::Datastream.new(indexable, 'test_ds')
     allow(ds_fixture).to receive(:content).and_return mods_fixture
-    allow(indexable).to receive(:descMetadata_datastream).and_return ds_fixture
+    allow(indexable).to receive(:descmetadata_datastream).and_return ds_fixture
 
     indexable
   end

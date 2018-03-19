@@ -11,20 +11,10 @@
   "publisher": "Institute for Social and Economic Research and Policy, Columbia University",
   "publisher_location": "New York",
   "date_issued": "2013",
-  "role": [
-    "author",
-    "author",
-    "originator",
-    "contributor"
-  ],
   "handle": "10.7916/D8ZW1VF7",
   "cul_doi_ssi": "10.7916/D8ZW1VF7",
   "title_display": "A Comprehensive Analysis of Poverty in India",
   "title_search": "A Comprehensive Analysis of Poverty in India",
-  "author_info": [
-    "Panagariya, Arvind :  :",
-    "Mukim, Megha :  :"
-  ],
   "author_search": [
     "panagariya, arvind",
     "mukim, megha"
@@ -53,7 +43,6 @@
   "subject_search": [
     "Economics"
   ],
-  "originator_department": "Institute for Social and Economic Research and Policy",
   "series_facet": [
     "ISERP Working Papers", "Program on Indian Economic Policies Working Papers"
   ],

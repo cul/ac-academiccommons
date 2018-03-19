@@ -10,19 +10,10 @@
   "language": "English",
   "publisher": "Sabin Center for Climate Change Law, Columbia University",
   "date_issued": "2013",
-  "role": ["author",
-    "author",
-    "originator",
-    "originator"
-  ],
   "handle":"10.7916/D85D8R19",
   "cul_doi_ssi":"10.7916/D85D8R19",
   "title_display": "NEPA and Downstream Greenhouse Gas Emissions of U.S. Coal Exports",
   "title_search": "NEPA and Downstream Greenhouse Gas Emissions of U.S. Coal Exports",
-  "author_info": [
-    "Sheargold, Elizabeth :  :",
-    "Walavalkar, Smita :  :"
-  ],
   "author_search": [
     "sheargold, elizabeth",
     "walavalkar, smita"
@@ -78,7 +69,6 @@
     "TransCanada Keystone Pipeline GP Ltd.",
     "National Environmental Policy Act of 1969 (United States)"
   ],
-  "originator_department":"Law",
   "series_facet": [
     "Sabin Center for Climate Change Law White Papers"
   ],

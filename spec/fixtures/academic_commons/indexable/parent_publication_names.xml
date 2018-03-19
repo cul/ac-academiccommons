@@ -39,6 +39,7 @@
             <mods:end>51</mods:end>
          </mods:extent>
       </mods:part>
+      <mods:identifier type="doi">10.125486/s130re42519-015-fdsf-x</mods:identifier>
    </mods:relatedItem>
    <mods:name type="corporate" valueURI="temp:71703d32375428e035955999ee388912415761edb1d72334bdc91a1e7dd394dc">
       <mods:namePart>Columbia University. Art History and Archaeology</mods:namePart>

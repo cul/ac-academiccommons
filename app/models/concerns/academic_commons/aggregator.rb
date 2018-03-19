@@ -13,8 +13,8 @@ module AcademicCommons::Aggregator
   end
 
   def to_solr(solr_doc={}, options={})
-    super.tap do |solr_doc|
-      index_descmetadata(solr_doc)
+    super.tap do |doc|
+      index_descmetadata(doc)
     end
   end
 

@@ -10,20 +10,15 @@
   "advisor_uni": [
     "as000"
   ],
+  "author_uni": [
+    "ad31453"
+  ],
   "language": "English",
   "date_issued": "2015",
-  "role": [
-    "author",
-    "thesis advisor",
-    "originator"
-  ],
   "handle": "10.7916/TEST123",
   "cul_doi_ssi": "10.7916/TEST123",
   "title_display": "Test Dissertation",
   "title_search": "Test Dissertation",
-  "author_info": [
-    "Doe, Ashley :  :"
-  ],
   "author_search": [
     "doe, ashley"
   ],
@@ -56,7 +51,6 @@
     "Persona (Literature)",
     "Influence (Literary, artistic, etc.)"
   ],
-  "originator_department": "English and Comparative Literature",
   "type_of_resource_mods": [
     "text"
   ],

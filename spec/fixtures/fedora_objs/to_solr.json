@@ -9,20 +9,12 @@
   "physical_location": "NNC",
   "language": "English",
   "date_issued": "1865",
-  "role": [
-    "author",
-    "originator",
-    "author"
-  ],
   "handle": "10.7916/ALICE",
   "cul_doi_ssi": "10.7916/ALICE",
   "doi": "10.1378/wonderland.01-2345",
   "issn": "0123-4567",
   "title_display": "Alice's Adventures in Wonderland",
   "title_search": "Alice's Adventures in Wonderland Project Gutenberg",
-  "author_info": [
-    "Carroll, Lewis :  :"
-  ],
   "author_search": [
     "carroll, lewis",
     "weird old guys."
@@ -63,7 +55,6 @@
     "Nonsense literature",
     "Bildungsromans"
   ],
-  "originator_department": "Bucolic Literary Society.",
   "volume": "1",
   "issue": "2",
   "start_page": "1",

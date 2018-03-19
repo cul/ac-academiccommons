@@ -37,7 +37,7 @@ module AcademicCommons
     def index_descmetadata(solr_doc = {})
       raise 'called index_descMetadata twice' if (@index_descmetadata ? (@index_descmetadata += 1) : (@index_descmetadata = 1)) > 1
 
-      meta = descMetadata_datastream
+      meta = descmetadata_datastream
       raise "descMetadata COULD NOT be found for #{pid}.\nSolr doc: #{solr_doc.inspect}" unless meta
 
       solr_doc['described_by_ssim'] = ["info:fedora/#{meta.pid}/#{meta.dsid}"]
@@ -50,7 +50,7 @@ module AcademicCommons
       # Accepts String of Nokogiri::XML::Element as value
       add_field = lambda { |name, value|
         return if value.nil?
-        value = value.content if value.is_a?(Nokogiri::XML::Element)
+        value = value.content if value.is_a?(Nokogiri::XML::Element) || value.is_a?(Nokogiri::XML::Attr)
         value = value.strip
         return if value.blank?
 
@@ -64,7 +64,6 @@ module AcademicCommons
 
       organizations = []
       departments = []
-      originator_department = ''
       # baseline blacklight fields: id is the unique identifier, format determines by default, what partials get called
       # TODO: Make sure access is indifferent
       add_field.call('id', pid) unless solr_doc['id'] || solr_doc[:id]
@@ -90,66 +89,37 @@ module AcademicCommons
       all_author_names = []
       mods.css('>name[@type=\'personal\']').each do |name_node|
         fullname = name_node.at_css('namePart:not([type])').content
-        note_org = false
 
         if name_node.css('role>roleTerm').collect(&:content).any? { |role| AUTHOR_ROLES.include?(role.downcase) }
-          note_org = true
           all_author_names << fullname
 
-          add_field.call('author_uni', name_node.attribute('ID'))
-
-          author_affiliations = []
-
-          name_node.css('affiliation').each do |affiliation_node|
-            author_affiliations.push(affiliation_node.text)
-          end
-
-          uni = name_node['ID'].nil? ? '' : name_node['ID']
-
-          add_field.call('author_info', fullname + ' : ' + uni + ' : ' + author_affiliations.join('; '))
-
+          add_field.call 'author_uni',    name_node.attribute('ID')
           add_field.call 'author_search', fullname.downcase
           add_field.call 'author_facet',  fullname
 
         elsif name_node.css('role>roleTerm').collect(&:content).any? { |role| ADVISOR_ROLES.include?(role.downcase) }
-          note_org = true
           first_role = name_node.at_css('role>roleTerm').text
-          add_field.call(first_role.downcase.gsub(/\s/, '_'), fullname)
+          add_field.call first_role.downcase.gsub(/\s/, '_'), fullname
 
-          add_field.call('advisor_uni', name_node['ID'])
-          add_field.call('advisor_search', fullname.downcase)
-        end
-
-        if note_org == true
-          name_node.css('affiliation').each do |affiliation_node|
-            affiliation_text = affiliation_node.text
-            next unless affiliation_text.include?('. ')
-            affiliation_split = affiliation_text.split('. ')
-            organizations.push(affiliation_split[0].strip)
-            departments.push(affiliation_split[1].strip)
-          end
+          add_field.call 'advisor_uni',    name_node.attribute('ID')
+          add_field.call 'advisor_search', fullname.downcase
         end
       end
 
       # CORPORATE NAMES
       mods.css('> name[@type=\'corporate\']').each do |corp_name_node|
-        if corp_name_node.css('role > roleTerm').collect(&:content).any? { |role| CORPORATE_DEPARTMENT_ROLES.include?(role.downcase) }
-          name_part = corp_name_node.at_css('namePart').text
-          if name_part.include?('. ')
-            name_part_split = name_part.split('. ')
-            organizations.push(name_part_split[0].strip)
-            departments.push(name_part_split[1].strip)
-            originator_department = name_part_split[1].strip
-          end
+        name_part = corp_name_node.at_css('namePart').text
+        roles = corp_name_node.css('role > roleTerm').collect(&:content).map(&:downcase)
+        if roles.any? { |role| CORPORATE_DEPARTMENT_ROLES.include?(role) } && name_part.include?('. ')
+          name_part_split = name_part.split('. ')
+          organizations.push(name_part_split[0].strip)
+          departments.push(name_part_split[1].strip)
         end
 
-        if corp_name_node.css('role > roleTerm').collect(&:content).any? { |role| CORPORATE_AUTHOR_ROLES.include?(role.downcase) }
-          fullname = corp_name_node.at_css('namePart').text
-
-          all_author_names << fullname
-          add_field.call('author_search', fullname.downcase)
-          add_field.call('author_facet', fullname)
-        end
+        next unless roles.any? { |role| CORPORATE_AUTHOR_ROLES.include?(role) }
+        all_author_names << name_part
+        add_field.call('author_search', name_part.downcase)
+        add_field.call('author_facet', name_part)
       end
 
       add_field.call('author_display', all_author_names.join('; '))
@@ -172,12 +142,11 @@ module AcademicCommons
       # SUBJECT
       mods.css('subject').each do |subject_node|
         attri = subject_node.attributes
-        if attri.count.zero? || (attri['authority'] && attri['authority'].value == 'fast')
-          subject_node.css('topic,title,namePart').each do |topic_node|
-            add_field.call 'keyword_search', topic_node.content.downcase
-            add_field.call 'subject_facet',  topic_node
-            add_field.call 'subject_search', topic_node
-          end
+        next unless attri.count.zero? || (attri['authority'] && attri['authority'].value == 'fast')
+        subject_node.css('topic,title,namePart').each do |topic_node|
+          add_field.call 'keyword_search', topic_node.content.downcase
+          add_field.call 'subject_facet',  topic_node
+          add_field.call 'subject_search', topic_node
         end
       end
 
@@ -186,9 +155,6 @@ module AcademicCommons
         add_field.call 'geographic_area_display', geo
         add_field.call 'geographic_area_search',  geo
       end
-
-      add_field.call('originator_department', originator_department)
-      add_field.call('table_of_contents', mods.at_css('tableOfContents')) # TODO: Can I delete this?
 
       mods.css('note').each { |note| add_field.call('notes', note) }
 
@@ -201,13 +167,14 @@ module AcademicCommons
           book_journal_title = book_journal_title.content + ': ' + book_journal_subtitle.content.to_s if book_journal_subtitle
         end
 
-        add_field.call('volume', related_host.at_css('part>detail[@type=\'volume\']>number'))
-        add_field.call('issue', related_host.at_css('part>detail[@type=\'issue\']>number'))
-        add_field.call('start_page', related_host.at_css('part > extent[@unit=\'page\'] > start'))
-        add_field.call('end_page', related_host.at_css('part > extent[@unit=\'page\'] > end'))
-        add_field.call('date', related_host.at_css('part > date'))
+        add_field.call 'volume',     related_host.at_css('part > detail[@type=\'volume\']>number')
+        add_field.call 'issue',      related_host.at_css('part > detail[@type=\'issue\']>number')
+        add_field.call 'start_page', related_host.at_css('part > extent[@unit=\'page\'] > start')
+        add_field.call 'end_page',   related_host.at_css('part > extent[@unit=\'page\'] > end')
+        add_field.call 'date',       related_host.at_css('part > date')
+        add_field.call 'doi',        related_host.at_css('identifier[@type=\'doi\']')
 
-        add_field.call('book_journal_title', book_journal_title)
+        add_field.call 'book_journal_title', book_journal_title
 
         related_host.css('name').each do |book_author|
           add_field.call('book_author', book_author.at_css('namePart:not([type])'))
@@ -244,13 +211,6 @@ module AcademicCommons
 
       departments.uniq.each { |dep| add_field.call('department_facet', dep.to_s.sub(', Department of', '')) }
 
-      # ROLE INDEXING
-      # TODO: Can we delete this?
-      mods.css('> name > role > roleTerm').each do |role|
-        next if role.nil? || role.text.length.zero?
-        add_field.call('role', role.text.downcase)
-      end
-
       # EMBARGO RELEASE DATE
       if (free_to_read = mods.at_css('free_to_read'))
         start_date = free_to_read.attribute('start_date').to_s
@@ -271,11 +231,11 @@ module AcademicCommons
       end
 
       # RECORD INFO
-      add_field.call('record_content_source', mods.at_css('recordInfo>recordContentSource'))
-      add_field.call('record_creation_date', mods.at_css('recordInfo>recordCreationDate'))
-      add_field.call('record_change_date', mods.at_css('recordInfo>recordChangeDate'))
-      add_field.call('record_identifier', mods.at_css('recordInfo>recordIdentifier'))
-      add_field.call('record_language_of_catalog', mods.at_css('recordInfo>languageOfCataloging>languageTerm'))
+      add_field.call 'record_content_source',      mods.at_css('> recordInfo > recordContentSource')
+      add_field.call 'record_creation_date',       mods.at_css('> recordInfo > recordCreationDate')
+      add_field.call 'record_change_date',         mods.at_css('> recordInfo > recordChangeDate')
+      add_field.call 'record_identifier',          mods.at_css('> recordInfo > recordIdentifier')
+      add_field.call 'record_language_of_catalog', mods.at_css('> recordInfo > languageOfCataloging > languageTerm')
 
       # ACCESS CONDITION
       add_field.call('restriction_on_access_ss', mods.at_css('> accessCondition[@type=\'restriction on access\']'))
@@ -287,7 +247,6 @@ module AcademicCommons
 
       # INDEXING
       add_field.call('isbn', mods.at_css('identifier[@type=\'isbn\']'))
-      add_field.call('doi', mods.at_css('identifier[@type=\'doi\']')) # Publisher DOI
       add_field.call('uri', mods.at_css('identifier[@type=\'uri\']'))
       add_field.call('issn', mods.at_css('identifier[@type=\'issn\']'))
 

@@ -1,7 +1,7 @@
 class ContentAggregator < ActiveFedora::Base
   include AcademicCommons::Aggregator
 
-  def descMetadata_datastream
+  def descmetadata_datastream
     if datastreams.keys.include?('descMetadata')
       return datastreams['descMetadata']
     else
@@ -12,7 +12,7 @@ class ContentAggregator < ActiveFedora::Base
   end
 
   def descMetadata_content
-    content_ds = descMetadata_datastream
+    content_ds = descmetadata_datastream
     return content_ds ? content_ds.content : nil
   end
 end

@@ -11,17 +11,10 @@
   "publisher": "Driesen",
   "publisher_location": "Taunusstein",
   "date_issued": "2007",
-  "role": [
-    "originator",
-    "author"
-  ],
   "handle": "10.7916/D86W9M15",
   "cul_doi_ssi": "10.7916/D86W9M15",
   "title_display": "Empathy, Motion and Emotion",
   "title_search": "Empathy, Motion and Emotion Wie sich Gefuhle Ausdruck verschaffen: Emotionen in Nahsicht",
-  "author_info": [
-    "Freedberg, David A. :  :"
-  ],
   "author_search": [
     "freedberg, david a."
   ],
@@ -48,7 +41,6 @@
     "Arts",
     "Art"
   ],
-  "originator_department": "Art History and Archaeology",
   "start_page": "17",
   "end_page": "51",
   "date": "2007",
