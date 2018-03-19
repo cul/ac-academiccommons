@@ -25,9 +25,9 @@ RSpec.describe AcademicCommons::Statistics do
     end
     let(:author_search) do
       {
-        rows: 100_000, sort: 'title_display asc', q: nil, page: 1,
+        rows: 100_000, sort: 'title_ssi asc', q: nil, page: 1,
         fq: ['author_uni:"abc123"', 'has_model_ssim:"info:fedora/ldpd:ContentAggregator"'],
-        fl: 'title_display,id,handle,doi,genre_facet,record_creation_date,object_state_ssi,free_to_read_start_date'
+        fl: 'title_ssi,id,handle,doi,genre_facet,record_creation_date,object_state_ssi,free_to_read_start_date'
       }
     end
 
@@ -48,7 +48,7 @@ RSpec.describe AcademicCommons::Statistics do
           {
             'response' => {
                'docs' => [
-                 { 'id' => pid, 'title_display' => 'First Test Document', 'object_state_ssi' => 'A',
+                 { 'id' => pid, 'title_ssi' => 'First Test Document', 'object_state_ssi' => 'A',
                    'handle' => '', 'doi' => '', 'genre_facet' => '' },
                ]
             }
@@ -79,7 +79,7 @@ RSpec.describe AcademicCommons::Statistics do
           {
             'response' => {
                'docs' => [
-                 { 'id' => pid, 'title_display' => 'First Test Document', 'object_state_ssi' => 'A',
+                 { 'id' => pid, 'title_ssi' => 'First Test Document', 'object_state_ssi' => 'A',
                    'handle' => '', 'doi' => '', 'genre_facet' => '', 'free_to_read_start_date' => Date.tomorrow.strftime('%Y-%m-%d') },
                ]
             }
@@ -139,7 +139,7 @@ RSpec.describe AcademicCommons::Statistics do
     context 'searching by facet' do
       it 'makes correct solr request' do
         params = statistics.instance_eval { detail_report_solr_params('author_uni', 'xyz123') }
-        expect(params).to match(q: nil, fq: ['author_uni:"xyz123"'], sort: 'title_display asc')
+        expect(params).to match(q: nil, fq: ['author_uni:"xyz123"'], sort: 'title_ssi asc')
       end
     end
 

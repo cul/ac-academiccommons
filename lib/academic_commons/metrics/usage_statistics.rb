@@ -14,7 +14,7 @@ module AcademicCommons::Metrics
 
     DEFAULT_SOLR_PARAMS = {
       rows: 100_000, page: 1,
-      fl: 'title_display,id,handle,doi,genre_facet,record_creation_date,object_state_ssi,free_to_read_start_date'
+      fl: 'title_ssi,id,handle,doi,genre_facet,record_creation_date,object_state_ssi,free_to_read_start_date'
     }.freeze
 
     PERIOD = 'Period'.freeze
@@ -209,7 +209,7 @@ module AcademicCommons::Metrics
 
     def get_solr_documents(params)
       params = params.merge(DEFAULT_SOLR_PARAMS)
-      params[:sort] = 'title_display asc' if(params[:sort].blank? || options[:order_by] == 'title')
+      params[:sort] = 'title_ssi asc' if(params[:sort].blank? || options[:order_by] == 'title')
       params[:fq] = params.fetch(:fq, []).clone << "has_model_ssim:\"#{ContentAggregator.to_class_uri}\""
       # Add filter to remove embargoed items, free_to_read date must be equal to or less than Date.current
       Blacklight.default_index.search(params).documents

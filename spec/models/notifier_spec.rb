@@ -6,9 +6,9 @@ RSpec.describe Notifier, type: :mailer do
     let(:solr_request) { { q: nil, fq: ["author_uni:\"#{uni}\""] } }
     let(:solr_params) do
       {
-        rows: 100_000, sort: 'title_display asc', q: nil, page: 1,
+        rows: 100_000, sort: 'title_ssi asc', q: nil, page: 1,
         fq: ["author_uni:\"#{uni}\"", 'has_model_ssim:"info:fedora/ldpd:ContentAggregator"'],
-        fl: 'title_display,id,handle,doi,genre_facet,record_creation_date,object_state_ssi,free_to_read_start_date'
+        fl: 'title_ssi,id,handle,doi,genre_facet,record_creation_date,object_state_ssi,free_to_read_start_date'
       }
     end
     let(:solr_response) do
@@ -16,7 +16,7 @@ RSpec.describe Notifier, type: :mailer do
         {
           'response' => {
             'docs' => [
-              { 'id' => 'actest:1', 'title_display' => 'First Test Document', 'object_state_ssi' => 'A',
+              { 'id' => 'actest:1', 'title_ssi' => 'First Test Document', 'object_state_ssi' => 'A',
                 'handle' => 'http://dx.doi.org/10.7916/TESTDOC1', 'doi' => '', 'genre_facet' => '' }
             ]
           }

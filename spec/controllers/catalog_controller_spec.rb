@@ -15,7 +15,7 @@ RSpec.describe CatalogController, type: :controller do
             fq: ['has_model_ssim:"info:fedora/ldpd:ContentAggregator"'],
             sort: 'record_creation_date desc',
             rows: '500',
-            fl: 'title_display,id,author_facet,author_display,record_creation_date,handle,abstract,author_uni,subject_facet,department_facet,genre_facet'
+            fl: 'title_ssi,id,author_facet,author_display,record_creation_date,handle,abstract,author_uni,subject_facet,department_facet,genre_facet'
           }
         end
 
@@ -39,7 +39,7 @@ RSpec.describe CatalogController, type: :controller do
             fq: ['has_model_ssim:"info:fedora/ldpd:ContentAggregator"'],
             sort: 'record_creation_date desc',
             rows: '10',
-            fl: 'title_display,id,author_facet,author_display,record_creation_date,handle,abstract,author_uni,subject_facet,department_facet,genre_facet'
+            fl: 'title_ssi,id,author_facet,author_display,record_creation_date,handle,abstract,author_uni,subject_facet,department_facet,genre_facet'
           }
         end
 
@@ -72,7 +72,7 @@ RSpec.describe CatalogController, type: :controller do
             'f.pub_date_facet.facet.limit' => 3,
             'f.series_facet.facet.limit' => 3,
             'sort' => 'record_create_date desc',
-            'fl' => 'title_display,id,author_facet,author_display,record_creation_date,handle,abstract,author_uni,subject_facet,department_facet,genre_facet'
+            'fl' => 'title_ssi,id,author_facet,author_display,record_creation_date,handle,abstract,author_uni,subject_facet,department_facet,genre_facet'
           }
         end
 
@@ -97,7 +97,7 @@ RSpec.describe CatalogController, type: :controller do
             q: '',
             sort: 'record_creation_date desc',
             rows: '500',
-            fl: 'title_display,id,author_facet,author_display,record_creation_date,handle,abstract,author_uni,subject_facet,department_facet,genre_facet'
+            fl: 'title_ssi,id,author_facet,author_display,record_creation_date,handle,abstract,author_uni,subject_facet,department_facet,genre_facet'
           }
         end
 
@@ -122,7 +122,7 @@ RSpec.describe CatalogController, type: :controller do
           q: '',
           sort: 'record_creation_date desc',
           rows: '500',
-          fl: 'title_display,id,author_facet,author_display,record_creation_date,handle,abstract,author_uni,subject_facet,department_facet,genre_facet'
+          fl: 'title_ssi,id,author_facet,author_display,record_creation_date,handle,abstract,author_uni,subject_facet,department_facet,genre_facet'
         }
       end
 

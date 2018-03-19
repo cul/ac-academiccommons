@@ -31,7 +31,7 @@ module CatalogHelper
 
   def build_recent_updated_list
     query_params = {
-      q: '', fl: 'title_display, id, author_facet, record_creation_date',
+      q: '', fl: 'title_ssi, id, author_facet, record_creation_date',
       sort: 'record_creation_date desc',
       fq: ['author_facet:*', "has_model_ssim:\"#{ContentAggregator.to_class_uri}\""],
       start: 0, rows: 100}

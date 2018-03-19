@@ -77,13 +77,8 @@ module AcademicCommons
       add_field.call 'physical_location', mods.at_css('location>physicalLocation')
 
       # TITLE
-      title = mods.css('> titleInfo > title')
       related_titles = mods.css('relatedItem[@type=\'host\']:not([displayLabel=Project])>titleInfo').css('>nonSort,title')
-
-      title_search = normalize_space.call((title + related_titles).collect(&:content).join(' '))
-
-      add_field.call 'title_display', title.first.text
-      add_field.call 'title_search',  title_search
+      add_field.call 'title_ssi', mods.at_css('> titleInfo > title')
 
       # PERSONAL NAMES
       all_author_names = []

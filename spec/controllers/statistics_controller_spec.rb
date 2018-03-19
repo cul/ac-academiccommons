@@ -25,15 +25,15 @@ describe StatisticsController, type: :controller, integration: true do
     #
     #   let(:author_search) do
     #     {
-    #       :rows => 100000, sort: 'title_display asc', q: nil, :page => 1,
-    #       :fq => "author_uni:\"author_uni:abc123\"", fl: "title_display,id,handle,doi,genre_facet"
+    #       :rows => 100000, sort: 'title_ssi asc', q: nil, :page => 1,
+    #       :fq => "author_uni:\"author_uni:abc123\"", fl: "title_ssi,id,handle,doi,genre_facet"
     #     }
     #   end
     #   let(:author_docs) do
     #     {
     #       'response' => {
     #         'docs' => [
-    #           { 'id' => pid, 'title_display' => 'First Test Document',
+    #           { 'id' => pid, 'title_ssi' => 'First Test Document',
     #             'handle' => '', 'doi' => '', 'genre_facet' => '' },
     #         ]
     #       }

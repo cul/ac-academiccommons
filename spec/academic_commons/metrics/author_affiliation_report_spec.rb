@@ -19,7 +19,7 @@ RSpec.describe AcademicCommons::Metrics::AuthorAffiliationReport do
       'response' => {
         'docs' => [
           { 'id' => 'actest:6', 'handle' => '10.7916/ALICE',
-            'title_display' => 'Alice\'s Adventures in Wonderland',
+            'title_ssi' => 'Alice\'s Adventures in Wonderland',
             'author_uni' => ['abc123', 'xyz567'], 'object_state_ssi' => 'A',
             'department_facet' => ['English Department', 'Creative Writing Department'],
             'genre_facet' => ['Books'],
@@ -35,7 +35,7 @@ RSpec.describe AcademicCommons::Metrics::AuthorAffiliationReport do
       'response' => {
         'docs' => [
           { 'id' => 'actest:7', 'handle' => '10.7916/PRIDE',
-            'title_display' => 'Pride and Prejudice',
+            'title_ssi' => 'Pride and Prejudice',
             'author_uni' => ['xyz567'], 'object_state_ssi' => 'A',
             'genre_facet' => ['Books'],
             'author_facet' => ['Austen, Jane', 'Doe, Jane'],

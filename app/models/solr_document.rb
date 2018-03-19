@@ -21,7 +21,7 @@ class SolrDocument
   use_extension(Blacklight::Document::DublinCore)
 
   field_semantics.merge!(
-    title: 'title_display',
+    title: 'title_ssi',
     author: 'author_facet',
 	  creator: 'author_facet',
 		date: 'pub_date_facet',

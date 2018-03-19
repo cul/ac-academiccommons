@@ -147,7 +147,7 @@ describe SolrDocumentsController, type: :controller do
     subject do
       solr_doc = {
         'id' => 'actest:1', 'handle' => doi,
-        'title_display' => 'Alice\'s Adventures in Wonderland',
+        'title_ssi' => 'Alice\'s Adventures in Wonderland',
         'author_uni' => [author_one, author_two],
         'free_to_read_start_date' => (Date.current - 1.month).to_s
       }

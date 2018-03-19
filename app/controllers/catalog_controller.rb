@@ -28,7 +28,7 @@ class CatalogController < ApplicationController
     }
 
     # solr field configuration for search results/index views
-    config.show.title_field = 'title_display'
+    config.show.title_field = 'title_ssi'
     config.show.display_type_field = 'format'
     config.show.genre = 'genre_facet'
     config.show.author = 'author_display'
@@ -46,7 +46,7 @@ class CatalogController < ApplicationController
 
 
     # solr field configuration for search results/index views
-    config.index.title_field = 'title_display'
+    config.index.title_field = 'title_ssi'
     config.index.num_per_page = 10
     config.index.display_type_field = 'format'
 
@@ -347,7 +347,7 @@ class CatalogController < ApplicationController
    params[:fq] = Array(params[:fq]).append("has_model_ssim:\"#{ContentAggregator.to_class_uri}\"")
 
    extra_params = {}
-   extra_params[:fl] = 'title_display,id,author_facet,author_display,record_creation_date,handle,abstract,author_uni,subject_facet,department_facet,genre_facet'
+   extra_params[:fl] = 'title_ssi,id,author_facet,author_display,record_creation_date,handle,abstract,author_uni,subject_facet,department_facet,genre_facet'
 
    if (params[:f].nil?)
      solr_response = repository.search(params.merge(extra_params))

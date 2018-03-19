@@ -5,7 +5,7 @@
   <% build_recent_updated_list.each do |recent_item| %>
 
     <li class="home-recent">
-      <%= link_to recent_item[:title_display], solr_document_path(recent_item[:id]) %>
+      <%= link_to recent_item[:title_ssi], solr_document_path(recent_item[:id]) %>
       <p class="caption">
         <% num_authors = 0 %>
         <% recent_item[:author_facet].each do |author| %>

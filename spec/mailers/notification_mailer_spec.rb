@@ -11,7 +11,7 @@ RSpec.describe NotificationMailer, type: :mailer do
       let(:solr_doc) do
         SolrDocument.new(
           object_state_ssi: 'A', free_to_read_start_date: Date.tomorrow.strftime('%Y-%m-%d'),
-          title_display: 'Alice\'s Adventures in Wonderland', handle: '10.7945/ALICE'
+          title_ssi: 'Alice\'s Adventures in Wonderland', handle: '10.7945/ALICE'
         )
       end
 
@@ -40,7 +40,7 @@ RSpec.describe NotificationMailer, type: :mailer do
       let(:solr_doc) do
         SolrDocument.new(
           object_state_ssi: 'A', free_to_read_start_date: Date.today.strftime('%Y-%m-%d'),
-          title_display: 'Alice\'s Adventures in Wonderland', handle: '10.7945/ALICE'
+          title_ssi: 'Alice\'s Adventures in Wonderland', handle: '10.7945/ALICE'
         )
       end
 

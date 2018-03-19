@@ -181,7 +181,7 @@ module AcademicCommons
         sort = solr_params['sort']
       else
         facet_query = ["#{facet}:\"#{query}\""]
-        sort = 'title_display asc'
+        sort = 'title_ssi asc'
       end
 
       return if facet_query.nil? && q.nil?

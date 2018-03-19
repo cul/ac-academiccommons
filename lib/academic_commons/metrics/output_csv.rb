@@ -52,7 +52,7 @@ module AcademicCommons::Metrics
         self.each_with_index do |item, idx|
           document = item.document
           item_row = [
-            idx + 1, document['title_display'],
+            idx + 1, document['title_ssi'],
             document.fetch('genre_facet', []).first,
             item.get_stat(Statistic::VIEW, time),
             item.get_stat(Statistic::DOWNLOAD, time),
@@ -81,7 +81,7 @@ module AcademicCommons::Metrics
         monthly_stats = self.months_list.map { |m| item_stat.get_stat(key, m.strftime(MONTH_KEY)) }
         document = item_stat.document
         csv.add_row [
-          document['title_display'], document['genre_facet'].first, document['handle'],
+          document['title_ssi'], document['genre_facet'].first, document['handle'],
           document['doi'], item_stat.get_stat(key, 'Period')
         ].concat(monthly_stats)
       end
