@@ -76,7 +76,7 @@ module AcademicCommons
       add_field.call 'url',               mods.at_css('location > url')
       add_field.call 'physical_location', mods.at_css('location>physicalLocation')
 
-      # Index title...
+      # TITLE
       title = mods.css('> titleInfo > title')
       related_titles = mods.css('relatedItem[@type=\'host\']:not([displayLabel=Project])>titleInfo').css('>nonSort,title')
 
@@ -87,10 +87,10 @@ module AcademicCommons
 
       # PERSONAL NAMES
       all_author_names = []
-      mods.css('>name[@type=\'personal\']').each do |name_node|
+      mods.css('> name[@type=\'personal\']').each do |name_node|
         fullname = name_node.at_css('namePart:not([type])').content
 
-        if name_node.css('role>roleTerm').collect(&:content).any? { |role| AUTHOR_ROLES.include?(role.downcase) }
+        if name_node.css('role > roleTerm').collect(&:content).any? { |role| AUTHOR_ROLES.include?(role.downcase) }
           all_author_names << fullname
 
           add_field.call 'author_uni',    name_node.attribute('ID')
@@ -124,12 +124,14 @@ module AcademicCommons
 
       add_field.call('author_display', all_author_names.join('; '))
 
-      # ORIGIN INFO
+      # DATE AND EDITION
       add_field.call 'pub_date_facet',     mods.at_css('> originInfo > dateIssued')
+      add_field.call 'date_issued',        mods.at_css('> originInfo > dateIssued')
+      add_field.call 'edition',            mods.at_css('> originInfo > edition')
+
+      # PUBLISHER
       add_field.call 'publisher',          mods.at_css('originInfo > publisher')
-      add_field.call 'publisher_location', mods.at_css('originInfo>place>placeTerm')
-      add_field.call 'date_issued',        mods.at_css('originInfo>dateIssued')
-      add_field.call 'edition',            mods.at_css('originInfo>edition')
+      add_field.call 'publisher_location', mods.at_css('originInfo > place > placeTerm')
 
       mods.css('genre').each do |genre_node|
         add_field.call 'genre_facet',  genre_node
@@ -137,10 +139,10 @@ module AcademicCommons
       end
 
       add_field.call 'abstract', mods.at_css('> abstract')
-      add_field.call 'language', mods.at_css('language>languageTerm')
+      add_field.call 'language', mods.at_css('> language > languageTerm')
 
       # SUBJECT
-      mods.css('subject').each do |subject_node|
+      mods.css('> subject').each do |subject_node|
         attri = subject_node.attributes
         next unless attri.count.zero? || (attri['authority'] && attri['authority'].value == 'fast')
         subject_node.css('topic,title,namePart').each do |topic_node|
@@ -156,10 +158,10 @@ module AcademicCommons
         add_field.call 'geographic_area_search',  geo
       end
 
-      mods.css('note').each { |note| add_field.call('notes', note) }
+      mods.css('> note').each { |note| add_field.call('notes', note) }
 
       # PARENT PUBLICATION
-      if (related_host = mods.at_css('relatedItem[@type=\'host\']:not([displayLabel=Project])'))
+      if (related_host = mods.at_css('> relatedItem[@type=\'host\']:not([displayLabel=Project])'))
         book_journal_title = related_host.at_css('titleInfo>title')
 
         if book_journal_title
@@ -173,6 +175,7 @@ module AcademicCommons
         add_field.call 'end_page',   related_host.at_css('part > extent[@unit=\'page\'] > end')
         add_field.call 'date',       related_host.at_css('part > date')
         add_field.call 'doi',        related_host.at_css('identifier[@type=\'doi\']')
+        add_field.call 'uri',        related_host.at_css('identifier[@type=\'uri\']')
 
         add_field.call 'book_journal_title', book_journal_title
 
@@ -182,7 +185,7 @@ module AcademicCommons
       end
 
       # SERIES, both cul and non-cul
-      mods.css('relatedItem[@type=\'series\']').each do |related_series|
+      mods.css('> relatedItem[@type=\'series\']').each do |related_series|
         if related_series.has_attribute?('ID')
           add_field.call('series_facet', related_series.at_css('titleInfo>title'))
           part_number = related_series.at_css('titleInfo>partNumber')
@@ -200,9 +203,9 @@ module AcademicCommons
         end
       end
 
-      mods.css('physicalDescription>internetMediaType').each { |mt| add_field.call('media_type_facet', mt) }
+      mods.css('> physicalDescription > internetMediaType').each { |mt| add_field.call('media_type_facet', mt) }
 
-      mods.css('typeOfResource').each do |tr|
+      mods.css('> typeOfResource').each do |tr|
         add_field.call 'type_of_resource_mods',  tr
         add_field.call 'type_of_resource_facet', RESOURCE_TYPES.fetch(tr.text, nil)
       end
@@ -212,7 +215,7 @@ module AcademicCommons
       departments.uniq.each { |dep| add_field.call('department_facet', dep.to_s.sub(', Department of', '')) }
 
       # EMBARGO RELEASE DATE
-      if (free_to_read = mods.at_css('free_to_read'))
+      if (free_to_read = mods.at_css('> extension > free_to_read'))
         start_date = free_to_read.attribute('start_date').to_s
         if start_date.present?
           add_field.call 'free_to_read_start_date', start_date
@@ -244,11 +247,6 @@ module AcademicCommons
       doi = mods.at_css('>identifier[@type=\'DOI\']')
       add_field.call('handle', doi)
       add_field.call('cul_doi_ssi', doi)
-
-      # INDEXING
-      add_field.call('isbn', mods.at_css('identifier[@type=\'isbn\']'))
-      add_field.call('uri', mods.at_css('identifier[@type=\'uri\']'))
-      add_field.call('issn', mods.at_css('identifier[@type=\'issn\']'))
 
       solr_doc
     end

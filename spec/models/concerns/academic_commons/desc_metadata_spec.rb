@@ -1,6 +1,8 @@
 require 'rails_helper'
 RSpec.describe AcademicCommons::DescMetadata do
   let(:expected_json) { fixture_to_json('fedora_objs/to_solr.json') }
+
+  # rubocop:disable RSpec/DescribedClass
   let(:indexable) do
     class_rig = Class.new
     class_rig.class_eval do
@@ -12,6 +14,7 @@ RSpec.describe AcademicCommons::DescMetadata do
 
       def pid; end
     end
+
     indexable = class_rig.new
     allow(indexable).to receive(:pid).and_return('actest:1')
 
@@ -21,6 +24,8 @@ RSpec.describe AcademicCommons::DescMetadata do
 
     indexable
   end
+
+  # rubocop:enable RSpec/DescribedClass
 
   shared_examples 'indexing mods' do
     subject { indexable.index_descmetadata }
