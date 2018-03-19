@@ -74,7 +74,6 @@ module AcademicCommons
       end
 
       add_field.call 'url',               mods.at_css('location > url')
-      add_field.call 'physical_location', mods.at_css('location>physicalLocation')
 
       # TITLE
       related_titles = mods.css('relatedItem[@type=\'host\']:not([displayLabel=Project])>titleInfo').css('>nonSort,title')
