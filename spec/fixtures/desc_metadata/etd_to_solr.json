@@ -1,6 +1,6 @@
 {
   "id": "actest:1",
-  "pid": "actest:1",
+  "fedora3_pid_ssi": "actest:1",
   "record_creation_date": "2016-09-14T16:31:33Z",
   "record_change_date": "2016-09-14T16:48:05Z",
   "record_language_of_catalog": "eng",
@@ -14,7 +14,6 @@
     "ad31453"
   ],
   "language": "English",
-  "date_issued": "2015",
   "handle": "10.7916/TEST123",
   "cul_doi_ssi": "10.7916/TEST123",
   "title_ssi": "Test Dissertation",

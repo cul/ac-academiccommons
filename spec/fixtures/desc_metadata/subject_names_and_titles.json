@@ -3,13 +3,12 @@
   "described_by_ssim": [
     "info:fedora/actest:1/test_ds"
   ],
-  "pid": "actest:1",
+  "fedora3_pid_ssi": "actest:1",
   "record_creation_date": "2017-06-21T13:57:22Z",
   "record_change_date": "2017-06-21T14:23:08Z",
   "record_language_of_catalog": "eng",
   "language": "English",
   "publisher": "Sabin Center for Climate Change Law, Columbia University",
-  "date_issued": "2013",
   "handle":"10.7916/D85D8R19",
   "cul_doi_ssi":"10.7916/D85D8R19",
   "title_ssi": "NEPA and Downstream Greenhouse Gas Emissions of U.S. Coal Exports",

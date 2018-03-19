@@ -120,7 +120,6 @@ module AcademicCommons
 
       # DATE AND EDITION
       add_field.call 'pub_date_facet',     mods.at_css('> originInfo > dateIssued')
-      add_field.call 'date_issued',        mods.at_css('> originInfo > dateIssued')
       add_field.call 'edition',            mods.at_css('> originInfo > edition')
 
       # PUBLISHER

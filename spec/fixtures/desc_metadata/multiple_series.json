@@ -3,14 +3,13 @@
   "described_by_ssim": [
     "info:fedora/actest:1/test_ds"
   ],
-  "pid":"actest:1",
+  "fedora3_pid_ssi":"actest:1",
   "record_creation_date": "2013-10-29T16:59:44Z",
   "record_change_date": "2018-02-17T01:34:32Z",
   "record_language_of_catalog": "eng",
   "language": "English",
   "publisher": "Institute for Social and Economic Research and Policy, Columbia University",
   "publisher_location": "New York",
-  "date_issued": "2013",
   "handle": "10.7916/D8ZW1VF7",
   "cul_doi_ssi": "10.7916/D8ZW1VF7",
   "title_ssi": "A Comprehensive Analysis of Poverty in India",
