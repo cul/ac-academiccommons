@@ -15,7 +15,7 @@ RSpec.describe CatalogController, type: :controller do
             fq: ['has_model_ssim:"info:fedora/ldpd:ContentAggregator"'],
             sort: 'record_creation_date desc',
             rows: '500',
-            fl: 'title_ssi,id,author_facet,author_display,record_creation_date,handle,abstract,author_uni,subject_facet,department_facet,genre_facet'
+            fl: 'title_ssi,id,author_facet,author_display,record_creation_date,handle,abstract,author_uni_ssim,subject_facet,department_facet,genre_facet'
           }
         end
 
@@ -39,7 +39,7 @@ RSpec.describe CatalogController, type: :controller do
             fq: ['has_model_ssim:"info:fedora/ldpd:ContentAggregator"'],
             sort: 'record_creation_date desc',
             rows: '10',
-            fl: 'title_ssi,id,author_facet,author_display,record_creation_date,handle,abstract,author_uni,subject_facet,department_facet,genre_facet'
+            fl: 'title_ssi,id,author_facet,author_display,record_creation_date,handle,abstract,author_uni_ssim,subject_facet,department_facet,genre_facet'
           }
         end
 
@@ -72,7 +72,7 @@ RSpec.describe CatalogController, type: :controller do
             'f.pub_date_facet.facet.limit' => 3,
             'f.series_facet.facet.limit' => 3,
             'sort' => 'record_create_date desc',
-            'fl' => 'title_ssi,id,author_facet,author_display,record_creation_date,handle,abstract,author_uni,subject_facet,department_facet,genre_facet'
+            'fl' => 'title_ssi,id,author_facet,author_display,record_creation_date,handle,abstract,author_uni_ssim,subject_facet,department_facet,genre_facet'
           }
         end
 
@@ -88,7 +88,7 @@ RSpec.describe CatalogController, type: :controller do
       context 'facets by department'
 
       context 'filters users by uni' do
-        let(:uni_filter) { 'author_uni:abc123' }
+        let(:uni_filter) { 'author_uni_ssim:abc123' }
         let(:expected_params) do
           {
             qt: 'search',
@@ -97,7 +97,7 @@ RSpec.describe CatalogController, type: :controller do
             q: '',
             sort: 'record_creation_date desc',
             rows: '500',
-            fl: 'title_ssi,id,author_facet,author_display,record_creation_date,handle,abstract,author_uni,subject_facet,department_facet,genre_facet'
+            fl: 'title_ssi,id,author_facet,author_display,record_creation_date,handle,abstract,author_uni_ssim,subject_facet,department_facet,genre_facet'
           }
         end
 
@@ -105,7 +105,7 @@ RSpec.describe CatalogController, type: :controller do
           expect(@controller.repository).to receive(:send_and_receive)
             .with('select', hash_including(expected_params))
             .and_return(empty_response)
-          get :index, fq: 'author_uni:abc123', format: 'rss'
+          get :index, fq: 'author_uni_ssim:abc123', format: 'rss'
         end
       end
     end
@@ -113,7 +113,7 @@ RSpec.describe CatalogController, type: :controller do
 
   describe '#custom_results' do
     context 'when :fq in request' do
-      let(:uni_filter) { 'author_uni:abc123' }
+      let(:uni_filter) { 'author_uni_ssim:abc123' }
       let(:expected_params) do
         {
           qt: 'search',
@@ -122,7 +122,7 @@ RSpec.describe CatalogController, type: :controller do
           q: '',
           sort: 'record_creation_date desc',
           rows: '500',
-          fl: 'title_ssi,id,author_facet,author_display,record_creation_date,handle,abstract,author_uni,subject_facet,department_facet,genre_facet'
+          fl: 'title_ssi,id,author_facet,author_display,record_creation_date,handle,abstract,author_uni_ssim,subject_facet,department_facet,genre_facet'
         }
       end
 

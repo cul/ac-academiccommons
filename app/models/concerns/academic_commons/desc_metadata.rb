@@ -27,7 +27,7 @@ module AcademicCommons
     # Keeping track of multivalued fields until we move over to using dynamic
     # field names. Once we make the switch this can be reduced.
     MULTIVALUED_FIELDS = %w[
-      member_of author_uni advisor_uni author_search advisor_search
+      member_of advisor_uni author_search advisor_search
       genre_search keyword_search subject_display subject_search notes
       book_author geographic_area_display geographic_area_search role
       affiliation_department type_of_resource_mods author_info thesis_advisor
@@ -88,9 +88,9 @@ module AcademicCommons
         if name_node.css('role > roleTerm').collect(&:content).any? { |role| AUTHOR_ROLES.include?(role.downcase) }
           all_author_names << fullname
 
-          add_field.call 'author_uni',    name_node.attribute('ID')
-          add_field.call 'author_search', fullname.downcase
-          add_field.call 'author_facet',  fullname
+          add_field.call 'author_uni_ssim', name_node.attribute('ID')
+          add_field.call 'author_search',   fullname.downcase
+          add_field.call 'author_facet',    fullname
 
         elsif name_node.css('role>roleTerm').collect(&:content).any? { |role| ADVISOR_ROLES.include?(role.downcase) }
           first_role = name_node.at_css('role>roleTerm').text

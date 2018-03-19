@@ -121,7 +121,7 @@ module AcademicCommons
           startdate = Date.parse(params[:month] + ' ' + params[:year])
           enddate = Date.new(startdate.year, startdate.month, -1) # end_date needs to be last day of month
 
-          solr_params = { q: nil, fq: ["author_uni:\"#{author_id}\""] }
+          solr_params = { q: nil, fq: ["author_uni_ssim:\"#{author_id}\""] }
           usage_stats = AcademicCommons::Metrics::UsageStatistics.new(
             solr_params, startdate, enddate, order_by: params[:order_by],
             include_zeroes: params[:include_zeroes], include_streaming: false,

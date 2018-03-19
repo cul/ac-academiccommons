@@ -11,7 +11,7 @@ RSpec.describe 'DepositorHelper' do
         'docs' => [
           { 'id' => pid, 'handle' => 'https://doi.org/10.7916/ALICE',
             'title_ssi' => 'Alice\'s Adventures in Wonderland',
-            'author_uni' => [uni, 'xyz123'],
+            'author_uni_ssim' => [uni, 'xyz123'],
             'free_to_read_start_date' => (Date.current - 1.month).to_s },
         ]
       }

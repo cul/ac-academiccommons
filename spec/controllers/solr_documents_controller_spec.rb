@@ -148,7 +148,7 @@ describe SolrDocumentsController, type: :controller do
       solr_doc = {
         'id' => 'actest:1', 'handle' => doi,
         'title_ssi' => 'Alice\'s Adventures in Wonderland',
-        'author_uni' => [author_one, author_two],
+        'author_uni_ssim' => [author_one, author_two],
         'free_to_read_start_date' => (Date.current - 1.month).to_s
       }
       @controller.instance_eval { notify_authors_of_new_item(solr_doc) }

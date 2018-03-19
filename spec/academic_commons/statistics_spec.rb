@@ -26,7 +26,7 @@ RSpec.describe AcademicCommons::Statistics do
     let(:author_search) do
       {
         rows: 100_000, sort: 'title_ssi asc', q: nil, page: 1,
-        fq: ['author_uni:"abc123"', 'has_model_ssim:"info:fedora/ldpd:ContentAggregator"'],
+        fq: ['author_uni_ssim:"abc123"', 'has_model_ssim:"info:fedora/ldpd:ContentAggregator"'],
         fl: 'title_ssi,id,handle,doi,genre_facet,record_creation_date,object_state_ssi,free_to_read_start_date'
       }
     end
@@ -138,8 +138,8 @@ RSpec.describe AcademicCommons::Statistics do
   describe '#detail_report_solr_params' do
     context 'searching by facet' do
       it 'makes correct solr request' do
-        params = statistics.instance_eval { detail_report_solr_params('author_uni', 'xyz123') }
-        expect(params).to match(q: nil, fq: ['author_uni:"xyz123"'], sort: 'title_ssi asc')
+        params = statistics.instance_eval { detail_report_solr_params('author_uni_ssim', 'xyz123') }
+        expect(params).to match(q: nil, fq: ['author_uni_ssim:"xyz123"'], sort: 'title_ssi asc')
       end
     end
 

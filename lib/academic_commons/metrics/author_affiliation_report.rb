@@ -38,8 +38,8 @@ module AcademicCommons::Metrics
 
         author_count = 1
 
-        # For each author_uni add a row...
-        doc.fetch(:author_uni, []).each do |uni|
+        # For each author_uni_ssim add a row...
+        doc.fetch(:author_uni_ssim, []).each do |uni|
           row = CSV::Row.new(headers, start_of_row)
 
           row['author uni'] = uni

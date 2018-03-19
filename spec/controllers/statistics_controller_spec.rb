@@ -16,17 +16,17 @@ describe StatisticsController, type: :controller, integration: true do
     #   include_context 'mock admin user'
     #
     #   let(:all_authors_search) do
-    #     { rows: 100000, page: 1, fl: "author_uni" }
+    #     { rows: 100000, page: 1, fl: "author_uni_ssim" }
     #   end
     #
     #   let(:authors) do
-    #     { 'response' => { 'docs' => [ { author_uni: 'abc123' }] } }
+    #     { 'response' => { 'docs' => [ { author_uni_ssim: 'abc123' }] } }
     #   end
     #
     #   let(:author_search) do
     #     {
     #       :rows => 100000, sort: 'title_ssi asc', q: nil, :page => 1,
-    #       :fq => "author_uni:\"author_uni:abc123\"", fl: "title_ssi,id,handle,doi,genre_facet"
+    #       :fq => "author_uni_ssim:\"author_uni_ssim:abc123\"", fl: "title_ssi,id,handle,doi,genre_facet"
     #     }
     #   end
     #   let(:author_docs) do

@@ -35,7 +35,7 @@ class StatisticsController < ApplicationController
 
     params[:email_template] ||= 'Normal'
 
-    ids = repository.search(rows: 100_000, page: 1, fl: 'author_uni')['response']['docs'].collect { |f| f['author_uni'] }.flatten.compact.uniq - EmailPreference.where(monthly_opt_out: true).collect(&:author)
+    ids = repository.search(rows: 100_000, page: 1, fl: 'author_uni_ssim')['response']['docs'].collect { |f| f['author_uni_ssim'] }.flatten.compact.uniq - EmailPreference.where(monthly_opt_out: true).collect(&:author)
 
     emails = EmailPreference.where('email is NOT NULL and monthly_opt_out = 0').collect
 

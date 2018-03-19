@@ -26,7 +26,7 @@ namespace :ac do
     start, rows = 0, 100
     while true
       solr_params = {
-        q: '*:*', start: start, rows: rows, fl: 'id,author_uni,handle',
+        q: '*:*', start: start, rows: rows, fl: 'id,author_uni_ssim,handle',
         fq: ["has_model_ssim:\"#{ContentAggregator.to_class_uri}\""],
         qt: 'standard'
       }
@@ -36,7 +36,7 @@ namespace :ac do
       break if docs.blank?
 
       docs.each do |d|
-        d.fetch('author_uni', []).each do |uni|
+        d.fetch('author_uni_ssim', []).each do |uni|
           Notification.record_new_item_notification(d['handle'], nil, uni, true)
         end
       end

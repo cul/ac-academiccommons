@@ -103,7 +103,7 @@ class SolrDocumentsController < ApplicationController
     doc = SolrDocument.new(solr_doc)
     ldap = Cul::LDAP.new
 
-    solr_doc.fetch('author_uni', []).each do |uni|
+    solr_doc.fetch('author_uni_ssim', []).each do |uni|
       # Skip if notification was already sent.
       next if Notification.sent_new_item_notification?(solr_doc['handle'], uni)
 

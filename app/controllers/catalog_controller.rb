@@ -347,7 +347,7 @@ class CatalogController < ApplicationController
    params[:fq] = Array(params[:fq]).append("has_model_ssim:\"#{ContentAggregator.to_class_uri}\"")
 
    extra_params = {}
-   extra_params[:fl] = 'title_ssi,id,author_facet,author_display,record_creation_date,handle,abstract,author_uni,subject_facet,department_facet,genre_facet'
+   extra_params[:fl] = 'title_ssi,id,author_facet,author_display,record_creation_date,handle,abstract,author_uni_ssim,subject_facet,department_facet,genre_facet'
 
    if (params[:f].nil?)
      solr_response = repository.search(params.merge(extra_params))
