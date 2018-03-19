@@ -5,8 +5,11 @@ RSpec.describe AcademicCommons::DescMetadata do
     class_rig = Class.new
     class_rig.class_eval do
       include AcademicCommons::DescMetadata
+
       def belongs_to; end
+
       def descMetadata_datastream; end
+
       def pid; end
     end
     indexable = class_rig.new
@@ -20,7 +23,7 @@ RSpec.describe AcademicCommons::DescMetadata do
   end
 
   shared_examples 'indexing mods' do
-    subject { indexable.index_descMetadata }
+    subject { indexable.index_descmetadata }
 
     describe '#index_descMetadata' do
       it  { is_expected.to eql(expected_json) }
@@ -31,6 +34,7 @@ RSpec.describe AcademicCommons::DescMetadata do
   # migration to Hyacinth.
   context 'when mods from Hyacinth' do
     let(:mods_fixture) { fixture_to_str('fedora_objs/mods.xml') }
+
     include_examples 'indexing mods'
 
     context 'contains degree information' do
