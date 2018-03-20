@@ -464,12 +464,13 @@
     & dt,
     & dt:first-child {
       float: left;
-      padding: 5px 0;
+      line-height: 1.8;
+      padding: 0;
     }
 
     & dd {
-      margin-left: 25%;
-      padding: 5px 0;
+      line-height: 1.8;
+      margin-left: 18%;
     }
   }
 }
