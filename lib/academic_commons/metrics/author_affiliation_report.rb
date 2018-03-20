@@ -28,11 +28,11 @@ module AcademicCommons::Metrics
 
         start_of_row = [
           doc[:id],
-          AcademicCommons.identifier_url(doc[:handle]),
+          AcademicCommons.identifier_url(doc[:cul_doi_ssi]),
           item_stats.get_stat(Statistic::DOWNLOAD, UsageStatistics::LIFETIME),
           item_stats.get_stat(Statistic::VIEW, UsageStatistics::LIFETIME),
-          doc.fetch(:department_facet, []).join(', '),
-          doc.fetch(:genre_facet, []).join(', '),
+          doc.fetch(:department_ssim, []).join(', '),
+          doc.fetch(:genre_ssim, []).join(', '),
           doc[:system_create_dtsi]
         ]
 
@@ -62,7 +62,7 @@ module AcademicCommons::Metrics
         end
 
         # For each author that does not have a author, row with just basic item information
-        total_authors = doc.fetch(:author_facet, []).count
+        total_authors = doc.fetch(:author_ssim, []).count
         while(total_authors >= author_count) do
           row = CSV::Row.new(headers, start_of_row)
           row['multi-author count'] = author_count

@@ -8,7 +8,7 @@ module AcademicCommons
     # @return [Boolean] whether or not document can be accessible
     def free_to_read?(document)
       return false unless document['object_state_ssi'] == 'A'
-      free_to_read_start_date = document[:free_to_read_start_date]
+      free_to_read_start_date = document[:free_to_read_start_date_ssi]
       return true unless free_to_read_start_date
       available_today?(free_to_read_start_date)
     end

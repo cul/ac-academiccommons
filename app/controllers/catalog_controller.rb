@@ -30,8 +30,8 @@ class CatalogController < ApplicationController
     # solr field configuration for search results/index views
     config.show.title_field = 'title_ssi'
     config.show.display_type_field = 'format'
-    config.show.genre = 'genre_facet'
-    config.show.author = 'author_display'
+    config.show.genre = 'genre_ssim'
+    config.show.author = 'author_ssim'
 
     ## Default parameters to send on single-document requests to Solr. These settings are the Blackligt defaults (see SolrHelper#solr_doc_params) or
     ## parameters included in the Blacklight-jetty document requestHandler.
@@ -71,15 +71,15 @@ class CatalogController < ApplicationController
     # :show may be set to false if you don't want the facet to be drawn in the
     # facet bar
 
-    config.add_facet_field 'author_facet',           label: 'Author',        limit: 5
-    config.add_facet_field 'department_facet',       label: 'Academic Unit', limit: 5
-    config.add_facet_field 'subject_facet',          label: 'Subject',       limit: 5
-    config.add_facet_field 'genre_facet',            label: 'Type',          limit: 5
+    config.add_facet_field 'author_ssim',            label: 'Author',        limit: 5
+    config.add_facet_field 'department_ssim',        label: 'Academic Unit', limit: 5
+    config.add_facet_field 'subject_ssim',           label: 'Subject',       limit: 5
+    config.add_facet_field 'genre_ssim',             label: 'Type',          limit: 5
     config.add_facet_field 'degree_level_name_ssim', label: 'Degree Level',  limit: 5
-    config.add_facet_field 'pub_date_facet',         label: 'Date',          limit: 5
-    config.add_facet_field 'series_facet',           label: 'Series',        limit: 5
-    config.add_facet_field 'language',               label: 'Language',      limit: 5
-    # config.add_facet_field 'type_of_resource_facet', label: 'Resource Type', if: current_user.admin?
+    config.add_facet_field 'pub_date_isi',           label: 'Date',          limit: 5
+    config.add_facet_field 'series_ssim',            label: 'Series',        limit: 5
+    config.add_facet_field 'language_ssim',          label: 'Language',      limit: 5
+    # config.add_facet_field 'type_of_resource_ssim', label: 'Resource Type', if: current_user.admin?
 
     # Have BL send all facet field names to Solr, which has been the default
     # previously. Simply remove these lines if you'd rather use Solr request
@@ -90,41 +90,41 @@ class CatalogController < ApplicationController
     # solr fields to be displayed in the index (search results) view
     #   The ordering of the field names is the order of the display
 
-    config.add_index_field 'author_facet',   label: 'Authors'
-    config.add_index_field 'pub_date_facet', label: 'Date'
-    config.add_index_field 'genre_facet',    label: 'Type'
+    config.add_index_field 'author_ssim',  label: 'Authors'
+    config.add_index_field 'pub_date_isi', label: 'Date'
+    config.add_index_field 'genre_ssim',   label: 'Type'
 
 
     # :display configuration is for our customized show view, it describes were on the page it should go.
-    config.add_show_field 'pub_date_facet',          display: :tag,    itemprop: 'datePublished'
-    config.add_show_field 'genre_facet',             display: :tag,    itemprop: 'genre'
+    config.add_show_field 'pub_date_isi',            display: :tag,    itemprop: 'datePublished'
+    config.add_show_field 'genre_ssim',              display: :tag,    itemprop: 'genre'
     config.add_show_field 'degree_level_name_ssim',  display: :tag
 
-    config.add_show_field 'author_facet',            display: :main_content,  itemprop: 'creator',      link_to_search: 'author_facet',
-                                                     separator_options: { words_connector: '; ', two_words_connector: '; ', last_word_connector: '; ' }
-    config.add_show_field 'abstract',                display: :main_content,  itemprop: 'description'
+    config.add_show_field 'author_ssim',  display: :main_content,  itemprop: 'creator',      link_to_search: 'author_ssim',
+                                          separator_options: { words_connector: '; ', two_words_connector: '; ', last_word_connector: '; ' }
+    config.add_show_field 'abstract_ssi', display: :main_content,  itemprop: 'description'
 
-    config.add_show_field 'geographic_area_display', display: :table, label: 'Geographic Areas', link_to_search: 'geographic_area_display'
-    config.add_show_field 'subject_facet',           display: :table, label: 'Subjects',       itemprop: 'keywords',    link_to_search: 'subject_facet'
+    config.add_show_field 'geographic_area_ssim', display: :table, label: 'Geographic Areas',                          link_to_search: 'geographic_area_ssim'
+    config.add_show_field 'subject_ssim',         display: :table, label: 'Subjects',         itemprop: 'keywords',    link_to_search: 'subject_ssim'
 
-    config.add_show_field 'book_journal_title',      label: 'Published In'
-    config.add_show_field 'doi',                     label: 'Publisher DOI',                             helper_method: :link_identifier
-    config.add_show_field 'volume',                  label: 'Volume'
-    config.add_show_field 'issue',                   label: 'Issue'
-    config.add_show_field 'pages',                   label: 'Pages', accessor: true, unless: ->(_, _, doc) { doc.pages.blank? }
-    config.add_show_field 'publisher',               label: 'Publisher'
-    config.add_show_field 'publisher_location',      label: 'Publication Origin'
-    config.add_show_field 'series_facet',            label: 'Series',                                     link_to_search: 'series_facet'
-    config.add_show_field 'non_cu_series_facet',     label: 'Series'
-    config.add_show_field 'part_number',             label: 'Part Number' #series part number
-    config.add_show_field 'department_facet',        label: 'Academic Units',                              link_to_search: 'department_facet'
-    config.add_show_field 'thesis_advisor',          label: 'Thesis Advisors' #not sure what part of the page this would go on.
-    config.add_show_field 'degree',                  label: 'Degree', accessor: true, unless: ->(_, _, doc) { doc.degree.blank? }
-    config.add_show_field 'url',                     label: 'Related URL'
+    config.add_show_field 'book_journal_title_ssi', label: 'Published In'
+    config.add_show_field 'doi_ssi',                label: 'Publisher DOI',                             helper_method: :link_identifier
+    config.add_show_field 'volume_ssi',             label: 'Volume'
+    config.add_show_field 'issue_ssi',              label: 'Issue'
+    config.add_show_field 'pages',                  label: 'Pages', accessor: true, unless: ->(_, _, doc) { doc.pages.blank? }
+    config.add_show_field 'publisher_ssi',          label: 'Publisher'
+    config.add_show_field 'publisher_location_ssi', label: 'Publication Origin'
+    config.add_show_field 'series_ssim',            label: 'Series',                                     link_to_search: 'series_ssim'
+    config.add_show_field 'non_cu_series_ssim',     label: 'Series'
+    config.add_show_field 'part_number',            label: 'Part Number' #series part number
+    config.add_show_field 'department_ssim',        label: 'Academic Units',                             link_to_search: 'department_ssim'
+    config.add_show_field 'thesis_advisor',         label: 'Thesis Advisors' #not sure what part of the page this would go on.
+    config.add_show_field 'degree',                 label: 'Degree', accessor: true, unless: ->(_, _, doc) { doc.degree.blank? }
+    config.add_show_field 'related_url_ssi',        label: 'Related URL'
 
-    config.add_show_field 'notes',                   display: :notes, label: 'Notes'
+    config.add_show_field 'notes_ssim',             display: :notes, label: 'Notes'
 
-    # config.add_show_field 'handle',                  label: 'Persistent URL',   itemprop: 'url',          helper_method: :link_identifier
+    # config.add_show_field 'cul_doi_ssi',                  label: 'Persistent URL',   itemprop: 'url',          helper_method: :link_identifier
 
 
 
@@ -342,12 +342,12 @@ class CatalogController < ApplicationController
 
    params[:page] = nil
    params[:q] = params[:q].to_s
-   params[:sort] = (params[:sort].nil?) ? 'record_creation_date desc' : params[:sort].to_s
+   params[:sort] = (params[:sort].nil?) ? 'record_creation_dtsi desc' : params[:sort].to_s
    params[:rows] = (params[:rows].nil? || params[:rows].to_s == '') ? ((params[:id].nil?) ? blacklight_config[:feed_rows] : params[:id].to_s) : params[:rows].to_s
    params[:fq] = Array(params[:fq]).append("has_model_ssim:\"#{ContentAggregator.to_class_uri}\"")
 
    extra_params = {}
-   extra_params[:fl] = 'title_ssi,id,author_facet,author_display,record_creation_date,handle,abstract,author_uni_ssim,subject_facet,department_facet,genre_facet'
+   extra_params[:fl] = 'title_ssi,id,author_ssim,record_creation_dtsi,cul_doi_ssi,abstract_ssi,author_uni_ssim,subject_ssim,department_ssim,genre_ssim'
 
    if (params[:f].nil?)
      solr_response = repository.search(params.merge(extra_params))
@@ -361,7 +361,7 @@ class CatalogController < ApplicationController
    document_list = solr_response.docs.collect {|doc| SolrDocument.new(doc, solr_response)}
 
    document_list.each do |doc|
-    doc[:pub_date] = Time.parse(doc[:record_creation_date].to_s).to_s(:rfc822)
+    doc[:pub_date] = Time.parse(doc[:record_creation_dtsi].to_s).to_s(:rfc822)
    end
 
    logger.info("Solr fetch: #{self.class}#custom_results (#{'%.1f' % ((Time.now.to_f - bench_start.to_f)*1000)}ms)")

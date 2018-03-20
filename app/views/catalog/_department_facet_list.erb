@@ -2,18 +2,18 @@
 
 <h1 class="content-title">
 	Browsing: <%=  link_to('Departments', departments_browse_path) %> &raquo; <%= link_to(params[:id], department_browse_path(params[:id])) %>
-	<br><%= link_to image_tag("rss.gif", :border=>0, :id=>"rssLink"), root_path + 'catalog.rss/?f[department_facet][]=' + url_encode_resource(params[:id])%>
+	<br><%= link_to image_tag("rss.gif", :border=>0, :id=>"rssLink"), root_path + 'catalog.rss/?f[department_ssim][]=' + url_encode_resource(params[:id])%>
 </h1>
 
 <%
 
 department_facet_list = get_department_facet_list(params[:id])
 
-author_facets = department_facet_list['author_facet']
+author_facets = department_facet_list['author_ssim']
 
-genre_facets = department_facet_list['genre_facet']
+genre_facets = department_facet_list['genre_ssim']
 
-subject_facets = department_facet_list['subject_facet']
+subject_facets = department_facet_list['subject_ssim']
 
 %>
 <div class="span-23">
@@ -28,9 +28,9 @@ subject_facets = department_facet_list['subject_facet']
 
 <%=
 
-Rails.logger.debug "linking author_facet #{params[:id].inspect} for #{v[:name].inspect}"
+Rails.logger.debug "linking author_ssim #{params[:id].inspect} for #{v[:name].inspect}"
 
-link_to(v[:name], '/?f[department_facet][]=' + url_encode_resource(params[:id]) + '&f[author_facet][]=' + url_encode_resource(v[:name]), :class=>"broswe_select")%>  <span class='item_count'> ( <%= number_with_delimiter(v[:count]) %> )</span>
+link_to(v[:name], '/?f[department_ssim][]=' + url_encode_resource(params[:id]) + '&f[author_ssim][]=' + url_encode_resource(v[:name]), :class=>"broswe_select")%>  <span class='item_count'> ( <%= number_with_delimiter(v[:count]) %> )</span>
 
   </li>
 
@@ -49,7 +49,7 @@ link_to(v[:name], '/?f[department_facet][]=' + url_encode_resource(params[:id]) 
 
 <%=
 
-link_to(v[:name], '/?f[department_facet][]=' + url_encode_resource(params[:id]) + '&f[genre_facet][]=' + url_encode_resource(v[:name]), :class=>"broswe_select")%> <span class='item_count'> ( <%= number_with_delimiter(v[:count])%>)</span>
+link_to(v[:name], '/?f[department_ssim][]=' + url_encode_resource(params[:id]) + '&f[genre_ssim][]=' + url_encode_resource(v[:name]), :class=>"broswe_select")%> <span class='item_count'> ( <%= number_with_delimiter(v[:count])%>)</span>
 
   </li>
 
@@ -68,7 +68,7 @@ link_to(v[:name], '/?f[department_facet][]=' + url_encode_resource(params[:id]) 
 
 <%=
 
-link_to(v[:name], '/?f[department_facet][]=' + url_encode_resource(params[:id]) + '&f[subject_facet][]=' + url_encode_resource(v[:name]), :class=>"broswe_select")%> <span class='item_count'> (<%= number_with_delimiter(v[:count]) %> )</span>
+link_to(v[:name], '/?f[department_ssim][]=' + url_encode_resource(params[:id]) + '&f[subject_ssim][]=' + url_encode_resource(v[:name]), :class=>"broswe_select")%> <span class='item_count'> (<%= number_with_delimiter(v[:count]) %> )</span>
 
   </li>
 

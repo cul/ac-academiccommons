@@ -18,11 +18,11 @@ RSpec.describe AcademicCommons::Metrics::AuthorAffiliationReport do
     Blacklight::Solr::Response.new({
       'response' => {
         'docs' => [
-          { 'id' => 'actest:6', 'handle' => '10.7916/ALICE',
+          { 'id' => 'actest:6', 'cul_doi_ssi' => '10.7916/ALICE',
             'title_ssi' => 'Alice\'s Adventures in Wonderland',
             'author_uni_ssim' => ['abc123', 'xyz567'], 'object_state_ssi' => 'A',
-            'department_facet' => ['English Department', 'Creative Writing Department'],
-            'genre_facet' => ['Books'],
+            'department_ssim' => ['English Department', 'Creative Writing Department'],
+            'genre_ssim' => ['Books'],
             'system_create_dtsi' => '2016-11-21T13:03:42Z',
             }
         ]
@@ -34,11 +34,11 @@ RSpec.describe AcademicCommons::Metrics::AuthorAffiliationReport do
     Blacklight::Solr::Response.new({
       'response' => {
         'docs' => [
-          { 'id' => 'actest:7', 'handle' => '10.7916/PRIDE',
+          { 'id' => 'actest:7', 'cul_doi_ssi' => '10.7916/PRIDE',
             'title_ssi' => 'Pride and Prejudice',
             'author_uni_ssim' => ['xyz567'], 'object_state_ssi' => 'A',
-            'genre_facet' => ['Books'],
-            'author_facet' => ['Austen, Jane', 'Doe, Jane'],
+            'genre_ssim' => ['Books'],
+            'author_ssim' => ['Austen, Jane', 'Doe, Jane'],
             'system_create_dtsi' => '2016-11-21T10:43:15Z'
             }
         ]

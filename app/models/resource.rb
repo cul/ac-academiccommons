@@ -9,7 +9,7 @@ class Resource < ActiveFedora::Base
       solr_doc['downloadable_content_type_ssi'] = content.mimeType
       solr_doc['downloadable_content_dsid_ssi'] = content.dsid
       solr_doc['downloadable_content_label_ss'] = content.label.blank? ? this.label : content.label
-      solr_doc['downloadable_content_size_i']   = content.size
+      solr_doc['downloadable_content_size_isi'] = content.size
     end
     solr_doc
   end

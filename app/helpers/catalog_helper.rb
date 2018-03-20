@@ -26,14 +26,14 @@ module CatalogHelper
   end
 
   def date_trend
-    @date_trend ||= AcademicCommons::DateTrend.new('record_creation_date', ContentAggregator)
+    @date_trend ||= AcademicCommons::DateTrend.new('record_creation_dtsi', ContentAggregator)
   end
 
   def build_recent_updated_list
     query_params = {
-      q: '', fl: 'title_ssi, id, author_facet, record_creation_date',
-      sort: 'record_creation_date desc',
-      fq: ['author_facet:*', "has_model_ssim:\"#{ContentAggregator.to_class_uri}\""],
+      q: '', fl: 'title_ssi, id, author_ssim, record_creation_dtsi',
+      sort: 'record_creation_dtsi desc',
+      fq: ['author_ssim:*', "has_model_ssim:\"#{ContentAggregator.to_class_uri}\""],
       start: 0, rows: 100}
     build_distinct_authors_list(query_params)
   end
@@ -43,7 +43,7 @@ module CatalogHelper
     return results unless response['docs'].present?
 
     response['docs'].each do |r|
-      new_authors = r['author_facet'] - authors if r['author_facet']
+      new_authors = r['author_ssim'] - authors if r['author_ssim']
 
       next unless new_authors.present?
       authors.concat new_authors
@@ -80,21 +80,21 @@ module CatalogHelper
 
   # TODO: Move to a browse controller
   def get_subjects_list
-    single_facet_values('subject_facet')
+    single_facet_values('subject_ssim')
   end
 
   # TODO: Move to a browse controller
   def get_departments_list
-    single_facet_values('department_facet')
+    single_facet_values('department_ssim')
   end
 
   # TODO: Move to a browse controller
   def get_department_facet_list(department)
-    query_params = {q: '', fq: 'department_facet:"' + department + '"', rows: '0', 'facet.limit' => -1 }
+    query_params = {q: '', fq: 'department_ssim:"' + department + '"', rows: '0', 'facet.limit' => -1 }
     solr_results = repository.search(query_params)
     facet_field_results = solr_results.facet_counts['facet_fields']
     collect_facet_field_values(facet_field_results).delete_if do |k,v|
-      k == 'department_facet' || k == 'organization_facet'
+      k == 'department_ssim' || k == 'organization_ssim'
     end
   end
 
@@ -127,7 +127,7 @@ module CatalogHelper
   ############### Copied from Blacklight CatalogHelper #####################
 
   def itemscope_itemtype
-    url_from_map = blacklight_config[:itemscope][:itemtypes][@document['genre_facet']]
+    url_from_map = blacklight_config[:itemscope][:itemtypes][@document['genre_ssim']]
     if url_from_map.nil?
       'http://schema.org/CreativeWork'
     else

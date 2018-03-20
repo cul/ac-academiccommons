@@ -10,8 +10,8 @@ RSpec.describe NotificationMailer, type: :mailer do
     context 'when document embargoed' do
       let(:solr_doc) do
         SolrDocument.new(
-          object_state_ssi: 'A', free_to_read_start_date: Date.tomorrow.strftime('%Y-%m-%d'),
-          title_ssi: 'Alice\'s Adventures in Wonderland', handle: '10.7945/ALICE'
+          object_state_ssi: 'A', free_to_read_start_date_ssi: Date.tomorrow.strftime('%Y-%m-%d'),
+          title_ssi: 'Alice\'s Adventures in Wonderland', cul_doi_ssi: '10.7945/ALICE'
         )
       end
 
@@ -39,8 +39,8 @@ RSpec.describe NotificationMailer, type: :mailer do
     context 'when document not embargoed' do
       let(:solr_doc) do
         SolrDocument.new(
-          object_state_ssi: 'A', free_to_read_start_date: Date.today.strftime('%Y-%m-%d'),
-          title_ssi: 'Alice\'s Adventures in Wonderland', handle: '10.7945/ALICE'
+          object_state_ssi: 'A', free_to_read_start_date_ssi: Date.today.strftime('%Y-%m-%d'),
+          title_ssi: 'Alice\'s Adventures in Wonderland', cul_doi_ssi: '10.7945/ALICE'
         )
       end
 

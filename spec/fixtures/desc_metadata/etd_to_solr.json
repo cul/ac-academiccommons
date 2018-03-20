@@ -1,70 +1,51 @@
 {
   "id": "actest:1",
   "fedora3_pid_ssi": "actest:1",
-  "record_creation_date": "2016-09-14T16:31:33Z",
-  "record_change_date": "2016-09-14T16:48:05Z",
-  "record_language_of_catalog": "eng",
-  "advisor_search": [
-    "smith, alan"
-  ],
-  "advisor_uni": [
+  "record_creation_dtsi": "2016-09-14T16:31:33Z",
+  "record_change_dtsi": "2016-09-14T16:48:05Z",
+  "advisor_uni_ssim": [
     "as000"
   ],
   "author_uni_ssim": [
     "ad31453"
   ],
-  "language": "English",
-  "handle": "10.7916/TEST123",
+  "language_ssim": [
+    "English"
+  ],
   "cul_doi_ssi": "10.7916/TEST123",
   "title_ssi": "Test Dissertation",
-  "author_search": [
-    "doe, ashley"
-  ],
-  "author_facet": [
+  "author_ssim": [
     "Doe, Ashley"
   ],
-  "thesis_advisor": [
+  "thesis_advisor_ssim": [
     "Smith, Alan"
   ],
   "author_display": "Doe, Ashley",
-  "pub_date_facet": [
-    "2015"
-  ],
-  "genre_facet": [
+  "pub_date_isi": "2015",
+  "genre_ssim": [
     "Thesis"
   ],
-  "genre_search": [
-    "Thesis"
-  ],
-  "abstract": "This dissertation focuses on the testing of a dissertation record.",
-  "keyword_search": [
-   "persona (literature)",
-   "influence (literary, artistic, etc.)"
-  ],
-  "subject_facet": [
+  "abstract_ssi": "This dissertation focuses on the testing of a dissertation record.",
+  "subject_ssim": [
     "Persona (Literature)",
     "Influence (Literary, artistic, etc.)"
   ],
-  "subject_search": [
-    "Persona (Literature)",
-    "Influence (Literary, artistic, etc.)"
-  ],
-  "type_of_resource_mods": [
+  "type_of_resource_mods_ssim": [
     "text"
   ],
-  "type_of_resource_facet": [
+  "type_of_resource_ssim": [
     "Text"
   ],
-  "organization_facet": [
+  "organization_ssim": [
     "Columbia University"
   ],
-  "department_facet": [
+  "department_ssim": [
     "English and Comparative Literature"
   ],
   "described_by_ssim": [
     "info:fedora/actest:1/test_ds"
   ],
-  "free_to_read_start_date": "2015-04-09",
+  "free_to_read_start_date_ssi": "2015-04-09",
   "free_to_read_start_date_dtsi": "2015-04-09T04:00:00Z",
   "degree_grantor_ssim": [
     "Columbia University"

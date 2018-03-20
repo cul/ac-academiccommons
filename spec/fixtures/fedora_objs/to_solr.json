@@ -1,73 +1,47 @@
 {
   "id": "actest:1",
-  "pid": "actest:1",
-  "record_content_source": "NNC",
-  "record_creation_date": "2017-09-14T16:31:33Z",
-  "record_change_date": "2017-09-14T16:48:05Z",
-  "record_identifier":  "24815",
-  "record_language_of_catalog": "eng",
-  "physical_location": "NNC",
-  "language": "English",
-  "handle": "10.7916/ALICE",
-  "cul_doi_ssi": "10.7916/ALICE",
-  "doi": "10.1378/wonderland.01-2345",
-  "title_ssi": "Alice's Adventures in Wonderland",
-  "author_search": [
-    "carroll, lewis",
-    "weird old guys."
+  "fedora3_pid_ssi": "actest:1",
+  "record_creation_dtsi": "2017-09-14T16:31:33Z",
+  "record_change_dtsi": "2017-09-14T16:48:05Z",
+  "language_ssim": [
+    "English"
   ],
-  "author_facet": [
+  "cul_doi_ssi": "10.7916/ALICE",
+  "doi_ssi": "10.1378/wonderland.01-2345",
+  "title_ssi": "Alice's Adventures in Wonderland",
+  "author_ssim": [
     "Carroll, Lewis",
     "Weird Old Guys."
   ],
   "author_display": "Carroll, Lewis; Weird Old Guys.",
-  "pub_date_facet": [
-    "1865"
-  ],
-  "genre_facet": [
+  "pub_date_isi": "1865",
+  "genre_ssim": [
     "Articles"
   ],
-  "genre_search": [
-    "Articles"
-  ],
-  "abstract": "Background -  Alice is feeling bored and drowsy while sitting on the riverbank with her older sister, who is reading a book with no pictures or conversations.",
-  "keyword_search": [
-    "tea parties",
-    "wonderland",
-    "rabbits",
-    "nonsense literature",
-    "bildungsromans"
-  ],
-  "subject_facet": [
+  "abstract_ssi": "Background -  Alice is feeling bored and drowsy while sitting on the riverbank with her older sister, who is reading a book with no pictures or conversations.",
+  "subject_ssim": [
     "Tea Parties",
     "Wonderland",
     "Rabbits",
     "Nonsense literature",
     "Bildungsromans"
   ],
-  "subject_search": [
-    "Tea Parties",
-    "Wonderland",
-    "Rabbits",
-    "Nonsense literature",
-    "Bildungsromans"
-  ],
-  "volume": "1",
-  "issue": "2",
-  "start_page": "1",
-  "end_page": "69",
-  "date": "June 2008",
-  "book_journal_title": "Project Gutenberg",
-  "type_of_resource_mods": [
+  "volume_ssi": "1",
+  "issue_ssi": "2",
+  "start_page_ssi": "1",
+  "end_page_ssi": "69",
+  "date_ssi": "June 2008",
+  "book_journal_title_ssi": "Project Gutenberg",
+  "type_of_resource_mods_ssim": [
     "text"
   ],
-  "type_of_resource_facet": [
+  "type_of_resource_ssim": [
     "Text"
   ],
-  "organization_facet": [
+  "organization_ssim": [
     "Oxford University"
   ],
-  "department_facet": [
+  "department_ssim": [
     "Bucolic Literary Society."
   ],
   "described_by_ssim": [

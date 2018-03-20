@@ -5,7 +5,7 @@ class DownloadController < ApplicationController
   before_filter :require_admin!, only: :download_log
 
   STANDARD_SEARCH_PARAMS = {
-    qt: 'standard',
+    qt: 'search',
     fl: '*',
     fq: [],
     facet: false

@@ -1,16 +1,16 @@
 module AcademicCommons
   module Statistics
     FACET_NAMES = Hash.new
-    FACET_NAMES.store('author_facet', 'Author')
-    FACET_NAMES.store('pub_date_facet', 'Date')
-    FACET_NAMES.store('genre_facet', 'Content Type')
-    FACET_NAMES.store('subject_facet', 'Subject')
-    FACET_NAMES.store('type_of_resource_facet', 'Resource Type')
-    FACET_NAMES.store('media_type_facet', 'Media Type')
-    FACET_NAMES.store('organization_facet', 'Organization')
-    FACET_NAMES.store('department_facet', 'Department')
-    FACET_NAMES.store('series_facet', 'Series')
-    FACET_NAMES.store('non_cu_series_facet', 'Non CU Series')
+    FACET_NAMES.store('author_ssim', 'Author')
+    FACET_NAMES.store('pub_date_isi', 'Date')
+    FACET_NAMES.store('genre_ssim', 'Content Type')
+    FACET_NAMES.store('subject_ssim', 'Subject')
+    FACET_NAMES.store('type_of_resource_ssim', 'Resource Type')
+    FACET_NAMES.store('media_type_ssim', 'Media Type')
+    FACET_NAMES.store('organization_ssim', 'Organization')
+    FACET_NAMES.store('department_ssim', 'Department')
+    FACET_NAMES.store('series_ssim', 'Series')
+    FACET_NAMES.store('non_cu_series_ssim', 'Non CU Series')
 
     private
 

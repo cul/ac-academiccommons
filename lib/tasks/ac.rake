@@ -26,9 +26,9 @@ namespace :ac do
     start, rows = 0, 100
     while true
       solr_params = {
-        q: '*:*', start: start, rows: rows, fl: 'id,author_uni_ssim,handle',
+        start: start, rows: rows, fl: 'id,author_uni_ssim,cul_doi_ssi',
         fq: ["has_model_ssim:\"#{ContentAggregator.to_class_uri}\""],
-        qt: 'standard'
+        qt: 'search'
       }
 
       docs = rsolr.get('select', params: solr_params)["response"]["docs"]
@@ -37,7 +37,7 @@ namespace :ac do
 
       docs.each do |d|
         d.fetch('author_uni_ssim', []).each do |uni|
-          Notification.record_new_item_notification(d['handle'], nil, uni, true)
+          Notification.record_new_item_notification(d['cul_doi_ssi'], nil, uni, true)
         end
       end
 

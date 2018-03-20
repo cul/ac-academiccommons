@@ -4,60 +4,46 @@
     "info:fedora/actest:1/test_ds"
   ],
   "fedora3_pid_ssi": "actest:1",
-  "record_creation_date": "2017-06-22T14:42:26Z",
-  "record_change_date": "2017-06-22T16:37:46Z",
-  "record_language_of_catalog": "eng",
-  "language": "English",
-  "publisher": "Driesen",
-  "publisher_location": "Taunusstein",
-  "handle": "10.7916/D86W9M15",
+  "record_creation_dtsi": "2017-06-22T14:42:26Z",
+  "record_change_dtsi": "2017-06-22T16:37:46Z",
+  "language_ssim": [
+    "English"
+  ],
+  "publisher_ssi": "Driesen",
+  "publisher_location_ssi": "Taunusstein",
   "cul_doi_ssi": "10.7916/D86W9M15",
   "title_ssi": "Empathy, Motion and Emotion",
-  "author_search": [
-    "freedberg, david a."
-  ],
-  "author_facet": [
+  "author_ssim": [
     "Freedberg, David A."
   ],
   "author_display": "Freedberg, David A.",
-  "pub_date_facet": ["2007"],
-  "genre_facet": [
+  "pub_date_isi": "2007",
+  "genre_ssim": [
     "Articles"
   ],
-  "genre_search": [
-    "Articles"
-  ],
-  "keyword_search": [
-    "arts",
-    "art"
-  ],
-  "subject_facet": [
+  "subject_ssim": [
     "Arts",
     "Art"
   ],
-  "subject_search": [
-    "Arts",
-    "Art"
-  ],
-  "start_page": "17",
-  "end_page": "51",
-  "date": "2007",
-  "book_journal_title": "Wie sich Gefuhle Ausdruck verschaffen: Emotionen in Nahsicht",
-  "book_author": [
+  "start_page_ssi": "17",
+  "end_page_ssi": "51",
+  "date_ssi": "2007",
+  "book_journal_title_ssi": "Wie sich Gefuhle Ausdruck verschaffen: Emotionen in Nahsicht",
+  "book_author_ssim": [
     "Herding, Klaus",
     "Krause-Wahl, Antje"
   ],
-  "doi": "10.125486/s130re42519-015-fdsf-x",
-  "type_of_resource_mods": [
+  "doi_ssi": "10.125486/s130re42519-015-fdsf-x",
+  "type_of_resource_mods_ssim": [
     "text"
   ],
-  "type_of_resource_facet": [
+  "type_of_resource_ssim": [
     "Text"
   ],
-  "organization_facet": [
+  "organization_ssim": [
     "Columbia University"
   ],
-  "department_facet": [
+  "department_ssim": [
     "Art History and Archaeology"
   ]
 }

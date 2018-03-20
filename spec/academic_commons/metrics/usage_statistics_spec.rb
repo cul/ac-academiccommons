@@ -11,7 +11,7 @@ RSpec.describe AcademicCommons::Metrics::UsageStatistics, integration: true do
     {
       rows: 100_000, sort: 'title_ssi asc', q: nil, page: 1,
       fq: ["author_uni_ssim:\"#{uni}\"", 'has_model_ssim:"info:fedora/ldpd:ContentAggregator"'],
-      fl: 'title_ssi,id,handle,doi,genre_facet,record_creation_date,object_state_ssi,free_to_read_start_date'
+      fl: 'title_ssi,id,cul_doi_ssi,doi,genre_ssim,record_creation_dtsi,object_state_ssi,free_to_read_start_date_ssi'
     }
   end
   let(:solr_response) do
@@ -20,9 +20,9 @@ RSpec.describe AcademicCommons::Metrics::UsageStatistics, integration: true do
         'response' => {
           'docs' => [
             { 'id' => pid2, 'title_ssi' => 'Second Test Document', 'object_state_ssi' => 'A',
-             'handle' => 'http://dx.doi.org/10.7916/TESTDOC2', 'doi' => '', 'genre_facet' => ''},
+             'cul_doi_ssi' => 'http://dx.doi.org/10.7916/TESTDOC2', 'doi' => '', 'genre_ssim' => ''},
             { 'id' => pid, 'title_ssi' => 'First Test Document', 'object_state_ssi' => 'A',
-              'handle' => 'http://dx.doi.org/10.7916/TESTDOC1', 'doi' => '', 'genre_facet' => '' }
+              'cul_doi_ssi' => 'http://dx.doi.org/10.7916/TESTDOC1', 'doi' => '', 'genre_ssim' => '' }
           ]
         }
       }, {}
@@ -49,12 +49,12 @@ RSpec.describe AcademicCommons::Metrics::UsageStatistics, integration: true do
               'response' => {
                 'docs' => [
                   { 'id' => pid2, 'title_ssi' => 'Second Test Document', 'object_state_ssi' => 'A',
-                   'handle' => 'http://dx.doi.org/10.7916/TESTDOC2', 'doi' => '', 'genre_facet' => ''},
+                   'cul_doi_ssi' => 'http://dx.doi.org/10.7916/TESTDOC2', 'doi_ssi' => '', 'genre_ssim' => ''},
                   { 'id' => pid, 'title_ssi' => 'First Test Document', 'object_state_ssi' => 'A',
-                    'handle' => 'http://dx.doi.org/10.7916/TESTDOC1', 'doi' => '', 'genre_facet' => '' },
+                    'cul_doi_ssi' => 'http://dx.doi.org/10.7916/TESTDOC1', 'doi_ssi' => '', 'genre_ssim' => '' },
                   { 'id' => 'actest:10', 'title_ssi' => 'First Test Document', 'object_state_ssi' => 'A',
-                    'handle' => 'http://dx.doi.org/10.7916/TESTDOC1', 'doi' => '', 'genre_facet' => '',
-                    'free_to_read_start_date' => Date.tomorrow.strftime('%Y-%m-%d') }
+                    'cul_doi_ssi' => 'http://dx.doi.org/10.7916/TESTDOC1', 'doi_ssi' => '', 'genre_ssim' => '',
+                    'free_to_read_start_date_ssi' => Date.tomorrow.strftime('%Y-%m-%d') }
                 ]
               }
             }, {}
@@ -297,7 +297,7 @@ RSpec.describe AcademicCommons::Metrics::UsageStatistics, integration: true do
         most_downloaded_asset(
           SolrDocument.new(
             'id' => 'actest:1', 'title_ssi' => 'Second Test Document', 'object_state_ssi' => 'A',
-            'handle' => 'http://dx.doi.org/10.7916/TESTDOC2', 'doi' => '', 'genre_facet' => ''
+            'cul_doi_ssi' => 'http://dx.doi.org/10.7916/TESTDOC2', 'doi' => '', 'genre_ssim' => ''
           )
         )
       }

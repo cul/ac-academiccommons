@@ -26,7 +26,7 @@ describe StatisticsController, type: :controller, integration: true do
     #   let(:author_search) do
     #     {
     #       :rows => 100000, sort: 'title_ssi asc', q: nil, :page => 1,
-    #       :fq => "author_uni_ssim:\"author_uni_ssim:abc123\"", fl: "title_ssi,id,handle,doi,genre_facet"
+    #       :fq => "author_uni_ssim:\"author_uni_ssim:abc123\"", fl: "title_ssi,id,cul_doi_ssi,doi,genre_ssim"
     #     }
     #   end
     #   let(:author_docs) do
@@ -34,7 +34,7 @@ describe StatisticsController, type: :controller, integration: true do
     #       'response' => {
     #         'docs' => [
     #           { 'id' => pid, 'title_ssi' => 'First Test Document',
-    #             'handle' => '', 'doi' => '', 'genre_facet' => '' },
+    #             'cul_doi_ssi' => '', 'doi' => '', 'genre_ssim' => '' },
     #         ]
     #       }
     #     }
@@ -116,7 +116,7 @@ describe StatisticsController, type: :controller, integration: true do
 
   describe 'GET common_statistics_csv' do
     include_examples 'authorization required' do
-      let(:http_request) { get :common_statistics_csv, f: { 'author_facet' => ['Carroll, Lewis'] } }
+      let(:http_request) { get :common_statistics_csv, f: { 'author_ssim' => ['Carroll, Lewis'] } }
     end
   end
 
@@ -135,7 +135,7 @@ describe StatisticsController, type: :controller, integration: true do
   describe 'GET send_csv_report' do
     include_examples 'authorization required' do
       let(:http_request) do
-        get :send_csv_report, f: { 'author_facet' => ['Carroll, Lewis'] },
+        get :send_csv_report, f: { 'author_ssim' => ['Carroll, Lewis'] },
                               email_to: 'example@example.com',
                               email_from: 'me@example.com'
       end
@@ -145,7 +145,7 @@ describe StatisticsController, type: :controller, integration: true do
       include_context 'mock admin user'
 
       before do
-        get :send_csv_report, f: { 'author_facet' => ['Carroll, Lewis.'] },
+        get :send_csv_report, f: { 'author_ssim' => ['Carroll, Lewis.'] },
                               email_to: 'example@example.com',
                               email_from: 'me@example.com'
       end

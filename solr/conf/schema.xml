@@ -464,6 +464,8 @@
    <!-- default, catch all search field -->
    <field name="text" type="text" indexed="true" stored="false" multiValued="true"/>
 
+   <field name="pid" type="string" indexed="true" stored="true" />
+
    <!-- these display fields are NOT multi-valued -->
    <field name="marc_display" type="string" indexed="false" stored="true" multiValued="false"/>
    <field name="title_display" type="string" indexed="false" stored="true" multiValued="false"/>
@@ -497,7 +499,6 @@
         EXAMPLE:  name="*_i" will match any field ending in _i (like myid_i, z_i)
         Longer patterns will be matched first.  if equal size patterns
         both match, the first appearing in the schema will be used.  -->
-   <dynamicField name="*_i"  type="int"    indexed="true"  stored="true"/>
    <dynamicField name="*_s"  type="string"  indexed="true"  stored="true"/>
    <dynamicField name="*_l"  type="long"   indexed="true"  stored="true"/>
    <dynamicField name="*_t"  type="text"    indexed="true"  stored="true" multiValued="true"/>
@@ -509,7 +510,6 @@
    <!-- Type used to index the lat and lon components for the "location" FieldType -->
    <dynamicField name="*_coordinate"  type="tdouble" indexed="true"  stored="false"/>
 
-   <dynamicField name="*_dt" type="date"    indexed="true"  stored="true"/>
    <dynamicField name="*_p"  type="location" indexed="true" stored="true"/>
 
    <!-- some trie-coded dynamic fields for faster range queries -->
@@ -532,11 +532,33 @@
    <dynamicField name="*suggest" type="textSuggest" indexed="true" stored="false" multiValued="true" />
 
    <!-- Hydra/ActiveFedora dynamic field definitions -->
-   <dynamicField name="*_dtsi" type="date"    indexed="true"  stored="true" multiValued="false" />
-   <dynamicField name="*_ss"  type="string"  indexed="false"  stored="true" multiValued="false"/>
-   <dynamicField name="*_ssi"  type="string"  indexed="true"  stored="true" multiValued="false"/>
-   <dynamicField name="*_ssim"  type="string"  indexed="true"  stored="true" multiValued="true"/>
-   <dynamicField name="*_ssm"  type="string"  indexed="false"  stored="true" multiValued="true"/>
+
+   <!-- date (_dt...) -->
+   <!-- The format for this date field is of the form 1995-12-31T23:59:59Z
+        Optional fractional seconds are allowed: 1995-12-31T23:59:59.999Z -->
+    <dynamicField name="*_dti" type="date" stored="false" indexed="true" multiValued="false"/>
+    <dynamicField name="*_dtim" type="date" stored="false" indexed="true" multiValued="true"/>
+    <dynamicField name="*_dts" type="date" stored="true" indexed="false" multiValued="false"/>
+    <dynamicField name="*_dtsm" type="date" stored="true" indexed="false" multiValued="true"/>
+    <dynamicField name="*_dtsi" type="date" stored="true" indexed="true" multiValued="false"/>
+    <dynamicField name="*_dtsim" type="date" stored="true" indexed="true" multiValued="true"/>
+
+    <!-- string (_s...) -->
+    <dynamicField name="*_si" type="string" stored="false" indexed="true" multiValued="false"/>
+    <dynamicField name="*_sim" type="string" stored="false" indexed="true" multiValued="true"/>
+    <dynamicField name="*_ss" type="string" stored="true" indexed="false" multiValued="false"/>
+    <dynamicField name="*_ssm" type="string" stored="true" indexed="false" multiValued="true"/>
+    <dynamicField name="*_ssi" type="string" stored="true" indexed="true" multiValued="false"/>
+    <dynamicField name="*_ssim" type="string" stored="true" indexed="true" multiValued="true"/>
+
+    <!-- integer (_i...) -->
+    <dynamicField name="*_ii" type="int" stored="false" indexed="true" multiValued="false"/>
+    <dynamicField name="*_iim" type="int" stored="false" indexed="true" multiValued="true"/>
+    <dynamicField name="*_is" type="int" stored="true" indexed="false" multiValued="false"/>
+    <dynamicField name="*_ism" type="int" stored="true" indexed="false" multiValued="true"/>
+    <dynamicField name="*_isi" type="int" stored="true" indexed="true" multiValued="false"/>
+    <dynamicField name="*_isim" type="int" stored="true" indexed="true" multiValued="true"/>
+
 
    <!-- uncomment the following to ignore any fields that don't already match an existing
         field name or dynamic field, rather than reporting them as an error.

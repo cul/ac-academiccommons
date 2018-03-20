@@ -105,7 +105,7 @@ class SolrDocumentsController < ApplicationController
 
     solr_doc.fetch('author_uni_ssim', []).each do |uni|
       # Skip if notification was already sent.
-      next if Notification.sent_new_item_notification?(solr_doc['handle'], uni)
+      next if Notification.sent_new_item_notification?(solr_doc['cul_doi_ssi'], uni)
 
       if author = ldap.find_by_uni(uni)
         email, name = author.email, author.name
@@ -122,7 +122,7 @@ class SolrDocumentsController < ApplicationController
         logger.error e.backtrace.join("\n ")
         success = false
       end
-      Notification.record_new_item_notification(doc[:handle], email, uni, success)
+      Notification.record_new_item_notification(doc[:cul_doi_ssi], email, uni, success)
     end
   end
 end
