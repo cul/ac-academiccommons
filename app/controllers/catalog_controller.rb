@@ -118,7 +118,7 @@ class CatalogController < ApplicationController
     config.add_show_field 'non_cu_series_ssim',     label: 'Series'
     config.add_show_field 'part_number',            label: 'Part Number' #series part number
     config.add_show_field 'department_ssim',        label: 'Academic Units',                             link_to_search: 'department_ssim'
-    config.add_show_field 'thesis_advisor',         label: 'Thesis Advisors' #not sure what part of the page this would go on.
+    config.add_show_field 'thesis_advisor_ssim',         label: 'Thesis Advisors' #not sure what part of the page this would go on.
     config.add_show_field 'degree',                 label: 'Degree', accessor: true, unless: ->(_, _, doc) { doc.degree.blank? }
     config.add_show_field 'related_url_ssi',        label: 'Related URL'
 
@@ -180,27 +180,27 @@ class CatalogController < ApplicationController
     # label is key, solr field is value
 
     config.add_sort_field('Best Match') do |field|
-      field.sort = 'score desc, pub_date_sort desc, title_sort asc'
+      field.sort = 'score desc, pub_date_isi desc, title_ssi asc'
       field.label = 'Best Match'
     end
 
     config.add_sort_field('Published Latest') do |field|
-      field.sort = 'pub_date_sort desc, title_sort asc'
+      field.sort = 'pub_date_isi desc, title_ssi asc'
       field.label = 'Published Latest'
     end
 
     config.add_sort_field('Published Earliest') do |field|
-      field.sort = 'pub_date_sort asc, title_sort asc'
+      field.sort = 'pub_date_isi asc, title_ssi asc'
       field.label = 'Published Earliest'
     end
 
     config.add_sort_field('Title A-Z') do |field|
-      field.sort = 'title_sort asc, pub_date_sort desc'
+      field.sort = 'title_ssi asc, pub_date_isi desc'
       field.label = 'Title A-Z'
     end
 
     config.add_sort_field('Title Z-A') do |field|
-     field.sort = 'title_sort desc, pub_date_sort desc'
+     field.sort = 'title_ssi desc, pub_date_isi desc'
      field.label = 'Title Z-A'
     end
 

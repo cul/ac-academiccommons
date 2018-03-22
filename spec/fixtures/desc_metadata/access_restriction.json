@@ -9,22 +9,43 @@
   "language_ssim": [
     "English"
   ],
+  "language_q": [
+    "English"
+  ],
   "publisher_ssi": "Driesen",
+  "publisher_q": [
+    "Driesen"
+  ],
   "publisher_location_ssi": "Taunusstein",
+  "publisher_location_q": [
+    "Taunusstein"
+  ],
   "cul_doi_ssi": "10.7916/D86W9M15",
+  "cul_doi_q": [
+    "10.7916/D86W9M15"
+  ],
   "title_ssi": "Empathy, Motion and Emotion",
+  "title_q": [
+    "Empathy, Motion and Emotion"
+  ],
   "author_ssim": [
     "Freedberg, David A."
   ],
-  "author_display": "Freedberg, David A.",
+  "author_q": [
+    "Freedberg, David A."
+  ],
   "pub_date_isi": "2007",
   "genre_ssim": [
     "Articles"
   ],
-  "genre_ssim": [
+  "genre_q": [
     "Articles"
   ],
   "subject_ssim": [
+    "Arts",
+    "Art"
+  ],
+  "subject_q": [
     "Arts",
     "Art"
   ],
@@ -32,7 +53,14 @@
   "end_page_ssi": "51",
   "date_ssi": "2007",
   "book_journal_title_ssi": "Wie sich Gefuhle Ausdruck verschaffen: Emotionen in Nahsicht",
+  "book_journal_title_q": [
+    "Wie sich Gefuhle Ausdruck verschaffen: Emotionen in Nahsicht"
+  ],
   "book_author_ssim": [
+    "Herding, Klaus",
+    "Krause-Wahl, Antje"
+  ],
+  "book_author_q": [
     "Herding, Klaus",
     "Krause-Wahl, Antje"
   ],
@@ -42,11 +70,27 @@
   "type_of_resource_ssim": [
     "Text"
   ],
+  "type_of_resource_q": [
+    "Text"
+  ],
   "organization_ssim": [
+    "Columbia University"
+  ],
+  "organization_q": [
     "Columbia University"
   ],
   "department_ssim": [
     "Art History and Archaeology"
   ],
-  "restriction_on_access_ss": "Removed from view at the request of the copyright holder."
+  "department_q": [
+    "Art History and Archaeology"
+  ],
+  "restriction_on_access_ss": "Removed from view at the request of the copyright holder.",
+  "suggest": [
+    "Empathy, Motion and Emotion",
+    "Freedberg, David A.",
+    "Arts",
+    "Art",
+    "Art History and Archaeology"
+  ]
 }

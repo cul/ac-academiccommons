@@ -15,7 +15,7 @@ RSpec.describe CatalogController, type: :controller do
             fq: ['has_model_ssim:"info:fedora/ldpd:ContentAggregator"'],
             sort: 'record_creation_dtsi desc',
             rows: '500',
-            fl: 'title_ssi,id,author_ssim,author_display,record_creation_dtsi,cul_doi_ssi,abstract_ssi,author_uni_ssim,subject_ssim,department_ssim,genre_ssim'
+            fl: 'title_ssi,id,author_ssim,author_ssim,record_creation_dtsi,cul_doi_ssi,abstract_ssi,author_uni_ssim,subject_ssim,department_ssim,genre_ssim'
           }
         end
 
@@ -39,7 +39,7 @@ RSpec.describe CatalogController, type: :controller do
             fq: ['has_model_ssim:"info:fedora/ldpd:ContentAggregator"'],
             sort: 'record_creation_dtsi desc',
             rows: '10',
-            fl: 'title_ssi,id,author_ssim,author_display,record_creation_dtsi,cul_doi_ssi,abstract_ssi,author_uni_ssim,subject_ssim,department_ssim,genre_ssim'
+            fl: 'title_ssi,id,author_ssim,author_ssim,record_creation_dtsi,cul_doi_ssi,abstract_ssi,author_uni_ssim,subject_ssim,department_ssim,genre_ssim'
           }
         end
 
@@ -72,7 +72,7 @@ RSpec.describe CatalogController, type: :controller do
             'f.pub_date_isi.facet.limit' => 3,
             'f.series_ssim.facet.limit' => 3,
             'sort' => 'record_create_date desc',
-            'fl' => 'title_ssi,id,author_ssim,author_display,record_creation_dtsi,cul_doi_ssi,abstract_ssi,author_uni_ssim,subject_ssim,department_ssim,genre_ssim'
+            'fl' => 'title_ssi,id,author_ssim,author_ssim,record_creation_dtsi,cul_doi_ssi,abstract_ssi,author_uni_ssim,subject_ssim,department_ssim,genre_ssim'
           }
         end
 
@@ -97,7 +97,7 @@ RSpec.describe CatalogController, type: :controller do
             q: '',
             sort: 'record_creation_dtsi desc',
             rows: '500',
-            fl: 'title_ssi,id,author_ssim,author_display,record_creation_dtsi,cul_doi_ssi,abstract_ssi,author_uni_ssim,subject_ssim,department_ssim,genre_ssim'
+            fl: 'title_ssi,id,author_ssim,author_ssim,record_creation_dtsi,cul_doi_ssi,abstract_ssi,author_uni_ssim,subject_ssim,department_ssim,genre_ssim'
           }
         end
 
@@ -122,7 +122,7 @@ RSpec.describe CatalogController, type: :controller do
           q: '',
           sort: 'record_creation_dtsi desc',
           rows: '500',
-          fl: 'title_ssi,id,author_ssim,author_display,record_creation_dtsi,cul_doi_ssi,abstract_ssi,author_uni_ssim,subject_ssim,department_ssim,genre_ssim'
+          fl: 'title_ssi,id,author_ssim,author_ssim,record_creation_dtsi,cul_doi_ssi,abstract_ssi,author_uni_ssim,subject_ssim,department_ssim,genre_ssim'
         }
       end
 

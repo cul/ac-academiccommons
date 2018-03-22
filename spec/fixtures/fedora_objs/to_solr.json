@@ -6,20 +6,48 @@
   "language_ssim": [
     "English"
   ],
+  "language_q": [
+    "English"
+  ],
   "cul_doi_ssi": "10.7916/ALICE",
+  "cul_doi_q": [
+    "10.7916/ALICE"
+  ],
   "doi_ssi": "10.1378/wonderland.01-2345",
+  "doi_q": [
+    "10.1378/wonderland.01-2345"
+  ],
   "title_ssi": "Alice's Adventures in Wonderland",
+  "title_q": [
+    "Alice's Adventures in Wonderland"
+  ],
   "author_ssim": [
     "Carroll, Lewis",
     "Weird Old Guys."
   ],
-  "author_display": "Carroll, Lewis; Weird Old Guys.",
+  "author_q": [
+    "Carroll, Lewis",
+    "Weird Old Guys."
+  ],
   "pub_date_isi": "1865",
   "genre_ssim": [
     "Articles"
   ],
+  "genre_q": [
+    "Articles"
+  ],
   "abstract_ssi": "Background -  Alice is feeling bored and drowsy while sitting on the riverbank with her older sister, who is reading a book with no pictures or conversations.",
+  "abstract_q": [
+    "Background -  Alice is feeling bored and drowsy while sitting on the riverbank with her older sister, who is reading a book with no pictures or conversations."
+  ],
   "subject_ssim": [
+    "Tea Parties",
+    "Wonderland",
+    "Rabbits",
+    "Nonsense literature",
+    "Bildungsromans"
+  ],
+  "subject_q": [
     "Tea Parties",
     "Wonderland",
     "Rabbits",
@@ -32,19 +60,42 @@
   "end_page_ssi": "69",
   "date_ssi": "June 2008",
   "book_journal_title_ssi": "Project Gutenberg",
+  "book_journal_title_q": [
+    "Project Gutenberg"
+  ],
   "type_of_resource_mods_ssim": [
     "text"
   ],
   "type_of_resource_ssim": [
     "Text"
   ],
+  "type_of_resource_q": [
+    "Text"
+  ],
   "organization_ssim": [
+    "Oxford University"
+  ],
+  "organization_q": [
     "Oxford University"
   ],
   "department_ssim": [
     "Bucolic Literary Society."
   ],
+  "department_q": [
+    "Bucolic Literary Society."
+  ],
   "described_by_ssim": [
     "info:fedora/actest:1/test_ds"
+  ],
+  "suggest": [
+    "Alice's Adventures in Wonderland",
+    "Carroll, Lewis",
+    "Weird Old Guys.",
+    "Tea Parties",
+    "Wonderland",
+    "Rabbits",
+    "Nonsense literature",
+    "Bildungsromans",
+    "Bucolic Literary Society."
   ]
 }

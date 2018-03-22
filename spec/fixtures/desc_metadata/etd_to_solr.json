@@ -6,40 +6,79 @@
   "advisor_uni_ssim": [
     "as000"
   ],
+  "advisor_uni_q": [
+    "as000"
+  ],
   "author_uni_ssim": [
+    "ad31453"
+  ],
+  "author_uni_q": [
     "ad31453"
   ],
   "language_ssim": [
     "English"
   ],
+  "language_q": [
+    "English"
+  ],
   "cul_doi_ssi": "10.7916/TEST123",
+  "cul_doi_q": [
+    "10.7916/TEST123"
+  ],
   "title_ssi": "Test Dissertation",
+  "title_q": [
+    "Test Dissertation"
+  ],
   "author_ssim": [
+    "Doe, Ashley"
+  ],
+  "author_q": [
     "Doe, Ashley"
   ],
   "thesis_advisor_ssim": [
     "Smith, Alan"
   ],
-  "author_display": "Doe, Ashley",
+  "thesis_advisor_q": [
+    "Smith, Alan"
+  ],
   "pub_date_isi": "2015",
   "genre_ssim": [
     "Thesis"
   ],
+  "genre_q": [
+    "Thesis"
+  ],
   "abstract_ssi": "This dissertation focuses on the testing of a dissertation record.",
-  "subject_ssim": [
-    "Persona (Literature)",
-    "Influence (Literary, artistic, etc.)"
+  "abstract_q": [
+    "This dissertation focuses on the testing of a dissertation record."
   ],
   "type_of_resource_mods_ssim": [
     "text"
   ],
+  "subject_ssim": [
+    "Persona (Literature)",
+    "Influence (Literary, artistic, etc.)"
+  ],
+  "subject_q": [
+    "Persona (Literature)",
+    "Influence (Literary, artistic, etc.)"
+  ],
   "type_of_resource_ssim": [
+    "Text"
+  ],
+  "type_of_resource_q": [
     "Text"
   ],
   "organization_ssim": [
     "Columbia University"
   ],
+  "organization_q": [
+    "Columbia University"
+  ],
   "department_ssim": [
+    "English and Comparative Literature"
+  ],
+  "department_q": [
     "English and Comparative Literature"
   ],
   "described_by_ssim": [
@@ -58,5 +97,13 @@
   ],
   "degree_level_name_ssim": [
     "Doctoral"
+  ],
+  "suggest": [
+    "Test Dissertation",
+    "Doe, Ashley",
+    "Smith, Alan",
+    "Persona (Literature)",
+    "Influence (Literary, artistic, etc.)",
+    "English and Comparative Literature"
   ]
 }
