@@ -15,7 +15,7 @@
   // -------- Teachers College ---------------------
   $(document).ready(function(){
     $.ajax({
-      url: '/statistics/total_usage_stats/?q={!raw f=organization_facet}Teachers College',
+      url: '/statistics/total_usage_stats/?q={!raw f=organization_ssim}Teachers College',
       dataType: 'json',
       success: function(data) {
         $('#teachers-school-docs-size').html(data.records);
@@ -29,7 +29,7 @@
   // -------- Union Theological Seminary ---------------------
   $(document).ready(function(){
     $.ajax({
-      url: '/statistics/total_usage_stats/?q={!raw f=organization_facet}Union Theological Seminary',
+      url: '/statistics/total_usage_stats/?q={!raw f=organization_ssim}Union Theological Seminary',
       dataType: 'json',
       success: function(data) {
         $('#t-seminary-docs-size').html(data.records);
@@ -43,7 +43,7 @@
   // -------- Jewish Theological Seminary ---------------------
   $(document).ready(function(){
     $.ajax({
-      url: '/statistics/total_usage_stats/?q={!raw f=organization_facet}Jewish Theological Seminary',
+      url: '/statistics/total_usage_stats/?q={!raw f=organization_ssim}Jewish Theological Seminary',
       dataType: 'json',
       success: function(data) {
         $('#j-seminary-docs-size').html(data.records);
@@ -58,7 +58,7 @@
   // -------- Barnard College ---------------------
   $(document).ready(function(){
     $.ajax({
-      url: '/statistics/total_usage_stats/?q={!raw f=organization_facet}Barnard College',
+      url: '/statistics/total_usage_stats/?q={!raw f=organization_ssim}Barnard College',
       dataType: 'json',
       success: function(data) {
         $('#barnard-college-docs-size').html(data.records);
@@ -72,7 +72,7 @@
   // -------- Columbia University ---------------------
   $(document).ready(function(){
     $.ajax({
-      url: '/statistics/total_usage_stats/?q={!raw f=organization_facet}Columbia University',
+      url: '/statistics/total_usage_stats/?q={!raw f=organization_ssim}Columbia University',
       dataType: 'json',
       success: function(data) {
         $('#cu-docs-size').html(data.records);

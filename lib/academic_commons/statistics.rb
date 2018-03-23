@@ -1,16 +1,16 @@
 module AcademicCommons
   module Statistics
     FACET_NAMES = Hash.new
-    FACET_NAMES.store('author_facet', 'Author')
-    FACET_NAMES.store('pub_date_facet', 'Date')
-    FACET_NAMES.store('genre_facet', 'Content Type')
-    FACET_NAMES.store('subject_facet', 'Subject')
-    FACET_NAMES.store('type_of_resource_facet', 'Resource Type')
-    FACET_NAMES.store('media_type_facet', 'Media Type')
-    FACET_NAMES.store('organization_facet', 'Organization')
-    FACET_NAMES.store('department_facet', 'Department')
-    FACET_NAMES.store('series_facet', 'Series')
-    FACET_NAMES.store('non_cu_series_facet', 'Non CU Series')
+    FACET_NAMES.store('author_ssim', 'Author')
+    FACET_NAMES.store('pub_date_isi', 'Date')
+    FACET_NAMES.store('genre_ssim', 'Content Type')
+    FACET_NAMES.store('subject_ssim', 'Subject')
+    FACET_NAMES.store('type_of_resource_ssim', 'Resource Type')
+    FACET_NAMES.store('media_type_ssim', 'Media Type')
+    FACET_NAMES.store('organization_ssim', 'Organization')
+    FACET_NAMES.store('department_ssim', 'Department')
+    FACET_NAMES.store('series_ssim', 'Series')
+    FACET_NAMES.store('non_cu_series_ssim', 'Non CU Series')
 
     private
 
@@ -121,7 +121,7 @@ module AcademicCommons
           startdate = Date.parse(params[:month] + ' ' + params[:year])
           enddate = Date.new(startdate.year, startdate.month, -1) # end_date needs to be last day of month
 
-          solr_params = { q: nil, fq: ["author_uni:\"#{author_id}\""] }
+          solr_params = { q: nil, fq: ["author_uni_ssim:\"#{author_id}\""] }
           usage_stats = AcademicCommons::Metrics::UsageStatistics.new(
             solr_params, startdate, enddate, order_by: params[:order_by],
             include_zeroes: params[:include_zeroes], include_streaming: false,
@@ -181,7 +181,7 @@ module AcademicCommons
         sort = solr_params['sort']
       else
         facet_query = ["#{facet}:\"#{query}\""]
-        sort = 'title_display asc'
+        sort = 'title_ssi asc'
       end
 
       return if facet_query.nil? && q.nil?

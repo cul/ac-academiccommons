@@ -11,7 +11,7 @@ module AcademicCommons::Metrics
       # Can only be generated with the per month flag is on
 
       CSV.generate do |csv|
-        # csv.add_row [facet.in?('author_facet', 'author_uni') ? 'Author UNI/Name:' : 'Search criteria:', self.query]
+        # csv.add_row [facet.in?('author_ssim', 'author_uni_ssim') ? 'Author UNI/Name:' : 'Search criteria:', self.query]
         csv.add_row [self.solr_params.inspect]
         csv.add_row []
         csv.add_row ['Period Covered by Report', time_period]
@@ -52,12 +52,12 @@ module AcademicCommons::Metrics
         self.each_with_index do |item, idx|
           document = item.document
           item_row = [
-            idx + 1, document['title_display'],
-            document.fetch('genre_facet', []).first,
+            idx + 1, document['title_ssi'],
+            document.fetch('genre_ssim', []).first,
             item.get_stat(Statistic::VIEW, time),
             item.get_stat(Statistic::DOWNLOAD, time),
-            Date.strptime(document['record_creation_date']).strftime('%m/%d/%Y'),
-            document['handle']
+            Date.strptime(document['record_creation_dtsi']).strftime('%m/%d/%Y'),
+            document['cul_doi_ssi']
           ]
           item_row.insert(5, item.get_stat(Statistic::STREAM, time)) if options[:include_streaming]
           csv.add_row item_row
@@ -81,7 +81,7 @@ module AcademicCommons::Metrics
         monthly_stats = self.months_list.map { |m| item_stat.get_stat(key, m.strftime(MONTH_KEY)) }
         document = item_stat.document
         csv.add_row [
-          document['title_display'], document['genre_facet'].first, document['handle'],
+          document['title_ssi'], document['genre_ssim'].first, document['cul_doi_ssi'],
           document['doi'], item_stat.get_stat(key, 'Period')
         ].concat(monthly_stats)
       end

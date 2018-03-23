@@ -1,0 +1,109 @@
+{
+  "id": "actest:1",
+  "fedora3_pid_ssi": "actest:1",
+  "record_creation_dtsi": "2016-09-14T16:31:33Z",
+  "record_change_dtsi": "2016-09-14T16:48:05Z",
+  "advisor_uni_ssim": [
+    "as000"
+  ],
+  "advisor_uni_q": [
+    "as000"
+  ],
+  "author_uni_ssim": [
+    "ad31453"
+  ],
+  "author_uni_q": [
+    "ad31453"
+  ],
+  "language_ssim": [
+    "English"
+  ],
+  "language_q": [
+    "English"
+  ],
+  "cul_doi_ssi": "10.7916/TEST123",
+  "cul_doi_q": [
+    "10.7916/TEST123"
+  ],
+  "title_ssi": "Test Dissertation",
+  "title_q": [
+    "Test Dissertation"
+  ],
+  "author_ssim": [
+    "Doe, Ashley"
+  ],
+  "author_q": [
+    "Doe, Ashley"
+  ],
+  "thesis_advisor_ssim": [
+    "Smith, Alan"
+  ],
+  "thesis_advisor_q": [
+    "Smith, Alan"
+  ],
+  "pub_date_isi": "2015",
+  "genre_ssim": [
+    "Thesis"
+  ],
+  "genre_q": [
+    "Thesis"
+  ],
+  "abstract_ssi": "This dissertation focuses on the testing of a dissertation record.",
+  "abstract_q": [
+    "This dissertation focuses on the testing of a dissertation record."
+  ],
+  "type_of_resource_mods_ssim": [
+    "text"
+  ],
+  "subject_ssim": [
+    "Persona (Literature)",
+    "Influence (Literary, artistic, etc.)"
+  ],
+  "subject_q": [
+    "Persona (Literature)",
+    "Influence (Literary, artistic, etc.)"
+  ],
+  "type_of_resource_ssim": [
+    "Text"
+  ],
+  "type_of_resource_q": [
+    "Text"
+  ],
+  "organization_ssim": [
+    "Columbia University"
+  ],
+  "organization_q": [
+    "Columbia University"
+  ],
+  "department_ssim": [
+    "English and Comparative Literature"
+  ],
+  "department_q": [
+    "English and Comparative Literature"
+  ],
+  "described_by_ssim": [
+    "info:fedora/actest:1/test_ds"
+  ],
+  "free_to_read_start_date_ssi": "2015-04-09",
+  "free_to_read_start_date_dtsi": "2015-04-09T04:00:00Z",
+  "degree_grantor_ssim": [
+    "Columbia University"
+  ],
+  "degree_name_ssim": [
+    "Ph.D."
+  ],
+  "degree_level_ssim": [
+    "2"
+  ],
+  "degree_level_name_ssim": [
+    "Doctoral"
+  ],
+  "suggest": [
+    "Test Dissertation",
+    "Doe, Ashley",
+    "Smith, Alan",
+    "Persona (Literature)",
+    "Influence (Literary, artistic, etc.)",
+    "English and Comparative Literature"
+  ]
+}

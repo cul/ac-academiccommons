@@ -10,7 +10,7 @@
          <mods:title>Academic Commons</mods:title>
       </mods:titleInfo>
    </mods:relatedItem>
-   <mods:name type="personal" valueURI="temp:fc669aef5f12ea515ae82b75f11b77b8fe24c20f067c8c790943f5acafeceb3b">
+   <mods:name type="personal" ID="ad31453" valueURI="temp:fc669aef5f12ea515ae82b75f11b77b8fe24c20f067c8c790943f5acafeceb3b">
       <mods:namePart>Doe, Ashley</mods:namePart>
       <mods:role>
          <mods:roleTerm type="text" valueURI="http://id.loc.gov/vocabulary/relators/aut" authority="marcrelator">Author</mods:roleTerm>

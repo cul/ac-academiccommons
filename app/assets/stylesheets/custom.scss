@@ -259,7 +259,7 @@
     margin: 0 0 12px 0;
   }
 
-  & .blacklight-author_facet {
+  & .blacklight-author_ssim {
     color: $gray-light;
     margin: 12px 0 30px 0;
   }
@@ -536,17 +536,17 @@
     margin: 0;
   }
 
-  & dd.blacklight-author_facet {
+  & dd.blacklight-author_ssim {
     margin: 0 0 13px 0;
   }
 
-  & dd.blacklight-pub_date_facet,
-  & dd.blacklight-genre_facet {
+  & dd.blacklight-pub_date_isi,
+  & dd.blacklight-genre_ssim {
     @include label-plain;
   }
 
-  & dt.blacklight-genre_facet,
-  & dt.blacklight-pub_date_facet {
+  & dt.blacklight-genre_ssim,
+  & dt.blacklight-pub_date_isi {
     display: none;
   }
 }

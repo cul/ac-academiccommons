@@ -4,7 +4,7 @@ class SolrDocument
   include AcademicCommons::Embargoes
 
   # self.unique_key = 'id'
-  self.timestamp_key = 'record_creation_date'
+  self.timestamp_key = 'record_creation_dtsi'
 
 
   # Email uses the semantic field mappings below to generate the body of an email.
@@ -21,15 +21,15 @@ class SolrDocument
   use_extension(Blacklight::Document::DublinCore)
 
   field_semantics.merge!(
-    title: 'title_display',
-    author: 'author_facet',
-	  creator: 'author_facet',
-		date: 'pub_date_facet',
-    type: ['type_of_resource_facet', 'genre_facet'],
-		publisher: 'publisher',
-		subject: 'subject_facet',
-	  description: 'abstract',
-	  language: 'language'
+    title: 'title_ssi',
+    author: 'author_ssim',
+	  creator: 'author_ssim',
+		date: 'pub_date_isi',
+    type: ['type_of_resource_ssim', 'genre_ssim'],
+		publisher: 'publisher_ssi',
+		subject: 'subject_ssim',
+	  description: 'abstract_ssi',
+	  language: 'language_ssim'
   )
 
   def embargoed?
@@ -69,7 +69,7 @@ class SolrDocument
   end
 
   def full_doi
-    AcademicCommons.identifier_url(fetch(:handle, nil))
+    AcademicCommons.identifier_url(fetch(:cul_doi_ssi, nil))
   end
 
   def assets(include_inactive: false)
@@ -77,8 +77,7 @@ class SolrDocument
     obj_display = fetch('id', [])
 
     member_search = {
-      q: '*:*',
-      qt: 'standard',
+      qt: 'search',
       fl: '*',
       fq: ["cul_member_of_ssim:\"info:fedora/#{obj_display}\""],
       rows: 10_000,
@@ -117,7 +116,7 @@ class SolrDocument
   end
 
   def pages
-    fields = [fetch('start_page', nil), fetch('end_page', nil)].compact
+    fields = [fetch('start_page_ssi', nil), fetch('end_page_ssi', nil)].compact
     fields.blank? ? nil : fields.join(' - ')
   end
 

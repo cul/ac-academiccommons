@@ -1,0 +1,96 @@
+{
+  "id": "actest:1",
+  "described_by_ssim": [
+    "info:fedora/actest:1/test_ds"
+  ],
+  "fedora3_pid_ssi":"actest:1",
+  "record_creation_dtsi": "2013-10-29T16:59:44Z",
+  "record_change_dtsi": "2018-02-17T01:34:32Z",
+  "language_ssim": [
+    "English"
+  ],
+  "language_q": [
+    "English"
+  ],
+  "publisher_ssi": "Institute for Social and Economic Research and Policy, Columbia University",
+  "publisher_q": [
+    "Institute for Social and Economic Research and Policy, Columbia University"
+  ],
+  "publisher_location_ssi": "New York",
+  "publisher_location_q": [
+    "New York"
+  ],
+  "cul_doi_ssi": "10.7916/D8ZW1VF7",
+  "cul_doi_q": [
+    "10.7916/D8ZW1VF7"
+  ],
+  "title_ssi": "A Comprehensive Analysis of Poverty in India",
+  "title_q": [
+    "A Comprehensive Analysis of Poverty in India"
+  ],
+  "author_ssim": [
+    "Panagariya, Arvind",
+    "Mukim, Megha"
+  ],
+  "author_q": [
+    "Panagariya, Arvind",
+    "Mukim, Megha"
+  ],
+  "pub_date_isi": "2013",
+  "genre_ssim": [
+    "Reports"
+  ],
+  "genre_q": [
+    "Reports"
+  ],
+  "abstract_ssi": "This paper offers a comprehensive analysis of poverty in India. It shows that no matter which of the two official poverty lines we use, poverty has declined steadily in all states and for all social and religious groups. Accelerated growth between the fiscal years 2004-05 and 2009-10 has also led to an accelerated decline in poverty rates. Moreover, the decline in poverty rates during these years has been sharper for the socially disadvantaged groups relative to upper caste groups so that we now observe a narrowing of the gap in the poverty rates between the two sets of social groups. The paper also provides a discussion of the recent controversies in India regarding the choice of poverty lines.",
+  "abstract_q": [
+    "This paper offers a comprehensive analysis of poverty in India. It shows that no matter which of the two official poverty lines we use, poverty has declined steadily in all states and for all social and religious groups. Accelerated growth between the fiscal years 2004-05 and 2009-10 has also led to an accelerated decline in poverty rates. Moreover, the decline in poverty rates during these years has been sharper for the socially disadvantaged groups relative to upper caste groups so that we now observe a narrowing of the gap in the poverty rates between the two sets of social groups. The paper also provides a discussion of the recent controversies in India regarding the choice of poverty lines."
+  ],
+  "subject_ssim": [
+    "Economics"
+  ],
+  "subject_q": [
+    "Economics"
+  ],
+  "series_ssim": [
+    "ISERP Working Papers", "Program on Indian Economic Policies Working Papers"
+  ],
+  "series_q": [
+    "ISERP Working Papers", "Program on Indian Economic Policies Working Papers"
+  ],
+  "series_part_number_ssim": [
+    "NONE",
+    "2013-01"
+  ],
+  "type_of_resource_mods_ssim": [
+    "text"
+  ],
+  "type_of_resource_ssim": [
+    "Text"
+  ],
+  "type_of_resource_q": [
+    "Text"
+  ],
+  "organization_ssim": [
+    "Columbia University"
+  ],
+  "organization_q": [
+    "Columbia University"
+  ],
+  "department_ssim": [
+    "Institute for Social and Economic Research and Policy"
+  ],
+  "department_q": [
+    "Institute for Social and Economic Research and Policy"
+  ],
+  "suggest": [
+    "A Comprehensive Analysis of Poverty in India",
+    "Panagariya, Arvind",
+    "Mukim, Megha",
+    "Economics",
+    "ISERP Working Papers",
+    "Program on Indian Economic Policies Working Papers",
+    "Institute for Social and Economic Research and Policy"
+  ]
+}

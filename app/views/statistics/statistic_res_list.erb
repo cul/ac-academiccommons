@@ -40,7 +40,7 @@
             </div>
             <div id='facet-docs-size' class='table-cell' style='display: table-cell;' title="">
               <a href="/catalog/<%= item.id %>">
-                <%= item.document['title_display'] %>
+                <%= item.document['title_ssi'] %>
               </a>
             </div>
           </div>
@@ -50,7 +50,7 @@
               Genre:
             </div>
             <div id='facet-docs-size' class='table-cell names' style='display: table-cell;' title="">
-              <%= item.document.fetch('genre_facet', []).first %>
+              <%= item.document.fetch('genre_ssim', []).first %>
             </div>
           </div>
 
@@ -59,7 +59,7 @@
               Created:
             </div>
             <div id='facet-docs-size' class='table-cell' style='display: table-cell;' title="">
-              <%= Date.strptime(item.document['record_creation_date']).strftime('%m/%d/%Y') %>
+              <%= Date.strptime(item.document['record_creation_dtsi']).strftime('%m/%d/%Y') %>
             </div>
           </div>
 

@@ -25,9 +25,9 @@ RSpec.describe AcademicCommons::Statistics do
     end
     let(:author_search) do
       {
-        rows: 100_000, sort: 'title_display asc', q: nil, page: 1,
-        fq: ['author_uni:"abc123"', 'has_model_ssim:"info:fedora/ldpd:ContentAggregator"'],
-        fl: 'title_display,id,handle,doi,genre_facet,record_creation_date,object_state_ssi,free_to_read_start_date'
+        rows: 100_000, sort: 'title_ssi asc', q: nil, page: 1,
+        fq: ['author_uni_ssim:"abc123"', 'has_model_ssim:"info:fedora/ldpd:ContentAggregator"'],
+        fl: 'title_ssi,id,cul_doi_ssi,doi,genre_ssim,record_creation_dtsi,object_state_ssi,free_to_read_start_date_ssi'
       }
     end
 
@@ -48,8 +48,8 @@ RSpec.describe AcademicCommons::Statistics do
           {
             'response' => {
                'docs' => [
-                 { 'id' => pid, 'title_display' => 'First Test Document', 'object_state_ssi' => 'A',
-                   'handle' => '', 'doi' => '', 'genre_facet' => '' },
+                 { 'id' => pid, 'title_ssi' => 'First Test Document', 'object_state_ssi' => 'A',
+                   'cul_doi_ssi' => '', 'doi' => '', 'genre_ssim' => '' },
                ]
             }
           }, {}
@@ -79,8 +79,8 @@ RSpec.describe AcademicCommons::Statistics do
           {
             'response' => {
                'docs' => [
-                 { 'id' => pid, 'title_display' => 'First Test Document', 'object_state_ssi' => 'A',
-                   'handle' => '', 'doi' => '', 'genre_facet' => '', 'free_to_read_start_date' => Date.tomorrow.strftime('%Y-%m-%d') },
+                 { 'id' => pid, 'title_ssi' => 'First Test Document', 'object_state_ssi' => 'A',
+                   'cul_doi_ssi' => '', 'doi' => '', 'genre_ssim' => '', 'free_to_read_start_date_ssi' => Date.tomorrow.strftime('%Y-%m-%d') },
                ]
             }
           }, {}
@@ -127,19 +127,19 @@ RSpec.describe AcademicCommons::Statistics do
   describe '.facet_items' do
     it 'creates correct solr query' do
       empty_response = Blacklight::Solr::Response.new(
-        { 'response' => { 'docs' => [] }, 'facet_counts' => { 'facet_fields' => { 'author_facet' => [] } } }, {}
+        { 'response' => { 'docs' => [] }, 'facet_counts' => { 'facet_fields' => { 'author_ssim' => [] } } }, {}
       )
-      solr_params = { q: '', :rows => 0, 'facet.limit' => -1, 'facet.field' => ['author_facet'] }
+      solr_params = { q: '', :rows => 0, 'facet.limit' => -1, 'facet.field' => ['author_ssim'] }
       expect(Blacklight.default_index).to receive(:search).with(solr_params).and_return(empty_response)
-      statistics.instance_eval { facet_items('author_facet') }
+      statistics.instance_eval { facet_items('author_ssim') }
     end
   end
 
   describe '#detail_report_solr_params' do
     context 'searching by facet' do
       it 'makes correct solr request' do
-        params = statistics.instance_eval { detail_report_solr_params('author_uni', 'xyz123') }
-        expect(params).to match(q: nil, fq: ['author_uni:"xyz123"'], sort: 'title_display asc')
+        params = statistics.instance_eval { detail_report_solr_params('author_uni_ssim', 'xyz123') }
+        expect(params).to match(q: nil, fq: ['author_uni_ssim:"xyz123"'], sort: 'title_ssi asc')
       end
     end
 

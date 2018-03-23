@@ -33,27 +33,32 @@ describe SolrDocumentsController, type: :controller do
 
   describe '#update' do
     include_context 'mock api key'
+
     subject do
       put :update, params
       response.status
     end
+
     context 'no api key' do
       let(:api_key) { nil }
       let(:params) { { id: 'good:id' } }
       it { is_expected.to be 401 }
     end
+
     context 'invalid api_key' do
       include_context 'bad api key'
 
       let(:params) { { id: 'good:id' } }
       it { is_expected.to be 403 }
     end
+
     context 'valid api key' do
       include_context 'good api key'
       context 'bad doc id' do
         let(:params) { { id: 'baad:id' } }
         it { is_expected.to be 404 }
       end
+
       context 'good doc id' do
         let(:mock_object) do
           ContentAggregator.new
@@ -146,10 +151,10 @@ describe SolrDocumentsController, type: :controller do
 
     subject do
       solr_doc = {
-        'id' => 'actest:1', 'handle' => doi,
-        'title_display' => 'Alice\'s Adventures in Wonderland',
-        'author_uni' => [author_one, author_two],
-        'free_to_read_start_date' => (Date.current - 1.month).to_s
+        'id' => 'actest:1', 'cul_doi_ssi' => doi,
+        'title_ssi' => 'Alice\'s Adventures in Wonderland',
+        'author_uni_ssim' => [author_one, author_two],
+        'free_to_read_start_date_ssi' => (Date.current - 1.month).to_s
       }
       @controller.instance_eval { notify_authors_of_new_item(solr_doc) }
     end

@@ -3,7 +3,7 @@ require 'rails_helper'
 describe SitemapController, type: :feature do
   before do
     @lmd = Time.now.httpdate # rfc2822
-    solr_doc = { 'id' => 'example_id', 'record_creation_date' => @lmd }
+    solr_doc = { 'id' => 'example_id', 'record_creation_dtsi' => @lmd }
     solr = double('Solr')
     solr_response = double('SolrResponse')
     allow(Blacklight).to receive(:default_index).and_return(solr)

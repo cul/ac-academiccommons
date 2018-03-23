@@ -2,16 +2,16 @@
 var in_process = false;
 
 var facets = new Array();
-facets['authors'] = 'author_facet';
-facets['pub_dates'] = 'pub_date_facet';
-facets['genre'] = 'genre_facet';
-facets['subjects'] = 'subject_facet';
-facets['type_of_resources'] = 'type_of_resource_facet';
-facets['media_types'] = 'media_type_facet';
-facets['organizations'] = 'organization_facet';
-facets['departments'] = 'department_facet';
-facets['series'] = 'series_facet';
-facets['non_cu_series'] = 'non_cu_series_facet';
+facets['authors'] = 'author_ssim';
+facets['pub_dates'] = 'pub_date_isi';
+facets['genre'] = 'genre_ssim';
+facets['subjects'] = 'subject_ssim';
+facets['type_of_resources'] = 'type_of_resource_ssim';
+facets['media_types'] = 'media_type_ssim';
+facets['organizations'] = 'organization_ssim';
+facets['departments'] = 'department_ssim';
+facets['series'] = 'series_ssim';
+facets['non_cu_series'] = 'non_cu_series_ssim';
 
 function hide_facet_results(){
 

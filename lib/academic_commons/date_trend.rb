@@ -1,6 +1,6 @@
 module AcademicCommons
   class DateTrend
-    def initialize(date_field = 'record_creation_date', af_model = nil)
+    def initialize(date_field = 'record_creation_dtsi', af_model = nil)
       @date_field = date_field.to_s
       if af_model
         @fq = ["has_model_ssim:\"#{af_model.to_class_uri}\""]

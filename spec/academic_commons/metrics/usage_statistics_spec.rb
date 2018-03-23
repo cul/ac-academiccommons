@@ -6,12 +6,12 @@ RSpec.describe AcademicCommons::Metrics::UsageStatistics, integration: true do
   let(:pid2) { 'actest:5' }
   let(:empty_response) { { 'response' => { 'docs' => [] } } }
   let(:usage_stats) { AcademicCommons::Metrics::UsageStatistics.new({}, nil, nil) }
-  let(:solr_request) { { q: nil, fq: ["author_uni:\"#{uni}\""] } }
+  let(:solr_request) { { q: nil, fq: ["author_uni_ssim:\"#{uni}\""] } }
   let(:solr_params) do
     {
-      rows: 100_000, sort: 'title_display asc', q: nil, page: 1,
-      fq: ["author_uni:\"#{uni}\"", 'has_model_ssim:"info:fedora/ldpd:ContentAggregator"'],
-      fl: 'title_display,id,handle,doi,genre_facet,record_creation_date,object_state_ssi,free_to_read_start_date'
+      rows: 100_000, sort: 'title_ssi asc', q: nil, page: 1,
+      fq: ["author_uni_ssim:\"#{uni}\"", 'has_model_ssim:"info:fedora/ldpd:ContentAggregator"'],
+      fl: 'title_ssi,id,cul_doi_ssi,doi,genre_ssim,record_creation_dtsi,object_state_ssi,free_to_read_start_date_ssi'
     }
   end
   let(:solr_response) do
@@ -19,10 +19,10 @@ RSpec.describe AcademicCommons::Metrics::UsageStatistics, integration: true do
       {
         'response' => {
           'docs' => [
-            { 'id' => pid2, 'title_display' => 'Second Test Document', 'object_state_ssi' => 'A',
-             'handle' => 'http://dx.doi.org/10.7916/TESTDOC2', 'doi' => '', 'genre_facet' => ''},
-            { 'id' => pid, 'title_display' => 'First Test Document', 'object_state_ssi' => 'A',
-              'handle' => 'http://dx.doi.org/10.7916/TESTDOC1', 'doi' => '', 'genre_facet' => '' }
+            { 'id' => pid2, 'title_ssi' => 'Second Test Document', 'object_state_ssi' => 'A',
+             'cul_doi_ssi' => 'http://dx.doi.org/10.7916/TESTDOC2', 'doi' => '', 'genre_ssim' => ''},
+            { 'id' => pid, 'title_ssi' => 'First Test Document', 'object_state_ssi' => 'A',
+              'cul_doi_ssi' => 'http://dx.doi.org/10.7916/TESTDOC1', 'doi' => '', 'genre_ssim' => '' }
           ]
         }
       }, {}
@@ -48,13 +48,13 @@ RSpec.describe AcademicCommons::Metrics::UsageStatistics, integration: true do
             {
               'response' => {
                 'docs' => [
-                  { 'id' => pid2, 'title_display' => 'Second Test Document', 'object_state_ssi' => 'A',
-                   'handle' => 'http://dx.doi.org/10.7916/TESTDOC2', 'doi' => '', 'genre_facet' => ''},
-                  { 'id' => pid, 'title_display' => 'First Test Document', 'object_state_ssi' => 'A',
-                    'handle' => 'http://dx.doi.org/10.7916/TESTDOC1', 'doi' => '', 'genre_facet' => '' },
-                  { 'id' => 'actest:10', 'title_display' => 'First Test Document', 'object_state_ssi' => 'A',
-                    'handle' => 'http://dx.doi.org/10.7916/TESTDOC1', 'doi' => '', 'genre_facet' => '',
-                    'free_to_read_start_date' => Date.tomorrow.strftime('%Y-%m-%d') }
+                  { 'id' => pid2, 'title_ssi' => 'Second Test Document', 'object_state_ssi' => 'A',
+                   'cul_doi_ssi' => 'http://dx.doi.org/10.7916/TESTDOC2', 'doi_ssi' => '', 'genre_ssim' => ''},
+                  { 'id' => pid, 'title_ssi' => 'First Test Document', 'object_state_ssi' => 'A',
+                    'cul_doi_ssi' => 'http://dx.doi.org/10.7916/TESTDOC1', 'doi_ssi' => '', 'genre_ssim' => '' },
+                  { 'id' => 'actest:10', 'title_ssi' => 'First Test Document', 'object_state_ssi' => 'A',
+                    'cul_doi_ssi' => 'http://dx.doi.org/10.7916/TESTDOC1', 'doi_ssi' => '', 'genre_ssim' => '',
+                    'free_to_read_start_date_ssi' => Date.tomorrow.strftime('%Y-%m-%d') }
                 ]
               }
             }, {}
@@ -188,7 +188,7 @@ RSpec.describe AcademicCommons::Metrics::UsageStatistics, integration: true do
     let(:uni) { 'abc123' }
     let(:expected_csv) do
       [
-        ['{:q=>nil, :fq=>["author_uni:\\"abc123\\""]}'],
+        ['{:q=>nil, :fq=>["author_uni_ssim:\\"abc123\\""]}'],
         [],
         ['Period Covered by Report', 'Jan 2015 - Dec 2016'],
         [],
@@ -296,8 +296,8 @@ RSpec.describe AcademicCommons::Metrics::UsageStatistics, integration: true do
       usage_stats.instance_eval{
         most_downloaded_asset(
           SolrDocument.new(
-            'id' => 'actest:1', 'title_display' => 'Second Test Document', 'object_state_ssi' => 'A',
-            'handle' => 'http://dx.doi.org/10.7916/TESTDOC2', 'doi' => '', 'genre_facet' => ''
+            'id' => 'actest:1', 'title_ssi' => 'Second Test Document', 'object_state_ssi' => 'A',
+            'cul_doi_ssi' => 'http://dx.doi.org/10.7916/TESTDOC2', 'doi' => '', 'genre_ssim' => ''
           )
         )
       }

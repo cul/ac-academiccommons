@@ -9,10 +9,10 @@ RSpec.describe 'DepositorHelper' do
     {
       'response' => {
         'docs' => [
-          { 'id' => pid, 'handle' => 'https://doi.org/10.7916/ALICE',
-            'title_display' => 'Alice\'s Adventures in Wonderland',
-            'author_uni' => [uni, 'xyz123'],
-            'free_to_read_start_date' => (Date.current - 1.month).to_s },
+          { 'id' => pid, 'cul_doi_ssi' => 'https://doi.org/10.7916/ALICE',
+            'title_ssi' => 'Alice\'s Adventures in Wonderland',
+            'author_uni_ssim' => [uni, 'xyz123'],
+            'free_to_read_start_date_ssi' => (Date.current - 1.month).to_s },
         ]
       }
     }.with_indifferent_access

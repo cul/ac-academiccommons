@@ -27,7 +27,7 @@
   <xsl:output
        method="xml"
        encoding="utf-8"
-       media-type="application/xml"
+       media-type="text/xml; charset=UTF-8"
   />
 
   <xsl:template match='/'>

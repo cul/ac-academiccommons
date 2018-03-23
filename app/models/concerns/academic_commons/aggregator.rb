@@ -3,6 +3,7 @@ module AcademicCommons::Aggregator
 
   included do
     include AcademicCommons::Resource
+    include AcademicCommons::DescMetadata
   end
 
   URI_TO_PID = 'info:fedora/'.freeze
@@ -12,8 +13,9 @@ module AcademicCommons::Aggregator
   end
 
   def to_solr(solr_doc={}, options={})
-    solr_doc = super
-    return index_descMetadata(solr_doc)
+    super.tap do |doc|
+      index_descmetadata(doc)
+    end
   end
 
   def list_members(pids_only=false)

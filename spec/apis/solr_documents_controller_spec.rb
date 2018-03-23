@@ -24,7 +24,7 @@ describe SolrDocumentsController, type: :controller, integration: true do
       get :show, id: 'actest:1', format: 'json'
       expect(response.status).to be 404
       put :update, { id: 'actest:1' }
-      sleep(20) # It may take the solr document up to 15 min to show up
+      sleep(20) # It may take the solr document up to 15 sec to show up
       expect(response.status).to be 200
       expect(response.headers['Location']).to eql('http://test.host/solr_document/actest:1')
       get :show, id: 'actest:1', format: 'json'

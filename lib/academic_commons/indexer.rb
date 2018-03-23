@@ -61,6 +61,28 @@ module AcademicCommons
       end
     end
 
+    # Indexes pids given regardless of whether or not they are already in solr.
+    # This method does not index associated assets. Item and asset pids have
+    # to be listed.
+    def by_pids(pids)
+      log_info "Preparing to index #{pids.size} item/assets"
+
+      pids.each do |pid|
+        log_info "Processing #{pid}"
+
+        begin
+          i = ActiveFedora::Base.find(pid)
+          i.update_index
+          success.append(pid)
+        rescue Exception => e
+          log_error e.message
+          log_error e.backtrace.join("\n ")
+          error.append(pid)
+          next
+        end
+      end
+    end
+
     def close
       # commit to solr RSolr.commit if doing autoCommit
       seconds_spent = Time.new - start

@@ -21,7 +21,7 @@ describe SolrDocument do
     let(:document) do
       described_class.new(
         id: 'test:obj', object_state_ssi: 'A',
-        free_to_read_start_date: Date.current.strftime('%Y-%m-%d')
+        free_to_read_start_date_ssi: Date.current.strftime('%Y-%m-%d')
       )
     end
 
@@ -30,7 +30,7 @@ describe SolrDocument do
     context 'defaults to non-active exclusion' do
       let(:expected_params) do
         {
-          q: '*:*', qt: 'standard', fl: '*',
+          qt: 'search', fl: '*',
           fq: ["cul_member_of_ssim:\"info:fedora/#{document[:id]}\"", 'object_state_ssi:A'],
           rows: 10_000, facet: false
         }
@@ -76,7 +76,7 @@ describe SolrDocument do
     context 'includes non-active' do
       let(:expected_params) do
         {
-          q: '*:*', qt: 'standard', fl: '*',
+          qt: 'search', fl: '*',
           fq: ["cul_member_of_ssim:\"info:fedora/#{document[:id]}\""],
           rows: 10_000, facet: false
         }
@@ -94,7 +94,7 @@ describe SolrDocument do
       let(:document) do
         described_class.new(
           id: 'test:obj',
-          free_to_read_start_date: Date.tomorrow.strftime('%Y-%m-%d'),
+          free_to_read_start_date_ssi: Date.tomorrow.strftime('%Y-%m-%d'),
           object_state_ssi: 'A'
         )
       end
@@ -109,7 +109,7 @@ describe SolrDocument do
       let(:document) do
         described_class.new(
           id: 'test:obj',
-          free_to_read_start_date: Date.current.prev_day.strftime('%Y-%m-%d'),
+          free_to_read_start_date_ssi: Date.current.prev_day.strftime('%Y-%m-%d'),
           object_state_ssi: 'I'
         )
       end
@@ -124,14 +124,14 @@ describe SolrDocument do
       let(:document) do
         described_class.new(
           id: 'test:obj',
-          free_to_read_start_date: Date.current.prev_day.strftime('%Y-%m-%d'),
+          free_to_read_start_date_ssi: Date.current.prev_day.strftime('%Y-%m-%d'),
           object_state_ssi: 'A'
         )
       end
 
       let(:expected_params) do
         {
-          q: '*:*', qt: 'standard', fl: '*',
+          qt: 'search', fl: '*',
           fq: ["cul_member_of_ssim:\"info:fedora/#{document[:id]}\""],
           rows: 10_000, facet: false
         }

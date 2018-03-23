@@ -10,7 +10,7 @@ namespace :ac do
     end
 
     desc 'Reindex items by pids'
-    task by_pid: :environment do
+    task by_item_pid: :environment do
       if ENV['pids']
         pids = ENV['pids'].split(',')
       else
@@ -23,6 +23,21 @@ namespace :ac do
         index.close
 
         Rails.cache.delete('repository_statistics')
+      end
+    end
+
+    desc 'Reindex by pid (item or asset)'
+    task by_pid: :environment do
+      if ENV['pidlist'].present?
+        pids = open(ENV['pidlist']).map(&:strip!)
+
+        index = AcademicCommons::Indexer.new(verbose: true)
+        index.by_pids(pids)
+        index.close
+
+        Rails.cache.delete('repository_statistics')
+      else
+        puts Rainbow('Incorrect arguments. Pass pidlist=/path/to/file').red
       end
     end
   end
