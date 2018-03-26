@@ -18,13 +18,7 @@
   "language_ssim": [
     "English"
   ],
-  "language_q": [
-    "English"
-  ],
   "cul_doi_ssi": "10.7916/TEST123",
-  "cul_doi_q": [
-    "10.7916/TEST123"
-  ],
   "title_ssi": "Test Dissertation",
   "title_q": [
     "Test Dissertation"
@@ -66,9 +60,6 @@
   "type_of_resource_ssim": [
     "Text"
   ],
-  "type_of_resource_q": [
-    "Text"
-  ],
   "organization_ssim": [
     "Columbia University"
   ],
@@ -101,8 +92,9 @@
   "suggest": [
     "Test Dissertation",
     "Doe, Ashley",
+    "Ashley Doe",
     "Smith, Alan",
-    "Persona (Literature)",
+    "Alan Smith", "Persona (Literature)",
     "Influence (Literary, artistic, etc.)",
     "English and Comparative Literature"
   ]

@@ -108,7 +108,7 @@ class CatalogController < ApplicationController
     config.add_show_field 'subject_ssim',         display: :table, label: 'Subjects',         itemprop: 'keywords',    link_to_search: 'subject_ssim'
 
     config.add_show_field 'book_journal_title_ssi', label: 'Published In'
-    config.add_show_field 'doi_ssi',                label: 'Publisher DOI',                             helper_method: :link_identifier
+    config.add_show_field 'publisher_doi_ssi',      label: 'Publisher DOI',                             helper_method: :link_identifier
     config.add_show_field 'volume_ssi',             label: 'Volume'
     config.add_show_field 'issue_ssi',              label: 'Issue'
     config.add_show_field 'pages',                  label: 'Pages', accessor: true, unless: ->(_, _, doc) { doc.pages.blank? }

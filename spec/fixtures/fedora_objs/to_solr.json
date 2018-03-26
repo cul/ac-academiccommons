@@ -6,17 +6,8 @@
   "language_ssim": [
     "English"
   ],
-  "language_q": [
-    "English"
-  ],
   "cul_doi_ssi": "10.7916/ALICE",
-  "cul_doi_q": [
-    "10.7916/ALICE"
-  ],
-  "doi_ssi": "10.1378/wonderland.01-2345",
-  "doi_q": [
-    "10.1378/wonderland.01-2345"
-  ],
+  "publisher_doi_ssi": "10.1378/wonderland.01-2345",
   "title_ssi": "Alice's Adventures in Wonderland",
   "title_q": [
     "Alice's Adventures in Wonderland"
@@ -69,9 +60,6 @@
   "type_of_resource_ssim": [
     "Text"
   ],
-  "type_of_resource_q": [
-    "Text"
-  ],
   "organization_ssim": [
     "Oxford University"
   ],
@@ -90,6 +78,7 @@
   "suggest": [
     "Alice's Adventures in Wonderland",
     "Carroll, Lewis",
+    "Lewis Carroll",
     "Weird Old Guys.",
     "Tea Parties",
     "Wonderland",

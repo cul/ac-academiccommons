@@ -9,21 +9,12 @@
   "language_ssim": [
     "English"
   ],
-  "language_q": [
-    "English"
-  ],
   "publisher_ssi": "Driesen",
   "publisher_q": [
     "Driesen"
   ],
   "publisher_location_ssi": "Taunusstein",
-  "publisher_location_q": [
-    "Taunusstein"
-  ],
   "cul_doi_ssi": "10.7916/D86W9M15",
-  "cul_doi_q": [
-    "10.7916/D86W9M15"
-  ],
   "title_ssi": "Empathy, Motion and Emotion",
   "title_q": [
     "Empathy, Motion and Emotion"
@@ -64,17 +55,11 @@
     "Herding, Klaus",
     "Krause-Wahl, Antje"
   ],
-  "doi_ssi": "10.125486/s130re42519-015-fdsf-x",
-  "doi_q": [
-    "10.125486/s130re42519-015-fdsf-x"
-  ],
+  "publisher_doi_ssi": "10.125486/s130re42519-015-fdsf-x",
   "type_of_resource_mods_ssim": [
     "text"
   ],
   "type_of_resource_ssim": [
-    "Text"
-  ],
-  "type_of_resource_q": [
     "Text"
   ],
   "organization_ssim": [
@@ -92,8 +77,13 @@
   "suggest": [
     "Empathy, Motion and Emotion",
     "Freedberg, David A.",
+    "David A. Freedberg",
     "Arts",
     "Art",
+    "Herding, Klaus",
+    "Klaus Herding",
+    "Krause-Wahl, Antje",
+    "Antje Krause-Wahl",
     "Art History and Archaeology"
   ]
 }

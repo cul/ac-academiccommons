@@ -96,12 +96,14 @@ module AcademicCommons
           add_field.call 'author_ssim', fullname
           add_field.call 'author_q',    fullname
           add_field.call 'suggest',     fullname
+          add_field.call 'suggest',     fullname.split(/,\s*/).reverse.join(' ')
 
         elsif name_node.css('role>roleTerm').collect(&:content).any? { |role| ADVISOR_ROLES.include?(role.downcase) }
           first_role = name_node.at_css('role>roleTerm').text
           add_field.call first_role.downcase.gsub(/\s/, '_') + '_ssim', fullname
           add_field.call first_role.downcase.gsub(/\s/, '_') + '_q',    fullname
           add_field.call 'suggest',                                     fullname
+          add_field.call 'suggest',                                     fullname.split(/,\s*/).reverse.join(' ')
 
           add_field.call 'advisor_uni_ssim', name_node.attribute('ID')
           add_field.call 'advisor_uni_q',    name_node.attribute('ID')
@@ -134,7 +136,6 @@ module AcademicCommons
       add_field.call 'publisher_q',   mods.at_css('originInfo > publisher')
 
       add_field.call 'publisher_location_ssi', mods.at_css('originInfo > place > placeTerm')
-      add_field.call 'publisher_location_q',   mods.at_css('originInfo > place > placeTerm')
 
       mods.css('genre').each do |genre_node|
         add_field.call 'genre_ssim',  genre_node
@@ -145,7 +146,6 @@ module AcademicCommons
       add_field.call 'abstract_q',   mods.at_css('> abstract')
 
       add_field.call 'language_ssim', mods.at_css('> language > languageTerm')
-      add_field.call 'language_q',    mods.at_css('> language > languageTerm')
 
       # SUBJECT
       mods.css('> subject').each do |subject_node|
@@ -179,14 +179,13 @@ module AcademicCommons
           book_journal_title = book_journal_title.content + ': ' + book_journal_subtitle.content.to_s if book_journal_subtitle
         end
 
-        add_field.call 'volume_ssi',     related_host.at_css('part > detail[@type=\'volume\']>number')
-        add_field.call 'issue_ssi',      related_host.at_css('part > detail[@type=\'issue\']>number')
-        add_field.call 'start_page_ssi', related_host.at_css('part > extent[@unit=\'page\'] > start')
-        add_field.call 'end_page_ssi',   related_host.at_css('part > extent[@unit=\'page\'] > end')
-        add_field.call 'date_ssi',       related_host.at_css('part > date')
-        add_field.call 'doi_ssi',        related_host.at_css('identifier[@type=\'doi\']')
-        add_field.call 'doi_q',          related_host.at_css('identifier[@type=\'doi\']')
-        add_field.call 'uri_ssi',        related_host.at_css('identifier[@type=\'uri\']')
+        add_field.call 'volume_ssi',        related_host.at_css('part > detail[@type=\'volume\']>number')
+        add_field.call 'issue_ssi',         related_host.at_css('part > detail[@type=\'issue\']>number')
+        add_field.call 'start_page_ssi',    related_host.at_css('part > extent[@unit=\'page\'] > start')
+        add_field.call 'end_page_ssi',      related_host.at_css('part > extent[@unit=\'page\'] > end')
+        add_field.call 'date_ssi',          related_host.at_css('part > date')
+        add_field.call 'publisher_doi_ssi', related_host.at_css('identifier[@type=\'doi\']')
+        add_field.call 'uri_ssi',           related_host.at_css('identifier[@type=\'uri\']')
 
         add_field.call 'book_journal_title_ssi', book_journal_title
         add_field.call 'book_journal_title_q',   book_journal_title
@@ -194,6 +193,9 @@ module AcademicCommons
         related_host.css('name').each do |book_author|
           add_field.call 'book_author_ssim', book_author.at_css('namePart:not([type])')
           add_field.call 'book_author_q',    book_author.at_css('namePart:not([type])')
+          add_field.call 'suggest',          book_author.at_css('namePart:not([type])')
+          add_field.call 'suggest',          book_author.at_css('namePart:not([type])').content.split(/,\s*/).reverse.join(' ')
+
         end
       end
 
@@ -212,6 +214,8 @@ module AcademicCommons
         else
           add_field.call('non_cu_series_ssim', related_series.at_css('titleInfo>title'))
           add_field.call('non_cu_series_q',    related_series.at_css('titleInfo>title'))
+          add_field.call('suggest',            related_series.at_css('titleInfo>title'))
+
 
           part_number = related_series.at_css('titleInfo>partNumber')
           add_field.call(
@@ -226,7 +230,6 @@ module AcademicCommons
       mods.css('> typeOfResource').each do |tr|
         add_field.call 'type_of_resource_mods_ssim', tr
         add_field.call 'type_of_resource_ssim',      RESOURCE_TYPES.fetch(tr.text, nil)
-        add_field.call 'type_of_resource_q',         RESOURCE_TYPES.fetch(tr.text, nil)
       end
 
       organizations.uniq.each do |org|
@@ -269,7 +272,6 @@ module AcademicCommons
 
       # CUL DOI, doi(with no prefix)
       add_field.call 'cul_doi_ssi', mods.at_css('>identifier[@type=\'DOI\']')
-      add_field.call 'cul_doi_q',   mods.at_css('>identifier[@type=\'DOI\']')
 
       solr_doc
     end
