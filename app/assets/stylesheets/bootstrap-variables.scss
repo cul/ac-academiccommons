@@ -6,9 +6,11 @@ $font-size-base: 16px;
 
 /* colors */
 
-$brand-primary: #4A90E2;
+$brand-primary: #008EE0;
 
-$brand-dark: #002D63;
+$brand-secondary: #C4D8E2;
+
+$brand-dark: #000d74;
 
 $gray-base: #000;
 
@@ -22,9 +24,7 @@ $state-success-text: #5cb85c;
 
 $navbar-default-bg: #fff;
 
-$logo-cul-banner: image_url('logo-cul-banner.png');
 
-$logo-image: image_url('logo-ac.png');
 
 $navbar-inverse-link-hover-color: #333;
 
@@ -35,3 +35,14 @@ $well-bg: #fff;
 /* panels */
 
 $panel-default-heading-bg: $gray-lighter-custom;
+
+
+/* logos */
+
+$logo-cul-banner: image_url('logo-cul-banner.png');
+
+$logo-image: image_url('logo-ac.png');
+
+$logo-browse: image_url('logo-browse.svg');
+
+$logo-share: image_url('logo-share.svg');

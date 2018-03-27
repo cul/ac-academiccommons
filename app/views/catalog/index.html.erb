@@ -7,7 +7,7 @@
 
 <% unless has_search_parameters? %>
   <%# if there are no input/search related params, display the "home" partial -%>
-  <div id="content" class="<%= main_content_classes %>">
+  <div id="content" class="col-md-12">
     <%= render 'home' %>
     <%= render 'shared/sitelinks_search_box' %>
   </div>
