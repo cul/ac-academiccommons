@@ -195,7 +195,6 @@ module AcademicCommons
           add_field.call 'book_author_q',    book_author.at_css('namePart:not([type])')
           add_field.call 'suggest',          book_author.at_css('namePart:not([type])')
           add_field.call 'suggest',          book_author.at_css('namePart:not([type])').content.split(/,\s*/).reverse.join(' ')
-
         end
       end
 
@@ -215,7 +214,6 @@ module AcademicCommons
           add_field.call('non_cu_series_ssim', related_series.at_css('titleInfo>title'))
           add_field.call('non_cu_series_q',    related_series.at_css('titleInfo>title'))
           add_field.call('suggest',            related_series.at_css('titleInfo>title'))
-
 
           part_number = related_series.at_css('titleInfo>partNumber')
           add_field.call(
