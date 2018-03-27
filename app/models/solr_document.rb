@@ -47,6 +47,7 @@ class SolrDocument
     degree_name: 'degree_name_ssim',
     degree_level: 'degree_level_name_ssim',
     degree_grantor: 'degree_grantor_ssim',
+    degree_discipline: 'degree_discipline_ssim',
     columbia_series: 'series_facet', # Only columbia series.
     thesis_advisor: 'thesis_advisor',
     embargo_end: 'free_to_read_start_date'
