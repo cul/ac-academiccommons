@@ -77,7 +77,7 @@ RSpec.describe DownloadController, type: :controller do
           let(:mock_resource) { SolrDocument.new(object_state_ssi: 'A', has_model_ssim: ['info:fedora/ldpd:MODSMetadata']) }
           it 'returns metadata' do
             get :fedora_content, uri: 'good:id', block: 'CONTENT', filename: 'metadata.txt', download_method: 'show_pretty', data: 'meta'
-            expect(response.headers['Content-Type']).to eql 'text/plain'
+            expect(response.headers['Content-Type']).to include 'text/plain'
           end
         end
 
@@ -90,7 +90,7 @@ RSpec.describe DownloadController, type: :controller do
           let(:mock_resource) { nil }
           it 'returns metadata' do
             get :fedora_content, uri: 'good:id', block: 'CONTENT', filename: 'metadata.txt', download_method: 'show_pretty', data: 'meta'
-            expect(response.headers['Content-Type']).to eql 'text/plain'
+            expect(response.headers['Content-Type']).to include 'text/plain'
           end
         end
       end
@@ -99,7 +99,7 @@ RSpec.describe DownloadController, type: :controller do
         let(:mock_resource) { SolrDocument.new(object_state_ssi: 'I', has_model_ssim: ['info:fedora/ldpd:MODSMetadata']) }
         it 'returns metadata' do
           get :fedora_content, uri: 'good:id', block: 'CONTENT', filename: 'metadata.txt', download_method: 'show_pretty', data: 'meta'
-          expect(response.headers['Content-Type']).to eql 'text/plain'
+          expect(response.headers['Content-Type']).to include 'text/plain'
         end
       end
 

@@ -28,7 +28,7 @@ class DownloadController < ApplicationController
     solr_results = repository.get('select', params: search_params)
     docs = solr_results['response']['docs']
     # did the resource doc exist? is it active?
-    resource_doc = docs.first
+    resource_doc = SolrDocument.new(docs.first)
     fail_fast = resource_doc.nil? || !free_to_read?(resource_doc)
 
     if !fail_fast
