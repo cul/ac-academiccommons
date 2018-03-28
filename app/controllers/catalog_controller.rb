@@ -112,6 +112,7 @@ class CatalogController < ApplicationController
     config.add_show_field 'volume_ssi',             label: 'Volume'
     config.add_show_field 'issue_ssi',              label: 'Issue'
     config.add_show_field 'pages',                  label: 'Pages', accessor: true, unless: ->(_, _, doc) { doc.pages.blank? }
+    config.add_show_field 'uri_ssi',                label: 'Url'
     config.add_show_field 'publisher_ssi',          label: 'Publisher'
     config.add_show_field 'publisher_location_ssi', label: 'Publication Origin'
     config.add_show_field 'series_ssim',            label: 'Series',                                     link_to_search: 'series_ssim'
