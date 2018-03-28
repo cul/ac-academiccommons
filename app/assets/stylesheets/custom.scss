@@ -681,7 +681,7 @@
 #home-content {
 
   & h2 {
-    font-size: 23px;
+    font-size: 30px;
     font-weight: bold;
     margin: 0 0 10px 0;
   }
@@ -689,12 +689,12 @@
   & h3 {
     font-size: 14px;
     letter-spacing: 1px;
-    margin: 0 0 20px 0;
+    margin: 0 0 30px 0;
     text-transform: uppercase;
   }
 
   & p.intro {
-    font-size: 23px;
+    font-size: 21px;
     font-weight: 300;
     letter-spacing: .4px;
     line-height: 1.8;
@@ -709,18 +709,17 @@
   & .links a {
     border: 1px solid $gray-lighter;
     border-radius: 3px;
-    box-shadow: 0 1px 4px 0 var(--shadow-color, hsla(0, 0%, 0%, 0.1)), 0 0px 4px 0 var(--shadow-color, hsla(0, 0%, 0%, 0.15));
+    // box-shadow: 0 1px 4px 0 var(--shadow-color, hsla(0, 0%, 0%, 0.1)), 0 0px 4px 0 var(--shadow-color, hsla(0, 0%, 0%, 0.15));
     display: block;
     margin: 0 0 30px 0;
-    min-height: 220px;
+    min-height: 190px;
   }
 
   & .links .top {
     align-items: center;
     background: $body-bg;
-    border-bottom: 1px dotted $gray-lighter;
     display: flex;
-    padding: 25px 30px 25px 30px;
+    padding: 25px 30px 0 30px;
   }
 
   & .links .top svg {
@@ -738,6 +737,7 @@
   & .links .top h2 {
     display: inline-block;
     flex: 1 0 0;
+    font-size: 24px;
     margin: 0;
   }
 
@@ -747,16 +747,35 @@
     padding: 15px 30px;
   }
 
-  & .featured {
+  & .links a:hover {
+    border-color: $brand-dark;
+    color: $brand-dark;
+    text-decoration: none;
+  }
+
+  & .links a:hover svg,
+  & .links a:hover svg path,
+  & .links a:hover p {
+    color: $brand-dark;
+    fill: $brand-dark;
+  }
+
+  & .featured-wrapper {
     background: lighten($gray-lighter-custom, 1%);
-    border: 1px dotted $gray-lighter;
-    border-radius: 3px;
+    width: 100vw;
+    position: relative;
+    margin-left: -50vw;
+    height: auto;
+    left: 50%;
+  }
+
+  & .featured {
     margin: 0 0 20px 0;
-    padding: 30px 30px;
+    padding: 50px 0 30px 0;
   }
 
   & .featured h2 {
-    margin-bottom: 45px;
+    margin-bottom: 52px;
   }
 
   & .stats {
@@ -769,7 +788,6 @@
   	font-weight: 500;
   	min-width: 75px;
   	padding: 0 8px 0 0;
-    text-align: right;
   }
 
   & .stats ul {
