@@ -66,5 +66,4 @@ module AcademicCommons::Resource
     query << "offset #{offset}" if offset
     query.join(' ')
   end
-
 end
