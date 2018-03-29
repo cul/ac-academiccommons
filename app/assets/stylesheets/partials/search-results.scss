@@ -70,3 +70,17 @@
     display: none;
   }
 }
+
+.noresults {
+
+  & h3,
+  & ul,
+  & li {
+    display: inline;
+    font-size: 18px;
+    font-weight: 300;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+}

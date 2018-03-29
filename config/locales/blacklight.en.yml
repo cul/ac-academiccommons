@@ -23,6 +23,8 @@ en:
           unavailable: 'Downloadable resources are currently unavailable for this item.'
       form:
         submit: ''
-
+      zero_results:
+        modify_search: "Try modifying your search:"
+        use_fewer_keywords: "use fewer keywords to start, then refine your search using the links in the sidebar."
     tools:
       download_all: 'Download All'
