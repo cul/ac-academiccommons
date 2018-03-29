@@ -1,3 +1,33 @@
+/* headings */
+
+h1,
+h2,
+h3 {
+  font-size: 33px;
+  font-weight: bold;
+  line-height: 1.4;
+  margin: 0 0 20px 0;
+}
+
+h2 {
+  font-size: 27px;
+  font-weight: 500;
+  margin: 20px 0;
+}
+
+h3 {
+  font-size: 17px;
+  font-weight: bold;
+  line-height: 1.6;
+  margin: 0 0 10px 0;
+  max-width: 700px;
+}
+
+
+
+
+
+
 /* cul banner */
 
 .cul-banner {
@@ -560,28 +590,28 @@
 #static-text {
   margin: 0 15px;
 
-  & h1,
-  & h2,
-  & h3 {
-    font-size: 33px;
-    font-weight: bold;
-    line-height: 1.4;
-    margin: 0 0 20px 0;
-  }
-
-  & h2 {
-    font-size: 27px;
-    font-weight: 500;
-    margin: 0 0 20px 0;
-  }
-
-  & h3 {
-    font-size: 17px;
-    font-weight: bold;
-    line-height: 1.6;
-    margin: 0 0 10px 0;
-    max-width: 700px;
-  }
+  // & h1,
+  // & h2,
+  // & h3 {
+  //   font-size: 33px;
+  //   font-weight: bold;
+  //   line-height: 1.4;
+  //   margin: 0 0 20px 0;
+  // }
+  //
+  // & h2 {
+  //   font-size: 27px;
+  //   font-weight: 500;
+  //   margin: 0 0 20px 0;
+  // }
+  //
+  // & h3 {
+  //   font-size: 17px;
+  //   font-weight: bold;
+  //   line-height: 1.6;
+  //   margin: 0 0 10px 0;
+  //   max-width: 700px;
+  // }
 
   & p,
   & ul {
@@ -717,7 +747,6 @@
 
   & .links .top {
     align-items: center;
-    background: $body-bg;
     display: flex;
     padding: 25px 30px 0 30px;
   }
@@ -761,7 +790,24 @@
   }
 
   & .featured-wrapper {
-    background: lighten($gray-lighter-custom, 1%);
+
+    border-top: 1px solid $gray-lighter;
+
+    // background: lighten($gray-lighter-custom, 1%);
+
+    // background-image: -webkit-gradient(
+    // 	linear,
+    // 	left top,
+    // 	left bottom,
+    // 	color-stop(0, #F3F5F3),
+    // 	color-stop(1, #FFFFFF)
+    // );
+    // background-image: -o-linear-gradient(bottom, #F3F5F3 0%, #FFFFFF 100%);
+    // background-image: -moz-linear-gradient(bottom, #F3F5F3 0%, #FFFFFF 100%);
+    // background-image: -webkit-linear-gradient(bottom, #F3F5F3 0%, #FFFFFF 100%);
+    // background-image: -ms-linear-gradient(bottom, #F3F5F3 0%, #FFFFFF 100%);
+    // background-image: linear-gradient(to bottom, #F3F5F3 0%, #FFFFFF 100%);
+
     width: 100vw;
     position: relative;
     margin-left: -50vw;
@@ -771,7 +817,7 @@
 
   & .featured {
     margin: 0 0 20px 0;
-    padding: 50px 0 30px 0;
+    padding: 40px 0 30px 0;
   }
 
   & .featured h2 {
