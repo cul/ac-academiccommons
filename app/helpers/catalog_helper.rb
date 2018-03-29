@@ -26,6 +26,10 @@ module CatalogHelper
     end
   end
 
+  def link_value(**options)
+    options.fetch(:value, []).map { |v| link_to(v, v) }
+  end
+
   def get_total_count
     date_trend.counts[:total]
   end

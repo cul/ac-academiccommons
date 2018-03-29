@@ -113,7 +113,7 @@ class CatalogController < ApplicationController
     config.add_show_field 'volume_ssi',             label: 'Volume'
     config.add_show_field 'issue_ssi',              label: 'Issue'
     config.add_show_field 'pages',                  label: 'Pages', accessor: true, unless: ->(_, _, doc) { doc.pages.blank? }
-    config.add_show_field 'uri_ssi',                label: 'Url'
+    config.add_show_field 'uri_ssi',                label: 'Url', helper_method: :link_value
     config.add_show_field 'publisher_ssi',          label: 'Publisher'
     config.add_show_field 'publisher_location_ssi', label: 'Publication Origin'
     config.add_show_field 'series_ssim',            label: 'Series', helper_method: :combine_title_and_part_number
@@ -121,7 +121,7 @@ class CatalogController < ApplicationController
     config.add_show_field 'department_ssim',        label: 'Academic Units', link_to_search: 'department_ssim'
     config.add_show_field 'thesis_advisor_ssim',    label: 'Thesis Advisors'
     config.add_show_field 'degree',                 label: 'Degree', accessor: true, unless: ->(_, _, doc) { doc.degree.blank? }
-    config.add_show_field 'related_url_ssi',        label: 'Related URL'
+    config.add_show_field 'related_url_ssi',        label: 'Related URL', helper_method: :link_value
 
     config.add_show_field 'notes_ssim',             display: :notes
 
