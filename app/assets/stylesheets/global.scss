@@ -1,0 +1,38 @@
+/* headings */
+
+h1,
+h2,
+h3 {
+  font-size: 33px;
+  font-weight: bold;
+  line-height: 1.4;
+  margin: 0 0 20px 0;
+}
+
+h2 {
+  font-size: 27px;
+  font-weight: 500;
+  margin: 20px 0;
+}
+
+h3 {
+  font-size: 17px;
+  font-weight: bold;
+  line-height: 1.6;
+  margin: 0 0 10px 0;
+  max-width: 700px;
+}
+
+h4 {
+  margin-bottom: 20px;
+}
+
+/* labels */
+
+span.label-tags {
+  color: lighten($gray-light, 15%);
+  font-size: 13px;
+  font-weight: 700;
+  margin: 0 10px 0 0;
+  text-transform: uppercase;
+}
