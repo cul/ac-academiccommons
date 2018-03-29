@@ -71,14 +71,15 @@ class CatalogController < ApplicationController
     # :show may be set to false if you don't want the facet to be drawn in the
     # facet bar
 
-    config.add_facet_field 'author_ssim',            label: 'Author',        limit: 5
-    config.add_facet_field 'department_ssim',        label: 'Academic Unit', limit: 5
-    config.add_facet_field 'subject_ssim',           label: 'Subject',       limit: 5
-    config.add_facet_field 'genre_ssim',             label: 'Type',          limit: 5
-    config.add_facet_field 'degree_level_name_ssim', label: 'Degree Level',  limit: 5
-    config.add_facet_field 'pub_date_isi',           label: 'Date',          limit: 5
-    config.add_facet_field 'series_ssim',            label: 'Series',        limit: 5
-    config.add_facet_field 'language_ssim',          label: 'Language',      limit: 5
+    config.add_facet_field 'author_ssim',            label: 'Author',          limit: 5
+    config.add_facet_field 'department_ssim',        label: 'Academic Unit',   limit: 5
+    config.add_facet_field 'subject_ssim',           label: 'Subject',         limit: 5
+    config.add_facet_field 'genre_ssim',             label: 'Type',            limit: 5
+    config.add_facet_field 'degree_level_name_ssim', label: 'Degree Level',    limit: 5
+    config.add_facet_field 'pub_date_isi',           label: 'Date',            limit: 5
+    config.add_facet_field 'series_ssim',            label: 'Series',          limit: 5
+    config.add_facet_field 'language_ssim',          label: 'Language',        limit: 5
+    config.add_facet_field 'geographic_area_ssim',   label: 'Geographic Area', limit: 5, show: false
     # config.add_facet_field 'type_of_resource_ssim', label: 'Resource Type', if: current_user.admin?
 
     # Have BL send all facet field names to Solr, which has been the default
