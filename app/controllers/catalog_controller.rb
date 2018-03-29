@@ -71,14 +71,15 @@ class CatalogController < ApplicationController
     # :show may be set to false if you don't want the facet to be drawn in the
     # facet bar
 
-    config.add_facet_field 'author_ssim',            label: 'Author',        limit: 5
-    config.add_facet_field 'department_ssim',        label: 'Academic Unit', limit: 5
-    config.add_facet_field 'subject_ssim',           label: 'Subject',       limit: 5
-    config.add_facet_field 'genre_ssim',             label: 'Type',          limit: 5
-    config.add_facet_field 'degree_level_name_ssim', label: 'Degree Level',  limit: 5
-    config.add_facet_field 'pub_date_isi',           label: 'Date',          limit: 5
-    config.add_facet_field 'series_ssim',            label: 'Series',        limit: 5
-    config.add_facet_field 'language_ssim',          label: 'Language',      limit: 5
+    config.add_facet_field 'author_ssim',            label: 'Author',          limit: 5
+    config.add_facet_field 'department_ssim',        label: 'Academic Unit',   limit: 5
+    config.add_facet_field 'subject_ssim',           label: 'Subject',         limit: 5
+    config.add_facet_field 'genre_ssim',             label: 'Type',            limit: 5
+    config.add_facet_field 'degree_level_name_ssim', label: 'Degree Level',    limit: 5
+    config.add_facet_field 'pub_date_isi',           label: 'Date',            limit: 5
+    config.add_facet_field 'series_ssim',            label: 'Series',          limit: 5
+    config.add_facet_field 'language_ssim',          label: 'Language',        limit: 5
+    config.add_facet_field 'geographic_area_ssim',   label: 'Geographic Area', limit: 5, show: false
     # config.add_facet_field 'type_of_resource_ssim', label: 'Resource Type', if: current_user.admin?
 
     # Have BL send all facet field names to Solr, which has been the default
@@ -95,34 +96,34 @@ class CatalogController < ApplicationController
     config.add_index_field 'genre_ssim',   label: 'Type'
 
 
-    # :display configuration is for our customized show view, it describes were on the page it should go.
-    config.add_show_field 'pub_date_isi',            display: :tag,    itemprop: 'datePublished'
-    config.add_show_field 'genre_ssim',              display: :tag,    itemprop: 'genre'
-    config.add_show_field 'degree_level_name_ssim',  display: :tag
+    # :display configuration is for our customized show view, it describes where on the page it should go.
+    config.add_show_field 'pub_date_isi',           display: :tag, itemprop: 'datePublished'
+    config.add_show_field 'genre_ssim',             display: :tag, itemprop: 'genre'
+    config.add_show_field 'degree_level_name_ssim', display: :tag
 
-    config.add_show_field 'author_ssim',  display: :main_content,  itemprop: 'creator',      link_to_search: 'author_ssim',
+    config.add_show_field 'author_ssim',  display: :main_content, itemprop: 'creator', link_to_search: 'author_ssim',
                                           separator_options: { words_connector: '; ', two_words_connector: '; ', last_word_connector: '; ' }
-    config.add_show_field 'abstract_ssi', display: :main_content,  itemprop: 'description'
+    config.add_show_field 'abstract_ssi', display: :main_content, itemprop: 'description'
 
-    config.add_show_field 'geographic_area_ssim', display: :table, label: 'Geographic Areas',                          link_to_search: 'geographic_area_ssim'
-    config.add_show_field 'subject_ssim',         display: :table, label: 'Subjects',         itemprop: 'keywords',    link_to_search: 'subject_ssim'
+    config.add_show_field 'geographic_area_ssim', display: :table, label: 'Geographic Areas', link_to_search: 'geographic_area_ssim'
+    config.add_show_field 'subject_ssim',         display: :table, label: 'Subjects',         link_to_search: 'subject_ssim',        itemprop: 'keywords'
 
     config.add_show_field 'book_journal_title_ssi', label: 'Published In'
-    config.add_show_field 'doi_ssi',                label: 'Publisher DOI',                             helper_method: :link_identifier
+    config.add_show_field 'publisher_doi_ssi',      label: 'Publisher DOI', helper_method: :link_identifier
     config.add_show_field 'volume_ssi',             label: 'Volume'
     config.add_show_field 'issue_ssi',              label: 'Issue'
     config.add_show_field 'pages',                  label: 'Pages', accessor: true, unless: ->(_, _, doc) { doc.pages.blank? }
+    config.add_show_field 'uri_ssi',                label: 'Url', helper_method: :link_value
     config.add_show_field 'publisher_ssi',          label: 'Publisher'
     config.add_show_field 'publisher_location_ssi', label: 'Publication Origin'
-    config.add_show_field 'series_ssim',            label: 'Series',                                     link_to_search: 'series_ssim'
-    config.add_show_field 'non_cu_series_ssim',     label: 'Series'
-    config.add_show_field 'part_number',            label: 'Part Number' #series part number
-    config.add_show_field 'department_ssim',        label: 'Academic Units',                             link_to_search: 'department_ssim'
-    config.add_show_field 'thesis_advisor_ssim',         label: 'Thesis Advisors' #not sure what part of the page this would go on.
+    config.add_show_field 'series_ssim',            label: 'Series', helper_method: :combine_title_and_part_number
+    config.add_show_field 'non_cu_series_ssim',     label: 'Series', helper_method: :combine_title_and_part_number
+    config.add_show_field 'department_ssim',        label: 'Academic Units', link_to_search: 'department_ssim'
+    config.add_show_field 'thesis_advisor_ssim',    label: 'Thesis Advisors'
     config.add_show_field 'degree',                 label: 'Degree', accessor: true, unless: ->(_, _, doc) { doc.degree.blank? }
-    config.add_show_field 'related_url_ssi',        label: 'Related URL'
+    config.add_show_field 'related_url_ssi',        label: 'Related URL', helper_method: :link_value
 
-    config.add_show_field 'notes_ssim',             display: :notes, label: 'Notes'
+    config.add_show_field 'notes_ssim',             display: :notes
 
     # config.add_show_field 'cul_doi_ssi',                  label: 'Persistent URL',   itemprop: 'url',          helper_method: :link_identifier
 

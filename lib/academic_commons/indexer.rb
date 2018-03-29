@@ -1,6 +1,9 @@
 module AcademicCommons
   class Indexer
+    # rubocop:disable Style/FormatStringToken
     TIMESTAMP = '%Y%m%d-%H%M%S'.freeze
+    # rubocop:enable Style/FormatStringToken
+
     attr_reader :indexing_logger, :error, :success, :start, :verbose
 
     # Creates object that reindex all records currently in the solr core or
@@ -85,8 +88,8 @@ module AcademicCommons
 
     def close
       # commit to solr RSolr.commit if doing autoCommit
-      seconds_spent = Time.new - start
-      readable_time_spent = Time.at(seconds_spent).utc.strftime('%H hours, %M minutes, %S seconds')
+      seconds = Time.current - start
+      readable_time_spent = format('%02d hours %02d minutes %02d seconds', seconds / 3_600, (seconds / 60) % 60, seconds % 60)
 
       log_info 'FINISH REINDEX '
       log_info "Time spent: #{readable_time_spent}"

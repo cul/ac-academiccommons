@@ -9,17 +9,11 @@
   "language_ssim": [
     "English"
   ],
-  "language_q": [
-    "English"
-  ],
   "publisher_ssi": "Sabin Center for Climate Change Law, Columbia University",
   "publisher_q": [
     "Sabin Center for Climate Change Law, Columbia University"
   ],
   "cul_doi_ssi":"10.7916/D85D8R19",
-  "cul_doi_q": [
-    "10.7916/D85D8R19"
-  ],
   "title_ssi": "NEPA and Downstream Greenhouse Gas Emissions of U.S. Coal Exports",
   "title_q": [
    "NEPA and Downstream Greenhouse Gas Emissions of U.S. Coal Exports"
@@ -82,9 +76,6 @@
   "type_of_resource_ssim": [
     "Text"
   ],
-  "type_of_resource_q": [
-    "Text"
-  ],
   "geographic_area_ssim": [
     "Europe",
     "Canada",
@@ -108,10 +99,13 @@
   "suggest": [
     "NEPA and Downstream Greenhouse Gas Emissions of U.S. Coal Exports",
     "Sheargold, Elizabeth",
+    "Elizabeth Sheargold",
     "Walavalkar, Smita",
+    "Smita Walavalkar",
     "Coal shipping terminals",
     "Greenhouse gas mitigation",
-    "Environmental law", "Climatic changes",
+    "Environmental law",
+    "Climatic changes",
     "International Energy Agency",
     "Council on Environmental Quality (U.S.)",
     "United States. Energy Information Administration",

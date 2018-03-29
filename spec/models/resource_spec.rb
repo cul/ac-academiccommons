@@ -12,8 +12,8 @@ describe Resource do
     resource
   end
 
-  context 'has CONTENT datastream' do
-    let(:downloadable_dsid) { 'CONTENT' }
+  context 'has content datastream' do
+    let(:downloadable_dsid) { 'content' }
     describe 'to_solr' do
       subject { resource.to_solr }
       it { is_expected.to include('object_state_ssi' => 'A') } # from ActiveFedora

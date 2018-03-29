@@ -13,6 +13,23 @@ module CatalogHelper
     [link_to(url, url)]
   end
 
+  def combine_title_and_part_number(**options)
+    field = options[:field]
+    part_number_field = field.gsub('_ssim', '_part_number_ssim')
+    part_numbers = options[:document].fetch(part_number_field, [])
+    options.fetch(:value, []).zip(part_numbers).map do |title, part_number|
+      facet_params = search_state.reset.add_facet_params(field, title)
+      value = link_to title, search_action_path(facet_params)
+
+      value.concat(", #{part_number}") unless part_number == 'NONE'
+      value
+    end
+  end
+
+  def link_value(**options)
+    options.fetch(:value, []).map { |v| link_to(v, v) }
+  end
+
   def get_total_count
     date_trend.counts[:total]
   end

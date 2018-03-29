@@ -9,21 +9,12 @@
   "language_ssim": [
     "English"
   ],
-  "language_q": [
-    "English"
-  ],
   "publisher_ssi": "Institute for Social and Economic Research and Policy, Columbia University",
   "publisher_q": [
     "Institute for Social and Economic Research and Policy, Columbia University"
   ],
   "publisher_location_ssi": "New York",
-  "publisher_location_q": [
-    "New York"
-  ],
   "cul_doi_ssi": "10.7916/D8ZW1VF7",
-  "cul_doi_q": [
-    "10.7916/D8ZW1VF7"
-  ],
   "title_ssi": "A Comprehensive Analysis of Poverty in India",
   "title_q": [
     "A Comprehensive Analysis of Poverty in India"
@@ -69,9 +60,6 @@
   "type_of_resource_ssim": [
     "Text"
   ],
-  "type_of_resource_q": [
-    "Text"
-  ],
   "organization_ssim": [
     "Columbia University"
   ],
@@ -87,7 +75,9 @@
   "suggest": [
     "A Comprehensive Analysis of Poverty in India",
     "Panagariya, Arvind",
+    "Arvind Panagariya",
     "Mukim, Megha",
+    "Megha Mukim",
     "Economics",
     "ISERP Working Papers",
     "Program on Indian Economic Policies Working Papers",
