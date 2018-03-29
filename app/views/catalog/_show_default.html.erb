@@ -11,7 +11,7 @@
 <%# Render tags under title %>
 <% document_show_fields(document).select { |name, f| f[:display] == :tag }.each do |field_name, field| -%>
   <% if should_render_show_field? document, field %>
-    <span class="label label-default"><%= doc_presenter.field_value field_name %></span>
+    <span class="label-tags"><%= doc_presenter.field_value field_name %></span>
   <% end -%>
 <% end -%>
 
