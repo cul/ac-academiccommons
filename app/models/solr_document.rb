@@ -50,7 +50,8 @@ class SolrDocument
     degree_discipline: 'degree_discipline_ssim',
     columbia_series: 'series_facet', # Only columbia series.
     thesis_advisor: 'thesis_advisor',
-    embargo_end: 'free_to_read_start_date'
+    embargo_end: 'free_to_read_start_date',
+    notes: 'notes'
   )
 
   def embargoed?
