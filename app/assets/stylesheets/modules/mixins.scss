@@ -10,3 +10,12 @@
   padding: 3px 7px;
   text-transform: uppercase;
 }
+
+@mixin label-tags {
+  color: lighten($gray-light, 15%);
+  display: inline-block;
+  font-size: 13px;
+  font-weight: 700;
+  margin: 0 10px 0 0;
+  text-transform: uppercase;
+}

@@ -59,6 +59,10 @@
     margin: 0 0 12px 0;
   }
 
+  & span.label-tags {
+    @include label-tags;
+  }
+
   & .blacklight-author_ssim {
     color: $gray-light;
     margin: 12px 0 30px 0;

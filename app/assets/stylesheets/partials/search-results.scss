@@ -62,7 +62,7 @@
 
   & dd.blacklight-pub_date_isi,
   & dd.blacklight-genre_ssim {
-    @include label-plain;
+    @include label-tags;
   }
 
   & dt.blacklight-genre_ssim,
