@@ -104,8 +104,8 @@ class CatalogController < ApplicationController
                                           separator_options: { words_connector: '; ', two_words_connector: '; ', last_word_connector: '; ' }
     config.add_show_field 'abstract_ssi', display: :main_content,  itemprop: 'description'
 
-    config.add_show_field 'geographic_area_ssim', display: :table, label: 'Geographic Areas',                          link_to_search: 'geographic_area_ssim'
-    config.add_show_field 'subject_ssim',         display: :table, label: 'Subjects',         itemprop: 'keywords',    link_to_search: 'subject_ssim'
+    config.add_show_field 'geographic_area_ssim', display: :table, label: 'Geographic Areas',                    link_to_search: 'geographic_area_ssim'
+    config.add_show_field 'subject_ssim',         display: :table, label: 'Subjects',   itemprop: 'keywords',    link_to_search: 'subject_ssim'
 
     config.add_show_field 'book_journal_title_ssi', label: 'Published In'
     config.add_show_field 'publisher_doi_ssi',      label: 'Publisher DOI',                             helper_method: :link_identifier
@@ -117,9 +117,8 @@ class CatalogController < ApplicationController
     config.add_show_field 'publisher_location_ssi', label: 'Publication Origin'
     config.add_show_field 'series_ssim',            label: 'Series', helper_method: :combine_title_and_part_number
     config.add_show_field 'non_cu_series_ssim',     label: 'Series', helper_method: :combine_title_and_part_number
-    config.add_show_field 'part_number',            label: 'Part Number' #series part number
     config.add_show_field 'department_ssim',        label: 'Academic Units',                             link_to_search: 'department_ssim'
-    config.add_show_field 'thesis_advisor_ssim',         label: 'Thesis Advisors' #not sure what part of the page this would go on.
+    config.add_show_field 'thesis_advisor_ssim',    label: 'Thesis Advisors' #not sure what part of the page this would go on.
     config.add_show_field 'degree',                 label: 'Degree', accessor: true, unless: ->(_, _, doc) { doc.degree.blank? }
     config.add_show_field 'related_url_ssi',        label: 'Related URL'
 
