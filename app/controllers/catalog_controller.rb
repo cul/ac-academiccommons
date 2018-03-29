@@ -115,8 +115,8 @@ class CatalogController < ApplicationController
     config.add_show_field 'uri_ssi',                label: 'Url'
     config.add_show_field 'publisher_ssi',          label: 'Publisher'
     config.add_show_field 'publisher_location_ssi', label: 'Publication Origin'
-    config.add_show_field 'series_ssim',            label: 'Series',                                     link_to_search: 'series_ssim'
-    config.add_show_field 'non_cu_series_ssim',     label: 'Series'
+    config.add_show_field 'series_ssim',            label: 'Series', helper_method: :combine_title_and_part_number
+    config.add_show_field 'non_cu_series_ssim',     label: 'Series', helper_method: :combine_title_and_part_number
     config.add_show_field 'part_number',            label: 'Part Number' #series part number
     config.add_show_field 'department_ssim',        label: 'Academic Units',                             link_to_search: 'department_ssim'
     config.add_show_field 'thesis_advisor_ssim',         label: 'Thesis Advisors' #not sure what part of the page this would go on.
