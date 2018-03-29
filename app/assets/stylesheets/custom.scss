@@ -23,7 +23,9 @@ h3 {
   max-width: 700px;
 }
 
-
+h4 {
+  margin-bottom: 20px;
+}
 
 
 
@@ -711,7 +713,7 @@ h3 {
 #home-content {
 
   & h2 {
-    font-size: 30px;
+    font-size: 21px;
     font-weight: bold;
     margin: 0 0 10px 0;
   }
@@ -732,23 +734,30 @@ h3 {
     max-width: 975px;
   }
 
+  & p.intro strong {
+    font-size: 25px;
+  }
+
   & .links {
     font-weight: 300;
+    padding-bottom: 30px;
   }
 
   & .links a {
     border: 1px solid $gray-lighter;
     border-radius: 3px;
     // box-shadow: 0 1px 4px 0 var(--shadow-color, hsla(0, 0%, 0%, 0.1)), 0 0px 4px 0 var(--shadow-color, hsla(0, 0%, 0%, 0.15));
+    box-shadow: 0 15px 35px rgba(50,50,90,.1), 0 5px 10px rgba(0,0,0,.05);
     display: block;
     margin: 0 0 30px 0;
-    min-height: 190px;
+    min-height: 200px;
+    padding: 30px 35px;
   }
 
   & .links .top {
     align-items: center;
     display: flex;
-    padding: 25px 30px 0 30px;
+    padding: 0 0 10px 0;
   }
 
   & .links .top svg {
@@ -766,14 +775,12 @@ h3 {
   & .links .top h2 {
     display: inline-block;
     flex: 1 0 0;
-    font-size: 24px;
     margin: 0;
   }
 
   & .links a p {
     color: $gray-base;
     line-height: 1.6;
-    padding: 15px 30px;
   }
 
   & .links a:hover {
@@ -821,6 +828,8 @@ h3 {
   }
 
   & .featured h2 {
+    color: lighten($gray-light, 10%);
+    font-size: 25px;
     margin-bottom: 52px;
   }
 
@@ -842,9 +851,9 @@ h3 {
   }
 
   & .stats li {
-    border-bottom: 1px dotted $gray-lighter;
+    border-bottom: 1px solid $gray-lighter;
   	display: block;
-  	line-height: 1.8;
+  	line-height: 2;
   }
 
   & p.quote {
