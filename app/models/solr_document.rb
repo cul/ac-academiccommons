@@ -51,7 +51,8 @@ class SolrDocument
     columbia_series: 'series_facet', # Only columbia series.
     thesis_advisor: 'thesis_advisor',
     embargo_end: 'free_to_read_start_date',
-    notes: 'notes'
+    notes: 'notes',
+    author_id: 'author_uni'
   )
 
   def embargoed?
