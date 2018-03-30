@@ -34,10 +34,11 @@ module V1::Entities
 
     expose :facets do |solr_response, options|
       facet_fields = solr_response.dig('facet_counts', 'facet_fields')
+      facet_fields = {} if facet_fields.blank?
 
       V1::Helpers::Solr::FACETS.each_with_object({}) do |facet, hash|
-         fields = facet_fields[V1::Helpers::Solr::MAP_TO_SOLR_FIELD[facet]]
-         hash[facet] = Hash[*fields] unless fields.blank?
+        fields = facet_fields[V1::Helpers::Solr::MAP_TO_SOLR_FIELD[facet]]
+        hash[facet] = Hash[*fields] unless fields.blank?
       end
     end
   end
