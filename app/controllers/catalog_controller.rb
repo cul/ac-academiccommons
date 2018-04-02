@@ -91,7 +91,11 @@ class CatalogController < ApplicationController
     # solr fields to be displayed in the index (search results) view
     #   The ordering of the field names is the order of the display
 
-    config.add_index_field 'author_ssim',  label: 'Authors'
+    config.add_index_field 'author_ssim',  label: 'Authors',
+                                           separator_options: { words_connector: '; ', two_words_connector: '; ', last_word_connector: '; ' }
+    config.add_index_field 'subject_ssim', label: 'Subjects',
+                                           separator_options: { two_words_connector: ', ', last_word_connector: ', ' }
+
     config.add_index_field 'pub_date_isi', label: 'Date'
     config.add_index_field 'genre_ssim',   label: 'Type'
 

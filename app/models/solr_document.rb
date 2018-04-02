@@ -68,8 +68,12 @@ class SolrDocument
     @semantic_value_hash
   end
 
+  def doi
+    fetch(:cul_doi_ssi, nil)
+  end
+
   def full_doi
-    AcademicCommons.identifier_url(fetch(:cul_doi_ssi, nil))
+    AcademicCommons.identifier_url(doi)
   end
 
   def assets(include_inactive: false)

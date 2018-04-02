@@ -22,13 +22,9 @@
         <li>
           <h4>DOI</h4>
           <div class="permanent-link">
-
-            <!-- doi goes here -->
-
             <textarea rows="1" readonly onclick="this.focus();this.select()">
-              https://doi.org/10.7916/D89G70BS/89G70BS89G70BS89G70BS
+              <%= @document.doi %>
             </textarea>
-
           </div>
         </li>
       </ul>
