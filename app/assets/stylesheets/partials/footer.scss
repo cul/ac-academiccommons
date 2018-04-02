@@ -4,12 +4,12 @@
   border-top: 1px solid $gray-lighter;
   color: $gray-lighter;
   font-size: 14px;
-  line-height: 1.7;
-  margin: 10px 0 0 0;
-  padding: 10px 15px;
+  line-height: 1.8;
+  margin: 20px 0 0 0;
+  padding: 15px 0;
 
   & .footer-links {
-    margin: 0 0 20px 0;
+  margin: 0 0 20px 0;
   }
 
   & .footer-links a:last-child {
@@ -19,11 +19,37 @@
   & span {
     margin: 0 3px;
   }
+}
 
-  & .contact {
+/* site description */
 
-    @media screen and (min-width: $screen-md ) {
+.site-description {
+  border-top: 1px solid $gray-lighter;
+  color: $gray-light;
+  font-size: 14px;
+  line-height: 1.8;
+  padding: 15px 0 45px 0;
+
+  & a {
+    color: $gray-light;
+    text-decoration: underline;
+  }
+
+  & a:hover {
+    color: $link-hover-color;
+  }
+}
+
+@media screen and (min-width: $screen-md ) {
+
+  .footer {
+
+    & .contact {
       text-align: right;
+    }
+
+    & .footer-links {
+      margin: 0;
     }
   }
 }
