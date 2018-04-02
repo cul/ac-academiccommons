@@ -6,19 +6,23 @@
 %>
 
 <div class="footer">
-
   <div class="<%= container_classes %>">
-
-  <div class="row">
-    <div class="col-sm-8 footer-links">
-      <%= link_to t('blacklight.header_links.about'), about_path %> <span>|</span>
-      <%= link_to t('blacklight.header_links.faq'), faq_path %> <span>|</span>
-      <%= link_to t('blacklight.header_links.policies'), policies_path %> <span>|</span>
-      <a href="http://library.columbia.edu" target="_blank" rel="noopener noreferrer">Columbia University Libraries</a>
+    <div class="row">
+      <div class="col-sm-8 footer-links">
+        <%= link_to t('blacklight.header_links.about'), about_path %> <span>|</span>
+        <%= link_to t('blacklight.header_links.faq'), faq_path %> <span>|</span>
+        <%= link_to t('blacklight.header_links.policies'), policies_path %> <span>|</span>
+        <a href="http://library.columbia.edu" target="_blank" rel="noopener noreferrer">Columbia University Libraries</a>
+      </div>
+      <div class="col-sm-4 contact">
+        <span class="glyphicon glyphicon-envelope"></span> <%= mail_to "ac@columbia.edu" %>
+      </div>
     </div>
-    <div class="col-sm-4 contact">
-      <span class="glyphicon glyphicon-envelope"></span> <%= mail_to "ac@columbia.edu" %>
-    </div>
-  </div></div>
+  </div>
+</div>
 
+<div class="site-description">
+  <div class="<%= container_classes %>">
+    Academic Commons provides global access to research and scholarship produced at <a href="https://www.columbia.edu/">Columbia University</a>, <a href="https://barnard.edu/">Barnard College</a>, <a href="http://www.tc.columbia.edu/">Teachers College</a>, <a href="https://utsnyc.edu/">Union Theological Seminary</a> and <a href="http://www.jtsa.edu/">Jewish Theological Seminary</a>. Academic Commons is managed by the <a href="http://library.columbia.edu/">Columbia University Libraries</a>.
+  </div>
 </div>
