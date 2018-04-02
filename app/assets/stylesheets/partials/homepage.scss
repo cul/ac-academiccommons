@@ -16,16 +16,12 @@
   }
 
   & p.intro {
-    font-size: 21px;
+    font-size: 17px;
     font-weight: 300;
     letter-spacing: .4px;
     line-height: 1.8;
-    margin: 15px 0 45px 0;
+    margin: 15px 0 35px 0;
     max-width: 975px;
-  }
-
-  & p.intro strong {
-    font-size: 25px;
   }
 
   & .links {
@@ -157,5 +153,19 @@
     color: $gray-light;
     font-size: 14px;
     font-weight: 400;
+  }
+}
+
+@media screen and (min-width: $screen-sm ) {
+#home-content {
+
+    & p.intro {
+      font-size: 21px;
+      margin-bottom: 45px;
+    }
+
+    & p.intro strong {
+      font-size: 25px;
+    }
   }
 }
