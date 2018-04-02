@@ -33,12 +33,3 @@ class ApplicationController < ActionController::Base
     new_user_session_path
   end
 end
-
-
-# Looks for SVG image in assets directory and outputs XML text
-
-def svg(name)
-  file_path = "#{Rails.root}/app/assets/images/#{name}.svg"
-  return File.read(file_path).html_safe if File.exists?(file_path)
-  '(not found)'
-end
