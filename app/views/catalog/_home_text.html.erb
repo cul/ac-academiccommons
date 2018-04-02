@@ -46,10 +46,10 @@
             <h3>Stats at a glance</h3>
 
             <ul>
-      				<li><span>24,145</span> <a href="">deposited works</a></li>
-      				<li><span>4,260</span> <a href="">dissertations</a></li>
-      				<li><span>4,961</span> <a href="">reports</a></li>
-      				<li><span>134</span> <a href="">datasets</a></li>
+      				<li><span><%= get_total_count %></span> <%= link_to('deposited works', search_action_path) %></li>
+      				<li><span>4,260</span> <%= link_to('dissertations', type_search("Theses")) %></li>
+      				<li><span>4,961</span> <%= link_to('reports', type_search("Reports")) %></li>
+      				<li><span>134</span> <%= link_to('datasets', type_search("Data (information)")) %></li>
       			</ul>
 
           </div>
