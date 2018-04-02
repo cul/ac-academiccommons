@@ -1,0 +1,29 @@
+/* footer */
+
+.footer {
+  border-top: 1px solid $gray-lighter;
+  color: $gray-lighter;
+  font-size: 14px;
+  line-height: 1.7;
+  margin: 10px 0 0 0;
+  padding: 10px 15px;
+
+  & .footer-links {
+    margin: 0 0 20px 0;
+  }
+
+  & .footer-links a:last-child {
+    white-space: nowrap;
+  }
+
+  & span {
+    margin: 0 3px;
+  }
+
+  & .contact {
+
+    @media screen and (min-width: $screen-md ) {
+      text-align: right;
+    }
+  }
+}

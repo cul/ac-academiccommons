@@ -1,0 +1,29 @@
+/* headings */
+
+h1,
+h2,
+h3 {
+  font-size: 33px;
+  font-weight: bold;
+  line-height: 1.4;
+  margin: 0 0 20px 0;
+}
+
+h2 {
+  font-size: 27px;
+  font-weight: 500;
+  margin: 20px 0;
+}
+
+h3 {
+  font-size: 17px;
+  font-weight: bold;
+  line-height: 1.6;
+  margin: 0 0 10px 0;
+  max-width: 700px;
+}
+
+h4.suggest {
+  font-size: 18px;
+  margin-bottom: 20px;
+}

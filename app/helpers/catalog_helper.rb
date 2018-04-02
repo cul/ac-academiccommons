@@ -6,6 +6,12 @@ module CatalogHelper
 
   delegate :repository, to: :controller
 
+  # Generates url for type faceted search
+  def type_search(type)
+    facet_params = search_state.reset.add_facet_params('genre_ssim', type)
+    search_action_path(facet_params)
+  end
+
   # Adds handle or doi prefix if necessary. Makes field a clickable link.
   def link_identifier(**options)
     value = options[:value].is_a?(Array) ? options[:value].first : options[:value]

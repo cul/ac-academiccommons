@@ -1,13 +1,77 @@
-<div id="home-content" class="span-24 clearfix ">
+<div id="home-content">
 
-<div id="home-content-center">
-  <em>Academic Commons</em> is Columbia University's digital repository where faculty, students, and staff of Columbia and its affiliate institutions can deposit the results of their scholarly work and research. Content in Academic Commons is freely available to the public.
-</div>
+  <p class="intro">
+    <strong>Academic Commons</strong> is the institutional research repository of Columbia University and its affiliate institutions. It provides global access to scholarship and research produced by faculty, staff, and students, as well as works created for Columbia-based publications and events. &nbsp; <a href="">Learn more ›</a>
+  </p>
 
-</div>
+  <div class="links">
 
-<div class="span-17">
-  <div id='most-recent' class='box clearfix'>
-    <%= render "most_recent_updated" %>
-  </div>
-</div>
+    <div class="row">
+
+      <div class="col-md-6">
+        <a href="">
+          <div class="top">
+            <%= svg 'icon-browse' %>
+            <h2>Browse the Repository</h2>
+          </div>
+          <p>Discover the range of departments, disciplines, subjects, and types of content represented in Academic Commons.</p>
+        </a>
+      </div>
+
+      <div class="col-md-6">
+        <a href="">
+          <div class="top">
+            <%= svg 'icon-share' %>
+            <h2>Share Your Research</h2>
+          </div>
+          <p>Your research is shared with a global audience, registered and citable via a DOI, discoverable in search engines, and accessible for the long term.</p>
+        </a>
+      </div>
+
+    </div><!-- .row -->
+  </div><!-- .links -->
+
+  <div class="featured-wrapper">
+
+    <div class="container">
+
+      <div class="featured">
+
+        <!-- <h2>Academic Commons at a glance</h2> -->
+
+        <div class="row">
+
+          <div class="stats col-md-4">
+
+            <h3>Stats at a glance</h3>
+
+            <ul>
+      				<li><span><%= get_total_count %></span> <%= link_to('deposited works', search_action_path) %></li>
+      				<li><span>4,260</span> <%= link_to('dissertations', type_search("Theses")) %></li>
+      				<li><span>4,961</span> <%= link_to('reports', type_search("Reports")) %></li>
+      				<li><span>134</span> <%= link_to('datasets', type_search("Data (information)")) %></li>
+      			</ul>
+
+          </div>
+
+          <div class="quotes col-md-8">
+
+            <h3>User stories</h3>
+
+            <p class="quote">“I think that academic work should be freely available as far as possible. While my colleagues in the US probably have institutional subscriptions to most of the journals I publish in, I know that my colleagues in other countries are not as lucky and Academic Commons might be the only way they get access.” <span>— Source</span></p>
+
+            <p class="quote">“Open access benefits everyone, both in and outside of the scholarly community. It especially benefits visibility and preservation, with the persistent URL.” <span>— Source</span></p>
+
+            <p class="quote">“This is a great CU initiative that is easy to use, widely accessible, and provides excellent monthly reports.” <span>— Source</span></p>
+
+          </div>
+
+        </div>
+
+      </div><!-- .featured -->
+
+    </div><!-- .container -->
+
+  </div><!-- .featured-wrapper -->
+
+</div><!-- #home-content -->

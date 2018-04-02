@@ -1,7 +1,23 @@
-@import 'bootstrap-variables';
+@import 'modules/bootstrap-variables';
 
-@import 'blacklight';
+@import 'modules/mixins';
 
-@import 'mixins';
+@import 'vendor/blacklight';
 
-@import 'custom';
+@import 'global';
+
+@import 'partials/cul-banner';
+
+@import 'partials/header';
+
+@import 'partials/item-page';
+
+@import 'partials/search-results';
+
+@import 'partials/static-page';
+
+@import 'partials/facets-sidenav';
+
+@import 'partials/homepage';
+
+@import 'partials/footer';
