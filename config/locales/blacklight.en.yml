@@ -21,6 +21,8 @@ en:
         assets:
           embargoed: 'This item is currently under embargo. It will be available starting %{date}.'
           unavailable: 'Downloadable resources are currently unavailable for this item.'
+      facets:
+          title: 'Refine your search'
       form:
         submit: ''
       zero_results:
