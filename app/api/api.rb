@@ -16,6 +16,8 @@ class API < Grape::API
   mount V1::DataFeed
   mount V1::Record
 
+  Grape::Middleware::Auth::Strategies.add(:http_token, Auth::Token)
+
   add_swagger_documentation \
     info: {
       title: 'Academic Commons API v1',
