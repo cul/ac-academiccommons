@@ -9,11 +9,13 @@
 <% doc_presenter = show_presenter(document) %>
 
 <%# Render tags under title %>
+<p>
 <% document_show_fields(document).select { |name, f| f[:display] == :tag }.each do |field_name, field| -%>
   <% if should_render_show_field? document, field %>
     <span class="label-tags"><%= doc_presenter.field_value field_name %></span>
   <% end -%>
 <% end -%>
+</p>
 
 <%# Render author and abstract %>
 <% document_show_fields(document).select { |name, f| f[:display] == :main_content }.each do |field_name, field| -%>
@@ -21,6 +23,15 @@
     <p class="blacklight-<%= field_name.parameterize %>"><%= doc_presenter.field_value field_name %></p>
   <% end -%>
 <% end -%>
+
+<%# Truncate author list %>
+<script>
+$('.blacklight-author_ssim').readmore({
+  collapsedHeight: 20,
+  lessLink: '<a href="#">View fewer authors</a>',
+  moreLink: '<a href="#">View all authors</a>'
+});
+</script>
 
 <%# Render table fields %>
 <% document_show_fields(document).select { |name, f| f[:display] == :table }.each do |field_name, field| -%>
