@@ -68,10 +68,11 @@
     display: inline-block;
     font-size: 16px;
     line-height: 1.7;
+    margin: 0;
   }
 
   & .blacklight-author_ssim + [data-readmore-toggle] {
-    background: #eee;
+    background: $gray-lighter-custom;
     font-size: 12px;
     display: inline;
     padding: 2px 5px;
