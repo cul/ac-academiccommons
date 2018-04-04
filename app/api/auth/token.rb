@@ -10,7 +10,7 @@ module Auth
 
     def call(env)
       auth = Token::Request.new(env)
-      Rails.logger.debug auth.params
+
       return unauthorized unless auth.provided?
 
       return bad_request unless auth.token?
@@ -35,7 +35,7 @@ module Auth
 
     class Request < Rack::Auth::AbstractRequest
       def token?
-        /(token|bearer)/ =~ scheme && !token.nil? && !token.blank?
+        /^(token|bearer)$/ =~ scheme && !token.nil? && !token.blank?
       end
 
       def credentials
@@ -47,7 +47,7 @@ module Auth
       end
 
       def params
-        @params ||= parts.last.split(/\s*(?:,|;|\t+)\s*/).map.with_index do |part, i|
+        @params ||= (parts.last || "").split(/\s*(?:,|;|\t+)\s*/).map.with_index do |part, i|
                       pair = part.split('=', 2)
                       pair.unshift('token') if i.zero? && pair.length == 1
                       pair.push("") if pair.length == 1
