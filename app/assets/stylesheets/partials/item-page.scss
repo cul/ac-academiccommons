@@ -65,14 +65,28 @@
 
   & .blacklight-author_ssim {
     color: $gray-light;
-    margin: 12px 0 30px 0;
+    display: inline-block;
+    font-size: 16px;
+    line-height: 1.7;
+    margin: 0;
   }
 
-  & p {
+  & .blacklight-author_ssim span {
+    white-space: nowrap;
+  }
+
+  & .blacklight-author_ssim + [data-readmore-toggle] {
+    background: $gray-lighter-custom;
+    font-size: 12px;
+    display: inline;
+    padding: 2px 5px;
+  }
+
+  & p.blacklight-abstract_ssi {
     font-size: 17px;
     font-weight: 300;
     line-height: 1.6;
-    margin: 0 0 30px 0;
+    margin: 30px 0;
   }
 
   & .subjects h4 {
