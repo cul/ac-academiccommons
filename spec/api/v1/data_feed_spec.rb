@@ -1,21 +1,47 @@
 require 'rails_helper'
 
 describe 'GET /api/v1/data_feed/:key', type: :request do
-   context 'when known key is given' do
-     it 'should return 200' do
-       get '/api/v1/data_feed/masters'
-       expect(response.status).to be 200
-     end
+  context 'when no token is provided' do
+    it 'should return 401' do
+      get '/api/v1/data_feed/masters'
+      expect(response.status).to be 401
+    end
+  end
 
-     context 'if no record match feed' do
-       it 'returns feed with no records' do
-         get '/api/v1/data_feed/masters'
-         expect(JSON.load(response.body)).to match({
-           'records' => [],
-           'total_number_of_results' => 0,
-         })
+  context 'when provides invalid token' do
+    let(:headers) { {'HTTP_AUTHORIZATION' => 'Token token=invalid_token'} }
+    before do
+      Token.create(scope: Token::DATAFEED, token: 'foobar')
+    end
+
+    it 'should return 401' do
+      get '/api/v1/data_feed/masters', {}, headers
+      expect(response.status).to be 401
+    end
+  end
+
+  context 'when provides valid token' do
+    let(:headers) { {'HTTP_AUTHORIZATION' => 'Token token=foobar' } }
+
+    before do
+      Token.create(scope: Token::DATAFEED, token: 'foobar')
+    end
+
+    context 'when known key is given' do
+       it 'should return 200' do
+         get '/api/v1/data_feed/masters', {}, headers
+         expect(response.status).to be 200
        end
-     end
+
+      context 'if no record match feed' do
+        it 'returns feed with no records' do
+          get '/api/v1/data_feed/masters', {}, headers
+          expect(JSON.load(response.body)).to match({
+            'records' => [],
+            'total_number_of_results' => 0,
+          })
+        end
+      end
 
      context 'if records match feed' do
        let(:connection) { double }
@@ -76,7 +102,7 @@ describe 'GET /api/v1/data_feed/:key', type: :request do
        it 'returns matching records' do
          allow(connection).to receive(:get).with('select', { params: parameters }).and_return(solr_response)
 
-         get '/api/v1/data_feed/masters'
+         get '/api/v1/data_feed/masters', {}, headers
 
          expect(JSON.load(response.body)).to match({
            'total_number_of_results' => 1,
@@ -108,12 +134,13 @@ describe 'GET /api/v1/data_feed/:key', type: :request do
          })
        end
      end
-   end
+    end
 
-   context 'when unknown key is given' do
-     it 'should return 400' do
-       get '/api/v1/data_feed/undefined_key'
-       expect(response.status).to be 400
-     end
-   end
+    context 'when unknown key is given' do
+      it 'should return 400' do
+        get '/api/v1/data_feed/undefined_key', {}, headers
+        expect(response.status).to be 400
+      end
+    end
+  end
 end
