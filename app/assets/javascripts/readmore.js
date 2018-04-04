@@ -9,6 +9,8 @@
  * Debounce function from http://davidwalsh.name/javascript-debounce-function
  */
 
+ /* v2.2.0 */
+
 /* global jQuery */
 
 (function(factory) {
@@ -339,4 +341,3 @@
   };
 
 }));
-

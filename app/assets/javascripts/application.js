@@ -7,3 +7,4 @@
 //= require jquery_ujs
 //= require turbolinks
 //= require readmore
+//= require readmore-call
