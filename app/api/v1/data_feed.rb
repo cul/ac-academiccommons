@@ -11,6 +11,11 @@ module V1
       'sort' => 'best_match', 'order': 'desc', 'page': 1, 'per_page': 100_000
     }
 
+    auth :http_token do |token, options|
+      valid_tokens = Token.where(scope: Token::DATAFEED).map(&:token)
+      valid_tokens.include?(token)
+    end
+
     desc 'Retrieves data feed. Key maps to a set of preconfigured search results',
       success: { code: 202, message: 'successful response' },
       failure: [
