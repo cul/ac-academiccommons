@@ -71,6 +71,10 @@
     margin: 0;
   }
 
+  & .blacklight-author_ssim span {
+    white-space: nowrap;
+  }
+
   & .blacklight-author_ssim + [data-readmore-toggle] {
     background: $gray-lighter-custom;
     font-size: 12px;
