@@ -5,6 +5,5 @@
 //= require jquery
 //= require blacklight/blacklight
 //= require jquery_ujs
-//= require turbolinks
 //= require readmore
 //= require readmore-call
