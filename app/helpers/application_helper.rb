@@ -13,8 +13,10 @@ module ApplicationHelper
   # rubocop:enable Rails/OutputSafety
 
   def highwire_press_tags(name, content)
-    Array.wrap(content).map do |c|
-      tag 'meta', name: name, content: c
-    end.join.html_safe
+    safe_join(
+      Array.wrap(content).map do |c|
+        tag 'meta', name: name, content: c
+      end
+    )
   end
 end

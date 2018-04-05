@@ -1,4 +1,4 @@
-<% unless @document.nil? %>
+<% if @document %>
   <% semantics_hash = @document.to_semantic_values %>
 
   <%= highwire_press_tags 'citation_title',            semantics_hash[:title] %>
