@@ -23,13 +23,27 @@ class SolrDocument
   field_semantics.merge!(
     title: 'title_ssi',
     author: 'author_ssim',
-	  creator: 'author_ssim',
-		date: 'pub_date_isi',
-    type: ['type_of_resource_ssim', 'genre_ssim'],
-		publisher: 'publisher_ssi',
-		subject: 'subject_ssim',
-	  description: 'abstract_ssi',
-	  language: 'language_ssim'
+    creator: 'author_ssim',
+    date: 'pub_date_isi',
+    type: 'genre_ssim',
+    publisher: 'publisher_ssi',
+    subject: 'subject_ssim',
+    description: 'abstract_ssi',
+    language: 'language_ssim',
+    abstract: "abstract",
+    department: "department_facet",
+    genre: "genre_facet",
+    created_at: "record_creation_date",
+    modified_at: 'record_change_date',
+    degree_name: 'degree_name_ssim',
+    degree_level: 'degree_level_name_ssim',
+    degree_grantor: 'degree_grantor_ssim',
+    degree_discipline: 'degree_discipline_ssim',
+    columbia_series: 'series_facet', # Only columbia series.
+    thesis_advisor: 'thesis_advisor',
+    embargo_end: 'free_to_read_start_date',
+    notes: 'notes',
+    author_id: 'author_uni'
   )
 
   def embargoed?
