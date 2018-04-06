@@ -3,9 +3,9 @@
 //
 
 //= require jquery
+//= require jquery_ujs
 //= require blacklight/blacklight
 //= require blacklight_range_limit
-//= require jquery_ujs
 //= require bootstrap/affix
 //= require readmore
 //= require readmore-call
