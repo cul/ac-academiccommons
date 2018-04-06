@@ -1,6 +1,7 @@
 class CatalogController < ApplicationController
   include Blacklight::Catalog
   include BlacklightOaiProvider::Controller
+  include BlacklightRangeLimit::ControllerOverride
 
   before_filter :record_view_stats, only: :show
 
