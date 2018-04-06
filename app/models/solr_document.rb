@@ -104,7 +104,7 @@ class SolrDocument
     member_search[:fq] << 'object_state_ssi:A' unless include_inactive
     response = Blacklight.default_index.connection.get 'select', params: member_search
     docs = response['response']['docs']
-    docs.map { |member| SolrDocument.new(member) }
+    @assets ||= docs.map { |member| SolrDocument.new(member) }
   rescue StandardError => e
     Rails.logger.error e.message
     return []
