@@ -61,20 +61,22 @@
 </div>
 
 <%# Render note %>
-<% note_fields = document_show_fields(document).select { |name, f| f[:display] == :notes } -%>
-<% if note_fields.present? %>
+<% note_text = [] -%>
+<% document_show_fields(document).select { |name, f| f[:display] == :notes }.each do |field_name, field| -%>
+  <% if should_render_show_field? document, field %>
+    <% doc_presenter.field_value(field_name, join: false).each { |v| note_text << v } %>
+  <% end -%>
+<% end -%>
+
+<% if note_text.present? %>
   <div class="panel panel-default">
     <div class="panel-heading">
       <h3 class="panel-title"><%= t('blacklight.search.show.panels.notes') %></h3>
     </div>
     <div class="panel-body">
-      <% note_fields.each do |field_name, field| -%>
-        <% if should_render_show_field? document, field %>
-          <% doc_presenter.field_value(field_name, join: false).each do |value| %>
-            <p><%= value %></p>
-          <% end %>
-        <% end -%>
-      <% end -%>
+      <% note_text.each do |text| %>
+        <p><%= text %></p>
+      <% end %>
     </div>
   </div>
 <% end %>
