@@ -3,20 +3,6 @@ module ApplicationHelper
     @document[CatalogController.blacklight_config[:show][:author]]
   end
 
-  def metaheader_fix_if_needed(name, content)
-
-    if(name == 'citation_author')
-      parts = content.split(',')
-      content = ''
-      parts.reverse.each do |part|
-        content += part + ' '
-      end
-      content.strip!
-    end
-
-    return content
-  end
-
   # Looks for SVG image in assets directory and outputs XML text
   # rubocop:disable Rails/OutputSafety
   def svg(name)
@@ -25,4 +11,12 @@ module ApplicationHelper
     '(not found)'
   end
   # rubocop:enable Rails/OutputSafety
+
+  def highwire_press_tags(name, content)
+    safe_join(
+      Array.wrap(content).map do |c|
+        tag 'meta', name: name, content: c
+      end
+    )
+  end
 end
