@@ -12,6 +12,8 @@ class Resource < ActiveFedora::Base
       solr_doc['downloadable_content_label_ss'] = content.label.blank? ? this.label : content.label
       solr_doc['downloadable_content_size_isi'] = size
     end
+
+    solr_doc['fulltext_txt'] = fulltext.to_s.force_encoding('utf-8').gsub(/\s+/, ' ')
     solr_doc
   end
 
@@ -19,6 +21,11 @@ class Resource < ActiveFedora::Base
     return datastreams['content'] if (datastreams.has_key?('content'))
     return datastreams['CONTENT'] if (datastreams.has_key?('CONTENT'))
     return nil
+  end
+
+  # Return string with fulltext or nil if there isn't a datastream to pull from
+  def fulltext
+    datastreams.has_key?('fulltext') ? datastreams['fulltext'].content : nil
   end
 
   def rels_int
