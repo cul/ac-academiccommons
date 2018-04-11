@@ -3,18 +3,41 @@
 #static-text {
   margin: 0 15px;
 
+  h1 {
+    font-size: 36px;
+  }
+
+  & h2 {
+    font-size: 30px;
+  }
+
   & p,
   & ul {
     font-size: 17px;
     font-weight: 300;
     line-height: 1.6;
     margin: 0 0 30px 0;
-    max-width: 700px;
+    max-width: 800px;
   }
 
   & p.anchor-links {
     color: $gray-light;
     font-size: 15px;
     max-width: none;
+  }
+
+  & ul.brand-logos {
+    padding: 0;
+
+    & li {
+      display: inline-block;
+      margin: 0 35px 0 0;
+      padding: 0;
+    }
+
+    & img {
+      max-height: 100px;
+      max-width: 140px;
+    }
   }
 }
