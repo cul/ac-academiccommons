@@ -57,10 +57,14 @@
   }
 
   & dd.blacklight-author_ssim {
-    margin: 0 0 13px 0;
+    margin: 0 0 10px 0;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+  }
+
+  & dd.blacklight-subject_ssim {
+    margin: 0 0 10px 0;
   }
 
   & dd.blacklight-pub_date_isi,
