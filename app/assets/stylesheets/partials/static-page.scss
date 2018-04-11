@@ -4,11 +4,14 @@
   margin: 0 15px;
 
   h1 {
-    font-size: 36px;
+
   }
 
   & h2 {
-    font-size: 30px;
+    border-bottom: 1px solid #ddd;
+    max-width: 800px;
+    padding-bottom: 10px;
+
   }
 
   & p,
