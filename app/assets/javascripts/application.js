@@ -7,3 +7,5 @@
 //= require jquery_ujs
 //= require readmore
 //= require readmore-call
+//= require affix
+//= require sticky-sidebar
