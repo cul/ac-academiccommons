@@ -4,7 +4,7 @@ $(document).ready(function(){
 
   $('#sidebar').affix({
         offset: {
-          top: 320,
+          top: 300,
           bottom: navHeight
         }
   });
