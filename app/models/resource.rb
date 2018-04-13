@@ -13,7 +13,7 @@ class Resource < ActiveFedora::Base
       solr_doc['downloadable_content_size_isi'] = size
     end
 
-    solr_doc['fulltext_txt'] = fulltext.to_s.force_encoding('utf-8').gsub(/\s+/, ' ')
+    solr_doc['fulltext_tsi'] = fulltext.to_s.force_encoding('utf-8').gsub(/\s+/, ' ')
     solr_doc
   end
 
