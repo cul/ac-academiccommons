@@ -77,7 +77,7 @@ class CatalogController < ApplicationController
     config.add_facet_field 'subject_ssim',           label: 'Subject',         limit: 5
     config.add_facet_field 'genre_ssim',             label: 'Type',            limit: 5
     config.add_facet_field 'degree_level_name_ssim', label: 'Degree Level',    limit: 5
-    config.add_facet_field 'pub_date_isi',           label: 'Date Published',  limit: 5, range: true
+    config.add_facet_field 'pub_date_isi',           label: 'Date Published',  limit: 5, range: true, range: { slider_js: false }
     config.add_facet_field 'series_ssim',            label: 'Series',          limit: 5
     config.add_facet_field 'language_ssim',          label: 'Language',        limit: 5
     config.add_facet_field 'geographic_area_ssim',   label: 'Geographic Area', limit: 5, show: false
