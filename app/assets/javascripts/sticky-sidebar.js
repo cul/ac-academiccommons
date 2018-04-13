@@ -8,9 +8,4 @@ $(document).ready(function(){
           bottom: navHeight
         }
   });
-
-  $body.scrollspy({
-  	target: '#fixed-sidebar',
-  	offset: navHeight
-  });
 });
