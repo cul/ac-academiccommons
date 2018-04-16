@@ -37,6 +37,11 @@
     box-shadow: none;
   }
 
+  & .form-control,
+  & .form-contro:focus {
+    z-index: 1000;
+  }
+
   & .input-group-btn {
     width: 1%;
   }
