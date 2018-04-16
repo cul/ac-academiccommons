@@ -9,7 +9,7 @@ cache(@sitemap_cache_key) do
     docs.each do |doc|
       xml.url do
         xml.loc(catalog_url(doc[:id]))
-        xml.lastmod(doc[:record_creation_date][0])
+        xml.lastmod(doc[:record_creation_date])
         xml.changefreq("yearly")
         xml.priority("0.5")
       end
