@@ -14,6 +14,7 @@ gem 'fancybox2-rails' # Used in helper classes. TODO: Confirm that this is neede
 gem 'gaffe'
 gem 'haml', '>= 4.0.7'
 gem 'httpclient','~>2.6'
+gem 'jbuilder'
 gem 'jquery-rails'
 gem 'mail_form'
 gem 'multipart-post', '~>2.0.0'
