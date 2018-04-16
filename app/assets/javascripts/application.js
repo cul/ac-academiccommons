@@ -5,5 +5,7 @@
 //= require jquery
 //= require blacklight/blacklight
 //= require jquery_ujs
+//= require bootstrap/affix
 //= require readmore
 //= require readmore-call
+//= require sticky-sidebar
