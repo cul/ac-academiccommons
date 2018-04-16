@@ -2,43 +2,32 @@
 
 #header-navbar {
   border-bottom: 1px dotted $gray-lighter;
-  margin: 0;
-  padding: 20px 0 0 0;
+  padding: 5px 0;
 
   & .navbar-brand {
     background-size: contain;
+    background-position: center center;
     width: 100%;
   }
 
   & .logo {
-    padding: 0;
-    z-index: 1000;
-  }
-
-  & .search-bar {
-    padding: 0;
+    overflow: hidden;
   }
 
   & .navbar-form {
-    border: 0;
     margin: 0;
-    padding-left: 0;
-    padding-right: 0;
+    padding: 7px 0;
+    width: 100%;
   }
 
-  & .navbar-form,
-  & .search-query-form,
-  & .input-group {
-    width: 100%;
+  & .input-group-btn {
+    width: 1%;
   }
 
   & .form-control {
     border-right: 0;
     box-shadow: none;
-  }
-
-  & .input-group-btn {
-    width: 1%;
+    z-index: 1000;
   }
 }
 
@@ -47,13 +36,10 @@
   #header-navbar {
     padding: 20px 0;
 
-    & .search-bar {
-      padding-left: 15px;
+    & .navbar-brand {
+      background-position: left center;
     }
 
-    & .navbar-brand {
-      background-position: left;
-    }
 
     & .navbar-form {
       margin: 7px 0;
@@ -107,6 +93,10 @@
   & .user-links {
     padding: 0;
   }
+
+  & .share-button span {
+    display: none;
+  }
 }
 
 @media screen and (min-width: $screen-sm ) {
@@ -133,6 +123,10 @@
 
     & .share-button {
       font-weight: bold;
+    }
+
+    & .share-button span {
+      display: inline-block;
     }
   }
 }

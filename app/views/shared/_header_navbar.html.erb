@@ -14,13 +14,15 @@
   </div>
 </div>
 
-<div id="header-navbar" role="navigation">
+<div id="header-navbar">
   <div class="<%= container_classes %>">
-    <div class="col-sm-8 logo">
-      <%= link_to application_name, root_path, class: "navbar-brand" %>
-    </div>
-    <div class="col-sm-4 search-bar">
-      <%= render_search_bar %>
+    <div class="row">
+      <div class="col-sm-8 logo">
+        <%= link_to application_name, root_path, class: "navbar-brand" %>
+      </div>
+      <div class="col-sm-4 search-bar">
+        <%= render_search_bar %>
+      </div>
     </div>
   </div>
 </div>
