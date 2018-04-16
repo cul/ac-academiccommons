@@ -2,6 +2,11 @@
 
 #static-text {
 
+  & .affix-top,
+  & .affix {
+  	position: relative;
+  }
+
   & a {
     text-decoration: underline;
   }
@@ -110,42 +115,35 @@
   }
 }
 
-/* fixed sidebar */
-
-.affix-top,
-.affix {
-	position: relative;
-}
-
 /* desktop view */
 
 @media screen and (min-width: $screen-md ) {
 
-  .affix-top,
-  .affix {
-  	position: static;
-  }
-
-  #sidebar-fixed.affix-top {
-     position: static;
-     width: 234px;
-   }
-
-   #sidebar-fixed.affix,
-   #sidebar-fixed.affix-bottom {
-     width: 234px;
-   }
-
-   #sidebar-fixed.affix {
-     position: fixed;
-     top: 0;
-   }
-
-   #sidebar-fixed.affix-bottom {
-     position: absolute;
-   }
-
   #static-text {
+
+    & .affix-top,
+    & .affix {
+      position: static;
+    }
+
+    & #sidebar.affix-top {
+      position: static;
+      width: 234px;
+    }
+
+    & #sidebar.affix,
+    & #sidebar.affix-bottom {
+      width: 234px;
+    }
+
+    & #sidebar.affix {
+      position: fixed;
+      top: 0;
+    }
+
+    & #sidebar.affix-bottom {
+      position: absolute;
+    }
 
 	  & ul.anchor-links li {
 				display: block;
