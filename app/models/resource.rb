@@ -9,9 +9,7 @@ class Resource < ActiveFedora::Base
       doi = doc.fetch('ezid_doi_ssim', nil)
       doc['cul_doi_ssi'] = doi.gsub('doi:', '') if doi.present?
 
-      content = downloadable_content
-
-      if content
+      if (content = downloadable_content)
         doc['downloadable_content_type_ssi'] = content.mimeType
         doc['downloadable_content_dsid_ssi'] = content.dsid
         doc['downloadable_content_label_ss'] = content.label.blank? ? this.label : content.label
