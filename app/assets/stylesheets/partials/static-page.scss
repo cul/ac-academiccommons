@@ -126,28 +126,24 @@
   	position: static;
   }
 
-  #sidebar.affix-top {
+  #sidebar-fixed.affix-top {
      position: static;
      width: 234px;
    }
 
-   #sidebar.affix,
-   #sidebar.affix-bottom {
+   #sidebar-fixed.affix,
+   #sidebar-fixed.affix-bottom {
      width: 234px;
    }
 
-   #sidebar.affix {
+   #sidebar-fixed.affix {
      position: fixed;
      top: 0;
    }
 
-   #sidebar.affix-bottom {
+   #sidebar-fixed.affix-bottom {
      position: absolute;
    }
-
-  #fixed-sidebar {
-    padding: 0 0 0 15px;
-  }
 
   #static-text {
 
