@@ -2,19 +2,24 @@ class Resource < ActiveFedora::Base
   include AcademicCommons::Resource
 
   def to_solr(solr_doc={}, options={})
-    solr_doc = super
-    solr_doc['pid'] ||= self.pid
-    content = downloadable_content
+    super.tap do |doc|
+      doc['pid'] ||= self.pid
+      doc['fedora3_pid_ssi'] = self.pid
 
-    if content
-      solr_doc['downloadable_content_type_ssi'] = content.mimeType
-      solr_doc['downloadable_content_dsid_ssi'] = content.dsid
-      solr_doc['downloadable_content_label_ss'] = content.label.blank? ? this.label : content.label
-      solr_doc['downloadable_content_size_isi'] = size
+      doi = doc.fetch('ezid_doi_ssim', nil)
+      doc['cul_doi_ssi'] = doi.gsub('doi:', '') if doi.present?
+
+      content = downloadable_content
+
+      if content
+        doc['downloadable_content_type_ssi'] = content.mimeType
+        doc['downloadable_content_dsid_ssi'] = content.dsid
+        doc['downloadable_content_label_ss'] = content.label.blank? ? this.label : content.label
+        doc['downloadable_content_size_isi'] = size
+      end
+
+      doc['fulltext_tsi'] = fulltext.to_s.force_encoding('utf-8').gsub(/\s+/, ' ')
     end
-
-    solr_doc['fulltext_tsi'] = fulltext.to_s.force_encoding('utf-8').gsub(/\s+/, ' ')
-    solr_doc
   end
 
   def downloadable_content
