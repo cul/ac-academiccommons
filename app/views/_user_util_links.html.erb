@@ -31,6 +31,9 @@
 
 <ul>
   <li>
-    <%= link_to t('blacklight.header_links.share'), deposit_path, :class => "share-button" %>
+    <%= link_to '/deposit', :class => 'share-button' do %>
+      <%= t('blacklight.header_links.upload') %>
+      <span><%= t('blacklight.header_links.upload_full_text') %></span>
+    <% end %>
   </li>
 </ul>

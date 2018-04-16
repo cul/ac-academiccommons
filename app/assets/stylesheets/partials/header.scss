@@ -95,6 +95,10 @@
   & .user-links {
     padding: 0;
   }
+
+  & .share-button span {
+    display: none;
+  }
 }
 
 @media screen and (min-width: $screen-sm ) {
@@ -121,6 +125,10 @@
 
     & .share-button {
       font-weight: bold;
+    }
+
+    & .share-button span {
+      display: inline-block;
     }
   }
 }

@@ -3,7 +3,8 @@ en:
     application_name: 'Academic Commons'
 
     header_links:
-      share: 'Share Your Research'
+      upload: 'Upload'
+      upload_full_text: 'Your Research'
       about: 'About'
       faq: 'FAQ'
       policies: 'Policies'
