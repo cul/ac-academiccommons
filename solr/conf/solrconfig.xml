@@ -144,11 +144,9 @@
          genre_q^25
          abstract_q^10
          general_search_text
-         fulltext_tsi^0.25
        </str>
        <str name="pf">
          genera_search_text^100
-         fulltext^10
        </str>
        <str name="author_qf">
          author_q
