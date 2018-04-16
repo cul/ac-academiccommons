@@ -21,22 +21,22 @@ Rails.application.routes.draw do
 
 
   # Blacklight routes
-  mount Blacklight::Engine => '/'
-
   concern :searchable, Blacklight::Routes::Searchable.new
   concern :exportable, Blacklight::Routes::Exportable.new
   concern :oai_provider, BlacklightOaiProvider::Routes.new
 
-  resource :catalog, only: [:index], controller: 'catalog' do
+  resource :catalog, only: [:index], as: 'catalog', path: 'search', controller: 'catalog', constraints: { id: /10\..+/ } do
     concerns :oai_provider
     concerns :searchable
     concerns :range_searchable
   end
 
   # Routes for solr document
-  resources :solr_document, only: [:show], controller: 'catalog' do
+  resources :solr_document, only: [:show], controller: 'catalog', path: 'doi', constraints: { id: /10\..+/ } do
     concerns :exportable
   end
+
+  mount Blacklight::Engine => '/'
 
   # RESTful routes for reindex API, working around Blacklight route camping
   delete '/solr_documents/:id', to: 'solr_documents#destroy'

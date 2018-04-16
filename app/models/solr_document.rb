@@ -4,7 +4,7 @@ class SolrDocument
   include BlacklightOaiProvider::SolrDocument
   include AcademicCommons::Embargoes
 
-  # self.unique_key = 'id'
+  self.unique_key = 'cul_doi_ssi'
   self.timestamp_key = 'record_creation_dtsi'
 
 
@@ -98,7 +98,7 @@ class SolrDocument
 
   def assets(include_inactive: false)
     return [] unless free_to_read?(self)
-    obj_display = fetch('id', [])
+    obj_display = fetch('fedora3_pid_ssi', [])
 
     member_search = {
       qt: 'search',
@@ -129,7 +129,7 @@ class SolrDocument
   def download_path
     return nil unless asset?
     Rails.application.routes.url_helpers.fedora_content_path(
-      :download, id,
+      :download, fetch('id', nil),
       fetch('downloadable_content_dsid_ssi'),
       fetch('downloadable_content_label_ss')
     )
