@@ -8,7 +8,7 @@
   padding: 15px 0;
 
   & .footer-links {
-  margin: 0 0 20px 0;
+  margin: 0 0 0 0;
   }
 
   & .footer-links a:last-child {
@@ -17,6 +17,10 @@
 
   & span {
     margin: 0 3px;
+  }
+
+  & .contact {
+    text-align: right;
   }
 }
 
@@ -36,19 +40,5 @@
 
   & a:hover {
     color: $link-hover-color;
-  }
-}
-
-@media screen and (min-width: $screen-md ) {
-
-  .footer {
-
-    & .contact {
-      text-align: right;
-    }
-
-    & .footer-links {
-      margin: 0;
-    }
   }
 }
