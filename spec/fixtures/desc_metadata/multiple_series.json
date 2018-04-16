@@ -4,6 +4,7 @@
     "info:fedora/actest:1/test_ds"
   ],
   "fedora3_pid_ssi":"actest:1",
+  "fedora3_uri_ssi":"info:fedora/actest:1",
   "record_creation_dtsi": "2013-10-29T16:59:44Z",
   "record_change_dtsi": "2018-02-17T01:34:32Z",
   "language_ssim": [
