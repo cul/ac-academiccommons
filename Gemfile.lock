@@ -458,6 +458,7 @@ DEPENDENCIES
   gaffe
   haml (>= 4.0.7)
   httpclient (~> 2.6)
+  jbuilder
   jettywrapper (>= 1.4.0)!
   jquery-rails
   mail_form
