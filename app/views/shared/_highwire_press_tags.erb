@@ -25,8 +25,6 @@
     <%= highwire_press_tags 'citation_dissertation_institution', semantics_hash[:degree_grantor] %>
   <% end %>
 
-  <%= highwire_press_tags 'citation_abstract_html_url', request.url %>
-
   <%= highwire_press_tags 'citation_pdf_url',
                           @document.assets.map { |a| URI.join(root_url, a.download_path).to_s } %>
 <% end %>

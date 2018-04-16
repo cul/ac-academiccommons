@@ -27,7 +27,6 @@ describe 'Item Page', type: :feature do
 
     it 'renders additional highwire tags' do
       expect(page).to have_xpath('//head/meta[@name="citation_keywords"][@content="Tea Parties"]', visible: false)
-      expect(page).to have_xpath('//head/meta[@name="citation_abstract_html_url"][@content="http://www.example.com/solr_document/actest:1"]', visible: false)
       expect(page).to have_xpath('//head/meta[@name="citation_pdf_url"][@content="http://www.example.com/download/fedora_content/download/actest:2/CONTENT/alice_in_wonderland.pdf"]', visible: false)
       expect(page).to have_xpath('//head/meta[@name="citation_pdf_url"][@content="http://www.example.com/download/fedora_content/download/actest:4/content/to_solr.json"]', visible: false)
     end
