@@ -73,7 +73,7 @@ module AcademicCommons
       # TODO: Make sure access is indifferent
       add_field.call('id', pid) unless solr_doc['id'] || solr_doc[:id]
       add_field.call('fedora3_uri_ssi', "info:fedora/#{pid}")
-      add_field.call('fedora3_pid_ssi', pid) unless solr_doc['pid'] || solr_doc[:pid]
+      add_field.call('fedora3_pid_ssi', pid)
 
       add_field.call 'related_url_ssi', mods.at_css('location > url')
 
