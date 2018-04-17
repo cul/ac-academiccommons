@@ -467,9 +467,6 @@
     <!-- default, catch all search field -->
     <field name="general_search_text" type="text" indexed="true" stored="false" multiValued="true"/>
 
-    <!-- fulltext field -->
-    <field name="fulltext" type="text" indexed="true" stored="false"/>
-
     <field name="pid" type="string" indexed="true" stored="true" />
 
     <!-- Dynamic field definitions.  If a field name is not found, dynamicFields
@@ -480,8 +477,6 @@
          Longer patterns will be matched first.  if equal size patterns
          both match, the first appearing in the schema will be used.  -->
     <dynamicField name="*_l"  type="long"   indexed="true"  stored="true"/>
-    <!-- <dynamicField name="*_t"  type="text"    indexed="true"  stored="true" multiValued="true"/> -->
-    <dynamicField name="*_txt" type="text_general"    indexed="true"  stored="true" multiValued="true"/>
     <dynamicField name="*_b"  type="boolean" indexed="true"  stored="true"/>
     <dynamicField name="*_f"  type="float"  indexed="true"  stored="true"/>
     <dynamicField name="*_d"  type="double" indexed="true"  stored="true"/>
@@ -490,13 +485,6 @@
     <dynamicField name="*_coordinate"  type="tdouble" indexed="true"  stored="false"/>
 
     <dynamicField name="*_p"  type="location" indexed="true" stored="true"/>
-
-    <!-- some trie-coded dynamic fields for faster range queries -->
-    <dynamicField name="*_ti" type="tint"    indexed="true"  stored="true"/>
-    <dynamicField name="*_tl" type="tlong"   indexed="true"  stored="true"/>
-    <dynamicField name="*_tf" type="tfloat"  indexed="true"  stored="true"/>
-    <dynamicField name="*_td" type="tdouble" indexed="true"  stored="true"/>
-    <dynamicField name="*_tdt" type="tdate"  indexed="true"  stored="true"/>
 
     <dynamicField name="ignored_*" type="ignored" multiValued="true"/>
     <dynamicField name="attr_*" type="text_general" indexed="true" stored="true" multiValued="true"/>
@@ -512,6 +500,18 @@
 
 
     <!-- Hydra/ActiveFedora dynamic field definitions -->
+
+    <!-- text (_t...) -->
+    <dynamicField name="*_ti" type="text" stored="false" indexed="true" multiValued="false"/>
+    <dynamicField name="*_tim" type="text" stored="false" indexed="true" multiValued="true"/>
+    <dynamicField name="*_ts" type="text" stored="true" indexed="false" multiValued="false"/>
+    <dynamicField name="*_tsm" type="text" stored="true" indexed="false" multiValued="true"/>
+    <dynamicField name="*_tsi" type="text" stored="true" indexed="true" multiValued="false"/>
+    <dynamicField name="*_tsim" type="text" stored="true" indexed="true" multiValued="true"/>
+    <dynamicField name="*_tiv" type="text" stored="false" indexed="true" multiValued="false" termVectors="true" termPositions="true" termOffsets="true"/>
+    <dynamicField name="*_timv" type="text" stored="false" indexed="true" multiValued="true" termVectors="true" termPositions="true" termOffsets="true"/>
+    <dynamicField name="*_tsiv" type="text" stored="true" indexed="true" multiValued="false" termVectors="true" termPositions="true" termOffsets="true"/>
+    <dynamicField name="*_tsimv" type="text" stored="true" indexed="true" multiValued="true" termVectors="true" termPositions="true" termOffsets="true"/>
 
     <!-- date (_dt...) -->
     <!-- The format for this date field is of the form 1995-12-31T23:59:59Z

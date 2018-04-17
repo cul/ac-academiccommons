@@ -1,6 +1,7 @@
 {
   "id": "actest:1",
   "fedora3_pid_ssi": "actest:1",
+  "fedora3_uri_ssi": "info:fedora/actest:1",
   "record_creation_dtsi": "2016-09-14T16:31:33Z",
   "record_change_dtsi": "2016-09-14T16:48:05Z",
   "advisor_uni_ssim": [
