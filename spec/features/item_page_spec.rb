@@ -2,7 +2,7 @@ require 'rails_helper'
 
 describe 'Item Page', type: :feature do
   before do
-    visit solr_document_path('actest:1')
+    visit solr_document_path('10.7916/ALICE')
   end
 
   it 'has the fixture object' do
