@@ -126,33 +126,29 @@
       position: static;
     }
 
-    & #sidebar.affix-top {
-      position: static;
+    & .affix,
+    & .affix-bottom,
+    & .affix-top {
       width: 234px;
     }
 
-    & #sidebar.affix,
-    & #sidebar.affix-bottom {
-      width: 234px;
-    }
-
-    & #sidebar.affix {
+    & .affix {
       position: fixed;
       top: 0;
     }
 
-    & #sidebar.affix-bottom {
+    & .affix-bottom {
       position: absolute;
     }
 
 	  & ul.anchor-links li {
-				display: block;
-	      line-height: 2;
-	    }
+			display: block;
+      line-height: 2;
+    }
 
 	  & ul.anchor-links li::after {
-				content: none;
-			}
+			content: none;
+		}
 
 		& #main-content {
 			border-left: 1px solid $gray-lighter;
