@@ -67,8 +67,8 @@ describe SolrDocumentsController, type: :controller do
         before do
           allow(ActiveFedora::Base).to receive(:find).with('good:id').and_return(mock_object)
           allow(mock_object).to receive(:pid).and_return('good:id')
-          allow(mock_object).to receive(:to_solr).and_return({})
-          expect(ActiveFedora::SolrService).to receive(:add).with({})
+          allow(mock_object).to receive(:to_solr).and_return('cul_doi_ssi' => '10.TEST/TEST')
+          expect(ActiveFedora::SolrService).to receive(:add).with('cul_doi_ssi' => '10.TEST/TEST')
           expect(controller).to receive(:notify_authors_of_new_item)
         end
         it do
