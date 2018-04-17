@@ -62,28 +62,15 @@ class SolrDocument
     fetch(:restriction_on_access_ss)
   end
 
-  # Overriding Blacklight v5.19.2 implementation of to_semantic_values to accept
-  # an array of solr fields instead of a singular solr field.
-  #
-  # This code was taken from Blacklight v6.11.1. When updating to Blacklight this
-  # code should be removed.
+  # Generates semantic_value_hash, overridden to add custom fields.
   def to_semantic_values
-    @semantic_value_hash ||= self.class.field_semantics.each_with_object(Hash.new([])) do |(key, field_names), hash|
-      ##
-      # Handles single string field_name or an array of field_names
-      value = Array.wrap(field_names).map { |field_name| self[field_name] }.flatten.compact
-
-      # Make single and multi-values all arrays, so clients
-      # don't have to know.
-      hash[key] = value unless value.empty?
+    unless @semantic_value_hash
+      super
+      # Custom values
+      @semantic_value_hash[:identifier] = full_doi
+      @semantic_value_hash[:persistent_url] = full_doi
+      @semantic_value_hash[:date] = @semantic_value_hash[:date].map(&:to_s)
     end
-
-    @semantic_value_hash ||= {}
-
-    # Custom values.
-    @semantic_value_hash[:identifier] = full_doi
-    @semantic_value_hash[:persistent_url] = full_doi
-    @semantic_value_hash[:date] = @semantic_value_hash[:date].map(&:to_s)
 
     @semantic_value_hash
   end
