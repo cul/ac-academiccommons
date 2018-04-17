@@ -98,7 +98,7 @@ class SolrDocument
 
   def assets(include_inactive: false)
     return [] unless free_to_read?(self)
-    obj_display = fetch('fedora3_pid_ssi', [])
+    obj_display = fetch('fedora3_pid_ssi', nil)
 
     member_search = {
       qt: 'search',

@@ -4,7 +4,7 @@ describe SolrDocument do
   describe '#download_path' do
     let(:document) do
       described_class.new(
-        'id' => 'actest:2', 'pid' => 'actest:2',
+        'id' => 'actest:2', 'fedora3_pid_ssi' => 'actest:2',
         'active_fedora_model_ssi' => 'GenericResource',
         'downloadable_content_type_ssi' => 'application/pdf',
         'downloadable_content_dsid_ssi' => 'CONTENT',
@@ -20,7 +20,7 @@ describe SolrDocument do
   describe '#assets' do
     let(:document) do
       described_class.new(
-        id: 'test:obj', object_state_ssi: 'A',
+        id: 'test:obj', fedora3_pid_ssi: 'test:obj', object_state_ssi: 'A',
         free_to_read_start_date_ssi: Date.current.strftime('%Y-%m-%d')
       )
     end
@@ -31,7 +31,7 @@ describe SolrDocument do
       let(:expected_params) do
         {
           qt: 'search', fl: '*',
-          fq: ["cul_member_of_ssim:\"info:fedora/#{document[:id]}\"", 'object_state_ssi:A'],
+          fq: ["cul_member_of_ssim:\"info:fedora/#{document[:fedora3_pid_ssi]}\"", 'object_state_ssi:A'],
           rows: 10_000, facet: false
         }
       end
@@ -69,7 +69,7 @@ describe SolrDocument do
           .with('select', params: expected_params)
           .and_return(solr_response)
         expect(document.assets.count).to eq 2
-        expect(document.assets.map(&:id)).to match_array ['actest:2', 'actest:10']
+        expect(document.assets.map { |a| a[:id] }).to match_array ['actest:2', 'actest:10']
       end
     end
 
@@ -123,7 +123,7 @@ describe SolrDocument do
     context 'parent doc was embargoed' do
       let(:document) do
         described_class.new(
-          id: 'test:obj',
+          id: 'test:obj', fedora3_pid_ssi: 'test:obj',
           free_to_read_start_date_ssi: Date.current.prev_day.strftime('%Y-%m-%d'),
           object_state_ssi: 'A'
         )
@@ -132,7 +132,7 @@ describe SolrDocument do
       let(:expected_params) do
         {
           qt: 'search', fl: '*',
-          fq: ["cul_member_of_ssim:\"info:fedora/#{document[:id]}\""],
+          fq: ["cul_member_of_ssim:\"info:fedora/#{document[:fedora3_pid_ssi]}\""],
           rows: 10_000, facet: false
         }
       end
