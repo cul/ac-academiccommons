@@ -1,14 +1,14 @@
 require 'rails_helper'
 
 RSpec.describe AcademicCommons::Metrics::ItemStats do
-  let(:pid) { 'actest:1' }
-  let(:doc) { SolrDocument.new(id: pid) }
+  let(:doi) { '10.7916/ALICE' }
+  let(:doc) { SolrDocument.new(cul_doi_ssi: doi) }
 
   subject { AcademicCommons::Metrics::ItemStats.new(doc) }
 
   describe '.new' do
     its(:document) { is_expected.to eq doc }
-    its(:id)       { is_expected.to eq pid }
+    its(:id)       { is_expected.to eq doi }
   end
 
   describe '#get_stat' do

@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :statistic do
-    identifier 'actest:1'
+    identifier '10.7916/ALICE'
     at_time    Time.now
 
     factory :view_stat do
@@ -12,7 +12,7 @@ FactoryBot.define do
     end
 
     factory :download_stat do
-      identifier 'actest:2'
+      identifier '10.7916/TESTDOC2'
       event Statistic::DOWNLOAD
     end
   end
