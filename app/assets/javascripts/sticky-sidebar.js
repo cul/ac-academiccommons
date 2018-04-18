@@ -3,7 +3,7 @@ $(document).ready(function(){
 
   $('#static-text #sidebar').affix({
     offset: {
-      top: 300,
+      top: 270,
       bottom: navHeight
     }
   });
