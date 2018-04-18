@@ -20,7 +20,7 @@ module V1
       success: { code: 202, message: 'successful response' },
       failure: [
         { code: 400, message: 'invalid parameter' },
-        { code: 403, message: 'not authorized' }
+        { code: 401, message: 'not authorized' }
       ]
     get '/data_feed/:key' do
       # check authorization

@@ -26,11 +26,20 @@ class API < Grape::API
                    'and only show the most commonly used fields. The `/record` '\
                    'endpoint will display all the fields. Frequent consumers '\
                    'of this api, may be interested in setting up a `data_feed/`'\
-                   ' for their specific purposes. Data feeds require authentication'\
-                   ', but have the benefit of displaying the entire record and '\
-                   'not having an upper limit on the number of results displayed. '\
+                   ' for their specific purposes. Data feeds require authentication '\
+                   '(via HTTP Token Authentication), but have the benefit of '\
+                   'displaying the entire record and not having an upper limit '\
+                   'on the number of results displayed.'\
                    "\n\n All endpoints accept `format` as a query parameter to "\
-                   'specify format response instead of accept headers. For example: `format=json`',
+                   'specify format response instead of accept headers. For example: `format=json`'\
+                   "\n\n RSS responses are only available for the `/search` endpoint. "\
+                   'This response returns a link to the search and contains an '\
+                   'xml/rss serialization of each record. Multiple authors are '\
+                   'separated by `;`. Multiple subjects, departments and types '\
+                   'are separated by `,`. Because of the limitations of the rss '\
+                   'specification this format will not display facets and other '\
+                   'details shown in the json serialization. The guid should be '\
+                   'used when linking to any resource.',
      contact_name: 'Academic Commons Staff',
      contact_email: 'ac@columbia.edu'
     },
