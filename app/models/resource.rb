@@ -16,7 +16,8 @@ class Resource < ActiveFedora::Base
         doc['downloadable_content_size_isi'] = size
       end
 
-      doc['fulltext_tsi'] = fulltext.to_s.force_encoding('utf-8').gsub(/\s+/, ' ')
+      fulltext_str = fulltext.to_s.force_encoding('utf-8').gsub(/\s+/, ' ')
+      doc['fulltext_tsi'] = fulltext_str unless fulltext_str.blank?
     end
   end
 
