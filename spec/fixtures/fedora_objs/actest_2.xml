@@ -42,12 +42,13 @@
   <foxml:datastream ID="RELS-EXT" STATE="A" CONTROL_GROUP="X" VERSIONABLE="true">
     <foxml:datastreamVersion ID="RELS-EXT1.0" LABEL="RDF Statements about this object" CREATED="2016-09-14T16:48:52.000Z" MIMETYPE="application/rdf+xml" FORMAT_URI="info:fedora/fedora-system:FedoraRELSExt-1.0" SIZE="857">
       <foxml:xmlContent>
-        <rdf:RDF xmlns:fedora-model="info:fedora/fedora-system:def/model#" xmlns:dcmi="http://purl.org/dc/terms/" xmlns:si-basic="http://purl.oclc.org/NET/CUL/RESOURCE/STILLIMAGE/BASIC/" xmlns:si-assess="http://purl.oclc.org/NET/CUL/RESOURCE/STILLIMAGE/ASSESSMENT/" xmlns:local="http://purl.oclc.org/NET/CUL/" xmlns:rel="info:fedora/fedora-system:def/relations-external#" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+        <rdf:RDF xmlns:fedora-model="info:fedora/fedora-system:def/model#" xmlns:dcmi="http://purl.org/dc/terms/" xmlns:si-basic="http://purl.oclc.org/NET/CUL/RESOURCE/STILLIMAGE/BASIC/" xmlns:si-assess="http://purl.oclc.org/NET/CUL/RESOURCE/STILLIMAGE/ASSESSMENT/" xmlns:local="http://purl.oclc.org/NET/CUL/" xmlns:rel="info:fedora/fedora-system:def/relations-external#" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:bibo="http://purl.org/ontology/bibo/">
           <rdf:Description rdf:about="info:fedora/actest:2">
             <rdf:type rdf:resource="http://purl.oclc.org/NET/CUL/Resource"></rdf:type>
             <fedora-model:hasModel rdf:resource="info:fedora/ldpd:Resource"></fedora-model:hasModel>
             <local:memberOf rdf:resource="info:fedora/actest:1"></local:memberOf>
             <cc:license rdf:resource="info:fedora/"></cc:license>
+            <bibo:doi rdf:resource="doi:10.7916/TESTDOC2"/>
           </rdf:Description>
         </rdf:RDF>
       </foxml:xmlContent>
