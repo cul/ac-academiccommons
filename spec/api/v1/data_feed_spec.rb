@@ -82,13 +82,10 @@ describe 'GET /api/v1/data_feed/:key', type: :request do
                  'degree_level_ssim' => ['1'],
                  'degree_level_name_ssim' => ['Master\'s'],
                  'degree_name_ssim' => ['M.S.'],
-                 'degree_grantor_ssim': ['Columbia University'],
-                 'degree_discipline_ssim': ['Biotechnology'],
-                 'degree_level_ssim': ['1'],
-                 'degree_level_name_ssim': ['Master\'s'],
+                 'degree_discipline_ssim' => ['Biotechnology'],
                  'notes' => ['M.S. Columbia University'],
                  'free_to_read_start_date' => '2018-01-01',
-                 'thesis_advisor': ['Smith, John']
+                 'thesis_advisor' => ['Smith, John']
                }
              ]
            }
