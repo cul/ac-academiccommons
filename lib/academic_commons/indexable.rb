@@ -346,6 +346,7 @@ module AcademicCommons
       if degree = mods.at_css("> extension > degree")
         add_field.call("degree_name_ssim", degree.at_css("name"))
         add_field.call("degree_grantor_ssim",  degree.at_css("grantor"))
+        add_field.call("degree_discipline_ssim", degree.at_css("discipline"))
 
         level = degree.at_css("level").text
         add_field.call("degree_level_ssim", level)

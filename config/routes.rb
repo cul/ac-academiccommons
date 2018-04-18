@@ -8,6 +8,8 @@ AcademicCommons::Application.routes.draw do
 
   root :to => "catalog#index"
 
+  mount API => '/'
+
   get "info/about"
 
   get '/catalog/browse/departments', :to => 'catalog#browse_department', :as => 'departments_browse'

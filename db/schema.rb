@@ -11,23 +11,23 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170821153702) do
+ActiveRecord::Schema.define(version: 20180404154442) do
 
   create_table "agreements", force: :cascade do |t|
     t.string   "uni"
     t.string   "name"
     t.string   "email"
     t.string   "agreement_version"
-    t.datetime "created_at",        null: false
-    t.datetime "updated_at",        null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "bookmarks", force: :cascade do |t|
     t.integer  "user_id",     null: false
     t.string   "document_id"
     t.string   "title"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.string   "user_type"
   end
 
@@ -35,8 +35,8 @@ ActiveRecord::Schema.define(version: 20170821153702) do
     t.string   "title",      null: false
     t.integer  "user_id",    null: false
     t.text     "data"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   add_index "content_blocks", ["title"], name: "index_content_blocks_on_title"
@@ -54,21 +54,22 @@ ActiveRecord::Schema.define(version: 20170821153702) do
     t.string   "doi_pmcid"
     t.text     "notes"
     t.boolean  "archived",          default: false
-    t.datetime "created_at",                        null: false
-    t.datetime "updated_at",                        null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "email_preferences", force: :cascade do |t|
     t.string   "author",          null: false
     t.boolean  "monthly_opt_out"
     t.string   "email"
-    t.datetime "created_at",      null: false
-    t.datetime "updated_at",      null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   add_index "email_preferences", ["author", "monthly_opt_out"], name: "index_email_preferences_on_author_and_monthly_opt_out"
 
-  create_table "eventlogs", force: :cascade do |t|
+  create_table "eventlogs", id: false, force: :cascade do |t|
+    t.integer  "id"
     t.string   "event_name"
     t.string   "user_name"
     t.string   "uid"
@@ -77,7 +78,8 @@ ActiveRecord::Schema.define(version: 20170821153702) do
     t.datetime "timestamp"
   end
 
-  create_table "logvalues", force: :cascade do |t|
+  create_table "logvalues", id: false, force: :cascade do |t|
+    t.integer "id"
     t.integer "eventlog_id"
     t.string  "param_name"
     t.string  "value"
@@ -99,8 +101,8 @@ ActiveRecord::Schema.define(version: 20170821153702) do
   create_table "searches", force: :cascade do |t|
     t.text     "query_params"
     t.integer  "user_id"
-    t.datetime "created_at",   null: false
-    t.datetime "updated_at",   null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.string   "user_type"
   end
 
@@ -109,8 +111,8 @@ ActiveRecord::Schema.define(version: 20170821153702) do
   create_table "sessions", force: :cascade do |t|
     t.string   "session_id", null: false
     t.text     "data"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   add_index "sessions", ["session_id"], name: "index_sessions_on_session_id"
@@ -123,8 +125,8 @@ ActiveRecord::Schema.define(version: 20170821153702) do
     t.string   "identifier"
     t.string   "result"
     t.datetime "at_time",    null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   add_index "statistics", ["at_time"], name: "index_statistics_on_at_time"
@@ -145,6 +147,17 @@ ActiveRecord::Schema.define(version: 20170821153702) do
     t.string "name"
   end
 
+  create_table "tokens", force: :cascade do |t|
+    t.string "token",         null: false
+    t.string "scope",         null: false
+    t.string "contact_email"
+    t.text   "description"
+  end
+
+  add_index "tokens", ["scope", "token"], name: "index_tokens_on_scope_and_token"
+  add_index "tokens", ["scope"], name: "index_tokens_on_scope"
+  add_index "tokens", ["token"], name: "index_tokens_on_token", unique: true
+
   create_table "users", force: :cascade do |t|
     t.string   "first_name"
     t.string   "last_name"
@@ -160,8 +173,8 @@ ActiveRecord::Schema.define(version: 20170821153702) do
     t.datetime "current_sign_in_at"
     t.string   "last_sign_in_ip"
     t.string   "current_sign_in_ip"
-    t.datetime "created_at",                         null: false
-    t.datetime "updated_at",                         null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.string   "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
