@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170821153702) do
+ActiveRecord::Schema.define(version: 20180404154442) do
 
   create_table "agreements", force: :cascade do |t|
     t.string   "uni"
@@ -146,6 +146,17 @@ ActiveRecord::Schema.define(version: 20170821153702) do
   create_table "tags", force: :cascade do |t|
     t.string "name"
   end
+
+  create_table "tokens", force: :cascade do |t|
+    t.string "token",         null: false
+    t.string "scope",         null: false
+    t.string "contact_email"
+    t.text   "description"
+  end
+
+  add_index "tokens", ["scope", "token"], name: "index_tokens_on_scope_and_token"
+  add_index "tokens", ["scope"], name: "index_tokens_on_scope"
+  add_index "tokens", ["token"], name: "index_tokens_on_token", unique: true
 
   create_table "users", force: :cascade do |t|
     t.string   "first_name"

@@ -1,3 +1,4 @@
+require 'academic_commons'
 class SolrDocument
   include Blacklight::Solr::Document
   include BlacklightOaiProvider::SolrDocument
@@ -20,6 +21,7 @@ class SolrDocument
   # Recommendation: Use field names from Dublin Core
   use_extension(Blacklight::Document::DublinCore)
 
+  # Normalized field names
   field_semantics.merge!(
     title: 'title_ssi',
     author: 'author_ssim',
@@ -31,19 +33,21 @@ class SolrDocument
     description: 'abstract_ssi',
     language: 'language_ssim',
     abstract: 'abstract_ssi',
-    department: 'department_facet',
-    genre: 'genre_facet',
-    created_at: 'record_creation_date',
-    modified_at: 'record_change_date',
+    department: 'department_ssim',
+    genre: 'genre_ssim',
+    created_at: 'record_creation_dtsi',
+    id: 'cul_doi_ssi',
+    legacy_id: 'id',
+    modified_at: 'record_change_dtsi',
     degree_name: 'degree_name_ssim',
     degree_level: 'degree_level_name_ssim',
     degree_grantor: 'degree_grantor_ssim',
     degree_discipline: 'degree_discipline_ssim',
-    columbia_series: 'series_facet', # Only columbia series.
-    thesis_advisor: 'thesis_advisor',
-    embargo_end: 'free_to_read_start_date',
-    notes: 'notes',
-    author_id: 'author_uni'
+    columbia_series: 'series_ssim', # Only columbia series.
+    thesis_advisor: 'thesis_advisor_ssim',
+    embargo_end: 'free_to_read_start_date_ssi',
+    notes: 'notes_ssim',
+    author_id: 'author_uni_ssim'
   )
 
   def embargoed?
@@ -78,6 +82,8 @@ class SolrDocument
 
     # Custom values.
     @semantic_value_hash[:identifier] = full_doi
+    @semantic_value_hash[:persistent_url] = full_doi
+    @semantic_value_hash[:date] = @semantic_value_hash[:date].map(&:to_s)
 
     @semantic_value_hash
   end

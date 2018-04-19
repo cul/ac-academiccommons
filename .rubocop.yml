@@ -7,6 +7,7 @@ Rails:
 
 AllCops:
   TargetRubyVersion: 2.3.3
+  TargetRailsVersion: 4.2
   Include:
     - '**/Rakefile'
     - '**/config.ru'
@@ -21,6 +22,11 @@ Style/Documentation:
 
 Style/FrozenStringLiteralComment:
   Enabled: false
+
+Style/SymbolArray:
+  Exclude:
+    - 'lib/tasks/**/*'
+    - Rakefile
 
 Metrics/AbcSize:
   Exclude:
