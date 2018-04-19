@@ -94,9 +94,7 @@ class CatalogController < ApplicationController
 
     config.add_index_field 'author_ssim',  label: 'Authors',
                                            separator_options: { words_connector: '; ', two_words_connector: '; ', last_word_connector: '; ' }
-    config.add_index_field 'subject_ssim', label: 'Subjects',
-                                           separator_options: { words_connector: ' | ', two_words_connector: ', ', last_word_connector: ' | ' }
-
+    config.add_index_field 'subject_ssim', label: 'Subjects', helper_method: :wrap_in_spans
     config.add_index_field 'pub_date_isi', label: 'Date'
     config.add_index_field 'genre_ssim',   label: 'Type'
 
