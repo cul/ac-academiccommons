@@ -1,4 +1,5 @@
 AcademicCommons::Application.routes.draw do
+  concern :range_searchable, BlacklightRangeLimit::Routes::RangeSearchable.new
   devise_for :users, controllers: { sessions: 'users/sessions', :omniauth_callbacks => "users/omniauth_callbacks" }
 
   devise_scope :user do
@@ -29,6 +30,7 @@ AcademicCommons::Application.routes.draw do
   resource :catalog, only: [:index], controller: 'catalog' do
     concerns :oai_provider
     concerns :searchable
+    concerns :range_searchable
   end
 
   # Routes for solr document
