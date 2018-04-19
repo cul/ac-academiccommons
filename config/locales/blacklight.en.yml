@@ -28,7 +28,7 @@ en:
         submit: ''
       zero_results:
         modify_search: "Try modifying your search:"
-        use_fewer_keywords: "use fewer keywords to start, then refine your search using the links in the sidebar."
+        use_fewer_keywords: "use fewer keywords to start, then refine your search using the links in the 'Refine Your Search' sidebar."
 
     tools:
       download_button: 'Download'

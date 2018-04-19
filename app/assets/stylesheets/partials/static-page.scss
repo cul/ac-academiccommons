@@ -22,12 +22,12 @@
 
   & h1 {
     margin: 0;
-		padding-bottom: 10px;
+		padding-bottom: 15px;
   }
 
   & h2 {
     display: inline-block;
-    margin: 0 0 20px 0;
+    margin: 0 0 15px 0;
     padding-top: 30px;
   }
 
@@ -51,9 +51,6 @@
   }
 
 	& p.intro {
-		font-size: 21px;
-		letter-spacing: .4px;
-		line-height: 1.8;
 		padding-top: 30px;
 	}
 
@@ -153,10 +150,6 @@
 		& #main-content {
 			border-left: 1px solid $gray-lighter;
 			padding: 0 40px;
-		}
-
-		& h1 {
-			padding-bottom: 40px;
 		}
 
 		& p,
