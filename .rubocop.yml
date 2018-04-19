@@ -24,7 +24,6 @@ Style/FrozenStringLiteralComment:
   Enabled: false
 
 Style/SymbolArray:
-  EnforcedStyle: percent
   Exclude:
     - 'lib/tasks/**/*'
     - Rakefile
