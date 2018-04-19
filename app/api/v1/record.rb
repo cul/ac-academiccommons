@@ -9,7 +9,7 @@ module V1
         solr_parameters = {
           rows: 1,
           fq: [
-            "handle:\"#{doi}\"",
+            "cul_doi_ssi:\"#{doi}\"",
             "has_model_ssim:\"#{ContentAggregator.to_class_uri}\"",
           ],
           fl: '*', # default blacklight solr param

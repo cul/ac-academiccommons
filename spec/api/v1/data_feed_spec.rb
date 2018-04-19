@@ -48,7 +48,7 @@ describe 'GET /api/v1/data_feed/:key', type: :request do
        let(:parameters) do
          {
            q: nil, sort: nil, start: 0, rows: 100000,
-           fq: ["has_model_ssim:\"#{ContentAggregator.to_class_uri}\"", 'genre_facet:"Theses"', 'degree_level_name_ssim:"Master\'s"'],
+           fq: ["has_model_ssim:\"#{ContentAggregator.to_class_uri}\"", 'genre_ssim:"Theses"', 'degree_level_name_ssim:"Master\'s"'],
            fl: '*', qt: 'search'
          }
        end
@@ -60,32 +60,26 @@ describe 'GET /api/v1/data_feed/:key', type: :request do
              'docs' => [
                {
                  'id' => 'actest:9',
-                 'record_creation_date' => '2011-02-25T18:57:00Z',
-                 'record_change_date' => '2011-02-25T18:57:00Z',
-                 'language' => 'English',
-                 'date_issued' => '2009',
-                 'handle' => '10.7916/D8WS9153',
-                 'title_display' => 'The Warburg effect and its role in cancer detection and therapy',
-                 'author_info' => ['Christ, Ethan J. : ec2038 :'],
-                 'author_facet' => ['Christ, Ethan J.'],
-                 'author_display' => 'Christ, Ethan J.',
-                 'pub_date_facet' => ['2009'],
-                 'genre_facet' => ['Theses'],
-                 'abstract' => 'The Warburg effect is a cellular phenomenon in cancer cells...',
-                 'subject_facet' => ['Biology'],
-                 'type_of_resource_mods' => ['text'],
-                 'type_of_resource_facet' => ['Text'],
-                 'organization_facet' => ['Columbia University'],
-                 'department_facet' => ['Biotechnology'],
+                 'record_creation_dtsi' => '2011-02-25T18:57:00Z',
+                 'record_change_dtsi' => '2011-02-25T18:57:00Z',
+                 'language_ssim' => 'English',
+                 'cul_doi_ssi' => '10.7916/D8WS9153',
+                 'title_ssi' => 'The Warburg effect and its role in cancer detection and therapy',
+                 'author_ssim' => ['Christ, Ethan J.'],
+                 'pub_date_isi' => '2009',
+                 'genre_ssim' => ['Theses'],
+                 'abstract_ssi' => 'The Warburg effect is a cellular phenomenon in cancer cells...',
+                 'subject_ssim' => ['Biology'],
+                 'department_ssim' => ['Biotechnology'],
                  'degree_name_ssim' => ['M.S.'],
                  'degree_grantor_ssim' => ['Columbia University'],
                  'degree_level_ssim' => ['1'],
                  'degree_level_name_ssim' => ['Master\'s'],
                  'degree_name_ssim' => ['M.S.'],
                  'degree_discipline_ssim' => ['Biotechnology'],
-                 'notes' => ['M.S. Columbia University'],
-                 'free_to_read_start_date' => '2018-01-01',
-                 'thesis_advisor' => ['Smith, John']
+                 'notes_ssim' => ['M.S. Columbia University'],
+                 'free_to_read_start_date_ssi' => '2018-01-01',
+                 'thesis_advisor_ssim' => ['Smith, John']
                }
              ]
            }

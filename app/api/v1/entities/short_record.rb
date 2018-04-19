@@ -1,6 +1,8 @@
 module V1::Entities
   class ShortRecord < Grape::Entity
     format_with(:singular) { |v| v.first }
+        format_with(:singular) { |v| v.first }
+
 
     with_options(format_with: :singular) do
       expose :id

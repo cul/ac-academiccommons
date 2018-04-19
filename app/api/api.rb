@@ -40,8 +40,8 @@ class API < Grape::API
                    'specification this format will not display facets and other '\
                    'details shown in the json serialization. The guid should be '\
                    'used when linking to any resource.',
-     contact_name: 'Academic Commons Staff',
-     contact_email: 'ac@columbia.edu'
+      contact_name: 'Academic Commons Staff',
+      contact_email: 'ac@columbia.edu'
     },
     tags: [
       { name: 'search', description: 'Search for records' },

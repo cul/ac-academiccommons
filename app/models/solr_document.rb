@@ -83,6 +83,7 @@ class SolrDocument
     # Custom values.
     @semantic_value_hash[:identifier] = full_doi
     @semantic_value_hash[:persistent_url] = full_doi
+    @semantic_value_hash[:date] = @semantic_value_hash[:date].map(&:to_s)
 
     @semantic_value_hash
   end

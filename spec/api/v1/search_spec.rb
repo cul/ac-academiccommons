@@ -5,14 +5,14 @@ describe 'GET /api/v1/search', type: :request do
   let(:empty_response) { { 'response' => { 'docs' => [] } } }
   let(:base_parameters) do
     {
-      q: nil, sort: 'score desc, pub_date_sort desc, title_sort asc',
+      q: nil, sort: 'score desc, pub_date_isi desc, title_ssi asc',
       start: 0, rows: 25,
       fq: ['has_model_ssim:"info:fedora/ldpd:ContentAggregator"'],
       fl: '*', qt: 'search', facet: 'true',
-      'facet.field' => ['author_facet', 'pub_date_facet', 'department_facet', 'subject_facet', 'genre_facet', 'series_facet'],
-      'f.author_facet.limit' => 5, 'f.pub_date_facet.limit' => 5,
-      'f.department_facet.limit' => 5, 'f.subject_facet.limit' => 5,
-      'f.genre_facet.limit' => 5, 'f.series_facet.limit' => 5
+      'facet.field' => ['author_ssim', 'pub_date_isi', 'department_ssim', 'subject_ssim', 'genre_ssim', 'series_ssim'],
+      'f.author_ssim.limit' => 5, 'f.pub_date_isi.limit' => 5,
+      'f.department_ssim.limit' => 5, 'f.subject_ssim.limit' => 5,
+      'f.genre_ssim.limit' => 5, 'f.series_ssim.limit' => 5
     }
   end
 
@@ -30,7 +30,7 @@ describe 'GET /api/v1/search', type: :request do
     context 'by departments' do
       let(:parameters) do
         base_parameters.merge(
-          fq: ['has_model_ssim:"info:fedora/ldpd:ContentAggregator"', 'department_facet:"Computer Science"', 'department_facet:"Bioinformatics"'],
+          fq: ['has_model_ssim:"info:fedora/ldpd:ContentAggregator"', 'department_ssim:"Computer Science"', 'department_ssim:"Bioinformatics"'],
         )
       end
 
@@ -44,7 +44,7 @@ describe 'GET /api/v1/search', type: :request do
     context 'by author' do
       let(:parameters) do
         base_parameters.merge(
-          fq: ['has_model_ssim:"info:fedora/ldpd:ContentAggregator"', 'author_facet:"Carroll, Lewis"'],
+          fq: ['has_model_ssim:"info:fedora/ldpd:ContentAggregator"', 'author_ssim:"Carroll, Lewis"'],
         )
       end
 
@@ -58,7 +58,7 @@ describe 'GET /api/v1/search', type: :request do
     context 'by author id' do
       let(:parameters) do
         base_parameters.merge(
-          fq: ['has_model_ssim:"info:fedora/ldpd:ContentAggregator"', 'author_uni:"abc123"'],
+          fq: ['has_model_ssim:"info:fedora/ldpd:ContentAggregator"', 'author_uni_ssim:"abc123"'],
         )
       end
 
@@ -93,7 +93,7 @@ describe 'GET /api/v1/search', type: :request do
   end
 
   context 'applies sort order' do
-    let(:parameters) { base_parameters.merge(sort: 'title_sort asc, pub_date_sort desc') }
+    let(:parameters) { base_parameters.merge(sort: 'title_ssi asc, pub_date_isi desc') }
 
     it 'creates correct solr query' do
       allow(AcademicCommons::Utils).to receive(:rsolr).and_return(connection)
