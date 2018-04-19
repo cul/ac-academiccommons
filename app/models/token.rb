@@ -1,6 +1,6 @@
 class Token < ActiveRecord::Base
   DATAFEED = :data_feed
-  SCOPES = [DATAFEED]
+  SCOPES = [DATAFEED].freeze
 
   validates :scope, presence: true
   validates :token, presence: true, uniqueness: true

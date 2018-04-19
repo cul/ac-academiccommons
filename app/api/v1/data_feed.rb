@@ -9,19 +9,19 @@ module V1
 
     DEFAULT_PARAMS = {
       'sort' => 'best_match', 'order': 'desc', 'page': 1, 'per_page': 100_000
-    }
+    }.freeze
 
-    auth :http_token do |token, options|
+    auth :http_token do |token, _options|
       valid_tokens = Token.where(scope: Token::DATAFEED).map(&:token)
       valid_tokens.include?(token)
     end
 
     desc 'Retrieves data feed. Key maps to a set of preconfigured search results',
-      success: { code: 202, message: 'successful response' },
-      failure: [
-        { code: 400, message: 'invalid parameter' },
-        { code: 401, message: 'not authorized' }
-      ]
+         success: { code: 202, message: 'successful response' },
+         failure: [
+           { code: 400, message: 'invalid parameter' },
+           { code: 401, message: 'not authorized' }
+         ]
     get '/data_feed/:key' do
       # check authorization
       # error! 'Access Denied', 401 if credentials not valid

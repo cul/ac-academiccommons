@@ -3,12 +3,9 @@ require 'rails_helper'
 describe 'GET /api/v1/record/doi/:doi', type: :request do
   context 'when doi correct' do
     before { get '/api/v1/record/doi/10.7916/ALICE' }
-    it 'should return 200' do
-      expect(response.status).to be 200
-    end
 
-    it 'should return response body with correct record information' do
-      expect(JSON.load(response.body)).to match({
+    let(:expected_json) do
+      {
         'abstract' => 'Background -  Alice is feeling bored and drowsy while sitting on the riverbank with her older sister, who is reading a book with no pictures or conversations.',
         'author' => ['Carroll, Lewis', 'Weird Old Guys.'],
         'columbia_series' => [],
@@ -29,15 +26,23 @@ describe 'GET /api/v1/record/doi/:doi', type: :request do
         'subject' => ['Tea Parties', 'Wonderland', 'Rabbits', 'Nonsense literature', 'Bildungsromans'],
         'thesis_advisor' => [],
         'title' => 'Alice\'s Adventures in Wonderland',
-        'type' => ['Articles'],
-        })
-      end
+        'type' => ['Articles']
+      }
+    end
+
+    it 'returns 200' do
+      expect(response.status).to be 200
+    end
+
+    it 'returns response body with correct record information' do
+      expect(JSON.parse(response.body)).to match(expected_json)
+    end
   end
 
   context 'when doi incorrect' do
     before { get '/api/v1/record/doi/10.48472/KDF84' }
 
-    it 'should return 404' do
+    it 'returns 404' do
       expect(response.status).to be 404
     end
   end

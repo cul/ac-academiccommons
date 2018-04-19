@@ -21,7 +21,7 @@ describe 'GET /api/v1/search', type: :request do
 
     it 'creates correct solr query' do
       allow(AcademicCommons::Utils).to receive(:rsolr).and_return(connection)
-      expect(connection).to receive(:get).with('select', { params: parameters }).and_return(empty_response)
+      expect(connection).to receive(:get).with('select', params: parameters).and_return(empty_response)
       get '/api/v1/search?format=rss&q=alice'
     end
   end
@@ -30,13 +30,13 @@ describe 'GET /api/v1/search', type: :request do
     context 'by departments' do
       let(:parameters) do
         base_parameters.merge(
-          fq: ['has_model_ssim:"info:fedora/ldpd:ContentAggregator"', 'department_ssim:"Computer Science"', 'department_ssim:"Bioinformatics"'],
+          fq: ['has_model_ssim:"info:fedora/ldpd:ContentAggregator"', 'department_ssim:"Computer Science"', 'department_ssim:"Bioinformatics"']
         )
       end
 
       it 'creates correct solr query' do
         allow(AcademicCommons::Utils).to receive(:rsolr).and_return(connection)
-        expect(connection).to receive(:get).with('select', { params: parameters }).and_return(empty_response)
+        expect(connection).to receive(:get).with('select', params: parameters).and_return(empty_response)
         get '/api/v1/search?department[]=Computer+Science&department[]=Bioinformatics'
       end
     end
@@ -44,13 +44,13 @@ describe 'GET /api/v1/search', type: :request do
     context 'by author' do
       let(:parameters) do
         base_parameters.merge(
-          fq: ['has_model_ssim:"info:fedora/ldpd:ContentAggregator"', 'author_ssim:"Carroll, Lewis"'],
+          fq: ['has_model_ssim:"info:fedora/ldpd:ContentAggregator"', 'author_ssim:"Carroll, Lewis"']
         )
       end
 
       it 'creates correct solr query' do
         allow(AcademicCommons::Utils).to receive(:rsolr).and_return(connection)
-        expect(connection).to receive(:get).with('select', { params: parameters }).and_return(empty_response)
+        expect(connection).to receive(:get).with('select', params: parameters).and_return(empty_response)
         get '/api/v1/search?author[]=Carroll,+Lewis'
       end
     end
@@ -58,13 +58,13 @@ describe 'GET /api/v1/search', type: :request do
     context 'by author id' do
       let(:parameters) do
         base_parameters.merge(
-          fq: ['has_model_ssim:"info:fedora/ldpd:ContentAggregator"', 'author_uni_ssim:"abc123"'],
+          fq: ['has_model_ssim:"info:fedora/ldpd:ContentAggregator"', 'author_uni_ssim:"abc123"']
         )
       end
 
       it 'creates correct solr query' do
         allow(AcademicCommons::Utils).to receive(:rsolr).and_return(connection)
-        expect(connection).to receive(:get).with('select', { params: parameters }).and_return(empty_response)
+        expect(connection).to receive(:get).with('select', params: parameters).and_return(empty_response)
         get '/api/v1/search?format=rss&author_id[]=abc123'
       end
     end
@@ -79,16 +79,16 @@ describe 'GET /api/v1/search', type: :request do
 
     it 'creates correct solr query' do
       allow(AcademicCommons::Utils).to receive(:rsolr).and_return(connection)
-      expect(connection).to receive(:get).with('select', { params: parameters }).and_return(empty_response)
+      expect(connection).to receive(:get).with('select', params: parameters).and_return(empty_response)
       get '/api/v1/search?search_type=title'
     end
 
     it 'returns error if invalid search type' do
       get '/api/v1/search?search_type=foobar'
       expect(response.status).to be 400
-      expect(JSON.load(response.body)).to match({
+      expect(JSON.parse(response.body)).to match(
         'error' => 'search_type does not have a valid value'
-      })
+      )
     end
   end
 
@@ -97,16 +97,16 @@ describe 'GET /api/v1/search', type: :request do
 
     it 'creates correct solr query' do
       allow(AcademicCommons::Utils).to receive(:rsolr).and_return(connection)
-      expect(connection).to receive(:get).with('select', { params: parameters }).and_return(empty_response)
+      expect(connection).to receive(:get).with('select', params: parameters).and_return(empty_response)
       get '/api/v1/search?sort=title&order=asc'
     end
 
     it 'returns error if invalid sort' do
       get '/api/v1/search?sort=foobar'
       expect(response.status).to be 400
-      expect(JSON.load(response.body)).to match({
+      expect(JSON.parse(response.body)).to match(
         'error' => 'sort does not have a valid value'
-      })
+      )
     end
   end
 
@@ -115,27 +115,26 @@ describe 'GET /api/v1/search', type: :request do
 
     it 'creates correct solr query' do
       allow(AcademicCommons::Utils).to receive(:rsolr).and_return(connection)
-      expect(connection).to receive(:get).with('select', { params: parameters }).and_return(empty_response)
+      expect(connection).to receive(:get).with('select', params: parameters).and_return(empty_response)
       get '/api/v1/search?page=3'
     end
 
     it 'returns error if page is not a number' do
       get '/api/v1/search?page=foo'
       expect(response.status).to be 400
-      expect(JSON.load(response.body)).to match({
+      expect(JSON.parse(response.body)).to match(
         'error' => 'page is invalid, page does not have a valid value'
-      })
+      )
     end
   end
 
   context 'when searching and filtering by multiple filters' do
     before { get '/api/v1/search?type[]=Articles&date[]=1865' }
-
-    it 'returns correct json response' do
-      expect(JSON.load(response.body)).to match({
+    let(:expected_json) do
+      {
         'total_number_of_results' => 1,
         'page' => 1,
-        'params' => { 'q' => nil, 'sort' => 'best_match', 'order' => 'desc', 'search_type' => 'keyword', 'filters' => { 'date' => ['1865'], 'type' => ['Articles']}},
+        'params' => { 'q' => nil, 'sort' => 'best_match', 'order' => 'desc', 'search_type' => 'keyword', 'filters' => { 'date' => ['1865'], 'type' => ['Articles'] } },
         'per_page' => 25,
         'records' => [
           {
@@ -160,7 +159,11 @@ describe 'GET /api/v1/search', type: :request do
           'subject' => { 'Bildungsromans' => 1, 'Nonsense literature' => 1, 'Rabbits' => 1, 'Tea Parties' => 1, 'Wonderland' => 1 },
           'type' => { 'Articles' => 1 }
         }
-      })
+      }
+    end
+
+    it 'returns correct json response' do
+      expect(JSON.parse(response.body)).to match expected_json
     end
   end
 
@@ -170,14 +173,14 @@ describe 'GET /api/v1/search', type: :request do
     it 'returns an error if greater than 100' do
       get '/api/v1/search?per_page=101'
       expect(response.status).to be 400
-      expect(JSON.load(response.body)).to match({
+      expect(JSON.parse(response.body)).to match(
         'error' => 'per_page does not have a valid value'
-      })
+      )
     end
 
     it 'creates correct solr query' do # when per_page is something other than the default
       allow(AcademicCommons::Utils).to receive(:rsolr).and_return(connection)
-      expect(connection).to receive(:get).with('select', { params: parameters }).and_return(empty_response)
+      expect(connection).to receive(:get).with('select', params: parameters).and_return(empty_response)
       get '/api/v1/search?per_page=50'
     end
   end
@@ -205,7 +208,7 @@ describe 'GET /api/v1/search', type: :request do
           </item>
        </channel>
      </rss>'
-   end
+    end
 
     it 'returns correct rss feed' do
       get '/api/v1/search?format=rss&q=alice'

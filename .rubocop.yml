@@ -23,6 +23,12 @@ Style/Documentation:
 Style/FrozenStringLiteralComment:
   Enabled: false
 
+Style/SymbolArray:
+  EnforcedStyle: percent
+  Exclude:
+    - 'lib/tasks/**/*'
+    - Rakefile
+
 Metrics/AbcSize:
   Exclude:
     - 'app/models/concerns/academic_commons/desc_metadata.rb'

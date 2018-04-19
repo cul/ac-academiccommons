@@ -10,7 +10,7 @@ module V1
           rows: 1,
           fq: [
             "cul_doi_ssi:\"#{doi}\"",
-            "has_model_ssim:\"#{ContentAggregator.to_class_uri}\"",
+            "has_model_ssim:\"#{ContentAggregator.to_class_uri}\""
           ],
           fl: '*', # default blacklight solr param
           qt: 'search' # default blacklight solr param
@@ -30,7 +30,7 @@ module V1
     get '/record/doi/:doi', requirements: { doi: /10[.].*/i } do
       record = get_document(params[:doi])
       if record.blank?
-        error! "Record not found", 404
+        error! 'Record not found', 404
       else
         present SolrDocument.new(record).to_semantic_values, with: Entities::FullRecord
       end

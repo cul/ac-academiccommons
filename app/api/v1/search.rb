@@ -2,11 +2,11 @@ module V1
   class Search < Grape::API
     content_type :json, 'application/json'
     content_type :rss, 'application/rss+xml'
-    formatter :rss, ->(object, env) {
+    formatter :rss, lambda { |object, env|
       xml = Builder::XmlMarkup.new(indent: 2)
       xml.instruct! :xml, version: '1.0'
-      xml.rss(version: '2.0', 'xmlns:dc': 'http://purl.org/dc/elements/1.1', 'xmlns:vivo': 'http://vivoweb.org/ontology/core') {
-        xml.channel {
+      xml.rss(version: '2.0', 'xmlns:dc': 'http://purl.org/dc/elements/1.1', 'xmlns:vivo': 'http://vivoweb.org/ontology/core') do
+        xml.channel do
           xml.title('Academic Commons Search Results')
           xml.link(
             env['rack.url_scheme'] + '://' + env['HTTP_HOST'] + env['ORIGINAL_FULLPATH']
@@ -23,16 +23,16 @@ module V1
 
               xml.guid doc.value_for(:persistent_url)
               xml.pubDate Time.zone.parse(doc.value_for(:created_at)).rfc822
-              xml.tag!('dc:date', doc.value_for(:date))    if doc.value_for(:date).present?
+              xml.tag!('dc:date', doc.value_for(:date)) if doc.value_for(:date).present?
               xml.description doc.value_for(:abstract) if doc.value_for(:abstract).present?
 
-              xml.tag!('dc:subject', doc.value_for(:subject).join(', '))         if doc.value_for(:subject).present?
-              xml.tag!('dc:type', doc.value_for(:type).join(', '))       if doc.value_for(:type).present?
+              xml.tag!('dc:subject', doc.value_for(:subject).join(', ')) if doc.value_for(:subject).present?
+              xml.tag!('dc:type', doc.value_for(:type).join(', ')) if doc.value_for(:type).present?
               xml.tag!('vivo:Department', doc.value_for(:department).join(', ')) if doc.value_for(:department).present?
             end
           end
-        }
-      }
+        end
+      end
     }
 
     default_format :json
@@ -47,17 +47,17 @@ module V1
       optional :order,       coerce: Symbol, default: :desc,        values: V1::Helpers::Solr::ORDER, desc: 'ordering of results'
 
       Helpers::Solr::FILTERS.each do |filter|
-        optional filter, type: Array[String],  documentation: { desc: "#{filter} filter", param_type: 'query' }
+        optional filter, type: Array[String], documentation: { desc: "#{filter} filter", param_type: 'query' }
       end
     end
 
     desc 'Query to conduct searches through all Academic Commons records',
-      success: { code: 202, message: 'successful response' },
-      failure: [
-        { code: 400, message: 'invalid parameters'},
-        { code: 500, message: 'unexpected error'}
-      ],
-      produces: ['application/json', 'application/rss+xml']
+         success: { code: 202, message: 'successful response' },
+         failure: [
+           { code: 400, message: 'invalid parameters' },
+           { code: 500, message: 'unexpected error' }
+         ],
+         produces: ['application/json', 'application/rss+xml']
     get :search do
       solr_response = query_solr(params: params)
       present solr_response, with: Entities::SearchResponse, params: params
