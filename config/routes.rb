@@ -6,7 +6,7 @@ AcademicCommons::Application.routes.draw do
     get 'sign_out', :to => 'users/sessions#destroy', :as => :destroy_user_session
   end
 
-  root :to => "catalog#index"
+  root :to => "catalog#home"
 
   mount API => '/'
 

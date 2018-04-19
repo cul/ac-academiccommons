@@ -32,6 +32,10 @@ Metrics/AbcSize:
   Exclude:
     - 'app/models/concerns/academic_commons/desc_metadata.rb'
 
+Metrics/ClassLength:
+  Exclude:
+    - 'app/controllers/catalog_controller.rb'
+
 Rails/OutputSafety:
   Exclude:
     - 'app/presentors/custom_join.rb'

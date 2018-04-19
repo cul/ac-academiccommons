@@ -321,6 +321,9 @@ class CatalogController < ApplicationController
     render nothing: true
   end
 
+  def home
+    render 'home'
+  end
 
   private
 
