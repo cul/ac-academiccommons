@@ -19,6 +19,7 @@ module CatalogHelper
     [link_to(url, url)]
   end
 
+  # Combines title and part number for series. Used on item page.
   def combine_title_and_part_number(**options)
     field = options[:field]
     part_number_field = field.gsub('_ssim', '_part_number_ssim')
@@ -34,6 +35,11 @@ module CatalogHelper
 
   def link_value(**options)
     options.fetch(:value, []).map { |v| link_to(v, v) }
+  end
+
+  # Wraps spans around each value.
+  def wrap_in_spans(**options)
+    safe_join(options.fetch(:value, []).map { |v| content_tag(:span, html_escape(v)) })
   end
 
   def get_total_count

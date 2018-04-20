@@ -2,8 +2,6 @@
 
 .well {
   background: $gray-lighter-custom;
-  // box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.3);
-  // border: 3px solid $gray-lighter;
   border: none;
   box-shadow: none;
 }
@@ -14,6 +12,7 @@
 }
 
 #sortAndPerPage {
+  border-bottom: 1px dotted #ccc;
   font-size: 14px;
   margin: 0;
   padding-bottom: 10px;
@@ -31,8 +30,9 @@
   margin-bottom: 30px;
 
   & .document {
+    border-bottom: 1px dotted #ccc;
     margin: 0;
-    padding: 25px 0;
+    padding: 15px 0;
   }
 
   & .document-counter {
@@ -43,11 +43,10 @@
     font-size: 21px;
     letter-spacing: .2px;
     line-height: 1.3;
-    margin: 0 0 10px 0;
+    margin: 0 0 8px 0;
   }
 
   & .document-metadata dd {
-    color: $gray-light;
     font-size: 14px;
     margin: 0;
   }
@@ -57,24 +56,31 @@
   }
 
   & dd.blacklight-author_ssim {
-    margin: 0 0 10px 0;
+    margin: 0 0 8px 0;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
   }
 
-  & dd.blacklight-subject_ssim {
-    margin: 0 0 10px 0;
-  }
-
   & dd.blacklight-pub_date_isi,
   & dd.blacklight-genre_ssim {
     @include label-tags;
+    margin-bottom: 13px;
   }
 
   & dt.blacklight-genre_ssim,
   & dt.blacklight-pub_date_isi {
     display: none;
+  }
+
+  & dd.blacklight-subject_ssim span {
+    background: $gray-lighter-custom;
+    border-radius: 3px;
+    color: $gray-light;
+    display: inline-block;
+    margin: 0 6px 6px 0;
+    padding: 3px 7px;
+    white-space: nowrap;
   }
 }
 

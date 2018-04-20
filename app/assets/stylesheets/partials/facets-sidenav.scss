@@ -59,6 +59,10 @@
   & .remove {
     text-indent: 7px;
   }
+
+  & p.subsection {
+    font-size: 12px;
+  }
 }
 
 @media screen and (min-width: $screen-md ) {
