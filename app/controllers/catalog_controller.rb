@@ -340,41 +340,4 @@ class CatalogController < ApplicationController
       event: event, identifier: id, at_time: Time.now()
     )
   end
-
-  def custom_results
-
-   bench_start = Time.now
-
-   if (!params[:id].nil?)
-     params[:id] = nil
-   end
-
-   params[:page] = nil
-   params[:q] = params[:q].to_s
-   params[:sort] = (params[:sort].nil?) ? 'record_creation_dtsi desc' : params[:sort].to_s
-   params[:rows] = (params[:rows].nil? || params[:rows].to_s == '') ? ((params[:id].nil?) ? blacklight_config[:feed_rows] : params[:id].to_s) : params[:rows].to_s
-   params[:fq] = Array(params[:fq]).append("has_model_ssim:\"#{ContentAggregator.to_class_uri}\"")
-
-   extra_params = {}
-   extra_params[:fl] = 'title_ssi,id,author_ssim,record_creation_dtsi,cul_doi_ssi,abstract_ssi,author_uni_ssim,subject_ssim,department_ssim,genre_ssim'
-
-   if (params[:f].nil?)
-     solr_response = repository.search(params.merge(extra_params))
-   else
-    #  solr_response = repository.search(self.processed_parameters(params).merge(extra_params))
-    solr_params = search_builder.with(params).processed_parameters.merge(extra_params)
-    solr_response = repository.search(solr_params)
-
-   end
-
-   document_list = solr_response.docs.collect {|doc| SolrDocument.new(doc, solr_response)}
-
-   document_list.each do |doc|
-    doc[:pub_date] = Time.parse(doc[:record_creation_dtsi].to_s).to_s(:rfc822)
-   end
-
-   logger.info("Solr fetch: #{self.class}#custom_results (#{'%.1f' % ((Time.now.to_f - bench_start.to_f)*1000)}ms)")
-
-   return [solr_response, document_list]
-  end
 end
