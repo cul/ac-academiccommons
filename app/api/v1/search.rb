@@ -41,7 +41,7 @@ module V1
       optional :search_type, coerce: Symbol, default: :keyword,     values: V1::Helpers::Solr::SEARCH_TYPES,
                              desc: 'type of search to be conducted, in most cases a keyword search should be sufficient'
       optional :q,           type: String, desc: 'query string'
-      optional :page,        type: Integer,  default: 1,            values: ->(v) { v.positive? }, desc: 'page number'
+      optional :page,        type: Integer,  default: 1,            values: ->(v) { v.is_a?(Integer) && v.positive? }, desc: 'page number'
       optional :per_page,    type: Integer,  default: 25,           values: 1..100, desc: 'number of results returned per page; the maximum number of results is 100'
       optional :sort,        coerce: Symbol, default: :best_match,  values: V1::Helpers::Solr::SORT, desc: 'sorting of search results'
       optional :order,       coerce: Symbol, default: :desc,        values: V1::Helpers::Solr::ORDER, desc: 'ordering of results'
