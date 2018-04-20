@@ -32,7 +32,7 @@
 
   & .document {
     margin: 0;
-    padding: 25px 0;
+    padding: 15px 0;
   }
 
   & .document-counter {
@@ -43,11 +43,10 @@
     font-size: 21px;
     letter-spacing: .2px;
     line-height: 1.3;
-    margin: 0 0 10px 0;
+    margin: 0 0 8px 0;
   }
 
   & .document-metadata dd {
-    color: $gray-light;
     font-size: 14px;
     margin: 0;
   }
@@ -57,31 +56,32 @@
   }
 
   & dd.blacklight-author_ssim {
-    margin: 0 0 10px 0;
+    margin: 0 0 8px 0;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
   }
 
-  & dd.blacklight-subject_ssim {
-    margin: 0 0 10px 0;
-  }
-
-  & dd.blacklight-subject_ssim span {
-    background: $gray-lighter-custom;
-    border-radius: 3px;
-    margin: 0 5px 0 0;
-    padding: 3px 7px;
-  }
-
   & dd.blacklight-pub_date_isi,
   & dd.blacklight-genre_ssim {
     @include label-tags;
+    margin-bottom: 13px;
   }
 
   & dt.blacklight-genre_ssim,
   & dt.blacklight-pub_date_isi {
     display: none;
+  }
+
+  & dd.blacklight-subject_ssim span {
+    background: $gray-lighter-custom;
+    border-radius: 3px;
+    color: $gray-light;
+    display: inline-block;
+    margin: 0 6px 6px 0;
+    padding: 3px 7px;
+    white-space: nowrap;
+
   }
 }
 
