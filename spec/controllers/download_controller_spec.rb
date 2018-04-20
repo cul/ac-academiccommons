@@ -24,38 +24,43 @@ RSpec.describe DownloadController, type: :controller do
         allow(mock_solr).to receive(:get).and_return({'response' => {'docs' => [mock_resource]}}, {'response' => {'docs' => [mock_parent].compact}})
         get :fedora_content, uri: 'good:id', block: 'content', filename: 'foot.txt', download_method: 'download'
       end
+
       context 'resource is active, parent is active' do
-        let(:mock_resource) { SolrDocument.new(object_state_ssi: 'A', cul_member_of_ssim: ['parent:id']) }
-        let(:mock_parent) { SolrDocument.new(object_state_ssi: 'A') }
+        let(:mock_resource) { { object_state_ssi: 'A', cul_member_of_ssim: ['info:fedora/parent:id'] } }
+        let(:mock_parent) { { object_state_ssi: 'A' } }
         # it should work
         it do
           expect(response.headers['X-Accel-Redirect']).to eql('/repository_download/localhost:8983/fedora/objects/good:id/datastreams/content/content')
         end
       end
+
       context 'resource is inactive, parent is active' do
-        let(:mock_resource) { SolrDocument.new(object_state_ssi: 'I', cul_member_of_ssim: ['parent:id']) }
-        let(:mock_parent) { SolrDocument.new(object_state_ssi: 'A') }
+        let(:mock_resource) { { object_state_ssi: 'I', cul_member_of_ssim: ['info:fedora/parent:id'] } }
+        let(:mock_parent) { { object_state_ssi: 'A' } }
         # it should fail
         it do
           expect(response.headers['X-Accel-Redirect']).to be_nil
         end
       end
+
       context 'resource is active, parent is inactive' do
-        let(:mock_resource) { SolrDocument.new(object_state_ssi: 'A', cul_member_of_ssim: ['parent:id']) }
-        let(:mock_parent) { SolrDocument.new(object_state_ssi: 'I') }
+        let(:mock_resource) { { object_state_ssi: 'A', cul_member_of_ssim: ['info:fedora/parent:id'] } }
+        let(:mock_parent) { { object_state_ssi: 'I' } }
         # it should fail
         it do
           expect(response.headers['X-Accel-Redirect']).to be_nil
         end
       end
+
       context 'resource is active, parent is absent' do
-        let(:mock_resource) { SolrDocument.new(object_state_ssi: 'A', cul_member_of_ssim: ['parent:id']) }
+        let(:mock_resource) { { object_state_ssi: 'A', cul_member_of_ssim: ['info:fedora/parent:id'] } }
         let(:mock_parent) { nil }
         # it should fail
         it do
           expect(response.headers['X-Accel-Redirect']).to be_nil
         end
       end
+
       context 'resource is active, parent is not constituent of AC' do
         # it should fail
         #TODO: Implement this test when memberOf: collection3 is replaced with constituentOf
@@ -74,7 +79,7 @@ RSpec.describe DownloadController, type: :controller do
 
       context 'from active metadata resource' do
         context 'with solr document' do
-          let(:mock_resource) { SolrDocument.new(object_state_ssi: 'A', has_model_ssim: ['info:fedora/ldpd:MODSMetadata']) }
+          let(:mock_resource) { { object_state_ssi: 'A', has_model_ssim: ['info:fedora/ldpd:MODSMetadata'] } }
           it 'returns metadata' do
             get :fedora_content, uri: 'good:id', block: 'CONTENT', filename: 'metadata.txt', download_method: 'show_pretty', data: 'meta'
             expect(response.headers['Content-Type']).to include 'text/plain'
@@ -87,7 +92,7 @@ RSpec.describe DownloadController, type: :controller do
             allow(ActiveFedora::Base.find('good:id')).to receive(:to_solr).and_return({'has_model_ssim' => 'info:fedora/ldpd:MODSMetadata'})
           end
 
-          let(:mock_resource) { nil }
+          let(:mock_resource) { {} }
           it 'returns metadata' do
             get :fedora_content, uri: 'good:id', block: 'CONTENT', filename: 'metadata.txt', download_method: 'show_pretty', data: 'meta'
             expect(response.headers['Content-Type']).to include 'text/plain'
@@ -96,7 +101,7 @@ RSpec.describe DownloadController, type: :controller do
       end
 
       context 'from inactive metadata resource' do
-        let(:mock_resource) { SolrDocument.new(object_state_ssi: 'I', has_model_ssim: ['info:fedora/ldpd:MODSMetadata']) }
+        let(:mock_resource) { { object_state_ssi: 'I', has_model_ssim: ['info:fedora/ldpd:MODSMetadata'] } }
         it 'returns metadata' do
           get :fedora_content, uri: 'good:id', block: 'CONTENT', filename: 'metadata.txt', download_method: 'show_pretty', data: 'meta'
           expect(response.headers['Content-Type']).to include 'text/plain'
@@ -104,7 +109,7 @@ RSpec.describe DownloadController, type: :controller do
       end
 
       context 'from active parentless object' do
-        let(:mock_resource) { SolrDocument.new(object_state_ssi: 'A') }
+        let(:mock_resource) { { object_state_ssi: 'A' } }
         it 'returns metadata' do
           get :fedora_content, uri: 'good:id', block: 'descMetadata', filename: 'metadata.txt', download_method: 'show_pretty', data: 'meta'
           expect(response.headers['Content-Type']).to eql 'text/plain'
@@ -112,7 +117,7 @@ RSpec.describe DownloadController, type: :controller do
       end
 
       context 'from inactive parentless object' do
-        let(:mock_resource) { SolrDocument.new(object_state_ssi: 'I') }
+        let(:mock_resource) { { object_state_ssi: 'I' } }
         it 'returns metadata' do
           get :fedora_content, uri: 'good:id', block: 'descMetadata', filename: 'metadata.txt', download_method: 'show_pretty', data: 'meta'
           expect(response.headers['Content-Type']).to eql 'text/plain'
