@@ -1,4 +1,5 @@
 require 'academic_commons'
+require 'academic_commons/date_trend'
 
 module CatalogHelper
   include Blacklight::CatalogHelperBehavior
