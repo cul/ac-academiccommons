@@ -1,2 +1,2 @@
-class EmailPreference < ActiveRecord::Base
+class EmailPreference < ApplicationRecord
 end

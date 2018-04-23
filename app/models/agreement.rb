@@ -1,4 +1,4 @@
-class Agreement < ActiveRecord::Base
+class Agreement < ApplicationRecord
 
  def self.to_csv
     CSV.generate do |csv|
