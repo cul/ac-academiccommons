@@ -5,7 +5,7 @@ RSpec.describe DownloadController, type: :controller do
     include_context 'log'
 
     include_examples 'authorization required' do
-      let(:http_request) { get :download_log, log_folder: 'ac-indexing', id: id }
+      let(:http_request) { get :download_log, params: { log_folder: 'ac-indexing', id: id } }
     end
   end
 
@@ -22,7 +22,7 @@ RSpec.describe DownloadController, type: :controller do
     context 'when downloading resource' do
       before do
         allow(mock_solr).to receive(:get).and_return({'response' => {'docs' => [mock_resource]}}, {'response' => {'docs' => [mock_parent].compact}})
-        get :fedora_content, uri: 'good:id', block: 'content', filename: 'foot.txt', download_method: 'download'
+        get :fedora_content, params: { uri: 'good:id', block: 'content', filename: 'foot.txt', download_method: 'download' }
       end
 
       context 'resource is active, parent is active' do
@@ -81,7 +81,7 @@ RSpec.describe DownloadController, type: :controller do
         context 'with solr document' do
           let(:mock_resource) { { object_state_ssi: 'A', has_model_ssim: ['info:fedora/ldpd:MODSMetadata'] } }
           it 'returns metadata' do
-            get :fedora_content, uri: 'good:id', block: 'CONTENT', filename: 'metadata.txt', download_method: 'show_pretty', data: 'meta'
+            get :fedora_content, params: { uri: 'good:id', block: 'CONTENT', filename: 'metadata.txt', download_method: 'show_pretty', data: 'meta' }
             expect(response.headers['Content-Type']).to include 'text/plain'
           end
         end
@@ -94,7 +94,7 @@ RSpec.describe DownloadController, type: :controller do
 
           let(:mock_resource) { {} }
           it 'returns metadata' do
-            get :fedora_content, uri: 'good:id', block: 'CONTENT', filename: 'metadata.txt', download_method: 'show_pretty', data: 'meta'
+            get :fedora_content, params: { uri: 'good:id', block: 'CONTENT', filename: 'metadata.txt', download_method: 'show_pretty', data: 'meta' }
             expect(response.headers['Content-Type']).to include 'text/plain'
           end
         end
@@ -103,7 +103,7 @@ RSpec.describe DownloadController, type: :controller do
       context 'from inactive metadata resource' do
         let(:mock_resource) { { object_state_ssi: 'I', has_model_ssim: ['info:fedora/ldpd:MODSMetadata'] } }
         it 'returns metadata' do
-          get :fedora_content, uri: 'good:id', block: 'CONTENT', filename: 'metadata.txt', download_method: 'show_pretty', data: 'meta'
+          get :fedora_content, params: { uri: 'good:id', block: 'CONTENT', filename: 'metadata.txt', download_method: 'show_pretty', data: 'meta' }
           expect(response.headers['Content-Type']).to include 'text/plain'
         end
       end
@@ -111,7 +111,7 @@ RSpec.describe DownloadController, type: :controller do
       context 'from active parentless object' do
         let(:mock_resource) { { object_state_ssi: 'A' } }
         it 'returns metadata' do
-          get :fedora_content, uri: 'good:id', block: 'descMetadata', filename: 'metadata.txt', download_method: 'show_pretty', data: 'meta'
+          get :fedora_content, params: { uri: 'good:id', block: 'descMetadata', filename: 'metadata.txt', download_method: 'show_pretty', data: 'meta' }
           expect(response.headers['Content-Type']).to eql 'text/plain'
         end
       end
@@ -119,7 +119,7 @@ RSpec.describe DownloadController, type: :controller do
       context 'from inactive parentless object' do
         let(:mock_resource) { { object_state_ssi: 'I' } }
         it 'returns metadata' do
-          get :fedora_content, uri: 'good:id', block: 'descMetadata', filename: 'metadata.txt', download_method: 'show_pretty', data: 'meta'
+          get :fedora_content, params: { uri: 'good:id', block: 'descMetadata', filename: 'metadata.txt', download_method: 'show_pretty', data: 'meta' }
           expect(response.headers['Content-Type']).to eql 'text/plain'
         end
       end

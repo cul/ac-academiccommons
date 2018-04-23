@@ -11,7 +11,7 @@ describe EmailPreferencesController, type: :controller do
 
   describe 'GET show' do
     include_examples 'authorization required' do
-      let(:http_request) { get :show, id: deposit.id }
+      let(:http_request) { get :show, params: { id: deposit.id } }
     end
   end
 
@@ -23,7 +23,7 @@ describe EmailPreferencesController, type: :controller do
 
   describe 'POST create' do
     let(:http_request) {
-      post :create, email_preference: { author: 'John Doe', monthly_opt_out: true, email: 'john.doe@example.com' }
+      post :create, params: { email_preference: { author: 'John Doe', monthly_opt_out: true, email: 'john.doe@example.com' } }
     }
 
     context 'without being logged in' do
@@ -61,12 +61,12 @@ describe EmailPreferencesController, type: :controller do
 
   describe 'GET edit' do
     include_examples 'authorization required' do
-      let(:http_request) { get :edit, id: deposit.id}
+      let(:http_request) { get :edit, params: { id: deposit.id } }
     end
   end
 
   describe 'PUT update' do
-    let(:http_request) { put :update, id: deposit.id, email_preference: { author: 'John Doe', monthly_opt_out: false, email: 'john.doe@example.com' } }
+    let(:http_request) { put :update, params: { id: deposit.id, email_preference: { author: 'John Doe', monthly_opt_out: false, email: 'john.doe@example.com' } } }
 
     context 'without being logged in' do
       before do
@@ -106,7 +106,7 @@ describe EmailPreferencesController, type: :controller do
   end
 
   describe 'DELETE destroy' do
-    let(:http_request) { delete :destroy, id: deposit.id }
+    let(:http_request) { delete :destroy, params: { id: deposit.id } }
 
     context 'without being logged in' do
       before do

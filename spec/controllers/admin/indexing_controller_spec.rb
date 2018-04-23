@@ -12,7 +12,7 @@ describe Admin::IndexingController, type: :controller do
     include_context 'log'
 
     include_examples 'authorization required' do
-      let(:http_request) { get :log_monitor, { timestamp: id } }
+      let(:http_request) { get :log_monitor, params: { timestamp: id } }
     end
   end
 end

@@ -5,10 +5,13 @@ RSpec.describe DepositController, type: :controller do
   describe 'POST submit' do
     context 'when user has a uni' do
       before do
-        post :submit, acceptedAgreement: 'agree',
-          uni: 'xxx123', name: 'Jane Doe', :'AC-agreement-version' => '1.1',
-          email: 'xxx123@columbia.edu', title: 'Test Deposit', author: 'Jane Doe',
-          abstr: 'Blah blah blah', file: fixture_file_upload('/test_file.txt')
+        post :submit,
+             params: {
+               acceptedAgreement: 'agree',
+               uni: 'xxx123', name: 'Jane Doe', :'AC-agreement-version' => '1.1',
+               email: 'xxx123@columbia.edu', title: 'Test Deposit', author: 'Jane Doe',
+               abstr: 'Blah blah blah', file: fixture_file_upload('/test_file.txt')
+             }
       end
 
       after do # Deleting file created by deposit.
@@ -41,10 +44,13 @@ RSpec.describe DepositController, type: :controller do
 
     context 'when user does not have a uni' do
       before do
-        post :submit, acceptedAgreement: 'agree', name: 'Jane Doe',
-          :'AC-agreement-version' => '1.1', email: 'xxx123@columbia.edu',
-          title: 'Test Deposit', author: 'Jane Doe',
-          abstr: 'Blah blah blah', file: fixture_file_upload('/test_file.txt')
+        post :submit,
+             params: {
+               acceptedAgreement: 'agree', name: 'Jane Doe',
+               :'AC-agreement-version' => '1.1', email: 'xxx123@columbia.edu',
+               title: 'Test Deposit', author: 'Jane Doe',
+               abstr: 'Blah blah blah', file: fixture_file_upload('/test_file.txt')
+             }
       end
 
       after do # Deleting file created by deposit.
@@ -68,10 +74,13 @@ RSpec.describe DepositController, type: :controller do
 
       context 'when the same file is deposited twice' do
         before do
-          post :submit, acceptedAgreement: 'agree', name: 'Jane Doe',
-            :'AC-agreement-version' => '1.1', email: 'xxx123@columbia.edu',
-            title: 'Test Deposit 2', author: 'Jane Doe',
-            abstr: 'Blah blah blah', file: fixture_file_upload('/test_file.txt')
+          post :submit,
+               params: {
+                 acceptedAgreement: 'agree', name: 'Jane Doe',
+                 :'AC-agreement-version' => '1.1', email: 'xxx123@columbia.edu',
+                 title: 'Test Deposit 2', author: 'Jane Doe',
+                 abstr: 'Blah blah blah', file: fixture_file_upload('/test_file.txt')
+               }
         end
 
         after do
