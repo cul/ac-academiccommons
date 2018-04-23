@@ -3,6 +3,6 @@ $(document).ready(function(){
   collapsedHeight: 25,
   lessLink: '<a href="#">View fewer authors</a>',
   moreLink: '<a href="#">View all authors</a>',
-  embedCSS: false
+  blockCSS: 'display: inline-block; width: auto;'
   });
 });
