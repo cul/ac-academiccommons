@@ -112,7 +112,7 @@ RSpec.describe DownloadController, type: :controller do
         let(:mock_resource) { { object_state_ssi: 'A' } }
         it 'returns metadata' do
           get :fedora_content, params: { uri: 'good:id', block: 'descMetadata', filename: 'metadata.txt', download_method: 'show_pretty', data: 'meta' }
-          expect(response.headers['Content-Type']).to eql 'text/plain'
+          expect(response.headers['Content-Type']).to include 'text/plain'
         end
       end
 
@@ -120,7 +120,7 @@ RSpec.describe DownloadController, type: :controller do
         let(:mock_resource) { { object_state_ssi: 'I' } }
         it 'returns metadata' do
           get :fedora_content, params: { uri: 'good:id', block: 'descMetadata', filename: 'metadata.txt', download_method: 'show_pretty', data: 'meta' }
-          expect(response.headers['Content-Type']).to eql 'text/plain'
+          expect(response.headers['Content-Type']).to include 'text/plain'
         end
       end
     end

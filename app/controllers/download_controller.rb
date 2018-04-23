@@ -14,7 +14,7 @@ class DownloadController < ApplicationController
   def download_log
     headers['Content-Type'] = 'application/octet-stream'
     headers['Content-Disposition'] = "attachment;filename=\"#{params[:id]}.log\""
-    render text: getLogContent(params[:log_folder], params[:id])
+    render plain: getLogContent(params[:log_folder], params[:id])
   end
 
   def fedora_content
@@ -50,7 +50,7 @@ class DownloadController < ApplicationController
     fail_fast ||= (head_response.status != 200)
 
     if fail_fast
-      render nothing: true, status: 404
+      render body: nil, status: 404
       return
     end
 
@@ -60,7 +60,7 @@ class DownloadController < ApplicationController
          record_stats
       end
       headers['X-Accel-Redirect'] = x_accel_url(url)
-      render nothing: true
+      render body: nil
     when 'show_pretty'
       h_ct = head_response.header['Content-Type'].to_s
       text_result = nil
@@ -75,12 +75,11 @@ class DownloadController < ApplicationController
         headers['Content-Type'] = 'text/xml'
         render xml: text_result
       else
-        headers['Content-Type'] = 'text/plain'
-        render text: text_result
+        render plain: text_result
       end
     else
       headers['X-Accel-Redirect'] = x_accel_url(url)
-      render nothing: true
+      render body: nil
     end
   end
 

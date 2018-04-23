@@ -321,7 +321,7 @@ class CatalogController < ApplicationController
   def streaming
     logger.info 'RECORDING STREAMING EVENT'
     record_stats(params['id'], Statistic::STREAM)
-    render nothing: true
+    render body: nil
   end
 
   def home

@@ -75,7 +75,7 @@ class Notifier < ActionMailer::Base
    end
 
     mail(to: recipients, from: from, subject: subject) do |f|
-      f.text { render text: message }
+      f.text { render plain: message }
     end
   end
 

@@ -217,7 +217,7 @@ class StatisticsController < ApplicationController
 
     Notifier.statistics_report_with_csv_attachment(recipients, from, subject, message, prepared_attachments).deliver
 
-    render text: 'sent'
+    render plain: 'sent'
   end
 
   def free_to_read?(doc)
