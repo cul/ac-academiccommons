@@ -2,7 +2,7 @@ class DownloadController < ApplicationController
   include LogsHelper
   include AcademicCommons::Embargoes
 
-  before_filter :require_admin!, only: :download_log
+  before_action :require_admin!, only: :download_log
 
   STANDARD_SEARCH_PARAMS = {
     qt: 'search',

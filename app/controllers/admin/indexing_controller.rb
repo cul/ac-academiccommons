@@ -1,5 +1,5 @@
 class Admin::IndexingController < ApplicationController
-  before_filter :require_admin!
+  before_action :require_admin!
 
   # GET /admin/indexing
   def show

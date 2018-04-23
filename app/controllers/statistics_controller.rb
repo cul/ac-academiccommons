@@ -1,6 +1,6 @@
 class StatisticsController < ApplicationController
   layout 'application'
-  before_filter :require_admin!, except: :unsubscribe_monthly
+  before_action :require_admin!, except: :unsubscribe_monthly
   include Blacklight::SearchHelper
   include AcademicCommons::Statistics
 

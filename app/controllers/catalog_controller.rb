@@ -3,9 +3,11 @@ class CatalogController < ApplicationController
   include BlacklightOaiProvider::Controller
   include BlacklightRangeLimit::ControllerOverride
 
-  before_filter :record_view_stats, only: :show
+  # rubocop:disable Rails/LexicallyScopedActionFilter
+  before_action :record_view_stats, only: :show
+  # rubocop:enable Rails/LexicallyScopedActionFilter
 
-  before_filter :url_decode_f
+  before_action :url_decode_f
 
   helper_method :url_encode_resource, :url_decode_resource
 

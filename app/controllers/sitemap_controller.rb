@@ -1,7 +1,7 @@
 class SitemapController < ApplicationController
   include Blacklight::SearchHelper
 
-  after_filter :sweep_cache, only: :index
+  after_action :sweep_cache, only: :index
 
   def index
     @latest_doc = latest_doc
