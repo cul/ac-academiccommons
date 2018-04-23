@@ -10,7 +10,7 @@ class ApplicationController < ActionController::Base
   helper_method :fedora_config # share some methods w/ views via helpers
 
   def fedora_config
-    @fedora_config ||= Rails.configuration.fedora
+    @fedora_config ||= Rails.application.config_for(:fedora)
   end
 
   # Authenticate a user using Devise and then check that the user is an

@@ -23,7 +23,7 @@ class EmailsController < ApplicationController
 
     render template: 'emails/_simple_email_form', layout: false,
            locals: { form_url: form_url,
-                     email_from: Rails.application.config.emails['mail_deliverer'],
+                     email_from: Rails.application.config_for(:emails)['mail_deliverer'],
                      email_to: '',
                      email_subject: 'statistics report',
                      email_message: message,

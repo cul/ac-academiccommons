@@ -42,16 +42,6 @@ module AcademicCommons
     # Configure sensitive parameters which will be filtered from the log file.
     config.filter_parameters += [:password]
 
-    # Loading configuration files for Solr, Fedora, Indexing, emails
-    # TODO: This can be removed in Rails 4. Rails 4 automates this process.
-    [:solr, :fedora, :emails].each do |i|
-      config_file = File.expand_path("../#{i}.yml", __FILE__) ## Do this better.
-      if File.exists? config_file
-        settings = ERB.new(IO.read(config_file)).result
-        config.send("#{i}=", YAML::load(settings)[Rails.env.to_s])
-      end
-    end
-
     # Use default logging formatter so that PID and timestamp are not suppressed.
     config.log_formatter = ::Logger::Formatter.new
 

@@ -16,7 +16,7 @@ class Notifier < ActionMailer::Base
     @author_id = author_id
     @usage_stats = usage_stats
     recipients = to_address
-    from = Rails.application.config.emails['mail_deliverer']
+    from = Rails.application.config_for(:emails)['mail_deliverer']
     full_from = "\"Academic Commons\" <#{from}>"
 
     subject = "Academic Commons Monthly Download Report for #{@usage_stats.time_period}"
@@ -47,8 +47,8 @@ class Notifier < ActionMailer::Base
     end
 
     @file_download_url = root_url + 'admin/deposits/' + deposit.id.to_s + '/file'
-    recipients = Rails.application.config.emails['mail_deposit_recipients']
-    from = Rails.application.config.emails['mail_deliverer']
+    recipients = Rails.application.config_for(:emails)['mail_deposit_recipients']
+    from = Rails.application.config_for(:emails)['mail_deliverer']
     subject = 'SD'
     subject.concat(" #{@uni} -") if @uni
     subject.concat(" #{@title.truncate(50)}")
@@ -60,8 +60,8 @@ class Notifier < ActionMailer::Base
     @name = request[:name]
     @email = request[:email]
     @agreement_version = request['AC-agreement-version']
-    recipients = Rails.application.config.emails['new_agreement_notification']
-    from = Rails.application.config.emails['mail_deliverer']
+    recipients = Rails.application.config_for(:emails)['new_agreement_notification']
+    from = Rails.application.config_for(:emails)['mail_deliverer']
     subject = 'Academic Commons Author Agreement Accepted'
     content_type = 'text/html'
 
@@ -91,8 +91,8 @@ class Notifier < ActionMailer::Base
       log[:second] = time_id[13..14].to_i
       log[:time] = Time.mktime(log[:year], log[:month], log[:day], log[:hour], log[:minute], log[:second]).strftime('%B %e, %Y %r')
 
-      recipients = Rails.application.config.emails['indexing_report_recipients']
-      from = Rails.application.config.emails['mail_deliverer']
+      recipients = Rails.application.config_for(:emails)['indexing_report_recipients']
+      from = Rails.application.config_for(:emails)['mail_deliverer']
       subject = 'Academic Commons - Daily Reindexing Report'
       content_type = 'text/html'
 
@@ -108,8 +108,8 @@ class Notifier < ActionMailer::Base
 
   def reindexing_summary(params, time_id)
 
-      recipients = Rails.application.config.emails['indexing_report_recipients']
-      from = Rails.application.config.emails['mail_deliverer']
+      recipients = Rails.application.config_for(:emails)['indexing_report_recipients']
+      from = Rails.application.config_for(:emails)['mail_deliverer']
       subject = 'Academic Commons - Daily Reindexing Summary Report'
       content_type = 'text/html'
 
@@ -130,8 +130,8 @@ class Notifier < ActionMailer::Base
     @new_items = new_items
     @embargoed_items = embargoed_items
     subject = 'Your submitted items are now available in Academic Commons'
-    bcc = Rails.application.config.emails['deposit_notification_bcc']
-    from = Rails.application.config.emails['mail_deliverer']
+    bcc = Rails.application.config_for(:emails)['deposit_notification_bcc']
+    from = Rails.application.config_for(:emails)['mail_deliverer']
     recipients = depositor.email
 
     if Rails.application.config.prod_environment
