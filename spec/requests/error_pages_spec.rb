@@ -26,7 +26,7 @@ RSpec.describe 'error pages', type: :request do
       end
 
       it 'render forbidden page' do
-        expect(response).to render_template('errors/forbidden')
+        expect(response.body).to include('Forbidden')
       end
     end
 
@@ -35,10 +35,6 @@ RSpec.describe 'error pages', type: :request do
 
       it 'returns 200 status code' do
         expect(response).to have_http_status(:success)
-      end
-
-      it 'render admin page' do
-        expect(response).to render_template('admin/index')
       end
     end
   end
@@ -54,7 +50,7 @@ RSpec.describe 'error pages', type: :request do
       end
 
       it 'renders record not found page' do
-        expect(response).to render_template('errors/record_not_found')
+        expect(response.body).to include('Record Not Found')
       end
     end
   end
