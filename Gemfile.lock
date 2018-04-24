@@ -112,6 +112,8 @@ GEM
       blacklight (>= 6.0.2)
       jquery-rails
       rails (>= 3.0)
+    bootsnap (1.3.0)
+      msgpack (~> 1.0)
     bootstrap-sass (3.3.7)
       autoprefixer-rails (>= 5.2.1)
       sass (>= 3.3.4)
@@ -265,6 +267,7 @@ GEM
     mini_mime (1.0.0)
     mini_portile2 (2.3.0)
     minitest (5.11.3)
+    msgpack (1.2.4)
     multi_json (1.13.1)
     multipart-post (2.0.0)
     mustermann (1.0.2)
@@ -499,6 +502,7 @@ DEPENDENCIES
   blacklight (~> 6.0)
   blacklight_oai_provider
   blacklight_range_limit
+  bootsnap
   bootstrap-sass
   byebug
   capistrano (= 3.8)
