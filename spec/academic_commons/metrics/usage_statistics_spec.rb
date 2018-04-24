@@ -49,7 +49,7 @@ RSpec.describe AcademicCommons::Metrics::UsageStatistics, integration: true do
               'response' => {
                 'docs' => [
                   { 'id' => 'actest:2', 'fedora3_pid_ssi' => 'actest:2', 'title_ssi' => 'Second Test Document', 'object_state_ssi' => 'A',
-                   'cul_doi_ssi' => '10.7916/TESTDOC2', 'doi_ssi' => '', 'fedora3_pid_ssi' => 'actest:2', 'genre_ssim' => ''},
+                   'cul_doi_ssi' => '10.7916/TESTDOC2', 'doi_ssi' => '', 'genre_ssim' => ''},
                   { 'id' => 'actest:1', 'title_ssi' => 'First Test Document', 'object_state_ssi' => 'A',
                     'cul_doi_ssi' => doi, 'doi_ssi' => '', 'fedora3_pid_ssi' => 'actest:1', 'genre_ssim' => '' },
                   { 'id' => 'actest:10', 'title_ssi' => 'First Test Document', 'object_state_ssi' => 'A',

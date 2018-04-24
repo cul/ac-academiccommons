@@ -21,7 +21,7 @@ class Statistic < ApplicationRecord
     ids = [ids] if ids.is_a? String
 
     raise 'ids must be an Array or String' unless ids.is_a? Array
-    raise "event must one of #{EVENTS}"     unless valid_event?(event)
+    raise "event must one of #{EVENTS}"    unless valid_event?(event)
 
     if start_date || end_date
       if start_date.respond_to?(:to_time) && end_date.respond_to?(:to_time)

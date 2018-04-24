@@ -17,7 +17,7 @@ class Resource < ActiveFedora::Base
       end
 
       fulltext_str = fulltext.to_s.force_encoding('utf-8').gsub(/\s+/, ' ')
-      doc['fulltext_tsi'] = fulltext_str unless fulltext_str.blank?
+      doc['fulltext_tsi'] = fulltext_str if fulltext_str.present?
     end
   end
 
