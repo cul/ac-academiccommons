@@ -6,8 +6,8 @@ RSpec.describe AcademicCommons::Metrics::AuthorAffiliationReport do
       {
         'response' => {
           'docs' => [
-            { 'id' => 'actest:6', 'object_state_ssi' => 'A' },
-            { 'id' => 'actest:7', 'object_state_ssi' => 'A' },
+            { 'id' => 'actest:6', 'cul_doi_ssi' => '10.7916/ALICE', 'object_state_ssi' => 'A' },
+            { 'id' => 'actest:7', 'cul_doi_ssi' => '10.7916/PRIDE', 'object_state_ssi' => 'A' },
           ]
         }
       },
@@ -47,12 +47,12 @@ RSpec.describe AcademicCommons::Metrics::AuthorAffiliationReport do
   end
 
   before :each do
-    FactoryBot.create(:view_stat, identifier: 'actest:6')
-    FactoryBot.create(:download_stat, identifier: 'actest:7')
+    FactoryBot.create(:view_stat, identifier: '10.7916/ALICE')
+    FactoryBot.create(:download_stat, identifier: '10.7916/PRIDE')
 
     allow(Blacklight.default_index).to receive(:search).with(any_args).and_return(solr_response)
-    allow(Blacklight.default_index).to receive(:find).with('actest:6').and_return(solr_doc_alice)
-    allow(Blacklight.default_index).to receive(:find).with('actest:7').and_return(solr_doc_pride)
+    allow(Blacklight.default_index).to receive(:find).with('10.7916/ALICE').and_return(solr_doc_alice)
+    allow(Blacklight.default_index).to receive(:find).with('10.7916/PRIDE').and_return(solr_doc_pride)
     allow(AcademicCommons::LDAP).to receive(:find_by_uni).with('xyz567').and_return(
       OpenStruct.new(uni: 'xyz567', name: 'Jane Austen', title: 'Professor of English', organizational_unit: 'English Department')
     )

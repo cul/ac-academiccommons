@@ -34,7 +34,7 @@ describe 'Item Page', type: :feature do
   end
 
   it 'has linked subject' do
-    expect(page).to have_xpath('//a[@href=\'/catalog?f%5Bsubject_ssim%5D%5B%5D=Tea+Parties\']', text: 'Tea Parties')
+    expect(page).to have_xpath('//a[@href=\'/search?f%5Bsubject_ssim%5D%5B%5D=Tea+Parties\']', text: 'Tea Parties')
   end
 
   it 'has linked publisher doi' do
