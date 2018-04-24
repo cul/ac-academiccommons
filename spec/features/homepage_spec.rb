@@ -16,7 +16,7 @@ describe 'Homepage', type: :feature do
       expect(page).to have_link('About', href: '/about')
       click_link 'About'
     end
-    expect(page).to have_css 'h3', text: 'Provide persistent access'
+    expect(page).to have_css 'h3', text: 'Enhanced discoverability'
   end
 
   it 'links to the self-deposit page' do
