@@ -47,7 +47,7 @@ describe AdminController, type: :controller do
     include_context 'mock_deposit'
 
     include_examples 'authorization required' do
-      let(:http_request) { get :show_deposit, id: id }
+      let(:http_request) { get :show_deposit, params: { id: id } }
     end
   end
 
@@ -55,7 +55,7 @@ describe AdminController, type: :controller do
     include_context 'mock_deposit'
 
     include_examples 'authorization required' do
-      let(:http_request) { get :download_deposit_file, id: id }
+      let(:http_request) { get :download_deposit_file, params: { id: id } }
     end
   end
 end

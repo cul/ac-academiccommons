@@ -1,4 +1,4 @@
-class Statistic < ActiveRecord::Base
+class Statistic < ApplicationRecord
   VIEW = 'View'.freeze
   DOWNLOAD = 'Download'.freeze
   STREAM = 'Streaming'.freeze

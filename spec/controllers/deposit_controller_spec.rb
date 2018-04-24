@@ -5,10 +5,13 @@ RSpec.describe DepositController, type: :controller do
   describe 'POST submit' do
     context 'when user has a uni' do
       before do
-        post :submit, acceptedAgreement: 'agree',
-          uni: 'xxx123', name: 'Jane Doe', :'AC-agreement-version' => '1.1',
-          email: 'xxx123@columbia.edu', title: 'Test Deposit', author: 'Jane Doe',
-          abstr: 'Blah blah blah', file: fixture_file_upload('/test_file.txt')
+        post :submit,
+             params: {
+               acceptedAgreement: 'agree',
+               uni: 'xxx123', name: 'Jane Doe', :'AC-agreement-version' => '1.1',
+               email: 'xxx123@columbia.edu', title: 'Test Deposit', author: 'Jane Doe',
+               abstr: 'Blah blah blah', file: fixture_file_upload('/test_file.txt')
+             }
       end
 
       after do # Deleting file created by deposit.
@@ -21,7 +24,7 @@ RSpec.describe DepositController, type: :controller do
 
       it 'emails about submission' do
         email = ActionMailer::Base.deliveries.pop
-        expect(email.to).to eq Rails.application.config.emails['mail_deposit_recipients']
+        expect(email.to).to eq Rails.application.config_for(:emails)['mail_deposit_recipients']
         expect(email.subject).to eq 'SD xxx123 - Test Deposit'
         expect(email.attachments[0].filename).to eq 'test_file.txt'
       end
@@ -41,10 +44,13 @@ RSpec.describe DepositController, type: :controller do
 
     context 'when user does not have a uni' do
       before do
-        post :submit, acceptedAgreement: 'agree', name: 'Jane Doe',
-          :'AC-agreement-version' => '1.1', email: 'xxx123@columbia.edu',
-          title: 'Test Deposit', author: 'Jane Doe',
-          abstr: 'Blah blah blah', file: fixture_file_upload('/test_file.txt')
+        post :submit,
+             params: {
+               acceptedAgreement: 'agree', name: 'Jane Doe',
+               :'AC-agreement-version' => '1.1', email: 'xxx123@columbia.edu',
+               title: 'Test Deposit', author: 'Jane Doe',
+               abstr: 'Blah blah blah', file: fixture_file_upload('/test_file.txt')
+             }
       end
 
       after do # Deleting file created by deposit.
@@ -68,10 +74,13 @@ RSpec.describe DepositController, type: :controller do
 
       context 'when the same file is deposited twice' do
         before do
-          post :submit, acceptedAgreement: 'agree', name: 'Jane Doe',
-            :'AC-agreement-version' => '1.1', email: 'xxx123@columbia.edu',
-            title: 'Test Deposit 2', author: 'Jane Doe',
-            abstr: 'Blah blah blah', file: fixture_file_upload('/test_file.txt')
+          post :submit,
+               params: {
+                 acceptedAgreement: 'agree', name: 'Jane Doe',
+                 :'AC-agreement-version' => '1.1', email: 'xxx123@columbia.edu',
+                 title: 'Test Deposit 2', author: 'Jane Doe',
+                 abstr: 'Blah blah blah', file: fixture_file_upload('/test_file.txt')
+               }
         end
 
         after do

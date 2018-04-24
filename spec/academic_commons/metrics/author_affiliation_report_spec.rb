@@ -64,8 +64,6 @@ RSpec.describe AcademicCommons::Metrics::AuthorAffiliationReport do
   subject { AcademicCommons::Metrics::AuthorAffiliationReport.generate_csv }
 
   context 'generates' do
-    shared_context 'mock ldap request'
-
     let(:expected_csv) do
       [
         ['pid', 'persistent url', 'lifetime downloads', 'lifetime views', 'department ac', 'genre', 'creation date', 'multi-author count', 'author uni', 'author name', 'ldap author title', 'ldap organizational unit'],

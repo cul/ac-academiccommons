@@ -9,7 +9,7 @@ class NotificationMailer < ApplicationMailer
                 'Your work is now registered in Academic Commons' :
                 'Your work is now available in Academic Commons'
 
-    bcc = Rails.application.config.emails['deposit_notification_bcc']
+    bcc = Rails.application.config_for(:emails)['deposit_notification_bcc']
 
     if Rails.application.config.prod_environment
       mail(to: @email, bcc: bcc, subject: subject)

@@ -85,7 +85,7 @@ module AcademicCommons
     end
 
     def get_res_list
-      query = params[:f]
+      query = params.to_unsafe_h[:f]
 
       return [] if query.blank?
 

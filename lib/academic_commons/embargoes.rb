@@ -7,7 +7,8 @@ module AcademicCommons
     # @param [SolrDocument] document solr document of asset(file)
     # @return [Boolean] whether or not document can be accessible
     def free_to_read?(document)
-      return false unless document['object_state_ssi'] == 'A'
+      object_state = document['object_state_ssi'] || document[:object_state_ssi]
+      return false unless object_state == 'A'
       free_to_read_start_date = document[:free_to_read_start_date_ssi]
       return true unless free_to_read_start_date
       available_today?(free_to_read_start_date)

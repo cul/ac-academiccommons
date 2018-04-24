@@ -1,6 +1,6 @@
 require Rails.root.join("config/environments/academiccommons_prod")
 
-AcademicCommons::Application.configure do
+Rails.application.configure do
   # Expands the lines which load the assets
   config.assets.debug = true
 

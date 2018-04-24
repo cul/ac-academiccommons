@@ -73,7 +73,7 @@ describe StatisticsController, type: :controller, integration: true do
     context 'without being logged in' do
       before do
         allow(controller).to receive(:current_user).and_return(nil)
-        get :total_usage_stats, format: :json
+        get :total_usage_stats, params: { format: :json }
       end
 
       it 'returns 401' do # Can't redirect because its a json request.
@@ -86,7 +86,7 @@ describe StatisticsController, type: :controller, integration: true do
 
       it 'fails' do
         expect {
-          get :total_usage_stats, format: :json
+          get :total_usage_stats, params: { format: :json }
         }.to raise_error AcademicCommons::Exceptions::NotAuthorized
       end
     end
@@ -100,7 +100,7 @@ describe StatisticsController, type: :controller, integration: true do
         FactoryBot.create(:streaming_stat)
       end
 
-      subject { get :total_usage_stats, q: "{!raw f=id}#{pid}", format: :json }
+      subject { get :total_usage_stats, params: { q: "{!raw f=id}#{pid}", format: :json } }
 
       it 'return correct json response' do
         json = JSON.parse(subject.body)
@@ -116,7 +116,7 @@ describe StatisticsController, type: :controller, integration: true do
 
   describe 'GET common_statistics_csv' do
     include_examples 'authorization required' do
-      let(:http_request) { get :common_statistics_csv, f: { 'author_ssim' => ['Carroll, Lewis'] } }
+      let(:http_request) { get :common_statistics_csv, params: { f: { 'author_ssim' => ['Carroll, Lewis'] } } }
     end
   end
 
@@ -135,9 +135,12 @@ describe StatisticsController, type: :controller, integration: true do
   describe 'GET send_csv_report' do
     include_examples 'authorization required' do
       let(:http_request) do
-        get :send_csv_report, f: { 'author_ssim' => ['Carroll, Lewis'] },
-                              email_to: 'example@example.com',
-                              email_from: 'me@example.com'
+        get :send_csv_report,
+            params: {
+              f: { 'author_ssim' => ['Carroll, Lewis'] },
+              email_to: 'example@example.com',
+              email_from: 'me@example.com'
+            }
       end
     end
 
@@ -145,9 +148,12 @@ describe StatisticsController, type: :controller, integration: true do
       include_context 'mock admin user'
 
       before do
-        get :send_csv_report, f: { 'author_ssim' => ['Carroll, Lewis.'] },
-                              email_to: 'example@example.com',
-                              email_from: 'me@example.com'
+        get :send_csv_report,
+            params: {
+              f: { 'author_ssim' => ['Carroll, Lewis.'] },
+              email_to: 'example@example.com',
+              email_from: 'me@example.com'
+            }
       end
 
       it 'sends email' do
@@ -163,12 +169,12 @@ describe StatisticsController, type: :controller, integration: true do
     let(:uni) { 'abc123' }
     context 'does not add email preference' do
       it 'when author missing' do
-        get :unsubscribe_monthly, chk: 'foo'
+        get :unsubscribe_monthly, params: { chk: 'foo' }
         expect(EmailPreference.count).to eq 0
       end
 
       it 'when chk missing' do
-        get :unsubscribe_monthly, author_id: 'foo'
+        get :unsubscribe_monthly, params: { author_id: 'foo' }
         expect(EmailPreference.count).to eq 0
       end
 
@@ -180,7 +186,7 @@ describe StatisticsController, type: :controller, integration: true do
 
     context 'when chk param is correctly signed' do
       before :each do
-        get :unsubscribe_monthly, author_id: uni, chk: Rails.application.message_verifier(:unsubscribe).generate(uni)
+        get :unsubscribe_monthly, params: { author_id: uni, chk: Rails.application.message_verifier(:unsubscribe).generate(uni) }
       end
 
       it 'creates email preference' do
@@ -194,14 +200,14 @@ describe StatisticsController, type: :controller, integration: true do
 
       it 'changes email preference' do
         EmailPreference.first.update!(monthly_opt_out: false)
-        get :unsubscribe_monthly, author_id: uni, chk: Rails.application.message_verifier(:unsubscribe).generate(uni)
+        get :unsubscribe_monthly, params: { author_id: uni, chk: Rails.application.message_verifier(:unsubscribe).generate(uni) }
         expect(EmailPreference.first.monthly_opt_out).to be true
       end
     end
 
     context 'when check param is not correctly signed' do
       before(:each) do
-        get :unsubscribe_monthly, author_id: uni, chk: Rails.application.message_verifier(:unsubscribe).generate('abc')
+        get :unsubscribe_monthly, params: { author_id: uni, chk: Rails.application.message_verifier(:unsubscribe).generate('abc') }
       end
 
       it 'does not unsubscribe user' do

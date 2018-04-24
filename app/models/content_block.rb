@@ -1,4 +1,4 @@
-class ContentBlock < ActiveRecord::Base
+class ContentBlock < ApplicationRecord
   validates_presence_of :title
   validates_presence_of :user
 

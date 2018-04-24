@@ -1,6 +1,6 @@
 class StatisticsController < ApplicationController
   layout 'application'
-  before_filter :require_admin!, except: :unsubscribe_monthly
+  before_action :require_admin!, except: :unsubscribe_monthly
   include Blacklight::SearchHelper
   include AcademicCommons::Statistics
 
@@ -217,7 +217,7 @@ class StatisticsController < ApplicationController
 
     Notifier.statistics_report_with_csv_attachment(recipients, from, subject, message, prepared_attachments).deliver
 
-    render text: 'sent'
+    render plain: 'sent'
   end
 
   def free_to_read?(doc)

@@ -1,4 +1,4 @@
-class Token < ActiveRecord::Base
+class Token < ApplicationRecord
   DATAFEED = :data_feed
   SCOPES = [DATAFEED].freeze
 

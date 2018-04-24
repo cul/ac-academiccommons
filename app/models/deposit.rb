@@ -1,4 +1,4 @@
-class Deposit < ActiveRecord::Base
+class Deposit < ApplicationRecord
 
   validates_presence_of :agreement_version
   validates_presence_of :name

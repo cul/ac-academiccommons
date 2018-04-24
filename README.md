@@ -1,6 +1,6 @@
 # Academic Commons 3.0
 
-[![Build Status](https://travis-ci.com/cul/ac-academiccommons.svg?token=6BbRmeM4Zm948hoLXUkV&branch=master)](https://travis-ci.com/cul/ac-academiccommons)
+[![Build Status](https://travis-ci.org/cul/ac-academiccommons.svg?branch=master)](https://travis-ci.org/cul/ac-academiccommons)
 
 ## Checking out and working with a local development instance
 

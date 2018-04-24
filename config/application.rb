@@ -1,4 +1,4 @@
-require File.expand_path('../boot', __FILE__)
+require_relative 'boot'
 
 require 'rails/all'
 
@@ -9,14 +9,19 @@ Bundler.require(*Rails.groups)
 module AcademicCommons
   class Application < Rails::Application
     include Cul::Omniauth::FileConfigurable
+
+    # Initialize configuration defaults for originally generated Rails version.
+    config.load_defaults 5.2
+
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded.
 
-    # Custom directories with classes and modules you want to be autoloadable.
+    # Custom directories with classes and modules you want to be eager loaded.
+    # After Rails 5, using autoload_paths is discouraged.
     config.paths.add File.join('app', 'api'), glob: File.join('**', '*.rb')
-    config.autoload_paths += Dir[Rails.root.join('app', 'api')]
-    config.autoload_paths += %W(#{config.root}/lib)
+    config.eager_load_paths += Dir[Rails.root.join('app', 'api')]
+    config.eager_load_paths += %W(#{config.root}/lib)
 
     # Only load the plugins named here, in the order given (default is alphabetical).
     # :all can be used as a placeholder for all plugins not explicitly named.
@@ -41,16 +46,6 @@ module AcademicCommons
 
     # Configure sensitive parameters which will be filtered from the log file.
     config.filter_parameters += [:password]
-
-    # Loading configuration files for Solr, Fedora, Indexing, emails
-    # TODO: This can be removed in Rails 4. Rails 4 automates this process.
-    [:solr, :fedora, :emails].each do |i|
-      config_file = File.expand_path("../#{i}.yml", __FILE__) ## Do this better.
-      if File.exists? config_file
-        settings = ERB.new(IO.read(config_file)).result
-        config.send("#{i}=", YAML::load(settings)[Rails.env.to_s])
-      end
-    end
 
     # Use default logging formatter so that PID and timestamp are not suppressed.
     config.log_formatter = ::Logger::Formatter.new

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180404154442) do
+ActiveRecord::Schema.define(version: 20180419165651) do
 
   create_table "agreements", force: :cascade do |t|
     t.string   "uni"

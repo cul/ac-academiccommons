@@ -35,7 +35,7 @@ describe SolrDocumentsController, type: :controller do
     include_context 'mock api key'
 
     subject do
-      put :update, params
+      put :update, params: params
       response.status
     end
 
@@ -93,7 +93,7 @@ describe SolrDocumentsController, type: :controller do
       allow(controller).to receive(:rsolr).and_return(rsolr)
     end
     subject do
-      delete :destroy, params
+      delete :destroy, params: params
       response.status
     end
     context 'no api key' do

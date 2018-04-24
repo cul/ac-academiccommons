@@ -1,14 +1,15 @@
 source 'https://rubygems.org'
 
-gem 'rails', '4.2.8'
+gem 'rails', '5.2.0'
 
 gem 'active-fedora', '~> 8.2'
 gem 'blacklight', '~> 6.0'
 gem 'blacklight_oai_provider'
 gem 'blacklight_range_limit'
+gem 'bootsnap'
 gem 'bootstrap-sass'
 gem 'cul-ldap'
-gem 'cul_omniauth'#, git: 'https://github.com/cul/cul_omniauth', branch: 'rails-5'
+gem 'cul_omniauth', git: 'https://github.com/cul/cul_omniauth', branch: 'rails-5'
 gem 'devise'
 gem 'dotenv-rails'
 gem 'fancybox2-rails' # Used in helper classes. TODO: Confirm that this is needed and used by the application.

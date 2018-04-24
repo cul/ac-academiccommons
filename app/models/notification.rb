@@ -1,6 +1,6 @@
 # This model keeps track of new item notifications that have been sent to users.
 # An item's DOI is used as its identifier.
-class Notification < ActiveRecord::Base
+class Notification < ApplicationRecord
   NEW_ITEM = 'new_item'.freeze
 
   validates :kind, :doi, presence: true

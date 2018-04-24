@@ -1,7 +1,7 @@
 class LogsController < ApplicationController
   include LogsHelper
 
-  before_filter :require_admin!
+  before_action :require_admin!
 
   layout 'application'
 
