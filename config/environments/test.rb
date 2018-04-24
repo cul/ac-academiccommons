@@ -1,10 +1,8 @@
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb
 
-  # In the development environment your application's code is reloaded on
-  # every request.  This slows down response time but is perfect for development
-  # since you don't have to restart the webserver when you make code changes.
-  config.cache_classes = false
+  # Caching classes on test in order to mimic a production environment.
+  config.cache_classes = true
 
   # Show full error reports and disable caching
   config.consider_all_requests_local       = false # Setting to false for error page tests
@@ -22,8 +20,9 @@ Rails.application.configure do
   # Expands the lines which load the assets
   config.assets.debug = true
 
-  # Do not eager load code on boot.
-  config.eager_load = false
+  # Eager loading con boot to mimic production environment.
+  # Test might slow down a bit, but we need to mimic production as best as we can.
+  config.eager_load = true
 
   # Setting host so that url helpers can be used in mailer views.
   config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
