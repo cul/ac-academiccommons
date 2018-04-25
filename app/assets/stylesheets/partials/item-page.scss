@@ -292,3 +292,16 @@
     }
   }
 }
+
+/* active panel */
+
+.active {
+  border-color: $brand-dark;
+  transition: border-color 1.5s ease;
+
+  .panel-heading {
+    background: $brand-dark;
+    color: #fff;
+    transition: background 1.5s ease;
+  }
+}
