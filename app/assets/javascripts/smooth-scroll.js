@@ -4,7 +4,7 @@ $(document).ready(function(){
 
       event.preventDefault();
       $('html').animate({
-          scrollTop: $target.offset().top
+          scrollTop: $target.offset().top -20
       }, 550);
       $target.addClass('active');
   });
