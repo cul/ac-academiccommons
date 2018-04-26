@@ -14,7 +14,7 @@ module AcademicCommons::Metrics
 
     DEFAULT_SOLR_PARAMS = {
       rows: 100_000, page: 1,
-      fl: 'title_ssi,id,cul_doi_ssi,doi,fedora3_pid_ssi,genre_ssim,record_creation_dtsi,object_state_ssi,free_to_read_start_date_ssi'
+      fl: 'title_ssi,id,cul_doi_ssi,fedora3_pid_ssi,publisher_doi_ssi,genre_ssim,record_creation_dtsi,object_state_ssi,free_to_read_start_date_ssi'
     }.freeze
 
     PERIOD = 'Period'.freeze

@@ -68,11 +68,12 @@ describe 'GET /api/v1/data_feed/:key', type: :request do
             'numFound' => 1,
             'docs' => [
               {
-                'id' => 'actest:9',
+                'id' => '10.7916/D8WS9153',
                 'record_creation_dtsi' => '2011-02-25T18:57:00Z',
                 'record_change_dtsi' => '2011-02-25T18:57:00Z',
                 'language_ssim' => 'English',
                 'cul_doi_ssi' => '10.7916/D8WS9153',
+                'fedora3_pid_ssi' => 'actest:9',
                 'title_ssi' => 'The Warburg effect and its role in cancer detection and therapy',
                 'author_ssim' => ['Christ, Ethan J.'],
                 'pub_date_isi' => '2009',

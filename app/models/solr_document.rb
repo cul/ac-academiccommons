@@ -36,8 +36,8 @@ class SolrDocument
     department: 'department_ssim',
     genre: 'genre_ssim',
     created_at: 'record_creation_dtsi',
-    id: 'cul_doi_ssi',
-    legacy_id: 'id',
+    id: 'id',
+    legacy_id: 'fedora3_pid_ssi',
     modified_at: 'record_change_dtsi',
     degree_name: 'degree_name_ssim',
     degree_level: 'degree_level_name_ssim',
@@ -116,7 +116,7 @@ class SolrDocument
   def download_path
     return nil unless asset?
     Rails.application.routes.url_helpers.fedora_content_path(
-      :download, fetch('id', nil),
+      :download, fetch('fedora3_pid_ssi', nil),
       fetch('downloadable_content_dsid_ssi'),
       fetch('downloadable_content_label_ss')
     )

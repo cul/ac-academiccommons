@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe AcademicCommons::Metrics::ItemStats do
   let(:doi) { '10.7916/ALICE' }
-  let(:doc) { SolrDocument.new(cul_doi_ssi: doi) }
+  let(:doc) { SolrDocument.new(id: doi) }
 
   subject { AcademicCommons::Metrics::ItemStats.new(doc) }
 

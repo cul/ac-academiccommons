@@ -11,7 +11,7 @@ RSpec.describe AcademicCommons::Metrics::UsageStatistics, integration: true do
     {
       rows: 100_000, sort: 'title_ssi asc', q: nil, page: 1,
       fq: ["author_uni_ssim:\"#{uni}\"", 'has_model_ssim:"info:fedora/ldpd:ContentAggregator"'],
-      fl: 'title_ssi,id,cul_doi_ssi,doi,fedora3_pid_ssi,genre_ssim,record_creation_dtsi,object_state_ssi,free_to_read_start_date_ssi'
+      fl: 'title_ssi,id,cul_doi_ssi,fedora3_pid_ssi,publisher_doi_ssi,genre_ssim,record_creation_dtsi,object_state_ssi,free_to_read_start_date_ssi'
     }
   end
   let(:solr_response) do
@@ -19,10 +19,10 @@ RSpec.describe AcademicCommons::Metrics::UsageStatistics, integration: true do
       {
         'response' => {
           'docs' => [
-            { 'id' => 'actest:5', 'title_ssi' => 'Second Test Document', 'object_state_ssi' => 'A',
-             'cul_doi_ssi' => doi5, 'doi' => '', 'fedora3_pid_ssi' => 'actest:5', 'genre_ssim' => ''},
-            { 'id' => 'actest:1', 'title_ssi' => 'First Test Document', 'object_state_ssi' => 'A',
-              'cul_doi_ssi' => doi, 'doi' => '', 'fedora3_pid_ssi' => 'actest:1', 'genre_ssim' => '' }
+            { 'id' => doi5, 'title_ssi' => 'Second Test Document', 'object_state_ssi' => 'A',
+             'cul_doi_ssi' => doi5, 'fedora3_pid_ssi' => 'actest:5', 'publisher_doi_ssi' => '', 'genre_ssim' => ''},
+            { 'id' => doi, 'title_ssi' => 'First Test Document', 'object_state_ssi' => 'A',
+              'cul_doi_ssi' => doi, 'fedora3_pid_ssi' => 'actest:1', 'publisher_doi_ssi' => '', 'genre_ssim' => '' }
           ]
         }
       }, {}
@@ -48,12 +48,12 @@ RSpec.describe AcademicCommons::Metrics::UsageStatistics, integration: true do
             {
               'response' => {
                 'docs' => [
-                  { 'id' => 'actest:2', 'fedora3_pid_ssi' => 'actest:2', 'title_ssi' => 'Second Test Document', 'object_state_ssi' => 'A',
-                   'cul_doi_ssi' => '10.7916/TESTDOC2', 'doi_ssi' => '', 'genre_ssim' => ''},
-                  { 'id' => 'actest:1', 'title_ssi' => 'First Test Document', 'object_state_ssi' => 'A',
-                    'cul_doi_ssi' => doi, 'doi_ssi' => '', 'fedora3_pid_ssi' => 'actest:1', 'genre_ssim' => '' },
-                  { 'id' => 'actest:10', 'title_ssi' => 'First Test Document', 'object_state_ssi' => 'A',
-                    'cul_doi_ssi' => '10.7916/TESTDOC10', 'doi_ssi' => '', 'fedora3_pid_ssi' => 'actest:10', 'genre_ssim' => '',
+                  { 'id' => '10.7916/TESTDOC2', 'fedora3_pid_ssi' => 'actest:2', 'title_ssi' => 'Second Test Document', 'object_state_ssi' => 'A',
+                   'cul_doi_ssi' => '10.7916/TESTDOC2', 'genre_ssim' => '', 'publisher_doi_ssi' => ''},
+                  { 'id' => doi, 'title_ssi' => 'First Test Document', 'object_state_ssi' => 'A',
+                    'cul_doi_ssi' => doi, 'fedora3_pid_ssi' => 'actest:1', 'genre_ssim' => '', 'publisher_doi_ssi' => '' },
+                  { 'id' => '10.7916/TESTDOC10', 'title_ssi' => 'First Test Document', 'object_state_ssi' => 'A',
+                    'cul_doi_ssi' => '10.7916/TESTDOC10', 'fedora3_pid_ssi' => 'actest:10', 'genre_ssim' => '', 'publisher_doi_ssi' => '',
                     'free_to_read_start_date_ssi' => Date.tomorrow.strftime('%Y-%m-%d') }
                 ]
               }
@@ -65,7 +65,7 @@ RSpec.describe AcademicCommons::Metrics::UsageStatistics, integration: true do
 
         it 'removes embargoed material' do
           expect(subject.count).to eq 2
-          expect(subject.find{ |i| i.id == 'actest:10' }).to eq nil
+          expect(subject.find{ |i| i.id == '10.7916/TESTDOC10' }).to eq nil
         end
 
         it 'calculates stats for available material' do
@@ -297,8 +297,8 @@ RSpec.describe AcademicCommons::Metrics::UsageStatistics, integration: true do
       usage_stats.instance_eval{
         most_downloaded_asset(
           SolrDocument.new(
-            'id' => 'actest:1', 'title_ssi' => 'Second Test Document', 'object_state_ssi' => 'A',
-            'cul_doi_ssi' => '10.7916/ALICE', 'doi' => '', 'fedora3_pid_ssi' => 'actest:1', 'genre_ssim' => ''
+            'id' => '10.7916/ALICE', 'title_ssi' => 'Second Test Document', 'object_state_ssi' => 'A',
+            'cul_doi_ssi' => '10.7916/ALICE', 'publisher_doi_ssi' => '', 'fedora3_pid_ssi' => 'actest:1', 'genre_ssim' => ''
           )
         )
       }

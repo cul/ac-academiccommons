@@ -6,8 +6,8 @@ RSpec.describe AcademicCommons::Metrics::AuthorAffiliationReport do
       {
         'response' => {
           'docs' => [
-            { 'id' => 'actest:6', 'cul_doi_ssi' => '10.7916/ALICE', 'object_state_ssi' => 'A' },
-            { 'id' => 'actest:7', 'cul_doi_ssi' => '10.7916/PRIDE', 'object_state_ssi' => 'A' },
+            { 'id' => '10.7916/ALICE', 'cul_doi_ssi' => '10.7916/ALICE', 'object_state_ssi' => 'A' },
+            { 'id' => '10.7916/PRIDE', 'cul_doi_ssi' => '10.7916/PRIDE', 'object_state_ssi' => 'A' },
           ]
         }
       },
@@ -18,7 +18,7 @@ RSpec.describe AcademicCommons::Metrics::AuthorAffiliationReport do
     Blacklight::Solr::Response.new({
       'response' => {
         'docs' => [
-          { 'id' => 'actest:6', 'cul_doi_ssi' => '10.7916/ALICE',
+          { 'id' => '10.7916/ALICE', 'cul_doi_ssi' => '10.7916/ALICE',
             'title_ssi' => 'Alice\'s Adventures in Wonderland',
             'author_uni_ssim' => ['abc123', 'xyz567'], 'object_state_ssi' => 'A',
             'department_ssim' => ['English Department', 'Creative Writing Department'],
@@ -34,7 +34,7 @@ RSpec.describe AcademicCommons::Metrics::AuthorAffiliationReport do
     Blacklight::Solr::Response.new({
       'response' => {
         'docs' => [
-          { 'id' => 'actest:7', 'cul_doi_ssi' => '10.7916/PRIDE',
+          { 'id' => '10.7916/PRIDE', 'cul_doi_ssi' => '10.7916/PRIDE',
             'title_ssi' => 'Pride and Prejudice',
             'author_uni_ssim' => ['xyz567'], 'object_state_ssi' => 'A',
             'genre_ssim' => ['Books'],
@@ -75,6 +75,7 @@ RSpec.describe AcademicCommons::Metrics::AuthorAffiliationReport do
     end
 
     it 'expected csv' do
+      pending 'awaiting decision from ACHYDRA-472'
       expect(CSV.parse(subject)[3..-1]).to match expected_csv
     end
   end

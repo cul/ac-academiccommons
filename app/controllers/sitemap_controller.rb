@@ -29,7 +29,7 @@ class SitemapController < ApplicationController
   def fetch_latest(rows = 1, latest = nil)
     opts = {
       rows: rows, q: '', sort: 'record_creation_dtsi desc',
-      fl: 'id, cul_doi_ssi, record_creation_dtsi'
+      fl: 'id, record_creation_dtsi'
     }
     opts[:fq] = "record_creation_dtsi:[* TO #{latest}]" if latest
     repository.search(opts)

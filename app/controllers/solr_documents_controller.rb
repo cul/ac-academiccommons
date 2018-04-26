@@ -59,7 +59,7 @@ class SolrDocumentsController < ApplicationController
       # get the members and collect ids
       obj = ActiveFedora::Base.find(params[:id])
       obj.list_members(true).each { |id| ids << id } if obj.respond_to? :list_members
-      ids.each { |id| rsolr.delete_by_id(id) }
+      ids.each { |id| rsolr.delete_by_query("fedora3_pid_ssi:\"#{id}\"") }
       rsolr.commit
     rescue Exception => e
       logger.warn e.message
@@ -72,7 +72,7 @@ class SolrDocumentsController < ApplicationController
       render status: status, plain: ''
       return
     end
-    doc = rsolr.find(filters: {id: "\"#{params[:id]}\""})['response']['docs'].first
+    doc = rsolr.find(filters: {fedora3_pid_ssi: "\"#{params[:id]}\""})['response']['docs'].first
     if doc
       render json: doc
     else

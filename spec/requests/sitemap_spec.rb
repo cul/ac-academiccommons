@@ -5,7 +5,7 @@ describe 'Sitemap', type: :request do
 
   let(:solr_doc) do
     SolrDocument.new(
-      'id' => 'example_id', 'cul_doi_ssi' => '10.7616/TEST', 'record_creation_dtsi' => current_time.utc.iso8601
+      'id' => '10.7616/TEST', 'record_creation_dtsi' => current_time.utc.iso8601
     )
   end
 
