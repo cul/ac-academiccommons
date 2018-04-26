@@ -4,7 +4,7 @@ class SolrDocument
   include BlacklightOaiProvider::SolrDocument
   include AcademicCommons::Embargoes
 
-  self.unique_key = 'cul_doi_ssi'
+  # self.unique_key = 'id'
   self.timestamp_key = 'record_creation_dtsi'
 
 

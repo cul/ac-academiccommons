@@ -69,9 +69,12 @@ module AcademicCommons
 
       organizations = []
       departments = []
-      # baseline blacklight fields: id is the unique identifier, format determines by default, what partials get called
-      # TODO: Make sure access is indifferent
-      add_field.call('id', pid) unless solr_doc['id'] || solr_doc[:id]
+
+      # Using DOI as document id
+      add_field.call 'id',          mods.at_css('>identifier[@type=\'DOI\']') # id is the unique identifier
+      add_field.call 'cul_doi_ssi', mods.at_css('>identifier[@type=\'DOI\']') # CUL DOI, doi(with no prefix)
+
+      # Adding fedora3 pid to document. Used for relating objects to each other.
       add_field.call('fedora3_uri_ssi', "info:fedora/#{pid}")
       add_field.call('fedora3_pid_ssi', pid)
 
@@ -269,9 +272,6 @@ module AcademicCommons
 
       # ACCESS CONDITION
       add_field.call('restriction_on_access_ss', mods.at_css('> accessCondition[@type=\'restriction on access\']'))
-
-      # CUL DOI, doi(with no prefix)
-      add_field.call 'cul_doi_ssi', mods.at_css('>identifier[@type=\'DOI\']')
 
       solr_doc
     end
