@@ -26,7 +26,7 @@ describe SolrDocumentsController, type: :controller, integration: true do
       put :update, params: { id: 'actest:1' }
       sleep(20) # It may take the solr document up to 15 sec to show up
       expect(response.status).to be 200
-      expect(response.headers['Location']).to eql('http://test.host/doi/10.7916%2FALICE')
+      expect(response.headers['Location']).to eql('http://test.host/doi/10.7916/ALICE')
       get :show, params: { id: 'actest:1', format: 'json' }
       expect(response.status).to be 200
       # publish does not cascade

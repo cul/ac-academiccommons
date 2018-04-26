@@ -25,16 +25,21 @@ Rails.application.routes.draw do
   concern :exportable, Blacklight::Routes::Exportable.new
   concern :oai_provider, BlacklightOaiProvider::Routes.new
 
-  resource :catalog, only: [:index], as: 'catalog', path: 'search', controller: 'catalog', constraints: { id: /(10\.)*.+/ } do
+  resource :catalog, only: [:index], as: 'catalog', path: 'search', controller: 'catalog', constraints: { id: /.*/ } do
     concerns :oai_provider
     concerns :searchable
     concerns :range_searchable
   end
 
   # Routes for solr document
-  resources :solr_document, only: [:show], controller: 'catalog', path: 'doi', constraints: { id: /(10\.)*.+/ } do
-    concerns :exportable
-  end
+  # Instead of specifying solr routes as:
+  #   resources :solr_document, only: [:show], controller: 'catalog', path: 'doi', constraints: { id: /.*/ } do
+  #     concerns :exportable
+  #   end
+  # Specifying routes using glob (*) in id param, this way slashes and period are accepted as part of the id.
+  match 'doi/*id/email', to: 'catalog#email', via: [:get, :post], as: :email_solr_document
+  match 'doi/email',     to: 'catalog#email', via: [:get, :post], as: :email_solr_document_index
+  match 'doi/*id',       to: 'catalog#show',  via: :get,          as: :solr_document
 
   mount Blacklight::Engine => '/'
 
