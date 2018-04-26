@@ -6,7 +6,8 @@ class SitemapController < ApplicationController
   def index
     @latest_doc = latest_doc
     @latest_time = Time.zone.parse(@latest_doc['record_creation_dtsi'])
-    if stale?(etag: @latest_doc, last_modified: @latest_time.utc)
+
+    if stale?(etag: @latest_doc, last_modified: @latest_time)
       key_parms = {
         controller: :sitemap, action: :index,
         record_creation_dtsi: @latest_time.to_i
@@ -15,7 +16,7 @@ class SitemapController < ApplicationController
       respond_to do |format|
         format.xml do
           headers['Content-Type'] = 'application/xml'
-          headers['Last-Modified-Date'] = Time.zone.parse(@latest_doc['record_creation_dtsi']).utc.httpdate
+          headers['Last-Modified-Date'] = @latest_time.httpdate
           render layout: false, template: 'sitemap/map', formats: :xml, handlers: :builder
         end
       end
@@ -26,13 +27,11 @@ class SitemapController < ApplicationController
   # catalog_helper custom_results() - but that relies on params
   # and modifies pub_date
   def fetch_latest(rows = 1, latest = nil)
-    opts = { rows: rows, q: '' }
-    if latest
-      opts[:fq] = "record_creation_dtsi:[* TO #{latest}]"
-    end
-    opts[:fl] = 'id, record_creation_dtsi'
-    opts[:sort] = 'record_creation_dtsi desc'
-    # this is the upper limit for a single sitemap, see sitemap.org
+    opts = {
+      rows: rows, q: '', sort: 'record_creation_dtsi desc',
+      fl: 'id, cul_doi_ssi, record_creation_dtsi'
+    }
+    opts[:fq] = "record_creation_dtsi:[* TO #{latest}]" if latest
     repository.search(opts)
   end
 
