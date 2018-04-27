@@ -100,7 +100,7 @@ describe StatisticsController, type: :controller, integration: true do
         FactoryBot.create(:streaming_stat)
       end
 
-      subject { get :total_usage_stats, params: { q: "{!raw f=id}#{pid}", format: :json } }
+      subject { get :total_usage_stats, params: { q: "{!raw f=fedora3_pid_ssi}#{pid}", format: :json } }
 
       it 'return correct json response' do
         json = JSON.parse(subject.body)

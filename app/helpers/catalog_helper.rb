@@ -58,36 +58,6 @@ module CatalogHelper
     @date_trend ||= AcademicCommons::DateTrend.new('record_creation_dtsi', ContentAggregator)
   end
 
-  def build_recent_updated_list
-    query_params = {
-      q: '', fl: 'title_ssi, id, author_ssim, record_creation_dtsi',
-      sort: 'record_creation_dtsi desc',
-      fq: ['author_ssim:*', "has_model_ssim:\"#{ContentAggregator.to_class_uri}\""],
-      start: 0, rows: 100}
-    build_distinct_authors_list(query_params)
-  end
-
-  def build_distinct_authors_list(query_params, authors = [], results = [])
-    response = repository.search(query_params)['response']
-    return results unless response['docs'].present?
-
-    response['docs'].each do |r|
-      new_authors = r['author_ssim'] - authors if r['author_ssim']
-
-      next unless new_authors.present?
-      authors.concat new_authors
-      results << r
-      break if(results.length == blacklight_config[:max_most_recent])
-    end
-    more_items = query_params[:start] + query_params[:rows] < response['numFound']
-    if(results.length < blacklight_config[:max_most_recent] && more_items)
-      query_params[:start] = query_params[:start] + query_params[:rows]
-      build_distinct_authors_list(query_params, authors, results)
-    else
-      results
-    end
-  end
-
   # TODO: Move to a browse controller
   def collect_facet_field_values(facet_field_results)
     results = {}

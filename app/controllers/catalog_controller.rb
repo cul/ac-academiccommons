@@ -36,17 +36,13 @@ class CatalogController < ApplicationController
     config.show.genre = 'genre_ssim'
     config.show.author = 'author_ssim'
 
-    ## Default parameters to send on single-document requests to Solr. These settings are the Blackligt defaults (see SolrHelper#solr_doc_params) or
-    ## parameters included in the Blacklight-jetty document requestHandler.
-    #
-    #config.default_document_solr_params = {
-    # :qt => 'document',
-    # ## These are hard-coded in the blacklight 'document' requestHandler
-    # # fl: '*',
-    # # :rows => 1
-    # # q: '{!raw f=id v=$id}'
-    #}
-
+    # Default values of parameters to send when requesting a single document
+    config.default_document_solr_params = {
+      # fl: '*',
+      # facet: false,
+      # rows: 1
+      # q: '{!raw f=id v=$id}'
+    }
 
     # solr field configuration for search results/index views
     config.index.title_field = 'title_ssi'
@@ -320,6 +316,22 @@ class CatalogController < ApplicationController
     logger.info 'RECORDING STREAMING EVENT'
     record_stats(params['id'], Statistic::STREAM)
     render body: nil
+  end
+
+  # Redirect legacy show urls (/catalog, /item) to /doi with the corresponding DOI.
+  # If an item with that pid no longer exists raise a Record Not Found error
+  def legacy_show
+    solr_params = {
+      qt: 'search', rows: 1,
+      fq: ["has_model_ssim:\"#{ContentAggregator.to_class_uri}\"", "fedora3_pid_ssi:\"#{params[:id]}\""]
+    }
+    solr_response = Blacklight.default_index.search(solr_params)
+
+    if solr_response.docs.present?
+      redirect_to solr_document_url(solr_response.docs.first.doi), status: :moved_permanently
+    else
+      raise Blacklight::Exceptions::RecordNotFound
+    end
   end
 
   def home

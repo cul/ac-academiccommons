@@ -45,7 +45,7 @@ module AcademicCommons::Metrics
         totals_row << total_for(Statistic::STREAM, time) if options[:include_streaming]
         csv.add_row totals_row
 
-        heading = ['#', 'TITLE', 'GENRE', 'VIEWS', 'DOWNLOADS', 'DEPOSIT DATE', 'HANDLE / DOI']
+        heading = ['#', 'TITLE', 'GENRE', 'VIEWS', 'DOWNLOADS', 'DEPOSIT DATE', 'DOI']
         heading.insert(5, 'STREAMS') if options[:include_streaming]
         csv.add_row heading
 
@@ -82,7 +82,7 @@ module AcademicCommons::Metrics
         document = item_stat.document
         csv.add_row [
           document['title_ssi'], document['genre_ssim'].first, document['cul_doi_ssi'],
-          document['doi'], item_stat.get_stat(key, 'Period')
+          document['publisher_doi_ssi'], item_stat.get_stat(key, 'Period')
         ].concat(monthly_stats)
       end
     end

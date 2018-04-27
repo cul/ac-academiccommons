@@ -14,7 +14,7 @@ module AcademicCommons::Metrics
 
     DEFAULT_SOLR_PARAMS = {
       rows: 100_000, page: 1,
-      fl: 'title_ssi,id,cul_doi_ssi,doi,genre_ssim,record_creation_dtsi,object_state_ssi,free_to_read_start_date_ssi'
+      fl: 'title_ssi,id,cul_doi_ssi,fedora3_pid_ssi,publisher_doi_ssi,genre_ssim,record_creation_dtsi,object_state_ssi,free_to_read_start_date_ssi'
     }.freeze
 
     PERIOD = 'Period'.freeze
@@ -219,15 +219,15 @@ module AcademicCommons::Metrics
     # Eventually may have to reevaluate this for queries that are for a specific
     # time range. For now, we are okay with this assumption.
     def most_downloaded_asset(doc)
-      asset_pids = doc.assets.map(&:id)
+      asset_ids = doc.assets.map(&:id)
 
-      return asset_pids.first if asset_pids.count == 1
+      return asset_ids.first if asset_ids.count == 1
 
       # Get the higest value stored here.
-      counts = Statistic.event_count(asset_pids, Statistic::DOWNLOAD)
+      counts = Statistic.event_count(asset_ids, Statistic::DOWNLOAD)
 
       # Return first pid, if items have never been downloaded.
-      return asset_pids.first if counts.empty?
+      return asset_ids.first if counts.empty?
 
       # Get key of most downloaded asset.
       key, value = counts.max_by{ |_,v| v }

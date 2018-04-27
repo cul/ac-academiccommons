@@ -2,7 +2,6 @@ require 'rails_helper'
 
 RSpec.describe AcademicCommons::Statistics do
   let(:uni) { 'abc123' }
-  let(:pid) { 'actest:1' }
   let(:empty_response) { { 'response' => { 'docs' => [] } } }
 
   let(:statistics) do
@@ -27,7 +26,7 @@ RSpec.describe AcademicCommons::Statistics do
       {
         rows: 100_000, sort: 'title_ssi asc', q: nil, page: 1,
         fq: ['author_uni_ssim:"abc123"', 'has_model_ssim:"info:fedora/ldpd:ContentAggregator"'],
-        fl: 'title_ssi,id,cul_doi_ssi,doi,genre_ssim,record_creation_dtsi,object_state_ssi,free_to_read_start_date_ssi'
+        fl: 'title_ssi,id,cul_doi_ssi,fedora3_pid_ssi,publisher_doi_ssi,genre_ssim,record_creation_dtsi,object_state_ssi,free_to_read_start_date_ssi'
       }
     end
 
@@ -48,8 +47,8 @@ RSpec.describe AcademicCommons::Statistics do
           {
             'response' => {
                'docs' => [
-                 { 'id' => pid, 'title_ssi' => 'First Test Document', 'object_state_ssi' => 'A',
-                   'cul_doi_ssi' => '', 'doi' => '', 'genre_ssim' => '' },
+                 { 'id' => '10.7916/ALICE', 'title_ssi' => 'First Test Document', 'object_state_ssi' => 'A',
+                   'cul_doi_ssi' => '10.7916/ALICE', 'fedora3_pid_ssi' => 'actest:1', 'publisher_doi_ssi' => '', 'genre_ssim' => '' },
                ]
             }
           }, {}
@@ -79,8 +78,8 @@ RSpec.describe AcademicCommons::Statistics do
           {
             'response' => {
                'docs' => [
-                 { 'id' => pid, 'title_ssi' => 'First Test Document', 'object_state_ssi' => 'A',
-                   'cul_doi_ssi' => '', 'doi' => '', 'genre_ssim' => '', 'free_to_read_start_date_ssi' => Date.tomorrow.strftime('%Y-%m-%d') },
+                 { 'id' => 'actest:1', 'title_ssi' => 'First Test Document', 'object_state_ssi' => 'A', 'fedora3_pid_ssi' => 'actest:1',
+                   'cul_doi_ssi' => '10.7916/ALICE', 'doi' => '', 'genre_ssim' => '', 'free_to_read_start_date_ssi' => Date.tomorrow.strftime('%Y-%m-%d') },
                ]
             }
           }, {}

@@ -4,7 +4,7 @@ module AcademicCommons::Metrics
     attr_reader :id, :document, :stats
 
     def initialize(document)
-      @id = document[:id] || document['id']
+      @id = document.id
       @document = document
       @stats = { Statistic::VIEW => {}, Statistic::DOWNLOAD => {}, Statistic::STREAM => {} }
     end

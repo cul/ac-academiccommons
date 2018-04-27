@@ -7,7 +7,6 @@ class DownloadController < ApplicationController
   STANDARD_SEARCH_PARAMS = {
     qt: 'search',
     fl: '*',
-    fq: [],
     facet: false
   }.freeze
 
@@ -23,7 +22,7 @@ class DownloadController < ApplicationController
     # this might be possible in one solr query if we index the info:fedora URI
     # and use a join clause on cul_member_of OR'd to the id search
     search_params = STANDARD_SEARCH_PARAMS.merge(
-      q: "id:#{params[:uri].gsub(':','\:')}"
+      fq: ["fedora3_pid_ssi:\"#{params[:uri]}\""]
     )
     solr_results = repository.get('select', params: search_params)
     docs = solr_results['response']['docs']
@@ -105,7 +104,7 @@ class DownloadController < ApplicationController
     return false if ids.blank?
     repository = Blacklight.default_index.connection
     search_params = STANDARD_SEARCH_PARAMS.merge(
-      q: "id:(#{ids.join(' OR ')})"
+      q: "fedora3_pid_ssi:(#{ids.join(' OR ')})"
     )
     solr_results = repository.get('select', params: search_params)
     docs = solr_results['response']['docs']

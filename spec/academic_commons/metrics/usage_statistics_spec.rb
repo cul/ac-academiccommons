@@ -2,8 +2,8 @@ require 'rails_helper'
 
 RSpec.describe AcademicCommons::Metrics::UsageStatistics, integration: true do
   let(:uni) { 'abc123' }
-  let(:pid) { 'actest:1' }
-  let(:pid2) { 'actest:5' }
+  let(:doi) { '10.7916/ALICE' }
+  let(:doi5) { '10.7916/TESTDOC5' }
   let(:empty_response) { { 'response' => { 'docs' => [] } } }
   let(:usage_stats) { AcademicCommons::Metrics::UsageStatistics.new({}, nil, nil) }
   let(:solr_request) { { q: nil, fq: ["author_uni_ssim:\"#{uni}\""] } }
@@ -11,7 +11,7 @@ RSpec.describe AcademicCommons::Metrics::UsageStatistics, integration: true do
     {
       rows: 100_000, sort: 'title_ssi asc', q: nil, page: 1,
       fq: ["author_uni_ssim:\"#{uni}\"", 'has_model_ssim:"info:fedora/ldpd:ContentAggregator"'],
-      fl: 'title_ssi,id,cul_doi_ssi,doi,genre_ssim,record_creation_dtsi,object_state_ssi,free_to_read_start_date_ssi'
+      fl: 'title_ssi,id,cul_doi_ssi,fedora3_pid_ssi,publisher_doi_ssi,genre_ssim,record_creation_dtsi,object_state_ssi,free_to_read_start_date_ssi'
     }
   end
   let(:solr_response) do
@@ -19,10 +19,10 @@ RSpec.describe AcademicCommons::Metrics::UsageStatistics, integration: true do
       {
         'response' => {
           'docs' => [
-            { 'id' => pid2, 'title_ssi' => 'Second Test Document', 'object_state_ssi' => 'A',
-             'cul_doi_ssi' => 'http://dx.doi.org/10.7916/TESTDOC2', 'doi' => '', 'genre_ssim' => ''},
-            { 'id' => pid, 'title_ssi' => 'First Test Document', 'object_state_ssi' => 'A',
-              'cul_doi_ssi' => 'http://dx.doi.org/10.7916/TESTDOC1', 'doi' => '', 'genre_ssim' => '' }
+            { 'id' => doi5, 'title_ssi' => 'Second Test Document', 'object_state_ssi' => 'A',
+             'cul_doi_ssi' => doi5, 'fedora3_pid_ssi' => 'actest:5', 'publisher_doi_ssi' => '', 'genre_ssim' => ''},
+            { 'id' => doi, 'title_ssi' => 'First Test Document', 'object_state_ssi' => 'A',
+              'cul_doi_ssi' => doi, 'fedora3_pid_ssi' => 'actest:1', 'publisher_doi_ssi' => '', 'genre_ssim' => '' }
           ]
         }
       }, {}
@@ -48,12 +48,12 @@ RSpec.describe AcademicCommons::Metrics::UsageStatistics, integration: true do
             {
               'response' => {
                 'docs' => [
-                  { 'id' => pid2, 'title_ssi' => 'Second Test Document', 'object_state_ssi' => 'A',
-                   'cul_doi_ssi' => 'http://dx.doi.org/10.7916/TESTDOC2', 'doi_ssi' => '', 'genre_ssim' => ''},
-                  { 'id' => pid, 'title_ssi' => 'First Test Document', 'object_state_ssi' => 'A',
-                    'cul_doi_ssi' => 'http://dx.doi.org/10.7916/TESTDOC1', 'doi_ssi' => '', 'genre_ssim' => '' },
-                  { 'id' => 'actest:10', 'title_ssi' => 'First Test Document', 'object_state_ssi' => 'A',
-                    'cul_doi_ssi' => 'http://dx.doi.org/10.7916/TESTDOC1', 'doi_ssi' => '', 'genre_ssim' => '',
+                  { 'id' => '10.7916/TESTDOC2', 'fedora3_pid_ssi' => 'actest:2', 'title_ssi' => 'Second Test Document', 'object_state_ssi' => 'A',
+                   'cul_doi_ssi' => '10.7916/TESTDOC2', 'genre_ssim' => '', 'publisher_doi_ssi' => ''},
+                  { 'id' => doi, 'title_ssi' => 'First Test Document', 'object_state_ssi' => 'A',
+                    'cul_doi_ssi' => doi, 'fedora3_pid_ssi' => 'actest:1', 'genre_ssim' => '', 'publisher_doi_ssi' => '' },
+                  { 'id' => '10.7916/TESTDOC10', 'title_ssi' => 'First Test Document', 'object_state_ssi' => 'A',
+                    'cul_doi_ssi' => '10.7916/TESTDOC10', 'fedora3_pid_ssi' => 'actest:10', 'genre_ssim' => '', 'publisher_doi_ssi' => '',
                     'free_to_read_start_date_ssi' => Date.tomorrow.strftime('%Y-%m-%d') }
                 ]
               }
@@ -65,7 +65,7 @@ RSpec.describe AcademicCommons::Metrics::UsageStatistics, integration: true do
 
         it 'removes embargoed material' do
           expect(subject.count).to eq 2
-          expect(subject.find{ |i| i.id == 'actest:10' }).to eq nil
+          expect(subject.find{ |i| i.id == '10.7916/TESTDOC10' }).to eq nil
         end
 
         it 'calculates stats for available material' do
@@ -198,22 +198,22 @@ RSpec.describe AcademicCommons::Metrics::UsageStatistics, integration: true do
         ['VIEWS REPORT:'],
         ['Total for period:', '2', '', '', '', 'Views by Month'],
         ['Title', 'Content Type', 'Persistent URL', 'Publisher DOI', 'Reporting Period Total Views', 'Jan-2015', 'Feb-2015', 'Mar-2015', 'Apr-2015', 'May-2015', 'Jun-2015', 'Jul-2015', 'Aug-2015', 'Sep-2015', 'Oct-2015', 'Nov-2015', 'Dec-2015', 'Jan-2016', 'Feb-2016', 'Mar-2016', 'Apr-2016', 'May-2016', 'Jun-2016', 'Jul-2016', 'Aug-2016', 'Sep-2016', 'Oct-2016', 'Nov-2016', 'Dec-2016'],
-        ['First Test Document', '', 'http://dx.doi.org/10.7916/TESTDOC1', '', '2', '1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '1', '0', '0', '0', '0', '0', '0', '0', '0', '0'],
-        ['Second Test Document', '', 'http://dx.doi.org/10.7916/TESTDOC2', '', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0'],
+        ['First Test Document', '', '10.7916/ALICE', '', '2', '1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '1', '0', '0', '0', '0', '0', '0', '0', '0', '0'],
+        ['Second Test Document', '', '10.7916/TESTDOC5', '', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0'],
 
         [], [],
         ['STREAMS REPORT:'],
         ['Total for period:', '1', '', '', '', 'Streams by Month'],
         ['Title', 'Content Type', 'Persistent URL', 'Publisher DOI', 'Reporting Period Total Streams', 'Jan-2015', 'Feb-2015', 'Mar-2015', 'Apr-2015', 'May-2015', 'Jun-2015', 'Jul-2015', 'Aug-2015', 'Sep-2015', 'Oct-2015', 'Nov-2015', 'Dec-2015', 'Jan-2016', 'Feb-2016', 'Mar-2016', 'Apr-2016', 'May-2016', 'Jun-2016', 'Jul-2016', 'Aug-2016', 'Sep-2016', 'Oct-2016', 'Nov-2016', 'Dec-2016'],
-        ['First Test Document', '', 'http://dx.doi.org/10.7916/TESTDOC1', '', '1', '0', '0', '0', '0', '1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0'],
-        ['Second Test Document', '', 'http://dx.doi.org/10.7916/TESTDOC2', '', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0'],
+        ['First Test Document', '', '10.7916/ALICE', '', '1', '0', '0', '0', '0', '1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0'],
+        ['Second Test Document', '', '10.7916/TESTDOC5', '', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0'],
 
         [], [],
         ['DOWNLOADS REPORT:'],
         ['Total for period:', '2', '', '', '', 'Downloads by Month'],
         ['Title', 'Content Type', 'Persistent URL', 'Publisher DOI', 'Reporting Period Total Downloads', 'Jan-2015', 'Feb-2015', 'Mar-2015', 'Apr-2015', 'May-2015', 'Jun-2015', 'Jul-2015', 'Aug-2015', 'Sep-2015', 'Oct-2015', 'Nov-2015', 'Dec-2015', 'Jan-2016', 'Feb-2016', 'Mar-2016', 'Apr-2016', 'May-2016', 'Jun-2016', 'Jul-2016', 'Aug-2016', 'Sep-2016', 'Oct-2016', 'Nov-2016', 'Dec-2016'],
-        ['First Test Document', '', 'http://dx.doi.org/10.7916/TESTDOC1', '', '2', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '2', '0', '0', '0', '0', '0', '0', '0', '0'],
-        ['Second Test Document', '', 'http://dx.doi.org/10.7916/TESTDOC2', '', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0']
+        ['First Test Document', '', '10.7916/ALICE', '', '2', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '2', '0', '0', '0', '0', '0', '0', '0', '0'],
+        ['Second Test Document', '', '10.7916/TESTDOC5', '', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0']
       ]
     end
     let(:usage_stats) do
@@ -240,8 +240,9 @@ RSpec.describe AcademicCommons::Metrics::UsageStatistics, integration: true do
 
   describe '#get_stat_for' do
     subject do
-      AcademicCommons::Metrics::UsageStatistics.new(solr_request, Date.parse('Dec 2015'), Date.parse('Apr 2016'),
-      per_month: true)
+      AcademicCommons::Metrics::UsageStatistics.new(
+        solr_request, Date.parse('Dec 2015'), Date.parse('Apr 2016'), per_month: true
+      )
     end
 
     before :each do
@@ -256,24 +257,24 @@ RSpec.describe AcademicCommons::Metrics::UsageStatistics, integration: true do
     end
 
     it 'return correct value for view period stats' do
-      expect(subject.get_stat_for(pid, Statistic::VIEW)).to be 2
+      expect(subject.get_stat_for(doi, Statistic::VIEW)).to be 2
     end
 
     it 'returns correct value for view month stats' do
-      expect(subject.get_stat_for(pid, Statistic::VIEW, 'Jan 2016')).to be 1
+      expect(subject.get_stat_for(doi, Statistic::VIEW, 'Jan 2016')).to be 1
     end
 
     it 'returns correct value of Lifetime download stats' do
-      expect(subject.get_stat_for(pid, Statistic::DOWNLOAD, 'Lifetime')).to be 2
+      expect(subject.get_stat_for(doi, Statistic::DOWNLOAD, 'Lifetime')).to be 2
     end
 
     it 'returns correct value of download April 2016 stats' do
-      expect(subject.get_stat_for(pid, Statistic::DOWNLOAD, 'Apr 2016')).to be 2
+      expect(subject.get_stat_for(doi, Statistic::DOWNLOAD, 'Apr 2016')).to be 2
     end
 
     it 'returns error if month and year are not part of the period' do
       expect {
-        subject.get_stat_for(pid, Statistic::VIEW, 'May 2017')
+        subject.get_stat_for(doi, Statistic::VIEW, 'May 2017')
       }.to raise_error 'View May 2017 not part of stats. Check parameters.'
     end
 
@@ -284,26 +285,26 @@ RSpec.describe AcademicCommons::Metrics::UsageStatistics, integration: true do
     end
 
     it 'returns 0 if id not present, but id part of results' do
-      expect(subject.get_stat_for('actest:5', Statistic::VIEW, 'Jan 2016')).to be 0
+      expect(subject.get_stat_for('10.7916/TESTDOC5', Statistic::VIEW, 'Jan 2016')).to be 0
     end
   end
 
   describe '#most_downloaded_asset' do
-    let(:pid1) { 'actest:2' }
-    let(:pid2) { 'actest:4' }
+    let(:asset1_doi) { '10.7916/TESTDOC2' }
+    let(:asset2_doi) { '10.7916/TESTDOC4' }
 
     subject {
       usage_stats.instance_eval{
         most_downloaded_asset(
           SolrDocument.new(
-            'id' => 'actest:1', 'title_ssi' => 'Second Test Document', 'object_state_ssi' => 'A',
-            'cul_doi_ssi' => 'http://dx.doi.org/10.7916/TESTDOC2', 'doi' => '', 'genre_ssim' => ''
+            'id' => '10.7916/ALICE', 'title_ssi' => 'Second Test Document', 'object_state_ssi' => 'A',
+            'cul_doi_ssi' => '10.7916/ALICE', 'publisher_doi_ssi' => '', 'fedora3_pid_ssi' => 'actest:1', 'genre_ssim' => ''
           )
         )
       }
     }
 
-    it 'returns error when pid not provided' do
+    it 'returns error when identifier not provided' do
       expect {
         usage_stats.instance_eval{ most_downloaded_asset }
       }.to raise_error ArgumentError
@@ -311,25 +312,25 @@ RSpec.describe AcademicCommons::Metrics::UsageStatistics, integration: true do
 
     context 'when item has one asset' do
       it 'returns only asset' do
-        expect(subject).to eql 'actest:2'
+        expect(subject).to eql asset1_doi
       end
     end
 
     context 'when item has more than one asset' do
       before :each do
         FactoryBot.create(:download_stat)
-        FactoryBot.create(:download_stat, identifier: pid2)
-        FactoryBot.create(:download_stat, identifier: pid2)
+        FactoryBot.create(:download_stat, identifier: asset2_doi)
+        FactoryBot.create(:download_stat, identifier: asset2_doi)
       end
 
       it 'returns most downloaded' do
-        expect(subject).to eql pid2
+        expect(subject).to eql asset2_doi
       end
     end
 
-    context 'when item asset has never been downloaded' do
+    context 'when item\'s asset has never been downloaded' do
       it 'returns first pid' do
-        expect(subject).to eql pid1
+        expect(subject).to eql asset1_doi
       end
     end
   end

@@ -9,6 +9,8 @@ class Resource < ActiveFedora::Base
       doi = doc.fetch('ezid_doi_ssim', nil)
       doc['cul_doi_ssi'] = doi.gsub('doi:', '') if doi.present?
 
+      doc['id'] = doc['cul_doi_ssi'] || self.pid
+
       if (content = downloadable_content)
         doc['downloadable_content_type_ssi'] = content.mimeType
         doc['downloadable_content_dsid_ssi'] = content.dsid
@@ -16,7 +18,8 @@ class Resource < ActiveFedora::Base
         doc['downloadable_content_size_isi'] = size
       end
 
-      doc['fulltext_tsi'] = fulltext.to_s.force_encoding('utf-8').gsub(/\s+/, ' ')
+      # fulltext_str = fulltext.to_s.force_encoding('utf-8').gsub(/\s+/, ' ')
+      # doc['fulltext_tsi'] = fulltext_str if fulltext_str.present?
     end
   end
 

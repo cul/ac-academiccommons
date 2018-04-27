@@ -42,7 +42,7 @@
 
     <% @usage_stats.each do |item| %>
       <tr>
-        <td><%= link_to item.document["title_ssi"], url_for(only_path: false, controller: :catalog, action: :show, id: item.id) %></td>
+        <td><%= link_to item.document["title_ssi"], item.document.full_doi %></td>
         <td class="cell"><%= item.get_stat(Statistic::VIEW, 'Period') %></td>
         <% if @streams %>
           <td class="cell"><%= item.get_stat(Statistic::STREAM, 'Period') %></td>
