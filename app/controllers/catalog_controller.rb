@@ -318,6 +318,22 @@ class CatalogController < ApplicationController
     render body: nil
   end
 
+  # Redirect legacy show urls (/catalog, /item) to /doi with the corresponding DOI.
+  # If an item with that pid no longer exists raise a Record Not Found error
+  def legacy_show
+    solr_params = {
+      qt: 'search', rows: 1,
+      fq: ["has_model_ssim:\"#{ContentAggregator.to_class_uri}\"", "fedora3_pid_ssi:\"#{params[:id]}\""]
+    }
+    solr_response = Blacklight.default_index.search(solr_params)
+
+    if solr_response.docs.present?
+      redirect_to solr_document_url(solr_response.docs.first.doi), status: :moved_permanently
+    else
+      raise Blacklight::Exceptions::RecordNotFound
+    end
+  end
+
   def home
     render 'home'
   end
