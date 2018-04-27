@@ -41,7 +41,7 @@ class CatalogController < ApplicationController
       # fl: '*',
       # facet: false,
       # rows: 1
-      q: '{!raw f=cul_doi_ssi v=$id}' # Documents should be looked up by DOI.
+      # q: '{!raw f=id v=$id}'
     }
 
     # solr field configuration for search results/index views
