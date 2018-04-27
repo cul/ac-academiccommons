@@ -60,6 +60,7 @@ group :development, :test do
   gem 'byebug'
   gem 'capybara', '~>2.2'
   gem 'chromedriver-helper'
+  gem 'coveralls', require: false
   gem 'database_cleaner'
   gem 'equivalent-xml'
   gem 'factory_bot_rails'

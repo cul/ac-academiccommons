@@ -17,6 +17,9 @@
 #
 # See http://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
 
+require 'coveralls'
+Coveralls.wear!
+
 require 'capybara/rspec'
 require 'selenium-webdriver'
 require 'equivalent-xml/rspec_matchers'
