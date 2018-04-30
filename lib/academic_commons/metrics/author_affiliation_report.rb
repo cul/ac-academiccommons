@@ -9,7 +9,7 @@ module AcademicCommons::Metrics
       usage_stats = UsageStatistics.new(solr_params)
 
       headers = [
-        'pid', 'persistent url', 'lifetime downloads', 'lifetime views',
+        'doi', 'legacy id', 'lifetime downloads', 'lifetime views',
         'department ac', 'genre', 'creation date', 'multi-author count',
         'author uni', 'author name', 'ldap author title',
         'ldap organizational unit'
@@ -27,8 +27,8 @@ module AcademicCommons::Metrics
         end
 
         start_of_row = [
-          doc[:id],
-          AcademicCommons.identifier_url(doc[:cul_doi_ssi]),
+          doc[:cul_doi_ssi],
+          doc[:fedora3_pid_ssi],
           item_stats.get_stat(Statistic::DOWNLOAD, UsageStatistics::LIFETIME),
           item_stats.get_stat(Statistic::VIEW, UsageStatistics::LIFETIME),
           doc.fetch(:department_ssim, []).join(', '),
