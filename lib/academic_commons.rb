@@ -11,4 +11,22 @@ module AcademicCommons
       str
     end
   end
+
+  # Returns solr search response. User must provide a block which changes the
+  # SearchParameters object. This method uses Blacklight to conduct a search with
+  # our own parameters. Use this method when retriving records outside of the
+  # typical blacklight controller context. This way, there's a centralized place
+  # to make those request.
+  #
+  # @example
+  #  solr_response = AcademicCommons.search do |parameters|
+  #   parameters.rows(1)
+  #   parameters.aggregators_only
+  #   parameters.filter('fedora3_pid_ssi', 'actest:1')
+  # end
+  def self.search
+    params = SearchParameters.new
+    yield(params)
+    Blacklight.default_index.search(params.to_h)
+  end
 end
