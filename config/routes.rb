@@ -35,6 +35,11 @@ Rails.application.routes.draw do
     concerns :range_searchable
   end
 
+  get '/download/fedora_content/download/:uri/:block/:filename', to: 'download#legacy_fedora_content', as: 'legacy_fedora_content',
+    block: /(CONTENT|content)/, uri: /.+/, filename: /.+/
+  match 'doi/*id/download', to: 'download#content', via: :get, as: 'asset_download'
+
+
   # Routes for solr document
   # Instead of specifying solr routes as:
   #   resources :solr_document, only: [:show], controller: 'catalog', path: 'doi', constraints: { id: /.*/ } do
@@ -44,6 +49,7 @@ Rails.application.routes.draw do
   match 'doi/*id/email', to: 'catalog#email', via: [:get, :post], as: :email_solr_document
   match 'doi/email',     to: 'catalog#email', via: [:get, :post], as: :email_solr_document_index
   match 'doi/*id',       to: 'catalog#show',  via: :get,          as: :solr_document
+
 
   mount Blacklight::Engine => '/'
 
@@ -58,9 +64,8 @@ Rails.application.routes.draw do
 
   resources :email_preferences
 
-  get '/download/fedora_content/:download_method/:uri/:block/:filename', to: 'download#fedora_content', as: 'fedora_content',
-    block: /(DC|CONTENT|content|SOURCE|descMetadata)/,
-    uri: /.+/, filename: /.+/, download_method: /(download|show|show_pretty)/
+
+
 
   get '/download/download_log/:id', to: 'download#download_log', as: 'download_log'
 

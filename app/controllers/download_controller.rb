@@ -16,107 +16,80 @@ class DownloadController < ApplicationController
     render plain: getLogContent(params[:log_folder], params[:id])
   end
 
-  def fedora_content
-    repository = Blacklight.default_index.connection
-    # get the resource doc and its parent docs
-    # this might be possible in one solr query if we index the info:fedora URI
-    # and use a join clause on cul_member_of OR'd to the id search
+  def content
+    # TODO: check that we are only downloading assets?
     search_params = STANDARD_SEARCH_PARAMS.merge(
-      fq: ["fedora3_pid_ssi:\"#{params[:uri]}\""]
+      fq: ["id:\"#{params[:id]}\""]
     )
-    solr_results = repository.get('select', params: search_params)
-    docs = solr_results['response']['docs']
+    docs = Blacklight.default_index.search(search_params).docs
     # did the resource doc exist? is it active?
-    resource_doc = SolrDocument.new(docs.first)
-    fail_fast = resource_doc.nil? || !free_to_read?(resource_doc)
+    resource_doc = docs.first
+    fail_fast = resource_doc.nil? || resource_doc.embargoed?
 
-    if !fail_fast
-      # are any parent docs active and readable?
+    if !fail_fast # check that at least one of the parent docs is active and readable
       ids = resource_doc.fetch(:cul_member_of_ssim,[]).map { |val| val.split('/').last }
       ids = ids.map { |val| val.gsub(':','\:') }
       fail_fast = !any_free_to_read?(ids)
     end
 
-    url = fedora_config['url'] + '/objects/' + params[:uri] + '/datastreams/' + params[:block] + '/content'
-
-    # Allow descMetadata downloads of resources regardless of embargo status.
-    # Allow CONTENT downloads of metadata. # TODO: Remove after Hyacinth migration.
-    if (is_metadata?(resource_doc) && params[:block] == 'CONTENT') || (params[:block] == 'descMetadata')
-      fail_fast = false
+    if !fail_fast # check that the content datastream exists for this object in fedora
+      url = Rails.application.config_for(:fedora)['url'] + '/objects/' + resource_doc.fetch(:fedora3_pid_ssi, nil) + '/datastreams/content/content'
+      head_response = http_client.head(url)
+      fail_fast ||= (head_response.status != 200)
     end
-
-    head_response = http_client.head(url) unless fail_fast
-    fail_fast ||= (head_response.status != 200)
 
     if fail_fast
       render body: nil, status: 404
-      return
-    end
-
-    case params[:download_method]
-    when 'download'
-      if(params[:data] != 'meta')
-         record_stats
-      end
-      headers['X-Accel-Redirect'] = x_accel_url(url)
-      render body: nil
-    when 'show_pretty'
-      h_ct = head_response.header['Content-Type'].to_s
-      text_result = nil
-      if h_ct.include?('xml')
-        xsl = Nokogiri::XSLT(File.read(Rails.root.to_s + '/app/tools/pretty-print.xsl'))
-        xml = Nokogiri(http_client.get_content(url))
-        text_result = xsl.apply_to(xml).to_s
-      else
-        text_result = 'Non-xml content streams cannot be pretty printed.'
-      end
-      if params[:xml]
-        headers['Content-Type'] = 'text/xml'
-        render xml: text_result
-      else
-        render plain: text_result
-      end
     else
-      headers['X-Accel-Redirect'] = x_accel_url(url)
+      record_stats
+      headers['X-Accel-Redirect'] = x_accel_url(url, resource_doc.filename)
       render body: nil
     end
   end
+
+  def legacy_fedora_content
+    # Get the resource doc and its parent docs.
+    search_params = STANDARD_SEARCH_PARAMS.merge(
+      fq: ["fedora3_pid_ssi:\"#{params[:uri]}\""]
+    )
+    solr_response = Blacklight.default_index.search(search_params)
+    resource_doc = solr_response.docs.first
+
+    # did the resource doc exist?
+    if resource_doc.nil?
+      render body: nil, status: 404
+    else
+      redirect_to asset_download_url(resource_doc.id), status: :moved_permanently
+    end
+  end
+
+  private
 
   def http_client
     @cl ||= HTTPClient.new
   end
 
-#downloading of files is handed off to nginx to improve performance.
-#uses the x-accel-redirect header in combination with nginx config location
-#syntax ’repository_download’ to have nginx proxy the download.
-#see http://kovyrin.net/2010/07/24/nginx-fu-x-accel-redirect-remote/
-
-  def x_accel_url(url, file_name = nil)
+  # Downloading of files is handed off to nginx to improve performance.
+  # Uses the x-accel-redirect header in combination with nginx config location
+  # syntax `repository_download` to have nginx proxy the download.
+  # See http://kovyrin.net/2010/07/24/nginx-fu-x-accel-redirect-remote/
+  def x_accel_url(url, filename = nil)
     uri = "/repository_download/#{url.gsub(/https?\:\/\//, '')}"
-    uri << "?#{file_name}" if file_name
+    uri << "?#{filename}" if filename
 
     logger.info '=========== ' + url
 
     uri
   end
 
+  # Returns true if any of the ids are free to read.
   def any_free_to_read?(ids)
     return false if ids.blank?
-    repository = Blacklight.default_index.connection
     search_params = STANDARD_SEARCH_PARAMS.merge(
       q: "fedora3_pid_ssi:(#{ids.join(' OR ')})"
     )
-    solr_results = repository.get('select', params: search_params)
-    docs = solr_results['response']['docs']
-    docs.detect { |d| free_to_read?(d) }
-  end
-
-  private
-
-  # TODO: Remove after Hyacinth migration.
-  def is_metadata?(doc)
-    doc = ActiveFedora::Base.find(params['uri']).to_solr if doc.nil?
-    (doc['has_model_ssim'] && doc['has_model_ssim'].include?('info:fedora/ldpd:MODSMetadata'))
+    solr_response = Blacklight.default_index.search(search_params)
+    solr_response.docs.find { |d| !d.embargoed? }
   end
 
   def record_stats
@@ -124,7 +97,7 @@ class DownloadController < ApplicationController
     Statistic.create!(
       session_id: request.session_options[:id],
       ip_address: request.env['HTTP_X_FORWARDED_FOR'] || request.remote_addr,
-      event: 'Download', identifier: params['uri'], at_time: Time.now()
+      event: 'Download', identifier: params['id'], at_time: Time.now()
     )
   end
 end
