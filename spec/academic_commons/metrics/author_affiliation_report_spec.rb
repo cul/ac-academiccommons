@@ -22,7 +22,7 @@ RSpec.describe AcademicCommons::Metrics::AuthorAffiliationReport do
             'title_ssi' => 'Alice\'s Adventures in Wonderland',
             'author_uni_ssim' => ['abc123', 'xyz567'], 'object_state_ssi' => 'A',
             'department_ssim' => ['English Department', 'Creative Writing Department'],
-            'genre_ssim' => ['Books'],
+            'genre_ssim' => ['Books'], 'fedora3_pid_ssi' => 'actest:6',
             'system_create_dtsi' => '2016-11-21T13:03:42Z',
             }
         ]
@@ -37,7 +37,7 @@ RSpec.describe AcademicCommons::Metrics::AuthorAffiliationReport do
           { 'id' => '10.7916/PRIDE', 'cul_doi_ssi' => '10.7916/PRIDE',
             'title_ssi' => 'Pride and Prejudice',
             'author_uni_ssim' => ['xyz567'], 'object_state_ssi' => 'A',
-            'genre_ssim' => ['Books'],
+            'genre_ssim' => ['Books'], 'fedora3_pid_ssi' => 'actest:7',
             'author_ssim' => ['Austen, Jane', 'Doe, Jane'],
             'system_create_dtsi' => '2016-11-21T10:43:15Z'
             }
@@ -66,16 +66,15 @@ RSpec.describe AcademicCommons::Metrics::AuthorAffiliationReport do
   context 'generates' do
     let(:expected_csv) do
       [
-        ['pid', 'persistent url', 'lifetime downloads', 'lifetime views', 'department ac', 'genre', 'creation date', 'multi-author count', 'author uni', 'author name', 'ldap author title', 'ldap organizational unit'],
-        ['actest:6', 'https://doi.org/10.7916/ALICE', '0', '1', 'English Department, Creative Writing Department', 'Books', '2016-11-21T13:03:42Z', '1', 'abc123', 'Lewis Carroll', 'Professor of Creative Writing', 'English Department'],
-        ['actest:6', 'https://doi.org/10.7916/ALICE', '0', '1', 'English Department, Creative Writing Department', 'Books', '2016-11-21T13:03:42Z', '2', 'xyz567', 'Jane Austen', 'Professor of English', 'English Department'],
-        ['actest:7', 'https://doi.org/10.7916/PRIDE', '0', '0', '', 'Books', '2016-11-21T10:43:15Z', '1', 'xyz567', 'Jane Austen', 'Professor of English', 'English Department'],
-        ['actest:7', 'https://doi.org/10.7916/PRIDE', '0', '0', '', 'Books', '2016-11-21T10:43:15Z', '2', nil, nil, nil, nil]
+        ['doi', 'legacy id', 'lifetime downloads', 'lifetime views', 'department ac', 'genre', 'creation date', 'multi-author count', 'author uni', 'author name', 'ldap author title', 'ldap organizational unit'],
+        ['10.7916/ALICE', 'actest:6', '0', '1', 'English Department, Creative Writing Department', 'Books', '2016-11-21T13:03:42Z', '1', 'abc123', 'Lewis Carroll', 'Professor of Creative Writing', 'English Department'],
+        ['10.7916/ALICE', 'actest:6', '0', '1', 'English Department, Creative Writing Department', 'Books', '2016-11-21T13:03:42Z', '2', 'xyz567', 'Jane Austen', 'Professor of English', 'English Department'],
+        ['10.7916/PRIDE', 'actest:7', '0', '0', '', 'Books', '2016-11-21T10:43:15Z', '1', 'xyz567', 'Jane Austen', 'Professor of English', 'English Department'],
+        ['10.7916/PRIDE', 'actest:7', '0', '0', '', 'Books', '2016-11-21T10:43:15Z', '2', nil, nil, nil, nil]
       ]
     end
 
     it 'expected csv' do
-      pending 'awaiting decision from ACHYDRA-472'
       expect(CSV.parse(subject)[3..-1]).to match expected_csv
     end
   end
