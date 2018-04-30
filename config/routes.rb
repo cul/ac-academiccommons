@@ -9,6 +9,11 @@ Rails.application.routes.draw do
 
   root to: "catalog#home"
 
+  get '/about',    to: 'info#about',    as: 'about'
+  get '/policies', to: 'info#policies', as: 'policies'
+  get '/faq',      to: 'info#faq',      as: 'faq'
+  get '/api',      to: 'info#api',      as: 'api_documentation'
+
   mount API => '/'
 
   # Browsing routes
@@ -94,10 +99,6 @@ Rails.application.routes.draw do
   get '/logs/all_author_monthly_reports_history', to: 'logs#all_author_monthly_reports_history'
   get '/logs/log_form',                           to: 'logs#log_form'
   get '/logs/ingest_history',                     to: 'logs#ingest_history'
-
-  get '/about',    to: 'info#about',    as: 'about'
-  get '/policies', to: 'info#policies', as: 'policies'
-  get '/faq',      to: 'info#faq',      as: 'faq'
 
   # Route used to render error page.
   get '/500', to: 'errors#internal_server_error'
