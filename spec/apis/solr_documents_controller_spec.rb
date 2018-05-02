@@ -34,8 +34,7 @@ describe SolrDocumentsController, type: :controller, integration: true do
       expect(response.status).to be 404
       put :update, params: { id: 'actest:2' }
       ActiveFedora::SolrService.commit # Force commit, since we are not using softCommit
-      expect(response.headers['Location'])
-        .to eql('http://test.host/download/fedora_content/download/actest:2/CONTENT/alice_in_wonderland.pdf')
+      expect(response.headers['Location']).to eql('http://test.host/doi/10.7916/TESTDOC2/download')
     end
     after do
       put :update, params: { id: 'actest:1' }

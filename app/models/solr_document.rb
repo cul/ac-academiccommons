@@ -115,7 +115,7 @@ class SolrDocument
 
   def download_path
     return nil unless asset?
-    Rails.application.routes.url_helpers.asset_download_path(id)
+    Rails.application.routes.url_helpers.content_download_path(id)
   end
 
   def asset?

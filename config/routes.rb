@@ -37,7 +37,7 @@ Rails.application.routes.draw do
 
   get '/download/fedora_content/download/:uri/:block/:filename', to: 'download#legacy_fedora_content', as: 'legacy_fedora_content',
     block: /(CONTENT|content)/, uri: /.+/, filename: /.+/
-  match 'doi/*id/download', to: 'download#content', via: :get, as: 'asset_download'
+  match 'doi/*id/download', to: 'download#content', via: :get, as: 'content_download'
 
 
   # Routes for solr document

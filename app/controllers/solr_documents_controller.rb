@@ -40,7 +40,7 @@ class SolrDocumentsController < ApplicationController
       aggregator = obj.is_a?(ContentAggregator)
       notify_authors_of_new_item(solr_doc) if aggregator
 
-      location_url = aggregator ? solr_document_url(solr_doc['cul_doi_ssi']) : download_url(obj)
+      location_url = aggregator ? solr_document_url(solr_doc['cul_doi_ssi']) : content_download_url(solr_doc['cul_doi_ssi'])
       response.headers['Location'] = location_url
       render status: :ok, plain: ''
     rescue ActiveFedora::ObjectNotFoundError => e
@@ -81,21 +81,6 @@ class SolrDocumentsController < ApplicationController
   end
 
   private
-
-  def download_url(af_obj)
-    download_params = {
-      block: nil,
-      uri: af_obj.pid,
-      filename: nil,
-      download_method: 'download'
-    }
-    block_ds = af_obj.downloadable_content
-    if block_ds
-      download_params[:block] = block_ds.dsid
-      download_params[:filename] = block_ds.label.blank? ? af_obj.label : block_ds.label
-    end
-    fedora_content_url(download_params)
-  end
 
   # Checks to see if new item notification has been sent to author. If one has
   # already been sent does not sent another one.

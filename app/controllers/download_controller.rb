@@ -59,7 +59,7 @@ class DownloadController < ApplicationController
     if resource_doc.nil?
       render body: nil, status: 404
     else
-      redirect_to asset_download_url(resource_doc.id), status: :moved_permanently
+      redirect_to content_download_url(resource_doc.id), status: :moved_permanently
     end
   end
 
