@@ -26,11 +26,11 @@ module AcademicCommons
 
       # Solr query to retrieve all aggregators in solr core.
       solr_params = {
-        q: nil, fl: 'id', rows: 100_000,
+        q: nil, fl: 'fedora3_pid_ssi', rows: 100_000,
         fq: ["has_model_ssim:\"#{ContentAggregator.to_class_uri}\""]
       }
       response = rsolr.get('select', params: solr_params)
-      pids = response['response']['docs'].map{ |doc| doc['id'] }
+      pids = response['response']['docs'].map{ |doc| doc['fedora3_pid_ssi'] }
       items(*pids)
     end
 
@@ -116,9 +116,9 @@ module AcademicCommons
       puts(string) if verbose
     end
 
-    # Helper to determain whether or not id exists in solr core.
+    # Helper to determain whether or not the fedora id exists in solr core.
     def solr_id_exists?(id)
-      response = rsolr.get('select', params: { q: "{!raw f=id}#{id}", rows: 0 })
+      response = rsolr.get('select', params: { q: "{!raw f=fedora3_pid_ssi}#{id}", rows: 0 })
       response['response']['numFound'].to_i == 1
     end
 
