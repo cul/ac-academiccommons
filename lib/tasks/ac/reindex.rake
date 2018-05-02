@@ -28,8 +28,9 @@ namespace :ac do
 
     desc 'Reindex by pid (item or asset)'
     task by_pid: :environment do
-      if ENV['pidlist'].present?
-        pids = open(ENV['pidlist']).map(&:strip!)
+      if ENV['pidlist'].present? || ENV['pids'].present?
+        pids = open(ENV['pidlist']).map(&:strip!) if ENV['pidlist'].present?
+        pids = ENV['pids'].split(',')             if ENV['pids'].present?
 
         index = AcademicCommons::Indexer.new(verbose: true)
         index.by_pids(pids)
