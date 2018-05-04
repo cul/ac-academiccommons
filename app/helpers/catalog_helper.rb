@@ -6,12 +6,6 @@ module CatalogHelper
 
   delegate :repository, to: :controller
 
-  # Generates url for type faceted search
-  def type_search(type)
-    facet_params = search_state.reset.add_facet_params('genre_ssim', type)
-    search_action_path(facet_params)
-  end
-
   # Adds handle or doi prefix if necessary. Makes field a clickable link.
   def link_identifier(**options)
     value = options[:value].is_a?(Array) ? options[:value].first : options[:value]
@@ -40,22 +34,6 @@ module CatalogHelper
   # Wraps spans around each value.
   def wrap_in_spans(**options)
     safe_join(options.fetch(:value, []).map { |v| content_tag(:span, html_escape(v)) })
-  end
-
-  def get_total_count
-    date_trend.counts[:total]
-  end
-
-  def get_count_by_year
-    date_trend.counts[:last_year]
-  end
-
-  def get_count_by_month
-    date_trend.counts[:last_month]
-  end
-
-  def date_trend
-    @date_trend ||= AcademicCommons::DateTrend.new('record_creation_dtsi', ContentAggregator)
   end
 
   # TODO: Move to a browse controller

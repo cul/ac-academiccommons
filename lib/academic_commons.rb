@@ -24,6 +24,8 @@ module AcademicCommons
   #   parameters.aggregators_only
   #   parameters.filter('fedora3_pid_ssi', 'actest:1')
   # end
+  #
+  # @return [Blacklight::Solr::Response] response object
   def self.search
     params = SearchParameters.new
     yield(params)
