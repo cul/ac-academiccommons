@@ -96,6 +96,8 @@ module AcademicCommons
       log_info "Successfully indexed #{success.count} item(s)."
       log_info "The following #{error.count} item(s) returned errors #{error.join(", ")}" unless error.count.zero?
       indexing_logger.close
+
+      Rails.cache.delete('repository_statistics') # Invalidating stats on homepage.
     end
 
     def start_timestamp
