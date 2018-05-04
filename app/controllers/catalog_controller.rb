@@ -321,11 +321,10 @@ class CatalogController < ApplicationController
   # Redirect legacy show urls (/catalog, /item) to /doi with the corresponding DOI.
   # If an item with that pid no longer exists raise a Record Not Found error
   def legacy_show
-    solr_params = {
-      qt: 'search', rows: 1,
-      fq: ["has_model_ssim:\"#{ContentAggregator.to_class_uri}\"", "fedora3_pid_ssi:\"#{params[:id]}\""]
-    }
-    solr_response = Blacklight.default_index.search(solr_params)
+    # Search for item with the matching fedora pid.
+    solr_response = AcademicCommons.search do |parameters|
+      parameters.rows(1).aggregators_only.filter('fedora3_pid_ssi', params[:id])
+    end
 
     if solr_response.docs.present?
       redirect_to solr_document_url(solr_response.docs.first.doi), status: :moved_permanently
