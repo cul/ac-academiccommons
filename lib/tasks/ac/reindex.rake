@@ -5,8 +5,6 @@ namespace :ac do
       index = AcademicCommons::Indexer.new(verbose: true)
       index.all_items
       index.close
-
-      Rails.cache.delete('repository_statistics')
     end
 
     desc 'Reindex items by pids'
@@ -21,8 +19,6 @@ namespace :ac do
         index = AcademicCommons::Indexer.new(verbose: true)
         index.items(*pids)
         index.close
-
-        Rails.cache.delete('repository_statistics')
       end
     end
 
@@ -35,8 +31,6 @@ namespace :ac do
         index = AcademicCommons::Indexer.new(verbose: true)
         index.by_pids(pids)
         index.close
-
-        Rails.cache.delete('repository_statistics')
       else
         puts Rainbow('Incorrect arguments. Pass pidlist=/path/to/file').red
       end
