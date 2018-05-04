@@ -115,11 +115,7 @@ class SolrDocument
 
   def download_path
     return nil unless asset?
-    Rails.application.routes.url_helpers.fedora_content_path(
-      :download, fetch('fedora3_pid_ssi', nil),
-      fetch('downloadable_content_dsid_ssi'),
-      fetch('downloadable_content_label_ss')
-    )
+    Rails.application.routes.url_helpers.content_download_path(id)
   end
 
   def asset?

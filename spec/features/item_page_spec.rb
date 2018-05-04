@@ -48,8 +48,8 @@ describe 'Item Page', type: :feature do
   end
 
   it 'links to asset downloads' do
-    expect(page).to have_xpath '//a[@href=\'/download/fedora_content/download/actest:2/CONTENT/alice_in_wonderland.pdf\']'
-    expect(page).to have_xpath '//a[@href=\'/download/fedora_content/download/actest:4/content/to_solr.json\']'
+    expect(page).to have_xpath '//a[@href=\'/doi/10.7916/TESTDOC2/download\']'
+    expect(page).to have_xpath '//a[@href=\'/doi/10.7916/TESTDOC4/download\']'
   end
 
   describe 'download links for' do
@@ -81,8 +81,8 @@ describe 'Item Page', type: :feature do
 
     it 'renders additional highwire tags' do
       expect(page).to have_xpath('//head/meta[@name="citation_keywords"][@content="Tea Parties"]', visible: false)
-      expect(page).to have_xpath('//head/meta[@name="citation_pdf_url"][@content="http://www.example.com/download/fedora_content/download/actest:2/CONTENT/alice_in_wonderland.pdf"]', visible: false)
-      expect(page).to have_xpath('//head/meta[@name="citation_pdf_url"][@content="http://www.example.com/download/fedora_content/download/actest:4/content/to_solr.json"]', visible: false)
+      expect(page).to have_xpath('//head/meta[@name="citation_pdf_url"][@content="http://www.example.com/doi/10.7916/TESTDOC2/download"]', visible: false)
+      expect(page).to have_xpath('//head/meta[@name="citation_pdf_url"][@content="http://www.example.com/doi/10.7916/TESTDOC4/download"]', visible: false)
     end
   end
 end

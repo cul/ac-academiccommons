@@ -4,16 +4,13 @@ describe SolrDocument do
   describe '#download_path' do
     let(:document) do
       described_class.new(
-        'id' => 'actest:2', 'fedora3_pid_ssi' => 'actest:2',
-        'active_fedora_model_ssi' => 'GenericResource',
-        'downloadable_content_type_ssi' => 'application/pdf',
-        'downloadable_content_dsid_ssi' => 'CONTENT',
-        'downloadable_content_label_ss' => 'alice_in_wonderland.pdf'
+        'id' => '10.7916/TESTDOC2',
+        'active_fedora_model_ssi' => 'GenericResource'
       )
     end
 
     it 'generates correct download_path' do
-      expect(document.download_path).to eql '/download/fedora_content/download/actest:2/CONTENT/alice_in_wonderland.pdf'
+      expect(document.download_path).to eql '/doi/10.7916/TESTDOC2/download'
     end
   end
 
