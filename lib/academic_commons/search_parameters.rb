@@ -26,7 +26,7 @@ module AcademicCommons
     def assets_only; end
 
     def aggregators_only
-      @parameters[:fq] << "has_model_ssim:\"#{ContentAggregator.to_class_uri}\""
+      filter('has_model_ssim', ContentAggregator.to_class_uri)
       self
     end
 
@@ -38,6 +38,17 @@ module AcademicCommons
     def member_of(pid); end
 
     def fedora3_pid(pid); end
+
+    def facet_by(*fields)
+      @parameters[:facet] = true
+      @parameters[:'facet.field'] = fields
+      self
+    end
+
+    def facet_limit(limit)
+      @parameters[:'facet.limit'] = limit
+      self
+    end
 
     def to_h
       parameters
