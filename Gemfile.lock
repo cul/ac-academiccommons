@@ -518,6 +518,7 @@ DEPENDENCIES
   bootsnap
   bootstrap-sass
   byebug
+  cancancan (~> 2.0)
   capistrano (= 3.8)
   capistrano-cul
   capistrano-passenger (~> 0.1)
