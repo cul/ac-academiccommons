@@ -131,4 +131,8 @@ class SolrDocument
     fields = [fetch('degree_name_ssim', nil), fetch('degree_grantor_ssim', nil)].compact
     fields.blank? ? nil : fields.join(', ')
   end
+
+  def itemtype
+    'http://schema.org/CreativeWork'
+  end
 end
