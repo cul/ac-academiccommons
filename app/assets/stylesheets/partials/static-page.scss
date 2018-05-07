@@ -28,7 +28,6 @@
   & h2 {
     display: inline-block;
     margin: 0 0 15px 0;
-    padding-top: 30px;
   }
 
   & h3 {
@@ -91,6 +90,10 @@
     }
   }
 
+  & #main-content {
+    padding: 30px 15px;
+  }
+
   & table {
     margin-bottom: 50px;
     max-width: 800px;
@@ -149,7 +152,7 @@
 
 		& #main-content {
 			border-left: 1px solid $gray-lighter;
-			padding: 0 40px;
+			padding: 30px 40px;
 		}
 
 		& p,

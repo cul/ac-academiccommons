@@ -10,3 +10,4 @@
 //= require readmore
 //= require readmore-call
 //= require sticky-sidebar
+//= require smooth-scroll
