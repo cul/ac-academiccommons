@@ -6,8 +6,12 @@ class User < ApplicationRecord
   before_create :set_personal_info_via_ldap
   after_initialize :set_personal_info_via_ldap
 
-  def admins
+  def self.admins
     where(admin: true)
+  end
+
+  def admin?
+    admin == 1
   end
 
   def to_s
