@@ -262,15 +262,19 @@
 /* sidebar */
 
 .show-tools {
+  animation: slideInUp;
+  animation-duration: 1s;
+  animation-fill-mode: both;
   border: 0;
   border-radius: 0;
-  border-top: 3px solid $gray-lighter;
+  border-top: 3px solid $brand-dark;
   bottom: 0;
-  box-shadow: none;
+  box-shadow: 0 0 17px 2px #bbb;
   margin: 0;
   margin-left: -15px;
   position: fixed;
   width: 100%;
+  z-index: 1;
 
   & ul {
     margin: 0;
@@ -316,6 +320,7 @@
   & .permanent-link textarea {
     background: $body-bg;
     border: 1px solid $gray-lighter;
+    border-radius: 0;
     box-shadow: inset 0 0 3px #ddd;
     color: $gray;
     font-weight: 300;
@@ -338,6 +343,7 @@
 @media screen and (min-width: $screen-sm ) {
 
   .show-tools {
+    animation: none;
     border: 0;
     border-radius: 3px;
     border: 1px solid $gray-lighter;
