@@ -263,13 +263,13 @@
 
 .show-tools {
   animation: slideInUp;
-  animation-duration: 1s;
+  animation-duration: .7s;
   animation-fill-mode: both;
   border: 0;
   border-radius: 0;
-  border-top: 3px solid $brand-dark;
+  border-top: 1px solid $brand-dark;
   bottom: 0;
-  box-shadow: 0 0 17px 2px #bbb;
+  box-shadow: 0 0 17px 2px #ccc;
   margin: 0;
   margin-left: -15px;
   position: fixed;
