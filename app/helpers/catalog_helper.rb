@@ -36,6 +36,14 @@ module CatalogHelper
     safe_join(options.fetch(:value, []).map { |v| content_tag(:span, html_escape(v)) })
   end
 
+  # Render values as metatags. Not displayed on the page, but are visible to search engines.
+  def metatags(**options)
+    itemprop = options.dig(:config, :itemprop)
+    safe_join(
+      options.fetch(:value, []).map { |v| content_tag(:meta, nil, itemprop: itemprop, content: v) }
+    )
+  end
+
   # TODO: Move to a browse controller
   def collect_facet_field_values(facet_field_results)
     results = {}
