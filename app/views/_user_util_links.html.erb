@@ -2,6 +2,7 @@
   Overriding blacklight v16.14.1 template.
 
   - Adds share button
+  - Displaying admin/user_dashboard link instead of user edit page
 %>
 
 <ul>
@@ -18,7 +19,7 @@
     </li>
     <% unless current_user.to_s.blank? -%>
     <li>
-      <%= link_to current_user, edit_user_registration_path %>
+      <%= link_to current_user, (current_user.admin?) ? admin_path : '/user_dashboard' %>
     </li>
     <% end %>
     <% else %>
