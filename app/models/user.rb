@@ -6,12 +6,15 @@ class User < ApplicationRecord
   before_create :set_personal_info_via_ldap
   after_initialize :set_personal_info_via_ldap
 
+  ADMIN = 'admin'.freeze
+  ROLES = [ADMIN].freeze
+
   def self.admins
-    where(admin: true)
+    where(role: ADMIN)
   end
 
   def admin?
-    admin == 1
+    role == ADMIN
   end
 
   def to_s
