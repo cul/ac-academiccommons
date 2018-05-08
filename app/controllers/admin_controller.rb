@@ -1,7 +1,7 @@
 class AdminController < ApplicationController
   authorize_resource
 
-  layout 'application'
+  layout 'admin'
 
   def edit_alert_message
     if params[:commit]
