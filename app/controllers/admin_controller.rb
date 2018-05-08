@@ -1,6 +1,5 @@
 class AdminController < ApplicationController
   authorize_resource
-
   layout 'admin'
 
   def edit_alert_message
