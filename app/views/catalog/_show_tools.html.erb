@@ -17,17 +17,15 @@
 <% if show_doc_actions? %>
   <div class="panel panel-default show-tools">
     <div class="panel-body">
-      <ul>
+      <ul class="download-box">
         <li>
           <%= render partial: 'download_button' %>
         </li>
-        <li>
+        <li class="permanent-link">
           <h4>DOI</h4>
-          <div class="permanent-link">
-            <textarea rows="1" readonly onclick="this.focus();this.select()">
-              <%= @document.doi %>
-            </textarea>
-          </div>
+          <textarea rows="1" readonly onclick="this.focus();this.select()">
+            <%= @document.doi %>
+          </textarea>
         </li>
       </ul>
       <ul class="social-buttons">
