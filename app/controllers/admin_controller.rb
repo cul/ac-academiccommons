@@ -1,5 +1,5 @@
 class AdminController < ApplicationController
-  before_action :require_admin!
+  authorize_resource
 
   layout 'application'
 
