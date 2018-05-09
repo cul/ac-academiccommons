@@ -76,8 +76,8 @@ describe StatisticsController, type: :controller, integration: true do
         get :total_usage_stats, params: { format: :json }
       end
 
-      it 'returns 401' do # Can't redirect because its a json request.
-        expect(response.status).to be 401
+      it 'returns 403' do # Can't redirect because its a json request.
+        expect(response.status).to be 403
       end
     end
 
@@ -87,7 +87,7 @@ describe StatisticsController, type: :controller, integration: true do
       it 'fails' do
         expect {
           get :total_usage_stats, params: { format: :json }
-        }.to raise_error AcademicCommons::Exceptions::NotAuthorized
+        }.to raise_error CanCan::AccessDenied
       end
     end
 

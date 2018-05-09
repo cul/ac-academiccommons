@@ -1,6 +1,6 @@
 class EmailPreferencesController < ApplicationController
-  before_action :require_admin!
-  layout 'application'
+  load_and_authorize_resource
+  layout 'admin'
 
   def index
     @email_preferences = EmailPreference.all

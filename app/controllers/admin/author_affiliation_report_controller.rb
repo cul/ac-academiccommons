@@ -1,5 +1,6 @@
 class Admin::AuthorAffiliationReportController < ApplicationController
-  before_action :require_admin!
+  authorize_resource class: false
+  layout 'admin'
 
   def index; end
 

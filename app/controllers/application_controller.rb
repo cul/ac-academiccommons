@@ -9,19 +9,19 @@ class ApplicationController < ActionController::Base
   helper :all # include all helpers, all the time
   helper_method :fedora_config # share some methods w/ views via helpers
 
-  def fedora_config
-    @fedora_config ||= Rails.application.config_for(:fedora)
+  rescue_from CanCan::AccessDenied do |exception|
+    if current_user.nil?
+      respond_to do |format|
+        format.json { render json: { 'error' => 'forbidden' }, status: :forbidden }
+        format.html { redirect_to new_user_session_path }
+      end
+    else
+      raise exception
+    end
   end
 
-  # Authenticate a user using Devise and then check that the user is an
-  # administrator. If user not an admin, user gets redirected to access_denied_url
-  # denied page.
-  def require_admin!
-    authenticate_user!
-
-    if !user_signed_in? || !current_user.admin
-      raise AcademicCommons::Exceptions::NotAuthorized
-    end
+  def fedora_config
+    @fedora_config ||= Rails.application.config_for(:fedora)
   end
 
   def is_bot?(user_agent)

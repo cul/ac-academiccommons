@@ -1,8 +1,9 @@
 class StatisticsController < ApplicationController
-  layout 'application'
-  before_action :require_admin!, except: :unsubscribe_monthly
   include Blacklight::SearchHelper
   include AcademicCommons::Statistics
+
+  authorize_resource except: :unsubscribe_monthly
+  layout 'admin'
 
   require 'csv'
 

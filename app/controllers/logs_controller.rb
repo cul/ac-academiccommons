@@ -1,9 +1,8 @@
 class LogsController < ApplicationController
   include LogsHelper
 
-  before_action :require_admin!
-
-  layout 'application'
+  authorize_resource class: false
+  layout 'admin'
 
   def ingest_history
     @log_folder = 'ac-indexing'

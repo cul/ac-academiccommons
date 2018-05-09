@@ -1,5 +1,5 @@
 class EmailsController < ApplicationController
-  before_action :require_admin!
+  authorize_resource class: false
 
   def get_csv_email_form
     logger.info('=================== get_simple_email_form =================== ')

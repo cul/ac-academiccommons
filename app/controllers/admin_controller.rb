@@ -1,7 +1,6 @@
 class AdminController < ApplicationController
-  before_action :require_admin!
-
-  layout 'application'
+  authorize_resource
+  layout 'admin'
 
   def edit_alert_message
     if params[:commit]
