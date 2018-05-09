@@ -9,6 +9,14 @@ class ApplicationController < ActionController::Base
   helper :all # include all helpers, all the time
   helper_method :fedora_config # share some methods w/ views via helpers
 
+  rescue_from CanCan::AccessDenied do |exception|
+    if current_user.nil?
+      redirect_to new_user_session_path
+    else
+      raise exception
+    end
+  end
+
   def fedora_config
     @fedora_config ||= Rails.application.config_for(:fedora)
   end
