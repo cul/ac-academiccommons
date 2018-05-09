@@ -31,7 +31,7 @@ RSpec.describe 'error pages', type: :request do
     end
 
     context 'when user admin' do
-      let(:user) { User.new(uid: uid, admin: true) }
+      let(:user) { User.new(uid: uid, role: User::ADMIN) }
 
       it 'returns 200 status code' do
         expect(response).to have_http_status(:success)
