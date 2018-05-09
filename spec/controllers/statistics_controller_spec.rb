@@ -87,7 +87,7 @@ describe StatisticsController, type: :controller, integration: true do
       it 'fails' do
         expect {
           get :total_usage_stats, params: { format: :json }
-        }.to raise_error AcademicCommons::Exceptions::NotAuthorized
+        }.to raise_error CanCan::AccessDenied
       end
     end
 

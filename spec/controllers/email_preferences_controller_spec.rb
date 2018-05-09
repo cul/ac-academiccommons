@@ -42,7 +42,7 @@ describe EmailPreferencesController, type: :controller do
       include_context 'mock non-admin user'
 
       it 'fails' do
-        expect { http_request }.to raise_error AcademicCommons::Exceptions::NotAuthorized
+        expect { http_request }.to raise_error CanCan::AccessDenied
       end
     end
 
@@ -84,7 +84,7 @@ describe EmailPreferencesController, type: :controller do
       include_context 'mock non-admin user'
 
       it 'fails' do
-        expect { http_request }.to raise_error AcademicCommons::Exceptions::NotAuthorized
+        expect { http_request }.to raise_error CanCan::AccessDenied
       end
     end
 
@@ -124,7 +124,7 @@ describe EmailPreferencesController, type: :controller do
       include_context 'mock non-admin user'
 
       it 'fails' do
-        expect { http_request }.to raise_error AcademicCommons::Exceptions::NotAuthorized
+        expect { http_request }.to raise_error CanCan::AccessDenied
       end
     end
 
