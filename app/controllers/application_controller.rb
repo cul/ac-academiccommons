@@ -11,7 +11,10 @@ class ApplicationController < ActionController::Base
 
   rescue_from CanCan::AccessDenied do |exception|
     if current_user.nil?
-      redirect_to new_user_session_path
+      respond_to do |format|
+        format.json { render json: { 'error' => 'forbidden' }, status: :forbidden }
+        format.html { redirect_to new_user_session_path }
+      end
     else
       raise exception
     end
