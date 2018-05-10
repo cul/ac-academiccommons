@@ -8,7 +8,14 @@ class CollectionsController < ApplicationController
     featured: {
       title: 'Featured Collections',
       summary: 'Browse collections of research produced by Columbia programs, institutes, and centers.',
-      facet: 'department_ssim'
+      facet: 'department_ssim',
+      values: [
+        'Center on Japanese Economy and Business',
+        'Columbia Center on Sustainable Investment',
+        'Community College Research Center',
+        'National Center for Disaster Preparedness',
+        'Tow Center for Digital Journalism'
+      ]
     },
     doctoraltheses: {
       title: 'Doctoral Theses',
@@ -35,7 +42,6 @@ class CollectionsController < ApplicationController
     # check that the category_id is valid
     # if not valid render page not found (404)
     # if category id is valid look up any additional solr parameters
-    puts
     @category = collections_config[params[:category_id].to_sym]
     response = AcademicCommons.search do |parameters|
       parameters.rows(0).facet_limit(-1).facet_by(@category.facet)
@@ -45,6 +51,7 @@ class CollectionsController < ApplicationController
     end
 
     facet_counts = response.facet_fields[@category.facet].each_slice(2).to_a.to_h
+    facet_counts.keep_if { |k, _| @category.values.include?(k) } if @category.values
 
     @collections = facet_counts.map do |value, count|
       OpenStruct.new(label: value, count: count, search_url: '/')
