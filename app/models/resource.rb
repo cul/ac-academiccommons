@@ -6,7 +6,7 @@ class Resource < ActiveFedora::Base
       doc['pid'] ||= self.pid
       doc['fedora3_pid_ssi'] = self.pid
 
-      doi = doc.fetch('ezid_doi_ssim', nil)
+      doi = doc.fetch('doi_ssim', nil)
       doc['cul_doi_ssi'] = doi.gsub('doi:', '') if doi.present?
 
       doc['id'] = doc['cul_doi_ssi'] || self.pid
