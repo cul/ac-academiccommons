@@ -1,5 +1,5 @@
 {
-  "id": "10.7916/D86W9M15",
+  "id": "10.7916/TESTTEST",
   "described_by_ssim": [
     "info:fedora/actest:1/test_ds"
   ],
@@ -16,7 +16,8 @@
   ],
   "publisher_location_ssi": "Taunusstein",
   "partner_journal_ssi": "Wie sich Gefuhle Ausdruck verschaffen: Emotionen in Nahsicht",
-  "cul_doi_ssi": "10.7916/D86W9M15",
+  "cul_doi_ssi": "10.7916/TESTTEST",
+  "doi_ssim": "10.7916/TESTTEST",
   "title_ssi": "Empathy, Motion and Emotion",
   "title_q": [
     "Empathy, Motion and Emotion"

@@ -1,5 +1,5 @@
 {
-  "id": "10.7916/TEST123",
+  "id": "10.7916/TESTTEST",
   "fedora3_pid_ssi": "actest:1",
   "fedora3_uri_ssi": "info:fedora/actest:1",
   "record_creation_dtsi": "2016-09-14T16:31:33Z",
@@ -19,7 +19,8 @@
   "language_ssim": [
     "English"
   ],
-  "cul_doi_ssi": "10.7916/TEST123",
+  "cul_doi_ssi": "10.7916/TESTTEST",
+  "doi_ssim": "10.7916/TESTTEST",
   "title_ssi": "Test Dissertation",
   "title_q": [
     "Test Dissertation"
