@@ -16,11 +16,13 @@ Rails.application.routes.draw do
 
   mount API => '/'
 
-  # Browsing routes
-  get '/catalog/browse/departments', to: 'catalog#browse_department', as: 'departments_browse'
-  get '/catalog/browse/subjects',    to: 'catalog#browse_subject',    as: 'subjects_browse'
-  get '/catalog/browse/departments/:id', :to => 'catalog#browse_department', :as => 'department_browse'
-  get '/catalog/browse' => redirect('/catalog/browse/subjects')
+  # Collections routes
+  resources :collections, only: [:index, :show], param: 'category_id'
+
+  # get '/catalog/browse/departments', to: 'catalog#browse_department', as: 'departments_browse'
+  # get '/catalog/browse/subjects',    to: 'catalog#browse_subject',    as: 'subjects_browse'
+  # get '/catalog/browse/departments/:id', :to => 'catalog#browse_department', :as => 'department_browse'
+  # get '/catalog/browse' => redirect('/catalog/browse/subjects')
 
   get '/catalog/streaming/:id', :to => 'catalog#streaming', :as => 'streaming'
 

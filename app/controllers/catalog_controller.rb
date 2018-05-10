@@ -283,14 +283,6 @@ class CatalogController < ApplicationController
 
   end
 
-  def browse_department
-    render layout: 'catalog_browse'
-  end
-
-  def browse_subject
-    render layout: 'catalog_browse'
-  end
-
   def url_decode_f
     if(params && params[:f])
       params[:f].each do |name, values|

@@ -1,0 +1,7 @@
+<h1><%= @category.title %></h1>
+
+<ul>
+  <% @collections.each do |collection| %>
+    <li><%= collection.label %> (<%= collection.count %>)</li>
+  <% end %>
+</ul>
