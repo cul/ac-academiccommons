@@ -5,6 +5,8 @@ en:
     header_links:
       about: 'About'
       browse: 'Browse'
+      collections: 'Collections'
+      developers: 'Developers'
       faq: 'FAQ'
       login: 'Log In'
       policies: 'Policies'
