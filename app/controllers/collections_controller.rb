@@ -70,6 +70,8 @@ class CollectionsController < ApplicationController
     CONFIG.each do |category, config|
       struct = OpenStruct.new(config)
       struct.url = "/collections/#{category}"
+      struct.top_partial = "#{category}_top"
+      struct.bottom_partial = "#{category}_bottom"
       c[category] = struct
     end
 
