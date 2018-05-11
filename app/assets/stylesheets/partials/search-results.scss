@@ -4,7 +4,8 @@
 
 .constraints-container {
   background: $gray-lighter-custom;
-  border: 0;
+  border: 2px solid $gray-lighter;
+  border-bottom: 0;
   border-bottom-left-radius: 0;
   border-bottom-right-radius: 0;
   box-shadow: none;
@@ -43,7 +44,8 @@ span.constraints-label {
 
 .page_links {
   background: $gray-lighter-custom;
-  border-top: 1px solid $gray-lighter;
+  border: 2px solid $gray-lighter;;
+  border-top-width: 1px;
   border-radius: 3px;
   border-top-left-radius: 0;
   border-top-right-radius: 0;
@@ -67,6 +69,7 @@ span.constraints-label {
 
   .constraints-container {
     background: $gray-lighter-custom;
+    border: 0;
     border-radius: 3px;
     padding: 6px 15px;
   }
