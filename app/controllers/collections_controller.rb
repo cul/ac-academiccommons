@@ -54,7 +54,8 @@ class CollectionsController < ApplicationController
     facet_counts.keep_if { |k, _| @category.values.include?(k) } if @category.values
 
     @collections = facet_counts.map do |value, count|
-      OpenStruct.new(label: value, count: count, search_url: '/')
+      filters = { @category.facet => value }.merge(@category.filters || {})
+      OpenStruct.new(label: value, count: count, search_url: search_url(filters))
     end
   end
 
@@ -74,6 +75,11 @@ class CollectionsController < ApplicationController
     end
 
     c
+  end
+
+  def search_url(filters)
+    facet_params = search_state.reset.params_for_search(f: filters)
+    search_action_path(facet_params)
   end
 
   def valid_category?(category)

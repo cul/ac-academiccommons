@@ -2,6 +2,6 @@
 
 <ul>
   <% @collections.each do |collection| %>
-    <li><%= collection.label %> (<%= collection.count %>)</li>
+    <li><%= link_to collection.label, collection.search_url %> (<%= collection.count %>)</li>
   <% end %>
 </ul>
