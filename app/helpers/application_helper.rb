@@ -1,8 +1,4 @@
 module ApplicationHelper
-  def document_author
-    @document[CatalogController.blacklight_config[:show][:author]]
-  end
-
   # Looks for SVG image in assets directory and outputs XML text
   # rubocop:disable Rails/OutputSafety
   def svg(name)

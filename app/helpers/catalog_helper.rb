@@ -55,26 +55,6 @@ module CatalogHelper
     collect_facet_field_values(facet_field_results).fetch(facet_field,[])
   end
 
-  # TODO: Move to a browse controller
-  def get_subjects_list
-    single_facet_values('subject_ssim')
-  end
-
-  # TODO: Move to a browse controller
-  def get_departments_list
-    single_facet_values('department_ssim')
-  end
-
-  # TODO: Move to a browse controller
-  def get_department_facet_list(department)
-    query_params = {q: '', fq: 'department_ssim:"' + department + '"', rows: '0', 'facet.limit' => -1 }
-    solr_results = repository.search(query_params)
-    facet_field_results = solr_results.facet_counts['facet_fields']
-    collect_facet_field_values(facet_field_results).delete_if do |k,v|
-      k == 'department_ssim' || k == 'organization_ssim'
-    end
-  end
-
   def get_metadata_list(doc)
     #catch any error and return an error message that resources are unavailable
     #this prevents fedora server outages from making ac2 item page inaccessible

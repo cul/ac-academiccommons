@@ -7,10 +7,6 @@ class CatalogController < ApplicationController
   before_action :record_view_stats, only: :show
   # rubocop:enable Rails/LexicallyScopedActionFilter
 
-  before_action :url_decode_f
-
-  helper_method :url_encode_resource, :url_decode_resource
-
   configure_blacklight do |config|
     # Delete default blacklight components we aren't using
     config.index.document_actions.delete(:bookmark)
@@ -281,35 +277,6 @@ class CatalogController < ApplicationController
       }
     }
 
-  end
-
-  def browse_department
-    render layout: 'catalog_browse'
-  end
-
-  def browse_subject
-    render layout: 'catalog_browse'
-  end
-
-  def url_decode_f
-    if(params && params[:f])
-      params[:f].each do |name, values|
-        i = 0
-        values.each do |value|
-          params[:f][name][i] = url_decode_resource(value)
-          i = i + 1
-        end
-      end
-    end
-  end
-
-  def url_encode_resource(value)
-    value = CGI::escape(value).gsub(/%2f/i, '%252F').gsub(/\./, '%2E')
-  end
-
-  def url_decode_resource(value)
-    value = value.gsub(/%252f/i, '%2F').gsub(/%2e/i, '.')
-    value = CGI::unescape(value)
   end
 
   def streaming

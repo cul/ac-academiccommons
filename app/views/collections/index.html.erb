@@ -1,0 +1,6 @@
+<h1>Collections</h1>
+
+<% @categories.each do |category| %>
+  <h2><%= link_to category.title, category.url %></h2>
+  <p><%= category.summary %></p>
+<% end %>
