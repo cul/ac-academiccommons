@@ -1,7 +1,15 @@
 <h1><%= @category.title %></h1>
 
+<% if lookup_context.exists?(@category.top_partial, ['collections'], true) %>
+   <%= render @category.top_partial %>
+<% end %>
+
 <ul>
   <% @collections.each do |collection| %>
     <li><%= link_to collection.label, collection.search_url %> (<%= collection.count %>)</li>
   <% end %>
 </ul>
+
+<% if lookup_context.exists?(@category.bottom_partial, ['collections'], true) %>
+   <%= render @category.bottom_partial %>
+<% end %>
