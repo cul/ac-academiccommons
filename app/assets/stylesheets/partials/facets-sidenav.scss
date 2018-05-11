@@ -1,6 +1,7 @@
 /* facets sidenav */
 
 #facets {
+  padding-bottom: 0;
 
   & h2.facets-heading {
     font-size: 14px;
@@ -16,6 +17,7 @@
   }
 
   & .panel-heading {
+    margin: 0;
     padding-left: 15px;
   }
 
@@ -29,6 +31,10 @@
 
   & .panel-group .panel-heading:hover {
     background-color: $gray-lighter-custom;
+  }
+
+  & .facets-toggle {
+    margin-right: 0;
   }
 
   & .panel-group {

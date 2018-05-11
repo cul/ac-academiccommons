@@ -7,13 +7,13 @@
 }
 
 .constraints-container {
-  margin-bottom: 25px;
+  margin-bottom: 0;
   padding: 13px 19px;
 }
 
 #sortAndPerPage {
   border-bottom: 1px dotted #ccc;
-  font-size: 14px;
+  font-size: 12px;
   margin: 0;
   padding-bottom: 10px;
 }
@@ -21,7 +21,25 @@
 #sort-dropdown .dropdown-toggle,
 #per_page-dropdown .dropdown-toggle {
   color: $gray-base;
-  font-size: 14px;
+  font-size: 12px;
+  padding: 6px
+}
+
+.page_links {
+  display: block;
+}
+
+@media screen and (min-width: $screen-sm ) {
+
+  #sortAndPerPage {
+    font-size: 14px;
+  }
+
+  #sort-dropdown .dropdown-toggle,
+  #per_page-dropdown .dropdown-toggle {
+    font-size: 14px;
+    padding: 6px 12px;
+  }
 }
 
 /*  main content */
