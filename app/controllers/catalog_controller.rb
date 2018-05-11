@@ -7,7 +7,7 @@ class CatalogController < ApplicationController
   before_action :record_view_stats, only: :show
   # rubocop:enable Rails/LexicallyScopedActionFilter
 
-  before_action :url_decode_f
+  # before_action :url_decode_f
 
   helper_method :url_encode_resource, :url_decode_resource
 
@@ -283,17 +283,17 @@ class CatalogController < ApplicationController
 
   end
 
-  def url_decode_f
-    if(params && params[:f])
-      params[:f].each do |name, values|
-        i = 0
-        values.each do |value|
-          params[:f][name][i] = url_decode_resource(value)
-          i = i + 1
-        end
-      end
-    end
-  end
+  # def url_decode_f
+  #   if(params && params[:f])
+  #     params[:f].each do |name, values|
+  #       i = 0
+  #       values.each do |value|
+  #         params[:f][name][i] = url_decode_resource(value)
+  #         i = i + 1
+  #       end
+  #     end
+  #   end
+  # end
 
   def url_encode_resource(value)
     value = CGI::escape(value).gsub(/%2f/i, '%252F').gsub(/\./, '%2E')
