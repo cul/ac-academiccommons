@@ -37,11 +37,10 @@ class CollectionsController < ApplicationController
 
   # GET /collections/:category_id
   def show
-    raise StandardError unless valid_category?(params[:category_id])
+    # Render 404 if category_id not valid
+    raise(ActionController::RoutingError, 'not found') unless valid_category?(params[:category_id])
 
-    # check that the category_id is valid
-    # if not valid render page not found (404)
-    # if category id is valid look up any additional solr parameters
+    # If category_id is valid look up any additional solr parameters
     @category = collections_config[params[:category_id].to_sym]
     response = AcademicCommons.search do |parameters|
       parameters.rows(0).facet_limit(-1).facet_by(@category.facet)
