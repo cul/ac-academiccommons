@@ -16,7 +16,8 @@
     margin: 0;
   }
 
-  & .panel-heading {
+  & .top-panel-heading {
+    border: 1px solid $gray-lighter;
     margin: 0;
     padding-left: 15px;
   }
@@ -38,13 +39,12 @@
   }
 
   & .panel-group {
-    border-bottom: 1px solid $gray-lighter;
   }
 
   & .panel {
     border: 0;
     border-radius: 0;
-    border-top: 1px solid #ddd;
+    border-bottom: 1px solid #ddd;
     box-shadow: none;
     font-size: 14px;
     margin: 0;
@@ -77,6 +77,11 @@
 
     & h2.facets-heading {
       margin: 0;
+    }
+
+    & .top-panel-heading {
+      border: 0;
+      border-bottom: 1px solid $gray-lighter;
     }
   }
 }
