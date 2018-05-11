@@ -78,6 +78,7 @@ class CollectionsController < ApplicationController
   end
 
   def search_url(filters)
+    filters.transform_values! { |v| Array.wrap(v) }
     facet_params = search_state.reset.params_for_search(f: filters)
     search_action_path(facet_params)
   end
