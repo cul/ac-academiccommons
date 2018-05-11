@@ -54,7 +54,7 @@ class CollectionsController < ApplicationController
     facet_counts.keep_if { |k, _| @category.values.include?(k) } if @category.values
 
     @collections = facet_counts.map do |value, count|
-      filters = { @category.facet => value }.merge(@category.filters || {})
+      filters = { @category.facet => value }.merge(@category.filter || {})
       OpenStruct.new(label: value, count: count, search_url: search_url(filters))
     end
   end
