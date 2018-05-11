@@ -9,10 +9,10 @@ Rails.application.routes.draw do
 
   root to: "catalog#home"
 
-  get '/about',    to: 'info#about',    as: 'about'
-  get '/policies', to: 'info#policies', as: 'policies'
-  get '/faq',      to: 'info#faq',      as: 'faq'
-  get '/api',      to: 'info#api',      as: 'api_documentation'
+  get '/about',      to: 'info#about',      as: 'about'
+  get '/policies',   to: 'info#policies',   as: 'policies'
+  get '/faq',        to: 'info#faq',        as: 'faq'
+  get '/developers', to: 'info#developers', as: 'developers'
 
   mount API => '/'
 
