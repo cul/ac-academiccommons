@@ -3,12 +3,14 @@ en:
     application_name: 'Academic Commons'
 
     header_links:
+      about: 'About'
+      collections: 'Collections'
+      developers: 'Developers'
+      faq: 'FAQ'
+      login: 'Log In'
+      policies: 'Policies'
       upload: 'Upload'
       upload_full_text: 'Your Research'
-      about: 'About'
-      faq: 'FAQ'
-      policies: 'Policies'
-      browse: 'Browse'
 
     search:
       index:
