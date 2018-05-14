@@ -1,157 +1,22 @@
-<% @page_title = "Deposit Your Research | " + application_name  %>
+<div id="static-text">
 
-<div class="page box sd">
+  <div class="page-title">
+    <div class="container">
+      <h1>Upload Your Research</h1>
+    </div>
+  </div>
 
-<h2>Academic Commons Self-Deposit</h2>
+	<div class="upload-landing">
+			<div class="log-in">
+				<h3>Have a Columbia UNI?</h3>
+				<p>Log in with your Columbia UNI and password</p>
+				<%= link_to t('blacklight.header_links.login'), new_user_session_path, class: 'btn btn-primary' %>
+			</div>
+			<div class="no-log-in">
+				<h3>No Columbia UNI?</h3>
+				<p>Tell us about your work and how it meets our <%= link_to 'guidelines for participation', policies_path %>.</p>
+				<p>Email <%= mail_to "ac@columbia.edu" %></p>
+			</div>
+  </div>
 
-<div id="intro">
-
-<p>Current faculty, staff, and students of Columbia and its affiliates can use this application to deposit research materials in any digital format, including: articles, monographs, theses and dissertations, working papers, technical reports, conference papers and presentations, datasets, software code, images, video, and other multimedia creations.</p>
-
-<p>If you need to deposit a file larger than 100 MB or have other questions about the deposit process, please contact us at <%= mail_to 'ac@columbia.edu' %>.</p>
-
-<p>Click Start to begin.</p>
-
-<div class="buttonWrapper">
-<input id="start_button" type="button" class="start-button" value="Start Here" alt="Start Here" title="Start Here" />
-</div>
-</div> <!-- #intro -->
-
-<div id="sd-form-wrap">
-<%= form_tag({ action: :submit}, :method=>'post', :multipart => true, :id=>'sd-form', :class=>'self-deposit-form', :charset=>'utf-8') do %>
-
-<ul id="stepForm" class="ui-accordion-container">
-
-<li id="sf1"><a href='#' class="ui-accordion-link"></a>
-
-<div>
-<h3>Step 1 of 3</h3>
-
-<fieldset>
-
-	<%= render :partial => 'deposit/author_agreement', :locals => {:required_class => "pageRequired" } %>
-
-<div class="buttonWrapper">
-	<input name="formNext1" type="button" class="open1 nextbutton" value="Continue" alt="Continue" title="Continue" />
-</div>
-
-
-</fieldset>
-
-</div>
-
-</li>
-
-<li id="sf2">
-<a href='#' class="ui-accordion-link"></a>
-<div><h3>Step 2 of 3</h3>
-
-<fieldset>
-
-<legend>Required Information</legend>
-
-
-<%= render :partial => 'deposit/basic_depositor_info', :locals => {:include_uni => true, :required_class => "pageRequired" } %>
-
-<p>
-<%= label_tag 'file', "File Upload" %>
-<%= file_field_tag "file", :class=>'pageRequired',:title=>'Please upload a digital copy of your work.'%>
-<span class="form-field-info">Is your file more than 100MB?  Email us at <a href="mailto:ac@columbia.edu">ac@columbia.edu</a></span>
-</p>
-
-<p>
-<%= label_tag 'title' %>
-<%= text_area_tag "title", "", :cols=>"60", :rows=>"3", :class=>'pageRequired',:title=>'Please enter the title.' %>
-<span class="form-field-info"></span>
-</p>
-
-
-<p>
-<%= label_tag 'author', 'Author(s)' %>
-<%= text_area_tag "author" ,"", :cols=>"60", :rows=>"3", :class=>'pageRequired' ,:title=>'Please enter the author names.'%>
-<span class="form-field-info"></span>
-</p>
-
-<p>
-<%= label_tag 'abstr', 'Abstract or Description' %>
-<%= text_area_tag "abstr", "",   :class=>'pageRequired' , :title=>'Please provide a brief description of the work being submitted, which will help increase its visibility in search results.'  %>
-
-<span class="form-field-info">Use this field to provide a summary of the content of your deposit.  You may cut-and-paste an abstract from the deposit itself, or write your own.  Please be aware that the information you provide here helps us make your work easier to find through our search engine.</span>
-</p>
-
-</fieldset>
-
-
-<fieldset>
-
-<legend>Optional Information</legend>
-
-<p>
-   <%= label_tag 'url', "URL"%>
-   <%= text_field_tag "url" %>
-   <span class="form-field-info"></span>
-</p>
-
-
-<p>
-	<%= label_tag 'doi_pmcid','DOI/PMCID' %>
-	<%= text_field_tag "doi_pmcid" %>
-	<span class="form-field-info"></span>
-</p>
-
-<p>
-	<%= label_tag 'software', "Notes" %>
-	<%= text_area_tag "software", "", :cols=>"60", :rows=>"12"  %>
-	<span class="form-field-info">Use this field to tell us anything else about your deposit that might be of interest to users, such as: special software requirements for viewing it, the citation information for a piece that has been published elsewhere, etc.</span>
-
-
-
-
-
-
-</p>
-
-<div class="buttonWrapper"><input name="formBack0" type="button" class="open0 prevbutton" value="Back" alt="Back" title="Back" /> <input name="formNext2" type="button" class="open2 nextbutton" value="Continue" alt="Continue" title="Continue" /></div>
-
-</fieldset>
-
-</div>
-</li>
-
-<li id="sf3">
-<a href='#' class="ui-accordion-link"></a>
-<div>
-
-<h3>Step 3 of 3</h3>
-
-<fieldset>
-<legend>Review and Submit</legend>
-
-<div>
-
-<p>Review your information below and click the Submit button to submit your research to Academic Commons.</p>
-
-<p class="clearfix"><span class="check-label">Name:</span><span class="check-value" id="name-check"></span></p>
-<p><span class="check-label">UNI:</span><span class="check-value" id="uni-check"></span></p>
-<p><span class="check-label">E-Mail:</span><span class="check-value" id="email-check"></span></p>
-<p><span class="check-label">Title:</span><span class="check-value" id="title-check"></span></p>
-<p class="clearfix"> <span class="check-label">Author(s):</span><span class="check-value" id="author-check"></span></p>
-<p class="clearfix"> <span class="check-label">Abstract:</span><span class="check-value" id="abstract-check"></span></p>
-<p class="clearfix"> <span class="check-label">File:</span><span class="check-value" id="file-check"></span></p>
-<p> <span class="check-label">URL:</span><span class="check-value" id="url-check"></span></p>
-<p> <span class="check-label">DOI/PMCID:</span><span class="check-value" id="doi-check"></span></p>
-<p> <span class="check-label">Note:</span><span class="check-value" id="note-check"></span></p>
-</div>
-
-<div class="buttonWrapper"><input name="formBack1" type="button" class="open1 prevbutton" value="Back" alt="Back" title="Back" /><input type="submit" class="open2 nextbutton" title="Submit"  /></div>
-
-
-</fieldset>
-</div>
-</li>
-</ul>
-
-<% end %>
-
-</div>
 </div>

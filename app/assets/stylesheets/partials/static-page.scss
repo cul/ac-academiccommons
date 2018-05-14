@@ -11,6 +11,10 @@
     text-decoration: underline;
   }
 
+  & a.btn {
+    text-decoration: none;
+  }
+
   & .page-title {
     border-bottom: 1px solid $gray-lighter;
     height: auto;
@@ -150,4 +154,59 @@
 			padding: 30px 40px;
 		}
 	}
+}
+
+/* upload your research landing page */
+
+#static-text .upload-landing {
+  display: block;
+  margin: 15px;
+
+  & h3 {
+    margin: 0 0 0 0;
+  }
+
+  & p {
+    margin: 15px 0 20px 0;
+  }
+
+  & .log-in,
+  & .no-log-in {
+    padding: 30px 40px 25px 40px;
+    width: 100%;
+  }
+
+  & .log-in {
+    border: 1px solid $gray-lighter;
+    border-radius: 3px;
+    box-shadow: $box-shadow;
+    z-index: 1000;
+  }
+
+  & .no-log-in {
+    background: $gray-lighter-custom;
+    border: 1px solid $gray-lighter;
+    border-radius: 3px;
+    margin: 10px 0;
+    padding: 30px 25px 25px 25px;
+  }
+}
+
+@media screen and (min-width: $screen-sm ) {
+
+  #static-text .upload-landing {
+    display: flex;
+    margin: 40px 15px;
+
+    & .log-in {
+      width: 47%;
+    }
+    & .no-log-in {
+      border: 0;
+      border-bottom-left-radius: 0;
+      border-top-left-radius: 0;
+      margin: 10px 0;
+      width: 37%;
+    }
+  }
 }
