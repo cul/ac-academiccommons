@@ -18,6 +18,6 @@ Rails.application.configure do
 
   # Application specific configuration.
   config.analytics_enabled = false
-  config.base_path = "academiccommons-test.cdrs.columbia.edu"
+  config.default_host = 'https://academiccommons-test.cdrs.columbia.edu'
   config.prod_environment = false
 end

@@ -61,6 +61,6 @@ Rails.application.configure do
 
   # Application specific configuration.
   config.analytics_enabled = true
-  config.base_path = "academiccommons.columbia.edu"
+  config.default_host = 'academiccommons.columbia.edu'
   config.prod_environment = true
 end

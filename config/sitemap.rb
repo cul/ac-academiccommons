@@ -1,5 +1,5 @@
 # Set the host name for URL creation
-SitemapGenerator::Sitemap.default_host = 'http://www.example.com'
+SitemapGenerator::Sitemap.default_host = Rails.application.config.default_host
 
 SitemapGenerator::Sitemap.create do
   # The root path '/' and sitemap index file are added automatically for you.
