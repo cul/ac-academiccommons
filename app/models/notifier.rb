@@ -79,50 +79,6 @@ class Notifier < ActionMailer::Base
     end
   end
 
-  def reindexing_results( errors_count, indexed_count, new_items_count, time_id )
-
-      log = {}
-      log[:time_id] = time_id.to_s
-      log[:year] = time_id[0..3].to_i
-      log[:month] = time_id[4..5].to_i
-      log[:day] = time_id[6..7].to_i
-      log[:hour] = time_id[9..10].to_i
-      log[:minute] = time_id[11..12].to_i
-      log[:second] = time_id[13..14].to_i
-      log[:time] = Time.mktime(log[:year], log[:month], log[:day], log[:hour], log[:minute], log[:second]).strftime('%B %e, %Y %r')
-
-      recipients = Rails.application.config_for(:emails)['indexing_report_recipients']
-      from = Rails.application.config_for(:emails)['mail_deliverer']
-      subject = 'Academic Commons - Daily Reindexing Report'
-      content_type = 'text/html'
-
-      @errors_count = errors_count
-      @indexed_count = indexed_count
-      @new_items_count = new_items_count
-      @time_id = time_id
-      @existing_time = log[:time]
-
-      mail(to: recipients, from: from, subject: subject, content_type: content_type)
-  end
-
-
-  def reindexing_summary(params, time_id)
-
-      recipients = Rails.application.config_for(:emails)['indexing_report_recipients']
-      from = Rails.application.config_for(:emails)['mail_deliverer']
-      subject = 'Academic Commons - Daily Reindexing Summary Report'
-      content_type = 'text/html'
-
-      @params = params
-      @new_indexed = params[:new_indexed] == nil ? [] : params[:new_indexed].split(',')
-      @new_embargoed = params[:embargo_new] == nil ? [] : params[:embargo_new].split(',')
-      @embargo_new_released = params[:embargo_new_released] == nil ? [] : params[:embargo_new_released].split(',')
-      @failed = params[:failed] == nil ? [] : params[:failed].split(',')
-      @time_id = time_id
-
-      mail(to: recipients, from: from, subject: subject, content_type: content_type)
-  end
-
   def depositor_first_time_indexed_notification(depositor, new_items, embargoed_items)
     raise 'New or embargoed items are required to send notification email' if new_items.blank? && embargoed_items.blank?
 
