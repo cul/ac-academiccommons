@@ -1,11 +1,14 @@
 module AcademicCommons
   class SearchParameters
+    MAX_ROWS = 100_000
+
     attr_reader :parameters
 
     def initialize
       @parameters = {
         qt: 'search',
-        fq: []
+        fq: [],
+        rows: MAX_ROWS
       }
     end
 
