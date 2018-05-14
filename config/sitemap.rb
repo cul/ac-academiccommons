@@ -18,8 +18,8 @@ SitemapGenerator::Sitemap.create do
   add developers_path, priority: 0.7, changefreq: 'monthly'
 
   # Add all items
-  items = AcademicCommons.search { |p| p.aggregators_only }.docs
-  items.each do |item| # could use fl parameter for better performance
+  items = AcademicCommons.search { |p| p.aggregators_only.field_list('id', 'record_change_dtsi') }.docs
+  items.each do |item|
     add solr_document_path(item.id), priority: 0.5, changefreq: 'yearly', lastmod: item['record_change_dtsi']
   end
 end

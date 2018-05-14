@@ -53,6 +53,14 @@ module AcademicCommons
       self
     end
 
+    # Only returns fields specified, the default behavior is to return all the
+    # fields. Modifies the :fl solr parameter. Use carefully! This limits the
+    # fields returned and could lead to unintended results.
+    def field_list(*fields)
+      @parameters[:fl] = Array.wrap(fields).join(',')
+      self
+    end
+
     def to_h
       parameters
     end
