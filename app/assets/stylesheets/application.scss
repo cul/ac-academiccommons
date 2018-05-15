@@ -1,14 +1,14 @@
 @import 'modules/bootstrap-variables';
 
-@import 'modules/mixins';
-
-@import 'modules/animation';
-
 @import 'vendor/blacklight';
 
 @import 'vendor/blacklight_range_limit';
 
 @import 'global';
+
+@import 'modules/mixins';
+
+@import 'modules/animation';
 
 @import 'partials/cul-banner';
 
