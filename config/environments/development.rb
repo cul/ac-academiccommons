@@ -16,7 +16,7 @@ Rails.application.configure do
 
   config.action_mailer.delivery_method = :file
 
-  config.default_host = 'localhost:3000'
+  config.default_host = 'http://localhost:3000'
 
   # Do not compress assets
   #config.assets.compress = false

@@ -13,7 +13,7 @@ solr_urls.each_with_index do |url, i|
 end
 
 # Checking Fedora connection
-OkComputer::Registry.register("fedora", OkComputer::FedoraCheck.new)
+OkComputer::Registry.register('fedora', OkComputer::FedoraCheck.new)
 
 # Checking mail server configuration and availability
 OkComputer::Registry.register('action_mailer', OkComputer::ActionMailerCheck.new)
@@ -22,3 +22,7 @@ OkComputer::Registry.register('action_mailer', OkComputer::ActionMailerCheck.new
 OkComputer::Registry.register('indexing_log_directory', OkComputer::DirectoryCheck.new('log/ac-indexing'))
 OkComputer::Registry.register('reports_log_directory', OkComputer::DirectoryCheck.new('log/monthly_reports'))
 OkComputer::Registry.register('self_deposits_directory', OkComputer::DirectoryCheck.new('data/self-deposit-uploads'))
+
+# Check sitemap exists
+url = URI.join(Rails.application.config.default_host, '/sitemap.xml.gz')
+OkComputer::Registry.register('sitemap', OkComputer::HttpCheck.new(url.to_s))
