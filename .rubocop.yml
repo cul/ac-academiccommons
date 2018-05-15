@@ -43,3 +43,7 @@ Rails/OutputSafety:
 Rails/Output:
   Exclude:
     - 'lib/academic_commons/indexer.rb'
+
+RSpec/DescribeClass:
+  Exclude:
+    - 'spec/tasks/*'
