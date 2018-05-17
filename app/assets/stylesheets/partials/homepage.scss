@@ -32,7 +32,7 @@
   & .links a {
     border: 1px solid $gray-lighter;
     border-radius: 3px;
-    box-shadow: 0 15px 35px rgba(50,50,90,.1), 0 5px 10px rgba(0,0,0,.05);
+    box-shadow: $box-shadow;
     display: block;
     margin: 0 0 30px 0;
     min-height: 225px;
