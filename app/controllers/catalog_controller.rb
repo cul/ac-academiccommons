@@ -122,7 +122,10 @@ class CatalogController < ApplicationController
 
     config.add_show_field 'notes_ssim',             display: :notes
 
-    # config.add_show_field 'cul_doi_ssi',                  label: 'Persistent URL',   itemprop: 'url',          helper_method: :link_identifier
+    # Only renders metatags for schema.org, does not display anything on the page.
+    config.add_show_field 'full_doi',       display: :main_content, accessor: true, itemprop: 'url',        helper_method: :metatags
+    config.add_show_field 'language_ssim',  display: :main_content,                 itemprop: 'inLanguage', helper_method: :metatags
+
 
 
 

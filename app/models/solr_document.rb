@@ -3,6 +3,7 @@ class SolrDocument
   include Blacklight::Solr::Document
   include BlacklightOaiProvider::SolrDocument
   include AcademicCommons::Embargoes
+  include Document::SchemaOrg
 
   # self.unique_key = 'id'
   self.timestamp_key = 'record_creation_dtsi'

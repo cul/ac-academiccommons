@@ -52,6 +52,10 @@ describe 'Item Page', type: :feature do
     expect(page).to have_xpath '//a[@href=\'/doi/10.7916/TESTDOC4/download\']'
   end
 
+  it 'has correct itemtype' do
+    expect(page).to have_xpath('//div[@itemtype="http://schema.org/ScholarlyArticle"]', visible: false)
+  end
+
   describe 'download links for' do
     xit 'download links return X-Accel-Redirect header' do
       click_on 'alice_in_wonderland.pdf'
