@@ -10,7 +10,7 @@
          <mods:title>Academic Commons</mods:title>
       </mods:titleInfo>
    </mods:relatedItem>
-   <mods:relatedItem type="host">
+   <mods:relatedItem type="host" ID="partnerJournal">
       <mods:titleInfo>
          <mods:title>Wie sich Gefuhle Ausdruck verschaffen: Emotionen in Nahsicht</mods:title>
       </mods:titleInfo>
