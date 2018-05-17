@@ -31,7 +31,6 @@ module Document
 
     def itemtype
       type = to_semantic_values.fetch(:type, []).first
-      Rails.logger.debug "Type: #{type}"
       ITEMTYPE_MAP.fetch(type, 'http://schema.org/CreativeWork')
     end
   end
