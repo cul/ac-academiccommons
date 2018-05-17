@@ -3,6 +3,7 @@ class SolrDocument
   include Blacklight::Solr::Document
   include BlacklightOaiProvider::SolrDocument
   include AcademicCommons::Embargoes
+  include Document::SchemaOrg
 
   # self.unique_key = 'id'
   self.timestamp_key = 'record_creation_dtsi'
@@ -130,9 +131,5 @@ class SolrDocument
   def degree
     fields = [fetch('degree_name_ssim', nil), fetch('degree_grantor_ssim', nil)].compact
     fields.blank? ? nil : fields.join(', ')
-  end
-
-  def itemtype
-    'http://schema.org/CreativeWork'
   end
 end
