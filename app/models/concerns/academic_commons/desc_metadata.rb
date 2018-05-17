@@ -194,6 +194,9 @@ module AcademicCommons
         add_field.call 'book_journal_title_ssi', book_journal_title
         add_field.call 'book_journal_title_q',   book_journal_title
 
+        is_partner_journal = related_host.attribute('ID').to_s == 'partnerJournal'
+        add_field.call 'partner_journal_ssi', book_journal_title if is_partner_journal
+
         related_host.css('name').each do |book_author|
           add_field.call 'book_author_ssim', book_author.at_css('namePart:not([type])')
           add_field.call 'book_author_q',    book_author.at_css('namePart:not([type])')
