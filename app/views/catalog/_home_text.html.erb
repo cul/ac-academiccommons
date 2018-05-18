@@ -4,46 +4,31 @@
     <strong>Academic Commons</strong> provides global access to research and scholarship produced at Columbia University and its affiliate institutions. <a href="/about/">Learn more &rarr;</a>
   </p>
 
-  <div class="links">
-
+  <div class="menu homepage-menu">
     <div class="row">
-
-      <div class="col-md-6">
-        <%= link_to collections_path do %>
-          <div class="top">
-            <%= svg 'icon-browse' %>
-            <h2>Browse Collections</h2>
-          </div>
-          <p>Browse Academic Commons via curated collections of scholarship and research. Discover selected works of a department, center, or program, or explore collections organized by type of work.</p>
-        <% end %>
-      </div>
-
-      <div class="col-md-6">
-        <a href="/deposit">
-          <div class="top">
-            <%= svg 'icon-upload' %>
-            <h2>Upload Your Research</h2>
-          </div>
-          <p>Are you a member of the Columbia community? Upload your work to Academic Commons to make it more discoverable, more impactful, and more accessible to the world.</p>
-        </a>
-      </div>
-
+      <%= link_to collections_path, class: 'col-md-6 tile collections' do %>
+        <div class="top">
+          <%= svg 'icon-browse' %>
+          <h2>Browse Collections</h2>
+        </div>
+        <p>Browse Academic Commons via curated collections of scholarship and research. Discover selected works of a department, center, or program, or explore collections organized by type of work.</p>
+      <% end %>
+      <a href="/deposit" class="col-md-6 tile upload">
+        <div class="top">
+          <%= svg 'icon-upload' %>
+          <h2>Upload Your Research</h2>
+        </div>
+        <p>Are you a member of the Columbia community? Upload your work to Academic Commons to make it more discoverable, more impactful, and more accessible to the world.</p>
+      </a>
     </div><!-- .row -->
-  </div><!-- .links -->
+  </div><!-- .menu -->
 
   <div class="featured-wrapper">
-
     <div class="container">
-
       <div class="featured">
-
-        <!-- <h2>Academic Commons at a glance</h2> -->
-
         <div class="row">
-
           <% cache('repository_statistics', expires_in: 1.day, race_condition_ttl: 2, skip_digest: true) do %>
             <div class="stats col-md-4">
-
               <h3>Stats at a glance</h3>
               <ul>
                 <li><span><%= counts[:all] %></span> <%= link_to('deposited works', search_action_path) %></li>
@@ -53,9 +38,8 @@
                 <li><span><%= counts[:conference_materials] %></span> <%= link_to('conference materials', type_search('Conference objects')) %></li>
                 <li><span><%= counts[:datasets] %></span> <%= link_to('datasets', type_search("Data (information)")) %></li>
               </ul>
-
             </div>
-            <% end %>
+          <% end %>
 
           <div class="quotes col-md-8">
 
@@ -68,13 +52,8 @@
             <p class="quote">“This is a great CU initiative that is easy to use, widely accessible, and provides excellent monthly reports.” <span>— Source</span></p>
 
           </div>
-
         </div>
-
       </div><!-- .featured -->
-
     </div><!-- .container -->
-
   </div><!-- .featured-wrapper -->
-
 </div><!-- #home-content -->

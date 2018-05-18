@@ -1,3 +1,5 @@
+/* menu */
+
 .menu {
   margin: 25px 0;
 
@@ -11,12 +13,17 @@
     border: 1px solid $gray-lighter;
     border-radius: 3px;
     margin: 10px;
-    padding: 25px;
+    padding: 30px;
     width: 100%;
   }
 
   & h2 {
     font-size: 23px;
+  }
+
+  & p {
+    font-weight: 300;
+    line-height: 1.6;
   }
 }
 
@@ -30,19 +37,72 @@
   }
 }
 
-/* upload your research menu */
+/* homepage menu */
 
-.menu .log-in {
+.homepage-menu {
+
+  & .collections,
+  & .upload {
     box-shadow: $box-shadow;
     z-index: 1000;
   }
 
-.menu .no-log-in {
-    background: $gray-lighter-custom;
-    border: 0;
-    color: $gray-light;
+  & a p {
+    color: $gray-base;
   }
 
-.menu .no-log-in svg.icon-email {
-    margin-bottom: -3px;
+  & a:hover p {
+    color: $brand-dark;
   }
+
+  & a:hover {
+    border-color: $brand-dark;
+    text-decoration: none;
+  }
+
+  & .top {
+    align-items: center;
+    display: flex;
+    padding: 0 0 10px 0;
+  }
+
+  & .top svg {
+    display: inline-block;
+    fill: $brand-primary;
+    flex: 1 0 0;
+    margin-right: 6px;
+    max-width: 40px;
+  }
+
+  & .top h2 {
+    display: inline-block;
+    flex: 1 0 0;
+    margin: 0;
+  }
+
+  & .top svg path {
+    fill: $brand-primary;
+  }
+
+  & a:hover svg,
+  & a:hover svg path {
+    fill: $brand-dark;
+  }
+}
+
+/* upload your research menu */
+
+.menu .log-in {
+  box-shadow: $box-shadow;
+  z-index: 1000;
+}
+
+.menu .no-log-in {
+  background: $gray-lighter-custom;
+  border: 0;
+  color: $gray-light;
+}
+
+.menu .no-log-in svg.icon-email {
+  margin-bottom: -3px;
+}

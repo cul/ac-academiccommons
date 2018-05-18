@@ -2,12 +2,6 @@
 
 #home-content {
 
-  & h2 {
-    font-size: 21px;
-    font-weight: bold;
-    margin: 0 0 10px 0;
-  }
-
   & h3 {
     font-size: 14px;
     letter-spacing: 1px;
@@ -20,65 +14,12 @@
     font-weight: 300;
     letter-spacing: .4px;
     line-height: 1.8;
-    margin: 20px 0;
+    margin: 10px 0 0 0;
     max-width: 975px;
   }
 
-  & .links {
-    font-weight: 300;
-    padding-bottom: 30px;
-  }
-
-  & .links a {
-    border: 1px solid $gray-lighter;
-    border-radius: 3px;
-    box-shadow: $box-shadow;
-    display: block;
-    margin: 0 0 30px 0;
-    min-height: 225px;
-    padding: 30px 35px;
-  }
-
-  & .links .top {
-    align-items: center;
-    display: flex;
-    padding: 0 0 10px 0;
-  }
-
-  & .links .top svg {
-    display: inline-block;
-    fill: $brand-primary;
-    flex: 1 0 0;
-    margin-right: 6px;
-    max-width: 40px;
-  }
-
-  & .links .top svg path {
-    fill: $brand-primary;
-  }
-
-  & .links .top h2 {
-    display: inline-block;
-    flex: 1 0 0;
-    margin: 0;
-  }
-
-  & .links a p {
-    color: $gray-base;
-    line-height: 1.6;
-  }
-
-  & .links a:hover {
-    border-color: $brand-dark;
-    color: $brand-dark;
-    text-decoration: none;
-  }
-
-  & .links a:hover svg,
-  & .links a:hover svg path,
-  & .links a:hover p {
-    color: $brand-dark;
-    fill: $brand-dark;
+  & .menu .row {
+    margin-bottom: 0;
   }
 
   & .featured-wrapper {
@@ -143,7 +84,7 @@
 
     & p.intro {
       font-size: 21px;
-      margin-bottom: 45px;
+      margin: 10px 0;
     }
 
     & p.intro strong {
