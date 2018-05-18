@@ -168,65 +168,12 @@
 	}
 }
 
-/* modifications for static page with menus */
+/* modifications for static pages with menus */
 
 #static-text .menu a {
   text-decoration: none;
 }
 
 #static-text .menu p {
-  margin: 10px 0;
-}
-
-/* upload your research landing page */
-
-#static-text .upload-landing {
-  display: block;
-  margin: 15px 15px 70px 15px;
-
-  & h3 {
-    margin: 0;
-  }
-
-  & p {
-    margin: 15px 0 20px 0;
-  }
-
-  & .log-in,
-  & .no-log-in {
-    border: 1px solid $gray-lighter;
-    border-radius: 3px;
-    margin: 15px 0;
-    padding: 40px;
-    width: 100%;
-  }
-
-  & .log-in {
-    box-shadow: $box-shadow;
-    z-index: 1000;
-  }
-
-  & .no-log-in {
-    background: $gray-lighter-custom;
-    border: 0;
-    color: $gray-light;
-    padding-bottom: 20px;
-  }
-
-  & .no-log-in svg.icon-email {
-    margin-bottom: -3px;
-  }
-}
-
-@media screen and (min-width: $screen-sm ) {
-
-  #static-text .upload-landing {
-    display: flex;
-    margin-top: 40px;
-    max-width: 910px;
-
-    & .no-log-in {
-      margin-left: 10px;
-    }
-  }
+  margin-top: 10px;
 }

@@ -1,4 +1,5 @@
 .menu {
+  margin: 25px 0;
 
   & .row {
     display: flex;
@@ -15,7 +16,7 @@
   }
 
   & h2 {
-    font-size: 25px;
+    font-size: 23px;
   }
 }
 
@@ -28,3 +29,20 @@
     }
   }
 }
+
+/* upload your research menu */
+
+.menu .log-in {
+    box-shadow: $box-shadow;
+    z-index: 1000;
+  }
+
+.menu .no-log-in {
+    background: $gray-lighter-custom;
+    border: 0;
+    color: $gray-light;
+  }
+
+.menu .no-log-in svg.icon-email {
+    margin-bottom: -3px;
+  }
