@@ -1,0 +1,30 @@
+.menu {
+
+  & .row {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0 -10px 60px -10px;
+  }
+
+  & .tile {
+    border: 1px solid $gray-lighter;
+    border-radius: 3px;
+    margin: 10px;
+    padding: 25px;
+    width: 100%;
+  }
+
+  & h2 {
+    font-size: 25px;
+  }
+}
+
+@media screen and (min-width: $screen-md ) {
+
+  .menu {
+
+    & .tile {
+      width: 45%;
+    }
+  }
+}

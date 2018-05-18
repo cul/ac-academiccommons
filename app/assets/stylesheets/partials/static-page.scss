@@ -24,6 +24,18 @@
     width: 100vw;
   }
 
+  & .no-border {
+    border: 0;
+  }
+
+  & .no-border h1 {
+    padding: 0;
+  }
+
+  & p.summary {
+    margin-top: 10px;
+  }
+
   & h1 {
     margin: 0;
 		padding-bottom: 18px;
@@ -154,6 +166,16 @@
 			padding: 30px 40px;
 		}
 	}
+}
+
+/* modifications for static page with menus */
+
+#static-text .menu a {
+  text-decoration: none;
+}
+
+#static-text .menu p {
+  margin: 10px 0;
 }
 
 /* upload your research landing page */
