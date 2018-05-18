@@ -26,3 +26,4 @@ require 'capistrano/passenger'
 
 require 'capistrano/cul'
 require 'whenever/capistrano'
+require 'capistrano/sitemap_generator'

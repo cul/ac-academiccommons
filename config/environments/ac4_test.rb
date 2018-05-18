@@ -24,6 +24,6 @@ AcademicCommons::Application.configure do
 
   # Application specific configuration.
   config.analytics_enabled = false
-  config.base_path = "ac4-test.cul.columbia.edu"
+  config.default_host = 'https://ac4-test.cul.columbia.edu'
   config.prod_environment = false
 end

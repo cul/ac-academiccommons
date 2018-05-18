@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe 'Unsubscribe' do
+RSpec.describe 'Unsubscribe', type: :feature do
   let(:uni) { 'abc123' }
 
   context 'flashes error when' do

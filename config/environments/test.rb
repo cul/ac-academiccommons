@@ -27,5 +27,5 @@ Rails.application.configure do
   # Setting host so that url helpers can be used in mailer views.
   config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
 
-  config.base_path = "localhost:3000"
+  config.default_host = 'http://localhost:3000'
 end

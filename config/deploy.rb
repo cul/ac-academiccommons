@@ -67,5 +67,6 @@ namespace :deploy do
     end
   end
 
-  after "deploy:published", :generate_500_html
+  before :publishing, 'sitemap:create'
+  after  :publishing, :generate_500_html
 end

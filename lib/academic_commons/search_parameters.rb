@@ -1,11 +1,14 @@
 module AcademicCommons
   class SearchParameters
+    MAX_ROWS = 100_000
+
     attr_reader :parameters
 
     def initialize
       @parameters = {
         qt: 'search',
-        fq: []
+        fq: [],
+        rows: MAX_ROWS
       }
     end
 
@@ -47,6 +50,14 @@ module AcademicCommons
 
     def facet_limit(limit)
       @parameters[:'facet.limit'] = limit
+      self
+    end
+
+    # Only returns fields specified, the default behavior is to return all the
+    # fields. Modifies the :fl solr parameter. Use carefully! This limits the
+    # fields returned and could lead to unintended results.
+    def field_list(*fields)
+      @parameters[:fl] = Array.wrap(fields).join(',')
       self
     end
 

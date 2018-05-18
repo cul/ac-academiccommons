@@ -89,8 +89,6 @@ Rails.application.routes.draw do
 
   get '/emails/get_csv_email_form', to: 'emails#get_csv_email_form'
 
-  get '/sitemap.xml', to: 'sitemap#index', format: 'xml'
-
   get '/logs/all_author_monthly_reports_history', to: 'logs#all_author_monthly_reports_history'
   get '/logs/log_form',                           to: 'logs#log_form'
   get '/logs/ingest_history',                     to: 'logs#ingest_history'
