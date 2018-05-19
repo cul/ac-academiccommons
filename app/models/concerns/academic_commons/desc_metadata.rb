@@ -70,9 +70,12 @@ module AcademicCommons
       organizations = []
       departments = []
 
-      # Using DOI as document id
-      add_field.call 'id',          mods.at_css('>identifier[@type=\'DOI\']') # id is the unique identifier
-      add_field.call 'cul_doi_ssi', mods.at_css('>identifier[@type=\'DOI\']') # CUL DOI, doi(with no prefix)
+      # Using DOI as document id, getting doi from fedora object.
+      doi = solr_doc.fetch('doi_ssim', nil)
+      raise StandardError, 'missing doi from fedora object' if doi.blank?
+      doi.gsub!('doi:', '')
+      add_field.call 'cul_doi_ssi', doi
+      add_field.call 'id',          doi
 
       # Adding fedora3 pid to document. Used for relating objects to each other.
       add_field.call('fedora3_uri_ssi', "info:fedora/#{pid}")

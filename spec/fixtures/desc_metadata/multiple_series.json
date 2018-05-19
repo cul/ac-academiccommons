@@ -1,5 +1,5 @@
 {
-  "id": "10.7916/D8ZW1VF7",
+  "id": "10.7916/TESTTEST",
   "described_by_ssim": [
     "info:fedora/actest:1/test_ds"
   ],
@@ -15,7 +15,8 @@
     "Institute for Social and Economic Research and Policy, Columbia University"
   ],
   "publisher_location_ssi": "New York",
-  "cul_doi_ssi": "10.7916/D8ZW1VF7",
+  "cul_doi_ssi": "10.7916/TESTTEST",
+  "doi_ssim": "10.7916/TESTTEST",
   "title_ssi": "A Comprehensive Analysis of Poverty in India",
   "title_q": [
     "A Comprehensive Analysis of Poverty in India"

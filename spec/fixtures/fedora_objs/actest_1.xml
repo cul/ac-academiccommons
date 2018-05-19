@@ -41,11 +41,12 @@
   <foxml:datastream ID="RELS-EXT" STATE="A" CONTROL_GROUP="X" VERSIONABLE="true">
     <foxml:datastreamVersion ID="RELS-EXT1.0" LABEL="RDF Statements about this object" CREATED="2016-09-14T16:48:51.000Z" MIMETYPE="application/rdf+xml" FORMAT_URI="info:fedora/fedora-system:FedoraRELSExt-1.0" SIZE="693">
       <foxml:xmlContent>
-        <rdf:RDF xmlns:fedora-model="info:fedora/fedora-system:def/model#" xmlns:ore="http://www.openarchives.org/ore/terms/" xmlns:local="http://purl.oclc.org/NET/CUL/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+        <rdf:RDF xmlns:fedora-model="info:fedora/fedora-system:def/model#" xmlns:ore="http://www.openarchives.org/ore/terms/" xmlns:local="http://purl.oclc.org/NET/CUL/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:bibo="http://purl.org/ontology/bibo/">
           <rdf:Description rdf:about="info:fedora/actest:1">
             <fedora-model:hasModel rdf:resource="info:fedora/ldpd:ContentAggregator"></fedora-model:hasModel>
             <rdf:type rdf:resource="http://purl.oclc.org/NET/CUL/Aggregator"></rdf:type>
             <cc:license rdf:resource="info:fedora/"></cc:license>
+            <bibo:doi rdf:resource="doi:10.7916/ALICE"/>
           </rdf:Description>
         </rdf:RDF>
       </foxml:xmlContent>

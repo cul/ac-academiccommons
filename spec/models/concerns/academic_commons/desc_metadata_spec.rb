@@ -1,6 +1,7 @@
 require 'rails_helper'
 RSpec.describe AcademicCommons::DescMetadata do
   let(:expected_json) { fixture_to_json('fedora_objs/to_solr.json') }
+  let(:start_solr_doc) { { 'doi_ssim' => '10.7916/TESTTEST' } }
 
   # rubocop:disable RSpec/DescribedClass
   let(:indexable) do
@@ -28,7 +29,7 @@ RSpec.describe AcademicCommons::DescMetadata do
   # rubocop:enable RSpec/DescribedClass
 
   shared_examples 'indexing mods' do
-    subject { indexable.index_descmetadata }
+    subject { indexable.index_descmetadata(start_solr_doc) }
 
     describe '#index_descMetadata' do
       it  { is_expected.to eql(expected_json) }
