@@ -180,21 +180,23 @@
 
 /* link lists */
 
-ul.link-list {
+#static-text ul.link-list {
   color: $gray-light;
-  column-count: 3;
+  column-count: auto;
   column-gap: 50px;
+  column-width: 300px;
   margin: 25px 0;
   max-width: none;
   padding: 0;
 
   & li {
-    line-height: 1.5;
+    break-inside: avoid-column;
+    line-height: 1.4;
     list-style: none;
     margin: 0 0 15px 0;
   }
-}
 
-#static-text ul.link-list a {
-  text-decoration: none;
+  & a {
+    text-decoration: none;
+  }
 }
