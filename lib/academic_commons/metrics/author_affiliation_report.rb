@@ -19,9 +19,11 @@ module AcademicCommons::Metrics
       rows = []
       usage_stats.each do |item_stats|
         # retrieve entire solr document
-        begin
-          doc = Blacklight.default_index.find(item_stats.id).docs.first
-        rescue Blacklight::Exceptions::RecordNotFound => e
+        results = AcademicCommons.search { |p| p.id(item_stats.id) }
+
+        if results.docs.count == 1
+          doc = results.docs.first
+        else
           Rails.logger.warn("Document not found for #{item_stats.id}")
           next
         end

@@ -19,6 +19,7 @@ module AcademicCommons
 
     def id(id)
       filter('id', id)
+      self
     end
 
     def filter(key, value)
