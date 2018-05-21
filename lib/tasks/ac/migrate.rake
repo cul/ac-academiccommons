@@ -8,5 +8,27 @@ namespace :ac do
         user.update(role: 'admin') if user.admin == true || user.admin == '1' || user.admin == 1
       end
     end
+
+    desc 'Migrate identifiers in stats to DOIs'
+    task stats_to_doi: :environment do
+      # Query for all fedora3 pids in our solr core.
+      results = AcademicCommons.search do |p|
+        p.field_list('id,cul_doi_ssi,fedora3_pid_ssi')
+      end
+
+      results.docs.each do |doc|
+        pid = doc[:fedora3_pid_ssi]
+        doi = doc[:cul_doi_ssi]
+        next if doi.blank? || pid.blank?
+
+        stats = Statistic.where(identifier: pid)
+        next if stats.count.zero?
+
+        # rubocop:disable Rails/SkipsModelValidations
+        puts "UPDATING identifier = #{pid} TO identifier = #{doi}"
+        stats.update_all(identifier: doi)
+        # rubocop:enable Rails/SkipsModelValidations
+      end
+    end
   end
 end
