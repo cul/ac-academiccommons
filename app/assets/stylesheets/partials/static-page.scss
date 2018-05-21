@@ -182,17 +182,19 @@
 
 ul.link-list {
   color: $gray-light;
-  column-count: 2;
+  column-count: 3;
   column-gap: 50px;
   margin: 25px 0;
+  max-width: none;
   padding: 0;
 
   & li {
-    line-height: 1.8;
+    line-height: 1.5;
     list-style: none;
+    margin: 0 0 15px 0;
   }
+}
 
-  & li a {
-    text-decoration: none;
-  }
+#static-text ul.link-list a {
+  text-decoration: none;
 }
