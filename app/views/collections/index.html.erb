@@ -1,6 +1,25 @@
-<h1>Collections</h1>
+<div id="static-text">
 
-<% @categories.each do |category| %>
-  <h2><%= link_to category.title, category.url %></h2>
-  <p><%= category.summary %></p>
-<% end %>
+  <div class="page-title no-border">
+    <div class="container">
+      <h1>Collections</h1>
+    </div>
+  </div>
+
+  <div class="container">
+    <p class="summary">
+      Academic Commons hosts research and scholarship from across Columbia University and its affiliate institutions. You can use the collections below to begin exploring.
+    </p>
+    <div class="menu">
+      <div class="row">
+        <% @categories.each do |category| %>
+          <div class="col-md-6 tile">
+            <h2><%= link_to category.title, category.url %></h2>
+            <p><%= category.summary %></p>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+
+</div>

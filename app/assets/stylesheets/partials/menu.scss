@@ -1,0 +1,108 @@
+/* menu */
+
+.menu {
+  margin: 20px 0;
+
+  & .row {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0 -10px 60px -10px;
+  }
+
+  & .tile {
+    border: 1px solid $gray-lighter;
+    border-radius: 3px;
+    margin: 10px;
+    padding: 30px 30px 10px 30px;
+    width: 100%;
+  }
+
+  & h2 {
+    font-size: 23px;
+  }
+
+  & p {
+    font-weight: 300;
+    line-height: 1.6;
+    margin: 10px 0 25px 0;
+  }
+}
+
+@media screen and (min-width: $screen-md ) {
+
+  .menu {
+
+    & .tile {
+      width: 45%;
+    }
+  }
+}
+
+/* homepage menu */
+
+.homepage-menu {
+
+  & .collections,
+  & .upload {
+    box-shadow: $box-shadow;
+    z-index: 1000;
+  }
+
+  & a p {
+    color: $gray-base;
+  }
+
+  & a:hover p {
+    color: $brand-dark;
+  }
+
+  & a:hover {
+    border-color: $brand-dark;
+    text-decoration: none;
+  }
+
+  & .top {
+    align-items: center;
+    display: flex;
+  }
+
+  & .top svg {
+    display: inline-block;
+    fill: $brand-primary;
+    flex: 1 0 0;
+    margin-right: 6px;
+    max-width: 40px;
+  }
+
+  & .top h2 {
+    display: inline-block;
+    flex: 1 0 0;
+    margin: 0;
+  }
+
+  & .top svg path {
+    fill: $brand-primary;
+  }
+
+  & a:hover svg,
+  & a:hover svg path {
+    fill: $brand-dark;
+  }
+}
+
+/* upload your research menu */
+
+.menu .log-in {
+  box-shadow: $box-shadow;
+  z-index: 1000;
+}
+
+.menu .no-log-in {
+  background: $gray-lighter-custom;
+  border: 0;
+  color: $gray-light;
+}
+
+.menu .no-log-in svg.icon-email {
+  margin-bottom: -3px;
+}
