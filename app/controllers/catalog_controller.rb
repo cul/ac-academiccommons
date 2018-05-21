@@ -34,6 +34,7 @@ class CatalogController < ApplicationController
 
     # Default values of parameters to send when requesting a single document
     config.default_document_solr_params = {
+      fq: ["has_model_ssim:\"#{ContentAggregator.to_class_uri}\""]
       # fl: '*',
       # facet: false,
       # rows: 1
