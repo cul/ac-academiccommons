@@ -176,12 +176,14 @@
 
 #static-text .menu p {
   margin-top: 3px;
-} 
+}
 
 /* link lists */
 
 ul.link-list {
   color: $gray-light;
+  column-count: 2;
+  column-gap: 50px;
   margin: 25px 0;
   padding: 0;
 
