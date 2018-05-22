@@ -9,6 +9,8 @@ class User < ApplicationRecord
   ADMIN = 'admin'.freeze
   ROLES = [ADMIN].freeze
 
+  has_many :agreements, dependent: :destroy
+
   def self.admins
     where(role: ADMIN)
   end
@@ -40,5 +42,9 @@ class User < ApplicationRecord
     end
 
     self
+  end
+
+  def signed_latest_agreement?
+    agreements.map(&:agreement_version).include?(Agreement::LATEST_AGREEMENT_VERSION)
   end
 end

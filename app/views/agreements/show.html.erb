@@ -1,0 +1,10 @@
+<div>
+  <h2>Columbia Academic Commons Participation Agreement</h2>
+
+  <% if current_user.signed_latest_agreement? %>
+    <p>Notice: You have already signed this agreement.</p>
+  <% end %>
+
+
+  <%= render partial: 'author_agreement' %>
+</div>

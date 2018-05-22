@@ -1,0 +1,29 @@
+<div>
+  <h2>Columbia Academic Commons Participation Agreement</h2>
+
+  <%= render partial: 'author_agreement' %>
+
+  <%= form_with model: @agreement, url: agreement_path, local: true do |f| %>
+    <fieldset>
+      <%= f.hidden_field(:agreement_version, value: '1.1') %>
+
+      <%= f.check_box(:accepted_agreement) %>
+      <%= f.label(:accepted_agreement, 'I have read and accept the participation agreement.') %>
+
+      <p>
+        <%= f.label :name, 'Name' %>
+        <%= f.text_field :name %>
+
+        <%= f.label :email, 'E-mail' %>
+        <%= f.text_field :email %>
+
+        <%= f.label :uni, 'UNI' %>
+        <%= f.text_field :uni %>
+      </p>
+
+      <p>
+        <%= f.submit('Accept') %>
+      </p>
+    </fieldset>
+  <% end %>
+</div>
