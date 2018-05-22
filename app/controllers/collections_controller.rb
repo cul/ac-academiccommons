@@ -1,13 +1,8 @@
 class CollectionsController < ApplicationController
   CONFIG = {
-    series: {
-      title: 'Paper and Report Series',
-      summary: 'View working paper and report series created by Columbia departments and centers.',
-      facet: 'series_ssim'
-    },
     featured: {
       title: 'Featured Collections',
-      summary: 'Browse collections of research produced by Columbia programs, institutes, and centers.',
+      summary: 'Discover unique research produced by a our featured Columbia departments, institutes and centers.',
       facet: 'department_ssim',
       values: [
         'Center on Japanese Economy and Business',
@@ -19,13 +14,18 @@ class CollectionsController < ApplicationController
     },
     doctoraltheses: {
       title: 'Doctoral Theses',
-      summary: 'View full-text Columbia doctoral theses from 2011 forward. Some theses dated prior to 2011 are also available.',
+      summary: 'Explore full-text Columbia doctoral theses from 2011 forward. Some theses dated prior to 2011 are also available.',
       filter: { genre_ssim: 'Theses', degree_level_name_ssim: 'Doctoral' },
       facet: 'department_ssim'
     },
+    series: {
+      title: 'Paper and Report Series',
+      summary: 'Browse series of working papers, event videos, and technical reports created by Columbia departments and centers.',
+      facet: 'series_ssim'
+    },
     journals: {
       title: 'Columbia Journals',
-      summary: 'Explore articles from a selection of journals published at Columbia.',
+      summary: 'View articles from a selection of journals published at Columbia.',
       facet: 'cu_journal_ssim'
     }
   }.freeze
