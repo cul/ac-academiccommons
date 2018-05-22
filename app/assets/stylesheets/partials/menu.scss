@@ -9,7 +9,8 @@
     margin: 0 -10px 60px -10px;
   }
 
-  & .tile {
+  & .tile,
+  & .tile-small {
     border: 1px solid $gray-lighter;
     border-radius: 3px;
     margin: 10px;
@@ -35,6 +36,11 @@
     & .tile {
       width: 45%;
     }
+
+    & .tile-small {
+      width: 30%;
+    }
+
   }
 }
 
