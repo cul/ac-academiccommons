@@ -19,7 +19,7 @@ class CollectionsController < ApplicationController
       facet: 'department_ssim'
     },
     series: {
-      title: 'Paper and Report Series',
+      title: 'Series',
       summary: 'Browse series of working papers, event videos, and technical reports created by Columbia departments and centers.',
       facet: 'series_ssim'
     },
