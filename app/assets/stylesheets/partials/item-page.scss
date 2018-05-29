@@ -164,6 +164,7 @@
 
   & .list-group-item span.filename {
     font-weight: 600;
+    width: 85%;
     word-break: break-all;
   }
 
@@ -226,6 +227,7 @@
     & .list-group-item span.filename {
       flex: 3 0 0;
       margin-right: 10px;
+      width: auto;
     }
 
     & .list-group-item span.filesize,

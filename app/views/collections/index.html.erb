@@ -13,7 +13,7 @@
     <div class="menu">
       <div class="row">
         <% @categories.each do |category| %>
-          <div class="col-md-6 tile">
+          <div class="col-md-4 tile">
             <h2><%= link_to category.title, category.url %></h2>
             <p><%= category.summary %></p>
           </div>

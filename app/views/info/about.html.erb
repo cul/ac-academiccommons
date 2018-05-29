@@ -12,33 +12,33 @@
       Academic Commons provides open, persistent access to research and scholarship created at Columbia University, Barnard College, Jewish Theological Seminary, Teachers College, and Union Theological Seminary. Academic Commons is a program of the <a href="http://library.columbia.edu/">Columbia University Libraries</a>.
     </p>
 
+    <h3>Long-term access</h3>
+    <p>No matter where you live, you can download the full text of the research and scholarship available in Academic Commons without encountering firewalls or fees. If you are a member of the Columbia community, you can deposit work in Academic Commons to ensure that it is accessible for years to come. </p>
+
     <h3>Enhanced discoverability</h3>
-    <p>Columbia research and scholarship in Academic Commons is freely accessible to anyone online. Works are are optimized for discovery in search engines, including Google and Google Scholar.</p>
+    <p>Find research in Academic Commons using a search engine such as Google, Google Scholar, or Bing. Works in Academic Commons are also included in CLIO, the Columbia Libraries catalog, and in Columbia University website search results.</p>
 
     <h3>Citation and attribution</h3>
-    <p>Academic Commons assigns a <a href="http://www.doi.org/">Digital Object Identifier</a>, or DOI, to each work. This persistent URL facilitates citation and attribution so researchers and scholars can receive credit for a broad range of work.</p>
+    <p>Columbia scholars and researchers, deposit in Academic Commons and encourage citation of work including data, reports and presentations. Items deposited in Academic Commons each receive a Digital Object Identifier, or DOI, a persistent URL that facilitates citation and attribution.</p>
 
-    <h3>Long-term access</h3>
-    <p>Academic Commons is part of the Columbia University Libraries long-term digital preservation storage system. We curate works in the repository in accordance with the Columbia University Libraries <a href="http://library.columbia.edu/about/policies/collection-development/general/preservation.html">Preservation Policy</a>.</p>
+    <h3>Highlighting centers, departments and programs</h3>
+    <p>Columbia departments, centers, institutes and programs, use Academic Commons to create a collection of research including working papers, reports, books, conference proceedings, and student theses. Then, you may want to create an automatic feed to your website using the <a href="/developers/">Academic Commons API</a>.</p>
 
-    <h3>Highlight departments or programs</h3>
-    <p>We partner with departments, institutes and centers at Columbia to enhance the impact of the research they produce, including student theses, working paper series, reports, books, conference proceedings, and other scholarly projects.</p>
+    <p>For information about contributing to Academic Commons, visit the <a href="/policies/">Policies</a> and <a href="/faq/">FAQ</a> pages.</p>
 
-    <p>For more information visit our <a href="/policies/">Deposit Policies</a> and <a href="/faq/">FAQ</a> pages.
-
-    <h2 id="platform">Platform</h2>
-
-    <h3>Open-source software</h3>
-    <p>Academic Commons is built using open-source applications that are developed, supported, and maintained by a consortium of research and cultural heritage institutions.</p>
+    <h3>Open-source technology</h3>
+    <p>Columbia University Libraries runs Academic Commons on open-source applications including Fedora, the repository platform upon which Academic Commons is built, and Blacklight, the framework for the Academic Commons user interface. Columbia University Libraries actively contributes to the development communities for both Fedora and Blacklight. The Academic Commons technology stack includes:</p>
 
     <ul class="brand-logos">
       <li><a href="http://www.fedora-commons.org/"><img src="<%= image_url('brand-logos/logo-fedora.png'); %>"></a></li>
-      <li><a href="http://duraspace.org/"><img src="<%= image_url('brand-logos/logo-duraspace.png'); %>"></a></li>
+      <!-- <li><a href="http://duraspace.org/"><img src="<%= image_url('brand-logos/logo-duraspace.png'); %>"></a></li> -->
       <li><a href="http://projectblacklight.org/"><img src="<%= image_url('brand-logos/logo-blacklight.png'); %>"></a></li>
+      <li><a href="https://www.mysql.com/"><img src="<%= image_url('brand-logos/logo-mysql.png'); %>"></a></li>
+      <li><a href="https://lucene.apache.org/solr/"><img src="<%= image_url('brand-logos/logo-solr.png'); %>"></a></li>
     </ul>
 
-    <h3>Part of a network of scholarly resources</h3>
-    <p>Academic Commons and the Columbia Libraries partner with scholarly initiatives around the globe to disseminate scholarship and research to the broadest possible audience, thereby increasing the usefulness and impact of research.</p>
+    <h3>Contributing to a network of open scholarly resources</h3>
+    <p>Academic Commons is part of a global network of initiatives that promote the open distribution of scholarship and research.</p>
 
     <ul class="brand-logos">
       <li><a href="https://www.datacite.org/"><img src="<%= image_url('brand-logos/logo-datacite.png'); %>"></a></li>
@@ -47,22 +47,26 @@
       <li><a href="https://www.re3data.org/"><img src="<%= image_url('brand-logos/logo-re3data.png'); %>"></a></li>
     </ul>
 
-    <h3>API</h3>
-    <p>Academic Commons has a RESTful API that can be used to query/search for records. We support JSON responses, and have limited support for RSS. More information and documentation for our API can be found here: <a href="http://petstore.swagger.io/?url=<%= root_url %>api/v1/swagger_doc">http://petstore.swagger.io/?url=<%= root_url %>api/v1/swagger_doc</a>
-    </p>
+    <p>Learn about our API and other developer resources on the <a href="/developers">Developers</a> page.</p>
 
-    <h3>OAI-PMH</h3>
-    <p>Academic Commons supports the <a href="http://www.openarchives.org/pmh/">Open Archives Initiative Protocol for Metadata Harvesting</a> (OAI-PMH), version 2.0.</p>
+    <h2 id="learn-more">Learn More</h2>
 
-    <p>The base URL is: <a href="https://academiccommons.columbia.edu/catalog/oai">https://academiccommons.columbia.edu/catalog/oai</a></p>
-
-    <h3>Metadata license</h3>
-
-    <p>Academic Commons bibliographic metadata—excluding abstracts, which may be under copyright—is available under a CC0 license.</p>
-
-    <p><a href="https://creativecommons.org/publicdomain/zero/1.0/"><img src="<%= image_url('logo-cc0-license.png'); %>"></a></p>
-
-    <p>To the extent possible under law, Columbia University Academic Commons has waived all copyright and related or neighboring rights to Academic Commons bibliographic metadata (abstracts are excluded from this license). This work is published from: United States.</p>
+    <div class="menu-small">
+      <div class="row">
+        <div class="col-md-4 tile">
+          <h2><%= link_to 'Policies', '/policies/' %></h2>
+          <p>Guidelines on uploading to Academic Commons and the details of our Terms of Use, Copyright, and Privacy policies.</p>
+        </div>
+        <div class="col-md-4 tile">
+          <h2><%= link_to 'FAQ', '/faq/' %></h2>
+          <p>View answers to frequently asked questions about Academic Commons.</p>
+        </div>
+        <div class="col-md-4 tile">
+          <h2><%= link_to 'Developers', '/developers/' %></h2>
+          <p>Information about the Academic Commons API, OAI-PMH, SWORD, metadata license, and sitemap.</p>
+        </div>
+      </div>
+    </div>
 
   </div><!--.container-->
 

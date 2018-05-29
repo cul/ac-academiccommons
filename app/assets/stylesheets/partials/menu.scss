@@ -1,6 +1,7 @@
 /* menu */
 
-.menu {
+.menu,
+.menu-small {
   margin: 20px 0;
 
   & .row {
@@ -9,6 +10,7 @@
     margin: 0 -10px 60px -10px;
   }
 
+  & .tile,
   & .tile {
     border: 1px solid $gray-lighter;
     border-radius: 3px;
@@ -28,12 +30,40 @@
   }
 }
 
+.menu-small {
+  max-width: 700px;
+}
+
+/* override static text values */
+
+#static-text .menu a,
+#static-text .menu-small a {
+  text-decoration: none;
+}
+
+#static-text .menu p,
+#static-text .menu-small p {
+  margin-top: 8px;
+}
+
 @media screen and (min-width: $screen-md ) {
 
   .menu {
 
     & .tile {
       width: 45%;
+    }
+  }
+
+  .menu-small {
+
+    & .tile {
+      padding: 20px 20px 10px 20px;
+      width: 30%;
+    }
+
+    & p {
+      font-size: 15px;
     }
   }
 }
