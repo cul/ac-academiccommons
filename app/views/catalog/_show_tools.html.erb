@@ -30,6 +30,8 @@
       </ul>
       <ul class="social-buttons">
 
+        <%= social_share_button_tag(@document[:title_ssi], allow_sites: %w(twitter facebook email)) %>
+
         <!-- social links here -->
 
         <%= render_show_doc_actions @document do |config, inner| %>

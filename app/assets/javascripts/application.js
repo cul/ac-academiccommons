@@ -11,3 +11,4 @@
 //= require readmore-call
 //= require sticky-sidebar
 //= require smooth-scroll
+//= require social-share-button
