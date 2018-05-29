@@ -74,6 +74,20 @@ If you need an object in AC to do further testing and development, add a collect
    rake ac:populate_solr
    ```
 
+## Authentication/Authorization in development
+If you would like to see pages that require authentication follow the steps below.
+
+1. Seed your development database with two users. ONLY USE THIS IN DEVELOPMENT.
+   ```
+   rake db:seed
+   ```
+
+2. Log in as one of the users that was just added. When you click the `log in` link, you will be prompted for a uni.
+
+   For administrative privileges, log in as `ta123`.
+
+   For a user without administrative privileges, log in as `tu123`.
+
 ## Running tests
 1. In order to run tests that require javascript you will might need `chrome` installed (needs to be tested).
 2. Run tests locally by running `rake ci`.

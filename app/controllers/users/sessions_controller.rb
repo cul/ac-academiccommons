@@ -4,11 +4,15 @@ class Users::SessionsController < Devise::SessionsController
   end
 
   def omniauth_provider_key
-    # there is support for :wind, :cas, and :saml in Cul::Omniauth
+    Rails.env.development? ? 'developer' : 'saml'
   end
 
   # GET /resource/sign_in
   def new
-    redirect_to user_saml_omniauth_authorize_path
+    if Rails.env.development?
+      redirect_to user_developer_omniauth_authorize_path
+    else
+      redirect_to user_saml_omniauth_authorize_path
+    end
   end
 end
