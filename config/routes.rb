@@ -44,8 +44,6 @@ Rails.application.routes.draw do
   #   end
   # Specifying routes using glob (*) in id param, this way slashes and period are accepted as part of the id.
   match 'doi/*id/download', to: 'download#content', via: :get,          as: 'content_download'
-  match 'doi/*id/email',    to: 'catalog#email',    via: [:get, :post], as: :email_solr_document
-  match 'doi/email',        to: 'catalog#email',    via: [:get, :post], as: :email_solr_document_index
   match 'doi/*id',          to: 'catalog#show',     via: :get,          as: :solr_document
 
   mount Blacklight::Engine => '/'
