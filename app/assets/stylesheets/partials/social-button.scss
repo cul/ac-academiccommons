@@ -1,0 +1,11 @@
+/* social buttons */
+
+$social-icon-size: 24px;
+
+.social-share-button {
+  .ssb-icon {
+    background-size: $social-icon-size $social-icon-size;
+    height: $social-icon-size;
+    width: $social-icon-size;
+  }
+}
