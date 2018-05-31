@@ -1,0 +1,4 @@
+<%= social_share_button_tag(@document[:title_ssi],
+                            allow_sites: %w(twitter facebook email),
+                            url: @document.full_doi,
+                            desc: @document[:title_ssi]) %>

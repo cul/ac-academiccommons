@@ -14,6 +14,10 @@ class CatalogController < ApplicationController
     config.show.document_actions.delete(:bookmark)
     config.show.document_actions.delete(:sms)
     config.show.document_actions.delete(:citation)
+    config.show.document_actions.delete(:email)
+
+    add_show_tools_partial :download_and_doi, partial: 'download_and_doi'
+    add_show_tools_partial :social_buttons, partial: 'social_buttons'
 
     config.navbar.partials.delete(:bookmark)
     config.navbar.partials.delete(:saved_searches)
