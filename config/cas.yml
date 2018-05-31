@@ -14,7 +14,13 @@ saml: &SAML
   provider: saml
   service_validate_url: /cas/samlValidate
 
-development: *SAML
+
+development:
+  provider: developer
+  fields:
+    - :uid
+  uid_field: :uid
+
 test: *SAML
 academiccommons_dev: *SAML
 academiccommons_test: *SAML
