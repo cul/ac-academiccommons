@@ -8,5 +8,7 @@ class UploadsController < ApplicationController
 
   # GET /upload/new
   # Show deposit form, if user is logged in.
-  def new; end
+  def new
+    @deposit = Deposit.new
+  end
 end

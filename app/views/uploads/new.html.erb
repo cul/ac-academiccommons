@@ -1,0 +1,31 @@
+
+<%= form_tag(uploads_path, method: :create) do %>
+  <div>
+    <div><%= label_tag(:title, 'Title') %></div>
+    <div><%= text_field_tag(:title, nil, placeholder: 'Title') %></div>
+  </div>
+
+  <div>
+    <div><%= label_tag(:abstract, 'Abstract') %></div>
+    <div><%= text_area_tag(:abstract, nil, placeholder: 'What is this work about? Provide a brief summary to help readers understand its argument.') %></div>
+  </div>
+
+  <div>
+    <div><%= label_tag(:year, 'Year Created') %></div>
+    <div><%= number_field_tag(:year, nil, placeholder: 'YYYY') %></div>
+  </div>
+
+  <div>
+    <%= label_tag(:doi, 'DOI/URL') %>
+    <%= text_field_tag(:doi, nil, placeholder: 'DOI or URL of work online (if applicable)') %>
+  </div>
+
+  <div>
+    <div><%= label_tag(:notes, 'Notes') %></div>
+    <div><%= text_area_tag(:notes, nil, placeholder: 'Additional information you want included in the record and/or notes for repository staff') %></div>
+  </div>
+
+
+  <%= submit_tag("Submit") %>
+
+<% end %>
