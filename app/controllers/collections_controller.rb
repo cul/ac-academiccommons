@@ -14,13 +14,13 @@ class CollectionsController < ApplicationController
     },
     doctoraltheses: {
       title: 'Doctoral Theses',
-      summary: 'Explore full-text Columbia doctoral theses from 2011 forward. Some theses dated prior to 2011 are also available.',
+      summary: 'Explore full-text Columbia doctoral theses from 2011 forward. Some theses dated prior to 2011 and others from affiliate insitutions are also available.',
       filter: { genre_ssim: 'Theses', degree_level_name_ssim: 'Doctoral' },
       facet: 'department_ssim'
     },
     series: {
       title: 'Series',
-      summary: 'Browse series of working papers, event videos, and technical reports created by Columbia departments and centers.',
+      summary: 'Browse series of working papers, event videos, and technical reports created by Columbia-affiliated departments and centers.',
       facet: 'series_ssim'
     },
     journals: {
