@@ -1,19 +1,12 @@
 /* item page sidebar */
 
 .show-tools {
-  animation: slideInUp;
-  animation-duration: .7s;
-  animation-fill-mode: both;
-  border: 0;
-  border-radius: 0;
-  border-top: 1px solid $brand-dark;
-  bottom: 0;
-  box-shadow: 0 0 17px 2px #ccc;
-  margin: 0;
-  margin-left: -15px;
-  position: fixed;
-  width: 100%;
-  z-index: 1;
+  box-shadow: none;
+  margin-bottom: 12px;
+
+  & .panel-body {
+    padding: 0;
+  }
 
   & ul {
     margin: 0;
@@ -22,13 +15,25 @@
 
   & li {
     list-style: none;
+    padding: 0;
   }
+}
 
-  & .panel-body {
-    padding: 10px;
-  }
+li.download-and-doi {
+  animation: slideInUp;
+  animation-duration: .7s;
+  animation-fill-mode: both;
+  background: $body-bg;
+  border-top: 1px solid $brand-dark;
+  bottom: 0;
+  box-shadow: 0 0 17px 2px #ccc;
+  margin-left: -15px;
+  padding: 10px;
+  position: fixed;
+  width: 100%;
+  z-index: 1000;
 
-  & .download-box {
+  & ul {
     display: flex;
   }
 
@@ -77,27 +82,27 @@
   & .permanent-link textarea:focus {
     color: $brand-dark;
   }
+}
 
-  & .social-buttons {
-    display: none;
-  }
+li.social-buttons {
+  padding: 10px 10px 6px 10px;
+}
+
+li.social-buttons a {
+  margin: 0 6px 0 0;
 }
 
 @media screen and (min-width: $screen-sm ) {
 
-  .show-tools {
+  li.download-and-doi {
     animation: none;
     border: 0;
-    border-radius: 3px;
-    border: 1px solid $gray-lighter;
     bottom: auto;
     box-shadow: none;
-    margin: 0;
     margin-left: inherit;
     position: relative;
-    width: auto;
 
-    & .download-box {
+    & ul {
       display: block;
     }
 
@@ -113,10 +118,9 @@
     & .permanent-link textarea {
       box-shadow: inset 0 0 3px #ddd;
     }
+  }
 
-    & .social-buttons {
-      display: block;
-      padding-top: 20px;
-    }
+  li.social-buttons {
+    padding: 2px 10px 6px 10px;
   }
 }
