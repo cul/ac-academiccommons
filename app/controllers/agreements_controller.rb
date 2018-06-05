@@ -17,7 +17,11 @@ class AgreementsController < ApplicationController
       agreement = Agreement.new(agreement_params)
       agreement.user = current_user
 
-      Notifier.new_author_agreement(params).deliver
+      NotificationMailer.new_agreement(
+        agreement_params[:name],
+        agreement_params[:email],
+        agreement_params[:agreement_version]
+      ).deliver
 
       if agreement.save
         flash[:notice] = 'Author Agreement Accepted.'

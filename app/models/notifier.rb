@@ -56,18 +56,6 @@ class Notifier < ActionMailer::Base
     mail(to: recipients, from: from, subject: subject)
   end
 
-  def new_author_agreement(request)
-    @name = request[:name]
-    @email = request[:email]
-    @agreement_version = request['AC-agreement-version']
-    recipients = Rails.application.config_for(:emails)['new_agreement_notification']
-    from = Rails.application.config_for(:emails)['mail_deliverer']
-    subject = 'Academic Commons Author Agreement Accepted'
-    content_type = 'text/html'
-
-    mail(to: recipients, from: from, subject: subject, content_type: content_type)
-  end
-
   def statistics_report_with_csv_attachment(recipients, from, subject, message, prepared_attachments)
 
    prepared_attachments.each do |file_name, content|

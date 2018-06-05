@@ -20,4 +20,17 @@ class NotificationMailer < ApplicationMailer
       logger.info "New item notification was sent to: #{bcc}"
     end
   end
+
+  # Notification is sent to AC staff when a new agreement is signed.
+  def new_agreement(name, email, agreement_version)
+    @name = name
+    @email = email
+    @agreement_version = agreement_version
+    recipients = Rails.application.config_for(:emails)['new_agreement_notification']
+    from = Rails.application.config_for(:emails)['mail_deliverer']
+    subject = 'Academic Commons Author Agreement Accepted'
+    content_type = 'text/html'
+
+    mail(to: recipients, from: from, subject: subject, content_type: content_type)
+  end
 end
