@@ -56,18 +56,6 @@ class Notifier < ActionMailer::Base
     mail(to: recipients, from: from, subject: subject)
   end
 
-  def new_author_agreement(request)
-    @name = request[:name]
-    @email = request[:email]
-    @agreement_version = request['AC-agreement-version']
-    recipients = Rails.application.config_for(:emails)['new_agreement_notification']
-    from = Rails.application.config_for(:emails)['mail_deliverer']
-    subject = 'Academic Commons Author Agreement Accepted'
-    content_type = 'text/html'
-
-    mail(to: recipients, from: from, subject: subject, content_type: content_type)
-  end
-
   def statistics_report_with_csv_attachment(recipients, from, subject, message, prepared_attachments)
 
    prepared_attachments.each do |file_name, content|
@@ -76,27 +64,6 @@ class Notifier < ActionMailer::Base
 
     mail(to: recipients, from: from, subject: subject) do |f|
       f.text { render plain: message }
-    end
-  end
-
-  def depositor_first_time_indexed_notification(depositor, new_items, embargoed_items)
-    raise 'New or embargoed items are required to send notification email' if new_items.blank? && embargoed_items.blank?
-
-    @depositor = depositor
-    @new_items = new_items
-    @embargoed_items = embargoed_items
-    subject = 'Your submitted items are now available in Academic Commons'
-    bcc = Rails.application.config_for(:emails)['deposit_notification_bcc']
-    from = Rails.application.config_for(:emails)['mail_deliverer']
-    recipients = depositor.email
-
-    if Rails.application.config.prod_environment
-      mail(to: recipients, bcc: bcc, from: from, subject: subject)
-      logger.info "=== new Item notification was sent to: #{recipients}, bcc: #{bcc}"
-    else
-      subject = "#{subject} - #{Rails.env.upcase}"
-      mail(to: bcc, from: from, subject: subject)
-      logger.info "=== new Item notification was sent to: #{bcc}"
     end
   end
 end

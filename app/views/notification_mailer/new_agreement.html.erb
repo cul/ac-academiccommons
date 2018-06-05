@@ -1,0 +1,19 @@
+
+<div>
+  <b>Accepted Author Agreement</b>
+  <b>
+    <%= " (#{@agreement_version}): " %>
+  </b>
+  <%= (@agreement_version != '') ? "&#x2713;".html_safe : '' %>
+</div>
+<hr/>
+<div>
+  <b>Name:</b>
+  <%= @name %>
+</div>
+<hr/>
+<div>
+  <b>E-mail:</b>
+  <%= @email %>
+</div>
+<hr/>
