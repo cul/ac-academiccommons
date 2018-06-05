@@ -1,7 +1,7 @@
 # Shared context for mocking administrative user.
 shared_context 'mock admin user' do
   before do
-    @admin = double(User)
+    @admin = double(User, id: 1)
     allow(@admin).to receive(:admin?).and_return(true)
     allow(@request.env['warden']).to receive(:authenticate!).and_return(@admin)
     allow(controller).to receive(:current_user).and_return(@admin)
@@ -11,7 +11,7 @@ end
 # Shared context for mocking a non-administrative user.
 shared_context 'mock non-admin user' do
   before do
-    @non_admin = double(User)
+    @non_admin = double(User, id: 2)
     allow(@non_admin).to receive(:admin?).and_return(false)
     allow(@request.env['warden']).to receive(:authenticate!).and_return(@non_admin)
     allow(controller).to receive(:current_user).and_return(@non_admin)
