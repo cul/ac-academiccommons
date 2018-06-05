@@ -78,25 +78,4 @@ class Notifier < ActionMailer::Base
       f.text { render plain: message }
     end
   end
-
-  def depositor_first_time_indexed_notification(depositor, new_items, embargoed_items)
-    raise 'New or embargoed items are required to send notification email' if new_items.blank? && embargoed_items.blank?
-
-    @depositor = depositor
-    @new_items = new_items
-    @embargoed_items = embargoed_items
-    subject = 'Your submitted items are now available in Academic Commons'
-    bcc = Rails.application.config_for(:emails)['deposit_notification_bcc']
-    from = Rails.application.config_for(:emails)['mail_deliverer']
-    recipients = depositor.email
-
-    if Rails.application.config.prod_environment
-      mail(to: recipients, bcc: bcc, from: from, subject: subject)
-      logger.info "=== new Item notification was sent to: #{recipients}, bcc: #{bcc}"
-    else
-      subject = "#{subject} - #{Rails.env.upcase}"
-      mail(to: bcc, from: from, subject: subject)
-      logger.info "=== new Item notification was sent to: #{bcc}"
-    end
-  end
 end
