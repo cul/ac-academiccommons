@@ -69,8 +69,6 @@ Rails.application.routes.draw do
 
   match '/deposit/submit', to: 'deposit#submit', via: [:get, :post]
   get '/deposit',          to: 'deposit#index', as: 'deposit'
-  match '/deposit/submit_author_agreement', to: 'deposit#submit_author_agreement', via: [:get, :post]
-  get '/deposit/agreement_only'
 
   resource :agreement
 

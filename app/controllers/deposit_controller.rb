@@ -44,27 +44,4 @@ class DepositController < ApplicationController
       redirect_to action: :index
     end
   end
-
-  def submit_author_agreement
-    if(params[:acceptedAgreement] == 'agree')
-      unival =  params[:uni]
-      if(unival.blank?)
-        unival= params[:nouni]
-      end
-
-      Agreement.create(
-        uni: unival,
-        agreement_version: params['AC-agreement-version'],
-        name: params[:name],
-        email: params[:email]
-      )
-      Notifier.new_author_agreement(params).deliver
-
-      @message_1 = 'Author Agreement Accepted'
-      @message_2 = 'Thank you for accepting our author agreement.'
-    else
-      flash[:notice] = 'You must accept the author rights agreement.'
-      redirect_to action: :agreement_only
-    end
-  end
 end
