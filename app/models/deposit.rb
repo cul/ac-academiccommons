@@ -28,11 +28,7 @@ class Deposit < ApplicationRecord
 
   has_many_attached :files
 
-  # store :metadata, accessors: [:title, :abstract, :doi, :notes, :doi], coder: JSON
+  belongs_to :user, optional: true
 
-  # add new columns for
-  #  hyacinth_identifier
-  #  proxied
-  #
-
+  store :metadata, accessors: %i[title creators abstract year doi license rights_statement notes], coder: JSON
 end
