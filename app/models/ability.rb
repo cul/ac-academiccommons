@@ -5,5 +5,6 @@ class Ability
     return if user.nil?
     can :manage, :all if user.admin?
     can %i[create show], Agreement, user_id: user.id
+    can %i[create show], Deposit, user_id: user.id
   end
 end

@@ -1,5 +1,5 @@
 class UploadsController < ApplicationController
-  # TODO: require authentication and add to abilities
+  load_and_authorize_resource class: Deposit, except: :index
 
   # GET /upload
   # Show upload landing page page if user is not logged in. If user is logged
@@ -18,7 +18,8 @@ class UploadsController < ApplicationController
   def create
     deposit = Deposit.new(upload_params)
     deposit.files.attach(params[:deposit][:files])
-    # TODO: make deposit belong_to logged_in user
+    deposit.user = current_user
+    # TODO: save user name and uni in deposit object
 
     # TODO: validate that required fields are inputted
     # required fields: 1 creator, right statement, title, file, abstract and year
