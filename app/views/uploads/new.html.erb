@@ -25,8 +25,27 @@
     <div><%= form.text_area(:notes, placeholder: 'Additional information you want included in the record and/or notes for repository staff') %></div>
   </div>
 
+  <div>
+    <%= form.label(:rights_statement, 'Rights Statement') %>
+    <%= form.collection_select(:rights_statement,
+                               Deposit::RIGHTS_STATEMENTS,
+                               :to_s,
+                               :to_s,
+                               prompt: 'Choose a statement about the copyright status of this work') %>
+  </div>
 
-  <%= form.file_field :files, multiple: true, direct_upload: true %>
+  <div>
+    <%= form.label(:license, 'License') %>
+    <%= form.collection_select(:license,
+                               Deposit::LICENSE,
+                               :to_s,
+                               :to_s,
+                               prompt: 'Choose how you would like other people to use this work') %>
+  </div>
+
+  <div>
+    <%= form.file_field :files, multiple: true %>
+  </div>
 
   <%= form.submit('Submit') %>
 
