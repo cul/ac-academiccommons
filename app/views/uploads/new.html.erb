@@ -1,4 +1,6 @@
 
+<%= render 'agreement' %>
+
 <%= form_with(model: @deposit, url: uploads_path, method: :create, local: true) do |form| %>
   <div>
     <div><%= form.label(:title, 'Title') %></div>
