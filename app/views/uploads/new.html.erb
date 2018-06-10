@@ -20,6 +20,28 @@
     <%= form.text_field(:doi, placeholder: 'DOI or URL of work online (if applicable)') %>
   </div>
 
+  <h4>Creator(s)</h4>
+  <div id='creator-list'>
+    <div>
+      <label for="deposit_creators_first_name">First Name</label>
+      <label for="deposit_creators_last_name">Last Name</label>
+      <label for="deposit_creators_uni">UNI</label>
+    </div>
+    <div>
+      <input type="text" name="deposit[creators][][first_name]" class="deposit_creators_first_name">
+      <input type="text" name="deposit[creators][][last_name]" class="deposit_creators_last_name">
+      <input type="text" name="deposit[creators][][uni]" class="deposit_creators_uni">
+    </div>
+
+  </div>
+  <div>
+    <%= button_tag 'Add another creator',
+                   type: 'button',
+                   id: 'add-address',
+                   data: { creator_list_id: 'creator-list'} %>
+
+  </div>
+
   <div>
     <div><%= form.label(:notes, 'Notes') %></div>
     <div><%= form.text_area(:notes, placeholder: 'Additional information you want included in the record and/or notes for repository staff') %></div>

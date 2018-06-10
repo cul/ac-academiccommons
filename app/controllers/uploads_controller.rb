@@ -17,7 +17,6 @@ class UploadsController < ApplicationController
   # POST /upload
   def create
     @deposit = Deposit.new(upload_params)
-    @deposit.files.attach(params[:deposit][:files])
     @deposit.user = current_user
     @deposit.authenticated = true
     # TODO: save user name and uni in deposit object
@@ -37,6 +36,6 @@ class UploadsController < ApplicationController
 
   def upload_params
     params.require(:deposit)
-          .permit(:title, :creators, :abstract, :year, :doi, :license, :rights_statement, :notes)
+          .permit(:title, :abstract, :year, :doi, :license, :rights_statement, :notes, files: [], creators: %i[first_name last_name uni])
   end
 end
