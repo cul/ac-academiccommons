@@ -19,7 +19,8 @@ class UploadsController < ApplicationController
     @deposit = Deposit.new(upload_params)
     @deposit.user = current_user
     @deposit.authenticated = true
-    # TODO: save user name and uni in deposit object
+    @deposit.name = current_user.full_name
+    @deposit.uni =  current_user.uid
 
     # TODO: validate that required fields are inputted
     # required fields: 1 creator, right statement, title, file, abstract and year
