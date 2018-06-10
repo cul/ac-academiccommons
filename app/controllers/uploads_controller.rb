@@ -22,12 +22,10 @@ class UploadsController < ApplicationController
     @deposit.name = current_user.full_name
     @deposit.uni =  current_user.uid
 
-    # TODO: validate that required fields are inputted
-    # required fields: 1 creator, right statement, title, file, abstract and year
     if @deposit.save
       render template: 'uploads/successful_upload'
     else
-      flash[:error] = 'Error saving deposit, please make sure all required fields are entered.'
+      flash[:error] = @deposit.errors.full_messages.to_sentence
       Rails.logger.debug @deposit.errors.inspect
       render :new
     end
