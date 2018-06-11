@@ -1,29 +1,39 @@
-<div>
-  <h2>Columbia Academic Commons Participation Agreement</h2>
+<div id="static-text">
 
-  <%= render partial: 'author_agreement' %>
+  <div class="page-title">
+    <div class="container">
+      <h1>Academic Commons Participation Agreement</h1>
+    </div>
+  </div>
 
-  <%= form_with model: @agreement, url: agreement_path, local: true do |f| %>
-    <fieldset>
-      <%= f.hidden_field(:agreement_version, value: '1.1') %>
+  <div class="container">
 
-      <%= f.check_box(:accepted_agreement) %>
-      <%= f.label(:accepted_agreement, 'I have read and accept the participation agreement.') %>
+    <%= render partial: 'author_agreement' %>
 
-      <p>
-        <%= f.label :name, 'Name' %>
-        <%= f.text_field :name %>
+    <%= form_with model: @agreement, url: agreement_path, local: true do |f| %>
+      <fieldset>
+        <%= f.hidden_field(:agreement_version, value: '1.1') %>
+        <ul>
+          <li class="checkbox">
+            <%= f.check_box(:accepted_agreement) %>
+            <%= f.label(:accepted_agreement, 'I have read and accept the participation agreement.') %>
+          </li>
+          <li>
+            <%= f.label :name, 'Name' %>
+            <%= f.text_field :name %>
+          </li>
+          <li>
+            <%= f.label :email, 'E-mail' %>
+            <%= f.text_field :email %>
+          </li>
+          <li>
+            <%= f.label :uni, 'UNI' %>
+            <%= f.text_field :uni %>
+          </li>
+        </ul>
+        <%= f.submit 'Accept', :class => 'btn btn-primary btn-accept' %>
+      </fieldset>
+    <% end %>
 
-        <%= f.label :email, 'E-mail' %>
-        <%= f.text_field :email %>
-
-        <%= f.label :uni, 'UNI' %>
-        <%= f.text_field :uni %>
-      </p>
-
-      <p>
-        <%= f.submit('Accept') %>
-      </p>
-    </fieldset>
-  <% end %>
+  </div>
 </div>
