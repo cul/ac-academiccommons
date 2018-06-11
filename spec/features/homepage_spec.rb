@@ -19,9 +19,9 @@ describe 'Homepage', type: :feature do
     expect(page).to have_css 'h3', text: 'Enhanced discoverability'
   end
 
-  it 'links to the self-deposit page' do
+  it 'links to the upload page' do
     # this needs to look for a link by href
-    expect(page).to have_css('a[href="/deposit"]')
+    expect(page).to have_css('a[href="/upload"]')
   end
 
   it 'displays correct total number of items in repository' do
