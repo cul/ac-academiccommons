@@ -1,242 +1,226 @@
-<div id="static-text">
+<% content_for :header do %>
+  <h1>Policies</h1>
+<% end %>
 
-  <div class="page-title">
-    <div class="container">
-      <h1>Policies</h1>
-    </div>
-  </div>
+<% content_for :sidebar do %>
+  <ul class="anchor-links" id="sidebar">
+    <li><%= link_to 'Participation', '#participation', class:'scroll' %></li>
+    <li><%= link_to 'Terms of Use', '#terms-of-use', class:'scroll' %></li>
+    <li><%= link_to 'Copyright', '#copyright', class:'scroll' %></li>
+    <li><%= link_to 'Privacy', '#privacy', class:'scroll' %></li>
+  </ul>
+<% end %>
 
-  <div class="container">
-    <div class="row">
+<h2 id="participation">Participation Guidelines</h2>
 
-      <div class="col-md-2">
-        <ul class="anchor-links" id="sidebar">
-         <li><%= link_to 'Participation', '#participation', class:'scroll' %></li>
-         <li><%= link_to 'Terms of Use', '#terms-of-use', class:'scroll' %></li>
-         <li><%= link_to 'Copyright', '#copyright', class:'scroll' %></li>
-         <li><%= link_to 'Privacy', '#privacy', class:'scroll' %></li>
-       </ul>
-      </div>
+<h3>Who can participate</h3>
 
-      <div class="col-md-10" id="main-content">
+<p>We accept uploads from affiliates of Columbia University, Barnard College, Jewish Theological Seminary, Teachers College, and Union Theological Seminary.</p>
+
+<ul>
+  <li>Current faculty and staff</li>
+  <li>Emeritus faculty</li>
+  <li>Registered retired faculty</li>
+  <li>Students (must meet additional requirements; see the <a href="#student-works">student works</a> section below for more information).</li>
+  <li>Departments, centers, and programs</li>
+</ul>
+
+<h3>Eligible content</h3>
+
+<h4>Research and scholarship</h4>
+<p>Academic Commons accepts research and scholarship created at Columbia and its affiliate institutions.</p>
+
+<h4>Upload agreement</h4>
+<p>Before you can upload work to Academic Commons, you will sign an agreement that grants Columbia University a non-exclusive license to distribute your work via the platform. By signing this agreement, you affirm that you hold sufficient rights to grant this license to Columbia.  </p>
+
+<p>Log in sign the upload agreement. You only need to sign the agreement once, but your consent will apply to any material you upload.</p>
+
+<ul>
+  <li>Read our <%= link_to 'copyright information', '#copyright' %> to learn more.</li>
+  <li>Read about managing your copyrights on the <a href="https://copyright.columbia.edu">Copyright Advisory Services</a> website.</li>
+</ul>
+
+<h4>Privacy and confidentiality</h4>
+<p>Works uploaded to Academic Commons must comply with all relevant federal, state, and institutional policies and guidelines regarding the protection of the privacy and confidentiality of human subjects. Works that should not be openly available online should not be uploaded to Academic Commons.</p>
+
+<h3>How to upload your work</h3>
+
+<h4>Log in to Academic Commons with your Columbia UNI</h4>
+<p>If you have a Columbia UNI, you can log in and follow the instructions on how to upload your work. </p>
+
+<h4>If you do not have a Columbia UNI</h4>
+<p>Email us at <a href="mailto:ac@columbia.edu">ac@columbia.edu</a>. Tell us about your work and how it meets our guidelines for participation.</p>
+
+<h4>Upload size limits</h4>
+<p>You can upload files up to 100MB in size. If you have files larger than 100MB to upload, contact us and we will arrange an alternative method of transfer.</p>
+
+<h4>Fee for files over 10GB</h4>
+<p>You can upload individual files up to 10GB free of charge. There is a one-time fee of $5 per GB for individual files that are over 10GB and up to 100GB in size. This fee is payable at the time of upload; contact us for more information. If you have individual files larger than 100GB, please contact us.</p>
+
+<h4>File types</h4>
+<p>Our system can support most file types. However, please remember that your work will be more useful to others if you provide it in a format that is either non-proprietary or widely used.</p>
+
+<h3>Your work in the repository</h3>
+
+<h4>Processing uploaded works</h4>
+<p>Please allow up to a week for your uploaded works to become available in Academic Commons. Email us <a href="mailto:ac@columbia.edu">ac@columbia.edu</a> if you have any questions or need to request faster processing. If you have a Columbia UNI you will receive an automatic email notification when your work is available in the repository.</p>
 
-        <h2 id="participation">Participation Guidelines</h2>
+<h4>DOI for each work</h4>
+<p>Each work in Academic Commons is assigned a Digital Object Identifier (DOI), which is a type of persistent URL. A sample DOI is: 10.7916/D8ZS2W8R. DOIs expressed as URLs look like this: https://doi.org/10.7916/D8ZS2W8R. Use the DOI when citing or referring to a work in Academic Commons.</p>
+
+<h4>Usage statistics reports</h4>
+<p>Authors who provide a Columbia UNI will receive a monthly email showing the number of downloads for each of their works in Academic Commons. Contact us at <a href="mailto:ac@columbia.edu">ac@columbia.edu</a> if you are not receiving our monthly emails.</p>
 
-        <h3>Who can participate</h3>
+<h4>Changing works in the repository</h4>
+<p>Because people may be linking to or citing your work, we do not change or replace files that have already been made available in Academic Commons. However we can archive a new version of a work and create a link to its predecessors.</p>
 
-        <p>We accept uploads from affiliates of Columbia University, Barnard College, Jewish Theological Seminary, Teachers College, and Union Theological Seminary.</p>
+<h4>Removing works from the repository</h4>
+<p>We strongly discourage the withdrawal of works from Academic Commons. However, you can request that public access to your work in Academic Commons be disabled. Though the work will no longer be publicly accessible, some metadata about the work will remain.</p>
 
-        <ul>
-          <li>Current faculty and staff</li>
-          <li>Emeritus faculty</li>
-          <li>Registered retired faculty</li>
-          <li>Students (must meet additional requirements; see the <a href="#student-works">student works</a> section below for more information).</li>
-          <li>Departments, centers, and programs</li>
-        </ul>
-
-        <h3>Eligible content</h3>
-
-        <h4>Research and scholarship</h4>
-        <p>Academic Commons accepts research and scholarship created at Columbia and its affiliate institutions.</p>
-
-        <h4>Upload agreement</h4>
-        <p>Before you can upload work to Academic Commons, you will sign an agreement that grants Columbia University a non-exclusive license to distribute your work via the platform. By signing this agreement, you affirm that you hold sufficient rights to grant this license to Columbia.  </p>
-
-        <p>Log in sign the upload agreement. You only need to sign the agreement once, but your consent will apply to any material you upload.</p>
-
-        <ul>
-          <li>Read our <%= link_to 'copyright information', '#copyright' %> to learn more.</li>
-          <li>Read about managing your copyrights on the <a href="https://copyright.columbia.edu">Copyright Advisory Services</a> website.</li>
-        </ul>
-
-        <h4>Privacy and confidentiality</h4>
-        <p>Works uploaded to Academic Commons must comply with all relevant federal, state, and institutional policies and guidelines regarding the protection of the privacy and confidentiality of human subjects. Works that should not be openly available online should not be uploaded to Academic Commons.</p>
-
-        <h3>How to upload your work</h3>
-
-        <h4>Log in to Academic Commons with your Columbia UNI</h4>
-        <p>If you have a Columbia UNI, you can log in and follow the instructions on how to upload your work. </p>
-
-        <h4>If you do not have a Columbia UNI</h4>
-        <p>Email us at <a href="mailto:ac@columbia.edu">ac@columbia.edu</a>. Tell us about your work and how it meets our guidelines for participation.</p>
-
-        <h4>Upload size limits</h4>
-        <p>You can upload files up to 100MB in size. If you have files larger than 100MB to upload, contact us and we will arrange an alternative method of transfer.</p>
+<h3 id="student-works">Student works in Academic Commons</h3>
 
-        <h4>Fee for files over 10GB</h4>
-        <p>You can upload individual files up to 10GB free of charge. There is a one-time fee of $5 per GB for individual files that are over 10GB and up to 100GB in size. This fee is payable at the time of upload; contact us for more information. If you have individual files larger than 100GB, please contact us.</p>
-
-        <h4>File types</h4>
-        <p>Our system can support most file types. However, please remember that your work will be more useful to others if you provide it in a format that is either non-proprietary or widely used.</p>
-
-        <h3>Your work in the repository</h3>
+<p>Students, your degree program may encourage or require you to contribute your thesis or capstone project to Academic Commons. You may also be able to upload other research or scholarship with the approval of your program or faculty advisor. See below for details.</p>
 
-        <h4>Processing uploaded works</h4>
-        <p>Please allow up to a week for your uploaded works to become available in Academic Commons. Email us <a href="mailto:ac@columbia.edu">ac@columbia.edu</a> if you have any questions or need to request faster processing. If you have a Columbia UNI you will receive an automatic email notification when your work is available in the repository.</p>
+<h4>Doctoral dissertations</h4>
 
-        <h4>DOI for each work</h4>
-        <p>Each work in Academic Commons is assigned a Digital Object Identifier (DOI), which is a type of persistent URL. A sample DOI is: 10.7916/D8ZS2W8R. DOIs expressed as URLs look like this: https://doi.org/10.7916/D8ZS2W8R. Use the DOI when citing or referring to a work in Academic Commons.</p>
+<p>The table below indicates which doctoral degree programs require dissertation uploads to Academic Commons.</p>
 
-        <h4>Usage statistics reports</h4>
-        <p>Authors who provide a Columbia UNI will receive a monthly email showing the number of downloads for each of their works in Academic Commons. Contact us at <a href="mailto:ac@columbia.edu">ac@columbia.edu</a> if you are not receiving our monthly emails.</p>
+<table>
 
-        <h4>Changing works in the repository</h4>
-        <p>Because people may be linking to or citing your work, we do not change or replace files that have already been made available in Academic Commons. However we can archive a new version of a work and create a link to its predecessors.</p>
+  <tr>
+    <th>School/Institution</th>
+    <th>Degree</th>
+    <th>Required upload to ProQuest and Academic Commons </th>
+    <th>Optional upload to Academic Commons</th>
+  </tr>
+  <tr>
+    <td>Columbia Graduate School of Arts and Sciences (GSAS)</td>
+    <td class="center">Ph.D., D.M.A., J.S.D.</td>
+    <td class="center">X</td>
+    <td class="center"></td>
+  </tr>
+  <tr>
+    <td>Mailman School of Public Health (GSAS administered)</td>
+    <td class="center">Ph.D.</td>
+    <td class="center">X</td>
+    <td class="center"></td>
+  </tr>
+  <tr>
+    <td>Mailman School of Public Health</td>
+    <td class="center">Dr.P.H.</td>
+    <td class="center">X</td>
+    <td class="center"></td>
+  </tr>
+  <tr>
+    <td>Teachers College (GSAS administered)</td>
+    <td class="center">Ph.D.</td>
+    <td class="center">X</td>
+    <td class="center"></td>
+  </tr>
+  <tr>
+    <td>Teachers College</td>
+    <td class="center">Ed.D.</td>
+    <td class="center">X</td>
+    <td class="center"></td>
+  </tr>
+  <tr>
+    <td>Union Theological Seminary</td>
+    <td class="center">Ph.D.</td>
+    <td class="center"></td>
+    <td class="center">X</td>
+  </tr>
+</table>
 
-        <h4>Removing works from the repository</h4>
-        <p>We strongly discourage the withdrawal of works from Academic Commons. However, you can request that public access to your work in Academic Commons be disabled. Though the work will no longer be publicly accessible, some metadata about the work will remain.</p>
+<h4>Master’s and undergraduate theses</h4>
+<p>Some Master’s and undergraduate programs offer students the option to upload their theses or capstone projects in Academic Commons. Consult your program administrator or faculty advisor for specific program policies.</p>
 
-        <h3 id="student-works">Student works in Academic Commons</h3>
+<h4>Alumni theses</h4>
+<p>Graduates of Columbia University and its affiliates can upload their dissertation or thesis in Academic Commons with approval from the degree-granting program. Contact the administrator of your degree program to request permission to upload.</p>
 
-        <p>Students, your degree program may encourage or require you to contribute your thesis or capstone project to Academic Commons. You may also be able to upload other research or scholarship with the approval of your program or faculty advisor. See below for details.</p>
+<h4>Thesis embargoes</h4>
+<p>If your degree program requires or encourages you to upload your thesis to Academic Commons, you may have the option of placing an embargo on your thesis. An embargo is a limited period of time during which your thesis is not publicly available. During the embargo period, descriptive information about the work is publicly accessible in Academic Commons and in CLIO, the Columbia Libraries catalog, but the thesis itself is not available. Embargo options vary by program and students should consult their degree program’s policies for more information.</p>
 
-        <h4>Doctoral dissertations</h4>
+<h4>Embargo changes</h4>
+<p>If you wish to make changes to the length of the embargo on your thesis in Academic Commons, contact the degree-program administrator with your request. If the request is approved, the program administrator will direct Academic Commons staff to change the embargo release date.</p>
 
-        <p>The table below indicates which doctoral degree programs require dissertation uploads to Academic Commons.</p>
+<p><em>Graduates of the Columbia Graduate School of Arts and Sciences should submit their request to the Dissertation Office at <a href="mailto:dissertations@columbia.edu">dissertations@columbia.edu</a>.</em></p>
 
-        <table>
+<h4>Embargo changes in ProQuest</h4>
+<p>If you also uploaded a thesis to ProQuest you must contact ProQuest directly to request changes to the availability of your work in the ProQuest dissertation and thesis database. Contact ProQuest at <a href="mailto:disspub@proquest.com">disspub@proquest.com</a>.</p>
 
-          <tr>
-            <th>School/Institution</th>
-            <th>Degree</th>
-            <th>Required upload to ProQuest and Academic Commons </th>
-            <th>Optional upload to Academic Commons</th>
-          </tr>
-          <tr>
-            <td>Columbia Graduate School of Arts and Sciences (GSAS)</td>
-            <td class="center">Ph.D., D.M.A., J.S.D.</td>
-            <td class="center">X</td>
-            <td class="center"></td>
-          </tr>
-          <tr>
-            <td>Mailman School of Public Health (GSAS administered)</td>
-            <td class="center">Ph.D.</td>
-            <td class="center">X</td>
-            <td class="center"></td>
-          </tr>
-          <tr>
-            <td>Mailman School of Public Health</td>
-            <td class="center">Dr.P.H.</td>
-            <td class="center">X</td>
-            <td class="center"></td>
-          </tr>
-          <tr>
-            <td>Teachers College (GSAS administered)</td>
-            <td class="center">Ph.D.</td>
-            <td class="center">X</td>
-            <td class="center"></td>
-          </tr>
-          <tr>
-            <td>Teachers College</td>
-            <td class="center">Ed.D.</td>
-            <td class="center">X</td>
-            <td class="center"></td>
-          </tr>
-          <tr>
-            <td>Union Theological Seminary</td>
-            <td class="center">Ph.D.</td>
-            <td class="center"></td>
-            <td class="center">X</td>
-          </tr>
-        </table>
+<h4>Other student works</h4>
+<p>If you are a student and want to upload other types of research or scholarship  in Academic Commons, you must obtain approval from the appropriate degree program, department, or faculty advisor.  Contact us at <a href="mailto:ac@columbia.edu">ac@columbia.edu</a> to learn more.</p>
 
-        <h4>Master’s and undergraduate theses</h4>
-        <p>Some Master’s and undergraduate programs offer students the option to upload their theses or capstone projects in Academic Commons. Consult your program administrator or faculty advisor for specific program policies.</p>
+<h2 id="terms-of-use">Terms of Use</h2>
 
-        <h4>Alumni theses</h4>
-        <p>Graduates of Columbia University and its affiliates can upload their dissertation or thesis in Academic Commons with approval from the degree-granting program. Contact the administrator of your degree program to request permission to upload.</p>
+<p>By using <%= link_to 'Academic Commons', root_path %> or any of its
+  content, you agree to accept and be bound by the following Terms of Use.</p>
+<p>Academic Commons is a freely accessible digital collection of research done at Columbia University or one of its affiliate institutions (Barnard College, Teachers College, Union Theological Seminary, Jewish Theological Seminary). The Columbia University Libraries presents Academic Commons in support of Columbia’s mission “to advance knowledge and learning at the highest level and to convey the products of its efforts to the world.”</p>
+<p>You may download and use works in Academic Commons in any manner consistent with fair use or other provision of copyright law. Users are responsible for determining whether a work is protected by copyright, the identity of the copyright holder, and the means for appropriately using the work.</p>
 
-        <h4>Thesis embargoes</h4>
-        <p>If your degree program requires or encourages you to upload your thesis to Academic Commons, you may have the option of placing an embargo on your thesis. An embargo is a limited period of time during which your thesis is not publicly available. During the embargo period, descriptive information about the work is publicly accessible in Academic Commons and in CLIO, the Columbia Libraries catalog, but the thesis itself is not available. Embargo options vary by program and students should consult their degree program’s policies for more information.</p>
+<h3>Items categorized as datasets</h3>
 
-        <h4>Embargo changes</h4>
-        <p>If you wish to make changes to the length of the embargo on your thesis in Academic Commons, contact the degree-program administrator with your request. If the request is approved, the program administrator will direct Academic Commons staff to change the embargo release date.</p>
+<p>In general, facts and collections of facts do not have copyright protection under U.S. copyright law. However, some data and data collections may have sufficient originality to be copyrightable. Users of data found in Academic Commons are responsible for determining any legal protection associated with the materials and reviewing any statements from the contributor about appropriate uses.</p>
 
-        <p><em>Graduates of the Columbia Graduate School of Arts and Sciences should submit their request to the Dissertation Office at <a href="mailto:dissertations@columbia.edu">dissertations@columbia.edu</a>.</em></p>
+<h2 id="copyright">Copyright</h2>
 
-        <h4>Embargo changes in ProQuest</h4>
-        <p>If you also uploaded a thesis to ProQuest you must contact ProQuest directly to request changes to the availability of your work in the ProQuest dissertation and thesis database. Contact ProQuest at <a href="mailto:disspub@proquest.com">disspub@proquest.com</a>.</p>
+<p>Works in Academic Commons are protected by copyright, with all rights reserved, unless otherwise indicated. The copyright for any work included in Academic Commons is retained by the copyright owner. Academic Commons does not own copyrights.</p>
+<p>Works are made available in Academic Commons at the direction of contributors (an author/creator or originating department, center, program, or school at Columbia or its affiliates) according to their understanding of their rights in that material. Works are added to Academic Commons when contributors affirm that they own the rights or have authority to contribute the works. Columbia University makes no representation or warranty about the appropriateness of the contribution or whether the contributor continues to own rights in the works.</p>
+<p>Users of Academic Commons are responsible for determining whether a work is protected by copyright, the identity of the copyright owner, and the means for appropriately using the work.</p>
 
-        <h4>Other student works</h4>
-        <p>If you are a student and want to upload other types of research or scholarship  in Academic Commons, you must obtain approval from the appropriate degree program, department, or faculty advisor.  Contact us at <a href="mailto:ac@columbia.edu">ac@columbia.edu</a> to learn more.</p>
+<h3>Determining Appropriate Use of Works in Academic Commons</h3>
 
-        <h2 id="terms-of-use">Terms of Use</h2>
+<p>The information below may help you address copyright questions about the appropriate use of works found in the Academic Commons collections. Please note that this guidance is not legal advice, nor does it address other relevant legal issues. By providing it, we do not intend to set restrictions, but instead to offer helpful insights about copyright and about contacting the proper party for permission, as needed.</p>
 
-        <p>By using <%= link_to 'Academic Commons', root_path %> or any of its
-          content, you agree to accept and be bound by the following Terms of Use.</p>
-        <p>Academic Commons is a freely accessible digital collection of research done at Columbia University or one of its affiliate institutions (Barnard College, Teachers College, Union Theological Seminary, Jewish Theological Seminary). The Columbia University Libraries presents Academic Commons in support of Columbia’s mission “to advance knowledge and learning at the highest level and to convey the products of its efforts to the world.”</p>
-        <p>You may download and use works in Academic Commons in any manner consistent with fair use or other provision of copyright law. Users are responsible for determining whether a work is protected by copyright, the identity of the copyright holder, and the means for appropriately using the work.</p>
+<h3>Fair Use</h3>
 
-        <h3>Items categorized as datasets</h3>
+<p>Fair Use offers an extraordinarily important opportunity for educators, researchers, and others to make reasonable and limited uses of copyrighted materials. It is your responsibility to determine if your planned use of works found in Academic Commons is consistent with Fair Use. To learn more, see the Fair Use section of the <a href="https://copyright.columbia.edu/">Columbia University Copyright Advisory Services</a> website.</p>
 
-        <p>In general, facts and collections of facts do not have copyright protection under U.S. copyright law. However, some data and data collections may have sufficient originality to be copyrightable. Users of data found in Academic Commons are responsible for determining any legal protection associated with the materials and reviewing any statements from the contributor about appropriate uses.</p>
+<h3>Licensed Uses</h3>
 
-        <h2 id="copyright">Copyright</h2>
+<p>If a work in Academic Commons includes a license or other statement with information about how the work can be used (e.g. Creative Commons), users may use the work in ways consistent with the license. This information may appear in the metadata record for the work or in the work itself. Be sure to look for specific conditions and any suggestions for citation or attribution. Users desiring to utilize the work beyond the terms of the license should contact the copyright owner.</p>
 
-        <p>Works in Academic Commons are protected by copyright, with all rights reserved, unless otherwise indicated. The copyright for any work included in Academic Commons is retained by the copyright owner. Academic Commons does not own copyrights.</p>
-        <p>Works are made available in Academic Commons at the direction of contributors (an author/creator or originating department, center, program, or school at Columbia or its affiliates) according to their understanding of their rights in that material. Works are added to Academic Commons when contributors affirm that they own the rights or have authority to contribute the works. Columbia University makes no representation or warranty about the appropriateness of the contribution or whether the contributor continues to own rights in the works.</p>
-        <p>Users of Academic Commons are responsible for determining whether a work is protected by copyright, the identity of the copyright owner, and the means for appropriately using the work.</p>
+<h3>Finding the Copyright Owner</h3>
 
-        <h3>Determining Appropriate Use of Works in Academic Commons</h3>
+<p>Authors/creators of many works in Academic Commons own the copyright to the work unless they have transferred rights to another party. Users seeking to locate the copyright owner of a work in Academic Commons could begin by contacting the author/creator of the work.</p>
+<p>Many works in Academic Commons have been published, either before or after the work has been uploaded to Academic Commons. In some of these cases, the authors/creators have transferred the copyright to a publisher. To contact the copyright owner of published works (especially those works that are not published under an open access license), users could begin by contacting the publisher.</p>
 
-        <p>The information below may help you address copyright questions about the appropriate use of works found in the Academic Commons collections. Please note that this guidance is not legal advice, nor does it address other relevant legal issues. By providing it, we do not intend to set restrictions, but instead to offer helpful insights about copyright and about contacting the proper party for permission, as needed.</p>
+<h3>Columbia as Copyright Holder</h3>
 
-        <h3>Fair Use</h3>
+<p class="list_title">Columbia University does not own a copyright interest solely because the work is available in Academic Commons.</p>
+<ul>
+  <li>Users do not need to contact Columbia University for permission solely because the work is available in Academic Commons. When Columbia University is not the rights owner, it will neither grant nor deny copyright permission regarding such materials.</li>
+  <li>If a user determines that Columbia University may be the copyright owner of a work and needs to contact the copyright owner, please start by contacting the person or office at Columbia that was responsible for creating the work. (See Videos of Speakers, below, for an example.)</li>
+</ul>
 
-        <p>Fair Use offers an extraordinarily important opportunity for educators, researchers, and others to make reasonable and limited uses of copyrighted materials. It is your responsibility to determine if your planned use of works found in Academic Commons is consistent with Fair Use. To learn more, see the Fair Use section of the <a href="https://copyright.columbia.edu/">Columbia University Copyright Advisory Services</a> website.</p>
+<h3>Special Cases</h3>
 
-        <h3>Licensed Uses</h3>
+<h4>Data and Datasets</h4>
+<p>In general, facts and collections of facts do not have copyright protection under U.S. copyright law. However, some data and data collections may have sufficient originality to be copyrightable. Users of data found in Academic Commons are responsible for determining any legal protection associated with the materials and reviewing any statements from the contributor about appropriate uses.</p>
 
-        <p>If a work in Academic Commons includes a license or other statement with information about how the work can be used (e.g. Creative Commons), users may use the work in ways consistent with the license. This information may appear in the metadata record for the work or in the work itself. Be sure to look for specific conditions and any suggestions for citation or attribution. Users desiring to utilize the work beyond the terms of the license should contact the copyright owner.</p>
+<h4>Videos of Speakers</h4>
+<p>Academic Commons includes videos, many of guest speakers at Columbia University events. For many such videos, rights in the visual images are owned by Columbia University, while the words and other content are the work of the speaker and rights may be retained by the speaker. Users may need to contact the speaker, and the office at Columbia that created the video, for further information.</p>
 
-        <h3>Finding the Copyright Owner</h3>
+<h4>Submitting a Copyright Infringement Notice</h4>
+<p>If you believe that the inclusion of a work in Academic Commons is in violation of your copyright, you may submit a notice of copyright infringement to Columbia University. See the Columbia University copyright page here: <a href="https://www.columbia.edu/content/copyright">https://www.columbia.edu/content/copyright</a>.</p>
 
-        <p>Authors/creators of many works in Academic Commons own the copyright to the work unless they have transferred rights to another party. Users seeking to locate the copyright owner of a work in Academic Commons could begin by contacting the author/creator of the work.</p>
-        <p>Many works in Academic Commons have been published, either before or after the work has been uploaded to Academic Commons. In some of these cases, the authors/creators have transferred the copyright to a publisher. To contact the copyright owner of published works (especially those works that are not published under an open access license), users could begin by contacting the publisher.</p>
+<h4>More Information</h4>
+<p>For general information about copyright, fair use, and permissions, please visit the <a href="https://copyright.columbia.edu/">Columbia University Copyright Advisory Services</a> website.</p>
+<p>If you have comments or questions about Academic Commons, please contact the Academic Commons staff at <%= mail_to "ac@columbia.edu" %>.</p>
 
-        <h3>Columbia as Copyright Holder</h3>
+<h2 id="privacy">Privacy</h2>
 
-        <p class="list_title">Columbia University does not own a copyright interest solely because the work is available in Academic Commons.</p>
-        <ul>
-          <li>Users do not need to contact Columbia University for permission solely because the work is available in Academic Commons. When Columbia University is not the rights owner, it will neither grant nor deny copyright permission regarding such materials.</li>
-          <li>If a user determines that Columbia University may be the copyright owner of a work and needs to contact the copyright owner, please start by contacting the person or office at Columbia that was responsible for creating the work. (See Videos of Speakers, below, for an example.)</li>
-        </ul>
+<p>Academic Commons complies with the Columbia University Libraries <a href="http://library.columbia.edu/about/policies/confidentiality.html" target="_blank" rel="noopener">Confidentiality of Library Records Policy</a>. We will not share any information about your use of Academic Commons except as required by the Confidentiality policy, though we may save the information described below for an indefinite period.</p>
 
-        <h3>Special Cases</h3>
+<h3>Users</h3>
+<p>When you visit Academic Commons, our system saves a record of your IP address. We do not intentionally record any information that identifies you.</p>
+<p>If you ask us a question by emailing <a href="mailto:ac@columbia.edu">ac@columbia.edu</a>, we save the information you provide (for example: your email address).</p>
 
-        <h4>Data and Datasets</h4>
-        <p>In general, facts and collections of facts do not have copyright protection under U.S. copyright law. However, some data and data collections may have sufficient originality to be copyrightable. Users of data found in Academic Commons are responsible for determining any legal protection associated with the materials and reviewing any statements from the contributor about appropriate uses.</p>
+<h3>Columbia Users</h3>
+<p>If you log in to Academic Commons using your Columbia UNI, our system retains a record of your session and of any statistical reports you create during that session.</p>
 
-        <h4>Videos of Speakers</h4>
-        <p>Academic Commons includes videos, many of guest speakers at Columbia University events. For many such videos, rights in the visual images are owned by Columbia University, while the words and other content are the work of the speaker and rights may be retained by the speaker. Users may need to contact the speaker, and the office at Columbia that created the video, for further information.</p>
+<h3>Contributors</h3>
+<p>When you contribute materials to Academic Commons, a limited amount of identifying and contact information is collected during upload and cataloging. This information may be consulted and used by repository staff in the course of repository operations. Some information associated with uploaded items--such as author, UNI, title, and abstract--is included in the publicly available Academic Commons item record. </p>
 
-        <h4>Submitting a Copyright Infringement Notice</h4>
-        <p>If you believe that the inclusion of a work in Academic Commons is in violation of your copyright, you may submit a notice of copyright infringement to Columbia University. See the Columbia University copyright page here: <a href="https://www.columbia.edu/content/copyright">https://www.columbia.edu/content/copyright</a>.</p>
-
-        <h4>More Information</h4>
-        <p>For general information about copyright, fair use, and permissions, please visit the <a href="https://copyright.columbia.edu/">Columbia University Copyright Advisory Services</a> website.</p>
-        <p>If you have comments or questions about Academic Commons, please contact the Academic Commons staff at <%= mail_to "ac@columbia.edu" %>.</p>
-
-        <h2 id="privacy">Privacy</h2>
-
-        <p>Academic Commons complies with the Columbia University Libraries <a href="http://library.columbia.edu/about/policies/confidentiality.html" target="_blank" rel="noopener">Confidentiality of Library Records Policy</a>. We will not share any information about your use of Academic Commons except as required by the Confidentiality policy, though we may save the information described below for an indefinite period.</p>
-
-        <h3>Users</h3>
-        <p>When you visit Academic Commons, our system saves a record of your IP address. We do not intentionally record any information that identifies you.</p>
-        <p>If you ask us a question by emailing <a href="mailto:ac@columbia.edu">ac@columbia.edu</a>, we save the information you provide (for example: your email address).</p>
-
-        <h3>Columbia Users</h3>
-        <p>If you log in to Academic Commons using your Columbia UNI, our system retains a record of your session and of any statistical reports you create during that session.</p>
-
-        <h3>Contributors</h3>
-        <p>When you contribute materials to Academic Commons, a limited amount of identifying and contact information is collected during upload and cataloging. This information may be consulted and used by repository staff in the course of repository operations. Some information associated with uploaded items--such as author, UNI, title, and abstract--is included in the publicly available Academic Commons item record. </p>
-
-        <h3>Google Analytics</h3>
-        <p>We use <a href="http://www.google.com/analytics/" target="_blank" rel="noopener">Google Analytics</a> to help us understand how Academic Commons is used and how we can improve user experience on the site. We may compile and distribute these usage statistics. Though Google Analytics does not collect personal identifying information, it does record your IP address and places a cookie in your browser so it can determine if you have previously visited Academic Commons. To learn more about how Google manages the data it collects, read Google’s <a href="http://www.google.com/intl/en/policies/privacy/" target="_blank" rel="noopener">Privacy Policy</a>. To learn how to prevent Google Analytics from using your data, read about the Google Analytics <a href="https://tools.google.com/dlpage/gaoptout" target="_blank" rel="noopener">Opt-out Browser Add-on</a>.</p>
-
-      </div><!--.main-content-->
-
-    </div><!--.row-->
-  </div><!--.container-->
-
-</div><!--#static-text-->
+<h3>Google Analytics</h3>
+<p>We use <a href="http://www.google.com/analytics/" target="_blank" rel="noopener">Google Analytics</a> to help us understand how Academic Commons is used and how we can improve user experience on the site. We may compile and distribute these usage statistics. Though Google Analytics does not collect personal identifying information, it does record your IP address and places a cookie in your browser so it can determine if you have previously visited Academic Commons. To learn more about how Google manages the data it collects, read Google’s <a href="http://www.google.com/intl/en/policies/privacy/" target="_blank" rel="noopener">Privacy Policy</a>. To learn how to prevent Google Analytics from using your data, read about the Google Analytics <a href="https://tools.google.com/dlpage/gaoptout" target="_blank" rel="noopener">Opt-out Browser Add-on</a>.</p>

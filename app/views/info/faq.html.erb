@@ -1,111 +1,95 @@
-<div id="static-text">
+<% content_for :header do %>
+  <h1>Frequently Asked Questions</h1>
+<% end %>
 
-  <div class="page-title">
-    <div class="container">
-      <h1>Frequently Asked Questions</h1>
-    </div>
-  </div>
+<% content_for :sidebar do %>
+  <ul class="anchor-links" id="sidebar">
+    <li><%= link_to 'Participation', '#participation', class:'scroll' %></li>
+    <li><%= link_to 'Manage', '#manage', class:'scroll' %></li>
+    <li><%= link_to 'Copyright', '#copyright', class:'scroll' %></li>
+    <li><%= link_to 'Theses', '#theses', class:'scroll' %></li>
+  </ul>
+<% end %>
 
-  <div class="container">
-    <div class="row">
+<h2 id="participation">Participation</h2>
 
-      <div class="col-md-2">
-        <ul class="anchor-links" id="sidebar">
-         <li><%= link_to 'Participation', '#participation', class:'scroll' %></li>
-         <li><%= link_to 'Manage', '#manage', class:'scroll' %></li>
-         <li><%= link_to 'Copyright', '#copyright', class:'scroll' %></li>
-         <li><%= link_to 'Theses', '#theses', class:'scroll' %></li>
-       </ul>
-      </div>
+<h3>Who can upload works to Academic Commons?</h3>
+<p>We accept research and scholarship from affiliates of Columbia University from affiliates of Columbia University, Barnard College, Jewish Theological Seminary, Teachers College, and Union Theological Seminary. Specifically, eligible groups are:</p>
 
-      <div class="col-md-10" id="main-content">
+<ul>
+  <li>Current faculty and staff</li>
+  <li>Emeritus faculty</li>
+  <li>Registered retired faculty</li>
+  <li>Departments, centers, institutes, and programs</li>
+  <li>Students can upload works that meet specific requirements. Some degree programs encourage or require students to upload their thesis or capstone project in Academic Commons.</li> <li>Students may also be able to upload other work. </li>
+</ul>
 
-        <h2 id="participation">Participation</h2>
+<p><em>For more information, see our <%= link_to 'Participation Policies', '/policies/' %>.</em></p>
 
-        <h3>Who can upload works to Academic Commons?</h3>
-        <p>We accept research and scholarship from affiliates of Columbia University from affiliates of Columbia University, Barnard College, Jewish Theological Seminary, Teachers College, and Union Theological Seminary. Specifically, eligible groups are:</p>
+<h3>What types of work can I upload?</h3>
+<p>We accept research and scholarship produced at Columbia University and its affiliate institutions, including the following types of work:<p>
 
-        <ul>
-          <li>Current faculty and staff</li>
-          <li>Emeritus faculty</li>
-          <li>Registered retired faculty</li>
-          <li>Departments, centers, institutes, and programs</li>
-          <li>Students can upload works that meet specific requirements. Some degree programs encourage or require students to upload their thesis or capstone project in Academic Commons.</li> <li>Students may also be able to upload other work. </li>
-        </ul>
+<ul>
+  <li>Journal articles</li>
+  <li>Books and book chapters</li>
+  <li>Working and technical papers</li>
+  <li>Reports</li>
+  <li>Data</li>
+  <li>Software and code</li>
+  <li>Presentations</li>
+  <li>Images</li>
+  <li>Maps</li>
+  <li>Theses (with program approval)</li>
+  <li>And more!</li>
+</ul>
 
-        <p><em>For more information, see our <%= link_to 'Participation Policies', '/policies/' %>.</em></p>
+<p><em>Note: You must ensure you have the right to upload any given work. See the <a href="https://copyright.columbia.edu/">Columbia Copyright Advisory Services</a> website to learn more.</em></p>
 
-        <h3>What types of work can I upload?</h3>
-        <p>We accept research and scholarship produced at Columbia University and its affiliate institutions, including the following types of work:<p>
+<h3>How do I upload my work?</h3>
+<p>Members of the Columbia community with a UNI can <a href="/sign_in">log in</a> to Academic Commons and follow the upload directions. If you don’t have a UNI, email us at <a href="mailto:ac@columbia.edu">ac@columbia.edu</a>.</p>
 
-        <ul>
-          <li>Journal articles</li>
-          <li>Books and book chapters</li>
-          <li>Working and technical papers</li>
-          <li>Reports</li>
-          <li>Data</li>
-          <li>Software and code</li>
-          <li>Presentations</li>
-          <li>Images</li>
-          <li>Maps</li>
-          <li>Theses (with program approval)</li>
-          <li>And more!</li>
-        </ul>
+<h3>Is there a limit to the number of works I can upload?</h3>
+<p>There is no limit on the number of works you can upload.</p>
 
-        <p><em>Note: You must ensure you have the right to upload any given work. See the <a href="https://copyright.columbia.edu/">Columbia Copyright Advisory Services</a> website to learn more.</em></p>
+<h3>Is there a file size limit?</h3>
+<p>Our upload form cannot accept individual files of a size larger than 100 MB. If you have files larger than 100 MB, please contact us at <a href="mailto:ac@columbia.edu">ac@columbia.edu</a> and we will arrange an alternative transfer method.</p>
 
-        <h3>How do I upload my work?</h3>
-        <p>Members of the Columbia community with a UNI can <a href="/sign_in">log in</a> to Academic Commons and follow the upload directions. If you don’t have a UNI, email us at <a href="mailto:ac@columbia.edu">ac@columbia.edu</a>.</p>
+<h3>Is there a fee?</h3>
+<p>Upload of individual files up to 10 GB is free of charge, but there is a one-time fee of $5 per GB for individual files that are over 10 GB and up to 100 GB. This fee is payable at the time of upload. If you would like to upload individual files that are larger than 100 GB, please contact us at <a href="mailto:ac@columbia.edu">ac@columbia.edu</a> to discuss your needs.</p>
 
-        <h3>Is there a limit to the number of works I can upload?</h3>
-        <p>There is no limit on the number of works you can upload.</p>
+<h3>Which file types do you accept?</h3>
+<p>We don’t have any restrictions on file type. As a general rule, we archive files in the format in which we receive them.</p>
 
-        <h3>Is there a file size limit?</h3>
-        <p>Our upload form cannot accept individual files of a size larger than 100 MB. If you have files larger than 100 MB, please contact us at <a href="mailto:ac@columbia.edu">ac@columbia.edu</a> and we will arrange an alternative transfer method.</p>
+<h3>Can I upload work that includes private or confidential information?</h3>
+<p>Authors must verify that they have complied with the privacy and confidentiality requirements of the relevant IRB, and of HIPAA, for any research involving human subjects. Works that cannot be shared openly online because of privacy, confidentiality, patent or copyright issues should not be uploaded to Academic Commons.</p>
 
-        <h3>Is there a fee?</h3>
-        <p>Upload of individual files up to 10 GB is free of charge, but there is a one-time fee of $5 per GB for individual files that are over 10 GB and up to 100 GB. This fee is payable at the time of upload. If you would like to upload individual files that are larger than 100 GB, please contact us at <a href="mailto:ac@columbia.edu">ac@columbia.edu</a> to discuss your needs.</p>
+<h2 id="manage">Manage</h2>
 
-        <h3>Which file types do you accept?</h3>
-        <p>We don’t have any restrictions on file type. As a general rule, we archive files in the format in which we receive them.</p>
+<h3>When can I expect to see my work in Academic Commons?</h3>
+<p>Please allow approximately one week for cataloging. If you need your work available sooner,  send us an email at <a href="mailto:ac@columbia.edu">ac@columbia.edu</a> and we will try to accommodate you.</p>
 
-        <h3>Can I upload work that includes private or confidential information?</h3>
-        <p>Authors must verify that they have complied with the privacy and confidentiality requirements of the relevant IRB, and of HIPAA, for any research involving human subjects. Works that cannot be shared openly online because of privacy, confidentiality, patent or copyright issues should not be uploaded to Academic Commons.</p>
+<h3>Are works peer-reviewed before they go in Academic Commons?</h3>
+<p>No. We do not make editorial decisions about content in the repository. However we do have guidelines for the types of content that are eligible for upload. See our <a href="/policies/">our policies</a> for more information.</p>
 
-        <h2 id="manage">Manage</h2>
+<h3>Can Academic Commons provide campus-only access to my work?</h3>
+<p>No. All content in Academic Commons is freely accessible to anyone online. Works that cannot be shared openly online should not be uploaded to Academic Commons. However, works can be embargoed (i.e., files are not available for download, though descriptive information is available) for a limited time.</p>
 
-        <h3>When can I expect to see my work in Academic Commons?</h3>
-        <p>Please allow approximately one week for cataloging. If you need your work available sooner,  send us an email at <a href="mailto:ac@columbia.edu">ac@columbia.edu</a> and we will try to accommodate you.</p>
+<h3>What is a DOI?</h3>
+<p>Each work in Academic Commons is assigned a DIgital Object Identifier (DOI), which is a type of persistent URL. A sample DOI is: 10.7916/D8ZS2W8R. DOIs expressed as URLs look like this: https://doi.org/10.7916/D8ZS2W8R. Use the DOI when citing or referring to a work in Academic Commons. Learn more about DOIs at <a href="http://www.doi.org/">doi.org</a>.</p>
 
-        <h3>Are works peer-reviewed before they go in Academic Commons?</h3>
-        <p>No. We do not make editorial decisions about content in the repository. However we do have guidelines for the types of content that are eligible for upload. See our <a href="/policies/">our policies</a> for more information.</p>
+<h2 id="copyright">Copyright</h2>
 
-        <h3>Can Academic Commons provide campus-only access to my work?</h3>
-        <p>No. All content in Academic Commons is freely accessible to anyone online. Works that cannot be shared openly online should not be uploaded to Academic Commons. However, works can be embargoed (i.e., files are not available for download, though descriptive information is available) for a limited time.</p>
+<h3>Are works in Academic Commons under copyright?</h3>
+<p>Most works in Academic Commons are under copyright. See our <a href="/policies#copyright">copyright policy</a> to learn more.</p>
 
-        <h3>What is a DOI?</h3>
-        <p>Each work in Academic Commons is assigned a DIgital Object Identifier (DOI), which is a type of persistent URL. A sample DOI is: 10.7916/D8ZS2W8R. DOIs expressed as URLs look like this: https://doi.org/10.7916/D8ZS2W8R. Use the DOI when citing or referring to a work in Academic Commons. Learn more about DOIs at <a href="http://www.doi.org/">doi.org</a>.</p>
+<h3>How do I report a possible copyright violation?</h3>
+<p>If you believe that the inclusion of a work in Academic Commons is in violation of your copyright, you may submit a notice of copyright infringement to Columbia University. See the Columbia University copyright page here: <a href="https://www.columbia.edu/content/copyright">columbia.edu/content/copyright</a>.</p>
 
-        <h2 id="copyright">Copyright</h2>
+<h2 id="theses">Theses</h2>
 
-        <h3>Are works in Academic Commons under copyright?</h3>
-        <p>Most works in Academic Commons are under copyright. See our <a href="/policies#copyright">copyright policy</a> to learn more.</p>
+<h3>Does Academic Commons hold all Columbia dissertations?</h3>
+<p>No. Academic Commons holds a copy of all Columbia dissertations written as part of a Ph.D., D.M.A., J.S.D., or Dr.P.H. program starting in 2011. The repository also holds dissertations written as part of the Teachers College Ed.D. program starting in 2011. In addition, Academic Commons holds some earlier dissertations uploaded by authors who wished to make their work openly available online. You can do a comprehensive search for all Columbia dissertations--including those in Academic Commons--using the Columbia University Libraries catalog <a href="https://clio.columbia.edu/">CLIO</a>.</p>
 
-        <h3>How do I report a possible copyright violation?</h3>
-        <p>If you believe that the inclusion of a work in Academic Commons is in violation of your copyright, you may submit a notice of copyright infringement to Columbia University. See the Columbia University copyright page here: <a href="https://www.columbia.edu/content/copyright">columbia.edu/content/copyright</a>.</p>
-
-        <h2 id="theses">Theses</h2>
-
-        <h3>Does Academic Commons hold all Columbia dissertations?</h3>
-        <p>No. Academic Commons holds a copy of all Columbia dissertations written as part of a Ph.D., D.M.A., J.S.D., or Dr.P.H. program starting in 2011. The repository also holds dissertations written as part of the Teachers College Ed.D. program starting in 2011. In addition, Academic Commons holds some earlier dissertations uploaded by authors who wished to make their work openly available online. You can do a comprehensive search for all Columbia dissertations--including those in Academic Commons--using the Columbia University Libraries catalog <a href="https://clio.columbia.edu/">CLIO</a>.</p>
-
-        <h3>Can I extend the embargo on my thesis or dissertation?</h3>
-        <p>Contact your degree-program administrator and explain the reason for the embargo extension and the amount of additional time you are requesting. If your request is approved, the administrator will direct Academic Commons staff to extend the embargo on your thesis or dissertation. </p>
-        <p><em>Columbia Graduate School of Arts and Sciences alumni should email <a href="mailto:dissertations@columbia.edu">dissertations@columbia.edu</a>.</em></p>
-
-      </div><!--.main-content-->
-
-    </div><!--.row-->
-  </div><!--.container-->
-
-</div><!--#static-text-->
+<h3>Can I extend the embargo on my thesis or dissertation?</h3>
+<p>Contact your degree-program administrator and explain the reason for the embargo extension and the amount of additional time you are requesting. If your request is approved, the administrator will direct Academic Commons staff to extend the embargo on your thesis or dissertation. </p>
+<p><em>Columbia Graduate School of Arts and Sciences alumni should email <a href="mailto:dissertations@columbia.edu">dissertations@columbia.edu</a>.</em></p>
