@@ -25,7 +25,7 @@ class AgreementsController < ApplicationController
 
       if agreement.save
         flash[:notice] = 'Author Agreement Accepted.'
-        redirect_to deposit_path
+        redirect_to uploads_path
       else
         flash[:error] = 'There was an error submitting your agreement form, please make sure ALL fields are filled.'
         redirect_to action: :new

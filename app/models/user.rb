@@ -10,6 +10,7 @@ class User < ApplicationRecord
   ROLES = [ADMIN].freeze
 
   has_many :agreements, dependent: :destroy
+  has_many :deposits,   dependent: :nullify # Keep deposits even if the user has been removed.
 
   def self.admins
     where(role: ADMIN)

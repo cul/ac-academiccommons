@@ -22,6 +22,8 @@ OkComputer::Registry.register('action_mailer', OkComputer::ActionMailerCheck.new
 OkComputer::Registry.register('indexing_log_directory', OkComputer::DirectoryCheck.new('log/ac-indexing'))
 OkComputer::Registry.register('reports_log_directory', OkComputer::DirectoryCheck.new('log/monthly_reports'))
 OkComputer::Registry.register('self_deposits_directory', OkComputer::DirectoryCheck.new('data/self-deposit-uploads'))
+OkComputer::Registry.register('storage_directory', OkComputer::DirectoryCheck.new('storage'))
+
 
 # Check sitemap exists
 url = URI.join(Rails.application.config.default_host, '/sitemap.xml.gz')

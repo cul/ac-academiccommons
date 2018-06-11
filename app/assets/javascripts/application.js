@@ -12,3 +12,5 @@
 //= require sticky-sidebar
 //= require smooth-scroll
 //= require social-share-button
+//= require activestorage
+//= require custom/add-creator

@@ -72,6 +72,9 @@ Rails.application.routes.draw do
 
   resource :agreement
 
+  resources :uploads, only: [:index, :new, :create], path: 'upload'
+  # resources :uploads, only: [:index] # admin/deposits, admin/deposit/:id
+
   get '/admin',                   to: 'admin#index',                 as: 'admin'
   get '/admin/deposit',           to: 'admin#deposits'
   get '/admin/deposits/:id',      to: 'admin#show_deposit',          as: 'show_deposit'

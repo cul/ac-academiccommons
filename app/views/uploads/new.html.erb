@@ -1,0 +1,81 @@
+
+<%= render 'agreement' %>
+
+<%= form_with(model: @deposit, url: uploads_path, method: :create, local: true) do |form| %>
+  <div>
+    <div><%= form.label(:title, 'Title') %></div>
+    <div><%= form.text_field(:title, placeholder: 'Title') %></div>
+  </div>
+
+  <div>
+    <div><%= form.label(:abstract, 'Abstract') %></div>
+    <div><%= form.text_area(:abstract, placeholder: 'What is this work about? Provide a brief summary to help readers understand its argument.') %></div>
+  </div>
+
+  <div>
+    <div><%= form.label(:year, 'Year Created') %></div>
+    <div><%= form.number_field(:year, placeholder: 'YYYY') %></div>
+  </div>
+
+  <div>
+    <%= form.label(:doi, 'DOI/URL') %>
+    <%= form.text_field(:doi, placeholder: 'DOI or URL of work online (if applicable)') %>
+  </div>
+
+  <%= '<div class="field_with_errors">'.html_safe if @deposit.errors.include?(:creators) %>
+    <h4>Creator(s)</h4>
+    <div id='creator-list'>
+      <div>
+        <label for="deposit_creators_first_name">First Name</label>
+        <label for="deposit_creators_last_name">Last Name</label>
+        <label for="deposit_creators_uni">UNI</label>
+      </div>
+      <% (@deposit.creators || [{}]).each do |c| %>
+        <div>
+          <input type="text" name="deposit[creators][][first_name]" class="deposit_creators_first_name", value="<%= c['first_name'] %>">
+          <input type="text" name="deposit[creators][][last_name]" class="deposit_creators_last_name", value="<%= c['last_name'] %>">
+          <input type="text" name="deposit[creators][][uni]" class="deposit_creators_uni",  value="<%= c['uni'] %>">
+        </div>
+      <% end %>
+    </div>
+
+  <%= '</div>'.html_safe if @deposit.errors.include?(:creators) %>
+
+  <div>
+    <%= button_tag 'Add another creator',
+                   type: 'button',
+                   id: 'add-address',
+                   data: { creator_list_id: 'creator-list'} %>
+
+  </div>
+
+  <div>
+    <div><%= form.label(:notes, 'Notes') %></div>
+    <div><%= form.text_area(:notes, placeholder: 'Additional information you want included in the record and/or notes for repository staff') %></div>
+  </div>
+
+  <div>
+    <%= form.label(:rights_statement, 'Rights Statement') %>
+    <%= form.collection_select(:rights_statement,
+                               Deposit::RIGHTS_STATEMENTS,
+                               :to_s,
+                               :to_s,
+                               prompt: 'Choose a statement about the copyright status of this work') %>
+  </div>
+
+  <div>
+    <%= form.label(:license, 'License') %>
+    <%= form.collection_select(:license,
+                               Deposit::LICENSE,
+                               :to_s,
+                               :to_s,
+                               prompt: 'Choose how you would like other people to use this work') %>
+  </div>
+
+  <div>
+    <%= form.file_field :files, multiple: true %>
+  </div>
+
+  <%= form.submit('Submit') %>
+
+<% end %>

@@ -65,5 +65,9 @@ module AcademicCommons
       'Blacklight::Exceptions::RecordNotFound' => :record_not_found,
       'CanCan::AccessDenied'                   => :forbidden
     )
+
+    config.active_job.queue_adapter = :inline
+    
+    config.active_storage.service = :local
   end
 end
