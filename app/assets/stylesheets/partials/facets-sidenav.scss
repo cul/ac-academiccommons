@@ -38,13 +38,10 @@
     margin-right: 0;
   }
 
-  & .panel-group {
-  }
-
   & .panel {
     border: 0;
     border-radius: 0;
-    border-bottom: 1px solid #ddd;
+    border-bottom: $border;
     box-shadow: none;
     font-size: 14px;
     margin: 0;
