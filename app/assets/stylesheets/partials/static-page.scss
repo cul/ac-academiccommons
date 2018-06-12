@@ -50,7 +50,7 @@
   }
 
   & .page-title:after {
-    border-bottom: 1px solid $gray-lighter;
+    border-bottom: $border;
     height: auto;
     left: 50%;
     margin-left: -50vw;
@@ -120,7 +120,7 @@
     }
 
     & td {
-      border-bottom: 1px solid $gray-lighter;
+      border-bottom: $border;
       padding: 8px 5px;
     }
 
@@ -168,7 +168,7 @@
 		}
 
 		& #main-content {
-			border-left: 1px solid $gray-lighter;
+			border-left: $border;
 			padding: 30px 40px;
 		}
 	}

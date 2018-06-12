@@ -23,7 +23,7 @@
   }
 
   & .featured-wrapper {
-    border-top: 1px solid $gray-lighter;
+    border-top: $border;
     height: auto;
     left: 50%;
     margin-left: -50vw;
@@ -60,7 +60,7 @@
   }
 
   & .stats li {
-    border-bottom: 1px solid $gray-lighter;
+    border-bottom: $border;
   	display: block;
   	line-height: 2;
   }

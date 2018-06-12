@@ -17,7 +17,7 @@
   }
 
   & .top-panel-heading {
-    border: 1px solid $gray-lighter;
+    border: $border;
     margin: 0;
     padding-left: 15px;
   }
@@ -81,7 +81,7 @@
 
     & .top-panel-heading {
       border: 0;
-      border-bottom: 1px solid $gray-lighter;
+      border-bottom: $border;
     }
   }
 }

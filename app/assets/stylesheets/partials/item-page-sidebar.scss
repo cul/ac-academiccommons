@@ -55,7 +55,7 @@ li.download-and-doi {
   }
 
   & h4 {
-    border: 1px solid $gray-lighter;
+    border: $border;
     border-radius: 4px 0 0 4px;
     border-right: 0;
     color: $gray-light;
@@ -67,7 +67,7 @@ li.download-and-doi {
 
   & .permanent-link textarea {
     background: $body-bg;
-    border: 1px solid $gray-lighter;
+    border: $border;
     border-radius: 0;
     box-shadow: none;
     color: $gray;
