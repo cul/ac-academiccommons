@@ -31,7 +31,7 @@
             <div class="stats col-md-4">
               <h3>Stats at a glance</h3>
               <ul>
-                <li><span><%= counts[:all] %></span> <%= link_to('deposited works', search_action_path) %></li>
+                <li><span><%= counts[:all] %></span> <%= link_to('works', search_action_path) %></li>
                 <li><span><%= counts[:articles] %></span> <%= link_to('articles', type_search('Articles')) %></li>
                 <li><span><%= counts[:reports] %></span> <%= link_to('reports', type_search('Reports')) %></li>
                 <li><span><%= counts[:doctoral_theses] %></span> <%= link_to('doctoral theses', dissertation_search) %></li>
@@ -42,8 +42,6 @@
           <% end %>
 
           <div class="quotes col-md-8">
-
-            <h3>User stories</h3>
 
             <p class="quote">“I think that academic work should be freely available as far as possible. While my colleagues in the US probably have institutional subscriptions to most of the journals I publish in, I know that my colleagues in other countries are not as lucky and Academic Commons might be the only way they get access.” <span>— Source</span></p>
 
