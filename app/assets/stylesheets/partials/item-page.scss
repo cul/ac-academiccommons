@@ -1,47 +1,5 @@
 /* item page */
 
-/* pagination widget */
-
-.pagination-search-widgets {
-  display: none;
-}
-
-@media screen and (min-width: $screen-sm ) {
-
-  .pagination-search-widgets {
-    border: 0;
-    border-bottom: 1px dotted $gray-lighter;
-    color: $gray-light;
-    display: block;
-    font-size: 12px;
-    letter-spacing: .2px;
-    margin: 0 0 13px 0;
-    padding: 0 0 13px 0;
-    text-transform: uppercase;
-
-    & a {
-      color: $gray-base;
-      font-weight: 500;
-    }
-
-    & .search-widgets {
-      display: inline-block;
-      margin: 0 25px 0 0;
-    }
-
-    & .page_links {
-      display: inline;
-      padding: 0;
-    }
-
-    & .results-counter {
-      display: inline;
-      margin: 0 0 0 25px;
-      padding: 0;
-    }
-  }
-}
-
 /* main content */
 
 #document {
