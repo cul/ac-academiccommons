@@ -30,13 +30,13 @@
 <div id="links-navbar" class="" role="navigation">
   <div class="<%= container_classes %>">
     <div class="row">
-      <div class="col-sm-6 about-links">
+      <div class="col-sm-4 about-links">
         <ul>
           <li><%= link_to t('blacklight.header_links.about'), about_path %></li>
           <li><%= link_to t('blacklight.header_links.collections'), '/collections/' %></li>
         </ul>
       </div>
-      <div class="col-sm-6 user-links" id="user-util-collapse">
+      <div class="col-sm-8 user-links" id="user-util-collapse">
         <%= render :partial=>'/user_util_links' %>
       </div>
     </div>

@@ -1,34 +1,26 @@
-<div id="static-text">
-  <div class="page-title">
-    <div class="container">
-      <h1>Developers</h1>
-    </div>
-  </div>
+<% content_for :header do %>
+  <h1>Developers</h1>
+<% end %>
 
-  <div class="container">
+<h3>API</h3>
+<p>The Academic Commons RESTful API can be used to query/search for records. We support JSON responses, and have limited support for RSS. Documentation and a GUI can be found at:<br>
 
-    <h3>API</h3>
-    <p>The Academic Commons RESTful API can be used to query/search for records. We support JSON responses, and have limited support for RSS. Documentation and a GUI can be found at:<br>
+<a href="http://petstore.swagger.io/?url=https://academiccommons.columbia.edu/api/v1/swagger_doc">http://petstore.swagger.io/?url=https://academiccommons.columbia.edu/api/v1/swagger_doc</a></p>
 
-    <a href="http://petstore.swagger.io/?url=https://academiccommons.columbia.edu/api/v1/swagger_doc">http://petstore.swagger.io/?url=https://academiccommons.columbia.edu/api/v1/swagger_doc</a></p>
+<h3>OAI-PMH</h3>
+<p>Academic Commons supports the <a href="https://www.openarchives.org/OAI/openarchivesprotocol.html">Open Archives Initiative Protocol for Metadata Harvesting (OAI-PMH)</a>, version 2.0.
+The base URL is: <a href="https://academiccommons.columbia.edu/catalog/oai">https://academiccommons.columbia.edu/catalog/oai</a></p>
 
-    <h3>OAI-PMH</h3>
-    <p>Academic Commons supports the <a href="https://www.openarchives.org/OAI/openarchivesprotocol.html">Open Archives Initiative Protocol for Metadata Harvesting (OAI-PMH)</a>, version 2.0.
-    The base URL is: <a href="https://academiccommons.columbia.edu/catalog/oai">https://academiccommons.columbia.edu/catalog/oai</a></p>
+<h3>SWORD</h3>
 
-    <h3>SWORD</h3>
-    <p>Academic Commons supports content uploaded via the <a href="http://swordapp.org/about/">SWORD</a> protocol version 1.3. If you are interested in using SWORD to upload to Academic Commons, please contact us at <a href="mailto:ac@columbia.edu">ac@columbia.edu</a>.</p>
+<p>Academic Commons can receive content via <a href="http://swordapp.org/">SWORD deposit</a>. SWORD is best used for recurrent deposits. If you would like to deposit content via SWORD, contact us at <a href="mailto:ac@columbia.edu">ac@columbia.edu</a>.</p>
 
-    <h3>Sitemap</h3>
-    <p>The sitemap for Academic Commons is regenerated daily. <a href="https://academiccommons.columbia.edu/sitemap.xml.gz">https://academiccommons.columbia.edu/sitemap.xml.gz</a></p>
+<h3>Sitemap</h3>
+<p>The sitemap for Academic Commons is regenerated daily. <a href="https://academiccommons.columbia.edu/sitemap.xml.gz">https://academiccommons.columbia.edu/sitemap.xml.gz</a></p>
 
-    <h3>Metadata license</h3>
-    <p>Academic Commons bibliographic metadata-excluding abstracts, which may be under copyright-is available under a <a href="https://creativecommons.org/publicdomain/zero/1.0/">Creative Commons 0 1.0 Universal</a> license.</p>
+<h3>Metadata license</h3>
+<p>Academic Commons bibliographic metadata — excluding abstracts, which may be under copyright — is available under a <a href="https://creativecommons.org/publicdomain/zero/1.0/">Creative Commons 0 1.0 Universal</a> license.</p>
 
-    <img src="<%= image_url('logo-cc0-license.png'); %>">
+<img src="<%= image_url('logo-cc0-license.png'); %>">
 
-    <p>To the extent possible under law, Columbia University Libraries has waived all copyright and related or neighboring rights to Academic Commons bibliographic metadata (abstracts are excluded from this license). This work is published from: United States.</p>
-
-  </div><!--.container-->
-
-</div><!--#static-text-->
+<p>To the extent possible under law, Columbia University Libraries has waived all copyright and related or neighboring rights to Academic Commons bibliographic metadata (abstracts are excluded from this license). This work is published from: United States.</p>

@@ -1,7 +1,9 @@
+/* mixins */
+
 /* labels */
 
 @mixin label-plain {
-  border: 1px solid $gray-lighter;
+  border: $border;
   border-radius: 3px;
   display: inline-block;
   color: $gray-base;

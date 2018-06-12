@@ -157,7 +157,7 @@
   }
 
   & .list-group-item span.image img {
-    border: 1px solid $gray-lighter;
+    border: $border;
     margin-right: 10px;
     max-height: 50px;
   }

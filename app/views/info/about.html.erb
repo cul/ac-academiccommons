@@ -1,73 +1,63 @@
-<div id="static-text">
+<% content_for :header do %>
+  <h1>About</h1>
+<% end %>
 
-  <div class="page-title">
-    <div class="container">
-      <h1>About</h1>
+<p class="intro">
+  Academic Commons provides open, persistent access to the scholarship produced by researchers at Columbia University, Barnard College, Jewish Theological Seminary, Teachers College, and Union Theological Seminary. Academic Commons is a program of the <a href="http://library.columbia.edu/">Columbia University Libraries</a>.
+</p>
+
+<h3>Long-term access</h3>
+<p>No matter where you live, you can download the full text of the research and scholarship available in Academic Commons without encountering firewalls or fees. If you are a member of the Columbia community, you can upload your work to Academic Commons to ensure that it is accessible for years to come. </p>
+
+<h3>Enhanced discoverability</h3>
+<p>Academic Commons is indexed by leading search engines, metadata aggregators, the Columbia Libraries catalog, and the Columbia University website.</p>
+
+<h3>Citation and attribution</h3>
+<p>Items uploaded to Academic Commons receive a <a href="http://www.doi.org">Digital Object Identifier</a>, or DOI, a persistent URL that facilitates citation and attribution.</p>
+
+<h3>Highlighting centers, departments and programs</h3>
+<p>Columbia departments, centers, institutes and programs can use Academic Commons to showcase affiliated research, from working papers, reports, and books to conference proceedings and student theses. Want this work to appear on your center or department's website? Create an automatic feed to your website using the <a href="/developers/">Academic Commons API</a>.</p>
+
+<p><em>For information about contributing to Academic Commons, visit the <a href="/policies/">Policies</a> and <a href="/faq/">FAQ</a> pages.</em></p>
+
+<h3>Open-source technology</h3>
+<p>Academic Commons runs on open-source applications including Fedora, the repository platform, and Blacklight, the user interface framework. Columbia University Libraries actively contributes to the development of both platforms. The Academic Commons technology stack includes:</p>
+
+<ul class="brand-logos">
+  <li><a href="http://www.fedora-commons.org/"><img src="<%= image_url('brand-logos/logo-fedora.png'); %>"></a></li>
+  <!-- <li><a href="http://duraspace.org/"><img src="<%= image_url('brand-logos/logo-duraspace.png'); %>"></a></li> -->
+  <li><a href="http://projectblacklight.org/"><img src="<%= image_url('brand-logos/logo-blacklight.png'); %>"></a></li>
+  <li><a href="https://www.mysql.com/"><img src="<%= image_url('brand-logos/logo-mysql.png'); %>"></a></li>
+  <li><a href="https://lucene.apache.org/solr/"><img src="<%= image_url('brand-logos/logo-solr.png'); %>"></a></li>
+</ul>
+
+<h3>Contributing to a network of open scholarly resources</h3>
+<p>Academic Commons is part of a network of initiatives that promote the open distribution of scholarship and research.</p>
+
+<ul class="brand-logos">
+  <li><a href="https://www.datacite.org/"><img src="<%= image_url('brand-logos/logo-datacite.png'); %>"></a></li>
+  <li><a href="http://www.share-research.org/"><img src="<%= image_url('brand-logos/logo-share.png'); %>"></a></li>
+  <li><a href="https://www.coar-repositories.org/"><img src="<%= image_url('brand-logos/logo-coar.png'); %>"></a></li>
+  <li><a href="https://www.re3data.org/"><img src="<%= image_url('brand-logos/logo-re3data.png'); %>"></a></li>
+  <li><a href="https://core.ac.uk/"><img src="<%= image_url('brand-logos/logo-core.png'); %>"></a></li>
+  <li><a href="https://www.base-search.net/"><img src="<%= image_url('brand-logos/logo-base-search.png'); %>"></a></li>
+</ul>
+
+<h2 id="learn-more">Learn More</h2>
+
+<div class="menu-small">
+  <div class="row">
+    <div class="col-md-4 tile">
+      <h2><%= link_to 'Policies', '/policies/' %></h2>
+      <p>Guidelines on uploading to Academic Commons and the details of our Terms of Use, Copyright, and Privacy policies.</p>
+    </div>
+    <div class="col-md-4 tile">
+      <h2><%= link_to 'FAQ', '/faq/' %></h2>
+      <p>View answers to frequently asked questions about Academic Commons.</p>
+    </div>
+    <div class="col-md-4 tile">
+      <h2><%= link_to 'Developers', '/developers/' %></h2>
+      <p>Information about the Academic Commons API, OAI-PMH, SWORD, metadata license, and sitemap.</p>
     </div>
   </div>
-
-  <div class="container">
-
-    <p class="intro">
-      Academic Commons provides open, persistent access to the scholarship produced by researchers at Columbia University, Barnard College, Jewish Theological Seminary, Teachers College, and Union Theological Seminary. Academic Commons is a program of the <a href="http://library.columbia.edu/">Columbia University Libraries</a>.
-    </p>
-
-    <h3>Long-term access</h3>
-    <p>No matter where you live, you can download the full text of the research and scholarship available in Academic Commons without encountering firewalls or fees. If you are a member of the Columbia community, you can upload your work to Academic Commons to ensure that it is accessible for years to come. </p>
-
-    <h3>Enhanced discoverability</h3>
-    <p>Academic Commons is indexed by leading search engines, metadata aggregators, the Columbia Libraries catalog, and the Columbia University website.</p>
-
-    <h3>Citation and attribution</h3>
-    <p>Items uploaded to Academic Commons receive a <a href="http://www.doi.org">Digital Object Identifier</a>, or DOI, a persistent URL that facilitates citation and attribution.</p>
-
-    <h3>Highlighting centers, departments and programs</h3>
-    <p>Columbia departments, centers, institutes and programs can use Academic Commons to showcase affiliated research, from working papers, reports, and books to conference proceedings and student theses. Want this work to appear on your center or department's website? Create an automatic feed to your website using the <a href="/developers/">Academic Commons API</a>.</p>
-
-    <p><em>For information about contributing to Academic Commons, visit the <a href="/policies/">Policies</a> and <a href="/faq/">FAQ</a> pages.</em></p>
-
-    <h3>Open-source technology</h3>
-    <p>Academic Commons runs on open-source applications including Fedora, the repository platform, and Blacklight, the user interface framework. Columbia University Libraries actively contributes to the development of both platforms. The Academic Commons technology stack includes:</p>
-
-    <ul class="brand-logos">
-      <li><a href="http://www.fedora-commons.org/"><img src="<%= image_url('brand-logos/logo-fedora.png'); %>"></a></li>
-      <!-- <li><a href="http://duraspace.org/"><img src="<%= image_url('brand-logos/logo-duraspace.png'); %>"></a></li> -->
-      <li><a href="http://projectblacklight.org/"><img src="<%= image_url('brand-logos/logo-blacklight.png'); %>"></a></li>
-      <li><a href="https://www.mysql.com/"><img src="<%= image_url('brand-logos/logo-mysql.png'); %>"></a></li>
-      <li><a href="https://lucene.apache.org/solr/"><img src="<%= image_url('brand-logos/logo-solr.png'); %>"></a></li>
-    </ul>
-
-    <h3>Contributing to a network of open scholarly resources</h3>
-    <p>Academic Commons is part of a global network of initiatives that promote the open distribution of scholarship and research.</p>
-
-    <ul class="brand-logos">
-      <li><a href="https://www.datacite.org/"><img src="<%= image_url('brand-logos/logo-datacite.png'); %>"></a></li>
-      <li><a href="http://www.share-research.org/"><img src="<%= image_url('brand-logos/logo-share.png'); %>"></a></li>
-      <li><a href="https://www.coar-repositories.org/"><img src="<%= image_url('brand-logos/logo-coar.png'); %>"></a></li>
-      <li><a href="https://www.re3data.org/"><img src="<%= image_url('brand-logos/logo-re3data.png'); %>"></a></li>
-      <li><a href="https://core.ac.uk/"><img src="<%= image_url('brand-logos/logo-core.png'); %>"></a></li>
-
-    </ul>
-
-    <h2 id="learn-more">Learn More</h2>
-
-    <div class="menu-small">
-      <div class="row">
-        <div class="col-md-4 tile">
-          <h2><%= link_to 'Policies', '/policies/' %></h2>
-          <p>Guidelines on uploading to Academic Commons and the details of our Terms of Use, Copyright, and Privacy policies.</p>
-        </div>
-        <div class="col-md-4 tile">
-          <h2><%= link_to 'FAQ', '/faq/' %></h2>
-          <p>View answers to frequently asked questions about Academic Commons.</p>
-        </div>
-        <div class="col-md-4 tile">
-          <h2><%= link_to 'Developers', '/developers/' %></h2>
-          <p>Information about the Academic Commons API, OAI-PMH, SWORD, metadata license, and sitemap.</p>
-        </div>
-      </div>
-    </div>
-
-  </div><!--.container-->
-
-</div><!--#static-text-->
+</div>
