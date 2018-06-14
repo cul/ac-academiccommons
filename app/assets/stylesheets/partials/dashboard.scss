@@ -1,0 +1,112 @@
+#dashboard {
+  border: $border;
+  border-radius: 3px;
+  font-weight: 300;
+  line-height: 1.6;
+  margin: 0 0 20px 0;
+  padding: 20px;
+
+  & .item {
+    margin: 0 0 20px 0;
+  }
+
+  & .agreement-message {
+    background: $gray-lighter-custom;
+    border-radius: 3px;
+    margin: 0 0 20px 0;
+    padding: 25px;
+  }
+
+  & input,
+  & textarea {
+    border: $border;
+  }
+
+  & input[type=text],
+  & input[type=number],
+  & input[type=file],
+  & textarea  {
+    padding: 5px;
+    width: 100%;
+  }
+
+  & input[type=file] {
+    border-radius: 3px;
+    line-height: 1;
+    padding: 25px;
+  }
+
+  & input[type=submit] {
+    border: 0;
+  }
+
+  & .checkbox {
+    background: $gray-lighter-custom;
+    border-radius: 3px;
+    line-height: 1.4;
+    padding: 25px;
+  }
+
+  & .checkbox h5 {
+    margin: 0 0 8px 0;
+  }
+
+  & .checkbox input[type=checkbox] {
+    line-height: 1.4;
+    margin: 3px 5px 0 0;
+  }
+
+  & .checkbox label {
+    font-weight: 300;
+  }
+
+  & textarea {
+    min-height: 200px;
+    padding: 10px;
+  }
+
+  & h3 {
+    font-size: 2.5rem;
+    font-weight: 300;
+    margin: 25px 0;
+  }
+
+  & .creators {
+    margin: 0 0 30px 0;
+    width: 100%;
+  }
+
+  & #creator-list div {
+    display: flex;
+  }
+
+  & #creator-list label,
+  & #creator-list input {
+    flex: 1;
+    margin: 0 2px 8px 0;
+  }
+
+  & select {
+    border: $border;
+    height: 30px;
+    padding: 5px;
+    width: 100%;
+  }
+}
+
+@media screen and (min-width: $screen-md ) {
+
+  #dashboard {
+
+    & .agreement-message,
+    & .checkbox,
+    & input[type=text],
+    & input[type=number],
+    & input[type=file],
+    & textarea,
+    & select,
+    & .creators {
+      width: 65%;
+    }
+  }
+}
