@@ -10,10 +10,11 @@
     margin: 0 -10px 60px -10px;
   }
 
-  & .tile,
   & .tile {
+    background: $body-bg;
     border: $border;
     border-radius: 3px;
+    display: block;
     margin: 10px;
     padding: 30px 30px 10px 30px;
     width: 100%;
@@ -46,35 +47,16 @@
   margin-top: 8px;
 }
 
-@media screen and (min-width: $screen-md ) {
-
-  .menu {
-
-    & .tile {
-      width: 45%;
-    }
-  }
-
-  .menu-small {
-
-    & .tile {
-      padding: 20px 20px 10px 20px;
-      width: 30%;
-    }
-
-    & p {
-      font-size: 15px;
-    }
-  }
-}
-
 /* homepage menu */
 
 .homepage-menu {
+  margin: 0 -10px;
+  padding-bottom: 30px;
 
   & .collections,
   & .upload {
     box-shadow: $box-shadow;
+    width: auto;
     z-index: 1000;
   }
 
@@ -120,6 +102,16 @@
   }
 }
 
+.homepage-menu:after {
+  border-bottom: $border;
+  height: auto;
+  left: 50%;
+  margin-left: -50vw;
+  padding-top: 20px;
+  position: relative;
+  width: 100vw;
+}
+
 /* upload your research menu */
 
 .menu .log-in {
@@ -135,4 +127,32 @@
 
 .menu .no-log-in svg.icon-email {
   margin-bottom: -3px;
+}
+
+/* media queries for large screens */
+
+@media screen and (min-width: $screen-md ) {
+
+  .menu {
+
+    & .tile {
+      width: 45%;
+    }
+  }
+
+  .menu-small {
+
+    & .tile {
+      padding: 20px 20px 10px 20px;
+      width: 30%;
+    }
+
+    & p {
+      font-size: 15px;
+    }
+  }
+
+  .homepage-menu .tile {
+    width: 45%;
+  }
 }
