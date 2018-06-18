@@ -1,6 +1,36 @@
+/* dashboard top nav */
+
+#dashboard-nav {
+  font-size: 12px;
+  font-weight: 300;
+
+  & li a {
+    border-left: 0;
+    border-right: 0;
+    border-top: 0;
+    color: $gray-light;
+    padding: 15px 5px;
+  }
+
+  & li a:hover {
+    background-color: $gray-lighter-custom;
+    border-color: $gray-lighter-custom;
+    border-bottom-color: $gray-lighter;
+  }
+
+  & li.active a {
+    border-bottom: $border;
+    color: $gray-base;
+  }
+
+  & li.active a:hover {
+    background: $body-bg;
+  }
+}
+
 #dashboard {
   border: $border;
-  border-radius: 3px;
+  border-top: 0;
   font-weight: 300;
   line-height: 1.6;
   margin: 0 0 20px 0;
@@ -32,6 +62,7 @@
 
   & input[type=file] {
     border-radius: 3px;
+    border-style: dashed;
     line-height: 1;
     padding: 25px;
   }
@@ -107,6 +138,25 @@
     & select,
     & .creators {
       width: 65%;
+    }
+  }
+
+  #dashboard-nav {
+    font-size: 16px;
+
+    & li a {
+      border: 0;
+      padding: 12px 20px;
+
+    }
+
+    & li.active a {
+      border: $border;
+      border-bottom: 0;
+    }
+
+    & li a:hover {
+
     }
   }
 }

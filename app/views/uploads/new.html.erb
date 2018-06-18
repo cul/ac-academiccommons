@@ -1,100 +1,107 @@
 
 <div class="col-md-12">
 
-<div id="dashboard">
+  <ul class="nav nav-tabs" id="dashboard-nav">
+    <li><a href=""><i class="glyphicon glyphicon-user"></i> My Account</a></li>
+    <li><a href=""><i class="glyphicon glyphicon-cog"></i> Admin</a></li>
+    <li><a href=""><i class="glyphicon glyphicon-list-alt"></i> View My Works</a></li>
+    <li class="active"><a href=""><i class="glyphicon glyphicon-plus"></i> Add New Work</a></li>
+  </ul>
 
-  <%= render 'agreement' %>
+  <div id="dashboard">
 
-  <%= form_with(model: @deposit, url: uploads_path, method: :create, local: true) do |form| %>
-    <div class="item">
-      <div><%= form.label(:title, 'Title') %></div>
-      <div><%= form.text_field(:title, placeholder: 'Title') %></div>
-    </div>
+    <%= render 'agreement' %>
 
-    <div class="item">
-      <div><%= form.label(:abstract, 'Abstract') %></div>
-      <div><%= form.text_area(:abstract, placeholder: 'What is this work about? Provide a brief summary to help readers understand its argument.') %></div>
-    </div>
-
-    <div class="item">
-      <div><%= form.label(:year, 'Year Created') %></div>
-      <div><%= form.number_field(:year, placeholder: 'YYYY') %></div>
-    </div>
-
-    <div class="item">
-      <%= form.label(:doi, 'DOI/URL') %><br>
-      <%= form.text_field(:doi, placeholder: 'DOI or URL of work online (if applicable)') %>
-    </div>
-
-    <div class="item checkbox">
-      <h5>Proxy</h5>
-      <input type="checkbox" value="1" name="agreement[accepted_agreement]" id="agreement_accepted_agreement">
-      <label for="agreement_accepted_agreement">Check here if you are making a proxy deposit for the author(s) of this work.</label>
-      <br><br>
-      <h5>Current student?</h5>
-      <input type="checkbox" value="1" name="agreement[accepted_agreement]" id="agreement_accepted_agreement">
-      <label for="agreement_accepted_agreement">Check here if you are a current student at Columbia or one of its affiliate institutions.</label>
-    </div>
-
-    <div class="creators">
-      <%= '<div class="field_with_errors">'.html_safe if @deposit.errors.include?(:creators) %>
-        <h3>Creator(s)</h3>
-        <div id='creator-list'>
-          <div>
-            <label for="deposit_creators_first_name">First Name</label>
-            <label for="deposit_creators_last_name">Last Name</label>
-            <label for="deposit_creators_uni">UNI</label>
-          </div>
-          <% (@deposit.creators || [{}]).each do |c| %>
-            <div>
-              <input type="text" name="deposit[creators][][first_name]" class="deposit_creators_first_name", value="<%= c['first_name'] %>">
-              <input type="text" name="deposit[creators][][last_name]" class="deposit_creators_last_name", value="<%= c['last_name'] %>">
-              <input type="text" name="deposit[creators][][uni]" class="deposit_creators_uni",  value="<%= c['uni'] %>">
-            </div>
-          <% end %>
-        </div>
-
-      <%= '</div>'.html_safe if @deposit.errors.include?(:creators) %>
-      <div>
-        <%= button_tag 'Add another creator',
-                       type: 'button',
-                       id: 'add-address',
-                       class: 'btn btn-default',
-                       data: { creator_list_id: 'creator-list'} %>
+    <%= form_with(model: @deposit, url: uploads_path, method: :create, local: true) do |form| %>
+      <div class="item">
+        <div><%= form.label(:title, 'Title') %></div>
+        <div><%= form.text_field(:title, placeholder: 'Title') %></div>
       </div>
-    </div>
 
-    <div class="item">
-      <div><%= form.label(:notes, 'Notes') %></div>
-      <div><%= form.text_area(:notes, placeholder: 'Additional information you want included in the record and/or notes for repository staff') %></div>
-    </div>
+      <div class="item">
+        <div><%= form.label(:abstract, 'Abstract') %></div>
+        <div><%= form.text_area(:abstract, placeholder: 'What is this work about? Provide a brief summary to help readers understand its argument.') %></div>
+      </div>
 
-    <div class="item">
-      <%= form.label(:rights_statement, 'Rights Statement') %><br>
-      <%= form.collection_select(:rights_statement,
-                                 Deposit::RIGHTS_STATEMENTS,
-                                 :to_s,
-                                 :to_s,
-                                 prompt: 'Choose copyright status of this work') %>
-    </div>
+      <div class="item">
+        <div><%= form.label(:year, 'Year Created') %></div>
+        <div><%= form.number_field(:year, placeholder: 'YYYY') %></div>
+      </div>
 
-    <div class="item">
-      <%= form.label(:license, 'License') %><br>
-      <%= form.collection_select(:license,
-                                 Deposit::LICENSE,
-                                 :to_s,
-                                 :to_s,
-                                 prompt: 'Choose how other people use this work') %>
-    </div>
+      <div class="item">
+        <%= form.label(:doi, 'DOI/URL') %><br>
+        <%= form.text_field(:doi, placeholder: 'DOI or URL of work online (if applicable)') %>
+      </div>
 
-    <div class="item">
-      <%= form.file_field :files, multiple: true %>
-    </div>
+      <div class="item checkbox">
+        <h5>Proxy</h5>
+        <input type="checkbox" value="1" name="agreement[accepted_agreement]" id="agreement_accepted_agreement">
+        <label for="agreement_accepted_agreement">Check here if you are making a proxy deposit for the author(s) of this work.</label>
+        <br><br>
+        <h5>Current student?</h5>
+        <input type="checkbox" value="1" name="agreement[accepted_agreement]" id="agreement_accepted_agreement">
+        <label for="agreement_accepted_agreement">Check here if you are a current student at Columbia or one of its affiliate institutions.</label>
+      </div>
 
-    <%= form.submit 'Submit', :class => 'btn btn-primary' %>
+      <div class="creators">
+        <%= '<div class="field_with_errors">'.html_safe if @deposit.errors.include?(:creators) %>
+          <h3>Creator(s)</h3>
+          <div id='creator-list'>
+            <div>
+              <label for="deposit_creators_first_name">First Name</label>
+              <label for="deposit_creators_last_name">Last Name</label>
+              <label for="deposit_creators_uni">UNI</label>
+            </div>
+            <% (@deposit.creators || [{}]).each do |c| %>
+              <div>
+                <input type="text" name="deposit[creators][][first_name]" class="deposit_creators_first_name", value="<%= c['first_name'] %>">
+                <input type="text" name="deposit[creators][][last_name]" class="deposit_creators_last_name", value="<%= c['last_name'] %>">
+                <input type="text" name="deposit[creators][][uni]" class="deposit_creators_uni",  value="<%= c['uni'] %>">
+              </div>
+            <% end %>
+          </div>
 
-  <% end %>
+        <%= '</div>'.html_safe if @deposit.errors.include?(:creators) %>
+        <div>
+          <%= button_tag 'Add another creator',
+                         type: 'button',
+                         id: 'add-address',
+                         class: 'btn btn-default',
+                         data: { creator_list_id: 'creator-list'} %>
+      </div>
+      </div>
 
-</div>
+      <div class="item">
+        <div><%= form.label(:notes, 'Notes') %></div>
+        <div><%= form.text_area(:notes, placeholder: 'Additional information you want included in the record and/or notes for repository staff') %></div>
+      </div>
+
+      <div class="item">
+        <%= form.label(:rights_statement, 'Rights Statement') %><br>
+        <%= form.collection_select(:rights_statement,
+                                   Deposit::RIGHTS_STATEMENTS,
+                                   :to_s,
+                                   :to_s,
+                                   prompt: 'Choose copyright status of this work') %>
+      </div>
+
+      <div class="item">
+        <%= form.label(:license, 'License') %><br>
+        <%= form.collection_select(:license,
+                                   Deposit::LICENSE,
+                                   :to_s,
+                                   :to_s,
+                                   prompt: 'Choose how other people use this work') %>
+      </div>
+
+      <div class="item">
+        <%= form.file_field :files, multiple: true %>
+      </div>
+
+      <%= form.submit 'Submit', :class => 'btn btn-primary' %>
+
+    <% end %>
+
+  </div>
 
 </div>
