@@ -49,7 +49,7 @@
     text-decoration: none;
   }
 
-  & .page-title:after {
+  & .page-title::after {
     border-bottom: $border;
     height: auto;
     left: 50%;
