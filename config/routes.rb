@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
   concern :range_searchable, BlacklightRangeLimit::Routes::RangeSearchable.new
-  devise_for :users, controllers: { sessions: 'users/sessions', :omniauth_callbacks => "users/omniauth_callbacks" }
+  devise_for :users, controllers: { sessions: 'users/sessions', omniauth_callbacks: 'users/omniauth_callbacks' }
 
   devise_scope :user do
     get 'sign_in',  to: 'users/sessions#new',     as: :new_user_session
@@ -9,17 +9,17 @@ Rails.application.routes.draw do
 
   root to: "catalog#home"
 
+  # Static Pages
   get '/about',      to: 'info#about',      as: 'about'
   get '/policies',   to: 'info#policies',   as: 'policies'
   get '/faq',        to: 'info#faq',        as: 'faq'
   get '/developers', to: 'info#developers', as: 'developers'
 
+  # Mounting API endpoint at /api/v1/
   mount API => '/'
 
   # Collections routes
   resources :collections, only: [:index, :show], param: 'category_id'
-
-  get '/catalog/streaming/:id', :to => 'catalog#streaming', :as => 'streaming'
 
   # Blacklight routes
   concern :searchable, Blacklight::Routes::Searchable.new
@@ -73,7 +73,9 @@ Rails.application.routes.draw do
   resource :agreement
 
   resources :uploads, only: [:index, :new, :create], path: 'upload'
-  # resources :uploads, only: [:index] # admin/deposits, admin/deposit/:id
+
+  get 'myworks', to: 'user#my_works'
+  get 'account', to: 'user#account'
 
   get '/admin',                   to: 'admin#index',                 as: 'admin'
   get '/admin/deposit',           to: 'admin#deposits'

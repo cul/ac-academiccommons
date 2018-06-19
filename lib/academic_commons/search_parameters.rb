@@ -62,6 +62,11 @@ module AcademicCommons
       self
     end
 
+    def sort_by(sort)
+      @parameters[:sort] = sort
+      self
+    end
+
     def to_h
       parameters
     end

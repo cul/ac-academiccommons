@@ -1,0 +1,17 @@
+<h1>Account</h1>
+
+<h3>Aggreement</h3>
+<% if current_user.signed_latest_agreement? %>
+  <p>You have signed the Academic Commons participation agreement. This agreement applies to all works you upload to Academic Commons.</p>
+  <%= link_to 'Read the agreement.', agreement_path %>
+<% else %>
+  <p>To upload your research, you must sign the Academic Commons participation agreement. This agreement applies to all works that you upload to Academic Commons.</p>
+  <%= link_to 'Read and sign the agreement', agreement_path %>
+<% end %>
+
+<h3>Email Preferences</h3>
+<p>Work in Progress</p>
+
+
+<h3>Display Name</h3>
+<p>Work in Progress</p>

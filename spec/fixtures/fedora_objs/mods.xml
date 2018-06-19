@@ -2,7 +2,7 @@
     <mods:titleInfo>
         <mods:title>Alice's Adventures in Wonderland</mods:title>
     </mods:titleInfo>
-    <mods:name type="personal">
+    <mods:name type="personal" ID="tu123">
         <mods:namePart>Carroll, Lewis</mods:namePart>
         <mods:role>
             <mods:roleTerm type="text">Author</mods:roleTerm>
