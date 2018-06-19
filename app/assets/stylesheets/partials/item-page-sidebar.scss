@@ -38,7 +38,7 @@ li.download-and-doi {
   }
 
   & .download-box p {
-    font-size: 14px;
+    font-size: 12px;
   }
 
   & .permanent-link {
@@ -50,7 +50,7 @@ li.download-and-doi {
 
   & .permanent-link h4,
   & .permanent-link textarea {
-    font-size: 14px;
+    font-size: 12px;
     line-height: 1;
   }
 
@@ -60,7 +60,7 @@ li.download-and-doi {
     border-right: 0;
     color: $gray-light;
     margin: 0;
-    padding: 10px 0;
+    padding: 11px 5px;
     text-align: center;
     width: 50px;
   }
@@ -73,7 +73,7 @@ li.download-and-doi {
     color: $gray;
     font-weight: 300;
     overflow: auto;
-    padding: 10px;
+    padding: 11px 5px;
     resize: none;
     white-space: nowrap;
     width: 100%;
@@ -100,6 +100,7 @@ li.social-buttons a {
     bottom: auto;
     box-shadow: none;
     margin-left: inherit;
+    padding-bottom: 12px;
     position: relative;
 
     & ul {
@@ -107,7 +108,7 @@ li.social-buttons a {
     }
 
     & .download-button {
-      margin: 0 0 12px 0;
+      margin: 0 0 15px 0;
       width: 100%;
     }
 
