@@ -123,6 +123,15 @@
     padding: 5px;
     width: 100%;
   }
+
+  & .field_with_errors {
+
+    & input,
+    & select,
+    & textarea {
+      border: 2px solid red;
+    }
+  }
 }
 
 @media screen and (min-width: $screen-md ) {
