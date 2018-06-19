@@ -42,8 +42,6 @@ li.download-and-doi {
   }
 
   & .permanent-link {
-    align-items: center;
-    display: flex;
     margin-left: 10px;
     width: 100%;
   }
@@ -55,25 +53,18 @@ li.download-and-doi {
   }
 
   & h4 {
-    border: $border;
-    border-radius: 4px 0 0 4px;
-    border-right: 0;
-    color: $gray-light;
-    margin: 0;
-    padding: 11px 5px;
-    text-align: center;
-    width: 50px;
+    color: $gray-base;
+    margin: 0 0 4px 0;
   }
 
   & .permanent-link textarea {
-    background: $body-bg;
-    border: $border;
+    border: none;
     border-radius: 0;
-    box-shadow: none;
+    box-shadow: inset 0 0 3px #bbb;
     color: $gray;
     font-weight: 300;
     overflow: auto;
-    padding: 11px 5px;
+    padding: 4px 0 4px 4px;
     resize: none;
     white-space: nowrap;
     width: 100%;
@@ -96,11 +87,12 @@ li.social-buttons a {
 
   li.download-and-doi {
     animation: none;
+    background: transparent;
     border: 0;
     bottom: auto;
     box-shadow: none;
     margin-left: inherit;
-    padding-bottom: 12px;
+    padding-bottom: 10px;
     position: relative;
 
     & ul {
@@ -117,7 +109,7 @@ li.social-buttons a {
     }
 
     & .permanent-link textarea {
-      box-shadow: inset 0 0 3px #ddd;
+      padding: 6px 4px;
     }
   }
 
