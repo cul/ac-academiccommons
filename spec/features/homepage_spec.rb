@@ -12,7 +12,7 @@ describe 'Homepage', type: :feature do
   end
 
   it 'links to the about page' do
-    within('.about-links') do
+    within('.main-nav') do
       expect(page).to have_link('About', href: '/about')
       click_link 'About'
     end
