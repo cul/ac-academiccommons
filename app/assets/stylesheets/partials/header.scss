@@ -42,7 +42,6 @@
       background-position: left center;
     }
 
-
     & .navbar-form {
       margin: 7px 0;
       padding: 0 0 0 15px;
@@ -56,77 +55,47 @@
   border-bottom: $border;
   box-shadow: 0 1px 2px $gray-lighter;
   color: $gray-lighter;
-  font-size: 14px;
-  line-height: 1;
-  margin: 0 0 15px 0;
-  padding: 0;
-  text-align: center;
+  font-size: 16px;
+  padding: 11px 0;
 
-  & ul {
-    display: inline-block;
+  & ul.main-nav {
+    display: flex;
+    flex-wrap: wrap;
     margin: 0;
     padding: 0;
   }
 
-  & li {
-    display: inline-block;
-  }
-
-  & li a {
-    display: inline-block;
-    margin: 0 -4px;
-    padding: 11px 15px;
-  }
-
-  & li a:hover {
-    background: $gray-lighter-custom;
-    text-decoration: none;
-  }
-
-  & .about-links,
-  & .user-links {
+  & ul.main-nav > li,
+  & .user-links > li {
     display: inline;
-  }
-
-  & .about-links {
-    padding: 0;
-  }
-
-  & .user-links {
-    padding: 0;
+    margin-right: 15px;
   }
 
   & .share-button span {
     display: none;
+  }
+
+  & a:focus,
+  & a:hover {
+    text-decoration: none;
   }
 }
 
 @media screen and (min-width: $screen-sm ) {
 
   #links-navbar {
-    font-size: 16px;
-
-    & li a {
-      padding: 18px 13px;
-    }
-
-    & .about-links {
-      padding-left: 7px;
-      text-align: left;
-    }
 
     & .user-links {
-      border: none;
-      padding-right: 7px;
+      flex: 1;
       text-align: right;
     }
 
-    & .share-button {
-      font-weight: bold;
+    & .user-links > li {
+      margin: 0 0 0 15px;
     }
 
     & .share-button span {
-      display: inline-block;
+      display: inline;
     }
   }
 }
