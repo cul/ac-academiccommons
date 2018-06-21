@@ -88,6 +88,7 @@ Rails.application.routes.draw do
   namespace :admin do
     get 'author_affiliation_report/index'
     get 'author_affiliation_report/create'
+    resources :request_agreements, only: [:new, :create]
   end
 
   get '/emails/get_csv_email_form', to: 'emails#get_csv_email_form'
