@@ -52,47 +52,66 @@
 /* links navbar */
 
 #links-navbar {
-  border-bottom: $border;
-  box-shadow: 0 1px 2px $gray-lighter;
-  color: $gray-lighter;
-  font-size: 16px;
-  padding: 11px 0;
+  font-size: 14px;
 
-  & ul.main-nav {
-    display: flex;
-    flex-wrap: wrap;
-    margin: 0;
-    padding: 0;
+  & .container {
+    padding-left: 0;
+    padding-right: 0;
   }
 
-  & ul.main-nav > li,
-  & .user-links > li {
-    display: inline;
-    margin-right: 15px;
+  & nav {
+    margin: 0;
+  }
+
+  & .navbar {
+    min-height: auto;
+  }
+
+  & .navbar-default {
+    background-color: $body-bg;
+    border: 0;
+    border-bottom: $border;
+    box-shadow: 0 1px 2px $gray-lighter;
+  }
+
+  & .navbar-nav {
+    float: left;
+    margin: 0;
+  }
+
+  & .navbar-nav > li {
+    float: left;
+  }
+
+  & .navbar-nav > li a {
+    color: $brand-primary;
+  }
+
+  & .navbar-nav > li a:hover {
+    background: $gray-lighter-custom;
+  }
+
+  & .navbar-nav .open .dropdown-menu {
+    position: absolute;
+    float: left;
+    background-color: $body-bg;
+    border: $border;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
   }
 
   & .share-button span {
     display: none;
   }
 
-  & a:focus,
-  & a:hover {
-    text-decoration: none;
+  & .dropdown-menu > li > a {
+    padding: 5px 20px;
   }
 }
 
 @media screen and (min-width: $screen-sm ) {
 
   #links-navbar {
-
-    & .user-links {
-      flex: 1;
-      text-align: right;
-    }
-
-    & .user-links > li {
-      margin: 0 0 0 15px;
-    }
+    font-size: 16px;
 
     & .share-button span {
       display: inline;
