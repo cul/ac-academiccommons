@@ -2,6 +2,12 @@ en:
   blacklight:
     application_name: 'Academic Commons'
 
+    dashboard_links:
+      my_account: 'My Account'
+      my_works: 'My Works'
+      add_new_work: 'Add New Work'
+      admin: "Admin"
+
     header_links:
       about: 'About'
       collections: 'Collections'

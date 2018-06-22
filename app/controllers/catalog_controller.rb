@@ -3,6 +3,8 @@ class CatalogController < ApplicationController
   include BlacklightOaiProvider::Controller
   include BlacklightRangeLimit::ControllerOverride
 
+  layout 'catalog'
+
   # rubocop:disable Rails/LexicallyScopedActionFilter
   before_action :record_view_stats, only: :show
   # rubocop:enable Rails/LexicallyScopedActionFilter

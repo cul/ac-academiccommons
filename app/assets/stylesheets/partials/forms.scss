@@ -1,0 +1,44 @@
+/* agreement form */
+
+#main-page form.agreement {
+  border: 1px solid $gray-lighter;
+  border-radius: 5px;
+  margin: 20px 0;
+  max-width: 700px;
+  padding: 20px;
+
+  & ul {
+    margin: 0;
+    padding: 0;
+  }
+
+  & li {
+    align-items: center;
+    display: flex;
+    justify-content: flex-start;
+    list-style: none;
+    margin: 5px 0;
+  }
+
+  & li.checkbox {
+    margin-bottom: 20px;
+  }
+
+  & label {
+    font-weight: bold;
+    margin: 0;
+    min-width: 70px;
+  }
+
+  & input[type=checkbox] {
+    margin: -3px 5px 0 0;
+  }
+
+  & input[type=text] {
+    min-width: 300px;
+  }
+
+  & .btn-accept {
+    margin-top: 25px;
+  }
+}

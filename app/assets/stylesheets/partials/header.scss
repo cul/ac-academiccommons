@@ -72,6 +72,7 @@
     border: 0;
     border-bottom: $border;
     box-shadow: 0 1px 2px $gray-lighter;
+    padding-left: 5px;
   }
 
   & .navbar-nav {
@@ -85,6 +86,7 @@
 
   & .navbar-nav > li a {
     color: $brand-primary;
+    padding: 5px 10px;
   }
 
   & .navbar-nav > li a:hover {
@@ -112,6 +114,10 @@
 
   #links-navbar {
     font-size: 16px;
+
+    & .navbar-nav > li a {
+      padding: 10px 15px;
+    }
 
     & .share-button span {
       display: inline;

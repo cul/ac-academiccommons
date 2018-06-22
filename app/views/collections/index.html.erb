@@ -1,25 +1,18 @@
-<div id="static-text">
+<% content_for :header do %>
+  <h1>Collections</h1>
+<% end %>
 
-  <div class="page-title no-border">
-    <div class="container">
-      <h1>Collections</h1>
-    </div>
-  </div>
+<p class="summary">
+  Academic Commons hosts research and scholarship from across Columbia University and its affiliate institutions. You can use the collections below to begin exploring or <%= link_to('browse everything in the repository', search_action_path) %>.
+</p>
 
-  <div class="container">
-    <p class="summary">
-      Academic Commons hosts research and scholarship from across Columbia University and its affiliate institutions. You can use the collections below to begin exploring.
-    </p>
-    <div class="menu">
-      <div class="row">
-        <% @categories.each do |category| %>
-          <div class="col-md-4 tile">
-            <h2><%= link_to category.title, category.url %></h2>
-            <p><%= category.summary %></p>
-          </div>
-        <% end %>
+<div class="menu">
+  <div class="row">
+    <% @categories.each do |category| %>
+      <div class="col-md-4 tile">
+        <h2><%= link_to category.title, category.url %></h2>
+        <p><%= category.summary %></p>
       </div>
-    </div>
+    <% end %>
   </div>
-
 </div>

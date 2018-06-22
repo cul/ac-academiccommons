@@ -4,8 +4,7 @@
 
 .constraints-container {
   background: $gray-lighter-custom;
-  border: 2px solid $gray-lighter;
-  border-bottom: 0;
+  border: 0;
   border-bottom-left-radius: 0;
   border-bottom-right-radius: 0;
   box-shadow: none;
@@ -19,6 +18,7 @@
 }
 
 #sortAndPerPage {
+  border-bottom-style: dotted;
   margin: 0;
   padding: 0;
 }
@@ -43,8 +43,7 @@ span.constraints-label {
 }
 
 .page_links {
-  background: $gray-lighter-custom;
-  border: 2px solid $gray-lighter;;
+  background: darken($gray-lighter-custom, 5%);
   border-top-width: 1px;
   border-radius: 3px;
   border-top-left-radius: 0;
@@ -71,6 +70,7 @@ span.constraints-label {
     background: $gray-lighter-custom;
     border: 0;
     border-radius: 3px;
+    margin-top: 15px;
     padding: 6px 15px;
   }
 
@@ -90,7 +90,7 @@ span.constraints-label {
   }
 }
 
-/*  main content */
+/*  main-page content */
 
 #documents {
   margin-bottom: 30px;

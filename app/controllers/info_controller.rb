@@ -1,6 +1,5 @@
 class InfoController < ApplicationController
   include Blacklight::SearchHelper
-  layout 'static_page'
 
   def about; end
   def policies; end
