@@ -4,7 +4,7 @@
   Thank you for your contribution to Columbia Academic Commons. To reach and sign our participation agreement, which grants a nonexclusive license to Columbia University to make your work available in Academic Commons, click on the link below.
 </p>
 
-<p><%= link_to agreement_url(token: @token), agreement_url(token: @token) %></p>
+<p><%= link_to new_agreement_url(agreement: { token: @token }), new_agreement_url(agreement: { token: @token }) %></p>
 
 <p>If you have any questions about this agreement, please email us at ac@columbia.edu.</p>
 
