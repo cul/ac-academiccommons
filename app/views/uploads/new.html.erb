@@ -11,19 +11,21 @@
 
   <%= render 'agreement' %>
 
+  <p><em>This form accepts files up to 100MB in size. If you have larger files, email <%= mail_to "ac@columbia.edu" %>.</em><p>
+
   <%= form_with(model: @deposit, url: uploads_path, method: :create, local: true) do |form| %>
     <div class="item">
-      <div><%= form.label(:title, 'Title') %></div>
+      <div><%= form.label(:title, 'Title') %>*</div>
       <div><%= form.text_field(:title, placeholder: 'Title') %></div>
     </div>
 
     <div class="item">
-      <div><%= form.label(:abstract, 'Abstract') %></div>
+      <div><%= form.label(:abstract, 'Abstract') %>*</div>
       <div><%= form.text_area(:abstract, placeholder: 'What is this work about? Provide a brief summary to help readers understand its argument.') %></div>
     </div>
 
     <div class="item">
-      <div><%= form.label(:year, 'Year Created') %></div>
+      <div><%= form.label(:year, 'Year Created') %>*</div>
       <div><%= form.number_field(:year, placeholder: 'YYYY') %></div>
     </div>
 
@@ -43,8 +45,8 @@
         <h3>Creator(s)</h3>
         <div id='creator-list'>
           <div>
-            <label for="deposit_creators_first_name">First Name</label>
-            <label for="deposit_creators_last_name">Last Name</label>
+            <label for="deposit_creators_first_name">First Name*</label>
+            <label for="deposit_creators_last_name">Last Name*</label>
             <label for="deposit_creators_uni">UNI</label>
           </div>
           <% (@deposit.creators || [{}]).each do |c| %>
@@ -72,7 +74,7 @@
     </div>
 
     <div class="item">
-      <%= form.label(:rights_statement, 'Rights Statement') %><br>
+      <%= form.label(:rights_statement, 'Rights Statement') %>*<br>
       <%= form.collection_select(:rights_statement,
                                  Deposit::RIGHTS_STATEMENTS,
                                  :to_s,
@@ -90,6 +92,7 @@
     </div>
 
     <div class="item">
+      <div><%= form.label(:upload_files, 'Upload File(s)*') %></div>
       <%= form.file_field :files, multiple: true %>
     </div>
 
