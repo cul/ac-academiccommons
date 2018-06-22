@@ -32,7 +32,7 @@ class AgreementsController < ApplicationController
           agreement_params[:agreement_version]
         ).deliver
 
-        redirect_to uploads_path
+        redirect_to token? ? root_path : uploads_path
       else
         flash[:error] = @agreement.errors.full_messages.to_sentence
         render :new
