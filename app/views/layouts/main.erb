@@ -1,21 +1,23 @@
 <%= content_for :content do %>
-  <div id="static-text" class="col-md-12">
+  <div id="main-page" class="col-md-12">
 
-    <div class="row page-title">
-      <div class="col-md-12">
-        <%= yield(:header) %>
+    <% if content_for? :header %>
+      <div class="row page-title">
+        <div class="col-md-12">
+          <%= yield(:header) %>
+        </div>
       </div>
-    </div>
+    <% end %>
 
     <% if content_for? :sidebar %>
-      <div class="col-md-2" id="side-nav">
+      <div class="col-md-2 side-nav">
         <%= yield(:sidebar) %>
       </div>
-      <div class="col-md-10" id="main-content">
+      <div class="col-md-10 main-content left-border">
         <%= yield %>
       </div>
     <% else %>
-      <div class="col-md-10" id="main-content">
+      <div class="col-md-12 main-content">
         <%= yield %>
       </div>
     <% end %>

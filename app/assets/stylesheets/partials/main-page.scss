@@ -1,15 +1,15 @@
-/* static page */
+/* main-page */
 
-#static-text {
+#main-page {
 
   & .affix-top,
   & .affix {
   	position: relative;
   }
 
-  /* site-nav */
+  /* side-nav */
 
-  & #side-nav {
+  & .side-nav {
     padding-left: 0;
   }
 
@@ -35,9 +35,9 @@
 		}
 	}
 
-  /* main content */
+  /* main-page content */
 
-  & #main-content {
+  & .main-content {
     padding: 20px 0;
   }
 
@@ -133,7 +133,12 @@
 
 @media screen and (min-width: $screen-md ) {
 
-  #static-text {
+  #main-page {
+
+    & .left-border {
+      border-left: $border;
+      padding: 30px 40px;
+    }
 
     & .affix-top,
     & .affix {
@@ -167,17 +172,12 @@
 	  & ul.anchor-links li::after {
 			content: none;
 		}
-
-		& #main-content {
-			border-left: $border;
-			padding: 30px 40px;
-		}
 	}
 }
 
 /* link lists */
 
-#static-text ul.link-list {
+#main-page ul.link-list {
   color: $gray-light;
   column-count: auto;
   column-gap: 50px;
@@ -200,52 +200,7 @@
 
 /* iframe */
 
-#static-text iframe.author-agreement {
+#main-page iframe.author-agreement {
   margin: 20px 0 0 0;
   max-width: 700px;
-}
-
-/* forms */
-
-#static-text form {
-  border: 1px solid $gray-lighter;
-  border-radius: 5px;
-  margin: 20px 0;
-  max-width: 700px;
-  padding: 20px;
-
-  & ul {
-    margin: 0;
-    padding: 0;
-  }
-
-  & li {
-    align-items: center;
-    display: flex;
-    justify-content: flex-start;
-    list-style: none;
-    margin: 5px 0;
-  }
-
-  & li.checkbox {
-    margin-bottom: 20px;
-  }
-
-  & label {
-    font-weight: bold;
-    margin: 0;
-    min-width: 70px;
-  }
-
-  & input[type=checkbox] {
-    margin: -3px 5px 0 0;
-  }
-
-  & input[type=text] {
-    min-width: 300px;
-  }
-
-  & .btn-accept {
-    margin-top: 25px;
-  }
 }

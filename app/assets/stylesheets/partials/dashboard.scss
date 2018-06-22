@@ -1,26 +1,34 @@
 /* dashboard top nav */
 
-#dashboard-nav {
+#main-page #dashboard-nav {
   font-size: 12px;
-  font-weight: 300;
+  margin-top: -20px;
+
+  & ul {
+    font-weight: normal;
+    max-width: none;
+  }
+
+  & .nav-tabs {
+    margin: 0;
+  }
 
   & li a {
-    border-left: 0;
-    border-right: 0;
-    border-top: 0;
     color: $gray-light;
     padding: 15px 5px;
+    text-decoration: none;
   }
 
   & li a:hover {
     background-color: $gray-lighter-custom;
-    border-color: $gray-lighter-custom;
-    border-bottom-color: $gray-lighter;
+    border-color: transparent;
+    border-bottom: $border;
   }
 
   & li.active a {
-    border-bottom: $border;
+    border: 0;
     color: $gray-base;
+    font-weight: bold;
   }
 
   & li.active a:hover {
@@ -28,13 +36,34 @@
   }
 }
 
-#dashboard {
+@media screen and (min-width: $screen-md ) {
+
+  #main-page #dashboard-nav {
+    font-size: 16px;
+
+    & li a {
+      padding: 15px 20px;
+    }
+
+    & li.active a {
+      border: $border;
+      border-bottom-color: $body-bg;
+    }
+  }
+}
+
+/* dashboard main-page content */
+
+#main-page #dashboard {
   border: $border;
   border-top: 0;
   font-weight: 300;
   line-height: 1.6;
-  margin: 0 0 20px 0;
   padding: 20px;
+
+  & p {
+    margin: 0 0 25px 0;
+  }
 
   & .item {
     margin: 0 0 20px 0;
@@ -136,7 +165,7 @@
 
 @media screen and (min-width: $screen-md ) {
 
-  #dashboard {
+  #main-page #dashboard {
 
     & .agreement-message,
     & .checkbox,
@@ -146,26 +175,7 @@
     & textarea,
     & select,
     & .creators {
-      width: 65%;
-    }
-  }
-
-  #dashboard-nav {
-    font-size: 16px;
-
-    & li a {
-      border: 0;
-      padding: 12px 20px;
-
-    }
-
-    & li.active a {
-      border: $border;
-      border-bottom: 0;
-    }
-
-    & li a:hover {
-
+      width: 70%;
     }
   }
 }

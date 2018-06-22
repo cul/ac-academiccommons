@@ -1,16 +1,9 @@
-<div id="static-text">
+<% content_for :header do %>
+  <h1>Academic Commons Participation Agreement</h1>
+<% end %>
 
-  <div class="page-title">
-    <div class="container">
-      <h1>Academic Commons Participation Agreement</h1>
-    </div>
-  </div>
+<% if current_user.signed_latest_agreement? %>
+  <p class="notice"><strong>Notice</strong>: You have already signed this agreement.</p>
+<% end %>
 
-  <div class="container">
-    <% if current_user.signed_latest_agreement? %>
-      <p class="notice"><strong>Notice</strong>: You have already signed this agreement.</p>
-    <% end %>
-
-    <%= render partial: 'author_agreement' %>
-  </div>
-</div>
+<%= render partial: 'author_agreement' %>
