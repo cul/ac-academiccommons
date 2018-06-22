@@ -1,5 +1,7 @@
 module Admin
   class RequestAgreementsController < ApplicationController
+    authorize_resource class: RequestAgreementsForm
+
     def new
       @request_agreements_form ||= RequestAgreementsForm.new
     end
