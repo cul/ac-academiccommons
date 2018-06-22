@@ -15,7 +15,8 @@
 
 	& ul.anchor-links {
     color: $gray-lighter;
-		font-size: 16px;
+		font-size: 14px;
+    font-weight: normal;
 		list-style: none;
 		margin: 0;
 		max-width: none;
@@ -33,6 +34,10 @@
 		& li::after {
 			content: ' | ';
 		}
+
+    & li:last-child::after {
+      content: '';
+    }
 	}
 
   /* main-page content */
@@ -161,6 +166,7 @@
     }
 
     & ul.anchor-links {
+      font-size: 16px;
       padding: 30px 0 0 0;
     }
 

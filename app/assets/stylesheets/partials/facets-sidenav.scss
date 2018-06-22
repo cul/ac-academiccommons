@@ -18,7 +18,7 @@
 
   & .top-panel-heading {
     border: $border;
-    margin: 0;
+    margin: 15px 0 0 0;
     padding-left: 15px;
   }
 
@@ -68,17 +68,18 @@
   }
 }
 
-@media screen and (min-width: $screen-md ) {
+@media screen and (min-width: $screen-sm ) {
 
   #facets {
 
     & h2.facets-heading {
-      margin: 0;
+      margin: 18px 0 0 0;
     }
 
     & .top-panel-heading {
       border: 0;
       border-bottom: $border;
+      margin: 0;
     }
   }
 }

@@ -85,6 +85,10 @@ li.social-buttons a {
 
 @media screen and (min-width: $screen-sm ) {
 
+  .show-tools {
+    margin-top: 15px;
+  }
+
   li.download-and-doi {
     animation: none;
     background: transparent;
