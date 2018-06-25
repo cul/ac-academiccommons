@@ -1,12 +1,25 @@
-<h1>My Works</h1>
+<div id="dashboard-nav">
+  <ul class="nav nav-tabs">
+    <li><a href="/account/"><i class="glyphicon glyphicon-user"></i> <%= t('blacklight.dashboard_links.my_account') %></a></li>
+    <li class="active"><a href="/myworks/"><i class="glyphicon glyphicon-list-alt"></i> <%= t('blacklight.dashboard_links.my_works') %></a></li>
+    <li><a href="/upload/"><i class="glyphicon glyphicon-plus"></i> <%= t('blacklight.dashboard_links.add_new_work') %></a></li>
+    <li><a href="/admin/"><i class="glyphicon glyphicon-cog"></i> <%= t('blacklight.dashboard_links.admin') %></a></li>
+  </ul>
+</div>
 
-<h2>Pending Works</h2>
-<% @pending_documents.each do |document| %>
-  <p><%= document.title %></p>
-<% end %>
+<div id="dashboard">
 
-<h2>Available Works</h2>
-<% @current_documents.each do |document| %>
-  <p><%= link_to document.to_semantic_values[:title].first,
-                 solr_document_path(document.to_semantic_values[:id].first) %></p>
-<% end %>
+  <h1>My Works</h1>
+
+  <h2>Pending Works</h2>
+  <% @pending_documents.each do |document| %>
+    <p><%= document.title %></p>
+  <% end %>
+
+  <h2>Available Works</h2>
+  <% @current_documents.each do |document| %>
+    <p><%= link_to document.to_semantic_values[:title].first,
+                   solr_document_path(document.to_semantic_values[:id].first) %></p>
+  <% end %>
+
+</div>

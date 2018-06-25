@@ -4,7 +4,7 @@
   font-size: 12px;
 
   & ul {
-    font-weight: normal;
+    font-weight: bold;
     max-width: none;
   }
 
@@ -13,7 +13,7 @@
   }
 
   & li a {
-    color: $gray-light;
+    color: lighten($gray-light, 10%);
     padding: 15px 5px;
     text-decoration: none;
   }
