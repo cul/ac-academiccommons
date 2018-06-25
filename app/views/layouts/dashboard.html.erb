@@ -1,0 +1,23 @@
+<%= content_for :content do %>
+  <div id="main-page">
+
+    <div id="dashboard-nav">
+      <ul class="nav nav-tabs">
+        <li><a href="/account/"><i class="glyphicon glyphicon-user"></i> <%= t('blacklight.dashboard_links.my_account') %></a></li>
+        <li class="active"><a href="/myworks/"><i class="glyphicon glyphicon-list-alt"></i> <%= t('blacklight.dashboard_links.my_works') %></a></li>
+        <li><a href="/upload/"><i class="glyphicon glyphicon-plus"></i> <%= t('blacklight.dashboard_links.add_new_work') %></a></li>
+        <li><a href="/admin/"><i class="glyphicon glyphicon-cog"></i> <%= t('blacklight.dashboard_links.admin') %></a></li>
+      </ul>
+    </div>
+
+    <div id="dashboard">
+
+      <%= content_for?(:dashboard) ? yield(:dashboard) : yield %>
+
+    </div>
+
+</div>
+
+<% end %>
+
+<%= render template: 'layouts/catalog' %>

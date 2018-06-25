@@ -1,6 +1,8 @@
 class UserController < ApplicationController
   before_action :authenticate_user!
 
+  layout 'dashboard'
+
   def account; end
 
   def my_works
