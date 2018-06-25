@@ -5,5 +5,7 @@
   "repository": "git@github.com:cul/ac-academiccommons.git",
   "author": "Carla Galarza <cmg2228@columbia.edu>",
   "license": "MIT",
-  "dependencies": {}
+  "dependencies": {
+    "readmore-js": "^2.1.0"
+  }
 }
