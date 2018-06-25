@@ -1,17 +1,20 @@
-<h1>Account</h1>
+<div id="dashboard-nav">
+  <ul class="nav nav-tabs">
+    <li class="active"><a href="/account/"><i class="glyphicon glyphicon-user"></i> <%= t('blacklight.dashboard_links.my_account') %></a></li>
+    <li><a href="/myworks/"><i class="glyphicon glyphicon-list-alt"></i> <%= t('blacklight.dashboard_links.my_works') %></a></li>
+    <li><a href="/upload/"><i class="glyphicon glyphicon-plus"></i> <%= t('blacklight.dashboard_links.add_new_work') %></a></li>
+    <li><a href="/admin/"><i class="glyphicon glyphicon-cog"></i> <%= t('blacklight.dashboard_links.admin') %></a></li>
+  </ul>
+</div>
 
-<h3>Aggreement</h3>
-<% if current_user.signed_latest_agreement? %>
-  <p>You have signed the Academic Commons participation agreement. This agreement applies to all works you upload to Academic Commons.</p>
-  <%= link_to 'Read the agreement.', agreement_path %>
-<% else %>
-  <p>To upload your research, you must sign the Academic Commons participation agreement. This agreement applies to all works that you upload to Academic Commons.</p>
-  <%= link_to 'Read and sign the agreement', agreement_path %>
-<% end %>
+<div id="dashboard">
 
-<h3>Email Preferences</h3>
-<p>Work in Progress</p>
+  <%= render 'uploads/agreement' %>
 
+  <h3>Email Preferences</h3>
+  <p>Work in Progress</p>
 
-<h3>Display Name</h3>
-<p>Work in Progress</p>
+  <h3>Display Name</h3>
+  <p>Work in Progress</p>
+
+</div>
