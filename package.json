@@ -1,0 +1,9 @@
+{
+  "name": "ac-academiccommons",
+  "version": "4.0.0",
+  "main": "index.js",
+  "repository": "git@github.com:cul/ac-academiccommons.git",
+  "author": "Carla Galarza <cmg2228@columbia.edu>",
+  "license": "MIT",
+  "dependencies": {}
+}
