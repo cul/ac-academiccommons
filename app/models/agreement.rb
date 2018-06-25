@@ -4,7 +4,7 @@ class Agreement < ApplicationRecord
   # TODO: These should also be required in schema.db
   validates :name, :email, :agreement_version, presence: true
 
-  belongs_to :user
+  belongs_to :user, optional: true
 
   def self.to_csv
     CSV.generate do |csv|

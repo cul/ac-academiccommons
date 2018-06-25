@@ -33,4 +33,14 @@ class NotificationMailer < ApplicationMailer
 
     mail(to: recipients, from: from, subject: subject, content_type: content_type)
   end
+
+  # Sent signed agreement link for a user without CU authentication to sign agreement.
+  def request_for_agreement(name, email, token)
+    @token = token
+    @name = name
+    from = Rails.application.config_for(:emails)['mail_deliverer']
+    subject = 'Signature request: Columbia Academic Commons participation agreement'
+
+    mail(to: email, from: from, subject: subject)
+  end
 end
