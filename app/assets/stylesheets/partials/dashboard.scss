@@ -178,3 +178,28 @@
     }
   }
 }
+
+/* admin page */
+
+#main-page #dashboard .box {
+
+  & h3 {
+    margin: 10px 0 25px 0;
+  }
+
+  & h4 {
+    margin: 25px 0 10px 0;
+  }
+}
+
+#main-page #dashboard .home-side {
+
+  & ul {
+    margin: 0;
+    padding: 0;
+  }
+
+  & li {
+    list-style: none;
+  }
+}
