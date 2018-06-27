@@ -1,7 +1,7 @@
-%div{:style => "padding: 0 0 10px 0;"}
+%div{:style => "padding: 0 0 0 0;"}
   = flash[:notice]
 
-%h3 Send Author Reports
+%h2 Send Author Reports
 .split_form
 
   = form_tag url_for(controller: :statistics, action: :all_author_monthlies) do
