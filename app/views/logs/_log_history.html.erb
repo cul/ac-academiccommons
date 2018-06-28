@@ -4,11 +4,9 @@
 
 <ul>
   <% @logs.each do |log| %>
-    <li style="padding: 0 0 2px 0;">
-
-      <a onclick="javascript:show_log('<%= log[:time_id]%>', '<%= @log_folder%>');" style=""><%= log[:time]%></a>
-       -
-      <%= link_to 'download', download_log_path(:id => log[:time_id], :log_folder => @log_folder) %>
+    <li>
+      <a onclick="javascript:show_log('<%= log[:time_id]%>', '<%= @log_folder%>');"><%= log[:time]%></a>
+      | <%= link_to 'download', download_log_path(:id => log[:time_id], :log_folder => @log_folder) %>
     </li>
   <% end %>
 </ul>
