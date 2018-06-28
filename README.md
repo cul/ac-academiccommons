@@ -31,10 +31,10 @@ CURRENT RECOMMENDED VERSION OF RUBY: 2.3.3
    ```
 
 5. Install required Javascript libraries using Yarn
-  ```
-  brew install yarn
-  yarn
-  ```
+    ```
+    brew install yarn
+    yarn
+    ```
 
 6. Setup your local development DB.
    ```

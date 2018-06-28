@@ -1,6 +1,6 @@
 <%= render 'agreement' %>
 
-<p><em>This form accepts files up to 100MB in size. If you have larger files, email <%= mail_to "ac@columbia.edu" %>.</em><p>
+<p class="note"><em>This form accepts files up to 100MB in size. If you have larger files, email <%= mail_to "ac@columbia.edu" %>.</em><p>
 
 <%= form_with(model: @deposit, url: uploads_path, method: :create, local: true) do |form| %>
   <div class="item">
