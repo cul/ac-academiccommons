@@ -17,7 +17,6 @@
   }
 
   & li a {
-    border: 0;
     border-bottom: $border;
     border-color: transparent;
     color: lighten($gray-light, 10%);
@@ -27,12 +26,10 @@
 
   & li a:hover {
     background-color: $gray-lighter-custom;
-    border: 0;
   }
 
   & li.active a {
     background: transparent;
-    border: 0;
     color: $gray-base;
     font-weight: bold;
   }
@@ -60,7 +57,6 @@
 
     & li a:hover {
       border-bottom: $border;
-      border-bottom-color: $gray-lighter-custom;
     }
 
     & li.active a {
