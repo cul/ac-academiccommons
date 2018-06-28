@@ -30,22 +30,28 @@ CURRENT RECOMMENDED VERSION OF RUBY: 2.3.3
    bundle install
    ```
 
-5. Setup your local development DB.
+5. Install required Javascript libraries using Yarn
+  ```
+  brew install yarn
+  yarn
+  ```
+
+6. Setup your local development DB.
    ```
    rake db:migrate
    ```
 
-6. Start your local fedora instance.
+7. Start your local fedora instance.
    ```
    rake jetty:start
    ```
 
-7. Start your local solr instance with a development core. (Leave this command running in the background)
+8. Start your local solr instance with a development core. (Leave this command running in the background)
    ```
    solr_wrapper
    ```
 
-8. Start your local Rails app
+9. Start your local Rails app
    ```
    rails server
    ```
