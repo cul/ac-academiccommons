@@ -83,12 +83,11 @@ Rails.application.routes.draw do
   get '/admin/deposits/:id/file', to: 'admin#download_deposit_file', as: 'download_deposit_file'
   get '/admin/agreements',        to: 'admin#agreements'
 
-  match '/admin/edit_alert_message', to: 'admin#edit_alert_message', via: [:get, :post]
-
   namespace :admin do
     get 'author_affiliation_report/index'
     get 'author_affiliation_report/create'
     resources :request_agreements, only: [:new, :create]
+    resource  :alert_message,      only: [:edit, :update]
   end
 
   get '/emails/get_csv_email_form', to: 'emails#get_csv_email_form'

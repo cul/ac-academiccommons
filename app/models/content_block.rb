@@ -1,4 +1,6 @@
 class ContentBlock < ApplicationRecord
+  ALERT_MESSAGE = 'alert_message'.freeze
+
   validates_presence_of :title
   validates_presence_of :user
 
