@@ -33,6 +33,7 @@ class UploadsController < ApplicationController
       send_student_reminder_email
       render template: 'uploads/successful_upload'
     else
+      @deposit.files.attachments.destroy_all # Remove attachment until we can presist them across requests.
       flash[:error] = @deposit.errors.full_messages.to_sentence
       Rails.logger.debug @deposit.errors.inspect
       render :new

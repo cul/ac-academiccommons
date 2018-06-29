@@ -1,0 +1,20 @@
+
+.dropzone.dz-started .dz-message {
+  display: block;
+}
+
+.dropzone .dz-success-mark {
+  display: none;
+}
+
+.dropzone .dz-error-mark {
+  display: none;
+}
+
+.dropzone .dz-success .dz-success-mark {
+  display: inline;
+}
+
+.dropzone .dz-error .dz-error-mark {
+  display: inline;
+}

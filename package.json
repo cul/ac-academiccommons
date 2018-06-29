@@ -6,6 +6,7 @@
   "author": "Carla Galarza <cmg2228@columbia.edu>",
   "license": "MIT",
   "dependencies": {
+    "dropzone": "^5.4.0",
     "readmore-js": "^2.1.0"
   }
 }
