@@ -1,6 +1,8 @@
 class UploadsController < ApplicationController
   load_and_authorize_resource class: Deposit, except: :index
 
+  layout 'dashboard'
+
   # GET /upload
   # Show upload landing page page if user is not logged in. If user is logged
   # in redirect to /upload/new

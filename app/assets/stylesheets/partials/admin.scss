@@ -1,0 +1,50 @@
+/* admin */
+
+/* admin sidebar */
+
+#main-page #dashboard .admin-sidebar {
+  padding-right: 15px;
+
+  & h3 {
+    margin: 10px 0 25px 0;
+  }
+
+  & h4 {
+    margin: 25px 0 10px 0;
+  }
+
+  & ul {
+    margin: 0;
+    padding: 0;
+  }
+
+  & li {
+    font-size: 14px;
+    line-height: 1.4;
+    list-style: none;
+    margin-bottom: 6px;
+  }
+
+  & a {
+    text-decoration: none;
+  }
+}
+
+/* admin content */
+
+#main-page #dashboard .admin-content {
+  padding: 5px 15px;
+
+  & h2 {
+    margin: 0 0 25px 0;
+  }
+
+  & pre {
+    font-size: 12px;
+  }
+
+  & a {
+    cursor: pointer;
+  }
+
+}

@@ -2,22 +2,22 @@
   <div id="main-page">
     <div id="dashboard-nav">
       <ul class="nav nav-tabs">
-        <li>
+        <li class="<%= active_class(account_path) %>">
           <%= link_to account_path do %>
             <i class="glyphicon glyphicon-user"></i> <%= t('blacklight.dashboard_links.my_account') %>
           <% end %>
         </li>
-        <li>
+        <li class="<%= active_class(myworks_path) %>">
           <%= link_to myworks_path do %>
           <i class="glyphicon glyphicon-list-alt"></i> <%= t('blacklight.dashboard_links.my_works') %>
         <% end %>
         </li>
-        <li>
+        <li class="<%= active_class(new_upload_path) %>">
           <%= link_to uploads_path do %>
           <i class="glyphicon glyphicon-plus"></i> <%= t('blacklight.dashboard_links.add_new_work') %>
         <% end %>
         </li>
-        <li class="active">
+        <li class="<%= active_class(admin_path) %>">
           <%= link_to admin_path do %>
           <i class="glyphicon glyphicon-cog"></i> <%= t('blacklight.dashboard_links.admin') %>
         <% end %>
@@ -25,14 +25,7 @@
       </ul>
     </div>
     <div id="dashboard">
-      <div class="row">
-        <div class="col-md-3">
-          <%= render 'shared/admin_sidebar' %>
-        </div>
-        <div class="col-md-9 admin-content">
-          <%= yield %>
-        </div>
-      </div>
+      <%= content_for?(:dashboard) ? yield(:dashboard) : yield %>
     </div>
   </div>
 <% end %>

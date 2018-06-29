@@ -17,4 +17,9 @@ module ApplicationHelper
       end
     )
   end
+  # add active class to current page
+
+  def active_class(link_path)
+    current_page?(link_path) ? 'active' : ''
+  end
 end

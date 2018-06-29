@@ -1,11 +1,9 @@
-<h1>My Works</h1>
-
-<h2>Pending Works</h2>
+<h3>Pending Works</h3>
 <% @pending_documents.each do |document| %>
   <p><%= document.title %></p>
 <% end %>
 
-<h2>Available Works</h2>
+<h3>Available Works</h3>
 <% @current_documents.each do |document| %>
   <p><%= link_to document.to_semantic_values[:title].first,
                  solr_document_path(document.to_semantic_values[:id].first) %></p>

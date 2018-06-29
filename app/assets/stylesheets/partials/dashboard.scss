@@ -1,47 +1,62 @@
 /* dashboard top nav */
 
 #main-page #dashboard-nav {
+  border-bottom: $border;
   font-size: 12px;
+  margin: 30px 0 0 0;
+  padding: 0 10px;
 
   & ul {
-    font-weight: normal;
+    font-weight: bold;
     max-width: none;
   }
 
   & .nav-tabs {
-    margin: 0;
+    border-bottom: 0;
+    margin: -20px 0 1px 0;
   }
 
   & li a {
-    color: $gray-light;
-    padding: 15px 5px;
+    border-bottom: $border;
+    border-color: transparent;
+    color: lighten($gray-light, 10%);
+    padding: 8px 5px;
     text-decoration: none;
   }
 
   & li a:hover {
     background-color: $gray-lighter-custom;
-    border-color: transparent;
-    border-bottom: $border;
   }
 
   & li.active a {
-    border: 0;
+    background: transparent;
     color: $gray-base;
     font-weight: bold;
   }
 
   & li.active a:hover {
-    background: $body-bg;
+    background: transparent;
   }
 }
 
-@media screen and (min-width: $screen-md ) {
+@media screen and (min-width: $screen-sm ) {
 
   #main-page #dashboard-nav {
+    border: 0;
     font-size: 16px;
+    margin: 10px 10px 0 10px;
+
+    & .nav-tabs {
+      border-bottom: $border;
+      margin: 0 0 -1px 0;
+    }
 
     & li a {
       padding: 15px 20px;
+    }
+
+    & li a:hover {
+      border-bottom: $border;
     }
 
     & li.active a {
@@ -54,11 +69,10 @@
 /* dashboard main-page content */
 
 #main-page #dashboard {
-  border: $border;
-  border-top: 0;
+  border: none;
   font-weight: 300;
   line-height: 1.6;
-  padding: 20px;
+  padding: 15px;
 
   & p {
     margin: 0 0 25px 0;
@@ -162,9 +176,12 @@
   }
 }
 
-@media screen and (min-width: $screen-md ) {
+@media screen and (min-width: $screen-sm ) {
 
   #main-page #dashboard {
+    border: $border;
+    margin: 0 20px 15px 20px;
+    padding: 20px;
 
     & .agreement-message,
     & .checkbox,
@@ -173,7 +190,8 @@
     & input[type=file],
     & textarea,
     & select,
-    & .creators {
+    & .creators,
+    & p.note {
       width: 70%;
     }
   }
