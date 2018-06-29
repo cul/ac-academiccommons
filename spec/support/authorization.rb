@@ -1,18 +1,18 @@
-# Shared context for mocking administrative user.
-shared_context 'mock admin user' do
+# Shared context for creating administrative user.
+shared_context 'admin user' do
   before do
-    @admin = double(User, id: 1)
-    allow(@admin).to receive(:admin?).and_return(true)
+    @admin = User.create(uid: 'ta123', first_name: 'Test', last_name: 'Admin', role: User::ADMIN)
+    # allow(@admin).to receive(:admin?).and_return(true)
     allow(@request.env['warden']).to receive(:authenticate!).and_return(@admin)
     allow(controller).to receive(:current_user).and_return(@admin)
   end
 end
 
-# Shared context for mocking a non-administrative user.
-shared_context 'mock non-admin user' do
+# Shared context for creating a non-administrative user.
+shared_context 'non-admin user' do
   before do
-    @non_admin = double(User, id: 2)
-    allow(@non_admin).to receive(:admin?).and_return(false)
+    @non_admin = User.create(uid: 'tu123', first_name: 'Test', last_name: 'User')
+    # allow(@non_admin).to receive(:admin?).and_return(false)
     allow(@request.env['warden']).to receive(:authenticate!).and_return(@non_admin)
     allow(controller).to receive(:current_user).and_return(@non_admin)
   end
@@ -40,7 +40,7 @@ shared_examples 'authorization required' do
   end
 
   context 'logged in as a non-admin user' do
-    include_context 'mock non-admin user'
+    include_context 'non-admin user'
 
     # In order to check status code, etc, need to create request specs.
     it 'fails' do
@@ -49,7 +49,7 @@ shared_examples 'authorization required' do
   end
 
   context 'logged in as an admin user' do
-    include_context 'mock admin user'
+    include_context 'admin user'
 
     before do
       http_request

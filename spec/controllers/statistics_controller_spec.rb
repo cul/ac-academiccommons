@@ -13,7 +13,7 @@ describe StatisticsController, type: :controller, integration: true do
     end
 
     # context 'when admin user makes request' do
-    #   include_context 'mock admin user'
+    #   include_context 'admin user'
     #
     #   let(:all_authors_search) do
     #     { rows: 100000, page: 1, fl: "author_uni_ssim" }
@@ -82,7 +82,7 @@ describe StatisticsController, type: :controller, integration: true do
     end
 
     context 'logged in as a non-admin user' do
-      include_context 'mock non-admin user'
+      include_context 'non-admin user'
 
       it 'fails' do
         expect {
@@ -92,7 +92,7 @@ describe StatisticsController, type: :controller, integration: true do
     end
 
     context 'when admin user makes a request' do
-      include_context 'mock admin user'
+      include_context 'admin user'
 
       before :each do
         FactoryBot.create(:view_stat)
@@ -145,7 +145,7 @@ describe StatisticsController, type: :controller, integration: true do
     end
 
     context 'when admin makes request' do
-      include_context 'mock admin user'
+      include_context 'admin user'
 
       before do
         get :send_csv_report,
