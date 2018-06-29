@@ -39,7 +39,7 @@ describe EmailPreferencesController, type: :controller do
     end
 
     context 'logged in as a non-admin user' do
-      include_context 'mock non-admin user'
+      include_context 'non-admin user'
 
       it 'fails' do
         expect { http_request }.to raise_error CanCan::AccessDenied
@@ -47,7 +47,7 @@ describe EmailPreferencesController, type: :controller do
     end
 
     context 'logged in as an admin user' do
-      include_context 'mock admin user'
+      include_context 'admin user'
 
       before do
         http_request
@@ -81,7 +81,7 @@ describe EmailPreferencesController, type: :controller do
     end
 
     context 'logged in as a non-admin user' do
-      include_context 'mock non-admin user'
+      include_context 'non-admin user'
 
       it 'fails' do
         expect { http_request }.to raise_error CanCan::AccessDenied
@@ -89,7 +89,7 @@ describe EmailPreferencesController, type: :controller do
     end
 
     context 'logged in as an admin user' do
-      include_context 'mock admin user'
+      include_context 'admin user'
 
       before do
         http_request
@@ -121,7 +121,7 @@ describe EmailPreferencesController, type: :controller do
     end
 
     context 'logged in as a non-admin user' do
-      include_context 'mock non-admin user'
+      include_context 'non-admin user'
 
       it 'fails' do
         expect { http_request }.to raise_error CanCan::AccessDenied
@@ -129,7 +129,7 @@ describe EmailPreferencesController, type: :controller do
     end
 
     context 'logged in as an admin user' do
-      include_context 'mock admin user'
+      include_context 'admin user'
 
       before do
         http_request

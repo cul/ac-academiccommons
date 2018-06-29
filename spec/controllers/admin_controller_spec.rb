@@ -19,18 +19,6 @@ describe AdminController, type: :controller do
     end
   end
 
-  describe 'GET edit_alert_message' do
-    include_examples 'authorization required' do
-      let(:http_request) { get :edit_alert_message }
-    end
-  end
-
-  describe 'POST edit_alert_message' do
-    include_examples 'authorization required' do
-      let(:http_request) { post :edit_alert_message }
-    end
-  end
-
   describe 'GET deposits' do
     include_examples 'authorization required' do
       let(:http_request) { get :deposits }

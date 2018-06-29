@@ -1,6 +1,6 @@
 
 <% cache('alert_message', expires_in: 1.day, race_condition_ttl: 2, skip_digest: true) do %>
-  <% if (alert_msg = ContentBlock.find_by_title("alert_message")) && !alert_msg.data.blank? %>
+  <% if (alert_msg = ContentBlock.find_by_title(ContentBlock::ALERT_MESSAGE)) && !alert_msg.data.blank? %>
     <center>
       <div class="warn" style="width: 550px; padding: 20px; background: rgba(255,255,255,.5); border: 1px solid red">
         <%= alert_msg.data.to_s %>

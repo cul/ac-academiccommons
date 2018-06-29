@@ -17,11 +17,13 @@
           <i class="glyphicon glyphicon-plus"></i> <%= t('blacklight.dashboard_links.add_new_work') %>
         <% end %>
         </li>
-        <li class="<%= active_class(admin_path) %>">
-          <%= link_to admin_path do %>
-          <i class="glyphicon glyphicon-cog"></i> <%= t('blacklight.dashboard_links.admin') %>
+        <% if current_user.admin? %>
+          <li class="<%= active_class(admin_path) %>">
+            <%= link_to admin_path do %>
+            <i class="glyphicon glyphicon-cog"></i> <%= t('blacklight.dashboard_links.admin') %>
+          <% end %>
+          </li>
         <% end %>
-        </li>
       </ul>
     </div>
     <div id="dashboard">
