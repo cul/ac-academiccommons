@@ -8,6 +8,7 @@ addons:
 before_script:
   - "for c in config/*.template.yml; do cp $c ${c/template.}; done"
 script:
+  - yarn
   - bundle exec rake db:schema:load
   - bundle exec rake db:test:prepare
   - bundle exec rake

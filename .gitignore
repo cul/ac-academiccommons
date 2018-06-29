@@ -41,4 +41,4 @@ coverage/*
 .ruby-gemset
 .ruby-version
 /storage/*
-node_modules
+/node_modules/

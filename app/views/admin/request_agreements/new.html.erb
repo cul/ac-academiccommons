@@ -1,0 +1,31 @@
+<h1>Request Agreements</h1>
+
+<p>
+  Use the form below to ask users who do not have a UNI log in to sign the
+  participation agreeement. Users will get a signed link that is connected to
+  their email and, optionally, uni.
+</p>
+
+<p>
+  The latest participation agreement is version <%= Agreement::LATEST_AGREEMENT_VERSION %>.
+</p>
+
+<%= form_with model: @request_agreements_form, url: admin_request_agreements_path, method: :create, local: true do |f| %>
+  <div>
+    <%= f.label :name, 'Name' %>
+    <%= f.text_field :name %>
+  </div>
+  <div>
+    <%= f.label :email, 'Email' %>
+    <%= f.text_field :email %>
+  </div>
+
+  <div>
+    <%= f.label :uni, 'UNI' %>
+    <%= f.text_field :uni %>
+  </div>
+
+  <div>
+    <%= f.submit 'Request Author Agreement', class: 'btn btn-primary' %>
+  </div>
+<% end %>

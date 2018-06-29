@@ -1,42 +1,63 @@
 class AgreementsController < ApplicationController
-  load_and_authorize_resource
+  load_and_authorize_resource       unless: :token?
+  before_action :verify_token,      if:     :token?
+
+  helper_method :token?, :token
 
   def show
     redirect_to(action: :new) unless current_user.signed_latest_agreement?
   end
 
   def new
-    redirect_to(action: :show) if current_user.signed_latest_agreement?
+    Rails.logger.debug params.inspect
+    redirect_to(action: :show) if !token? && current_user.signed_latest_agreement?
 
-    @agreement = Agreement.new
+    @agreement ||= Agreement.new(agreement_params)
+    @agreement.uni = current_user.uid unless token?
   end
 
   # Endpoint for logged in user to accept author agreement.
   def create
-    if params[:agreement][:accepted_agreement]
-      agreement = Agreement.new(agreement_params)
-      agreement.user = current_user
+    @agreement = Agreement.new(agreement_params)
+    @agreement.user = current_user     unless token?
+    @agreement.uni  = current_user.uid unless token?
 
-      NotificationMailer.new_agreement(
-        agreement_params[:name],
-        agreement_params[:email],
-        agreement_params[:agreement_version]
-      ).deliver
-
-      if agreement.save
+    if ActiveRecord::Type::Boolean.new.cast(params[:agreement][:accepted_agreement])
+      if @agreement.save
         flash[:notice] = 'Author Agreement Accepted.'
-        redirect_to uploads_path
+
+        NotificationMailer.new_agreement(
+          agreement_params[:name],
+          agreement_params[:email],
+          agreement_params[:agreement_version]
+        ).deliver
+
+        redirect_to token? ? root_path : uploads_path
       else
-        flash[:error] = 'There was an error submitting your agreement form, please make sure ALL fields are filled.'
-        redirect_to action: :new
+        flash[:error] = @agreement.errors.full_messages.to_sentence
+        render :new
       end
     else
       flash[:error] = 'You must accept the participation agreement.'
-      redirect_to action: :new
+      render :new
     end
   end
 
   private
+
+  def token
+    params.dig(:agreement, :token)
+  end
+
+  def token?
+    token.present?
+  end
+
+  def verify_token
+    creds = Rails.application.message_verifier(:agreement).verify(token)
+    raise CanCanCan::AccessDenied if creds.nil? || creds.is_a?(ActiveSupport::MessageVerifier::InvalidSignature) || creds[2] != Agreement::LATEST_AGREEMENT_VERSION
+    params[:agreement] = (params[:agreement] || {}).merge(email: creds[0], uni: creds[1])
+  end
 
   def agreement_params
     params.require(:agreement).permit(:uni, :agreement_version, :name, :email)
