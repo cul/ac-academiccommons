@@ -43,4 +43,16 @@ class NotificationMailer < ApplicationMailer
 
     mail(to: email, from: from, subject: subject)
   end
+
+  # Notification sent out to self-identified student depositors. This
+  # notification serves as a reminder that departmental approval is required
+  # for student works.
+  def reminder_to_request_departmental_approval(name, email)
+    @name = name
+
+    from = Rails.application.config_for(:emails)['mail_deliverer']
+    subject = 'Request Department Approval'
+
+    mail(to: email, from: from, subject: subject)
+  end
 end
