@@ -3,8 +3,6 @@ class UploadsController < ApplicationController
 
   layout 'dashboard'
 
-  # layout 'main', only: [:index]
-
   # GET /upload
   # Show upload landing page page if user is not logged in. If user is logged
   # in redirect to /upload/new
