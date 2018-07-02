@@ -1,18 +1,11 @@
-<div class="agreement-message">
-
-  <% if current_user.signed_latest_agreement? %>
-
-    <p><strong>Note:</strong> You have signed the Academic Commons participation agreement. This agreement applies to all works you upload to Academic Commons.</p>
-
+<% if current_user.signed_latest_agreement? %>
+  <p class="agreement-message alert alert-info">
+    <strong>Note:</strong> You have signed the Academic Commons participation agreement. This agreement applies to all works you upload to Academic Commons.
     <%= link_to 'Read the agreement', agreement_path %>
-
-  <% else %>
-
-    <p><strong>Note:</strong> To upload your research, you must sign the Academic Commons participation agreement. This agreement applies to all works that you upload to Academic Commons.</p>
-
+  </p>
+<% else %>
+  <p class="agreement-message alert alert-info">
+    <strong>Note:</strong> To upload your research, you must sign the Academic Commons participation agreement. This agreement applies to all works that you upload to Academic Commons.
     <%= link_to 'Read and sign the agreement', agreement_path %>
-
-    <!-- <p>* If you are uploading research as a proxy for the creator(s), check the box below. </p> -->
-  <% end %>
-
-</div>
+  </p>
+<% end %>

@@ -74,19 +74,23 @@
   line-height: 1.6;
   padding: 15px;
 
+  & h3 {
+    font-size: 25px;
+    font-weight: 300;
+    margin: 30px 0;
+  }
+
   & p {
-    margin: 0 0 25px 0;
+    margin: 0 0 30px 0;
+    max-width: none;
+  }
+
+  & p.alert {
+    margin-bottom: 10px;
   }
 
   & .item {
-    margin: 0 0 20px 0;
-  }
-
-  & .agreement-message {
-    background: $gray-lighter-custom;
-    border-radius: 3px;
-    margin: 0 0 20px 0;
-    padding: 25px;
+    margin: 30px 0;
   }
 
   & input,
@@ -113,23 +117,22 @@
     border: 0;
   }
 
-  & .checkbox {
-    background: $gray-lighter-custom;
-    border-radius: 3px;
-    line-height: 1.4;
-    padding: 25px;
+  & label {
+    display: block;
+    font-size: 18px;
   }
 
   & .checkbox h5 {
+    font-size: 18px;
     margin: 0 0 8px 0;
   }
 
   & .checkbox input[type=checkbox] {
-    line-height: 1.4;
-    margin: 3px 5px 0 0;
+    margin: 4px 5px 0 0;
   }
 
   & .checkbox label {
+    font-size: 16px;
     font-weight: 300;
   }
 
@@ -138,14 +141,17 @@
     padding: 10px;
   }
 
-  & h3 {
-    font-size: 2.5rem;
-    font-weight: 300;
-    margin: 25px 0;
+  & form h3 {
+    font-size: 18px;
+    font-weight: bold;
+    margin: 0 0 5px 0;
   }
 
   & .creators {
+    background: $gray-lighter-custom;
+    border-radius: 4px;
     margin: 0 0 30px 0;
+    padding: 20px;
     width: 100%;
   }
 
@@ -156,6 +162,7 @@
   & #creator-list label,
   & #creator-list input {
     flex: 1;
+    font-size: 14px;
     margin: 0 2px 8px 0;
   }
 
@@ -192,7 +199,8 @@
     & select,
     & .creators,
     & p.note,
-    & .dropzone {
+    & .dropzone,
+    & p {
       width: 70%;
     }
   }

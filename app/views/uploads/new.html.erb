@@ -1,25 +1,24 @@
 <%= render 'agreement' %>
 
-<p><em>This form accepts files up to 100MB in size. If you have larger files, email <%= mail_to "ac@columbia.edu" %>.</em><p>
-
 <%= form_with(model: @deposit, url: uploads_path, method: :create, local: true, id: :upload) do |form| %>
+
   <div class="item">
-    <div><%= form.label(:title, 'Title') %>*</div>
-    <div><%= form.text_field(:title, placeholder: 'Title') %></div>
+    <%= form.label(:title, 'Title*') %>
+    <%= form.text_field(:title, placeholder: 'Title') %>
   </div>
 
   <div class="item">
-    <div><%= form.label(:abstract, 'Abstract') %>*</div>
-    <div><%= form.text_area(:abstract, placeholder: 'What is this work about? Provide a brief summary to help readers understand its argument.') %></div>
+    <%= form.label(:abstract, 'Abstract*') %>
+    <%= form.text_area(:abstract, placeholder: 'What is this work about? Provide a brief summary to help readers understand its argument.') %>
   </div>
 
   <div class="item">
-    <div><%= form.label(:year, 'Year Created') %>*</div>
-    <div><%= form.number_field(:year, placeholder: 'YYYY') %></div>
+    <%= form.label(:year, 'Year Created*') %>
+    <%= form.number_field(:year, placeholder: 'YYYY') %>
   </div>
 
   <div class="item">
-    <%= form.label(:doi, 'DOI/URL') %><br>
+    <%= form.label(:doi, 'DOI/URL') %>
     <%= form.text_field(:doi, placeholder: 'DOI or URL of work online (if applicable)') %>
   </div>
 
@@ -29,9 +28,10 @@
     <%= form.label :student, 'Check here if you are a current student at Columbia or one of its affiliate institutions.' %>
   </div>
 
+  <h3>Creator(s)</h3>
   <div class="creators">
     <%= '<div class="field_with_errors">'.html_safe if @deposit.errors.include?(:creators) %>
-      <h3>Creator(s)</h3>
+
       <div id='creator-list'>
         <div>
           <label for="deposit_creators_first_name">First Name*</label>
@@ -59,16 +59,15 @@
   </div>
 
   <div class="item">
-    <div><%= form.label(:notes, 'Notes') %></div>
-    <div><%= form.text_area(:notes, placeholder: 'Additional information you want included in the record and/or notes for repository staff') %></div>
+    <%= form.label(:notes, 'Notes') %>
+    <%= form.text_area(:notes, placeholder: 'Additional information you want included in the record and/or notes for repository staff') %>
   </div>
 
   <div class="item">
-    <%= form.label(:rights_statement, 'Copyright Status') %>*<br>
-    <p>
-      Please confirm whether your deposit is in any way copyright protected.  By making a selection from the menu below I confirm
-      that I have the authority to do so. For more information about how copyright protects your materials, see
-      <%= link_to 'https://copyright.columbia.edu/basics/copyright-quick-guide.html', 'https://copyright.columbia.edu/basics/copyright-quick-guide.html' %>
+    <%= form.label(:rights_statement, 'Copyright Status*') %>
+    <p class="alert alert-warning">
+      Please confirm whether your deposit is in any way copyright protected. By making a selection from the menu below I confirm that I have the authority to do so. For more information about how copyright protects your materials, see our
+      <%= link_to 'Copyright Quick Guide', 'https://copyright.columbia.edu/basics/copyright-quick-guide.html' %>
     </p>
     <%= form.collection_select(:rights_statement,
                                Deposit::COPYRIGHT_STATUS,
@@ -82,6 +81,8 @@
 
   <div class="item" id="file-upload">
     <div><%= form.label(:files, 'Upload File(s)*') %></div>
+      <p class="alert alert-gray">This form accepts files up to 100MB in size. If you have larger files, email <%= mail_to "ac@columbia.edu" %>.</p>
+
     <div><%= form.file_field :files, multiple: true, direct_upload: true %></div>
 
     <div action='/' id="deposit-drop" class="dropzone"></div>
