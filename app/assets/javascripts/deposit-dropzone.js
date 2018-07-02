@@ -55,7 +55,7 @@ $(document).ready(function() {
         uploadFile(file);
       });
     },
-    dictDefaultMessage: "Click here or drag and drop your files",
+    dictDefaultMessage: "<span class='link-color'>Select a file</span> or drag and drop here",
     paramName: 'deposit[files][]',
     uploadMultiple: true,
     autoProcessQueue: false,

@@ -1,20 +1,47 @@
+#main-page .dropzone {
+  border: $border;
+  border-radius: 5px;
+  border-style: dashed;
+  border-width: 2px;
+  font-size: 14px;
 
-.dropzone.dz-started .dz-message {
-  display: block;
+  & .dz-message {
+    font-size: 18px;
+  }
+
+  &.dz-started .dz-message {
+    display: block;
+  }
+
+  & .dz-success-mark {
+    display: none;
+  }
+
+  & .dz-error-mark {
+    display: none;
+  }
+
+  & .dz-success .dz-success-mark {
+    display: inline;
+  }
+
+  & .dz-error .dz-error-mark {
+    display: inline;
+  }
+
+  & .dz-message span.link-color {
+    color: $brand-primary;
+  }
+
+  & .dz-message span.link-color:hover {
+    text-decoration: underline;
+  }
+
+  & .dz-success-mark {
+    color: #5cb85c;
+  }
 }
 
-.dropzone .dz-success-mark {
-  display: none;
-}
-
-.dropzone .dz-error-mark {
-  display: none;
-}
-
-.dropzone .dz-success .dz-success-mark {
-  display: inline;
-}
-
-.dropzone .dz-error .dz-error-mark {
-  display: inline;
+#main-page .dz-drag-hover {
+  background: $gray-lighter-custom;
 }
