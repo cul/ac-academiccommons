@@ -9,7 +9,7 @@ class UploadsController < ApplicationController
   # Show upload landing page page if user is not logged in. If user is logged
   # in redirect to /upload/new
   def index
-    redirect_to(action: :new) and return if current_user
+    redirect_to(action: :new) && return if current_user
     render layout: 'main'
   end
 
