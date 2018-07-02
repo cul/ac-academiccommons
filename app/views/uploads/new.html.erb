@@ -64,22 +64,21 @@
   </div>
 
   <div class="item">
-    <%= form.label(:rights_statement, 'Rights Statement') %>*<br>
+    <%= form.label(:rights_statement, 'Copyright Status') %>*<br>
+    <p>
+      Please confirm whether your deposit is in any way copyright protected.  By making a selection from the menu below I confirm
+      that I have the authority to do so. For more information about how copyright protects your materials, see
+      <%= link_to 'https://copyright.columbia.edu/basics/copyright-quick-guide.html', 'https://copyright.columbia.edu/basics/copyright-quick-guide.html' %>
+    </p>
     <%= form.collection_select(:rights_statement,
-                               Deposit::RIGHTS_STATEMENTS,
+                               Deposit::COPYRIGHT_STATUS,
                                :to_s,
                                :to_s,
                                prompt: 'Choose copyright status of this work') %>
   </div>
 
-  <div class="item">
-    <%= form.label(:license, 'License') %><br>
-    <%= form.collection_select(:license,
-                               Deposit::LICENSE,
-                               :to_s,
-                               :to_s,
-                               prompt: 'Choose how other people use this work') %>
-  </div>
+  <%# div for license information populated via javascript %>
+  <div id="use-by-others" class="item"></div>
 
   <div class="item" id="file-upload">
     <div><%= form.label(:files, 'Upload File(s)*') %></div>

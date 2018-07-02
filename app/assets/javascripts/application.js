@@ -12,7 +12,8 @@
 //= require sticky-sidebar
 //= require smooth-scroll
 //= require social-share-button
-//= require custom/add-creator
 //= require activestorage
 //= require dropzone
 //= require deposit-dropzone
+//= require upload/add-creator
+//= require upload/license-options
