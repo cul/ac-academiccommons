@@ -25,8 +25,8 @@
 
   <div class="item checkbox">
     <h5>Current student?</h5>
-    <input type="checkbox" value="1" name="agreement[accepted_agreement]" id="agreement_accepted_agreement">
-    <label for="agreement_accepted_agreement">Check here if you are a current student at Columbia or one of its affiliate institutions.</label>
+    <%= form.check_box :student %>
+    <%= form.label :student, 'Check here if you are a current student at Columbia or one of its affiliate institutions.' %>
   </div>
 
   <div class="creators">
