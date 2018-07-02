@@ -4,13 +4,14 @@ class CollectionsController < ApplicationController
       title: 'Featured Collections',
       summary: 'Discover unique research produced by a our featured Columbia departments, institutes and centers.',
       facet: 'department_ssim',
-      values: [
-        'Center on Japanese Economy and Business',
-        'Columbia Center on Sustainable Investment',
-        'Community College Research Center',
-        'National Center for Disaster Preparedness',
-        'Tow Center for Digital Journalism'
-      ]
+      values: {
+        'Center for Behavioral Cardiovascular Health' => 'The Center for Behavioral Cardiovascular Health (CBCH) is a leader in cutting-edge behavioral medicine research dedicated to understanding how and why behaviors, psychological factors, and societal forces influence hypertension and cardiovascular disease. ',
+        'Center on Japanese Economy and Business'     => 'The Center on Japanese Economy and Business (CJEB) is the preeminent US academic center focused on promoting knowledge of Japanese business systems in domestic, East Asia, and international contexts.',
+        'Columbia Center on Sustainable Investment'   => 'The Columbia Center on Sustainable Investment (CCSI) is the only university-based applied research center and forum dedicated to the study, practice and discussion of sustainable international investment.',
+        'Community College Research Center'           => 'CCRC strategically assesses the problems and performance of community colleges in order to contribute to the development of practice and policy that expands access to higher education and promotes success for all students.',
+        'National Center for Disaster Preparedness'   => 'The National Center for Disaster Preparedness at the Earth Institute works to understand and improve the nation’s capacity to prepare for, respond to and recover from disasters. ',
+        'Tow Center for Digital Journalism'           => 'The Tow Center for Digital Journalism hosts a variety of diverse research projects that explore innovation at the intersection of journalism and technology.'
+      }
     },
     doctoraltheses: {
       title: 'Doctoral Theses',
@@ -50,11 +51,13 @@ class CollectionsController < ApplicationController
     end
 
     facet_counts = response.facet_fields[@category.facet].each_slice(2).to_a.to_h
-    facet_counts.keep_if { |k, _| @category.values.include?(k) } if @category.values
+    facet_counts.keep_if { |k, _| @category.values.keys.include?(k) } if @category.values
 
     @collections = facet_counts.map do |value, count|
       filters = { @category.facet => value }.merge(@category.filter || {})
-      OpenStruct.new(label: value, count: count, search_url: search_url(filters))
+      c = OpenStruct.new(label: value, count: count, search_url: search_url(filters))
+      c.description = @category.values[value] if @category.values
+      c
     end
   end
 

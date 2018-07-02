@@ -9,6 +9,7 @@
 <ul class="link-list">
   <% @collections.each do |collection| %>
     <li><%= link_to collection.label, collection.search_url %> (<%= collection.count %>)</li>
+    <%= content_tag(:p, collection.description) if collection.description %>
   <% end %>
 </ul>
 
