@@ -85,12 +85,8 @@
     max-width: none;
   }
 
-  & p.alert {
-    margin-bottom: 10px;
-  }
-
   & .item {
-    margin: 30px 0;
+    margin: 40px 0;
   }
 
   & input,
@@ -117,13 +113,14 @@
     border: 0;
   }
 
-  & label {
+  & label,
+  & h5 {
     display: block;
-    font-size: 18px;
+    font-size: 14px;
+    text-transform: uppercase;
   }
 
   & .checkbox h5 {
-    font-size: 18px;
     margin: 0 0 8px 0;
   }
 
@@ -132,11 +129,14 @@
   }
 
   & .checkbox label {
+    color: $gray-base;
     font-size: 16px;
     font-weight: 300;
+    text-transform: none;
   }
 
   & textarea {
+    margin-bottom: -10px;
     min-height: 200px;
     padding: 10px;
   }
@@ -164,6 +164,7 @@
     flex: 1;
     font-size: 14px;
     margin: 0 2px 8px 0;
+    text-transform: none;
   }
 
   & select {
@@ -171,6 +172,10 @@
     height: 30px;
     padding: 5px;
     width: 100%;
+  }
+
+  & p.note {
+    margin: 0 0 10px 0;
   }
 
   & .field_with_errors {
