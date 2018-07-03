@@ -3,16 +3,16 @@
 
 // TODO: This needs to be revisited soon for a more elegant solution.
 
-const uploadFile = function (file) {
-  const input = document.querySelector('input[type=file]')
+function uploadFile(file) {
+  var input = document.querySelector('input[type=file]');
 
   // your form needs the file_field direct_upload: true, which
   // provides data-direct-upload-url
-  const url = input.dataset.directUploadUrl
+  var url = input.dataset.directUploadUrl;
 
-  const upload = new ActiveStorage.DirectUpload(file, url);
+  var upload = new ActiveStorage.DirectUpload(file, url);
 
-  upload.create((error, blob) => {
+  upload.create(function (error, blob){
     if (error) {
       // Handle the error
       file.previewElement.classList.add("dz-error");
@@ -20,11 +20,11 @@ const uploadFile = function (file) {
       //  Add an appropriately-named hidden input to the form with a
       //  value of blob.signed_id so that the blob ids will be
       //  transmitted in the normal upload flow
-      const hiddenField = document.createElement('input')
+      var hiddenField = document.createElement('input');
       hiddenField.setAttribute("type", "hidden");
       hiddenField.setAttribute("value", blob.signed_id);
-      hiddenField.name = input.name
-      document.querySelector('form#upload').appendChild(hiddenField)
+      hiddenField.name = input.name;
+      document.querySelector('form#upload').appendChild(hiddenField);
       file.previewElement.classList.add("dz-success");
     }
   })
@@ -42,8 +42,8 @@ $(document).ready(function() {
   // Initializing dropzone, when a file is added use activestorage to upload it.
   $("div#deposit-drop").dropzone({
     init: function(){
-      const input = document.querySelector('input[type=file]')
-      const inputTwo = document.querySelector('input[class=dz-hidden-input]')
+      var input = document.querySelector('input[type=file]');
+      var inputTwo = document.querySelector('input[class=dz-hidden-input]');
 
       inputTwo.setAttribute('data-direct-upload-url', input.getAttribute('data-direct-upload-url'));
       inputTwo.setAttribute('name', input.getAttribute('name'));
@@ -67,7 +67,7 @@ $(document).ready(function() {
   // Remove any attachments that may be presisted from previous requests.
   // We can revist this behavior when we can display this previously attached
   // documents in the UI.
-  const hiddenFileInputs = document.querySelectorAll('input[name="deposit[files][]"][type="hidden"]');
+  var hiddenFileInputs = document.querySelectorAll('input[name="deposit[files][]"][type="hidden"]');
   console.log(hiddenFileInputs);
-  hiddenFileInputs.forEach( function(currentValue, currentIndex, listObj) { currentValue.remove(); } )
+  hiddenFileInputs.forEach( function(currentValue, currentIndex, listObj) { currentValue.remove(); } );
 });
