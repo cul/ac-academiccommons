@@ -1,8 +1,8 @@
 <%= render 'agreement' %>
 
-<p class="note"><em>This form accepts files up to 100MB in size. If you have larger files, email <%= mail_to "ac@columbia.edu" %>.</em><p>
+<p><em>This form accepts files up to 100MB in size. If you have larger files, email <%= mail_to "ac@columbia.edu" %>.</em><p>
 
-<%= form_with(model: @deposit, url: uploads_path, method: :create, local: true) do |form| %>
+<%= form_with(model: @deposit, url: uploads_path, method: :create, local: true, id: :upload) do |form| %>
   <div class="item">
     <div><%= form.label(:title, 'Title') %>*</div>
     <div><%= form.text_field(:title, placeholder: 'Title') %></div>
@@ -44,17 +44,18 @@
             <input type="text" name="deposit[creators][][last_name]" class="deposit_creators_last_name", value="<%= c['last_name'] %>">
             <input type="text" name="deposit[creators][][uni]" class="deposit_creators_uni",  value="<%= c['uni'] %>" <%= 'readonly="readonly"' if c['uni'] == current_user.uid %>>
           </div>
-        <% end %>
-      </div>
+      <% end %>
+    </div>
 
     <%= '</div>'.html_safe if @deposit.errors.include?(:creators) %>
+
     <div>
       <%= button_tag 'Add another creator',
                      type: 'button',
                      id: 'add-address',
                      class: 'btn btn-default',
                      data: { creator_list_id: 'creator-list'} %>
-  </div>
+    </div>
   </div>
 
   <div class="item">
@@ -80,11 +81,25 @@
                                prompt: 'Choose how other people use this work') %>
   </div>
 
-  <div class="item">
-    <div><%= form.label(:upload_files, 'Upload File(s)*') %></div>
-    <%= form.file_field :files, multiple: true %>
+  <div class="item" id="file-upload">
+    <div><%= form.label(:files, 'Upload File(s)*') %></div>
+    <div><%= form.file_field :files, multiple: true, direct_upload: true %></div>
+
+    <div action='/' id="deposit-drop" class="dropzone"></div>
   </div>
 
-  <%= form.submit 'Submit', :class => 'btn btn-primary' %>
+  <div id='file-preview'>
+    <div id="preview-template">
+      <div>
+        <span class="name" data-dz-name></span>
+        <strong class="error text-danger" data-dz-errormessage></strong>
+        <span class="size" data-dz-size></span>
+        <span class="dz-success-mark">✔</span>
+        <span class="dz-error-mark">✘</span>
+      </div>
+    </div>
+  </div>
+
+  <%= form.submit 'Submit', class: 'btn btn-primary' %>
 
 <% end %>

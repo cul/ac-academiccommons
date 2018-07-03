@@ -2,6 +2,10 @@
 # yarn lockfile v1
 
 
+dropzone@^5.4.0:
+  version "5.4.0"
+  resolved "https://registry.yarnpkg.com/dropzone/-/dropzone-5.4.0.tgz#3290c07f59b189eb5a11e99a58c9b2adae5acfec"
+
 jquery@~2.1.4:
   version "2.1.4"
   resolved "https://registry.yarnpkg.com/jquery/-/jquery-2.1.4.tgz#228bde698a0c61431dc2630a6a154f15890d2317"

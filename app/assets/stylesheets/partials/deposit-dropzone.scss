@@ -1,0 +1,55 @@
+#main-page .dropzone {
+  border: $border;
+  border-radius: 5px;
+  border-style: dashed;
+  border-width: 2px;
+  font-size: 14px;
+
+  & .dz-message {
+    font-size: 18px;
+  }
+
+  &.dz-started .dz-message {
+    display: block;
+  }
+
+  & .dz-success-mark {
+    display: none;
+  }
+
+  & .dz-error-mark {
+    display: none;
+  }
+
+  & .dz-success .dz-success-mark {
+    display: inline;
+  }
+
+  & .dz-error .dz-error-mark {
+    display: inline;
+  }
+
+  & .dz-message span.link-color {
+    color: $brand-primary;
+  }
+
+  & .dz-message span.link-color:hover {
+    text-decoration: underline;
+  }
+
+  & .dz-success {
+    color: #5cb85c;
+  }
+
+  & .dz-error {
+    color: #d9534f;
+  }
+
+  & .dz-success-mark {
+    color: #5cb85c;
+  }
+}
+
+#main-page .dz-drag-hover {
+  background: $gray-lighter-custom;
+}
