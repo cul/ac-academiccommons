@@ -85,6 +85,10 @@
     max-width: none;
   }
 
+  & p.note {
+    margin: 0 0 10px 0;
+  }
+
   & .item {
     margin: 40px 0;
   }
@@ -136,7 +140,6 @@
   }
 
   & textarea {
-    margin-bottom: -10px;
     min-height: 200px;
     padding: 10px;
   }
@@ -172,10 +175,6 @@
     height: 30px;
     padding: 5px;
     width: 100%;
-  }
-
-  & p.note {
-    margin: 0 0 10px 0;
   }
 
   & .field_with_errors {
