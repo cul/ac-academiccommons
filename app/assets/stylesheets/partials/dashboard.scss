@@ -150,26 +150,6 @@
     margin: 0 0 5px 0;
   }
 
-  & .creators {
-    background: $gray-lighter-custom;
-    border-radius: 4px;
-    margin: 0 0 30px 0;
-    padding: 20px;
-    width: 100%;
-  }
-
-  & #creator-list div {
-    display: flex;
-  }
-
-  & #creator-list label,
-  & #creator-list input {
-    flex: 1;
-    font-size: 14px;
-    margin: 0 2px 8px 0;
-    text-transform: none;
-  }
-
   & select {
     border: $border;
     height: 30px;
@@ -184,6 +164,65 @@
     & textarea {
       border: 2px solid #d9534f;
     }
+  }
+
+  /* creator list */
+
+  & .creators {
+    border: $border;
+    border-radius: 4px;
+    margin: 0 0 30px 0;
+    padding: 20px;
+    width: 100%;
+  }
+
+  & .creator-header,
+  & #creator-list div {
+    align-items: center;
+    border: 0;
+    border-bottom: $border;
+    border-style: dotted;
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 0;
+  }
+
+  & .creator-header {
+    border: none;
+    padding: 0 0 5px 0;
+  }
+
+  & #creator-list div:hover {
+    cursor: pointer;
+  }
+
+  & .creator-header label,
+  & .creator-header span,
+  & #creator-list input,
+  & #creator-list span.sort-icon {
+    font-size: 14px;
+    margin: 0 3px 0 0;
+    text-transform: none;
+    width: 30%;
+  }
+
+  & .creator-header span.placeholder {
+    color: transparent;
+    margin: 0;
+    padding: 6px;
+    width: 7%;
+  }
+
+  & #creator-list span.sort-icon {
+    color: $gray-light;
+    margin: 0;
+    padding: 6px;
+    text-align: center;
+    width: 7%;
+  }
+
+  & #creator-list span.sort-icon:hover {
+    background: $gray-lighter-custom;
   }
 }
 
