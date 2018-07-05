@@ -29,6 +29,10 @@
     display: inline;
   }
 
+  & .dz-complete .dz-waiting-mark {
+    display: none;
+  }
+
   & .dz-message span.link-color {
     color: $brand-primary;
   }
