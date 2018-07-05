@@ -81,7 +81,7 @@
 
   <div class="item" id="file-upload">
     <div><%= form.label(:files, 'Upload File(s)*') %></div>
-      <p class="alert alert-gray">This form accepts files up to 100MB in size. If you have larger files, email <%= mail_to "ac@columbia.edu" %>.</p>
+      <p class="alert alert-info">This form accepts files up to 100MB in size. If you have larger files, email <%= mail_to "ac@columbia.edu" %>.</p>
 
     <div><%= form.file_field :files, multiple: true, direct_upload: true %></div>
 
