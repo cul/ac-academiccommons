@@ -14,6 +14,6 @@
 //= require social-share-button
 //= require activestorage
 //= require dropzone
-//= require deposit-dropzone
+//= require upload/file-upload
 //= require upload/add-creator
 //= require upload/license-options
