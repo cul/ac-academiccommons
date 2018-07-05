@@ -74,19 +74,23 @@
   line-height: 1.6;
   padding: 15px;
 
+  & h3 {
+    font-size: 25px;
+    font-weight: 300;
+    margin: 30px 0;
+  }
+
   & p {
-    margin: 0 0 25px 0;
+    margin: 0 0 30px 0;
+    max-width: none;
+  }
+
+  & p.note {
+    margin: 0 0 10px 0;
   }
 
   & .item {
-    margin: 0 0 20px 0;
-  }
-
-  & .agreement-message {
-    background: $gray-lighter-custom;
-    border-radius: 3px;
-    margin: 0 0 20px 0;
-    padding: 25px;
+    margin: 40px 0;
   }
 
   & input,
@@ -113,11 +117,11 @@
     border: 0;
   }
 
-  & .checkbox {
-    background: $gray-lighter-custom;
-    border-radius: 3px;
-    line-height: 1.4;
-    padding: 25px;
+  & label,
+  & h5 {
+    display: block;
+    font-size: 14px;
+    text-transform: uppercase;
   }
 
   & .checkbox h5 {
@@ -125,12 +129,14 @@
   }
 
   & .checkbox input[type=checkbox] {
-    line-height: 1.4;
-    margin: 3px 5px 0 0;
+    margin: 4px 5px 0 0;
   }
 
   & .checkbox label {
+    color: $gray-base;
+    font-size: 16px;
     font-weight: 300;
+    text-transform: none;
   }
 
   & textarea {
@@ -138,14 +144,17 @@
     padding: 10px;
   }
 
-  & h3 {
-    font-size: 2.5rem;
-    font-weight: 300;
-    margin: 25px 0;
+  & form h3 {
+    font-size: 18px;
+    font-weight: bold;
+    margin: 0 0 5px 0;
   }
 
   & .creators {
+    background: $gray-lighter-custom;
+    border-radius: 4px;
     margin: 0 0 30px 0;
+    padding: 20px;
     width: 100%;
   }
 
@@ -156,7 +165,9 @@
   & #creator-list label,
   & #creator-list input {
     flex: 1;
+    font-size: 14px;
     margin: 0 2px 8px 0;
+    text-transform: none;
   }
 
   & select {
@@ -192,7 +203,8 @@
     & select,
     & .creators,
     & p.note,
-    & .dropzone {
+    & .dropzone,
+    & p {
       width: 70%;
     }
   }

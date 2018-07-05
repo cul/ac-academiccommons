@@ -1,22 +1,7 @@
 class Deposit < ApplicationRecord
-  RIGHTS_STATEMENTS = [
-    'No Copyright - United States',
-    'No Copyright - Other Known Legal Restrictions',
+  COPYRIGHT_STATUS = [
     'In Copyright',
-    'In Copyright - Educational Use Permitted',
-    'In Copyright- Non-Commercial Use Permitted',
-    'In Copyright- Unknown Rightsholder',
-    'Copyright Undetermined'
-  ].freeze
-
-  LICENSE = [
-    'Attribution (CC BY)',
-    'Attribution-ShareAlike (CC BY-SA)',
-    'Attribution-NoDerivs (CC BY-ND)',
-    'Attribution-NonCommercial (CC BY-NC)',
-    'Attribution-NonCommercial-ShareAlike (CC BY-NC-SA)',
-    'Attribution-NonCommercial-NoDerivs (CC BY-NC-ND)',
-    'No license attributed'
+    'No Copyright'
   ].freeze
 
   # validates_presence_of :agreement_version
