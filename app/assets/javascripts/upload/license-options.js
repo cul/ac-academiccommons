@@ -36,7 +36,7 @@ $(document).ready(function(){
 
     // If this label isn't present, add it.
     if ($('label[for=deposit_license]').length == 0) {
-      $(div).append($('<label for="deposit_license">Use by Others</label><p class="note">By making a selection from the menu below I confirm that I have the authority to do so. For more information on how licenses work and the options below, see here our <a href="https://copyright.columbia.edu/basics/copyright-quick-guide.html">Copyright Quick Guide</a>.<br><br>For information on specific licensing terms as provided for in the options below, see <a href="https://creativecommons.org/">Creative Commons</a>.</p>'))
+      $(div).append($('<div class="animated fadeIn"><label for="deposit_license">Use by Others</label><p class="note">By making a selection from the menu below I confirm that I have the authority to do so. For more information on how licenses work and the options below, see here our <a href="https://copyright.columbia.edu/basics/copyright-quick-guide.html">Copyright Quick Guide</a>.<br><br>For information on specific licensing terms as provided for in the options below, see <a href="https://creativecommons.org/">Creative Commons</a>.</p></div>'))
     }
 
     // Add dropdown with appropriate list of license options depending on

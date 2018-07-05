@@ -1,5 +1,14 @@
 /* animation */
 
+.animated {
+  animation-fill-mode: both;
+  animation-duration: 1s;
+}
+
+.fadeIn {
+  animation-name: fadeIn;
+}
+
 @keyframes slideInUp {
   from {
     transform: translate3d(0, 100%, 0);
@@ -8,5 +17,16 @@
 
   to {
     transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes fadeIn {
+
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
   }
 }
