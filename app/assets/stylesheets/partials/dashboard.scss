@@ -193,7 +193,7 @@
   }
 
   & #creator-list div:hover {
-    background-image: linear-gradient(to left top, $gray-lighter-custom 0%, #fff 100%);
+    background-image: linear-gradient(to left, $gray-lighter-custom, $body-bg);
     cursor: move;
   }
 
