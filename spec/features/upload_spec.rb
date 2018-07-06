@@ -1,7 +1,7 @@
 require 'rails_helper'
 
-RSpec.describe DepositController, type: :feature do
-
+RSpec.describe 'Upload', type: :feature do
+  # rubocop:disable all
   describe 'index', js: true do
     before do
       visit deposit_path
@@ -41,12 +41,6 @@ RSpec.describe DepositController, type: :feature do
           expect(page).to have_content 'Step 2 of 3'
         end
 
-        xit 'cannot continue until all required information is entered' do
-          click_button 'Continue'
-          expect(page).to have_content 'Please enter the title.'
-          expect(page).to have_content 'Step 2 of 3'
-        end
-
         context 'once deposit information is entered' do
           before do
             fill_in('name', with: 'John Doe')
@@ -58,17 +52,13 @@ RSpec.describe DepositController, type: :feature do
             click_button 'Continue'
           end
 
-          xit 'renders information to review' do
-            expect(page).to have_content 'Review and Submit'
-          end
-
           context 'when user submits' do
             before do
               click_button 'Submit'
             end
 
             after do
-              FileUtils.rm(File.join(Rails.root, Deposit.first.file_path)) # Remove file deposited
+              FileUtils.rm(Rails.root.join(Deposit.first.file_path)) # Remove file deposited
             end
 
             xit 'renders submission confirmation' do
@@ -83,4 +73,5 @@ RSpec.describe DepositController, type: :feature do
       end
     end
   end
+  # rubocop:enable all
 end

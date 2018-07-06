@@ -19,31 +19,9 @@ describe AdminController, type: :controller do
     end
   end
 
-  describe 'GET deposits' do
-    include_examples 'authorization required' do
-      let(:http_request) { get :deposits }
-    end
-  end
-
   describe 'GET agreements' do
     include_examples 'authorization required' do
       let(:http_request) { get :agreements }
-    end
-  end
-
-  describe 'GET show_deposit' do
-    include_context 'mock_deposit'
-
-    include_examples 'authorization required' do
-      let(:http_request) { get :show_deposit, params: { id: id } }
-    end
-  end
-
-  describe 'GET download_deposit_file' do
-    include_context 'mock_deposit'
-
-    include_examples 'authorization required' do
-      let(:http_request) { get :download_deposit_file, params: { id: id } }
     end
   end
 end

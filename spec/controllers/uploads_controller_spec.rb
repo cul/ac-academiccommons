@@ -1,14 +1,14 @@
 require 'rails_helper'
 
-RSpec.describe DepositController, type: :controller do
-
+RSpec.describe UploadsController, type: :controller do
+  # rubocop:disable all
   describe 'POST submit' do
     context 'when user has a uni' do
       before do
         post :submit,
              params: {
                acceptedAgreement: 'agree',
-               uni: 'xxx123', name: 'Jane Doe', :'AC-agreement-version' => '1.1',
+               uni: 'xxx123', name: 'Jane Doe', 'AC-agreement-version': '1.1',
                email: 'xxx123@columbia.edu', title: 'Test Deposit', author: 'Jane Doe',
                abstr: 'Blah blah blah', file: fixture_file_upload('/test_file.txt')
              }
@@ -35,11 +35,6 @@ RSpec.describe DepositController, type: :controller do
         expect(Deposit.first.uni).to eq 'xxx123'
         expect(Deposit.first.file_path).to eq 'data/self-deposit-uploads/xxx123/test_file.txt'
       end
-
-      xit 'create a agreement record' do
-        expect(Agreement.count).to eq 1
-        expect(Agreement.first.uni).to eq 'xxx123'
-      end
     end
 
     context 'when user does not have a uni' do
@@ -54,7 +49,7 @@ RSpec.describe DepositController, type: :controller do
       end
 
       after do # Deleting file created by deposit.
-        FileUtils.rm(File.join(Rails.root, Deposit.first.file_path))
+        FileUtils.rm(Rails.root.join(Deposit.first.file_path))
       end
 
       xit 'response is successful' do
@@ -67,24 +62,19 @@ RSpec.describe DepositController, type: :controller do
         expect(Deposit.first.email).to eq 'xxx123@columbia.edu'
       end
 
-      xit 'create a agreement record' do
-        expect(Agreement.count).to eq 1
-        expect(Agreement.first.name).to eq 'Jane Doe'
-      end
-
       context 'when the same file is deposited twice' do
         before do
           post :submit,
                params: {
                  acceptedAgreement: 'agree', name: 'Jane Doe',
-                 :'AC-agreement-version' => '1.1', email: 'xxx123@columbia.edu',
+                 'AC-agreement-version': '1.1', email: 'xxx123@columbia.edu',
                  title: 'Test Deposit 2', author: 'Jane Doe',
                  abstr: 'Blah blah blah', file: fixture_file_upload('/test_file.txt')
                }
         end
 
         after do
-          FileUtils.rm(File.join(Rails.root, Deposit.last.file_path))
+          FileUtils.rm(Rails.root.join(Deposit.last.file_path))
         end
 
         xit 'creates a second deposit record' do
@@ -98,4 +88,5 @@ RSpec.describe DepositController, type: :controller do
       end
     end
   end
+  # rubocop:enable all
 end
