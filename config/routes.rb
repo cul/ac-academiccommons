@@ -67,9 +67,6 @@ Rails.application.routes.draw do
   get '/statistics/statistic_res_list',     to: 'statistics#statistic_res_list'
   get '/statistics/total_usage_stats',      to: 'statistics#total_usage_stats'
 
-  match '/deposit/submit', to: 'deposit#submit', via: [:get, :post]
-  get '/deposit',          to: 'deposit#index', as: 'deposit'
-
   resource :agreement
 
   resources :uploads, only: [:index, :new, :create], path: 'upload'
