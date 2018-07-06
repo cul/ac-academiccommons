@@ -17,4 +17,5 @@
 //= require deposit-dropzone
 //= require upload/add-creator
 //= require upload/license-options
-//= require sort-list
+//= require jquery-ui-sortable
+//= require upload/author-reorder
