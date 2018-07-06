@@ -2,10 +2,10 @@
 <?xml-stylesheet type="text/xsl" href="/assets/blacklight_oai_provider/oai2-1af06cf5d63ebaab14633002db03fd7d3427a8424623e0deafe3362afeea2d28.xsl"?>
 <OAI-PMH xmlns="http://www.openarchives.org/OAI/2.0/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/ http://www.openarchives.org/OAI/2.0/OAI-PMH.xsd">
   <responseDate>2017-11-01T18:35:21Z</responseDate>
-  <request verb="Identify">https://academiccommons.columbia.edu/catalog/oai</request>
+  <request verb="Identify">https://academiccommons.columbia.edu/oai</request>
   <Identify>
     <repositoryName>Columbia University Academic Commons</repositoryName>
-    <baseURL>https://academiccommons.columbia.edu/catalog/oai</baseURL>
+    <baseURL>https://academiccommons.columbia.edu/oai</baseURL>
     <protocolVersion>2.0</protocolVersion>
     <adminEmail>ac@columbia.edu</adminEmail>
     <earliestDatestamp>2017-09-14T16:31:33Z</earliestDatestamp>
@@ -16,7 +16,7 @@
           <scheme>oai</scheme>
           <repositoryIdentifier>academiccommons.columbia.edu</repositoryIdentifier>
           <delimiter>:</delimiter>
-          <sampleIdentifier>oai:academiccommons.columbia.edu:ac:109660</sampleIdentifier>
+          <sampleIdentifier>oai:academiccommons.columbia.edu:10.7916/D89C74V4</sampleIdentifier>
         </oai-identifier>
     </description>
   </Identify>
