@@ -1,0 +1,29 @@
+<h3>Self-Deposits</h3>
+<table>
+  <thead>
+    <tr>
+      <th>Depositor</th>
+      <th>UNI</th>
+      <th>Title</th>
+      <th>Deposited on</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @deposits.each do |deposit| %>
+      <tr>
+        <td>
+          <%= deposit.name %>
+        </td>
+        <td>
+          <%= deposit.uni %>
+        </td>
+        <td>
+          <%= link_to deposit.title, admin_deposit_path(deposit) %>
+        </td>
+        <td>
+          <%= deposit.created_at.strftime('%F %R') %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

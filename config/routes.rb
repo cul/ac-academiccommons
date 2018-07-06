@@ -75,9 +75,6 @@ Rails.application.routes.draw do
   get 'account', to: 'user#account'
 
   get '/admin',                   to: 'admin#index',                 as: 'admin'
-  get '/admin/deposit',           to: 'admin#deposits'
-  get '/admin/deposits/:id',      to: 'admin#show_deposit',          as: 'show_deposit'
-  get '/admin/deposits/:id/file', to: 'admin#download_deposit_file', as: 'download_deposit_file'
   get '/admin/agreements',        to: 'admin#agreements'
 
   namespace :admin do
@@ -85,6 +82,7 @@ Rails.application.routes.draw do
     get 'author_affiliation_report/create'
     resources :request_agreements, only: [:new, :create]
     resource  :alert_message,      only: [:edit, :update]
+    resources :deposits,           only: [:index, :show]
   end
 
   get '/emails/get_csv_email_form', to: 'emails#get_csv_email_form'
