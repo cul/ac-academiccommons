@@ -13,6 +13,11 @@
     display: block;
   }
 
+  & .dz-waiting-mark i {
+    animation: spin 2s infinite linear;
+    transform-origin: 50% 58%;
+  }
+
   & .dz-success-mark {
     display: none;
   }
@@ -27,6 +32,10 @@
 
   & .dz-error .dz-error-mark {
     display: inline;
+  }
+
+  & .dz-complete .dz-waiting-mark {
+    display: none;
   }
 
   & .dz-message span.link-color {
