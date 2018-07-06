@@ -8,7 +8,7 @@
 //= require blacklight_range_limit
 //= require bootstrap/affix
 //= require readmore-js/readmore
-//= require readmore-call
+//= require read-more
 //= require sticky-sidebar
 //= require smooth-scroll
 //= require social-share-button
@@ -17,3 +17,5 @@
 //= require deposit-dropzone
 //= require upload/add-creator
 //= require upload/license-options
+//= require jquery-ui-sortable
+//= require upload/author-reorder

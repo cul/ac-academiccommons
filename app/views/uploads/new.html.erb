@@ -30,32 +30,36 @@
 
   <h5>Creator(s)</h5>
   <div class="creators">
+
     <%= '<div class="field_with_errors">'.html_safe if @deposit.errors.include?(:creators) %>
 
+      <div class="creator-header">
+        <label for="deposit_creators_first_name">First Name*</label>
+        <label for="deposit_creators_last_name">Last Name*</label>
+        <label for="deposit_creators_uni">UNI</label>
+        <span class="placeholder"></span>
+      </div>
+
       <div id='creator-list'>
-        <div>
-          <label for="deposit_creators_first_name">First Name*</label>
-          <label for="deposit_creators_last_name">Last Name*</label>
-          <label for="deposit_creators_uni">UNI</label>
-        </div>
         <% (@deposit.creators || [{}]).each do |c| %>
           <div>
             <input type="text" name="deposit[creators][][first_name]" class="deposit_creators_first_name", value="<%= c['first_name'] %>">
             <input type="text" name="deposit[creators][][last_name]" class="deposit_creators_last_name", value="<%= c['last_name'] %>">
             <input type="text" name="deposit[creators][][uni]" class="deposit_creators_uni",  value="<%= c['uni'] %>" <%= 'readonly="readonly"' if c['uni'] == current_user.uid %>>
+            <span class="sort-icon"><i class="glyphicon glyphicon-sort"></i></span>
           </div>
-      <% end %>
-    </div>
+        <% end %>
+      </div>
 
     <%= '</div>'.html_safe if @deposit.errors.include?(:creators) %>
 
-    <div>
-      <%= button_tag 'Add another creator',
-                     type: 'button',
-                     id: 'add-address',
-                     class: 'btn btn-default',
-                     data: { creator_list_id: 'creator-list'} %>
-    </div>
+    <%= button_tag 'Add another creator',
+                    type: 'button',
+                    id: 'add-address',
+                    class: 'btn btn-default',
+                    style: 'margin-top: 8px;',
+                    data: { creator_list_id: 'creator-list'} %>
+
   </div>
 
   <div class="item">
