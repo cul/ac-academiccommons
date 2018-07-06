@@ -193,7 +193,8 @@
   }
 
   & #creator-list div:hover {
-    cursor: pointer;
+    background-image: linear-gradient(to left top, $gray-lighter-custom 0%, #fff 100%);
+    cursor: move;
   }
 
   & .creator-header label,
@@ -219,10 +220,6 @@
     padding: 6px;
     text-align: center;
     width: 7%;
-  }
-
-  & #creator-list span.sort-icon:hover {
-    background: $gray-lighter-custom;
   }
 }
 
