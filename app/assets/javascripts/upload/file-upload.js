@@ -4,6 +4,10 @@
 $(document).ready(function() {
   Dropzone.autoDiscover = false;
 
+  if ($('div#deposit-drop').length == 0){
+    return;
+  }
+
   // Reading in preview template, then deleting.
   var previewNode = document.querySelector("#preview-template");
   previewNode.id = "";
