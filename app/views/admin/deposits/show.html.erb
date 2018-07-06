@@ -1,0 +1,64 @@
+<p>
+  <%= link_to '>> Back to Self-deposits', admin_deposits_path %>
+</p>
+<h3><%= @deposit.title %></h3>
+
+<dl class="dl-horizontal">
+  <% if @deposit.user %>
+    <dt>UNI</dt>
+    <dd><%= @deposit.user.uid %></dd>
+
+    <dt>Name</dt>
+    <dd><%= @deposit.user.full_name %></dd>
+
+    <dt>E-mail</dt>
+    <dd><%= @deposit.user.email %></dd>
+
+    <dt>Agreement Signed?</dt>
+    <dd><%= @deposit.user.signed_latest_agreement? ? 'yes' : 'no' %></dd>
+  <% else %>
+    <dt>UNI</dt>
+    <dd><%= @deposit.uni %></dd>
+
+    <dt>Name</dt>
+    <dd><%= @deposit.name %></dd>
+  <% end %>
+
+  <dt>Authenticated?</dt>
+  <dd><%= @deposit.authenticated? %></dd>
+</dl>
+
+<dl class="dl-horizontal">
+  <dt>Title</dt>
+  <dd><%= @deposit.title %></dd>
+
+  <dt>Creators</dt>
+  <% @deposit.creators.each do |c| %>
+    <% name = "#{c[:first_name]} #{c[:last_name]}" %>
+    <% name = "#{name} (#{c[:uni]})" if c[:uni] %>
+    <dd><%= name %></dd>
+  <% end %>
+
+  <dt>Year</dt>
+  <dd><%= @deposit.year %></dd>
+
+  <dt>Abstract</dt>
+  <dd><%= @deposit.abstract %></dd>
+
+  <dt>DOI/URL</dt>
+  <dd><%= (@deposit.doi.blank?) ? 'None' : @deposit.doi %></dd>
+
+  <dt>Notes</dt>
+  <dd><%= (@deposit.notes.blank?) ? 'None' : @deposit.notes %></dd>
+
+  <dt>Rights Statement</dt>
+  <dd><%= @deposit.rights_statement %></dd>
+
+  <dt>License</dt>
+  <dd><%= (@deposit.license.blank?) ? 'None' : @deposit.license %></dd>
+
+  <dt>Files</dt>
+  <% @deposit.files.each do |f| %>
+    <dd><%= link_to f.filename, rails_blob_path(f, disposition: "attachment") %></dd>
+  <% end %>
+</dl>
