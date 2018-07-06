@@ -24,13 +24,14 @@ Rails.application.routes.draw do
   # Blacklight routes
   concern :searchable, Blacklight::Routes::Searchable.new
   concern :exportable, Blacklight::Routes::Exportable.new
-  concern :oai_provider, BlacklightOaiProvider::Routes.new
 
   resource :catalog, only: [:index], as: 'catalog', path: 'search', controller: 'catalog', constraints: { id: /.*/ } do
-    concerns :oai_provider
     concerns :searchable
     concerns :range_searchable
   end
+
+  # OAI endpoint
+  match :oai, to: 'catalog#oai', via: [:post, :get], as: :oai_catalog
 
   # Redirect for old download links
   get '/download/fedora_content/download/:uri/:block/:filename', to: 'download#legacy_fedora_content', as: 'legacy_fedora_content',
