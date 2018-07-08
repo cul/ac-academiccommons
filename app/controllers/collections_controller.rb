@@ -27,7 +27,7 @@ class CollectionsController < ApplicationController
     journals: {
       title: 'Columbia Journals',
       summary: 'View articles from a selection of journals published at Columbia.',
-      facet: 'cu_journal_ssim'
+      facet: 'partner_journal_ssi'
     }
   }.freeze
 

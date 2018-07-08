@@ -82,6 +82,8 @@ class CatalogController < ApplicationController
     config.add_facet_field 'series_ssim',            label: 'Series',          limit: 5
     config.add_facet_field 'language_ssim',          label: 'Language',        limit: 5
     config.add_facet_field 'geographic_area_ssim',   label: 'Geographic Area', limit: 5, show: false
+    config.add_facet_field 'partner_journal_ssi',    label: 'Journal',         limit: 5, show: false
+
     # config.add_facet_field 'type_of_resource_ssim', label: 'Resource Type', if: current_user.admin?
 
     # Have BL send all facet field names to Solr, which has been the default
