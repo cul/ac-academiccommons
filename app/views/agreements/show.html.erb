@@ -1,9 +1,5 @@
-<% content_for :header do %>
-  <h1>Academic Commons Participation Agreement</h1>
-<% end %>
-
 <% if current_user.signed_latest_agreement? %>
-  <p class="notice"><strong>Notice</strong>: You have already signed this agreement.</p>
+  <p class="alert alert-info"><strong>Notice</strong>: You have already signed this agreement.</p>
 <% end %>
 
 <%= render partial: 'author_agreement' %>
