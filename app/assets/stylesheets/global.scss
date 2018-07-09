@@ -5,7 +5,7 @@ h2,
 h3,
 h4,
 h5 {
-  font-weight: 700;
+  font-weight: 600;
 }
 
 h1 {
@@ -28,6 +28,21 @@ h4 {
   font-size: 16px;
   font-weight: 500;
   line-height: 1;
+}
+
+p.summary,
+#main-page p.summary {
+  font-size: 21px;
+  font-weight: 300;
+  line-height: 1.6;
+  margin-top: 0;
+  margin-bottom: 25px;
+  max-width: 700px;
+}
+
+p.summary a,
+#main-page p.summary a {
+  text-decoration: none;
 }
 
 @media screen and (min-width: $screen-md ) {
