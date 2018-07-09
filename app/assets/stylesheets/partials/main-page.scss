@@ -69,22 +69,22 @@
   }
 
   & h2 {
-    margin: 0;
+    margin: 0 0 25px 0;
   }
 
   & h3 {
-    margin: 25px 0 -20px 0;
+    margin: 25px 0 0 0;
   }
 
   & h4 {
-    margin: 45px 0 -20px 0;
+    margin: 25px 0 0 0;
   }
 
   & p,
   & ul {
     font-weight: 300;
     line-height: 1.6;
-    margin: 25px 0;
+    margin: 0 0 25px 0;
     max-width: 700px;
     overflow-wrap: break-word;
     word-wrap: break-word;
@@ -92,6 +92,10 @@
 
   & p.alert {
     margin-top: 0;
+  }
+
+  & p.small {
+    font-size: 14px;
   }
 
   & ul.brand-logos {
@@ -121,6 +125,7 @@
 
     & td {
       border-bottom: $border;
+      font-size: 14px;
       padding: 8px 5px;
     }
 
