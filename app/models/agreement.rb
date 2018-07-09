@@ -1,6 +1,6 @@
 class Agreement < ApplicationRecord
-  LATEST_AGREEMENT_VERSION = '1.2'.freeze
-  AGREEMENT_VERSIONS = ['1.1', '1.2'].freeze
+  LATEST_AGREEMENT_VERSION = '2.0'.freeze
+  AGREEMENT_VERSIONS = ['1.1', '2.0'].freeze
   # TODO: These should also be required in schema.db
   validates :name, :email, :agreement_version, presence: true
 
