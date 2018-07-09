@@ -1,8 +1,6 @@
 module Admin
-  class AgreementsController < ApplicationController
+  class AgreementsController < AdminController
     load_and_authorize_resource
-
-    layout 'admin'
 
     def index
       @agreements = Agreement.all

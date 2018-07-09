@@ -1,8 +1,6 @@
 module Admin
-  class AlertMessagesController < ApplicationController
+  class AlertMessagesController < AdminController
     load_and_authorize_resource class: ContentBlock
-
-    layout 'admin'
 
     def edit
       @alert_message ||= ContentBlock.find_by(title: ContentBlock::ALERT_MESSAGE)

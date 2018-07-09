@@ -1,8 +1,6 @@
 module Admin
-  class DepositsController < ApplicationController
+  class DepositsController < AdminController
     load_and_authorize_resource
-
-    layout 'admin'
 
     def index
       @deposits = Deposit.order(created_at: :desc)
