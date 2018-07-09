@@ -1,0 +1,37 @@
+<h2>Author Agreements</h2>
+<p>
+  <%= link_to('Download CSV File', '/admin/agreements.csv') %>
+</p>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>UNI</th>
+      <th>Name</th>
+      <th>Email</th>
+      <th>Signed on</th>
+      <th>Agreement Version</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @agreements.each do |agreement| %>
+      <tr>
+        <td>
+          <%= agreement.uni %>
+        </td>
+        <td>
+          <%= agreement.name %>
+        </td>
+        <td>
+          <%= agreement.email %>
+        </td>
+        <td>
+          <%= agreement.created_at.strftime('%Y-%m-%d') %>
+        </td>
+        <td>
+          <%= agreement.agreement_version %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
