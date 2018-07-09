@@ -63,13 +63,6 @@
     width: 100vw;
   }
 
-  & p.summary {
-    font-size: 23px;
-    margin-top: 0;
-    margin-bottom: 30px;
-    max-width: 800px;
-  }
-
   & h1 {
     margin: 0;
     padding: 6px 0 18px 15px;
@@ -99,6 +92,22 @@
 
   & p.intro {
     font-size: 21px;
+    margin-top: 0;
+  }
+
+  & p.summary {
+    font-size: 23px;
+    margin-top: 0;
+    margin-bottom: 30px;
+    max-width: 800px;
+  }
+
+  & p.intro a,
+  & p.summary a {
+    text-decoration: none;
+  }
+
+  & p.alert {
     margin-top: 0;
   }
 
