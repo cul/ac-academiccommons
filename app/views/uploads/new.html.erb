@@ -1,5 +1,7 @@
 <%= render 'agreement' %>
 
+<p><em>* Required fields</em></p>
+
 <%= form_with(model: @deposit, url: uploads_path, method: :create, local: true, id: :upload) do |form| %>
 
   <div class="item">
@@ -28,7 +30,7 @@
     <%= form.label :student, 'Check here if you are a current student at Columbia or one of its affiliate institutions.' %>
   </div>
 
-  <h5>Creator(s)</h5>
+  <h5>Creator(s)*</h5>
   <div class="creators">
 
     <%= '<div class="field_with_errors">'.html_safe if @deposit.errors.include?(:creators) %>
