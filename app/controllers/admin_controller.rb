@@ -1,12 +1,12 @@
 class AdminController < ApplicationController
-  authorize_resource
+  authorize_resource  if: :root_admin_controller?
+  check_authorization unless: :root_admin_controller?
+
   layout 'admin'
 
-  def agreements
-      @agreements = Agreement.all
-      respond_to do |format|
-         format.html
-         format.csv { send_data Agreement.to_csv }
-      end
+  private
+
+  def root_admin_controller?
+    request.controller_class == AdminController
   end
 end

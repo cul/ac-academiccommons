@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe AdminController, type: :controller do
+describe Admin::AgreementsController, type: :controller do
   describe 'GET index' do
     include_examples 'authorization required' do
       let(:http_request) { get :index }

@@ -1,8 +1,6 @@
 module Admin
-  class RequestAgreementsController < ApplicationController
+  class RequestAgreementsController < AdminController
     authorize_resource class: RequestAgreementsForm
-
-    layout 'admin'
 
     def new
       @request_agreements_form ||= RequestAgreementsForm.new
