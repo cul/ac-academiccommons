@@ -49,12 +49,16 @@ span.constraints-label {
   border-top-left-radius: 0;
   border-top-right-radius: 0;
   display: block;
-  font-size: 12px;
+  font-size: $font-size-small;
   padding: 7px 10px;
 }
 
+.page_links a {
+  font-weight: bold;
+}
+
 .search-widgets {
-  padding: 10px 0;
+  padding: 8px 0;
 }
 
 #sort-dropdown .dropdown-toggle,
@@ -82,7 +86,7 @@ span.constraints-label {
     background: transparent;
     border: 0;
     display: inline-block;
-    padding: 17px 0;
+    padding: 17px 0 0 0;
   }
 
   #sortAndPerPage .pull-right {
@@ -96,7 +100,9 @@ span.constraints-label {
   margin-bottom: 30px;
 
   & .document {
-    border-bottom: 1px dotted #ccc;
+    border: 0;
+    border-bottom: $border;
+    border-style: dotted;
     margin: 0;
     padding: 15px 0;
   }
