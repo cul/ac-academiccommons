@@ -22,7 +22,7 @@
   & .blacklight-author_ssim {
     color: $gray-light;
     display: inline-block;
-    font-size: 16px;
+    font-size: $font-size-normal;
     line-height: 1.7;
     margin: 0;
   }
@@ -39,7 +39,7 @@
   }
 
   & p.blacklight-abstract_ssi {
-    font-size: 16px;
+    font-size: $font-size-normal;
     font-weight: 300;
     line-height: 1.6;
     margin: 20px 0 30px 0;
@@ -47,7 +47,7 @@
 
   & .subjects h4 {
     border-bottom: 1px dotted $gray-lighter;
-    font-size: 16px;
+    font-size: $font-size-normal;
     font-weight: bold;
     margin-bottom: 10px;
     padding-bottom: 10px;
@@ -60,7 +60,7 @@
   }
 
   & .subjects li {
-    font-size: 14px;
+    font-size: $font-size-small;
     list-style: none;
     margin: 0 0 12px 0;
   }
@@ -70,7 +70,7 @@
   }
 
   & .panel-title {
-    font-size: 16px;
+    font-size: $font-size-normal;
     font-weight: bold;
   }
 
@@ -104,7 +104,7 @@
     border: 0;
     display: flex;
     flex-wrap: wrap;
-    font-size: 14px;
+    font-size: $font-size-small;
     justify-content: space-between;
     position: relative;
   }
@@ -139,7 +139,7 @@
   }
 
   & dl {
-    font-size: 14px;
+    font-size: $font-size-small;
     line-height: 1.7;
     margin: 0;
   }

@@ -52,7 +52,7 @@
 /* links navbar */
 
 #links-navbar {
-  font-size: 14px;
+  font-size: $font-size-small;
 
   & .container {
     padding-left: 0;
@@ -113,7 +113,7 @@
 @media screen and (min-width: $screen-sm ) {
 
   #links-navbar {
-    font-size: 16px;
+    font-size: $font-size-normal;
 
     & .navbar-nav > li a {
       padding: 10px 15px;

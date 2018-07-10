@@ -34,7 +34,7 @@ span.constraints-label {
 .constraint .btn {
   border: 0;
   box-shadow: 0 0 2px #aaa;
-  font-size: 13px;
+  font-size: $font-size-small;
   line-height: 1.2;
 }
 
@@ -114,7 +114,7 @@ span.constraints-label {
   }
 
   & .document-metadata dd {
-    font-size: 14px;
+    font-size: $font-size-small;
     margin: 0;
   }
 

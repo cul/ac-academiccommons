@@ -2,7 +2,7 @@
 
 #main-page #dashboard-nav {
   border-bottom: $border;
-  font-size: 12px;
+  font-size: $font-size-small;
   margin: 30px 0 0 0;
   padding: 0 10px;
 
@@ -13,7 +13,7 @@
 
   & .nav-tabs {
     border-bottom: 0;
-    margin: -20px 0 1px 0;
+    margin: -30px 0 1px 0;
   }
 
   & li a {
@@ -43,7 +43,7 @@
 
   #main-page #dashboard-nav {
     border: 0;
-    font-size: 16px;
+    font-size: $font-size-normal;
     margin: 10px 10px 0 10px;
 
     & .nav-tabs {
@@ -120,7 +120,7 @@
   & label,
   & h5 {
     display: block;
-    font-size: 14px;
+    font-size: $font-size-small;
     text-transform: uppercase;
   }
 
@@ -134,7 +134,7 @@
 
   & .checkbox label {
     color: $gray-base;
-    font-size: 16px;
+    font-size: $font-size-normal;
     font-weight: 300;
     text-transform: none;
   }
@@ -201,7 +201,7 @@
   & .creator-header span,
   & #creator-list input,
   & #creator-list span.sort-icon {
-    font-size: 14px;
+    font-size: $font-size-small;
     margin: 0 3px 0 0;
     text-transform: none;
     width: 30%;
