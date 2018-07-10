@@ -94,7 +94,6 @@ class Deposit < ApplicationRecord
         xml.structMap('ID': 'sword-mets-struct-1', 'LABEL': 'structure', 'TYPE': 'LOGICAL') do
           xml.div('ID': 'sword-mets-div-1', 'DMDID': 'sword-mets-dmd-1', 'TYPE': 'SWORD Object') do
             xml.div('ID': 'sword-mets-div-2', 'TYPE': 'File')
-
             files.count.times do |i|
               xml.fptr('FILEID': "sword-mets-file-#{i + 1}")
             end
@@ -103,5 +102,27 @@ class Deposit < ApplicationRecord
       end
     end
     builder.to_xml
+  end
+
+  def sword_zip
+    stringio = Zip::OutputStream.write_buffer do |z|
+      z.put_next_entry('mets.xml')
+      z.write mets
+      files.each do |file|
+        z.put_next_entry(file.filename)
+        z.write file.download
+      end
+    end
+    stringio.string
+  end
+
+  def send_to_sword
+    # Check that we are allowed to send data to sword in this environment.
+    retrun unless Rails.application.config.send_deposits_to_sword == true
+
+    # Check that we have all the credentials necessary, url, collection_slug, username, password
+    Rails.application.config_for(:secrets)['sword']
+
+    # Send request to SWORD
   end
 end
