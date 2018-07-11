@@ -1,21 +1,15 @@
-<% @page_title = "Email Preference" %>
+<p><%= link_to '<< Back to Email Preferences', admin_email_preferences_path %></p>
 
+<h2>Email Preference</h2>
+<dl class="dl-horizontal">
+  <dt>Author</dt>
+  <dd><%= h @email_preference.author %></dd>
 
-<p>
-  <strong>Author:</strong>
-  <%= h @email_preference.author %>
-</p>
-<p>
-  <strong>Monthly Opt Out:</strong>
-  <%= h @email_preference.monthly_opt_out %>
-</p>
-<p>
-  <strong>Alternate Email:</strong>
-  <%= h @email_preference.email %>
-</p>
-<p>
-  <%= link_to "Edit", edit_admin_email_preference_path(@email_preference) %>
-  |
-  <%= link_to "View All", admin_email_preferences_path %>
-</p>
-<%= button_to 'Destroy', admin_email_preference_path(@email_preference), confirm: 'Are you sure?', method: :delete %>
+  <dt>Monthly Opt Out</dt>
+  <dd><%= h @email_preference.monthly_opt_out %></dd>
+
+   <dt>Alternate Email</dt>
+   <dd><%= h @email_preference.email %></dd>
+</dl>
+
+<%= link_to 'Edit', edit_admin_email_preference_path(@email_preference), role: 'button', class: 'btn btn-primary' %>

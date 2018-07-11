@@ -1,15 +1,5 @@
-<% if @email_preference.errors.any? %>
-  <div id="error_explanation">
-    <h2><%= pluralize(@email_preference.errors.count, "error") %> prohibited this article from being saved:</h2>
-    <ul>
-      <% @article.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-      <% end %>
-    </ul>
-  </div>
-<% end %>
 
-<%= form_with model: @email_preference, url: admin_email_preferences_path, local: false do |f| %>
+<%= form_with model: [:admin, @email_preference], local: true do |f| %>
   <p>
     <%= f.label :author %>
     <%= f.text_field :author %>

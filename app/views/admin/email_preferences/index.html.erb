@@ -1,35 +1,40 @@
-<div class="admin-content">
 
-  <table class="table">
+<h2>Email Preferences</h2>
+<p>
+  These email preferences are only applied to monthly statistics emails sent to
+  authors. To prevent an author from getting the email, add a record with their
+  uni as the author and then check the opt-out checkbox. To change an author's
+  email, add a record with the uni as the author, add the new email, and do not
+  check the opt-out checkbox.
+</p>
+<p>
+  <%= link_to 'Create New Email Preference', new_admin_email_preference_path %>
+</p>
+<table class="table table-striped">
+  <tr>
+    <th>Author</th>
+    <th>Monthly opt out</th>
+    <th>Alternate Email</th>
+    <th></th>
+    <th></th>
+  </tr>
+  <% for email_preference in @email_preferences %>
     <tr>
-      <th>Author</th>
-      <th>Monthly opt out</th>
-      <th>Alternate Email</th>
+      <td>
+        <%= h email_preference.author %>
+      </td>
+      <td>
+        <%= h email_preference.monthly_opt_out %>
+      </td>
+      <td>
+        <%= h email_preference.email %>
+      </td>
+      <td>
+        <%= link_to 'Edit', edit_admin_email_preference_path(email_preference), role: 'button', class: 'btn btn-sm btn-primary' %>
+      </td>
+      <td>
+        <%= button_to 'Destroy', admin_email_preference_path(email_preference), confirm: 'Are you sure?', class: 'btn btn-sm btn-danger', data: { confirm: 'Are you sure?' }%>
+      </td>
     </tr>
-    <% for email_preference in @email_preferences %>
-      <tr>
-        <td>
-          <%= h email_preference.author %>
-        </td>
-        <td>
-          <%= h email_preference.monthly_opt_out %>
-        </td>
-        <td>
-          <%= h email_preference.email %>
-        </td>
-        <td>
-          <%= link_to 'Show', admin_email_preference_path(email_preference) %>
-        </td>
-        <td>
-          <%= link_to 'Edit', edit_admin_email_preference_path(email_preference) %>
-        </td>
-        <td>
-          <%= button_to 'Destroy', admin_email_preference_path(email_preference), confirm: 'Are you sure?', method: :delete %>
-        </td>
-      </tr>
-    <% end %>
-  </table>
-  <p>
-    <%= link_to "New Email Preference", new_admin_email_preference_path %>
-  </p>
-</div>
+  <% end %>
+</table>

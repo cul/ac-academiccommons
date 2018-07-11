@@ -1,11 +1,5 @@
-<% @page_title = "New Email Preference" %>
+<p><%= link_to '<< Back to Email Preferences', admin_email_preferences_path %></p>
 
-<div class="admin-content">
-  New Email Preference
-  <br/>
-  <br/>
-  <%= render partial: 'form' %>
-  <p>
-    <%= link_to "Back to List", admin_email_preferences_path %>
-  </p>
-</div>
+<h2>New Email Preference</h2>
+
+<%= render partial: 'form' %>

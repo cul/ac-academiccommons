@@ -1,13 +1,8 @@
-<% @page_title = "Edit Email Preference" %>
 
-<div class="admin-content">
-  New Email Preference
-  <br/>
-  <br/>
-  <%= render partial: 'form' %>
-  <p>
-    <%= link_to 'Show', admin_email_preference_path(@email_preference) %>
-    |
-    <%= link_to 'View All', admin_email_preferences_path %>
-  </p>
-</div>
+<p><%= link_to "<< Back to Email Preferences", admin_email_preferences_path %></p>
+
+<h2>Edit Email Preference</h2>
+
+<%= render partial: 'form' %>
+
+<%= button_to 'Destroy', admin_email_preference_path(@email_preference), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-sm btn-danger' %>
