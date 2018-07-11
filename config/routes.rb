@@ -54,8 +54,6 @@ Rails.application.routes.draw do
   put '/solr_documents/:id', to: 'solr_documents#update'
   get '/solr_documents/:id', to: 'solr_documents#show'
 
-  resources :email_preferences
-
   get '/download/download_log/:id', to: 'download#download_log', as: 'download_log'
 
   match '/statistics/detail_report',        to: 'statistics#detail_report',        via: [:get, :post]
@@ -84,6 +82,7 @@ Rails.application.routes.draw do
     resource  :alert_message,      only: [:edit, :update]
     resources :deposits,           only: [:index, :show]
     resources :agreements,         only: :index
+    resources :email_preferences
   end
 
   get '/emails/get_csv_email_form', to: 'emails#get_csv_email_form'
