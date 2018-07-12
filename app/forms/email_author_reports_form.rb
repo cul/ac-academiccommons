@@ -1,0 +1,2 @@
+class EmailAuthorReportsForm < FormObject
+end

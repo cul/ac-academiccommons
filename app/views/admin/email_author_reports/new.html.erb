@@ -1,0 +1,97 @@
+<h2>Email Author Reports</h2>
+
+<%= form_with model: @email_author_reports_form, url: admin_email_author_reports_path, class: 'form-horizontal', local: false do |f| %>
+  <div class="form-group">
+    <%= f.label :month, 'Report Month', class: 'col-sm-3 control-label' %>
+    <% month = (Date.current - 1.months).strftime('%b') %>
+    <% year = (month == 'Dec') ? Date.current.year - 1 : Date.current.year %>
+    <div class="col-sm-2">
+      <%= select_tag :month, options_for_select(Date::ABBR_MONTHNAMES, params[:month] || month), class: 'form-control' %>
+    </div>
+    <div class="col-sm-2">
+      <%= select_tag :year, options_for_select((2011..Date.current.year), params[:year] || year), class: 'form-control' %>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :do_not_send_email, 'Do not send email, log only', class: 'col-sm-3 control-label' %>
+    <div class="checkbox col-sm-9">
+      <%= f.check_box :do_not_send_email %>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :order_by, 'Order Works By', class: 'col-sm-3 control-label' %>
+    <div class="col-sm-4">
+      <%= select_tag :order_by, options_for_select([["Titles (A-Z)", "titles"], ["Most Viewed", "views"], ["Most Downloaded", "downloads"]], params[:order_by]) %>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <div class="label">Number of reports to send:</div>
+     <div class="value"><%# @authors.length %></div>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :optional_note, 'Optional note', class: 'col-sm-3 control-label' %>
+    <div class="col-sm-9">
+      <%= f.text_area :optional_note, class: 'form-control' %>
+    </div>
+  </div>
+
+   <div class="form-group">
+     <div class="col-sm-offset-2 col-sm-10">
+       <%= f.submit 'Send To Authors', data: { confirm: 'This will send most likely hundreds of emails. Are you sure?' }, class: 'btn btn-primary'  %>
+     </div
+   </div>
+
+<% end %>
+
+    <br/>
+
+    <br/>
+    <hr/>
+    <div style="padding: 0px 0px;">
+      <div style="display: table; width: ;">
+        <div style="display: table-row;"></div>
+        <div class="table-cell" style="display: table-cell; padding: 2px 15px 2px 0px">
+          <%= submit_tag "Send Report For Single Person" %>
+        </div>
+        <div class="table-cell" style="display: table-cell; padding: 2px 15px 2px 0px">
+          UNI:
+        </div>
+        <div class="table-cell" style="display: table-cell; padding: 2px 15px 2px 0px">
+          <%= text_field_tag :one_report_uni, params[:one_report_uni] %>
+        </div>
+        <div class="table-cell" style="display: table-cell; padding: 2px 15px 2px 0px">
+          Email:
+        </div>
+        <div class="table-cell" style="display: table-cell; padding: 2px 15px 2px 0px">
+          <%= text_field_tag :one_report_email, params[:one_report_email] %>
+        </div>
+        <div style="display: table-row;"></div>
+        <div class="table-cell" style="display: table-cell; padding: 2px 15px 2px 0px">
+          <%= submit_tag "Test Alternate Email For Person" %>
+        </div>
+        <div class="table-cell" style="display: table-cell; padding: 2px 15px 2px 0px">
+          UNI:
+        </div>
+        <div class="table-cell" style="display: table-cell; padding: 2px 15px 2px 0px">
+          <%= text_field_tag :test_users, params[:test_users] %>
+        </div>
+        <div style="display: table-row;"></div>
+        <div class="table-cell" style="display: table-cell; padding: 5px 15px 2px 0px">
+          <%= submit_tag "Send All Reports To Single Email", :onclick => "return confirm('This will send most likely hundreds of emails. Are you sure?');" %>
+        </div>
+        <div class="table-cell" style="display: table-cell; padding: 5px 15px 2px 0px">
+          Email:
+        </div>
+        <div class="table-cell" style="display: table-cell;; padding: 5px 15px 2px 0px">
+          <div class="value"></div>
+          <%= text_field_tag :designated_recipient, params[:designated_recipient] %>
+        </div>
+      </div>
+    </div>
+    <%= render :partial => "/debug_deliveries" %>
+
+</div>
