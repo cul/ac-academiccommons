@@ -3,7 +3,7 @@ module Admin
     load_and_authorize_resource
 
     def index
-      @email_preferences = EmailPreference.all
+      @email_preferences = EmailPreference.order(created_at: :desc)
     end
 
     def show
