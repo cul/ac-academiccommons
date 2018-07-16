@@ -1,35 +1,36 @@
 <h2>Email Author Reports</h2>
 
-<%= form_with model: @email_author_reports_form, url: admin_email_author_reports_path, class: 'form-horizontal', local: false do |f| %>
+<%= form_with model: @email_author_reports_form, url: admin_email_author_reports_path, class: 'form-horizontal', local: true do |f| %>
+  <div class="form-group">
+    <%= f.label :reports_for, 'For', class: 'col-sm-3 control-label' %>
+    <div class="col-sm-9 radio">
+        <%= f.radio_button(:reports_for, 'all') %>
+        <%= f.label(:reports_for_all_authors, 'all authors') %>
+        <%= f.radio_button(:reports_for, 'one') %>
+        <%= f.label(:reports_for_one_author, 'one author') %>
+
+        <%= f.label(:uni, 'UNI', class: 'col-sm-3 control-label') %>
+        <%= f.text_field(:uni) %>
+    </div>
+  </div>
+
   <div class="form-group">
     <%= f.label :month, 'Report Month', class: 'col-sm-3 control-label' %>
     <% month = (Date.current - 1.months).strftime('%b') %>
     <% year = (month == 'Dec') ? Date.current.year - 1 : Date.current.year %>
     <div class="col-sm-2">
-      <%= select_tag :month, options_for_select(Date::ABBR_MONTHNAMES, params[:month] || month), class: 'form-control' %>
+      <%= f.select :month, options_for_select(Date::ABBR_MONTHNAMES, params[:month] || month), class: 'form-control' %>
     </div>
     <div class="col-sm-2">
-      <%= select_tag :year, options_for_select((2011..Date.current.year), params[:year] || year), class: 'form-control' %>
+      <%= f.select :year, options_for_select((2011..Date.current.year), params[:year] || year), class: 'form-control' %>
     </div>
   </div>
 
   <div class="form-group">
-    <%= f.label :do_not_send_email, 'Do not send email, log only', class: 'col-sm-3 control-label' %>
-    <div class="checkbox col-sm-9">
-      <%= f.check_box :do_not_send_email %>
-    </div>
-  </div>
-
-  <div class="form-group">
-    <%= f.label :order_by, 'Order Works By', class: 'col-sm-3 control-label' %>
+    <%= f.label :order_works_by, 'Order Works By', class: 'col-sm-3 control-label' %>
     <div class="col-sm-4">
-      <%= select_tag :order_by, options_for_select([["Titles (A-Z)", "titles"], ["Most Viewed", "views"], ["Most Downloaded", "downloads"]], params[:order_by]) %>
+      <%= f.select :order_works_by, options_for_select([["Titles (A-Z)", "titles"], ["Most Viewed", "views"], ["Most Downloaded", "downloads"]], params[:order_by]) %>
     </div>
-  </div>
-
-  <div class="form-group">
-    <div class="label">Number of reports to send:</div>
-     <div class="value"><%# @authors.length %></div>
   </div>
 
   <div class="form-group">
@@ -39,59 +40,35 @@
     </div>
   </div>
 
+  <div class="form-group">
+    <%= f.label :deliver, 'Delivery Options', class: 'col-sm-3 control-label' %>
+    <div class="col-sm-9 radio">
+      <%= f.radio_button(:deliver, :reports_to_each_author) %>
+      <%= f.label(:deliver_email_reports_to_each_author, 'email report(s) to each author') %>
+
+      <%= f.radio_button(:deliver, :do_not_send_email) %>
+      <%= f.label(:deliver_do_not_send_email, 'do not send email, log only') %>
+
+      <%= f.radio_button(:deliver, :all_reports_to_one_email) %>
+      <%= f.label(:deliver_all_reports_to_one_email, 'email all reports to one email') %>
+
+      <%= f.label(:email, 'Email', class: 'col-sm-3 control-label') %>
+      <%= f.text_field(:email) %>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <div>Number of reports to send:</div>
+     <div><%# @authors.length %></div>
+  </div>
+
    <div class="form-group">
      <div class="col-sm-offset-2 col-sm-10">
-       <%= f.submit 'Send To Authors', data: { confirm: 'This will send most likely hundreds of emails. Are you sure?' }, class: 'btn btn-primary'  %>
-     </div
+       <%= f.submit 'Send Reports', data: { confirm: 'This will send most likely hundreds of emails. Are you sure?' }, class: 'btn btn-primary'  %>
+     </div>
    </div>
 
 <% end %>
-
-    <br/>
-
-    <br/>
-    <hr/>
-    <div style="padding: 0px 0px;">
-      <div style="display: table; width: ;">
-        <div style="display: table-row;"></div>
-        <div class="table-cell" style="display: table-cell; padding: 2px 15px 2px 0px">
-          <%= submit_tag "Send Report For Single Person" %>
-        </div>
-        <div class="table-cell" style="display: table-cell; padding: 2px 15px 2px 0px">
-          UNI:
-        </div>
-        <div class="table-cell" style="display: table-cell; padding: 2px 15px 2px 0px">
-          <%= text_field_tag :one_report_uni, params[:one_report_uni] %>
-        </div>
-        <div class="table-cell" style="display: table-cell; padding: 2px 15px 2px 0px">
-          Email:
-        </div>
-        <div class="table-cell" style="display: table-cell; padding: 2px 15px 2px 0px">
-          <%= text_field_tag :one_report_email, params[:one_report_email] %>
-        </div>
-        <div style="display: table-row;"></div>
-        <div class="table-cell" style="display: table-cell; padding: 2px 15px 2px 0px">
-          <%= submit_tag "Test Alternate Email For Person" %>
-        </div>
-        <div class="table-cell" style="display: table-cell; padding: 2px 15px 2px 0px">
-          UNI:
-        </div>
-        <div class="table-cell" style="display: table-cell; padding: 2px 15px 2px 0px">
-          <%= text_field_tag :test_users, params[:test_users] %>
-        </div>
-        <div style="display: table-row;"></div>
-        <div class="table-cell" style="display: table-cell; padding: 5px 15px 2px 0px">
-          <%= submit_tag "Send All Reports To Single Email", :onclick => "return confirm('This will send most likely hundreds of emails. Are you sure?');" %>
-        </div>
-        <div class="table-cell" style="display: table-cell; padding: 5px 15px 2px 0px">
-          Email:
-        </div>
-        <div class="table-cell" style="display: table-cell;; padding: 5px 15px 2px 0px">
-          <div class="value"></div>
-          <%= text_field_tag :designated_recipient, params[:designated_recipient] %>
-        </div>
-      </div>
-    </div>
     <%= render :partial => "/debug_deliveries" %>
 
 </div>
