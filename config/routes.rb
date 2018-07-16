@@ -14,6 +14,7 @@ Rails.application.routes.draw do
   get '/policies',   to: 'info#policies',   as: 'policies'
   get '/faq',        to: 'info#faq',        as: 'faq'
   get '/developers', to: 'info#developers', as: 'developers'
+  get '/credits',    to: 'info#credits',    as: 'credits'
 
   # Mounting API endpoint at /api/v1/
   mount API => '/'
