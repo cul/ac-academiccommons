@@ -7,6 +7,10 @@
     max-width: 800px;
   }
 
+  & p.summary strong {
+    font-size: 25px;
+  }
+
   & h3 {
     font-size: $font-size-small;
     letter-spacing: 1px;
