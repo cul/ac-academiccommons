@@ -3,13 +3,16 @@ module Admin
     authorize_resource class: EmailAuthorReportsForm
 
     def new
-      @email_author_reports_form ||= EmailAuthorReportsForm.new
+      @email_author_reports_form ||= EmailAuthorReportsForm.new(
+        year:  Date.current.prev_month.year,
+        month: Date.current.prev_month.strftime('%b')
+      )
     end
 
     def create
       @email_author_reports_form = EmailAuthorReportsForm.new(email_author_reports_params)
       if @email_author_reports_form.send_emails
-        flash[:success] = 'Emails send to recipients.'
+        flash[:success] = @email_author_reports_form.message
         redirect_to action: :new
       else
         flash[:error] = @email_author_reports_form.errors.full_messages.to_sentence

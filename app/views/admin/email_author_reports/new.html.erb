@@ -16,20 +16,18 @@
 
   <div class="form-group">
     <%= f.label :month, 'Report Month', class: 'col-sm-3 control-label' %>
-    <% month = (Date.current - 1.months).strftime('%b') %>
-    <% year = (month == 'Dec') ? Date.current.year - 1 : Date.current.year %>
     <div class="col-sm-2">
-      <%= f.select :month, options_for_select(Date::ABBR_MONTHNAMES, params[:month] || month), class: 'form-control' %>
+      <%= f.select :month, EmailAuthorReportsForm::MONTHS, class: 'form-control' %>
     </div>
     <div class="col-sm-2">
-      <%= f.select :year, options_for_select((2011..Date.current.year), params[:year] || year), class: 'form-control' %>
+      <%= f.select :year, EmailAuthorReportsForm::YEAR_BEG..Date.current.year, class: 'form-control' %>
     </div>
   </div>
 
   <div class="form-group">
     <%= f.label :order_works_by, 'Order Works By', class: 'col-sm-3 control-label' %>
     <div class="col-sm-4">
-      <%= f.select :order_works_by, options_for_select([["Titles (A-Z)", "titles"], ["Most Viewed", "views"], ["Most Downloaded", "downloads"]], params[:order_by]) %>
+      <%= f.select :order_works_by, [['Titles (A-Z)', 'titles'], ['Most Viewed', 'views'], ['Most Downloaded', 'downloads']], class: 'form-control' %>
     </div>
   </div>
 
@@ -57,18 +55,9 @@
     </div>
   </div>
 
-  <div class="form-group">
-    <div>Number of reports to send:</div>
-     <div><%# @authors.length %></div>
-  </div>
-
    <div class="form-group">
      <div class="col-sm-offset-2 col-sm-10">
        <%= f.submit 'Send Reports', data: { confirm: 'This will send most likely hundreds of emails. Are you sure?' }, class: 'btn btn-primary'  %>
      </div>
    </div>
-
 <% end %>
-    <%= render :partial => "/debug_deliveries" %>
-
-</div>
