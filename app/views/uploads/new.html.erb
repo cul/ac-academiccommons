@@ -4,27 +4,27 @@
 
 <%= form_with(model: @deposit, url: uploads_path, method: :create, local: true, id: :upload) do |form| %>
 
-  <div class="item">
+  <div class="form-group">
     <%= form.label(:title, 'Title*') %>
     <%= form.text_field(:title, placeholder: 'Title') %>
   </div>
 
-  <div class="item">
+  <div class="form-group">
     <%= form.label(:abstract, 'Abstract*') %>
     <%= form.text_area(:abstract, placeholder: 'What is this work about? Provide a brief summary to help readers understand its argument.') %>
   </div>
 
-  <div class="item">
+  <div class="form-group">
     <%= form.label(:year, 'Year Created*') %>
     <%= form.number_field(:year, placeholder: 'YYYY') %>
   </div>
 
-  <div class="item">
+  <div class="form-group">
     <%= form.label(:doi, 'DOI/URL') %>
     <%= form.text_field(:doi, placeholder: 'DOI or URL of work online (if applicable)') %>
   </div>
 
-  <div class="item checkbox">
+  <div class="form-group checkbox">
     <h5>Current student?</h5>
     <%= form.check_box :student %>
     <%= form.label :student, 'Check here if you are a current student at Columbia or one of its affiliate institutions.' %>
@@ -64,12 +64,12 @@
 
   </div>
 
-  <div class="item">
+  <div class="form-group">
     <%= form.label(:notes, 'Notes') %>
     <%= form.text_area(:notes, placeholder: 'Additional information you want included in the record and/or notes for repository staff') %>
   </div>
 
-  <div class="item">
+  <div class="form-group">
     <%= form.label(:rights_statement, 'Copyright Status*') %>
     <p class="note">
       Please confirm whether your deposit is in any way copyright protected.  For more information about how copyright protects your materials, see our
@@ -86,7 +86,7 @@
   <%# div for license information populated via javascript %>
   <div id="use-by-others" class="item"></div>
 
-  <div class="item" id="file-upload">
+  <div class="form-group" id="file-upload">
     <div><%= form.label(:files, 'Upload File(s)*') %></div>
       <p class="alert alert-info">This form accepts files up to 100MB in size. If you have larger files, email <%= mail_to "ac@columbia.edu" %>.</p>
 

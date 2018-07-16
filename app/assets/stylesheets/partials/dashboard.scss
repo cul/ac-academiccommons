@@ -2,7 +2,7 @@
 
 #main-page #dashboard-nav {
   border-bottom: $border;
-  font-size: 12px;
+  font-size: $font-size-small;
   margin: 30px 0 0 0;
   padding: 0 10px;
 
@@ -13,7 +13,7 @@
 
   & .nav-tabs {
     border-bottom: 0;
-    margin: -20px 0 1px 0;
+    margin: -30px 0 1px 0;
   }
 
   & li a {
@@ -43,7 +43,7 @@
 
   #main-page #dashboard-nav {
     border: 0;
-    font-size: 16px;
+    font-size: $font-size-base;
     margin: 10px 10px 0 10px;
 
     & .nav-tabs {
@@ -89,137 +89,8 @@
     margin: 0 0 10px 0;
   }
 
-  & .item {
-    margin: 40px 0;
-  }
-
-  & input,
-  & textarea {
-    border: $border;
-  }
-
-  & input[type=text],
-  & input[type=number],
-  & input[type=file],
-  & textarea  {
-    padding: 5px;
-    width: 100%;
-  }
-
-  & input[type=file] {
-    border-radius: 3px;
-    border-style: dashed;
-    line-height: 1;
-    padding: 25px;
-  }
-
-  & input[type=submit] {
-    border: 0;
-  }
-
-  & label,
-  & h5 {
-    display: block;
-    font-size: 14px;
-    text-transform: uppercase;
-  }
-
-  & .checkbox h5 {
-    margin: 0 0 8px 0;
-  }
-
-  & .checkbox input[type=checkbox] {
-    margin: 4px 5px 0 0;
-  }
-
-  & .checkbox label {
-    color: $gray-base;
-    font-size: 16px;
-    font-weight: 300;
-    text-transform: none;
-  }
-
-  & textarea {
-    min-height: 200px;
-    padding: 10px;
-  }
-
-  & form h3 {
-    font-size: 18px;
-    font-weight: bold;
-    margin: 0 0 5px 0;
-  }
-
-  & select {
-    border: $border;
-    height: 30px;
-    padding: 5px;
-    width: 100%;
-  }
-
-  & .field_with_errors {
-
-    & input,
-    & select,
-    & textarea {
-      border: 2px solid #d9534f;
-    }
-  }
-
-  /* creator list */
-
-  & .creators {
-    border: $border;
-    border-radius: 4px;
-    margin: 0 0 30px 0;
-    padding: 20px;
-    width: 100%;
-  }
-
-  & .creator-header,
-  & #creator-list div {
-    align-items: center;
-    border: 0;
-    border-bottom: $border;
-    border-style: dotted;
-    display: flex;
-    justify-content: space-between;
-    padding: 10px 0;
-  }
-
-  & .creator-header {
-    border: none;
-    padding: 0 0 5px 0;
-  }
-
-  & #creator-list div:hover {
-    background-image: linear-gradient(to left, $gray-lighter-custom, $body-bg);
-    cursor: move;
-  }
-
-  & .creator-header label,
-  & .creator-header span,
-  & #creator-list input,
-  & #creator-list span.sort-icon {
-    font-size: 14px;
-    margin: 0 3px 0 0;
-    text-transform: none;
-    width: 30%;
-  }
-
-  & .creator-header span.placeholder {
-    color: transparent;
-    margin: 0;
-    padding: 6px;
-    width: 7%;
-  }
-
-  & #creator-list span.sort-icon {
-    color: $gray-light;
-    margin: 0;
-    padding: 6px;
-    text-align: center;
-    width: 7%;
+  & table {
+    max-width: 100%;
   }
 }
 

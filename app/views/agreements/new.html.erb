@@ -4,24 +4,22 @@
   <fieldset>
     <%= f.hidden_field(:agreement_version, value: Agreement::LATEST_AGREEMENT_VERSION) %>
     <%= f.hidden_field(:token, value: token) if token? %>
-    <ul>
-      <li class="checkbox">
+      <div class="checkbox">
         <%= f.check_box(:accepted_agreement) %>
         <%= f.label(:accepted_agreement, 'I have read and accept the participation agreement.') %>
-      </li>
-      <li>
+      </div>
+      <div class="form-group">
         <%= f.label :name, 'Name' %>
         <%= f.text_field :name %>
-      </li>
-      <li>
+      </div>
+      <div class="form-group">
         <%= f.label :email, 'E-mail' %>
         <%= f.text_field :email, readonly: (token?) ? 'readonly' : nil %>
-      </li>
-      <li>
+      </div>
+      <div class="form-group">
         <%= f.label :uni, 'UNI' %>
         <%= f.text_field :uni, readonly: 'readonly' %>
-      </li>
-    </ul>
+      </div>
     <%= f.submit 'Accept', :class => 'btn btn-primary btn-accept' %>
   </fieldset>
 <% end %>

@@ -52,7 +52,7 @@
 /* links navbar */
 
 #links-navbar {
-  font-size: 14px;
+  font-size: $font-size-small;
 
   & .container {
     padding-left: 0;
@@ -99,6 +99,7 @@
     background-color: $body-bg;
     border: $border;
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
+    padding: 0;
   }
 
   & .share-button span {
@@ -113,7 +114,7 @@
 @media screen and (min-width: $screen-sm ) {
 
   #links-navbar {
-    font-size: 16px;
+    font-size: $font-size-base;
 
     & .navbar-nav > li a {
       padding: 10px 15px;

@@ -15,7 +15,7 @@
 
 	& ul.anchor-links {
     color: $gray-lighter;
-		font-size: 14px;
+		font-size: $font-size-small;
     font-weight: normal;
 		list-style: none;
 		margin: 0;
@@ -69,46 +69,31 @@
   }
 
   & h2 {
-    margin: 0;
+    margin: 0 0 25px 0;
   }
 
-  & h3 {
-    margin: 25px 0 -20px 0;
-  }
-
+  & h3,
   & h4 {
-    margin: 45px 0 -20px 0;
+    margin: 25px 0 0 0;
   }
 
   & p,
   & ul {
     font-weight: 300;
     line-height: 1.6;
-    margin: 25px 0;
+    margin: 0 0 25px 0;
     max-width: 700px;
     overflow-wrap: break-word;
     word-wrap: break-word;
   }
 
-  & p.intro {
-    font-size: 21px;
-    margin-top: 0;
-  }
-
-  & p.summary {
-    font-size: 23px;
-    margin-top: 0;
-    margin-bottom: 30px;
-    max-width: 800px;
-  }
-
-  & p.intro a,
-  & p.summary a {
-    text-decoration: none;
-  }
-
   & p.alert {
     margin-top: 0;
+  }
+
+  & p.small {
+    font-size: $font-size-small;
+    letter-spacing: normal;
   }
 
   & ul.brand-logos {
@@ -132,12 +117,14 @@
 
     & th {
       background: $gray-lighter-custom;
-      font-size: 14px;
+      font-size: $font-size-small;
       padding: 10px;
+      vertical-align: middle;
     }
 
     & td {
       border-bottom: $border;
+      font-size: $font-size-small;
     }
 
     & td.center {
@@ -176,7 +163,7 @@
     }
 
     & ul.anchor-links {
-      font-size: 16px;
+      font-size: $font-size-base;
       padding: 30px 0 0 0;
     }
 
