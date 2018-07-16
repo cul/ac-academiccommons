@@ -2,6 +2,7 @@
   Overriding Blacklight v6.14.1 template.
 
   - template yields to :content if available
+  - adding our own body classes
   - overriding this template can be removed when we go to Blacklight v7
 %>
 
@@ -31,7 +32,7 @@
     <%= csrf_meta_tags %>
     <%= content_for(:head) %>
   </head>
-  <body class="<%= render_body_class %>">
+  <body class="<%= render_body_class %> <%= controller_path.gsub(/_|\//, '-') %> <%= action_name.gsub(/_/, '-') %>">
 
   <%= render 'shared/alert_box' %>
 

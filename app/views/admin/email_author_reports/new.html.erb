@@ -1,0 +1,63 @@
+<h2>Email Author Reports</h2>
+
+<%= form_with model: @email_author_reports_form, url: admin_email_author_reports_path, class: 'form-horizontal', local: true do |f| %>
+  <div class="form-group">
+    <%= f.label :reports_for, 'For', class: 'col-sm-3 control-label' %>
+    <div class="col-sm-9 radio">
+        <%= f.radio_button(:reports_for, 'all') %>
+        <%= f.label(:reports_for_all_authors, 'all authors') %>
+        <%= f.radio_button(:reports_for, 'one') %>
+        <%= f.label(:reports_for_one_author, 'one author') %>
+
+        <%= f.label(:uni, 'UNI', class: 'col-sm-3 control-label') %>
+        <%= f.text_field(:uni, disabled: true, class: 'form-control') %>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :month, 'Report Month', class: 'col-sm-3 control-label' %>
+    <div class="col-sm-2">
+      <%= f.select :month, EmailAuthorReportsForm::MONTHS, class: 'form-control' %>
+    </div>
+    <div class="col-sm-2">
+      <%= f.select :year, EmailAuthorReportsForm::YEAR_BEG..Date.current.year, class: 'form-control' %>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :order_works_by, 'Order Works By', class: 'col-sm-3 control-label' %>
+    <div class="col-sm-4">
+      <%= f.select :order_works_by, [['Titles (A-Z)', 'titles'], ['Most Viewed', 'views'], ['Most Downloaded', 'downloads']], class: 'form-control' %>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :optional_note, 'Optional note', class: 'col-sm-3 control-label' %>
+    <div class="col-sm-9">
+      <%= f.text_area :optional_note, class: 'form-control' %>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :deliver, 'Delivery Options', class: 'col-sm-3 control-label' %>
+    <div class="col-sm-9 radio">
+      <%= f.radio_button(:deliver, :reports_to_each_author) %>
+      <%= f.label(:deliver_email_reports_to_each_author, 'email report(s) to each author') %>
+
+      <%= f.radio_button(:deliver, :do_not_send_email) %>
+      <%= f.label(:deliver_do_not_send_email, 'do not send email, log only') %>
+
+      <%= f.radio_button(:deliver, :all_reports_to_one_email) %>
+      <%= f.label(:deliver_all_reports_to_one_email, 'email all reports to one email') %>
+
+      <%= f.label(:email, 'Email', class: 'col-sm-3 control-label') %>
+      <%= f.text_field(:email, disabled: true, class: 'form-control') %>
+    </div>
+  </div>
+
+   <div class="form-group">
+     <div class="col-sm-offset-2 col-sm-10">
+       <%= f.submit 'Send Reports', data: { confirm: 'This will send most likely hundreds of emails. Are you sure?' }, class: 'btn btn-primary'  %>
+     </div>
+   </div>
+<% end %>
