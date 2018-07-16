@@ -10,7 +10,7 @@
         <%= f.label(:reports_for_one_author, 'one author') %>
 
         <%= f.label(:uni, 'UNI', class: 'col-sm-3 control-label') %>
-        <%= f.text_field(:uni) %>
+        <%= f.text_field(:uni, disabled: true, class: 'form-control') %>
     </div>
   </div>
 
@@ -51,7 +51,7 @@
       <%= f.label(:deliver_all_reports_to_one_email, 'email all reports to one email') %>
 
       <%= f.label(:email, 'Email', class: 'col-sm-3 control-label') %>
-      <%= f.text_field(:email) %>
+      <%= f.text_field(:email, disabled: true, class: 'form-control') %>
     </div>
   </div>
 
