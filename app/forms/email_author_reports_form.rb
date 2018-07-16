@@ -25,7 +25,7 @@ class EmailAuthorReportsForm < FormObject
       errors.add(:base, 'There is already an email process running.')
       return false
     else
-      send_authors_reports(authors)
+      send_authors_reports
     end
   end
 
@@ -35,7 +35,7 @@ class EmailAuthorReportsForm < FormObject
 
   private
 
-  def send_authors_reports(processed_authors)
+  def send_authors_reports
     start_time = Time.current
     time_id = start_time.strftime('%Y%m%d-%H%M%S')
 
@@ -59,7 +59,7 @@ class EmailAuthorReportsForm < FormObject
     startdate = Date.parse(month + ' ' + year)
     enddate   = Date.new(startdate.year, startdate.month, -1) # end_date needs to be last day of month
 
-    processed_authors.each do |author|
+    authors.each do |author|
       begin
         author_id = author[:id]
 
