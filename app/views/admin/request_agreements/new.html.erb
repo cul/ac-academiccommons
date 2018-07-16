@@ -11,21 +11,19 @@
 </p>
 
 <%= form_with model: @request_agreements_form, url: admin_request_agreements_path, method: :create, local: true do |f| %>
-  <div>
+  <div class="form-group">
     <%= f.label :name, 'Name' %>
     <%= f.text_field :name %>
   </div>
-  <div>
+  <div class="form-group">
     <%= f.label :email, 'Email' %>
     <%= f.text_field :email %>
   </div>
-
-  <div>
+  <div class="form-group">
     <%= f.label :uni, 'UNI' %>
     <%= f.text_field :uni %>
   </div>
-
-  <div>
+  <div class="form-group">
     <%= f.submit 'Request Author Agreement', class: 'btn btn-primary' %>
   </div>
 <% end %>

@@ -88,6 +88,10 @@
   & p.note {
     margin: 0 0 10px 0;
   }
+
+  & table {
+    max-width: 100%;
+  }
 }
 
 @media screen and (min-width: $screen-sm ) {
