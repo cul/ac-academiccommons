@@ -4,7 +4,17 @@
 <% end %>
 
 <h3>Available Works</h3>
-<% @current_documents.each do |document| %>
-  <p><%= link_to document.to_semantic_values[:title].first,
-                 solr_document_path(document.to_semantic_values[:id].first) %></p>
+<% @current_documents_with_stats.each do |item_stats| %>
+  <% document = item_stats.document %>
+  <p>
+    <%= link_to document.to_semantic_values[:title].first, solr_document_path(document.to_semantic_values[:id].first) %>
+    <%= item_stats.get_stat(Statistic::DOWNLOAD, AcademicCommons::Metrics::UsageStatistics::PERIOD) %>
+    <%= item_stats.get_stat(Statistic::DOWNLOAD, AcademicCommons::Metrics::UsageStatistics::LIFETIME) %>
+  </p>
 <% end %>
+
+<p>
+  Totals:
+  <%= @current_documents_with_stats.total_for(Statistic::DOWNLOAD, AcademicCommons::Metrics::UsageStatistics::PERIOD) %>
+  <%= @current_documents_with_stats.total_for(Statistic::DOWNLOAD, AcademicCommons::Metrics::UsageStatistics::LIFETIME) %>
+</p>

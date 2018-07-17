@@ -7,7 +7,7 @@ class UserController < ApplicationController
 
   def my_works
     @pending_documents = pending_documents
-    @current_documents = current_documents
+    @current_documents_with_stats = current_documents_with_stats
   end
 
   private
@@ -18,11 +18,13 @@ class UserController < ApplicationController
     end
   end
 
-  def current_documents
-    results = AcademicCommons.search do |parameters|
-      parameters.filter('author_uni_ssim', current_user.uid)
-                .sort_by('title_ssi asc')
-    end
-    results.docs
+  def current_documents_with_stats
+    startdate = Date.current.prev_month.beginning_of_month
+    enddate   = startdate.end_of_month
+    solr_params = { q: nil, fq: ["author_uni_ssim:\"#{current_user.uid}\""] }
+
+    AcademicCommons::Metrics::UsageStatistics.new(
+      solr_params, startdate, enddate, order_by: 'titles'
+    )
   end
 end
