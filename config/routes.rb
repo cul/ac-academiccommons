@@ -86,8 +86,8 @@ Rails.application.routes.draw do
     resources :deposits,            only: [:index, :show]
     resources :agreements,          only: :index
     resources :email_preferences
-    resources :email_author_reports, only: [:new, :create]
-    resources :reports,              only: [:new, :create]
+    resources :email_author_reports,     only: [:new, :create]
+    resources :usage_statistics_reports, only: [:new, :create]
   end
 
   # Resque web interface, only administrators have access

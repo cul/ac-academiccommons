@@ -1,0 +1,2 @@
+class UsageStatisticsReportsForm < FormObject
+end
