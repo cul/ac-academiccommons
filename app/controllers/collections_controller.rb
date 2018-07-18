@@ -16,7 +16,11 @@ class CollectionsController < ApplicationController
     doctoraltheses: {
       title: 'Doctoral Theses',
       summary: 'Explore full-text Columbia dissertations from 2011 forward. Some theses dated prior to 2011 and others from affiliate insitutions are also available.',
-      filter: { genre_ssim: 'Theses', degree_level_name_ssim: 'Doctoral' },
+      filter: {
+        genre_ssim: 'Theses',
+        degree_level_name_ssim: 'Doctoral',
+        degree_grantor_ssim: '("Columbia University" OR "Teachers College" OR "Union Theological Seminary")'
+      },
       facet: 'department_ssim'
     },
     series: {
