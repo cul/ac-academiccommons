@@ -20,4 +20,5 @@ Rails.application.configure do
   config.analytics_enabled = false
   config.default_host = 'https://academiccommons-test.cdrs.columbia.edu'
   config.prod_environment = false
+  config.sending_deposits_to_sword = true
 end

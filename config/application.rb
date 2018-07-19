@@ -60,6 +60,9 @@ module AcademicCommons
     # per-environment basis.
     config.analytics_enabled = false
 
+    # Only sending deposits to SWORD in certain environments.
+    config.sending_deposits_to_sword = false
+
     # Mapping errors
     config.action_dispatch.rescue_responses.merge!(
       'Blacklight::Exceptions::RecordNotFound' => :record_not_found,
