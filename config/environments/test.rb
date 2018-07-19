@@ -28,4 +28,7 @@ Rails.application.configure do
   config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
 
   config.default_host = 'http://localhost:3000'
+
+  # Using async queue that does not require any setup
+  config.active_job.queue_adapter = :async
 end

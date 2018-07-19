@@ -29,4 +29,8 @@ Rails.application.configure do
 
   # Setting host so that url helpers can be used in mailer views.
   config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
+
+  # Using async queue that does not require any setup
+  config.active_job.queue_adapter = :async
+
 end
