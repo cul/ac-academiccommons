@@ -1,0 +1,27 @@
+table,
+#main-page table {
+  margin-bottom: 50px;
+  max-width: 100%;
+
+  & th {
+    background: $gray-lighter-custom;
+    font-size: $font-size-small;
+    padding: 10px;
+    vertical-align: middle;
+  }
+
+  & td {
+    border-bottom: $border;
+    font-size: $font-size-small;
+  }
+
+  & th.center,
+  & td.center {
+    text-align: center;
+  }
+}
+
+table.small,
+#main-page table.small {
+  max-width: 700px;
+}

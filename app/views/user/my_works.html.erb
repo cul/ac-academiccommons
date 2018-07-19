@@ -18,20 +18,42 @@
   <h4>No works available </h4>
   <p>Visit our <%= link_to 'upload page', uploads_path %> to contribute your works.</p>
 <% else %>
-  <%= @current_works_with_stats.time_period %>
-
-  <% @current_works_with_stats.each do |item_stats| %>
-    <% document = item_stats.document %>
-    <p>
-      <%= link_to document.to_semantic_values[:title].first, solr_document_path(document.to_semantic_values[:id].first) %>
-      <%= item_stats.get_stat(Statistic::DOWNLOAD, AcademicCommons::Metrics::UsageStatistics::PERIOD) %>
-      <%= item_stats.get_stat(Statistic::DOWNLOAD, AcademicCommons::Metrics::UsageStatistics::LIFETIME) %>
-    </p>
-  <% end %>
-
-  <p>
-    Totals:
-    <%= @current_works_with_stats.total_for(Statistic::DOWNLOAD, AcademicCommons::Metrics::UsageStatistics::PERIOD) %>
-    <%= @current_works_with_stats.total_for(Statistic::DOWNLOAD, AcademicCommons::Metrics::UsageStatistics::LIFETIME) %>
-  </p>
+  <table class="table small">
+    <tr>
+      <th>
+        Work
+      </th>
+      <th class="center">
+        <%= @current_works_with_stats.time_period %>
+      </th>
+      <th class="center">
+        Lifetime
+      </th>
+    </tr>
+    <% @current_works_with_stats.each do |item_stats| %>
+      <% document = item_stats.document %>
+        <tr>
+          <td>
+            <%= link_to document.to_semantic_values[:title].first, solr_document_path(document.to_semantic_values[:id].first) %>
+          </td>
+          <td class="center">
+            <%= item_stats.get_stat(Statistic::DOWNLOAD, AcademicCommons::Metrics::UsageStatistics::PERIOD) %>
+          </td>
+          <td class="center">
+            <%= item_stats.get_stat(Statistic::DOWNLOAD, AcademicCommons::Metrics::UsageStatistics::LIFETIME) %>
+          </td>
+        </tr>
+    <% end %>
+    <tr>
+      <td>
+        <em>Totals:</em>
+      </td>
+      <td class="center">
+        <%= @current_works_with_stats.total_for(Statistic::DOWNLOAD, AcademicCommons::Metrics::UsageStatistics::PERIOD) %>
+      </td>
+      <td class="center">
+        <%= @current_works_with_stats.total_for(Statistic::DOWNLOAD, AcademicCommons::Metrics::UsageStatistics::LIFETIME) %>
+      </td>
+    </tr>
+  </table>
 <% end %>
