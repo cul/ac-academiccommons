@@ -115,14 +115,4 @@ class Deposit < ApplicationRecord
     end
     stringio.string
   end
-
-  def send_to_sword
-    # Check that we are allowed to send data to sword in this environment.
-    retrun unless Rails.application.config.send_deposits_to_sword == true
-
-    # Check that we have all the credentials necessary, url, collection_slug, username, password
-    Rails.application.config_for(:secrets)['sword']
-
-    # Send request to SWORD
-  end
 end

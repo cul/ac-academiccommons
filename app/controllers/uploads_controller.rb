@@ -31,6 +31,7 @@ class UploadsController < ApplicationController
 
     if @deposit.save
       send_student_reminder_email
+      SwordDepositJob.perform_later(@deposit)
       render template: 'uploads/successful_upload'
     else
       @deposit.files.attachments.destroy_all # Remove attachment until we can presist them across requests.

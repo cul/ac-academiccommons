@@ -1,5 +1,6 @@
 class NotificationMailer < ApplicationMailer
   helper :catalog # Needed to correctly render persistent url.
+  default from: 'ac@columbia.edu'
 
   def new_item_available(solr_doc, uni, email, name = nil)
     @uni, @name, @email = uni, name, email
@@ -54,5 +55,10 @@ class NotificationMailer < ApplicationMailer
     subject = 'Request Department Approval'
 
     mail(to: email, from: from, subject: subject)
+  end
+
+  def deposit_sent_to_sword(deposit, email)
+    @deposit = deposit
+    mail(to: email, subject: 'Deposit sent to sword')
   end
 end
