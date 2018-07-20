@@ -34,6 +34,11 @@ module AcademicCommons
       self
     end
 
+    def embargoed_only
+      filter('object_state_ssi', 'A')
+      @parameters[:fq] << 'free_to_read_start_date_dtsi:[NOW+1DAYS TO *]'
+    end
+
     def rows(rows)
       @parameters[:rows] = rows
       self
