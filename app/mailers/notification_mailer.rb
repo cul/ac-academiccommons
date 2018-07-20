@@ -39,9 +39,4 @@ class NotificationMailer < ApplicationMailer
 
     mail(to: email, subject: 'Request Department Approval')
   end
-
-  def deposit_sent_to_sword(deposit, email)
-    @deposit = deposit
-    mail(to: email, subject: 'Deposit sent to sword')
-  end
 end

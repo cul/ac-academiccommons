@@ -30,7 +30,7 @@ class SwordDepositJob < ApplicationJob
       deposit.files.destroy_all
 
       # Send notification to AC staff.
-      NotificationMailer.deposit_sent_to_sword(deposit, 'ac@columbia.edu').deliver
+      AdministrativeMailer.new_deposit(deposit).deliver
     else
       message = "There was an error deliving a SWORD deposit for deposit record id: #{deposit.id}. SWORD deposit returned a status code of #{response.code}. Please check logs."
       ErrorMailer.sword_deposit_error('Error Delivering SWORD Deposit', message)
