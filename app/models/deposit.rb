@@ -39,7 +39,7 @@ class Deposit < ApplicationRecord
         'xmlns:xlink':        'http://www.w3.org/1999/xlink',
         'xsi:schemaLocation': 'http://www.loc.gov/METS/ http://www.loc.gov/standards/mets/mets.xsd http://www.loc.gov/mods/v3 http://www.loc.gov/standards/mods/v3/mods-3-2.xsd'
       ) do
-        xml.metsHdr('CREATEDATE': Time.now.utc.xmlschema) do
+        xml.metsHdr('CREATEDATE': Time.current.utc.xmlschema) do
           xml.agent('ROLE': 'CUSTODIAN', 'TYPE': 'ORGANIZATION') do
             xml.name 'Academic Commons, Columbia University'
           end

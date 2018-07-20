@@ -1,7 +1,7 @@
 FactoryBot.define do
   factory :statistic do
     identifier '10.7916/ALICE'
-    at_time    Time.now
+    at_time    Time.current
 
     factory :view_stat do
       event Statistic::VIEW
