@@ -29,6 +29,7 @@ deployed: &deployed
   mail_deposit_recipients:
     - ACdeposit@columbia.edu
   mail_deliverer: ac@columbia.edu
+  administrative_notifications: ac@columbia.edu
   new_agreement_notification:
     - ac@columbia.edu
   error_notifications: diag@library.columbia.edu
