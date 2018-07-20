@@ -52,7 +52,7 @@ class UploadsController < ApplicationController
     return unless ActiveRecord::Type::Boolean.new.cast(params[:deposit][:student])
 
     begin
-      NotificationMailer.reminder_to_request_departmental_approval(current_user.full_name, current_user.email).deliver
+      UserMailer.reminder_to_request_departmental_approval(current_user.full_name, current_user.email).deliver
     rescue Net::SMTPFatalError, Net::SMTPSyntaxError, IOError, Net::SMTPAuthenticationError,
            Net::SMTPServerBusy, Net::SMTPUnknownError => e
 

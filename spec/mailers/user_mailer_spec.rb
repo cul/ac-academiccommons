@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe NotificationMailer, type: :mailer do
+RSpec.describe UserMailer, type: :mailer do
   describe 'new_item_available' do
     let(:email) { 'abc123@columbia.edu' }
     let(:uni) { 'abc123' }

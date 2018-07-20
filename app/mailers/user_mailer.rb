@@ -1,4 +1,5 @@
-class NotificationMailer < ApplicationMailer
+class UserMailer < ApplicationMailer
+  # This mailer contains emails that go to Academic Commons users.
   helper :catalog # Needed to correctly render persistent url.
   default from: Rails.application.config_for(:emails)['mail_deliverer']
 

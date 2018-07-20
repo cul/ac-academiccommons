@@ -100,7 +100,7 @@ class SolrDocumentsController < ApplicationController
       success = true
 
       begin
-        NotificationMailer.new_item_available(doc, uni, email, name).deliver_now
+        UserMailer.new_item_available(doc, uni, email, name).deliver_now
       rescue Net::SMTPAuthenticationError, Net::SMTPServerBusy, Net::SMTPUnknownError,
         Timeout::Error, Net::SMTPFatalError, IOError, Net::SMTPSyntaxError => e
         logger.error "Error Sending Email: #{e.message}"

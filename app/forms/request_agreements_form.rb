@@ -24,7 +24,7 @@ class RequestAgreementsForm < FormObject
 
     begin
       token = Rails.application.message_verifier(:agreement).generate([email, uni, Agreement::LATEST_AGREEMENT_VERSION])
-      NotificationMailer.request_for_agreement(name, email, token).deliver_now
+      UserMailer.request_for_agreement(name, email, token).deliver_now
     rescue Net::SMTPAuthenticationError, Net::SMTPServerBusy, Net::SMTPUnknownError,
            Timeout::Error, Net::SMTPFatalError, IOError, Net::SMTPSyntaxError => e
       Rails.logger.error "Error Sending Email: #{e.message}"
