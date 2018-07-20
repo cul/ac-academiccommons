@@ -20,7 +20,7 @@ development: *local
 test: *local
 
 
-# Emails for deployed environments.
+# Emails for deployed dev/test environments.
 deployed: &deployed
   deposit_notification_bcc:
     - ac@columbia.edu
@@ -31,9 +31,14 @@ deployed: &deployed
   mail_deliverer: ac@columbia.edu
   new_agreement_notification:
     - ac@columbia.edu
+  error_notifications: diag@library.columbia.edu
 
 academiccommons_dev: *deployed
 academiccommons_test: *deployed
 academiccommons_prod: *deployed
 ac4_dev: *deployed
 ac4_test: *deployed
+
+academiccommons_prod: *deployed
+  <<: *deployed
+  error_notifications: cmg2228@columbia.edu

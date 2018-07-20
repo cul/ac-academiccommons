@@ -1,4 +1,9 @@
 module AcademicCommons
+  # Returns app version number
+  def self.version
+    IO.read(Rails.root.join('VERSION')).strip
+  end
+
   # Converts handles or DOIs to full urls. If str does not match a DOI or
   # handle format, returns the string unchanged.
   def self.identifier_url(str)
