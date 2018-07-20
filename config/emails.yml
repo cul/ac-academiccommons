@@ -6,15 +6,10 @@
 # Emails are not actually sent in local environments, therefore the emails don't
 # have to be valid.
 local: &local
-  deposit_notification_bcc:
-    - example@columbia.edu
-  indexing_report_recipients:
-    - example@columbia.edu
-  mail_deposit_recipients:
-    - example@columbia.edu
   mail_deliverer: ac@columbia.edu
-  new_agreement_notification:
-    - example@columbia.edu
+  administrative_notifications: example@columbia.edu
+  error_notifications: developers@library.columbia.edu
+
 
 development: *local
 test: *local
@@ -22,16 +17,8 @@ test: *local
 
 # Emails for deployed dev/test environments.
 deployed: &deployed
-  deposit_notification_bcc:
-    - ac@columbia.edu
-  indexing_report_recipients:
-    - ac@columbia.edu
-  mail_deposit_recipients:
-    - ACdeposit@columbia.edu
   mail_deliverer: ac@columbia.edu
   administrative_notifications: ac@columbia.edu
-  new_agreement_notification:
-    - ac@columbia.edu
   error_notifications: diag@library.columbia.edu
 
 academiccommons_dev: *deployed
