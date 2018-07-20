@@ -10,7 +10,6 @@ local: &local
   administrative_notifications: example@columbia.edu
   error_notifications: developers@library.columbia.edu
 
-
 development: *local
 test: *local
 
@@ -19,7 +18,7 @@ test: *local
 deployed: &deployed
   mail_deliverer: ac@columbia.edu
   administrative_notifications: ac@columbia.edu
-  error_notifications: diag@library.columbia.edu
+  error_notifications: cmg2228@columbia.edu
 
 academiccommons_dev: *deployed
 academiccommons_test: *deployed
@@ -27,6 +26,6 @@ academiccommons_prod: *deployed
 ac4_dev: *deployed
 ac4_test: *deployed
 
-academiccommons_prod: *deployed
+academiccommons_prod:
   <<: *deployed
-  error_notifications: cmg2228@columbia.edu
+  error_notifications: diag@library.columbia.edu

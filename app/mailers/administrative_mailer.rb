@@ -1,5 +1,5 @@
 class AdministrativeMailer < ApplicationMailer
-  # This mailer contains emails that should go to the Academic Commons
+  # This mailer contains emails that go to the Academic Commons
   # administrative staff.
   default to: Rails.application.config_for(:emails)['administrative_notifications']
 
