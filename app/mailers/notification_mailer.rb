@@ -1,6 +1,6 @@
 class NotificationMailer < ApplicationMailer
   helper :catalog # Needed to correctly render persistent url.
-  default from: 'ac@columbia.edu'
+  default from: Rails.application.config_for(:emails)['mail_deliverer']
 
   def new_item_available(solr_doc, uni, email, name = nil)
     @uni, @name, @email = uni, name, email
@@ -26,10 +26,9 @@ class NotificationMailer < ApplicationMailer
   def request_for_agreement(name, email, token)
     @token = token
     @name = name
-    from = Rails.application.config_for(:emails)['mail_deliverer']
-    subject = 'Signature request: Columbia Academic Commons participation agreement'
 
-    mail(to: email, from: from, subject: subject)
+    subject = 'Signature request: Columbia Academic Commons participation agreement'
+    mail(to: email, subject: subject)
   end
 
   # Notification sent out to self-identified student depositors. This
@@ -38,10 +37,7 @@ class NotificationMailer < ApplicationMailer
   def reminder_to_request_departmental_approval(name, email)
     @name = name
 
-    from = Rails.application.config_for(:emails)['mail_deliverer']
-    subject = 'Request Department Approval'
-
-    mail(to: email, from: from, subject: subject)
+    mail(to: email, subject: 'Request Department Approval')
   end
 
   def deposit_sent_to_sword(deposit, email)
