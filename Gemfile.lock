@@ -235,8 +235,15 @@ GEM
     hooks (0.4.1)
       uber (~> 0.0.14)
     htmlentities (4.3.4)
+    http (3.3.0)
+      addressable (~> 2.3)
+      http-cookie (~> 1.0)
+      http-form_data (~> 2.0)
+      http_parser.rb (~> 0.6.0)
     http-cookie (1.0.3)
       domain_name (~> 0.5)
+    http-form_data (2.1.1)
+    http_parser.rb (0.6.0)
     httpclient (2.8.3)
     i18n (1.0.1)
       concurrent-ruby (~> 1.0)
@@ -572,6 +579,7 @@ DEPENDENCIES
   grape-entity
   grape-swagger
   haml (>= 4.0.7)
+  http
   httpclient (~> 2.6)
   jbuilder
   jettywrapper (>= 1.4.0)!
