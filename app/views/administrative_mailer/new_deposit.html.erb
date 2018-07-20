@@ -1,64 +1,18 @@
 <div>
-  <b>Accepted Author Agreement</b>
-  <b>(<%= @agreement_version %>): <%= "&#x2713;".html_safe unless @agreement_version.empty? %></b>
-</div>
-
-<hr>
-
-<div>
-  <b>UNI:</b> <%= @uni %>
-</div>
-
-<hr>
-
-<div>
-  <b>Name:</b> <%= @name %>
-</div>
-
-<hr>
-
-<div>
-  <b>E-mail:</b> <%= @email %>
+  <b>Name:</b> <%= @deposit.name %>
 </div>
 
 <hr>
 
 <div><b>Title:</b></div>
-<div><%= @title %></div>
+<div><%= @deposit.title %></div>
 
 <hr>
 
-<div><b>Authors:</b></div>
-<div><%= @authors %></div>
+<div><b>Creators:</b></div>
+<div><%= @deposit.creators %></div>
 
 <hr>
 
-<div><b>Abstract or Description:</b></div>
-<div><%= @abstract %></div>
-
-<hr>
-
-<div>
-  <b>URL:</b> <%= @url %>
-</div>
-
-<hr>
-
-<div>
-  <b>DOI/PMCID:</b> <%= @doi_pmcid %>
-</div>
-
-<hr>
-
-<div><b>Notes: </b></div>
-<div><%= @notes %></div>
-
-<hr>
-
-<div>
-  <b>File:</b> <%= "Attached." unless attachments.empty? %> File can be downloaded directly from: <%= link_to nil, @file_download_url %>
-</div>
-
-<hr>
-
-<p>You can access the record for this deposit at <%= link_to nil, @record_url %></p>
+<div><b>Record in Hyacinth:</b></div>
+<div>Link soon.</div>
