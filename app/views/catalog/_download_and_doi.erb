@@ -1,51 +1,12 @@
-
-
-<!-- <ul class="download-box">
-  <li class="download-button-box">
-    <%= render partial: 'download_button' %>
-  </li>
-  <li class="permanent-link">
-    <h4>DOI</h4>
-    <textarea id="doi" rows="1" >
-      <%= @document.full_doi %>
-    </textarea>
-    <button class="btn" data-clipboard-target="#doi">
-      O
-    </button>
-  </li>
-</ul> -->
-
-<!-- readonly onclick="this.focus();this.select()" -->
-
-
-
-<!-- <ul class="download-box">
-  <li class="download-button-box">
-    <%= render partial: 'download_button' %>
-  </li>
-  <li class="permanent-link">
-    <h4>DOI</h4>
-
-<div class="doi-and-copy-button">
-  <input id="doi" type="text" value="<%= @document.full_doi %>">
-  <button class="btn btn-default" type="button" data-clipboard-target="#doi">
-    XO
-  </button>
+<div class="download-box">
+<%= render partial: 'download_button' %>
 </div>
-
-
-  </li>
-</ul> -->
-
-  <div class="download-box">
-  <%= render partial: 'download_button' %>
+<div class="doi-container">
+  <h4 class="doi-label">DOI</h4>
+  <div class="doi-and-copy-button">
+    <input readonly onclick="this.focus();this.select()" id="doi" type="text" value="<%= @document.full_doi %>">
+    <button class="btn" type="button" data-clipboard-target="#doi">
+      <i class="glyphicon glyphicon-copy"></i>
+    </button>
   </div>
-  <div class="doi-container">
-    <h4 class="doi-label">DOI</h4>
-    <div class="doi-and-copy-button">
-      <input id="doi" type="text" value="<%= @document.full_doi %>">
-      <button class="btn" type="button" data-clipboard-target="#doi">
-        <i class="glyphicon glyphicon-copy"></i>
-      </button>
-    </div>
-  </div>
+</div>
