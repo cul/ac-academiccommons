@@ -19,6 +19,8 @@
   }
 }
 
+
+
 li.download-and-doi {
   animation: slideInUp;
   animation-duration: .7s;
@@ -27,57 +29,49 @@ li.download-and-doi {
   border-top: 1px solid $brand-dark;
   bottom: 0;
   box-shadow: 0 0 17px 2px #ccc;
+  display: flex;
   margin-left: -15px;
   padding: 10px;
   position: fixed;
   width: 100%;
   z-index: 100;
 
-  & ul {
+  & .download-box {
+    display: inline;
+    flex: 1;
+  }
+
+  & .doi-container {
+    flex: 3;
+    margin-left: 5px;
+  }
+
+  & h4.doi-label {
+    font-size: 12px;
+    margin: 0;
+  }
+
+  & .doi-and-copy-button {
     display: flex;
   }
 
-  & ul.download-box p {
-    font-size: 12px;
-  }
-
-  & li.download-button-box {
-    width: 30%;
-  }
-
-  & li.permanent-link {
-    width: 70%;
-  }
-
-  & li.permanent-link h4,
-  & li.permanent-link textarea {
+  & .doi-and-copy-button input {
     font-size: 12px;
     line-height: 1;
+    padding: 3px 6px;
+    width: 80%;
   }
 
-  & li.permanent-link h4 {
-    color: $gray-base;
-    margin: 0 0 2px 0;
-  }
-
-  & li.permanent-link textarea {
+  & .doi-and-copy-button .btn {
     border: $border;
-    border-color: $gray-light;
-    border-radius: 0;
-    box-shadow: inset 0 0 3px #bbb;
-    color: $gray;
-    font-weight: 300;
-    overflow: auto;
-    padding: 4px 0 4px 4px;
-    resize: none;
-    white-space: nowrap;
-    width: 100%;
-  }
-
-  & li.permanent-link textarea:focus {
-    color: $brand-dark;
+    margin-left: 5px;
+    width: 20%;
   }
 }
+
+
+
+
 
 li.social-buttons {
   padding: 10px 10px 6px 10px;
@@ -99,35 +93,12 @@ li.social-buttons a {
     border: 0;
     bottom: auto;
     box-shadow: none;
+    display: block;
     margin-left: inherit;
-    padding-bottom: 10px;
     position: relative;
 
-    & ul {
-      display: block;
-    }
 
-    & li.download-button-box {
-      margin: 0 0 15px 0;
-      width: 100%;
-    }
-
-    & li.download-button-box .download-button {
-      width: 100%;
-    }
-
-    & li.permanent-link {
-      width: 100%;
-    }
-
-    & li.permanent-link textarea  {
-      border-color: $gray-lighter;
-      padding: 6px 4px;
-    }
-
-    & li.permanent-link h4 {
-      margin-bottom: 4px;
-    }
+    
   }
 
   li.social-buttons {
