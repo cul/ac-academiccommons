@@ -54,8 +54,6 @@ Rails.application.routes.draw do
   put '/solr_documents/:id', to: 'solr_documents#update'
   get '/solr_documents/:id', to: 'solr_documents#show'
 
-  resources :email_preferences
-
   get '/download/download_log/:id', to: 'download#download_log', as: 'download_log'
 
   match '/statistics/detail_report',        to: 'statistics#detail_report',        via: [:get, :post]
@@ -80,10 +78,12 @@ Rails.application.routes.draw do
   namespace :admin do
     get 'author_affiliation_report/index'
     get 'author_affiliation_report/create'
-    resources :request_agreements, only: [:new, :create]
-    resource  :alert_message,      only: [:edit, :update]
-    resources :deposits,           only: [:index, :show]
-    resources :agreements,         only: :index
+    resources :request_agreements,  only: [:new, :create]
+    resource  :alert_message,       only: [:edit, :update]
+    resources :deposits,            only: [:index, :show]
+    resources :agreements,          only: :index
+    resources :email_preferences
+    resources :email_author_reports, only: [:new, :create]
   end
 
   get '/emails/get_csv_email_form', to: 'emails#get_csv_email_form'

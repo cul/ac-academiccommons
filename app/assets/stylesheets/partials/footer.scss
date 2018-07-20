@@ -3,7 +3,7 @@
 .footer {
   border-top: $border;
   color: $gray-lighter;
-  font-size: 14px;
+  font-size: $font-size-small;
   line-height: 1.8;
   padding: 15px 0;
 
@@ -30,7 +30,7 @@
 .site-description {
   border-top: $border;
   color: $gray-light;
-  font-size: 14px;
+  font-size: $font-size-small;
   line-height: 1.8;
   padding: 15px 0 70px 0;
 

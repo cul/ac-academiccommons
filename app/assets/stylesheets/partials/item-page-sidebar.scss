@@ -37,28 +37,32 @@ li.download-and-doi {
     display: flex;
   }
 
-  & .download-box p {
+  & ul.download-box p {
     font-size: 12px;
   }
 
-  & .permanent-link {
-    margin-left: 10px;
-    width: 100%;
+  & li.download-button-box {
+    width: 30%;
   }
 
-  & .permanent-link h4,
-  & .permanent-link textarea {
+  & li.permanent-link {
+    width: 70%;
+  }
+
+  & li.permanent-link h4,
+  & li.permanent-link textarea {
     font-size: 12px;
     line-height: 1;
   }
 
-  & h4 {
+  & li.permanent-link h4 {
     color: $gray-base;
-    margin: 0 0 4px 0;
+    margin: 0 0 2px 0;
   }
 
-  & .permanent-link textarea {
-    border: none;
+  & li.permanent-link textarea {
+    border: $border;
+    border-color: $gray-light;
     border-radius: 0;
     box-shadow: inset 0 0 3px #bbb;
     color: $gray;
@@ -70,7 +74,7 @@ li.download-and-doi {
     width: 100%;
   }
 
-  & .permanent-link textarea:focus {
+  & li.permanent-link textarea:focus {
     color: $brand-dark;
   }
 }
@@ -103,17 +107,26 @@ li.social-buttons a {
       display: block;
     }
 
-    & .download-button {
+    & li.download-button-box {
       margin: 0 0 15px 0;
       width: 100%;
     }
 
-    & .permanent-link {
-      margin: 0;
+    & li.download-button-box .download-button {
+      width: 100%;
     }
 
-    & .permanent-link textarea {
+    & li.permanent-link {
+      width: 100%;
+    }
+
+    & li.permanent-link textarea  {
+      border-color: $gray-lighter;
       padding: 6px 4px;
+    }
+
+    & li.permanent-link h4 {
+      margin-bottom: 4px;
     }
   }
 

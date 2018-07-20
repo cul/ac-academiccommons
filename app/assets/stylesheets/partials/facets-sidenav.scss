@@ -4,13 +4,13 @@
   padding-bottom: 0;
 
   & h2.facets-heading {
-    font-size: 14px;
+    font-size: $font-size-small;
     font-weight: bold;
     text-transform: uppercase;
   }
 
   & h3.facet-field-heading {
-    font-size: 14px;
+    font-size: $font-size-small;
     font-weight: normal;
     line-height: 1;
     margin: 0;
@@ -43,7 +43,7 @@
     border-radius: 0;
     border-bottom: $border;
     box-shadow: none;
-    font-size: 14px;
+    font-size: $font-size-small;
     margin: 0;
   }
 
@@ -62,10 +62,6 @@
   & .remove {
     text-indent: 7px;
   }
-
-  & p.subsection {
-    font-size: 12px;
-  }
 }
 
 @media screen and (min-width: $screen-sm ) {
@@ -73,7 +69,7 @@
   #facets {
 
     & h2.facets-heading {
-      margin: 18px 0 0 0;
+      margin: 6px 0 0 0;
     }
 
     & .top-panel-heading {

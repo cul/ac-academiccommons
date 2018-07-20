@@ -19,3 +19,4 @@
 //= require upload/license-options
 //= require jquery-ui-sortable
 //= require upload/author-reorder
+//= require admin/enable-optional-fields

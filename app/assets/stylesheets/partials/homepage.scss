@@ -1,21 +1,21 @@
 /* homepage */
 
 #home-content {
+  padding-top: 20px;
+
+  & p.summary {
+    max-width: 800px;
+  }
+
+  & p.summary strong {
+    font-size: 25px;
+  }
 
   & h3 {
-    font-size: 14px;
+    font-size: $font-size-small;
     letter-spacing: 1px;
     margin: 0 0 30px 0;
     text-transform: uppercase;
-  }
-
-  & p.intro {
-    font-size: 17px;
-    font-weight: 300;
-    letter-spacing: .4px;
-    line-height: 1.8;
-    margin: 10px 0 0 0;
-    max-width: 975px;
   }
 
   & .stats {
@@ -51,7 +51,7 @@
 
   & p.quote span {
     color: $gray-light;
-    font-size: 14px;
+    font-size: $font-size-small;
     font-weight: 400;
   }
 }

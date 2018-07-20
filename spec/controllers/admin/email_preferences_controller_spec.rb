@@ -1,7 +1,7 @@
 require 'rails_helper'
 
-describe EmailPreferencesController, type: :controller do
-  let(:deposit)   { EmailPreference.create(author: 'John Doe', monthly_opt_out: false, email: 'john.doe@example.com') }
+describe Admin::EmailPreferencesController, type: :controller do
+  let(:deposit) { EmailPreference.create(author: 'John Doe', monthly_opt_out: false, email: 'john.doe@example.com') }
 
   describe 'GET index' do
     include_examples 'authorization required' do
@@ -22,9 +22,9 @@ describe EmailPreferencesController, type: :controller do
   end
 
   describe 'POST create' do
-    let(:http_request) {
+    let(:http_request) do
       post :create, params: { email_preference: { author: 'John Doe', monthly_opt_out: true, email: 'john.doe@example.com' } }
-    }
+    end
 
     context 'without being logged in' do
       before do
@@ -54,7 +54,7 @@ describe EmailPreferencesController, type: :controller do
       end
 
       it 'succeeds' do
-        expect(response).to redirect_to email_preference_url(EmailPreference.first.id)
+        expect(response.status).to be 200
       end
     end
   end
@@ -96,7 +96,7 @@ describe EmailPreferencesController, type: :controller do
       end
 
       it 'succeeds' do
-        expect(response).to redirect_to email_preference_url(deposit.id)
+        expect(response.status).to be 200
       end
 
       it 'updates monthly_opt_out preference' do
@@ -136,7 +136,7 @@ describe EmailPreferencesController, type: :controller do
       end
 
       it 'succeeds' do # Redirects to index page on success.
-        expect(response).to redirect_to email_preferences_url
+        expect(response).to redirect_to admin_email_preferences_url
       end
     end
   end

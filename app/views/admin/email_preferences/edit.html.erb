@@ -1,0 +1,8 @@
+
+<p><%= link_to "<< Back to Email Preferences", admin_email_preferences_path %></p>
+
+<h2>Edit Email Preference</h2>
+
+<%= render partial: 'form' %>
+
+<%= button_to 'Destroy', admin_email_preference_path(@email_preference), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-sm btn-danger' %>

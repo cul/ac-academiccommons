@@ -28,86 +28,6 @@ class StatisticsController < ApplicationController
     redirect_to root_url
   end
 
-  def all_author_monthlies
-    commit_button_all = 'Send To Authors'
-    commit_button_all_to_single = 'Send All Reports To Single Email'
-    commit_button_aternate = 'Test Alternate Email For Person'
-    commit_button_one_to_one = 'Send Report For Single Person'
-
-    params[:email_template] ||= 'Normal'
-
-    ids = repository.search(rows: 100_000, page: 1, fl: 'author_uni_ssim')['response']['docs'].collect { |f| f['author_uni_ssim'] }.flatten.compact.uniq - EmailPreference.where(monthly_opt_out: true).collect(&:author)
-
-    emails = EmailPreference.where('email is NOT NULL and monthly_opt_out = 0').collect
-
-    alternate_emails = Hash.new
-
-    emails.each do |ep|
-      alternate_emails[ep.author] = ep.email;
-    end
-
-    @authors = ids.collect { |id| {id: id, email: alternate_emails[id] || "#{id}@columbia.edu"}}
-
-    if params[:commit]
-
-      if params[:commit].in?(commit_button_all)
-        processed_authors = @authors
-        final_notice = 'All monthly reports processing was started.'
-      end
-
-      if params[:commit].in?(commit_button_all_to_single)
-        if params[:designated_recipient].empty?
-          flash.now[:error] = 'Cannot \'Send All Reports To Single Email\' - the destination email was not provided'
-          return
-        end
-        processed_authors = @authors
-        final_notice = 'All monthly reports processing was started to be sent to ' + params[:designated_recipient]
-        designated_recipient = params[:designated_recipient]
-      else
-        params[:designated_recipient] = nil
-      end
-
-      if params[:commit].in?(commit_button_aternate)
-        if params[:test_users].empty?
-          flash.now[:error] = 'Could not get statistics. The UNI must be provided!'
-          clean_params(params)
-          return
-        end
-
-        email = alternate_emails[params[:test_users].to_s]
-        if email.nil? || email.empty?
-          flash.now[:error] = 'Could not get statistics for ' + params[:test_users].to_s + '. The alternate email was not found!'
-          clean_params(params)
-          return
-        end
-        processed_authors = make_test_author(params[:test_users].to_s, alternate_emails[params[:test_users].to_s])
-        final_notice = 'The monthly report for ' + params[:test_users].to_s + ' was sent to ' + alternate_emails[params[:test_users].to_s]
-      end
-
-      if params[:commit].in?(commit_button_one_to_one )
-
-        if params[:one_report_uni].empty? || params[:one_report_email].empty?
-          flash.now[:error] = 'Could not get statistics. The UNI and Email must be provided!'
-          return
-        end
-        processed_authors = make_test_author(params[:one_report_uni].to_s, params[:one_report_email])
-        final_notice = 'The monthly report for ' + params[:one_report_uni].to_s + ' was sent to ' + params[:one_report_email]
-      end
-
-      if(!monthly_reports_in_process?)
-        send_authors_reports(processed_authors, designated_recipient)
-      else
-        final_notice = 'The process is already running.'
-      end
-
-      logger.info '============= final_notice: ' + final_notice
-
-      flash.now[:notice] = final_notice
-
-      clean_params(params)
-    end
-  end
-
   def detail_report
     set_default_params(params)
 
@@ -226,13 +146,6 @@ class StatisticsController < ApplicationController
   end
 
   private
-
-  def monthly_reports_in_process?
-    Dir.glob("#{Rails.root}/log/monthly_reports/*.tmp") do |log_file_path|
-      return true
-    end
-    return false
-  end
 
   def set_default_params(params)
     if (params[:month_from].nil? || params[:month_to].nil? || params[:year_from].nil? || params[:year_to].nil?)
