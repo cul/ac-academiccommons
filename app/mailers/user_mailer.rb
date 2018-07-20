@@ -4,12 +4,16 @@ class UserMailer < ApplicationMailer
   default from: Rails.application.config_for(:emails)['mail_deliverer']
 
   def new_item_available(solr_doc, uni, email, name = nil)
-    @uni, @name, @email = uni, name, email
+    @uni = uni
+    @name = name
+    @email = email
     @solr_doc = solr_doc
 
-    subject = (@solr_doc.embargoed?) ?
-                'Your work is now registered in Academic Commons' :
+    subject = if @solr_doc.embargoed?
+                'Your work is now registered in Academic Commons'
+              else
                 'Your work is now available in Academic Commons'
+              end
 
     bcc = Rails.application.config_for(:emails)['administrative_notifications']
 
