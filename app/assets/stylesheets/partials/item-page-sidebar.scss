@@ -34,18 +34,23 @@ li.download-and-doi {
   width: 100%;
   z-index: 100;
 
-  & .download-box {
-    display: inline;
+  & .download-button {
     flex: 1;
-  }
-
-  & .download-box .btn {
     padding: 9px 8px;
     width: 100%;
   }
 
+  & p {
+    background: $gray-lighter-custom;
+    border-radius: 6px;
+    flex: 2;
+    font-size: 12px;
+    margin: 0;
+    padding: 5px;
+  }
+
   & .doi-container {
-    flex: 3;
+    flex: 2;
     margin-left: 8px;
   }
 
@@ -87,10 +92,6 @@ li.download-and-doi {
   }
 }
 
-
-
-
-
 li.social-buttons {
   padding: 10px 10px 6px 10px;
 }
@@ -122,8 +123,6 @@ li.social-buttons a {
     & h4.doi-label {
       margin-bottom: 4px;
     }
-
-
   }
 
   li.social-buttons {

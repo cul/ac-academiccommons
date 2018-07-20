@@ -14,7 +14,7 @@ $(document).ready(function(){
   function hideTooltip(btn) {
     setTimeout(function() {
       $(btn).tooltip('hide');
-    }, 5000);
+    }, 3000);
   }
 
   var clipboard = new ClipboardJS('button');
