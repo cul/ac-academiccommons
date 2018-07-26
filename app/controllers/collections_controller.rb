@@ -2,7 +2,7 @@ class CollectionsController < ApplicationController
   CONFIG = {
     featured: {
       title: 'Featured Collections',
-      summary: 'Discover unique research produced by a our featured Columbia departments, institutes and centers.',
+      summary: 'Discover unique research produced by our featured Columbia departments, institutes and centers.',
       facet: 'department_ssim',
       values: {
         'Center for Behavioral Cardiovascular Health' => 'The Center for Behavioral Cardiovascular Health (CBCH) is a leader in cutting-edge behavioral medicine research dedicated to understanding how and why behaviors, psychological factors, and societal forces influence hypertension and cardiovascular disease. ',
