@@ -4,7 +4,7 @@ namespace :ac do
     task to_roles: :environment do
       # If role column has '1' should be converted to admin, otherwise it will
       # be set to null.
-      User.in_batches.each do |user|
+      User.find_each do |user|
         user.update(role: 'admin') if user.admin == true || user.admin == '1' || user.admin == 1
       end
     end
@@ -34,7 +34,7 @@ namespace :ac do
 
   desc 'Migrate deposit metadata to metadata text field'
   task migrate_deposit_data: :environment do
-    Deposit.in_batches.each do |deposit|
+    Deposit.find_each do |deposit|
       deposit.metadata[:title] = deposit[:title]
       deposit.metadata[:abstract] = deposit[:abstract]
       deposit.metadata[:doi] = deposit[:doi_pmcid]
