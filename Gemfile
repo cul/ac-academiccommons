@@ -57,6 +57,7 @@ group :development, :test do
   gem 'capistrano-cul', require: false
   gem 'capistrano-passenger', '~> 0.1', require: false
   gem 'capistrano-rails', '~> 1.1', require: false
+  gem 'capistrano-resque', '~> 0.2.2', require: false
   gem 'capistrano-rvm', '~> 0.1', require: false
 
   gem 'rubocop', '~> 0.52.1', require: false
