@@ -1,6 +1,6 @@
 $(document).ready(function(){
 
-  $('button').tooltip({
+  $('button.copy-to-clipboard').tooltip({
     trigger: 'click',
     placement: 'top'
   });
@@ -17,7 +17,7 @@ $(document).ready(function(){
     }, 3000);
   }
 
-  var clipboard = new ClipboardJS('button');
+  var clipboard = new ClipboardJS('button.copy-to-clipboard');
 
   clipboard.on('success', function(e) {
     setTooltip(e.trigger, 'Copied!');

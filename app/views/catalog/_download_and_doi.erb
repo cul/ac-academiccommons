@@ -6,7 +6,7 @@
     <textarea rows="1" readonly onclick="this.focus();this.select()" id="doi">
       <%= @document.full_doi %>
     </textarea>
-    <button class="btn" type="button" data-clipboard-target="#doi">
+    <button class="btn copy-to-clipboard" type="button" data-clipboard-target="#doi">
       <i class="glyphicon glyphicon-copy"></i>
     </button>
   </div>
