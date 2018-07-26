@@ -30,17 +30,17 @@ namespace :ac do
         # rubocop:enable Rails/SkipsModelValidations
       end
     end
-  end
 
-  desc 'Migrate deposit metadata to metadata text field'
-  task migrate_deposit_data: :environment do
-    Deposit.find_each do |deposit|
-      deposit.metadata[:title] = deposit[:title]
-      deposit.metadata[:abstract] = deposit[:abstract]
-      deposit.metadata[:doi] = deposit[:doi_pmcid]
-      deposit.metadata[:notes] = deposit[:notes]
-      deposit.authenticated = false
-      deposit.save!
+    desc 'Migrate deposit metadata to metadata text field'
+    task deposit_data: :environment do
+      Deposit.find_each do |deposit|
+        deposit.metadata[:title] = deposit[:title]
+        deposit.metadata[:abstract] = deposit[:abstract]
+        deposit.metadata[:doi] = deposit[:doi_pmcid]
+        deposit.metadata[:notes] = deposit[:notes]
+        deposit.authenticated = false
+        deposit.save!
+      end
     end
   end
 end
