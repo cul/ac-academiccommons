@@ -69,11 +69,11 @@
   }
 
   & a:hover p {
-    color: $brand-dark;
+    color: $link-hover-color;
   }
 
   & a:hover {
-    border-color: $brand-dark;
+    border-color: $link-hover-color;
     text-decoration: none;
   }
 
@@ -84,7 +84,7 @@
 
   & .top svg {
     display: inline-block;
-    fill: $brand-primary;
+    fill: $link-color;
     flex: 1 0 0;
     margin-right: 6px;
     max-width: 40px;
@@ -97,12 +97,12 @@
   }
 
   & .top svg path {
-    fill: $brand-primary;
+    fill: $link-color;
   }
 
   & a:hover svg,
   & a:hover svg path {
-    fill: $brand-dark;
+    fill: $link-hover-color;
   }
 }
 

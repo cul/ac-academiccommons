@@ -4,8 +4,6 @@
 
 @import 'vendor/blacklight_range_limit';
 
-@import 'global';
-
 @import 'modules/mixins';
 
 @import 'modules/variables';
@@ -13,6 +11,8 @@
 @import 'modules/animation';
 
 @import 'modules/icons';
+
+@import 'global';
 
 @import 'partials/admin';
 
