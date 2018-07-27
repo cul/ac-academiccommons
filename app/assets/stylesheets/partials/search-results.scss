@@ -128,8 +128,12 @@ span.constraints-label {
     margin: 0;
   }
 
+
+
+
+
   & dd.blacklight-author_ssim {
-    margin: 0 0 8px 0;
+    margin-bottom: 6px;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -138,7 +142,7 @@ span.constraints-label {
   & dd.blacklight-pub_date_isi,
   & dd.blacklight-genre_ssim {
     @include tag-label;
-    margin-bottom: 13px;
+    margin-bottom: 6px;
   }
 
   & dt.blacklight-genre_ssim,
@@ -146,15 +150,19 @@ span.constraints-label {
     display: none;
   }
 
+  & dd.blacklight-subject_ssim {
+    white-space: pre-line;
+  }
+
   & dd.blacklight-subject_ssim span {
-    background: $gray-lighter-custom;
-    border-radius: 3px;
     color: $gray-light;
     display: inline-block;
-    margin: 0 6px 6px 0;
-    padding: 3px 7px;
-    white-space: nowrap;
+    margin-bottom: 3px;
+    margin-right: 14px;
   }
+
+
+
 }
 
 .pagination {

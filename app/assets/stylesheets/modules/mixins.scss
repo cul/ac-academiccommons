@@ -1,20 +1,7 @@
 /* mixins */
 
-/* labels */
-
-// @mixin label-plain {
-//   border: $border;
-//   border-radius: 3px;
-//   display: inline-block;
-//   color: $gray-base;
-//   font-size: 11px;
-//   font-weight: bold;
-//   padding: 3px 7px;
-//   text-transform: uppercase;
-// }
-
 @mixin tag-label {
-  color: lighten($gray-light, 15%);
+  color: $gray-light;
   display: inline-block;
   font-size: 13px;
   font-weight: 700;
