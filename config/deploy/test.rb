@@ -12,6 +12,9 @@ set :resque_environment_task, true
 
 set :resque_log_file, 'log/resque.log'
 
+# Adding resque config to list of linked files
+set :linked_files, fetch(:linked_files, []).push('config/resque.yml')
+
 after 'deploy:restart', 'resque:restart'
 
 
