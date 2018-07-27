@@ -15,8 +15,8 @@
     margin: 0 0 6px 0;
   }
 
-  & span.label-tags {
-    @include label-tags;
+  & span.tag-label {
+    @include tag-label;
   }
 
   & .blacklight-author_ssim {
@@ -46,23 +46,30 @@
   }
 
   & .subjects h4 {
-    border-bottom: 1px dotted $gray-lighter;
     font-size: $font-size-base;
     font-weight: bold;
-    margin-bottom: 10px;
-    padding-bottom: 10px;
   }
 
   & .subjects ul {
-    columns: 2;
     margin: 0 0 30px 0;
     padding: 0;
   }
 
   & .subjects li {
     font-size: $font-size-small;
+    display: inline;
     list-style: none;
     margin: 0 0 12px 0;
+  }
+
+  & .subjects li a {
+    @include tag-link;
+  }
+
+  & .subjects li a:hover {
+    background: $link-hover-color;
+    color: $body-bg;
+    text-decoration: none;
   }
 
   & .panel {
@@ -169,10 +176,6 @@
 
     & p.blacklight-abstract_ssi {
       font-size: 17px;
-    }
-
-    & .subjects ul {
-      columns: 4;
     }
 
     & .list-group-item span {

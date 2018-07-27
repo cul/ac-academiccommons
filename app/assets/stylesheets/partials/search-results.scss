@@ -137,7 +137,7 @@ span.constraints-label {
 
   & dd.blacklight-pub_date_isi,
   & dd.blacklight-genre_ssim {
-    @include label-tags;
+    @include tag-label;
     margin-bottom: 13px;
   }
 
