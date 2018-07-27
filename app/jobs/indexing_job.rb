@@ -3,5 +3,7 @@ class IndexingJob < ApplicationJob
   def perform(pid)
     i = ActiveFedora::Base.find(pid)
     i.update_index
+
+    Rails.cache.delete('repository_statistics') # Invalidating stats on homepage.
   end
 end
