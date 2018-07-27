@@ -42,7 +42,7 @@
     font-size: $font-size-base;
     font-weight: 300;
     line-height: 1.6;
-    margin: 20px 0 30px 0;
+    margin: 20px 0;
   }
 
   & .subjects h4 {
@@ -51,7 +51,7 @@
   }
 
   & .subjects ul {
-    margin: 0 0 30px 0;
+    margin: 0 0 20px 0;
     padding: 0;
   }
 
@@ -74,6 +74,7 @@
 
   & .panel {
     box-shadow: none;
+    margin-bottom: 20px;
   }
 
   & .panel-title {

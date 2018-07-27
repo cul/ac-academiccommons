@@ -128,10 +128,6 @@ span.constraints-label {
     margin: 0;
   }
 
-
-
-
-
   & dd.blacklight-author_ssim {
     margin-bottom: 6px;
     overflow: hidden;
@@ -149,20 +145,13 @@ span.constraints-label {
   & dt.blacklight-pub_date_isi {
     display: none;
   }
-
-  & dd.blacklight-subject_ssim {
-    white-space: pre-line;
-  }
-
+  
   & dd.blacklight-subject_ssim span {
     color: $gray-light;
     display: inline-block;
     margin-bottom: 3px;
     margin-right: 14px;
   }
-
-
-
 }
 
 .pagination {
