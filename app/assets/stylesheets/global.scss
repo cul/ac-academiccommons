@@ -33,12 +33,10 @@ h4 {
 
 p.summary,
 #main-page p.summary {
-  font-size: 20px;
+  font-size: 18px;
   font-weight: 300;
-  letter-spacing: .4px;
   line-height: 1.6;
-  margin-top: 0;
-  margin-bottom: 25px;
+  margin: 0;
   max-width: 700px;
 }
 
@@ -53,6 +51,12 @@ p.summary strong {
 }
 
 @media screen and (min-width: $screen-md ) {
+
+  p.summary,
+  #main-page p.summary {
+    font-size: 20px;
+    letter-spacing: .4px;
+  }
 
   h1 {
     font-size: 42px;
