@@ -33,7 +33,7 @@
   <dd><%= @deposit.title %></dd>
 
   <dt>Creators</dt>
-  <% @deposit.creators.each do |c| %>
+  <% (@deposit.creators || []).each do |c| %>
     <% name = "#{c[:first_name]} #{c[:last_name]}" %>
     <% name = "#{name} (#{c[:uni]})" if c[:uni] %>
     <dd><%= name %></dd>
