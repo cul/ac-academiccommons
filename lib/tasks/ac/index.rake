@@ -1,14 +1,13 @@
-# rubocop:disable Rails/Output
 namespace :ac do
   namespace :index do
     # Indexing jobs under this namespace will enqueue jobs to index items/assets,
     # instead of running them synchronously.
-    desc 'Reindex all items and assets'
+    desc 'Reindex all items and assets using worker queue'
     task all: :environment do
       puts 'pending implementation'
     end
 
-    desc 'Reindex by pid (item or asset)'
+    desc 'Reindex by pid (item or asset) using worker queue'
     task by_pid: :environment do
       if ENV['pidlist'].present? || ENV['pids'].present?
         pids = open(ENV['pidlist']).map(&:strip!) if ENV['pidlist'].present?
@@ -25,4 +24,3 @@ namespace :ac do
     end
   end
 end
-# rubocop:enable Rails/Output
