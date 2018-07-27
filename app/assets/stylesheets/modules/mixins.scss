@@ -10,8 +10,9 @@
 }
 
 @mixin tag-link {
-  background: $gray-lighter-custom;
+  background: $link-color;
   border-radius: 3px;
+  color: $body-bg;
   display: inline-block;
   margin: 0 6px 10px 0;
   padding: 3px 7px;
