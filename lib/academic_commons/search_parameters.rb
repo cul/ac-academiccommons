@@ -23,7 +23,12 @@ module AcademicCommons
     end
 
     def filter(key, value)
-      @parameters[:fq] << "#{key}:\"#{value}\""
+      @parameters[:fq] << if value.start_with?('(', '[') && value.end_with?(']', ')')
+                            "#{key}:#{value}"
+                          else
+                            "#{key}:\"#{value}\""
+                          end
+
       self
     end
 
