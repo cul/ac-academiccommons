@@ -35,6 +35,7 @@ li.download-and-doi {
   z-index: 100;
 
   & .download-button {
+    background: $link-color;
     flex: 1;
     padding: 9px 8px;
     width: 100%;
