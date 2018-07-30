@@ -128,6 +128,7 @@ class CatalogController < ApplicationController
     config.add_show_field 'thesis_advisor_ssim',    label: 'Thesis Advisors'
     config.add_show_field 'degree',                 label: 'Degree', accessor: true, unless: ->(_, _, doc) { doc.degree.blank? }
     config.add_show_field 'related_url_ssi',        label: 'Related URL', helper_method: :link_value
+    config.add_show_field 'fedora3_pid_ssi',        label: 'Fedora 3 PID', if: ->(context, _, _) { context.current_user&.admin? }
 
     config.add_show_field 'notes_ssim',             display: :notes
 
