@@ -83,7 +83,13 @@ class CatalogController < ApplicationController
     config.add_facet_field 'language_ssim',          label: 'Language',        limit: 5
     config.add_facet_field 'geographic_area_ssim',   label: 'Geographic Area', limit: 5, show: false
     config.add_facet_field 'partner_journal_ssi',    label: 'Journal',         limit: 5, show: false
-    config.add_facet_field 'degree_grantor_ssim',    label: 'Degree Grantor',  limit: 5, show: false
+    config.add_facet_field 'degree_grantor_ssim',    label: 'Degree Grantor',  limit: 5, show: false,
+                                                     query: {
+                                                       '("Columbia University" OR "Teachers College" OR "Union Theological Seminary")' => {
+                                                         label: 'Columbia University, Teachers College, or Union Theological Seminary',
+                                                         fq: 'degree_grantor_ssim:("Columbia University" OR "Teachers College" OR "Union Theological Seminary")'
+                                                       }
+                                                     }
 
     # config.add_facet_field 'type_of_resource_ssim', label: 'Resource Type', if: current_user.admin?
 
