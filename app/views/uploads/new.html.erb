@@ -1,8 +1,11 @@
-<%= render 'agreement' %>
-
 <p><em>* Required fields</em></p>
 
 <%= form_with(model: @deposit, url: uploads_path, method: :create, local: true, id: :upload) do |form| %>
+
+  <h5>Participation Agreement</h5>
+  <p>
+    <%= render 'agreement' %>
+  </p>
 
   <div class="form-group">
     <%= form.label(:title, 'Title*') %>
