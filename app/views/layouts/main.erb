@@ -2,10 +2,8 @@
   <div id="main-page">
 
     <% if content_for? :header %>
-      <div class="row page-title">
-        <div class="col-md-12">
-          <%= yield(:header) %>
-        </div>
+      <div class="page-header">
+        <%= yield(:header) %>
       </div>
     <% end %>
 

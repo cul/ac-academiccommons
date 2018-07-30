@@ -1,16 +1,24 @@
 
 <% unless @pending_works.empty? %>
   <h3>Pending Works</h3>
+  <table class="table small">
   <% @pending_works.each do |document| %>
-    <p><%= document.title %></p>
+    <tr>
+      <td><%= document.title %></td>
+    </tr>
   <% end %>
+  </table>
 <% end %>
 
 <% unless @embargoed_works.empty? %>
   <h3>Embargoed Works</h3>
+  <table class="table small">
   <% @pending_works.each do |document| %>
-    <p><%= link_to document.to_semantic_values[:title].first, solr_document_path(document.to_semantic_values[:id].first) %></p>
+    <tr>
+      <td><%= link_to document.to_semantic_values[:title].first, solr_document_path(document.to_semantic_values[:id].first) %></td>
+    </tr>
   <% end %>
+  </table>
 <% end %>
 
 <% if @current_works_with_stats.empty? %>

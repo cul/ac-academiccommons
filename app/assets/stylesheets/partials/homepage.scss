@@ -1,14 +1,14 @@
 /* homepage */
 
 #home-content {
-  padding-top: 20px;
+  padding-top: 10px;
 
   & p.summary {
     max-width: 800px;
   }
 
   & p.summary strong {
-    font-size: 25px;
+    font-size: 23px;
   }
 
   & h3 {
@@ -59,12 +59,7 @@
 @media screen and (min-width: $screen-sm ) {
 #home-content {
 
-    & p.intro {
-      font-size: 21px;
-      margin: 10px 0 20px 0;
-    }
-
-    & p.intro strong {
+    & p.summary strong {
       font-size: 25px;
     }
   }

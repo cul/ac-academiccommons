@@ -1,23 +1,20 @@
 /* mixins */
 
-/* labels */
-
-@mixin label-plain {
-  border: $border;
-  border-radius: 3px;
-  display: inline-block;
-  color: $gray-base;
-  font-size: 11px;
-  font-weight: bold;
-  padding: 3px 7px;
-  text-transform: uppercase;
-}
-
-@mixin label-tags {
-  color: lighten($gray-light, 15%);
+@mixin tag-label {
+  color: $gray-light;
   display: inline-block;
   font-size: 13px;
   font-weight: 700;
   margin: 0 10px 0 0;
   text-transform: uppercase;
+}
+
+@mixin tag-link {
+  background: $link-color;
+  border-radius: 3px;
+  color: $body-bg;
+  display: inline-block;
+  margin: 0 6px 10px 0;
+  padding: 3px 7px;
+  white-space: nowrap;
 }

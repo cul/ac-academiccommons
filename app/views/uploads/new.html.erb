@@ -1,8 +1,11 @@
-<%= render 'agreement' %>
-
 <p><em>* Required fields</em></p>
 
 <%= form_with(model: @deposit, url: uploads_path, method: :create, local: true, id: :upload) do |form| %>
+
+  <h5>Participation Agreement</h5>
+  <p>
+    <%= render 'agreement' %>
+  </p>
 
   <div class="form-group">
     <%= form.label(:title, 'Title*') %>
@@ -66,7 +69,7 @@
 
   <div class="form-group">
     <%= form.label(:notes, 'Notes') %>
-    <%= form.text_area(:notes, placeholder: 'Additional information you want included in the record and/or notes for repository staff') %>
+    <%= form.text_area(:notes, placeholder: 'Additional information you want included in the record (such as suggested keywords) and/or notes for repository staff') %>
   </div>
 
   <div class="form-group">

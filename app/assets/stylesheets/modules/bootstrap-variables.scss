@@ -14,13 +14,15 @@ $brand-secondary: #C4D8E2;
 
 $brand-dark: #000d74;
 
-$gray-base: #000;
+$link-color: #0077CC;
+
+$link-hover-color: lighten($link-color, 15%);
+
+$gray-base: #111;
 
 $gray-lighter: #ddd;
 
 $gray-lighter-custom: #f3f5f3;
-
-$link-hover-color: $brand-dark;
 
 $state-success-text: #5cb85c;
 
