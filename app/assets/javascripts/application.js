@@ -20,3 +20,5 @@
 //= require jquery-ui-sortable
 //= require upload/author-reorder
 //= require admin/enable-optional-fields
+//= require clipboard/dist/clipboard.min
+//= require copy-to-clipboard
