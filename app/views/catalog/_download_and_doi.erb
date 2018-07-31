@@ -1,7 +1,7 @@
 <%= render partial: 'download_button' %>
 
 <div class="doi-container">
-  <h4 class="doi-label">DOI</h4>
+  <label for="doi" class="doi-label">DOI</label>
   <div class="doi-and-copy-button">
     <textarea rows="1" readonly onclick="this.focus();this.select()" id="doi"><%= @document.full_doi %></textarea>
     <button class="btn copy-to-clipboard" type="button" data-clipboard-target="#doi" aria-label="Copy DOI to clipboard">

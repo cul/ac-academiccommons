@@ -55,7 +55,7 @@ li.download-and-doi {
     margin-left: 8px;
   }
 
-  & h4.doi-label {
+  & label.doi-label {
     font-size: 12px;
     line-height: 1;
     margin: 0 0 2px 0;
@@ -121,7 +121,7 @@ li.social-buttons a {
     position: relative;
 
     & .doi-container {
-      margin: 15px 0 0 0;
+      margin: 10px 0 0 0;
     }
 
     & h4.doi-label {
