@@ -31,6 +31,10 @@
     box-shadow: none;
     z-index: 1000;
   }
+
+  & .submit-search-text {
+    @include visually-hidden;
+  }
 }
 
 @media screen and (min-width: $screen-sm ) {
