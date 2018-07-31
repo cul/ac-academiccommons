@@ -26,3 +26,9 @@ OkComputer::Registry.register('storage_directory', OkComputer::DirectoryCheck.ne
 # Check sitemap exists
 url = URI.join(Rails.application.config.default_host, '/sitemap.xml.gz')
 OkComputer::Registry.register('sitemap', OkComputer::HttpCheck.new(url.to_s))
+
+# Check that resque/redis is up and working
+if Rails.application.config.active_job.queue_adapter == :resque
+  OkComputer::Registry.register('redis', OkComputer::RedisCheck.new(Rails.application.config_for(:resque)))
+  OkComputer::Registry.register('resque', OkComputer::ResqueDownCheck.new)
+end
