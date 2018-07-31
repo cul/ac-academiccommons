@@ -82,3 +82,9 @@ p.summary strong {
 .visually-hidden {
   @include visually-hidden;
 }
+
+/* primary button */
+
+.btn-primary {
+  background: $link-color;
+}
