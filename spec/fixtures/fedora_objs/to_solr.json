@@ -83,6 +83,12 @@
   "described_by_ssim": [
     "info:fedora/actest:1/test_ds"
   ],
+  "use_and_reproduction_uri_ssim": [
+    "http://rightsstatements.org/vocab/InC/1.0/"
+  ],
+  "use_and_reproduction_label_ssim": [
+    "In Copyright"
+  ],
   "suggest": [
     "Alice's Adventures in Wonderland",
     "Carroll, Lewis",
