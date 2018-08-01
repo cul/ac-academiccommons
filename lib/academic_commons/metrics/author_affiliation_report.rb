@@ -17,6 +17,9 @@ module AcademicCommons::Metrics
 
       ldap_user = {} # Caching ldap user details.
       rows = []
+
+      ldap = Cul::LDAP.new
+
       usage_stats.each do |item_stats|
         # retrieve entire solr document
         results = AcademicCommons.search { |p| p.id(item_stats.id) }
@@ -50,13 +53,13 @@ module AcademicCommons::Metrics
           # query ldap for more information about this author
           person = ldap_user.fetch(uni, nil)
           if person.nil?
-            person = AcademicCommons::LDAP.find_by_uni(uni)
+            person = ldap.find_by_uni(uni)
             ldap_user[uni] = person
           end
 
-          row['author name'] = person.name
-          row['ldap author title'] = person.title
-          row['ldap organizational unit'] = person.organizational_unit
+          row['author name'] = person&.name
+          row['ldap author title'] = person&.title
+          row['ldap organizational unit'] = person&.organizational_unit
 
           author_count += 1
 

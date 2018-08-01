@@ -35,11 +35,13 @@ class User < ApplicationRecord
 
   def set_personal_info_via_ldap
     if uid
-      person = AcademicCommons::LDAP.find_by_uni(uid)
+      ldap = Cul::LDAP.new
+      person = ldap.find_by_uni(uid)
+
       # Don't override with nil
-      self.email      = person.email || email
-      self.first_name = person.first_name || first_name
-      self.last_name  = person.last_name || last_name
+      self.email      = person&.email || email
+      self.first_name = person&.first_name || first_name
+      self.last_name  = person&.last_name || last_name
     end
 
     self

@@ -6,19 +6,8 @@ RSpec.describe Users::OmniauthCallbacksController, type: :controller do
     OmniAuth::AuthHash.new({ 'uid' => uid, 'extra' => {} })
   end
 
-  let(:ldap_request) do
-    {
-      base: 'o=Columbia University, c=US',
-      filter: Net::LDAP::Filter.eq('uid', uid)
-    }
-  end
-
-  let(:ldap_response) do
-    [{
-      mail:       'abc123@columbia.edu',
-      sn:         'Doe',
-      givenname:  'Jane'
-    }]
+  let(:cul_ldap_entry) do
+    instance_double('Cul::LDAP::Entry', uni: 'abc123', email: 'abc123@columbia.edu', last_name: 'Doe', first_name: 'Jane')
   end
 
   before :each do
@@ -26,7 +15,7 @@ RSpec.describe Users::OmniauthCallbacksController, type: :controller do
     OmniAuth.config.mock_auth[:saml] = saml_hash
     @request.env['devise.mapping'] = Devise.mappings[:user]
     @request.env['omniauth.auth'] = OmniAuth.config.mock_auth[:saml]
-    allow_any_instance_of(Net::LDAP).to receive(:search).with(ldap_request).and_return(ldap_response)
+    allow_any_instance_of(Cul::LDAP).to receive(:find_by_uni).with(uid).and_return(cul_ldap_entry)
   end
 
   # GET :saml

@@ -1,7 +1,7 @@
 # Shared context for creating administrative user.
 shared_context 'admin user' do
   before do
-    @admin = User.create(uid: 'ta123', first_name: 'Test', last_name: 'Admin', role: User::ADMIN)
+    @admin = User.create!(uid: 'ta123', first_name: 'Test', last_name: 'Admin', email: 'ta123@columbia.edu', role: User::ADMIN)
     # allow(@admin).to receive(:admin?).and_return(true)
     allow(@request.env['warden']).to receive(:authenticate!).and_return(@admin)
     allow(controller).to receive(:current_user).and_return(@admin)
@@ -11,7 +11,7 @@ end
 # Shared context for creating a non-administrative user.
 shared_context 'non-admin user' do
   before do
-    @non_admin = User.create(uid: 'tu123', first_name: 'Test', last_name: 'User')
+    @non_admin = User.create!(uid: 'tu123', first_name: 'Test', last_name: 'User', email: 'tu123@columbia.edu')
     # allow(@non_admin).to receive(:admin?).and_return(false)
     allow(@request.env['warden']).to receive(:authenticate!).and_return(@non_admin)
     allow(controller).to receive(:current_user).and_return(@non_admin)

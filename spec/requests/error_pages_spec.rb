@@ -5,15 +5,17 @@ RSpec.describe 'error pages', type: :request do
 
   describe '/admin' do
     let(:uid) { 'abc123' }
+    let(:ldap) { instance_double('Cul::LDAP') }
     let(:ldap_user) do
-      OpenStruct.new(uni: 'abc123', first_name: 'Jane', last_name: 'Doe')
+      instance_double('User', uid: 'abc123', first_name: 'Jane', last_name: 'Doe', email: 'abc123@columbia.edu')
     end
 
     before :each do
       OmniAuth.config.test_mode = true
       Rails.application.env_config['devise.mapping'] = Devise.mappings[:user]
       Rails.application.env_config['omniauth.auth'] = OmniAuth.config.mock_auth[:saml]
-      expect(AcademicCommons::LDAP).to receive(:find_by_uni).with('abc123').and_return(ldap_user)
+      allow(Cul::LDAP).to receive(:new).and_return(ldap)
+      allow(ldap).to receive(:find_by_uni).with('abc123').and_return(ldap_user)
       login_as user
       get '/admin'
     end
