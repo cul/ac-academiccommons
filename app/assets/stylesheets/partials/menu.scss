@@ -137,7 +137,9 @@
 
 @media screen and (min-width: $screen-md ) {
 
-  .menu {
+  .menu,
+  .menu-small,
+  .homepage-menu {
 
     & .tile {
       width: 45%;
@@ -146,17 +148,8 @@
 
   .menu-small {
 
-    & .tile {
-      padding: 20px 20px 10px 20px;
-      width: 30%;
-    }
-
     & p {
       font-size: 15px;
     }
-  }
-
-  .homepage-menu .tile {
-    width: 45%;
   }
 }
