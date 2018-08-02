@@ -51,7 +51,7 @@
             <input type="text" name="deposit[creators][][first_name]" class="deposit_creators_first_name", value="<%= c['first_name'] %>">
             <input type="text" name="deposit[creators][][last_name]" class="deposit_creators_last_name", value="<%= c['last_name'] %>">
             <input type="text" name="deposit[creators][][uni]" class="deposit_creators_uni",  value="<%= c['uni'] %>" <%= 'readonly="readonly"' if c['uni'] == current_user.uid %>>
-            <span class="sort-icon"><i class="fas fa-arrows-alt"></i></span>
+            <span class="sort-icon"><i class="fas fa-arrows-alt" title="Sort creators" aria-hidden></i></span><span class="visually-hidden">Sort creators</span>
           </div>
         <% end %>
       </div>
