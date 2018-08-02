@@ -69,7 +69,8 @@ module AcademicCommons
       'CanCan::AccessDenied'                   => :forbidden
     )
 
-    config.active_job.queue_adapter = :resque
+    # Using async queue that does not require any setup
+    config.active_job.queue_adapter = :async
 
     config.active_storage.service = :local
 
