@@ -19,7 +19,7 @@
   & li a {
     border-bottom: $border;
     border-color: transparent;
-    color: lighten($gray-light, 10%);
+    color: $gray-light;
     padding: 8px 5px;
     text-decoration: none;
   }
