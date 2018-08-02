@@ -58,8 +58,6 @@ class User < ApplicationRecord
     rescue StandardError => e
       raise e if new_record?
     end
-
-    true
   end
 
   def signed_latest_agreement?
