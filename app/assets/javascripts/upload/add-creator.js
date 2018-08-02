@@ -4,7 +4,7 @@ function addCreatorField(creatorListId) {
   div.append('<input type="text" name="deposit[creators][][first_name]" class="deposit_creators_first_name"/>')
   div.append('<input type="text" name="deposit[creators][][last_name]" class="deposit_creators_last_name"/>')
   div.append('<input type="text" name="deposit[creators][][uni]" class="deposit_creators_uni"/>')
-  div.append('<span class="sort-icon"><i class="glyphicon glyphicon-sort"></i></span>')
+  div.append('<span class="sort-icon"><i class="fas fa-arrows-alt"></i></span>')
 
   $('#' + creatorListId).append(div);
 }

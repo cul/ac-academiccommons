@@ -22,3 +22,4 @@
 //= require admin/enable-optional-fields
 //= require clipboard/dist/clipboard.min
 //= require copy-to-clipboard
+//= require @fortawesome/fontawesome-free/js/all
