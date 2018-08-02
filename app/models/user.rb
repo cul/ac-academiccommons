@@ -3,8 +3,9 @@ class User < ApplicationRecord
  include Blacklight::User
  include Cul::Omniauth::Users
 
-  before_create :set_personal_info_via_ldap
-  after_initialize :set_personal_info_via_ldap
+  # User information is updated before every save. Every time a user logs in
+  # their user model is saved by devise.
+  before_validation :set_personal_info_via_ldap
 
   ADMIN = 'admin'.freeze
   ROLES = [ADMIN].freeze
@@ -34,7 +35,9 @@ class User < ApplicationRecord
   end
 
   def set_personal_info_via_ldap
-    if uid
+    return if uid.blank?
+
+    begin
       ldap = Cul::LDAP.new
       person = ldap.find_by_uni(uid)
 
@@ -42,9 +45,9 @@ class User < ApplicationRecord
       self.email      = person&.email || email
       self.first_name = person&.first_name || first_name
       self.last_name  = person&.last_name || last_name
+    rescue StandardError => e
+      raise e if new_record?
     end
-
-    self
   end
 
   def signed_latest_agreement?
