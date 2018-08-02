@@ -4,23 +4,23 @@
       <ul class="nav nav-tabs">
         <li class="<%= active_class(account_path) %>">
           <%= link_to account_path do %>
-            <i class="fas fa-user"></i> <%= t('blacklight.dashboard_links.my_account') %>
+            <i class="fas fa-user" aria-hidden></i> <%= t('blacklight.dashboard_links.my_account') %>
           <% end %>
         </li>
         <li class="<%= active_class(myworks_path) %>">
           <%= link_to myworks_path do %>
-          <i class="fas fa-list-ul"></i> <%= t('blacklight.dashboard_links.my_works') %>
+          <i class="fas fa-list-ul" aria-hidden></i> <%= t('blacklight.dashboard_links.my_works') %>
         <% end %>
         </li>
         <li class="<%= active_class(new_upload_path) %>">
           <%= link_to uploads_path do %>
-          <i class="far fa-plus-square"></i> <%= t('blacklight.dashboard_links.add_new_work') %>
+          <i class="far fa-plus-square" aria-hidden></i> <%= t('blacklight.dashboard_links.add_new_work') %>
         <% end %>
         </li>
         <% if current_user.admin? %>
           <li class="<%= active_class(admin_path) %>">
             <%= link_to admin_path do %>
-            <i class="fas fa-cog"></i> <%= t('blacklight.dashboard_links.admin') %>
+            <i class="fas fa-cog" aria-hidden></i> <%= t('blacklight.dashboard_links.admin') %>
           <% end %>
           </li>
         <% end %>
