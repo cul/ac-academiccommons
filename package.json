@@ -10,5 +10,8 @@
     "dropzone": "^5.4.0",
     "jquery-ui": "^1.12.1",
     "readmore-js": "^2.1.0"
+  },
+  "devDependencies": {
+    "@fortawesome/fontawesome-free": "^5.2.0"
   }
 }
