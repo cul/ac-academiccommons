@@ -25,7 +25,7 @@ describe User, type: :model do
 
     context 'if updating a record' do
       before do
-        allow(ldap).to receive(:find_by_uni).with(uni).once.and_return(cul_ldap_entry)
+        allow(ldap).to receive(:find_by_uni).with(uni).twice.and_return(cul_ldap_entry)
         user.save
       end
 
