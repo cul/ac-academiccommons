@@ -3,9 +3,11 @@ class User < ApplicationRecord
  include Blacklight::User
  include Cul::Omniauth::Users
 
-  # User information is updated before every save. Every time a user logs in
-  # their user model is saved by devise. Have to explicitly make these two calls
-  # or else object is not updated when a user logs in.
+  # User information is updated before every save and before validation when an
+  # object is created. We have to explicitly make the two calls because on
+  # create validation will fail if email, etc are not present. Every time a user
+  # logs in and logs out their user model is saved by devise. Therefore, ldap
+  # information is updated at user log in and log out.
   before_validation :set_personal_info_via_ldap, on: :create
   before_save       :set_personal_info_via_ldap
 
