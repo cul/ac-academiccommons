@@ -559,7 +559,6 @@ DEPENDENCIES
   jquery-rails
   multipart-post (~> 2.0.0)
   mysql2
-  net-ldap
   nokogiri (~> 1.8.1)
   okcomputer
   rails (= 5.2.0)
