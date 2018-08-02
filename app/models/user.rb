@@ -41,10 +41,16 @@ class User < ApplicationRecord
       ldap = Cul::LDAP.new
       person = ldap.find_by_uni(uid)
 
-      # Don't override with nil
-      self.email      = person&.email || email
-      self.first_name = person&.first_name || first_name
-      self.last_name  = person&.last_name || last_name
+      if person
+        # Don't override with nil
+        self.email      = person.email || email
+        self.first_name = person.first_name || first_name
+        self.last_name  = person.last_name || last_name
+
+        Rails.logger.info "Retrived user information via LDAP for #{full_name} (#{uid})"
+      else
+        Rails.logger.warn("LDAP record for #{uid} NOT found.")
+      end
     rescue StandardError => e
       raise e if new_record?
     end
