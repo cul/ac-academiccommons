@@ -97,7 +97,7 @@ class DownloadController < ApplicationController
     Statistic.create!(
       session_id: request.session_options[:id],
       ip_address: request.env['HTTP_X_FORWARDED_FOR'] || request.remote_addr,
-      event: 'Download', identifier: params['id'], at_time: Time.now()
+      event: 'Download', identifier: params['id'], at_time: Time.current
     )
   end
 end

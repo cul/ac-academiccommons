@@ -232,7 +232,7 @@ describe SolrDocumentsController, type: :controller do
       before :each do
         email = double
         allow(email).to receive(:deliver_now).and_raise(Net::SMTPSyntaxError)
-        allow(NotificationMailer).to receive(:new_item_available).and_return(email)
+        allow(UserMailer).to receive(:new_item_available).and_return(email)
         subject
       end
 

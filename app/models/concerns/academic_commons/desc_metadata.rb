@@ -1,3 +1,4 @@
+# rubocop:disable Metrics/ModuleLength, Metrics/MethodLength
 module AcademicCommons
   module DescMetadata
     extend ActiveSupport::Concern
@@ -40,7 +41,6 @@ module AcademicCommons
     #      results. Please consult schema.xml and solrconfig.xml before removing any of these fields.
     #   2. `suggest` field is used to populate the suggest handler used by the
     #      autocomplete dropdown.
-
     def index_descmetadata(solr_doc = {})
       raise 'called index_descMetadata twice' if (@index_descmetadata ? (@index_descmetadata += 1) : (@index_descmetadata = 1)) > 1
 
@@ -279,6 +279,12 @@ module AcademicCommons
       # ACCESS CONDITION
       add_field.call('restriction_on_access_ss', mods.at_css('> accessCondition[@type=\'restriction on access\']'))
 
+      # USE AND REPRODUCTION
+      mods.css('> accessCondition[@type=\'use and reproduction\']').each do |r|
+        add_field.call 'use_and_reproduction_label_ssim', r
+        add_field.call 'use_and_reproduction_uri_ssim',   r.attribute('href')
+      end
+
       solr_doc
     end
 
@@ -287,3 +293,4 @@ module AcademicCommons
     end
   end
 end
+# rubocop:enable Metrics/MethodLength, Metrics/ModuleLength

@@ -1,3 +1,5 @@
+require 'resque/server'
+
 Rails.application.routes.draw do
   concern :range_searchable, BlacklightRangeLimit::Routes::RangeSearchable.new
   devise_for :users, controllers: { sessions: 'users/sessions', omniauth_callbacks: 'users/omniauth_callbacks' }
@@ -85,6 +87,16 @@ Rails.application.routes.draw do
     resources :agreements,          only: :index
     resources :email_preferences
     resources :email_author_reports, only: [:new, :create]
+  end
+
+  # Resque web interface, only administrators have access
+  # Make sure that the resque user restriction below is AFTER `devise_for :users`
+  resque_web_constraint = lambda do |request|
+    current_user = request.env['warden'].user
+    current_user.present? && current_user.respond_to?(:admin?) && current_user.admin?
+  end
+  constraints resque_web_constraint do
+    mount Resque::Server.new, at: '/admin/resque'
   end
 
   get '/emails/get_csv_email_form', to: 'emails#get_csv_email_form'

@@ -19,6 +19,7 @@ gem 'grape'
 gem 'grape-entity'
 gem 'grape-swagger'
 gem 'haml', '>= 4.0.7'
+gem 'http'
 gem 'httpclient','~>2.6'
 gem 'jbuilder'
 gem 'jquery-rails'
@@ -26,6 +27,7 @@ gem 'multipart-post', '~>2.0.0'
 gem 'nokogiri', '~> 1.8.1'
 gem 'okcomputer'
 gem 'rainbow'
+gem 'resque', '~> 1.27'
 gem 'rinku', '~> 1.3.0', require: 'rails_rinku'
 gem 'rsolr-ext'
 gem 'sass-rails'
@@ -54,6 +56,7 @@ group :development, :test do
   gem 'capistrano-cul', require: false
   gem 'capistrano-passenger', '~> 0.1', require: false
   gem 'capistrano-rails', '~> 1.1', require: false
+  gem 'capistrano-resque', '~> 0.2.2', require: false
   gem 'capistrano-rvm', '~> 0.1', require: false
 
   gem 'rubocop', '~> 0.52.1', require: false

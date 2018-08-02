@@ -1,6 +1,9 @@
 require Rails.root.join("config/environments/academiccommons_prod")
 
 AcademicCommons::Application.configure do
+  # Compresses assets.
+  config.assets.compress = false
+
   # Expands the lines which load the assets
   config.assets.debug = true
 

@@ -1,4 +1,4 @@
-Rails.application.configure do
+AcademicCommons::Application.configure do
   # Settings specified here will take precedence over those in config/application.rb
 
   # The production environment is meant for finished, "live" apps.
@@ -24,7 +24,10 @@ Rails.application.configure do
   config.assets.css_compressor = :sass
 
   # Do not fallback to assets pipeline if a precompiled asset is missed.
-  config.assets.compile = true # TODO: Should be false.
+  config.assets.compile = false
+
+  # Compresses assets.
+  config.assets.compress = true
 
   # Asset digests allow you to set far-future HTTP expiration dates on all assets,
   # yet still be able to expire them through the digest params.
@@ -53,6 +56,8 @@ Rails.application.configure do
   # the I18n.default_locale when a translation can not be found)
   config.i18n.fallbacks = true
 
+  config.active_job.queue_adapter = :resque
+
   # Log deprecation notices.
   config.active_support.deprecation = :log
 
@@ -63,4 +68,5 @@ Rails.application.configure do
   config.analytics_enabled = true
   config.default_host = 'academiccommons.columbia.edu'
   config.prod_environment = true
+  config.sending_deposits_to_sword = true
 end

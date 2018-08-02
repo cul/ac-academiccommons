@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe NotificationMailer, type: :mailer do
+RSpec.describe UserMailer, type: :mailer do
   describe 'new_item_available' do
     let(:email) { 'abc123@columbia.edu' }
     let(:uni) { 'abc123' }
@@ -39,7 +39,7 @@ RSpec.describe NotificationMailer, type: :mailer do
     context 'when document not embargoed' do
       let(:solr_doc) do
         SolrDocument.new(
-          object_state_ssi: 'A', free_to_read_start_date_ssi: Date.today.strftime('%Y-%m-%d'),
+          object_state_ssi: 'A', free_to_read_start_date_ssi: Date.current.strftime('%Y-%m-%d'),
           title_ssi: 'Alice\'s Adventures in Wonderland', cul_doi_ssi: '10.7945/ALICE'
         )
       end
