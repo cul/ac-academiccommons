@@ -4,8 +4,10 @@ class User < ApplicationRecord
  include Cul::Omniauth::Users
 
   # User information is updated before every save. Every time a user logs in
-  # their user model is saved by devise.
-  before_validation :set_personal_info_via_ldap
+  # their user model is saved by devise. Have to explicitly make these two calls
+  # or else object is not updated when a user logs in.
+  before_validation :set_personal_info_via_ldap, on: :create
+  before_save       :set_personal_info_via_ldap
 
   ADMIN = 'admin'.freeze
   ROLES = [ADMIN].freeze
@@ -49,11 +51,13 @@ class User < ApplicationRecord
 
         Rails.logger.info "Retrived user information via LDAP for #{full_name} (#{uid})"
       else
-        Rails.logger.warn("LDAP record for #{uid} NOT found.")
+        Rails.logger.warn "LDAP record for #{uid} NOT found."
       end
     rescue StandardError => e
       raise e if new_record?
     end
+
+    true
   end
 
   def signed_latest_agreement?
