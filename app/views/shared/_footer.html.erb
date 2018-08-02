@@ -12,7 +12,8 @@
         <%= link_to t('blacklight.header_links.about'), about_path %> <span>|</span>
         <%= link_to t('blacklight.header_links.faq'), faq_path %> <span>|</span>
         <%= link_to t('blacklight.header_links.policies'), policies_path %> <span>|</span>
-        <%= link_to t('blacklight.header_links.developers'), developers_path %></li>
+        <%= link_to t('blacklight.header_links.developers'), developers_path %><span>|</span>
+        <%= link_to t('blacklight.header_links.credits'), credits_path %>
       </div>
       <div class="col-xs-6 contact">
         <%= svg 'icon-email' %> <%= mail_to "ac@columbia.edu" %>
