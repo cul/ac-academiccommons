@@ -20,6 +20,7 @@
 }
 
 li.download-and-doi {
+  align-items: center;
   animation: slideInUp;
   animation-duration: .7s;
   animation-fill-mode: both;
@@ -36,7 +37,7 @@ li.download-and-doi {
 
   & .download-button {
     flex: 1;
-    padding: 9px 8px;
+    padding: 11px 8px;
     width: 100%;
   }
 
@@ -51,10 +52,11 @@ li.download-and-doi {
 
   & .doi-container {
     flex: 2;
+    line-height: 1;
     margin-left: 8px;
   }
 
-  & h4.doi-label {
+  & label.doi-label {
     font-size: 12px;
     line-height: 1;
     margin: 0 0 2px 0;
@@ -119,8 +121,12 @@ li.social-buttons a {
     margin-left: inherit;
     position: relative;
 
+    & .download-button {
+      padding: 8px;
+    }
+
     & .doi-container {
-      margin: 15px 0 0 0;
+      margin: 10px 0 0 0;
     }
 
     & h4.doi-label {

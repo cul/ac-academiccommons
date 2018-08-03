@@ -45,7 +45,7 @@
     margin: 20px 0;
   }
 
-  & .subjects h4 {
+  & .subjects h2 {
     font-size: $font-size-base;
     font-weight: bold;
   }
@@ -77,6 +77,7 @@
   }
 
   & .panel-title {
+    color: $gray-base;
     font-size: $font-size-base;
     font-weight: bold;
   }

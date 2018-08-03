@@ -5,7 +5,7 @@
 <% elsif @document.embargoed? %>
   <p><em><%= t('blacklight.search.show.assets.embargoed', date: @document[:free_to_read_start_date_ssi]) %></em></p>
 <% elsif assets.count == 1 %>
-  <%= link_to t('blacklight.tools.download_button'), assets.first.download_path, class: 'btn btn-primary download-button' %>
+  <%= link_to t('blacklight.tools.download_button'), assets.first.download_path, class: 'btn btn-primary download-button', 'aria-label': 'Download file' %>
 <% else %>
-  <a href="#assets-panel" class="btn btn-primary download-button scroll"><%= t('blacklight.tools.download_button') %></a>
+  <a href="#assets-panel" class="btn btn-primary download-button scroll" aria-label="Download file"><%= t('blacklight.tools.download_button') %></a>
 <% end %>

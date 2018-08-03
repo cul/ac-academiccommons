@@ -23,7 +23,7 @@
   <nav class="navbar navbar-default">
     <div class="<%= container_classes %>">
       <ul class="nav navbar-nav about-links">
-        <li><%= link_to t('blacklight.header_links.about'), about_path %></li>
+        <li><%= link_to t('blacklight.header_links.about'), about_path, 'aria-label': 'About Academic Commons' %></li>
         <li><%= link_to t('blacklight.header_links.collections'), '/collections/' %></li>
       </ul>
       <ul class="nav navbar-nav navbar-right user-links">

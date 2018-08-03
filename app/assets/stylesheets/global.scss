@@ -74,6 +74,7 @@ p.summary strong {
 }
 
 .alert a {
+  color: $link-color-dark;
   font-weight: bold;
 }
 
@@ -81,4 +82,15 @@ p.summary strong {
 
 .visually-hidden {
   @include visually-hidden;
+}
+
+/* primary button */
+
+.btn-primary {
+  background: $link-color;
+}
+
+.btn-primary:hover {
+  background: $link-hover-color;
+  border-color: $link-hover-color;
 }

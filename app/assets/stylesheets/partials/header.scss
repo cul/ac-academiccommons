@@ -29,7 +29,12 @@
   & .form-control {
     border-right: 0;
     box-shadow: none;
+    color: $gray-base;
     z-index: 1000;
+  }
+
+  & .submit-search-text {
+    @include visually-hidden;
   }
 }
 
@@ -91,6 +96,7 @@
 
   & .navbar-nav > li a:hover {
     background: $gray-lighter-custom;
+    color: $link-hover-color;
   }
 
   & .navbar-nav .open .dropdown-menu {
