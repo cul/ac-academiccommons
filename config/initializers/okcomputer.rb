@@ -21,10 +21,14 @@ OkComputer::Registry.register('action_mailer', OkComputer::ActionMailerCheck.new
 # Check that directories exists
 OkComputer::Registry.register('indexing_log_directory', OkComputer::DirectoryCheck.new('log/ac-indexing'))
 OkComputer::Registry.register('reports_log_directory', OkComputer::DirectoryCheck.new('log/monthly_reports'))
-OkComputer::Registry.register('self_deposits_directory', OkComputer::DirectoryCheck.new('data/self-deposit-uploads'))
 OkComputer::Registry.register('storage_directory', OkComputer::DirectoryCheck.new('storage'))
-
 
 # Check sitemap exists
 url = URI.join(Rails.application.config.default_host, '/sitemap.xml.gz')
 OkComputer::Registry.register('sitemap', OkComputer::HttpCheck.new(url.to_s))
+
+# Check that resque/redis is up and working
+if Rails.application.config.active_job.queue_adapter == :resque
+  OkComputer::Registry.register('redis', OkComputer::RedisCheck.new(Rails.application.config_for(:resque)))
+  OkComputer::Registry.register('resque', OkComputer::ResqueDownCheck.new)
+end

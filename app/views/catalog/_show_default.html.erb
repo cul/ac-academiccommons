@@ -8,7 +8,7 @@
 
 <% doc_presenter = show_presenter(document) %>
 
-<%# Render tags under title %>
+<%# Render tags above title %>
 <p class="genre-labels">
 <% document_show_fields(document).select { |name, f| f[:display] == :tag }.each do |field_name, field| -%>
   <% if should_render_show_field? document, field %>
@@ -16,6 +16,9 @@
   <% end -%>
 <% end -%>
 </p>
+
+<%# Render title %>
+<%= render_document_heading(document, :tag => :h1) %>
 
 <%# Render author and abstract %>
 <% document_show_fields(document).select { |name, f| f[:display] == :main_content }.each do |field_name, field| -%>

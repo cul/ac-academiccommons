@@ -38,6 +38,8 @@ class CatalogController < ApplicationController
     config.show.genre = 'genre_ssim'
     config.show.author = 'author_ssim'
 
+    config.show.partials = [:show] # Removing :show_header partial
+
     # Default values of parameters to send when requesting a single document
     config.default_document_solr_params = {
       fq: ["has_model_ssim:\"#{ContentAggregator.to_class_uri}\""]
@@ -335,7 +337,7 @@ class CatalogController < ApplicationController
     Statistic.create!(
       session_id: request.session_options[:id],
       ip_address: request.env['HTTP_X_FORWARDED_FOR'] || request.remote_addr,
-      event: event, identifier: id, at_time: Time.now()
+      event: event, identifier: id, at_time: Time.current
     )
   end
 end

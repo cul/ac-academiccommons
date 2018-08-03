@@ -60,13 +60,17 @@ module AcademicCommons
     # per-environment basis.
     config.analytics_enabled = false
 
+    # Only sending deposits to SWORD in certain environments.
+    config.sending_deposits_to_sword = false
+
     # Mapping errors
     config.action_dispatch.rescue_responses.merge!(
       'Blacklight::Exceptions::RecordNotFound' => :record_not_found,
       'CanCan::AccessDenied'                   => :forbidden
     )
 
-    config.active_job.queue_adapter = :inline
+    # Using async queue that does not require any setup
+    config.active_job.queue_adapter = :async
 
     config.active_storage.service = :local
 

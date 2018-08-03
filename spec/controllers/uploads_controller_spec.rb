@@ -24,7 +24,7 @@ RSpec.describe UploadsController, type: :controller do
 
       xit 'emails about submission' do
         email = ActionMailer::Base.deliveries.pop
-        expect(email.to).to eq Rails.application.config_for(:emails)['mail_deposit_recipients']
+        expect(email.to).to eq Rails.application.config_for(:emails)['administrative_notifications']
         expect(email.subject).to eq 'SD xxx123 - Test Deposit'
         expect(email.attachments[0].filename).to eq 'test_file.txt'
       end

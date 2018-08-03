@@ -5,4 +5,5 @@ class InfoController < ApplicationController
   def policies; end
   def faq; end
   def developers; end
+  def credits; end
 end

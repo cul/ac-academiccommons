@@ -26,7 +26,7 @@ class AgreementsController < ApplicationController
       if @agreement.save
         flash[:notice] = 'Author Agreement Accepted.'
 
-        NotificationMailer.new_agreement(
+        AdministrativeMailer.new_agreement(
           agreement_params[:name],
           agreement_params[:email],
           agreement_params[:agreement_version]

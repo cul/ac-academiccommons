@@ -2,7 +2,7 @@
   <% if (alert_msg = ContentBlock.find_by_title(ContentBlock::ALERT_MESSAGE)) && !alert_msg.data.blank? %>
     <div class="alert-box">
       <div class="container">
-        <i class="glyphicon glyphicon-alert"></i> <%= alert_msg.data.to_s %>
+        <i class="fas fa-exclamation-triangle" aria-hidden></i> <%= alert_msg.data.to_s %>
       </div>
     </div>
   <% end %>

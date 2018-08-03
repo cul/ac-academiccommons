@@ -3,8 +3,13 @@ class User < ApplicationRecord
  include Blacklight::User
  include Cul::Omniauth::Users
 
-  before_create :set_personal_info_via_ldap
-  after_initialize :set_personal_info_via_ldap
+  # User information is updated before every save and before validation when an
+  # object is created. We have to explicitly make the two calls because on
+  # create validation will fail if email, etc are not present. Every time a user
+  # logs in and logs out their user model is saved by devise. Therefore, ldap
+  # information is updated at user log in and log out.
+  before_validation :set_personal_info_via_ldap, on: :create
+  before_save       :set_personal_info_via_ldap
 
   ADMIN = 'admin'.freeze
   ROLES = [ADMIN].freeze
@@ -34,15 +39,25 @@ class User < ApplicationRecord
   end
 
   def set_personal_info_via_ldap
-    if uid
-      person = AcademicCommons::LDAP.find_by_uni(uid)
-      # Don't override with nil
-      self.email      = person.email || email
-      self.first_name = person.first_name || first_name
-      self.last_name  = person.last_name || last_name
-    end
+    return if uid.blank?
 
-    self
+    begin
+      ldap = Cul::LDAP.new
+      person = ldap.find_by_uni(uid)
+
+      if person
+        # Don't override with nil
+        self.email      = person.email || email
+        self.first_name = person.first_name || first_name
+        self.last_name  = person.last_name || last_name
+
+        Rails.logger.info "Retrived user information via LDAP for #{full_name} (#{uid})"
+      else
+        Rails.logger.warn "LDAP record for #{uid} NOT found."
+      end
+    rescue StandardError => e
+      raise e if new_record?
+    end
   end
 
   def signed_latest_agreement?

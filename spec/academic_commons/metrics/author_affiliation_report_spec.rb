@@ -57,11 +57,13 @@ RSpec.describe AcademicCommons::Metrics::AuthorAffiliationReport do
       fl: 'title_ssi,id,cul_doi_ssi,fedora3_pid_ssi,publisher_doi_ssi,genre_ssim,record_creation_dtsi,object_state_ssi,free_to_read_start_date_ssi'
     ).and_return(solr_response)
 
-    allow(AcademicCommons::LDAP).to receive(:find_by_uni).with('xyz567').and_return(
-      OpenStruct.new(uni: 'xyz567', name: 'Jane Austen', title: 'Professor of English', organizational_unit: 'English Department')
+    ldap = instance_double('Cul::LDAP')
+    allow(Cul::LDAP).to receive(:new).and_return(ldap)
+    allow(ldap).to receive(:find_by_uni).with('xyz567').and_return(
+      instance_double('Cul::LDAP::Entry', uni: 'xyz567', name: 'Jane Austen', title: 'Professor of English', organizational_unit: 'English Department')
     )
-    allow(AcademicCommons::LDAP).to receive(:find_by_uni).with('abc123').and_return(
-      OpenStruct.new(uni: 'abc123', name: 'Lewis Carroll', title: 'Professor of Creative Writing', organizational_unit: 'English Department')
+    allow(ldap).to receive(:find_by_uni).with('abc123').and_return(
+      instance_double('Cul::LDAP::Entry', uni: 'abc123', name: 'Lewis Carroll', title: 'Professor of Creative Writing', organizational_unit: 'English Department')
     )
   end
 

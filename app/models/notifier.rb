@@ -1,8 +1,6 @@
 # TODO: Mailer should be moved to app/mailers directory.
 # TODO: Mailer should be divided into NotifierMailer and StatisticsMailer.
 class Notifier < ActionMailer::Base
-  MAX_FILE_SIZE = 1024 * 1024 * 25 # Max file size (25 MB) that can be emailed in KB.
-
   def statistics_by_search(to_address, author_id, usage_stats, request)
     statistics_report(to_address, author_id, usage_stats, request, nil)
   end
@@ -26,34 +24,6 @@ class Notifier < ActionMailer::Base
     mail(to: recipients, from: full_from, subject: subject)
 
     logger.debug("Report sent for: #{author_id} to: #{to_address}")
-  end
-
-  def new_deposit(root_url, deposit, attach_file = true)
-    @agreement_version = deposit.agreement_version
-    @uni = deposit.uni
-    @name = deposit.name
-    @email = deposit.email
-    @title = deposit.title
-    @authors = deposit.authors
-    @abstract = deposit.abstract
-    @url = deposit.url
-    @doi_pmcid = deposit.doi_pmcid
-    @notes = deposit.notes
-    @record_url = root_url + 'admin/deposits/' + deposit.id.to_s
-
-    filepath = File.join(Rails.root, deposit.file_path)
-    if attach_file && File.size(filepath) < MAX_FILE_SIZE  # Tries to attach file if under 25MB.
-      attachments[File.basename(filepath)] = File.read(filepath)
-    end
-
-    @file_download_url = root_url + 'admin/deposits/' + deposit.id.to_s + '/file'
-    recipients = Rails.application.config_for(:emails)['mail_deposit_recipients']
-    from = Rails.application.config_for(:emails)['mail_deliverer']
-    subject = 'SD'
-    subject.concat(" #{@uni} -") if @uni
-    subject.concat(" #{@title.truncate(50)}")
-
-    mail(to: recipients, from: from, subject: subject)
   end
 
   def statistics_report_with_csv_attachment(recipients, from, subject, message, prepared_attachments)

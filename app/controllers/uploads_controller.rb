@@ -31,6 +31,7 @@ class UploadsController < ApplicationController
 
     if @deposit.save
       send_student_reminder_email
+      SwordDepositJob.perform_later(@deposit)
       render template: 'uploads/successful_upload'
     else
       @deposit.files.attachments.destroy_all # Remove attachment until we can presist them across requests.
@@ -51,7 +52,7 @@ class UploadsController < ApplicationController
     return unless ActiveRecord::Type::Boolean.new.cast(params[:deposit][:student])
 
     begin
-      NotificationMailer.reminder_to_request_departmental_approval(current_user.full_name, current_user.email).deliver
+      UserMailer.reminder_to_request_departmental_approval(current_user.full_name, current_user.email).deliver
     rescue Net::SMTPFatalError, Net::SMTPSyntaxError, IOError, Net::SMTPAuthenticationError,
            Net::SMTPServerBusy, Net::SMTPUnknownError => e
 
