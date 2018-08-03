@@ -1,0 +1,23 @@
+<% usage_stats = @usage_statistics_reports_form.usage_stats %>
+<% if usage_stats %>
+  <% if @usage_statistics_reports_form.display == 'summary' %>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Title</th>
+          <th>Genre</th>
+          <th>DOI</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% usage_stats.each do |item| %>
+          <tr>
+            <td>item.document.title</td>
+            <td></td>
+            <td>item.document.title.doi</td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+
+<% end %>
