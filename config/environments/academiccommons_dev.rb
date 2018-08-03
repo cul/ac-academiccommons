@@ -16,6 +16,8 @@ Rails.application.configure do
   # when problems arise.
   config.log_level = :debug
 
+  config.active_job.queue_adapter = :async
+
   # Application specific configuration.
   config.analytics_enabled = false
   config.default_host = 'https://academiccommons-dev.cdrs.columbia.edu'
