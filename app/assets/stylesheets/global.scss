@@ -76,3 +76,9 @@ p.summary strong {
 .alert a {
   font-weight: bold;
 }
+
+/* visually hidden text */
+
+.visually-hidden {
+  @include visually-hidden;
+}

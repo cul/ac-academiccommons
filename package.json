@@ -6,6 +6,7 @@
   "author": "Carla Galarza <cmg2228@columbia.edu>",
   "license": "MIT",
   "dependencies": {
+    "@fortawesome/fontawesome-free": "^5.2.0",
     "clipboard": "^2.0.1",
     "dropzone": "^5.4.0",
     "jquery-ui": "^1.12.1",
