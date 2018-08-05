@@ -1,4 +1,6 @@
 class Statistic < ApplicationRecord
+  YEAR_BEG = 2011 # first year we have statistics for.
+
   VIEW = 'View'.freeze
   DOWNLOAD = 'Download'.freeze
   STREAM = 'Streaming'.freeze

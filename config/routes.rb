@@ -87,7 +87,9 @@ Rails.application.routes.draw do
     resources :agreements,          only: :index
     resources :email_preferences
     resources :email_author_reports,     only: [:new, :create]
-    resources :usage_statistics_reports, only: [:new, :create]
+    resources :usage_statistics_reports, only: [:new, :create] do
+      get 'csv', on: :collection
+    end
   end
 
   # Resque web interface, only administrators have access

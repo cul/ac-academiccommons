@@ -36,7 +36,7 @@ module AcademicCommons::Metrics
     # @option options [Boolean] :include_streaming flag to indicate whether streaming statistics should be calculated
     # @option options [Boolean] :per_month flag to organize/calculate statistics by month
     # @option options [Boolean] :recent_first if true, when listing months list most recent month first
-    # @option options [String] :order_by most number of downloads or views
+    # @option options [String] :order_by most number of downloads or views, by default orders by title
     def initialize(solr_params, start_date = nil, end_date = nil, **options)
       @start_date = start_date
       @end_date = end_date

@@ -138,4 +138,12 @@ class SolrDocument
   def title
     to_semantic_values[:title].first
   end
+
+  def genre
+    to_semantic_values[:genre].first
+  end
+
+  def created_at
+    to_semantic_values[:created_at].first
+  end
 end

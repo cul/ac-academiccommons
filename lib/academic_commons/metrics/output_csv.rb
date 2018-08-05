@@ -65,6 +65,47 @@ module AcademicCommons::Metrics
       end
     end
 
+    def time_period_summary
+      summary_table('Period')
+    end
+
+    def lifetime_summary
+      summary_table('Lifetime')
+    end
+
+    def summary_table(time)
+      table = [['Title', 'Genre', 'DOI', 'Record Creation Date', 'Views', 'Downloads']]
+
+      self.each do |item|
+        table << [
+          item.document.title, item.document.genre, item.document.doi,
+          Date.strptime(item.document.created_at).strftime('%m/%d/%Y'),
+          item.get_stat(Statistic::VIEW, time), item.get_stat(Statistic::DOWNLOAD, time)
+        ]
+      end
+
+      table
+    end
+
+    # event should be one of Statistic::VIEW or Statistic::DOWNLOAD
+    def month_by_month_table(event)
+      headers = ['Title', 'Genre', 'DOI', 'Record Creation Date']
+      month_column_headers = self.months_list.map { |m| m.strftime('%b-%Y') }
+      headers.concat(month_column_headers)
+      table = [headers]
+
+      self.each do |item|
+        id = item.id
+        monthly_stats = self.months_list.map { |m| item.get_stat(event, m.strftime(MONTH_KEY)) }
+        table << [
+          item.document.title, item.document.genre, item.document.doi,
+          Date.strptime(item.document.created_at).strftime('%m/%d/%Y')
+        ].concat(monthly_stats)
+      end
+
+      table
+    end
+
     private
 
     # Makes each category (View, Download, Streaming) section of csv.

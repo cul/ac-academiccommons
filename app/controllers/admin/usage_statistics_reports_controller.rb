@@ -9,18 +9,29 @@ module Admin
     def create
       @usage_statistics_reports_form = UsageStatisticsReportsForm.new(usage_statistics_reports_params)
 
+      flash[:error] = @usage_statistics_reports_form.errors.full_messages.to_sentence unless @usage_statistics_reports_form.generate_statistics
+
+      render :new
+    end
+
+    def csv
+      @usage_statistics_reports_form = UsageStatisticsReportsForm.new(usage_statistics_reports_params)
+
       if @usage_statistics_reports_form.generate_statistics
-        render :new
+        send_data @usage_statistics_reports_form.usage_stats.to_csv, type: 'application/csv', filename: 'usage_statistics.csv'
       else
         flash[:error] = @usage_statistics_reports_form.errors.full_messages.to_sentence
         render :new
       end
     end
 
-    private
-
     def usage_statistics_reports_params
-      params.require(:usage_statistics_reports_form).permit(:time_period, :order, :options, :display, filters: %i[field value])
+      params.require(:usage_statistics_reports_form).permit(
+        :time_period, :order, :display,
+        filters: %i[field value],
+        start_date: {},
+        end_date: {}
+      )
     end
   end
 end
