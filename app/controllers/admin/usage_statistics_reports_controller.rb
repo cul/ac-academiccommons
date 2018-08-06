@@ -8,6 +8,7 @@ module Admin
 
     def create
       @usage_statistics_reports_form = UsageStatisticsReportsForm.new(usage_statistics_reports_params)
+      @usage_statistics_reports_form.requested_by = current_user
 
       flash[:error] = @usage_statistics_reports_form.errors.full_messages.to_sentence unless @usage_statistics_reports_form.generate_statistics
 
@@ -16,9 +17,10 @@ module Admin
 
     def csv
       @usage_statistics_reports_form = UsageStatisticsReportsForm.new(usage_statistics_reports_params)
+      @usage_statistics_reports_form.requested_by = current_user
 
       if @usage_statistics_reports_form.generate_statistics
-        send_data @usage_statistics_reports_form.usage_stats.to_csv, type: 'application/csv', filename: 'usage_statistics.csv'
+        send_data @usage_statistics_reports_form.to_csv, type: 'application/csv', filename: 'usage_statistics.csv'
       else
         flash[:error] = @usage_statistics_reports_form.errors.full_messages.to_sentence
         render :new

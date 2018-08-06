@@ -65,12 +65,65 @@ module AcademicCommons::Metrics
       end
     end
 
+    # display: month_to_month
+    #          lifetime_summary
+    #          period_summary
+    # def to_csv(type)
+    #
+    # Headers (should be the same for both)
+    #
+    # if lifetime or range
+    #   fetch table
+    # elsif month to month, can only do month to month if the month to month flag was choosen
+    #   fetch different table (x2)
+    # end
+
+    # Returns array with details of usage stats
+    def report_details(period_covered: nil)
+      [
+        ['Period Covered by Report:', period_covered || self.time_period],
+        ['Raw Query:', self.solr_params.inspect],
+        ['Order:', self.options[:order]],
+        ['Report created by:', options[:requested_by].nil? ? 'N/A' : "#{options[:requested_by]} (#{options[:requested_by].uid})"],
+        ['Report created on:', Time.current.strftime('%Y-%m-%d')],
+        ['Total number of items:', self.count]
+      ]
+    end
+
+    def time_period_csv
+      CSV.generate do |csv|
+        report_details.each { |a| csv.add_row(a) }
+        csv.add_row [] # Blank row
+        time_period_summary.each { |a| csv.add_row(a) }
+      end
+    end
+
+    def lifetime_csv
+      CSV.generate do |csv|
+        report_details(period_covered: 'Lifetime').each { |a| csv.add_row(a) }
+        csv.add_row [] # Blank row
+        lifetime_summary.each { |a| csv.add_row(a) }
+      end
+    end
+
+    def month_by_month_csv
+      CSV.generate do |csv|
+        report_details.each { |a| csv.add_row(a) }
+        csv.add_row [] # Blank row
+        csv.add_row ['VIEWS']
+        month_by_month_table(Statistic::VIEW).each { |a| csv.add_row(a) }
+        csv.add_row [] # Blank row
+        csv.add_row ['DOWNLOADS']
+        month_by_month_table(Statistic::DOWNLOAD).each { |a| csv.add_row(a) }
+      end
+    end
+
     def time_period_summary
-      summary_table('Period')
+      summary_table(AcademicCommons::Metrics::UsageStatistics::PERIOD)
     end
 
     def lifetime_summary
-      summary_table('Lifetime')
+      summary_table(AcademicCommons::Metrics::UsageStatistics::LIFETIME)
     end
 
     def summary_table(time)

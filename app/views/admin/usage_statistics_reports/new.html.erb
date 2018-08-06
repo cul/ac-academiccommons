@@ -49,10 +49,14 @@
           <%= f.label :start_date, 'Start Date', class: 'col-sm-3 col-xs-offset-1' %>
 
           <div class="col-sm-4">
-            <%= start_date_form.select :month, UsageStatisticsReportsForm::MONTHS, class: 'form-control col-sm-4' %>
+            <%= start_date_form.select :month, UsageStatisticsReportsForm::MONTHS,
+                                       class: 'form-control col-sm-4',
+                                       selected: @usage_statistics_reports_form.start_date&.fetch(:month) %>
           </div>
            <div class="col-sm-4">
-            <%= start_date_form.select :year, Statistic::YEAR_BEG..Date.current.year, class: 'form-control' %>
+            <%= start_date_form.select :year, Statistic::YEAR_BEG..Date.current.year,
+                                       class: 'form-control',
+                                       selected: @usage_statistics_reports_form.start_date&.fetch(:year) %>
           </div>
         <% end %>
       </div>
@@ -62,10 +66,14 @@
           <%= f.label :end_date, 'End Date', class: 'col-sm-3 col-xs-offset-1' %>
 
           <div class="col-sm-4">
-            <%= start_date_form.select :month, UsageStatisticsReportsForm::MONTHS, class: 'form-control col-sm-4' %>
+            <%= start_date_form.select :month, UsageStatisticsReportsForm::MONTHS,
+                                        class: 'form-control col-sm-4',
+                                        selected: @usage_statistics_reports_form.end_date&.fetch(:month) %>
           </div>
            <div class="col-sm-4">
-            <%= start_date_form.select :year, Statistic::YEAR_BEG..Date.current.year, class: 'form-control' %>
+            <%= start_date_form.select :year, Statistic::YEAR_BEG..Date.current.year,
+                                       class: 'form-control',
+                                       selected: @usage_statistics_reports_form.end_date&.fetch(:year) %>
           </div>
         <% end %>
       </div>
