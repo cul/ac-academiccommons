@@ -1,9 +1,6 @@
 require Rails.root.join("config/environments/academiccommons_prod")
 
 AcademicCommons::Application.configure do
-  # Does not expand the lines which load the assets
-  config.assets.debug = false
-
   # Adds additional error checking when serving assets at runtime.
   # Checks for improperly declared sprockets dependencies.
   # Raises helpful error messages.
