@@ -3,37 +3,59 @@
 /* admin sidebar */
 
 #main-page #dashboard .admin-sidebar {
-  padding-right: 15px;
+  background: $gray-lighter-custom;
+  border-color: transparent;
+
+  & li a {
+    padding: 3px 0;
+  }
 
   & h3 {
-    margin: 10px 0 25px 0;
+    margin: 10px;
   }
 
   & h4 {
-    margin: 25px 0 10px 0;
+    font-size: $font-size-small;
+    line-height: 1.4;
+    margin: 0;
   }
 
   & ul {
-    margin: 0;
-    padding: 0;
+    margin: 10px 0 25px 0;
   }
 
   & li {
     font-size: $font-size-small;
     line-height: 1.4;
-    list-style: none;
-    margin-bottom: 6px;
   }
 
   & a {
+    color: $link-color;
     text-decoration: none;
+  }
+
+  & a:hover {
+    text-decoration: underline;
+  }
+}
+
+@media screen and (min-width: $screen-sm ) {
+
+  #main-page #dashboard .admin-sidebar {
+    background: $body-bg;
+
+    & .admin-sidebar-header,
+    & ul,
+    & li {
+      float: none;
+    }
   }
 }
 
 /* admin content */
 
 #main-page #dashboard .admin-content {
-  padding: 5px 15px;
+  padding: 0 15px;
 
   & h2 {
     margin: 0 0 25px 0;
@@ -46,5 +68,11 @@
   & a {
     cursor: pointer;
   }
+}
 
+@media screen and (min-width: $screen-sm ) {
+
+  #main-page #dashboard .admin-content {
+    padding: 5px 15px 5px 30px;
+  }
 }
