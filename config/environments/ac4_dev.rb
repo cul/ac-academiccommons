@@ -1,11 +1,14 @@
 require Rails.root.join("config/environments/academiccommons_prod")
 
 AcademicCommons::Application.configure do
+  # Does not expand the lines which load the assets
+  config.assets.debug = true
+
+  # Do not fallback to assets pipeline if a precompiled asset is missed.
+  config.assets.compile = true
+
   # Compresses assets.
   config.assets.compress = false
-
-  # Expands the lines which load the assets
-  config.assets.debug = true
 
   # Adds additional error checking when serving assets at runtime.
   # Checks for improperly declared sprockets dependencies.
