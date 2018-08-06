@@ -50,7 +50,8 @@ class SolrDocument
     embargo_end: 'free_to_read_start_date_ssi',
     notes: 'notes_ssim',
     author_id: 'author_uni_ssim',
-    organization: 'organization_ssim'
+    organization: 'organization_ssim',
+    resource_type: 'type_of_resource_ssim'
   )
 
   def embargoed?
