@@ -24,3 +24,6 @@
 //= require copy-to-clipboard
 //= require @fortawesome/fontawesome-free/js/all
 //= require duplicate-input-fields
+//= require datatables.net/js/jquery.dataTables.min
+//= require datatables.net-bs/js/dataTables.bootstrap.min
+//= require admin/datatables

@@ -1,9 +1,9 @@
-<table class="table">
+<table class="table datatables">
   <% array.each_with_index do |row, idx| %>
     <% if idx.zero? %>
-      <tr><%= safe_join(row.map { |cell| content_tag :th, cell }) %></tr>
+      <thead><tr><%= safe_join(row.map { |cell| content_tag :th, cell }) %></tr></thead>
     <% else %>
-      <tr><%= safe_join(row.map { |cell| content_tag :td, cell }) %></tr>
+      <tbody><tr><%= safe_join(row.map { |cell| content_tag :td, cell }) %></tr></tbody>
     <% end %>
   <% end %>
 </table>
