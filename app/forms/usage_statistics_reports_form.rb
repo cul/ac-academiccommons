@@ -26,7 +26,7 @@ class UsageStatisticsReportsForm < FormObject
   attr_accessor :filters, :time_period, :order, :display, :usage_stats,
                 :start_date, :end_date, :requested_by
 
-  validates :time_period, :display, presence: true
+  validates :time_period, :display, :order, presence: true
   validates :start_date, :end_date, presence: true, if: proc { |a| a.time_period == 'date_range' }
   validates :display,     inclusion: { in: DISPLAY_OPTIONS }
   validates :time_period, inclusion: { in: TIME_PERIOD_OPTIONS }
@@ -44,7 +44,7 @@ class UsageStatisticsReportsForm < FormObject
 
     options = {}
     options[:per_month] = true if display == 'month_by_month'
-    options[:order] = order || nil
+    options[:order_by] = order
     options[:requested_by] = requested_by
 
     if time_period == 'lifetime'
