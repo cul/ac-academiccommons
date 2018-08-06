@@ -1,13 +1,7 @@
 class UsageStatisticsReportsForm < FormObject
   MONTHS = Date::ABBR_MONTHNAMES.dup[1..12].freeze
-
-  attr_accessor :filters, :time_period, :order, :display, :usage_stats,
-                :start_date, :end_date, :requested_by
-
-  #  :format => :email, :csv, :html
-
-  # validates :time_period, :order, :display, presence: true
-  # if time_period is range, then start and end date need to be populated
+  DISPLAY_OPTIONS = ['summary', 'month_by_month'].freeze
+  TIME_PERIOD_OPTIONS = ['date_range', 'lifetime'].freeze
 
   FILTERS = {
     'Author Name'    => SolrDocument.field_semantics[:author],
@@ -19,7 +13,8 @@ class UsageStatisticsReportsForm < FormObject
     'Department'     => SolrDocument.field_semantics[:department],
     'Series'         => SolrDocument.field_semantics[:columbia_series],
     'Non CU Series'  => SolrDocument.field_semantics[:non_columbia_series],
-    'UNI'            => SolrDocument.field_semantics[:author_id]
+    'UNI'            => SolrDocument.field_semantics[:author_id],
+    'CUL DOI'        => SolrDocument.field_semantics[:id]
   }.freeze
 
   ORDER = {
@@ -27,6 +22,16 @@ class UsageStatisticsReportsForm < FormObject
     'Most Views' => 'views',
     'Most Downloads' => 'downloads'
   }.freeze
+
+  attr_accessor :filters, :time_period, :order, :display, :usage_stats,
+                :start_date, :end_date, :requested_by
+
+  validates :time_period, :display, presence: true
+  validates :start_date, :end_date, presence: true, if: proc { |a| a.time_period == 'date_range' }
+  validates :display,     inclusion: { in: DISPLAY_OPTIONS }
+  validates :time_period, inclusion: { in: TIME_PERIOD_OPTIONS }
+  validates :order,       inclusion: { in: ORDER.values }
+  validate  :filters_must_have_a_value
 
   def generate_statistics
     return false unless valid?
@@ -47,7 +52,7 @@ class UsageStatisticsReportsForm < FormObject
       e_date = Date.current.prev_month.end_of_month
     elsif time_period == 'date_range'
       s_date = Date.parse("#{start_date[:month]} #{start_date[:year]}").in_time_zone
-      e_date = Date.parse("#{end_date[:month]} #{end_date[:year]}").in_time_zone
+      e_date = Date.parse("#{end_date[:month]} #{end_date[:year]}").end_of_month.in_time_zone
     end
 
     @usage_stats = AcademicCommons::Metrics::UsageStatistics.new(
@@ -67,5 +72,11 @@ class UsageStatisticsReportsForm < FormObject
         usage_stats.time_period_csv
       end
     end
+  end
+
+  private
+
+  def filters_must_have_a_value
+    errors.add(:filters, 'must have a field and value') if (filters || {}).any? { |f| f[:field].present? && f[:value].blank? }
   end
 end

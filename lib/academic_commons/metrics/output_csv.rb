@@ -83,7 +83,7 @@ module AcademicCommons::Metrics
       [
         ['Period Covered by Report:', period_covered || self.time_period],
         ['Raw Query:', self.solr_params.inspect],
-        ['Order:', self.options[:order]],
+        ['Order:', self.options[:order].titlecase],
         ['Report created by:', options[:requested_by].nil? ? 'N/A' : "#{options[:requested_by]} (#{options[:requested_by].uid})"],
         ['Report created on:', Time.current.strftime('%Y-%m-%d')],
         ['Total number of items:', self.count]
