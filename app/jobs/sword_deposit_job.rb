@@ -7,7 +7,7 @@ class SwordDepositJob < ApplicationJob
 
     # Check that we have all the credentials necessary: url, user, password
     credentials =  Rails.application.config_for(:secrets)['sword']
-    raise 'Missing SWORD credentials' unless %i[url user password].all? { |k| credentials[k].present? }
+    raise 'Missing SWORD credentials' unless ['url', 'user', 'password'].all? { |k| credentials[k].present? }
 
     # Send request to SWORD
     begin
