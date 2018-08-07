@@ -3,7 +3,7 @@ class SwordDepositJob < ApplicationJob
 
   def perform(deposit)
     # Check that we are allowed to send data to sword in this environment.
-    return unless Rails.application.config.send_deposits_to_sword
+    return unless Rails.application.config.sending_deposits_to_sword
 
     # Check that we have all the credentials necessary: url, user, password
     credentials =  Rails.application.config_for(:secrets)['sword']
