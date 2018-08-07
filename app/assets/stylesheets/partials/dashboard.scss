@@ -75,7 +75,10 @@
   border: none;
   font-weight: 300;
   line-height: 1.6;
-  padding: 15px;
+
+  & .dashboard-container {
+    padding: 20px;
+  }
 
   & h3 {
     font-size: 25px;
@@ -98,23 +101,13 @@
   #main-page #dashboard {
     border: $border;
     margin: 0 20px 15px 20px;
-    padding: 20px;
 
     & h3 {
       margin-top: 15px;
     }
 
-    & .agreement-message,
-    & .checkbox,
-    & input[type=text],
-    & input[type=number],
-    & input[type=file],
-    & textarea,
-    & select,
-    & .creators,
-    & p.note,
-    & .dropzone,
-    & p {
+    .dashboard-container {
+      padding: 30px;
       width: 70%;
     }
   }

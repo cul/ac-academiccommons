@@ -27,7 +27,9 @@
       </ul>
     </div>
     <div id="dashboard">
-      <%= content_for?(:dashboard) ? yield(:dashboard) : yield %>
+      <div class="dashboard-container">
+        <%= content_for?(:dashboard) ? yield(:dashboard) : yield %>
+      </div>
     </div>
   </div>
 <% end %>
