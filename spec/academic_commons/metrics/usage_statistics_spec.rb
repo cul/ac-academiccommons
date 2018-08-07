@@ -19,9 +19,9 @@ RSpec.describe AcademicCommons::Metrics::UsageStatistics, integration: true do
       {
         'response' => {
           'docs' => [
-            { 'id' => doi5, 'title_ssi' => 'Second Test Document', 'object_state_ssi' => 'A',
+            { 'id' => doi5, 'title_ssi' => 'Second Test Document', 'object_state_ssi' => 'A', 'record_creation_dtsi' => '2018-08-07T03:40:22Z',
              'cul_doi_ssi' => doi5, 'fedora3_pid_ssi' => 'actest:5', 'publisher_doi_ssi' => '', 'genre_ssim' => ''},
-            { 'id' => doi, 'title_ssi' => 'First Test Document', 'object_state_ssi' => 'A',
+            { 'id' => doi, 'title_ssi' => 'First Test Document', 'object_state_ssi' => 'A', 'record_creation_dtsi' => '2018-08-07T03:40:22Z',
               'cul_doi_ssi' => doi, 'fedora3_pid_ssi' => 'actest:1', 'publisher_doi_ssi' => '', 'genre_ssim' => '' }
           ]
         }
@@ -54,7 +54,7 @@ RSpec.describe AcademicCommons::Metrics::UsageStatistics, integration: true do
                     'cul_doi_ssi' => doi, 'fedora3_pid_ssi' => 'actest:1', 'genre_ssim' => '', 'publisher_doi_ssi' => '' },
                   { 'id' => '10.7916/TESTDOC10', 'title_ssi' => 'First Test Document', 'object_state_ssi' => 'A',
                     'cul_doi_ssi' => '10.7916/TESTDOC10', 'fedora3_pid_ssi' => 'actest:10', 'genre_ssim' => '', 'publisher_doi_ssi' => '',
-                    'free_to_read_start_date_ssi' => Date.tomorrow.strftime('%Y-%m-%d') }
+                    'free_to_read_start_date_ssi' => Date.current.tomorrow.strftime('%Y-%m-%d') }
                 ]
               }
             }, {}
@@ -102,8 +102,10 @@ RSpec.describe AcademicCommons::Metrics::UsageStatistics, integration: true do
 
       context 'when requesting stats for current month' do
         subject do
-          AcademicCommons::Metrics::UsageStatistics.new(solr_request, Date.current - 1.month, Date.current,
-          include_zeroes: true, include_streaming: true)
+          AcademicCommons::Metrics::UsageStatistics.new(
+            solr_request, Date.current - 1.month, Date.current,
+            include_zeroes: true, include_streaming: true
+          )
         end
 
         it 'returns correct results' do
@@ -183,57 +185,49 @@ RSpec.describe AcademicCommons::Metrics::UsageStatistics, integration: true do
     end
   end
 
-  describe '#to_csv_by_month' do
+  describe '#month_by_month_csv' do
     let(:pid) { 'actest:1' }
     let(:uni) { 'abc123' }
     let(:expected_csv) do
       [
-        ['{:q=>nil, :fq=>["author_uni_ssim:\\"abc123\\""]}'],
-        [],
-        ['Period Covered by Report', 'Jan 2015 - Dec 2016'],
-        [],
+        ['Period Covered by Report:', 'Jan 2015 - Dec 2016'],
+        ['Raw Query:', '{:q=>nil, :fq=>["author_uni_ssim:\\"abc123\\""]}'],
+        ['Order:', 'Views'],
         ['Report created by:', 'N/A'],
-        ['Report created on:', Time.new.strftime('%Y-%m-%d')],
-        [], [],
-        ['VIEWS REPORT:'],
-        ['Total for period:', '2', '', '', '', 'Views by Month'],
-        ['Title', 'Content Type', 'Persistent URL', 'Publisher DOI', 'Reporting Period Total Views', 'Jan-2015', 'Feb-2015', 'Mar-2015', 'Apr-2015', 'May-2015', 'Jun-2015', 'Jul-2015', 'Aug-2015', 'Sep-2015', 'Oct-2015', 'Nov-2015', 'Dec-2015', 'Jan-2016', 'Feb-2016', 'Mar-2016', 'Apr-2016', 'May-2016', 'Jun-2016', 'Jul-2016', 'Aug-2016', 'Sep-2016', 'Oct-2016', 'Nov-2016', 'Dec-2016'],
-        ['First Test Document', '', '10.7916/ALICE', '', '2', '1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '1', '0', '0', '0', '0', '0', '0', '0', '0', '0'],
-        ['Second Test Document', '', '10.7916/TESTDOC5', '', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0'],
-
-        [], [],
-        ['STREAMS REPORT:'],
-        ['Total for period:', '1', '', '', '', 'Streams by Month'],
-        ['Title', 'Content Type', 'Persistent URL', 'Publisher DOI', 'Reporting Period Total Streams', 'Jan-2015', 'Feb-2015', 'Mar-2015', 'Apr-2015', 'May-2015', 'Jun-2015', 'Jul-2015', 'Aug-2015', 'Sep-2015', 'Oct-2015', 'Nov-2015', 'Dec-2015', 'Jan-2016', 'Feb-2016', 'Mar-2016', 'Apr-2016', 'May-2016', 'Jun-2016', 'Jul-2016', 'Aug-2016', 'Sep-2016', 'Oct-2016', 'Nov-2016', 'Dec-2016'],
-        ['First Test Document', '', '10.7916/ALICE', '', '1', '0', '0', '0', '0', '1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0'],
-        ['Second Test Document', '', '10.7916/TESTDOC5', '', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0'],
-
-        [], [],
-        ['DOWNLOADS REPORT:'],
-        ['Total for period:', '2', '', '', '', 'Downloads by Month'],
-        ['Title', 'Content Type', 'Persistent URL', 'Publisher DOI', 'Reporting Period Total Downloads', 'Jan-2015', 'Feb-2015', 'Mar-2015', 'Apr-2015', 'May-2015', 'Jun-2015', 'Jul-2015', 'Aug-2015', 'Sep-2015', 'Oct-2015', 'Nov-2015', 'Dec-2015', 'Jan-2016', 'Feb-2016', 'Mar-2016', 'Apr-2016', 'May-2016', 'Jun-2016', 'Jul-2016', 'Aug-2016', 'Sep-2016', 'Oct-2016', 'Nov-2016', 'Dec-2016'],
-        ['First Test Document', '', '10.7916/ALICE', '', '2', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '2', '0', '0', '0', '0', '0', '0', '0', '0'],
-        ['Second Test Document', '', '10.7916/TESTDOC5', '', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0']
+        ['Report created on:', Time.current.strftime('%Y-%m-%d')],
+        ['Total number of items:', '2'],
+        [],
+        ['VIEWS'],
+        ['Title', 'Genre', 'DOI', 'Record Creation Date', 'Jan-2015', 'Feb-2015', 'Mar-2015', 'Apr-2015', 'May-2015', 'Jun-2015', 'Jul-2015', 'Aug-2015', 'Sep-2015', 'Oct-2015', 'Nov-2015', 'Dec-2015', 'Jan-2016', 'Feb-2016', 'Mar-2016', 'Apr-2016', 'May-2016', 'Jun-2016', 'Jul-2016', 'Aug-2016', 'Sep-2016', 'Oct-2016', 'Nov-2016', 'Dec-2016'],
+        ['First Test Document', '', '10.7916/ALICE', '08/07/2018', '1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '1', '0', '0', '0', '0', '0', '0', '0', '0', '0'],
+        ['Second Test Document', '', '10.7916/TESTDOC5', '08/07/2018', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0'],
+        [],
+        ['DOWNLOADS'],
+        ['Title', 'Genre', 'DOI', 'Record Creation Date', 'Jan-2015', 'Feb-2015', 'Mar-2015', 'Apr-2015', 'May-2015', 'Jun-2015', 'Jul-2015', 'Aug-2015', 'Sep-2015', 'Oct-2015', 'Nov-2015', 'Dec-2015', 'Jan-2016', 'Feb-2016', 'Mar-2016', 'Apr-2016', 'May-2016', 'Jun-2016', 'Jul-2016', 'Aug-2016', 'Sep-2016', 'Oct-2016', 'Nov-2016', 'Dec-2016'],
+        ['First Test Document', '', '10.7916/ALICE', '08/07/2018', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '2', '0', '0', '0', '0', '0', '0', '0', '0'],
+        ['Second Test Document', '', '10.7916/TESTDOC5', '08/07/2018', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0']
       ]
     end
     let(:usage_stats) do
-      AcademicCommons::Metrics::UsageStatistics.new(solr_request, Date.parse('Jan 2015'), Date.parse('Dec 2016'),
-      order_by: 'views', include_zeroes: true, include_streaming: true, per_month: true)
+      AcademicCommons::Metrics::UsageStatistics.new(
+        solr_request, Time.zone.parse('Jan 2015'), Time.zone.parse('Dec 2016'),
+        order_by: 'views', include_zeroes: true, per_month: true
+      )
     end
 
     before :each do
-      FactoryBot.create(:view_stat, at_time: Date.parse('Jan 15, 2015'))
-      FactoryBot.create(:view_stat, at_time: Date.parse('March 9, 2016'))
-      FactoryBot.create(:download_stat, at_time: Date.parse('April 2, 2016'))
-      FactoryBot.create(:download_stat, at_time: Date.parse('April 2, 2016'))
-      FactoryBot.create(:streaming_stat, at_time: Date.parse('May 3, 2015'))
+      FactoryBot.create(:view_stat, at_time: Time.zone.parse('Jan 15, 2015'))
+      FactoryBot.create(:view_stat, at_time: Time.zone.parse('March 9, 2016'))
+      FactoryBot.create(:download_stat, at_time: Time.zone.parse('April 2, 2016'))
+      FactoryBot.create(:download_stat, at_time: Time.zone.parse('April 2, 2016'))
+      FactoryBot.create(:streaming_stat, at_time: Time.zone.parse('May 3, 2015'))
 
       allow(Blacklight.default_index).to receive(:search)
         .with(solr_params).and_return(solr_response)
     end
 
     it 'creates the expected csv' do
-      csv = usage_stats.to_csv_by_month
+      csv = usage_stats.month_by_month_csv
       expect(CSV.parse(csv)).to match expected_csv
     end
   end
