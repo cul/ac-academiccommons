@@ -12,9 +12,9 @@ class SwordDepositJob < ApplicationJob
     # Send request to SWORD
     begin
       response = HTTP.timeout(:global, write: 60, connect: 60, read: 60)
-                     .basic_auth(user: credentials[:user], pass: credentials[:pass])
+                     .basic_auth(user: credentials['user'], pass: credentials['password'])
                      .headers(content_type: 'application/zip')
-                     .post(uri: credentials[:url], body: deposit.sword_zip)
+                     .post(uri: credentials['url'], body: deposit.sword_zip)
     rescue StandardError => e
       message = "There was an error deliving a SWORD deposit for deposit record id: #{deposit.id}. Please check logs."
       ErrorMailer.sword_deposit_error('Error Delivering SWORD Deposit', message)
