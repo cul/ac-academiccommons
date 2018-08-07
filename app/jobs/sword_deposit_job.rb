@@ -23,8 +23,8 @@ class SwordDepositJob < ApplicationJob
 
     if response.code == 201
       # Given the response, save the hyacinth identifier in the Deposit object
-
-      identifier = JSON.parse(response.body)[:item_pid]
+      Rails.logger.debug "Response body from SWORD: #{response.body}"
+      identifier = JSON.parse(response.body.to_s)['item_pid']
       deposit.update!(hyacinth_identifier: identifier)
 
       # Start job to delete any files associated with the deposit object.
