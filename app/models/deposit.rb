@@ -86,7 +86,7 @@ class Deposit < ApplicationRecord
           xml.fileGrp('ID': 'sword-mets-fgrp-1', 'USE': 'CONTENT') do
             files.each_with_index do |file, i|
               xml.file('GROUPID': "sword-mets-fgid-#{i}", 'ID': "sword-mets-file-#{i + 1}", 'MIMETYPE': file.content_type) do
-                xml.fLocat('LOCTYPE': 'URL', 'xlink:href': file.filename)
+                xml.FLocat('LOCTYPE': 'URL', 'xlink:href': file.filename)
               end
             end
           end
