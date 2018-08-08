@@ -165,26 +165,22 @@ form,
 
 .admin-form,
 #main-page .admin-form {
-  border-top: $border;
 
   & label {
     display: block;
   }
 
-  & .sub-label {
-    font-weight: normal;
-  }
-
   & .radio input[type="radio"] {
     margin-left: 0;
-    margin-top: 1px;
+    margin-top: 2px;
   }
 
-  & .form-inline {
-    padding-top: 5px;
+  & .disabled-input {
+    font-weight: normal;
+    padding: 7px 0 0 20px;
   }
 
-  & input[type=text] {
+  & .disabled-input input[type=text] {
     width: auto;
   }
 }

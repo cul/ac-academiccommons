@@ -8,19 +8,19 @@
       <%= f.label(:reports_for_all_authors, 'All authors') %>
       <%= f.radio_button(:reports_for, 'one') %>
       <%= f.label(:reports_for_one_author, 'One author') %>
-      <div class="form-inline">
-        <%= f.label(:uni, 'UNI', class: 'col-sm-2 control-label sub-label') %>
-        <%= f.text_field(:uni, disabled: true, class: 'col-sm-3 form-control') %>
+      <div class="disabled-input">
+        <%= f.label(:uni, 'UNI', class: 'control-label visually-hidden') %>
+        <%= f.text_field(:uni, disabled: true, placeholder: 'UNI', class: 'col-sm-3 form-control') %>
       </div>
     </div>
   </div>
 
   <div class="form-group">
     <%= f.label :month, 'Report Month', class: 'col-sm-3 control-label' %>
-    <div class="col-sm-2">
+    <div class="col-sm-2 dropdown-horizontal">
       <%= f.select :month, EmailAuthorReportsForm::MONTHS, class: 'form-control' %>
     </div>
-    <div class="col-sm-2">
+    <div class="col-sm-2 dropdown-horizontal">
       <%= f.select :year, EmailAuthorReportsForm::YEAR_BEG..Date.current.year, class: 'form-control' %>
     </div>
   </div>
@@ -50,15 +50,16 @@
 
       <%= f.radio_button(:deliver, :all_reports_to_one_email) %>
       <%= f.label(:deliver_all_reports_to_one_email, 'Email all reports to one email') %>
-      <div class="form-inline">
-        <%= f.label(:email, 'Email', class: 'col-sm-2 control-label sub-label') %>
-        <%= f.text_field(:email, disabled: true, class: 'col-sm-3 form-control') %>
+      <div class="disabled-input">
+        <%= f.label(:email, 'Email', class: 'control-label visually-hidden') %>
+        <%= f.text_field(:email, disabled: true, placeholder: 'EMAIL', class: 'col-sm-3 form-control') %>
       </div>
     </div>
   </div>
 
    <div class="form-group">
-     <div class="col-sm-offset-3 col-sm-10">
+     <div class="col-sm-offset-3 col-sm-9">
+       <br>
        <%= f.submit 'Send Reports', data: { confirm: 'This will send most likely hundreds of emails. Are you sure?' }, class: 'btn btn-primary'  %>
      </div>
    </div>
