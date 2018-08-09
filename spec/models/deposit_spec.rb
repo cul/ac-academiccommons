@@ -7,7 +7,7 @@ describe Deposit, type: :model do
     let(:expected_xml) { fixture_to_xml('deposit_mets', 'mets.xml') }
 
     it 'generates correct mets' do
-      expect(Nokogiri::XML(deposit.mets.to_s)).to be_equivalent_to(expected_xml).ignoring_content_of('metsHdr')
+      expect(Nokogiri::XML(deposit.mets.to_s)).to be_equivalent_to(expected_xml).ignoring_attr_values('CREATEDATE')
     end
 
     context 'when using passing in DOI instead of URL' do
