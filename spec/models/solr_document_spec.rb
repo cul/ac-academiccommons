@@ -58,22 +58,19 @@ describe SolrDocument do
         }
       end
 
-      it 'calls solr with expected params' do
-        expect(Blacklight.default_index.connection).to receive(:get)
-          .with('select', params: expected_params)
-          .and_return(empty_response)
-        document.assets
-      end
-
-      it 'returns array with documents' do
+      before do
         allow(Blacklight.default_index.connection).to receive(:get)
           .with('select', params: expected_params)
           .and_return(solr_response)
+      end
+
+      it 'calls solr with expected params' do
         expect(document.assets.count).to eq 2
+      end
+
+      it 'returns asset documents with thumbnail urls' do
         expect(document.assets.map { |a| a[:id] }).to match_array ['actest:2', 'actest:10']
-        non_urls = document.assets.map(&:thumbnail).detect do |val|
-          !(val =~ /http:\/\/.*jpg/)
-        end
+        non_urls = document.assets.map(&:thumbnail).detect { |val| val !~ %r{http:\/\/.*jpg} }
         expect(non_urls).to be_falsey
       end
     end
