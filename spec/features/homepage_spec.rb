@@ -19,6 +19,12 @@ describe 'Homepage', type: :feature do
     expect(page).to have_css 'h3', text: 'Enhanced discoverability'
   end
 
+  it 'links to the explore page' do
+    within('.about-links') do
+      expect(page).to have_link('Explore', href: '/explore')
+    end
+  end
+
   it 'links to the upload page' do
     # this needs to look for a link by href
     expect(page).to have_css('a[href="/upload"]')
