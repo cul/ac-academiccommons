@@ -39,12 +39,16 @@ describe SolrDocument do
             'docs' => [
               {
                 'id' => 'actest:2',
+                'fedora3_pid_ssi' => 'actest:2',
+                'active_fedora_model_ssi' => 'GenericResource',
                 'downloadable_content_type_ssi' => 'application/pdf',
                 'downloadable_content_dsid_ssi' => 'CONTENT',
                 'downloadable_content_label_ss' => 'alice_in_wonderland.pdf'
               },
               {
                 'id' => 'actest:10',
+                'fedora3_pid_ssi' => 'actest:10',
+                'active_fedora_model_ssi' => 'GenericResource',
                 'downloadable_content_type_ssi' => 'image/png',
                 'downloadable_content_dsid_ssi' => 'CONTENT',
                 'downloadable_content_label_ss' => 'alice_in_wonderland_cover.png'
@@ -67,6 +71,10 @@ describe SolrDocument do
           .and_return(solr_response)
         expect(document.assets.count).to eq 2
         expect(document.assets.map { |a| a[:id] }).to match_array ['actest:2', 'actest:10']
+        non_urls = document.assets.map(&:thumbnail).detect do |val|
+          !(val =~ /http:\/\/.*jpg/)
+        end
+        expect(non_urls).to be_falsey
       end
     end
 
