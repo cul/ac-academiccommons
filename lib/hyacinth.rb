@@ -5,6 +5,6 @@ module Hyacinth
   end
 
   def self.digital_object_url(pid)
-    Addressable::URI.join(base_url, '/digital_objects#{"controller":"digital_objects","action":"show","pid":"' + pid + '"}')
+    Addressable::URI.join(base_url, '/digital_objects#{"controller":"digital_objects","action":"show","pid":"' + pid + '"}').to_s
   end
 end

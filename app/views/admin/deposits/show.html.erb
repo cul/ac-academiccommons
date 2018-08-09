@@ -65,4 +65,7 @@
   <% @deposit.files.each do |f| %>
     <dd><%= link_to f.filename, rails_blob_path(f, disposition: "attachment") %></dd>
   <% end %>
+
+  <dt>Hyacinth Identifier</dt>
+  <dd><%= (@deposit.hyacinth_identifier.blank?) ? 'None' : @deposit.hyacinth_identifier %></dd>
 </dl>
