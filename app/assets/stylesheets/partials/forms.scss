@@ -1,7 +1,8 @@
-form {
+form,
+#main-page form,
+#main-page #dashboard form {
 
-  & h3,
-  & h5 {
+  & h3 {
     font-size: 18px;
     font-weight: bold;
     margin: 0 0 5px 0;
@@ -20,7 +21,6 @@ form {
   & input,
   & textarea {
     border: $border;
-    color: $gray-base;
     font-weight: 500;
   }
 
@@ -43,15 +43,15 @@ form {
     border: 0;
   }
 
-  & label,
-  & h5 {
+  & label.control-label,
+  & h3 {
     display: block;
     font-size: $font-size-small;
     font-weight: bold;
     text-transform: uppercase;
   }
 
-  & .checkbox h5 {
+  & .checkbox h3 {
     font-weight: bold;
     margin: 0 0 8px 0;
   }
@@ -73,6 +73,7 @@ form {
   }
 
   & select {
+    background: $body-bg;
     border: $border;
     height: 35px;
     padding: 5px;
@@ -111,7 +112,7 @@ form {
 
   & .creator-header {
     border: none;
-    padding: 0 0 5px 0;
+    padding: 0;
   }
 
   & #creator-list div:hover {
@@ -157,5 +158,33 @@ form {
   & input[type=text],
   & textarea  {
     width: 70%;
+  }
+}
+
+/* admin forms */
+
+.admin-form,
+#main-page #dashboard .admin-form {
+
+  & label {
+    display: block;
+  }
+
+  & .radio input[type="radio"] {
+    margin-left: 0;
+    margin-top: 2px;
+  }
+
+  & .radio label {
+    min-height: 30px;
+  }
+
+  & .disabled-input {
+    font-weight: normal;
+    padding: 7px 0 0 20px;
+  }
+
+  & .disabled-input input[type=text] {
+    width: auto;
   }
 }

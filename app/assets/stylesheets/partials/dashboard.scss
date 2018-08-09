@@ -1,10 +1,11 @@
 /* dashboard top nav */
 
 #main-page #dashboard-nav {
+  background-image: linear-gradient(to bottom, #fff 0%, #f3f5f3 100%);
   border-bottom: $border;
   font-size: $font-size-small;
   margin: 30px 0 0 0;
-  padding: 0 10px;
+  padding: 0 10px 10px 10px;
 
   & ul {
     font-weight: bold;
@@ -42,9 +43,11 @@
 @media screen and (min-width: $screen-sm ) {
 
   #main-page #dashboard-nav {
+    background-image: none;
     border: 0;
     font-size: $font-size-base;
     margin: 10px 10px 0 10px;
+    padding: 0 10px;
 
     & .nav-tabs {
       border-bottom: $border;
@@ -69,15 +72,17 @@
 /* dashboard main-page content */
 
 #main-page #dashboard {
-  border: none;
   font-weight: 300;
   line-height: 1.6;
-  padding: 15px;
+
+  & .dashboard-container {
+    padding: 20px;
+  }
 
   & h3 {
     font-size: 25px;
     font-weight: 300;
-    margin: 20px 0 10px 0;
+    margin: 0 0 10px 0;
   }
 
   & p {
@@ -95,19 +100,13 @@
   #main-page #dashboard {
     border: $border;
     margin: 0 20px 15px 20px;
-    padding: 20px;
 
-    & .agreement-message,
-    & .checkbox,
-    & input[type=text],
-    & input[type=number],
-    & input[type=file],
-    & textarea,
-    & select,
-    & .creators,
-    & p.note,
-    & .dropzone,
-    & p {
+    & h3 {
+      margin-top: 15px;
+    }
+
+    .dashboard-container {
+      padding: 30px;
       width: 70%;
     }
   }

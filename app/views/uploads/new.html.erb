@@ -2,38 +2,38 @@
 
 <%= form_with(model: @deposit, url: uploads_path, method: :create, local: true, id: :upload) do |form| %>
 
-  <h5>Participation Agreement</h5>
+  <h3>Participation Agreement</h3>
   <p>
     <%= render 'agreement' %>
   </p>
 
   <div class="form-group">
-    <%= form.label(:title, 'Title*') %>
+    <%= form.label(:title, 'Title*', class: 'control-label') %>
     <%= form.text_field(:title, placeholder: 'Title') %>
   </div>
 
   <div class="form-group">
-    <%= form.label(:abstract, 'Abstract*') %>
+    <%= form.label(:abstract, 'Abstract*', class: 'control-label') %>
     <%= form.text_area(:abstract, placeholder: 'What is this work about? Provide a brief summary to help readers understand its argument.') %>
   </div>
 
   <div class="form-group">
-    <%= form.label(:year, 'Year Created*') %>
+    <%= form.label(:year, 'Year Created*', class: 'control-label') %>
     <%= form.number_field(:year, placeholder: 'YYYY') %>
   </div>
 
   <div class="form-group">
-    <%= form.label(:doi, 'DOI/URL') %>
+    <%= form.label(:doi, 'DOI/URL', class: 'control-label') %>
     <%= form.text_field(:doi, placeholder: 'DOI or URL of work online (if applicable)') %>
   </div>
 
   <div class="form-group checkbox">
-    <h5>Current student?</h5>
+    <h3>Current student?</h3>
     <%= form.check_box :student %>
     <%= form.label :student, 'Check here if you are a current student at Columbia or one of its affiliate institutions.' %>
   </div>
 
-  <h5>Creator(s)*</h5>
+  <h3>Creator(s)*</h3>
   <div class="creators">
 
     <%= '<div class="field_with_errors">'.html_safe if @deposit.errors.include?(:creators) %>
@@ -68,14 +68,14 @@
   </div>
 
   <div class="form-group">
-    <%= form.label(:notes, 'Notes') %>
+    <%= form.label(:notes, 'Notes', class: 'control-label') %>
     <%= form.text_area(:notes, placeholder: 'Additional information you want included in the record (such as suggested keywords) and/or notes for repository staff') %>
   </div>
 
   <div class="form-group">
-    <%= form.label(:rights_statement, 'Copyright Status*') %>
+    <%= form.label(:rights_statement, 'Copyright Status*', class: 'control-label') %>
     <p class="note">
-      Please confirm whether your deposit is copyright protected. If you are choosing to designate your work as public domain, you confirm that you have the full authority to do so. For more information about copyright protection, please consult
+      Please confirm whether your deposit is copyright protected. If you are choosing to designate your work as public domain (i.e., having no copyright), you confirm that you have the full authority to do so. For more information about copyright protection, please consult
       <%= link_to "Columbia University Library’s Copyright Advisory Service’s Copyright Quick Guide", 'https://copyright.columbia.edu/basics/copyright-quick-guide.html' %>.
     </p>
     <%= form.collection_select(:rights_statement,
@@ -89,7 +89,7 @@
   <div id="use-by-others" class="item"></div>
 
   <div class="form-group" id="file-upload">
-    <div><%= form.label(:files, 'Upload File(s)*') %></div>
+    <div><%= form.label(:files, 'Upload File(s)*', class: 'control-label') %></div>
       <p class="alert alert-info">This form accepts files up to 100MB in size. If you have larger files, email <%= mail_to "ac@columbia.edu" %>.</p>
 
     <div><%= form.file_field :files, multiple: true, direct_upload: true %></div>
