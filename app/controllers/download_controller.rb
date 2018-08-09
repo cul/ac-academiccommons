@@ -34,7 +34,7 @@ class DownloadController < ApplicationController
 
     if !fail_fast # check that the content datastream exists for this object in fedora
       url = Rails.application.config_for(:fedora)['url'] + '/objects/' + resource_doc.fetch(:fedora3_pid_ssi, nil) + '/datastreams/content/content'
-      fail_fast ||= (HTTP.head(url) != 200)
+      fail_fast ||= (HTTP.head(url).code != 200)
     end
 
     if fail_fast
