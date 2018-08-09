@@ -568,6 +568,7 @@ PLATFORMS
 
 DEPENDENCIES
   active-fedora (~> 8.2)
+  addressable
   blacklight (~> 6.0)
   blacklight_oai_provider
   blacklight_range_limit
@@ -615,6 +616,7 @@ DEPENDENCIES
   rspec-rails (~> 3.5)
   rubocop (~> 0.52.1)
   rubocop-rspec (~> 1.22.2)
+  rubyzip
   sass-rails
   selenium-webdriver
   sentry-raven

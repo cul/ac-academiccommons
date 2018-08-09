@@ -3,18 +3,18 @@ class SwordDepositJob < ApplicationJob
 
   def perform(deposit)
     # Check that we are allowed to send data to sword in this environment.
-    return unless Rails.application.config.send_deposits_to_sword
+    return unless Rails.application.config.sending_deposits_to_sword
 
     # Check that we have all the credentials necessary: url, user, password
     credentials =  Rails.application.config_for(:secrets)['sword']
-    raise 'Missing SWORD credentials' unless %i[url user password].all? { |k| credentials[k].present? }
+    raise 'Missing SWORD credentials' unless ['url', 'user', 'password'].all? { |k| credentials[k].present? }
 
     # Send request to SWORD
     begin
       response = HTTP.timeout(:global, write: 60, connect: 60, read: 60)
-                     .basic_auth(user: credentials[:user], pass: credentials[:pass])
+                     .basic_auth(user: credentials['user'], pass: credentials['password'])
                      .headers(content_type: 'application/zip')
-                     .post(credentials[:url], body: deposit.sword_zip)
+                     .post(credentials['url'], body: deposit.sword_zip)
     rescue StandardError => e
       message = "There was an error deliving a SWORD deposit for deposit record id: #{deposit.id}. Please check logs."
       ErrorMailer.sword_deposit_error('Error Delivering SWORD Deposit', message)
@@ -23,7 +23,8 @@ class SwordDepositJob < ApplicationJob
 
     if response.code == 201
       # Given the response, save the hyacinth identifier in the Deposit object
-      identifier = response.parse_and_find_identifier
+      Rails.logger.debug "Response body from SWORD: #{response.body}"
+      identifier = JSON.parse(response.body.to_s)['item_pid']
       deposit.update!(hyacinth_identifier: identifier)
 
       # Start job to delete any files associated with the deposit object.
