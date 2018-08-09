@@ -253,7 +253,6 @@ GEM
       domain_name (~> 0.5)
     http-form_data (2.1.1)
     http_parser.rb (0.6.0)
-    httpclient (2.8.3)
     i18n (1.0.1)
       concurrent-ruby (~> 1.0)
     ice_nine (0.11.2)
@@ -598,7 +597,6 @@ DEPENDENCIES
   grape-swagger
   haml (>= 4.0.7)
   http
-  httpclient (~> 2.6)
   jbuilder
   jettywrapper (>= 1.4.0)!
   jquery-rails
