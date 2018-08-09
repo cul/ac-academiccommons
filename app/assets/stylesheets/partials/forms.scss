@@ -175,6 +175,10 @@ form,
     margin-top: 2px;
   }
 
+  & .radio label {
+    min-height: 30px;
+  }
+
   & .disabled-input {
     font-weight: normal;
     padding: 7px 0 0 20px;
