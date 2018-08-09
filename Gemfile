@@ -3,6 +3,7 @@ source 'https://rubygems.org'
 gem 'rails', '5.2.0'
 
 gem 'active-fedora', '~> 8.2'
+gem 'addressable'
 gem 'blacklight', '~> 6.0'
 gem 'blacklight_oai_provider'
 gem 'blacklight_range_limit'

@@ -568,6 +568,7 @@ PLATFORMS
 
 DEPENDENCIES
   active-fedora (~> 8.2)
+  addressable
   blacklight (~> 6.0)
   blacklight_oai_provider
   blacklight_range_limit
