@@ -27,7 +27,7 @@
   </td></tr>
 
   <tr><td class="title"><%= @solr_doc[:title_ssi] %></td></tr>
-  <tr><td class="item-detail"><%= link_identifier(value: @solr_doc[:cul_doi_ssi]) %></td></tr>
+  <tr><td class="item-detail"><%= link_to @solr_doc.full_doi, @solr_doc.full_doi %></td></tr>
   <% if @solr_doc.embargoed? %>
     <tr><td class="item-detail">Release date: <%= @solr_doc[:free_to_read_start_date_ssi] %></td></tr>
   <% end %>
