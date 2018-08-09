@@ -10,9 +10,13 @@
 <hr>
 
 <div><b>Creators:</b></div>
-<div><%= @deposit.creators %></div>
+<div><%= @deposit.creators.map { |c| "#{c[:first_name]} #{c[:lastname]}" }.join(', ') %></div>
 
 <hr>
 
 <div><b>Record in Hyacinth:</b></div>
-<div>Link soon.</div>
+<% if @deposit.hyacinth_id %>
+  <div><% link_to 'Link to record', Hyacinth.digital_object_url(@deposit.hyacinth_identifier) %></div>
+<% else %>
+  <p>No Hyacinth identifier found in record.</p>
+<% end %>
