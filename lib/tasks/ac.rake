@@ -1,5 +1,3 @@
-require File.expand_path(File.dirname(__FILE__) + '../../../lib/james_monkeys.rb')
-
 namespace :ac do
   desc "Adds item and collection to the repository."
   task :populate_solr => :environment do
