@@ -59,15 +59,6 @@ Rails.application.routes.draw do
 
   get '/download/download_log/:id', to: 'download#download_log', as: 'download_log'
 
-  match '/statistics/detail_report',        to: 'statistics#detail_report',        via: [:get, :post]
-  match '/statistics/all_author_monthlies', to: 'statistics#all_author_monthlies', via: [:get, :post]
-  get '/statistics/generic_statistics',     to: 'statistics#generic_statistics'
-  get '/statistics/send_csv_report',        to: 'statistics#send_csv_report'
-  get '/statistics/school_statistics',      to: 'statistics#school_statistics'
-  get '/statistics/common_statistics_csv',  to: 'statistics#common_statistics_csv'
-  get '/statistics/statistic_res_list',     to: 'statistics#statistic_res_list'
-  get '/statistics/total_usage_stats',      to: 'statistics#total_usage_stats'
-
   resource :agreement
 
   resources :uploads, only: [:index, :new, :create], path: 'upload'

@@ -11,7 +11,7 @@ module AcademicCommons::Metrics
       # Can only be generated with the per month flag is on
 
       CSV.generate do |csv|
-        # csv.add_row [facet.in?('author_ssim', 'author_uni_ssim') ? 'Author UNI/Name:' : 'Search criteria:', self.query]
+        # csv.add_row [facet.include?('author_ssim', 'author_uni_ssim') ? 'Author UNI/Name:' : 'Search criteria:', self.query]
         csv.add_row [self.solr_params.inspect]
         csv.add_row []
         csv.add_row ['Period Covered by Report', time_period]
