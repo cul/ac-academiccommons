@@ -52,7 +52,7 @@ class Deposit < ApplicationRecord
                 end
                 if doi.present?
                   xml['mods'].relatedItem('type': 'host') do
-                    if (m = %r{^(http:\/\/dx\.doi\.org\/|https:\/\/doi\.org\/)?(?<doi>10\..+)$/}.match(doi))
+                    if (m = %r{^(http:\/\/dx\.doi\.org\/|https:\/\/doi\.org\/)?(?<doi>10\..+)$}.match(doi))
                       xml['mods'].identifier(m[:doi], 'type': 'doi')
                     else
                       xml['mods'].identifier(doi, 'type': 'uri')

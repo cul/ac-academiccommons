@@ -15,7 +15,6 @@ FactoryBot.define do
       deposit.files.attach(
         io: File.open(Rails.root.join('spec', 'fixtures', 'test_file.txt')),
         filename: 'test_file.txt'
-        # content_type: 'image/jpeg'
       )
     end
   end
