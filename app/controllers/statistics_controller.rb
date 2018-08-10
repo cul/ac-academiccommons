@@ -2,31 +2,12 @@ class StatisticsController < ApplicationController
   include Blacklight::SearchHelper
   include AcademicCommons::Statistics
 
-  authorize_resource except: :unsubscribe_monthly
+  authorize_resource
   layout 'admin'
 
   require 'csv'
 
   helper_method :facet_names, :facet_items, :months
-
-  def unsubscribe_monthly
-    author_id = params[:author_id].to_s
-
-    begin
-      raise 'Request missing parameters.' if author_id.blank? || params[:chk].blank?
-      raise 'Cannot be verified.' unless Rails.application.message_verifier(:unsubscribe).verify(params[:chk]) == author_id
-
-      epref = EmailPreference.find_or_initialize_by(author: author_id)
-      epref.monthly_opt_out = true
-      epref.save!
-
-      flash[:success] = 'Unsubscribe request successful'
-    rescue
-      flash[:error] = 'There was an error with your unsubscribe request'
-    end
-
-    redirect_to root_url
-  end
 
   def detail_report
     set_default_params(params)

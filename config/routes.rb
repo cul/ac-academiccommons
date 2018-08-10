@@ -65,7 +65,6 @@ Rails.application.routes.draw do
   get '/statistics/send_csv_report',        to: 'statistics#send_csv_report'
   get '/statistics/school_statistics',      to: 'statistics#school_statistics'
   get '/statistics/common_statistics_csv',  to: 'statistics#common_statistics_csv'
-  get '/statistics/unsubscribe_monthly',    to: 'statistics#unsubscribe_monthly'
   get '/statistics/statistic_res_list',     to: 'statistics#statistic_res_list'
   get '/statistics/total_usage_stats',      to: 'statistics#total_usage_stats'
 
@@ -73,8 +72,9 @@ Rails.application.routes.draw do
 
   resources :uploads, only: [:index, :new, :create], path: 'upload'
 
-  get 'myworks', to: 'user#my_works'
-  get 'account', to: 'user#account'
+  get 'myworks',             to: 'user#my_works'
+  get 'account',             to: 'user#account'
+  get 'unsubscribe_monthly', to: 'user#unsubscribe_monthly'
 
   get '/admin',                   to: 'admin#index',                 as: 'admin'
 

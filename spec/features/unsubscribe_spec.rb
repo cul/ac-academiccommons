@@ -7,29 +7,29 @@ RSpec.describe 'Unsubscribe', type: :feature do
     let(:error) { 'There was an error with your unsubscribe request' }
 
     it 'author_id missing' do
-      visit '/statistics/unsubscribe_monthly?chk=foo'
+      visit 'unsubscribe_monthly?chk=foo'
       expect(page).to have_content error
     end
 
     it 'chk missing' do
-      visit "/statistics/unsubscribe_monthly?author_id=#{uni}"
+      visit "unsubscribe_monthly?author_id=#{uni}"
       expect(page).to have_content error
     end
 
     it 'chk and author_id missing' do
-      visit '/statistics/unsubscribe_monthly'
+      visit 'unsubscribe_monthly'
       expect(page).to have_content error
     end
 
     it 'chk incorrect' do
-      visit "/statistics/unsubscribe_monthly?author_id=#{uni}&chk=#{Rails.application.message_verifier(:unsubscribe).generate('abc')}"
+      visit "unsubscribe_monthly?author_id=#{uni}&chk=#{Rails.application.message_verifier(:unsubscribe).generate('abc')}"
       expect(page).to have_content error
     end
   end
 
   context 'when successful request' do
     before :each do
-      visit "/statistics/unsubscribe_monthly?author_id=#{uni}&chk=#{Rails.application.message_verifier(:unsubscribe).generate(uni)}"
+      visit "unsubscribe_monthly?author_id=#{uni}&chk=#{Rails.application.message_verifier(:unsubscribe).generate(uni)}"
     end
 
     it 'flashes successful message' do

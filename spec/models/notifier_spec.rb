@@ -36,7 +36,7 @@ RSpec.describe Notifier, type: :mailer do
     it 'contains correct unsubscribe link' do
       expect(mail.body.to_s).to have_link(
         'click here',
-        href: statistics_unsubscribe_monthly_url(author_id: 'abc123', chk: Rails.application.message_verifier(:unsubscribe).generate('abc123'))
+        href: unsubscribe_monthly_url(author_id: 'abc123', chk: Rails.application.message_verifier(:unsubscribe).generate('abc123'))
       )
     end
   end

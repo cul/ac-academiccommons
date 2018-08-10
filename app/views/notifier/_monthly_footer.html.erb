@@ -1,7 +1,7 @@
 <br/>
 <br/>
 <div>
-  Questions about this email contact <%= mail_to "ac@columbia.edu" %>
+  Questions about this email contact <%= mail_to 'ac@columbia.edu' %>
 </div>
 <br/>
 
@@ -13,7 +13,7 @@ Have more to deposit: <%= link_to 'click here', uploads_url %>
 <br/>
 
 Wish to unsubscribe:
-<%= link_to("click here", statistics_unsubscribe_monthly_url(author_id: @author_id, chk: Rails.application.message_verifier(:unsubscribe).generate(@author_id))) %>
+<%= link_to('click here', unsubscribe_monthly_url(author_id: @author_id, chk: Rails.application.message_verifier(:unsubscribe).generate(@author_id))) %>
 
 <br/><br/>
 
