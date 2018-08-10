@@ -93,8 +93,6 @@ Rails.application.routes.draw do
     mount Resque::Server.new, at: '/admin/resque'
   end
 
-  get '/emails/get_csv_email_form', to: 'emails#get_csv_email_form'
-
   get '/logs/all_author_monthly_reports_history', to: 'logs#all_author_monthly_reports_history'
   get '/logs/log_form',                           to: 'logs#log_form'
   get '/logs/ingest_history',                     to: 'logs#ingest_history'
