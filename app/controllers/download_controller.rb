@@ -34,8 +34,7 @@ class DownloadController < ApplicationController
 
     if !fail_fast # check that the content datastream exists for this object in fedora
       url = Rails.application.config_for(:fedora)['url'] + '/objects/' + resource_doc.fetch(:fedora3_pid_ssi, nil) + '/datastreams/content/content'
-      head_response = http_client.head(url)
-      fail_fast ||= (head_response.status != 200)
+      fail_fast ||= (HTTP.head(url).code != 200)
     end
 
     if fail_fast
@@ -64,10 +63,6 @@ class DownloadController < ApplicationController
   end
 
   private
-
-  def http_client
-    @cl ||= HTTPClient.new
-  end
 
   # Downloading of files is handed off to nginx to improve performance.
   # Uses the x-accel-redirect header in combination with nginx config location

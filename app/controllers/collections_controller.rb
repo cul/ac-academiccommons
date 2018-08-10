@@ -35,12 +35,14 @@ class CollectionsController < ApplicationController
     }
   }.freeze
 
-  # GET /collections
+  # GET /explore
+  # NB custom resource path for collections
   def index
     @categories = collections_config.values
   end
 
-  # GET /collections/:category_id
+  # GET /explore/:category_id
+  # NB custom resource path for collections
   def show
     # Render 404 if category_id not valid
     raise(ActionController::RoutingError, 'not found') unless valid_category?(params[:category_id])
@@ -76,7 +78,7 @@ class CollectionsController < ApplicationController
 
     CONFIG.each do |category, config|
       struct = OpenStruct.new(config)
-      struct.url = "/collections/#{category}"
+      struct.url = collection_path(category_id: category)
       struct.top_partial = "#{category}_top"
       struct.bottom_partial = "#{category}_bottom"
       c[category] = struct

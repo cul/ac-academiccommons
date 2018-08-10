@@ -34,12 +34,11 @@ RSpec.describe DownloadController, type: :controller do
     let(:parent_doc)    { SolrDocument.new(object_state_ssi: 'A') }
     let(:mock_resource) { double(docs: [resource_doc]) }
     let(:mock_parent)   { double(docs: [parent_doc]) }
-    let(:mock_client)   { double(HTTPClient, head: mock_head_response) }
-    let(:mock_head_response) { double('headers', status: 200) }
+    let(:mock_head_response) { double('headers', code: 200) }
 
     before do
       allow(Blacklight.default_index).to receive(:search).and_return(mock_resource, mock_parent)
-      controller.instance_variable_set(:@cl, mock_client)
+      allow(HTTP).to receive(:head).and_return(mock_head_response)
 
       get :content, params: { id: '10.7616/TESTTEST' }
     end

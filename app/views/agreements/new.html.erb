@@ -9,15 +9,15 @@
         <%= f.label(:accepted_agreement, 'I have read and accept the participation agreement.') %>
       </div>
       <div class="form-group">
-        <%= f.label :name, 'Name' %>
+        <%= f.label :name, 'Name', class: 'control-label' %>
         <%= f.text_field :name %>
       </div>
       <div class="form-group">
-        <%= f.label :email, 'E-mail' %>
+        <%= f.label :email, 'E-mail', class: 'control-label' %>
         <%= f.text_field :email, readonly: (token?) ? 'readonly' : nil %>
       </div>
       <div class="form-group">
-        <%= f.label :uni, 'UNI' %>
+        <%= f.label :uni, 'UNI', class: 'control-label' %>
         <%= f.text_field :uni, readonly: 'readonly' %>
       </div>
     <%= f.submit 'Accept', :class => 'btn btn-primary btn-accept' %>

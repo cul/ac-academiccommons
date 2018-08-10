@@ -22,7 +22,7 @@ Rails.application.routes.draw do
   mount API => '/'
 
   # Collections routes
-  resources :collections, only: [:index, :show], param: 'category_id'
+  resources :collections, only: [:index, :show], param: 'category_id', path: 'explore'
 
   # Blacklight routes
   concern :searchable, Blacklight::Routes::Searchable.new

@@ -253,7 +253,6 @@ GEM
       domain_name (~> 0.5)
     http-form_data (2.1.1)
     http_parser.rb (0.6.0)
-    httpclient (2.8.3)
     i18n (1.0.1)
       concurrent-ruby (~> 1.0)
     ice_nine (0.11.2)
@@ -568,6 +567,7 @@ PLATFORMS
 
 DEPENDENCIES
   active-fedora (~> 8.2)
+  addressable
   blacklight (~> 6.0)
   blacklight_oai_provider
   blacklight_range_limit
@@ -597,7 +597,6 @@ DEPENDENCIES
   grape-entity
   grape-swagger
   http
-  httpclient (~> 2.6)
   jbuilder
   jettywrapper (>= 1.4.0)!
   jquery-rails
@@ -614,6 +613,7 @@ DEPENDENCIES
   rspec-rails (~> 3.5)
   rubocop (~> 0.52.1)
   rubocop-rspec (~> 1.22.2)
+  rubyzip
   sass-rails
   selenium-webdriver
   sentry-raven
