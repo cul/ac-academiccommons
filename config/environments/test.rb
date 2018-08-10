@@ -24,6 +24,9 @@ Rails.application.configure do
   # Test might slow down a bit, but we need to mimic production as best as we can.
   config.eager_load = true
 
+  # ActiveStorage test environment.
+  config.active_storage.service = :test
+
   # Setting host so that url helpers can be used in mailer views.
   config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
 
