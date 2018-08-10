@@ -15,7 +15,7 @@ class Deposit < ApplicationRecord
   # validates_presence_of :abstract
 
   validate :one_creator_must_be_present, on: :create
-  validates :title, :abstract, :year, :rights_statement, :files, presence: true, on: :create
+  validates :title, :abstract, :year, :rights_statement, :license, :files, presence: true, on: :create
 
   has_many_attached :files
 
