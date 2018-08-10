@@ -1,0 +1,55 @@
+<?xml version="1.0"?>
+<mets xmlns="http://www.loc.gov/METS/" xmlns:mods="http://www.loc.gov/mods/v3" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xlink="http://www.w3.org/1999/xlink" xsi:schemaLocation="http://www.loc.gov/METS/ http://www.loc.gov/standards/mets/mets.xsd http://www.loc.gov/mods/v3 http://www.loc.gov/standards/mods/v3/mods-3-2.xsd">
+  <metsHdr CREATEDATE="2018-08-09T19:33:54Z">
+    <agent ROLE="CUSTODIAN" TYPE="ORGANIZATION">
+      <name>Academic Commons, Columbia University</name>
+    </agent>
+  </metsHdr>
+  <dmdSec ID="sword-mets-dmd-1">
+    <mdwrap MDTYPE="MODS">
+      <xmlData>
+        <mods:mods>
+          <mods:titleInfo>
+            <mods:title>Test Depost</mods:title>
+          </mods:titleInfo>
+          <mods:abstract>foobar</mods:abstract>
+          <mods:originInfo>
+            <mods:dateIssued encoding="w3cdtf">2018</mods:dateIssued>
+          </mods:originInfo>
+          <mods:relatedItem type="host">
+            <mods:identifier type="doi">10.7619/example</mods:identifier>
+          </mods:relatedItem>
+          <mods:name type="personal" ID="abc123">
+            <mods:namePart>Doe, Jane</mods:namePart>
+            <mods:role>
+              <mods:roleTerm type="text" valueURI="http://id.loc.gov/vocabulary/relators/aut" authority="marcrelator">Author</mods:roleTerm>
+            </mods:role>
+          </mods:name>
+          <mods:name type="personal">
+            <mods:namePart>Doe, John</mods:namePart>
+            <mods:role>
+              <mods:roleTerm type="text" valueURI="http://id.loc.gov/vocabulary/relators/aut" authority="marcrelator">Author</mods:roleTerm>
+            </mods:role>
+          </mods:name>
+          <mods:note type="internal">This deposit is just for testing purposes.</mods:note>
+          <mods:recordInfo>
+            <mods:recordInfoNote>AC SWORD MODS v1.0</mods:recordInfoNote>
+          </mods:recordInfo>
+        </mods:mods>
+      </xmlData>
+    </mdwrap>
+  </dmdSec>
+  <fileSec>
+    <fileGrp ID="sword-mets-fgrp-1" USE="CONTENT">
+      <file GROUPID="sword-mets-fgid-0" ID="sword-mets-file-1" MIMETYPE="text/plain">
+        <FLocat LOCTYPE="URL" xlink:href="test_file.txt"/>
+      </file>
+    </fileGrp>
+  </fileSec>
+  <structMap ID="sword-mets-struct-1" LABEL="structure" TYPE="LOGICAL">
+    <div ID="sword-mets-div-1" DMDID="sword-mets-dmd-1" TYPE="SWORD Object">
+      <div ID="sword-mets-div-2" TYPE="File"/>
+      <fptr FILEID="sword-mets-file-1"/>
+    </div>
+  </structMap>
+</mets>
