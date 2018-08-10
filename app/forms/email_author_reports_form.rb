@@ -78,7 +78,7 @@ class EmailAuthorReportsForm < FormObject
           reports_logger.info "Report for '#{author_id}' would have been sent to #{send_to}, but NO EMAIL WAS SENT BECAUSE THIS IS A TEST."
           @skipped_counter += 1
         else
-          Notifier.author_monthly(send_to, author_id, usage_stats, optional_note).deliver
+          StatisticsMailer.author_monthly(send_to, author_id, usage_stats, optional_note).deliver
           reports_logger.info "Report for '#{author_id}' was sent to #{send_to} at #{Time.current.xmlschema}."
           @sent_counter += 1
         end

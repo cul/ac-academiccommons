@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Notifier, type: :mailer do
+RSpec.describe StatisticsMailer, type: :mailer do
   describe '.author_monthly' do
     let(:uni) { 'abc123' }
     let(:solr_request) { { q: nil, fq: ["author_uni_ssim:\"#{uni}\""] } }
@@ -25,10 +25,10 @@ RSpec.describe Notifier, type: :mailer do
     end
     let(:usage_stats) { AcademicCommons::Metrics::UsageStatistics.new(solr_request, Date.new(2017, 1, 1), Date.new(2017, 1, 31)) }
     let(:mail) do
-      Notifier.author_monthly('abc123@columbia.edu', 'abc123', usage_stats, '')
+      StatisticsMailer.author_monthly('abc123@columbia.edu', 'abc123', usage_stats, '')
     end
 
-    before :each do
+    before do
       allow(Blacklight.default_index).to receive(:search)
         .with(solr_params).and_return(solr_response)
     end
