@@ -596,7 +596,6 @@ DEPENDENCIES
   grape
   grape-entity
   grape-swagger
-  haml (>= 4.0.7)
   http
   httpclient (~> 2.6)
   jbuilder
