@@ -79,7 +79,7 @@
       <%= link_to "Columbia University Library’s Copyright Advisory Service’s Copyright Quick Guide", 'https://copyright.columbia.edu/basics/copyright-quick-guide.html' %>.
     </p>
     <%= form.collection_select(:rights_statement,
-                               Deposit::COPYRIGHT_STATUS,
+                               Deposit::COPYRIGHT_STATUS.keys,
                                :to_s,
                                :to_s,
                                prompt: 'Choose copyright status of this work') %>

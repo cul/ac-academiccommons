@@ -1,8 +1,19 @@
 class Deposit < ApplicationRecord
-  COPYRIGHT_STATUS = [
-    'In Copyright',
-    'No Copyright'
-  ].freeze
+  COPYRIGHT_STATUS = {
+    'In Copyright' => 'http://rightsstatements.org/vocab/InC/1.0/',
+    'No Copyright' => 'http://rightsstatements.org/vocab/NoC-US/1.0/'
+  }.freeze
+
+  LICENSE = {
+    'Use by others as provided for by copyright laws - All rights reserved' => nil,
+    'Attribution (CC BY)'                                => 'https://creativecommons.org/licenses/by/4.0/',
+    'Attribution-ShareAlike (CC BY-SA)'                  => 'https://creativecommons.org/licenses/by-sa/4.0/',
+    'Attribution-NoDerivs (CC BY-ND)'                    => 'https://creativecommons.org/licenses/by-nd/4.0/',
+    'Attribution-NonCommercial (CC BY-NC)'               => 'https://creativecommons.org/licenses/by-nc/4.0/',
+    'Attribution-NonCommercial-ShareAlike (CC BY-NC-SA)' => 'https://creativecommons.org/licenses/by-nc-sa/4.0/	',
+    'Attribution-NonCommercial-NoDerivs (CC BY-NC-ND)'   => 'https://creativecommons.org/licenses/by-nc-nd/4.0/',
+    'CC0'                                                => 'https://creativecommons.org/publicdomain/zero/1.0/'
+  }.freeze
 
   before_validation :clean_up_creators
 
