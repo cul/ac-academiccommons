@@ -47,5 +47,13 @@ describe Deposit, type: :model do
 
       include_examples 'generates expected mets'
     end
+
+    context 'when deposit contains no license' do
+      subject(:deposit) { FactoryBot.create(:deposit, license: '') }
+
+      let(:expected_xml) { fixture_to_xml('deposit_mets', 'mets_with_no_license.xml') }
+
+      include_examples 'generates expected mets'
+    end
   end
 end

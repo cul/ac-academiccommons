@@ -1,7 +1,18 @@
 class Deposit < ApplicationRecord
-  COPYRIGHT_STATUS = [
-    'In Copyright',
-    'No Copyright'
+  RIGHTS_OPTIONS = {
+    'In Copyright' => 'http://rightsstatements.org/vocab/InC/1.0/',
+    'No Copyright' => 'http://rightsstatements.org/vocab/NoC-US/1.0/'
+  }.freeze
+
+  # License can be empty or one of the following values.
+  LICENSE_OPTIONS = [
+    'https://creativecommons.org/licenses/by/4.0/',
+    'https://creativecommons.org/licenses/by-sa/4.0/',
+    'https://creativecommons.org/licenses/by-nd/4.0/',
+    'https://creativecommons.org/licenses/by-nc/4.0/',
+    'https://creativecommons.org/licenses/by-nc-sa/4.0/',
+    'https://creativecommons.org/licenses/by-nc-nd/4.0/',
+    'https://creativecommons.org/publicdomain/zero/1.0/'
   ].freeze
 
   before_validation :clean_up_creators
@@ -15,13 +26,16 @@ class Deposit < ApplicationRecord
   # validates_presence_of :abstract
 
   validate :one_creator_must_be_present, on: :create
-  validates :title, :abstract, :year, :rights_statement, :files, presence: true, on: :create
+  validate :cco_must_be_selected, if: proc { |a| a.rights == RIGHTS_OPTIONS['No Copyright'] }
+  validates :title, :abstract, :year, :rights, :files, presence: true, on: :create
+  validates :rights,  inclusion: { in: RIGHTS_OPTIONS.values }, on: :create
+  validates :license, inclusion: { in: LICENSE_OPTIONS },       on: :create, if: proc { |a| a.license.present? }
 
   has_many_attached :files
 
   belongs_to :user, optional: true
 
-  store :metadata, accessors: %i[title creators abstract year doi license rights_statement notes], coder: JSON
+  store :metadata, accessors: %i[title creators abstract year doi license rights notes], coder: JSON
 
   # Returns METS representation of deposit, including descriptive, file and
   # structural metadata.
@@ -50,6 +64,7 @@ class Deposit < ApplicationRecord
                 xml['mods'].originInfo do
                   xml['mods'].dateIssued(year, 'encoding': 'w3cdtf')
                 end
+
                 if doi.present?
                   xml['mods'].relatedItem('type': 'host') do
                     if (m = %r{^(http:\/\/dx\.doi\.org\/|https:\/\/doi\.org\/)?(?<doi>10\..+)$}.match(doi))
@@ -59,6 +74,7 @@ class Deposit < ApplicationRecord
                     end
                   end
                 end
+
                 creators.each do |c|
                   xml['mods'].name('type': 'personal') do
                     xml.parent.set_attribute('ID', c[:uni]) if c[:uni].present?
@@ -67,6 +83,16 @@ class Deposit < ApplicationRecord
                       xml['mods'].roleTerm('Author', 'type': 'text', 'valueURI': 'http://id.loc.gov/vocabulary/relators/aut', 'authority': 'marcrelator')
                     end
                   end
+                end
+
+                if license.present?
+                  xml['mods'].accessCondition(
+                    'type': 'use and reproduction', 'displayLabel': 'License', 'xlink:href': license
+                  )
+                elsif rights.present?
+                  xml['mods'].accessCondition(
+                    'type': 'use and reproduction', 'displayLabel': 'Rights Status', 'xlink:href': rights
+                  )
                 end
 
                 xml['mods'].note(notes, 'type': 'internal') if notes.present?
@@ -112,6 +138,10 @@ class Deposit < ApplicationRecord
   end
 
   private
+
+  def cco_must_be_selected
+    errors.add(:license, 'CCO must be selected') unless license == 'https://creativecommons.org/publicdomain/zero/1.0/'
+  end
 
   def one_creator_must_be_present
     one_creator_present = creators.any? do |c|

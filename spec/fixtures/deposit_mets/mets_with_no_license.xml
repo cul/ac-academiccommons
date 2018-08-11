@@ -17,7 +17,7 @@
             <mods:dateIssued encoding="w3cdtf">2018</mods:dateIssued>
           </mods:originInfo>
           <mods:relatedItem type="host">
-            <mods:identifier type="doi">10.7619/example</mods:identifier>
+            <mods:identifier type="uri">https://www.example.com</mods:identifier>
           </mods:relatedItem>
           <mods:name type="personal" ID="abc123">
             <mods:namePart>Doe, Jane</mods:namePart>
@@ -31,7 +31,7 @@
               <mods:roleTerm type="text" valueURI="http://id.loc.gov/vocabulary/relators/aut" authority="marcrelator">Author</mods:roleTerm>
             </mods:role>
           </mods:name>
-          <mods:accessCondition type="use and reproduction" displayLabel="License" xlink:href="https://creativecommons.org/licenses/by/4.0/"></mods:accessCondition>
+          <mods:accessCondition type="use and reproduction" displayLabel="Rights Status" xlink:href="http://rightsstatements.org/vocab/InC/1.0/"></mods:accessCondition>
           <mods:note type="internal">This deposit is just for testing purposes.</mods:note>
           <mods:recordInfo>
             <mods:recordInfoNote>AC SWORD MODS v1.0</mods:recordInfoNote>
