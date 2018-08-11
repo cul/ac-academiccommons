@@ -12,17 +12,20 @@ $(document).ready(function(){
 
     for (i = 0; i < licenses.length; ++i) {
       option = $('<option />', {
-        value: licenses[i],
-        text: licenses[i],
-        selected: (hiddenInput.attr('value') === licenses[i]) ? 'selected' : null
+        value: licenses[i].value,
+        text: licenses[i].text,
+        selected: (hiddenInput.attr('value') === licenses[i].value) ? 'selected' : null
       }).appendTo(s);
     }
 
     s.appendTo(div);
   }
 
-  $('form#upload select#deposit_rights_statement').change(function() {
-    if ($(this).val() != 'No Copyright' && $(this).val() != 'In Copyright'){
+  $('form#upload select#deposit_rights').change(function() {
+    var inCopyright = 'http://rightsstatements.org/vocab/InC/1.0/';
+    var noCopyright = 'http://rightsstatements.org/vocab/NoC-US/1.0/';
+
+    if ($(this).val() != inCopyright && $(this).val() != noCopyright){
       return;
     }
 
@@ -41,20 +44,20 @@ $(document).ready(function(){
 
     // Add dropdown with appropriate list of license options depending on
     //copyright selection
-    if ($(this).val() === 'No Copyright') {
-      addLicenseDropdown(div, ['CC0'])
+    if ( $(this).val() === noCopyright ) {
+      var licenses = [{ text: 'CC0', value: 'https://creativecommons.org/publicdomain/zero/1.0/' }];
     } else {
       var licenses = [
-        'Use by others as provided for by copyright laws - All rights reserved',
-        'Attribution (CC BY)',
-        'Attribution-ShareAlike (CC BY-SA)',
-        'Attribution-NoDerivs (CC BY-ND)',
-        'Attribution-NonCommercial (CC BY-NC)',
-        'Attribution-NonCommercial-ShareAlike (CC BY-NC-SA)',
-        'Attribution-NonCommercial-NoDerivs (CC BY-NC-ND)',
+        { text: 'Use by others as provided for by copyright laws - All rights reserved', value: '' },
+        { text: 'Attribution (CC BY)', value: 'https://creativecommons.org/licenses/by/4.0/' },
+        { text: 'Attribution-ShareAlike (CC BY-SA)', value: 'https://creativecommons.org/licenses/by-sa/4.0/' },
+        { text: 'Attribution-NoDerivs (CC BY-ND)', value: 'https://creativecommons.org/licenses/by-nd/4.0/' },
+        { text: 'Attribution-NonCommercial (CC BY-NC)', value: 'https://creativecommons.org/licenses/by-nc/4.0/' },
+        { text:'Attribution-NonCommercial-ShareAlike (CC BY-NC-SA)', value: 'https://creativecommons.org/licenses/by-nc-sa/4.0/'},
+        { text: 'Attribution-NonCommercial-NoDerivs (CC BY-NC-ND)', value: 'https://creativecommons.org/licenses/by-nc-nd/4.0/'},
       ];
-
-      addLicenseDropdown(div, licenses)
     }
+
+    addLicenseDropdown(div, licenses);
   }).change();
 });

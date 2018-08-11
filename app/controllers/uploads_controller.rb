@@ -45,7 +45,7 @@ class UploadsController < ApplicationController
 
   def upload_params
     params.require(:deposit)
-          .permit(:title, :abstract, :year, :doi, :license, :rights_statement, :notes, files: [], creators: %i[first_name last_name uni])
+          .permit(:title, :abstract, :year, :doi, :license, :rights, :notes, files: [], creators: %i[first_name last_name uni])
   end
 
   def send_student_reminder_email

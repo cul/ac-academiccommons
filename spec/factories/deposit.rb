@@ -9,7 +9,7 @@ FactoryBot.define do
     year '2018'
     doi  'https://www.example.com'
     notes 'This deposit is just for testing purposes.'
-    rights_statement 'http://rightsstatements.org/vocab/InC/1.0/'
+    rights 'http://rightsstatements.org/vocab/InC/1.0/'
 
     after(:build) do |deposit|
       deposit.files.attach(

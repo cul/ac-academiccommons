@@ -73,16 +73,12 @@
   </div>
 
   <div class="form-group">
-    <%= form.label(:rights_statement, 'Copyright Status*', class: 'control-label') %>
+    <%= form.label(:rights, 'Copyright Status*', class: 'control-label') %>
     <p class="note">
       Please confirm whether your deposit is copyright protected. If you are choosing to designate your work as public domain (i.e., having no copyright), you confirm that you have the full authority to do so. For more information about copyright protection, please consult
       <%= link_to "Columbia University Library’s Copyright Advisory Service’s Copyright Quick Guide", 'https://copyright.columbia.edu/basics/copyright-quick-guide.html' %>.
     </p>
-    <%= form.collection_select(:rights_statement,
-                               Deposit::COPYRIGHT_STATUS.keys,
-                               :to_s,
-                               :to_s,
-                               prompt: 'Choose copyright status of this work') %>
+    <%= form.select(:rights, Deposit::RIGHTS_OPTIONS, prompt: 'Choose copyright status of this work') %>
   </div>
 
   <%# div for license information populated via javascript %>
