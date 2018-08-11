@@ -23,8 +23,8 @@ class CollectionsController < ApplicationController
       },
       facet: 'department_ssim'
     },
-    series: {
-      title: 'Series',
+    producedatcolumbia: {
+      title: 'Produced at Columbia',
       summary: 'Browse series of working papers, event videos, and technical reports created by Columbia-affiliated departments and centers.',
       facet: 'series_ssim'
     },
