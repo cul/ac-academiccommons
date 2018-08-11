@@ -21,7 +21,7 @@
       <%= f.select :month, EmailAuthorReportsForm::MONTHS, class: 'form-control' %>
     </div>
     <div class="col-sm-2 dropdown-horizontal">
-      <%= f.select :year, EmailAuthorReportsForm::YEAR_BEG..Date.current.year, class: 'form-control' %>
+      <%= f.select :year, Statistic::YEAR_BEG..Date.current.year, class: 'form-control' %>
     </div>
   </div>
 

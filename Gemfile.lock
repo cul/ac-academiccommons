@@ -596,7 +596,6 @@ DEPENDENCIES
   grape
   grape-entity
   grape-swagger
-  haml (>= 4.0.7)
   http
   jbuilder
   jettywrapper (>= 1.4.0)!

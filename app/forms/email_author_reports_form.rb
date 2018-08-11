@@ -1,5 +1,4 @@
 class EmailAuthorReportsForm < FormObject
-  YEAR_BEG = 2011 # first year we have statistics for.
   MONTHS = Date::ABBR_MONTHNAMES.dup[1..12].freeze
   REPORTS_FOR_OPTIONS = ['one', 'all'].freeze
   ORDER_WORKS_BY_OPTIONS = ['titles', 'views', 'downloads'].freeze
@@ -12,7 +11,7 @@ class EmailAuthorReportsForm < FormObject
   validates :reports_for, :month, :year, :order_works_by, :deliver, presence: true
   validates :email, presence: true, if: proc { |a| a.deliver == 'all_reports_to_one_email' }
   validates :uni,   presence: true, if: proc { |a| a.reports_for == 'one' }
-  validates :year,  numericality: { greater_than_or_equal_to: YEAR_BEG, less_than_or_equal_to: Time.current.year }
+  validates :year,  numericality: { greater_than_or_equal_to: Statistic::YEAR_BEG, less_than_or_equal_to: Time.current.year }
   validates :deliver,        inclusion: { in: DELIVER_OPTIONS }
   validates :reports_for,    inclusion: { in: REPORTS_FOR_OPTIONS }
   validates :month,          inclusion: { in: MONTHS }
@@ -79,7 +78,7 @@ class EmailAuthorReportsForm < FormObject
           reports_logger.info "Report for '#{author_id}' would have been sent to #{send_to}, but NO EMAIL WAS SENT BECAUSE THIS IS A TEST."
           @skipped_counter += 1
         else
-          Notifier.author_monthly(send_to, author_id, usage_stats, optional_note).deliver
+          StatisticsMailer.author_monthly(send_to, author_id, usage_stats, optional_note).deliver
           reports_logger.info "Report for '#{author_id}' was sent to #{send_to} at #{Time.current.xmlschema}."
           @sent_counter += 1
         end

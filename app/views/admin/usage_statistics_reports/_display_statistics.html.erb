@@ -1,0 +1,33 @@
+<% usage_stats = @usage_statistics_reports_form.usage_stats %>
+
+<% if usage_stats %>
+  <h3>Usage Statistics</h3>
+  <ul>
+    <% usage_stats.report_details.each do |a| %>
+      <li><%= content_tag(:b, a[0]) + ' ' + a[1].to_s %></li>
+    <% end %>
+  </ul>
+
+  <% if usage_stats.empty? %>
+    <p>No results matched your search</p>
+  <% else %>
+    <p>
+      <%= link_to 'Export Results to CSV', csv_admin_usage_statistics_reports_path(params.to_unsafe_h.slice(:usage_statistics_reports_form)), class: 'btn btn-default' %>
+    </p>
+
+    <% case @usage_statistics_reports_form.display %>
+    <% when 'summary' %>
+      <% case @usage_statistics_reports_form.time_period %>
+      <% when 'lifetime' %>
+        <%= render 'table', array: usage_stats.lifetime_summary %>
+      <% when 'date_range' %>
+        <%= render 'table', array: usage_stats.time_period_summary %>
+      <% end %>
+    <% when 'month_by_month' %>
+      <h4>Views</h4>
+      <%= render 'table', array: usage_stats.month_by_month_table(Statistic::VIEW) %>
+      <h4>Downloads</h4>
+      <%= render 'table', array: usage_stats.month_by_month_table(Statistic::DOWNLOAD) %>
+    <% end %>
+  <% end %>
+<% end %>

@@ -59,22 +59,13 @@ Rails.application.routes.draw do
 
   get '/download/download_log/:id', to: 'download#download_log', as: 'download_log'
 
-  match '/statistics/detail_report',        to: 'statistics#detail_report',        via: [:get, :post]
-  match '/statistics/all_author_monthlies', to: 'statistics#all_author_monthlies', via: [:get, :post]
-  get '/statistics/generic_statistics',     to: 'statistics#generic_statistics'
-  get '/statistics/send_csv_report',        to: 'statistics#send_csv_report'
-  get '/statistics/school_statistics',      to: 'statistics#school_statistics'
-  get '/statistics/common_statistics_csv',  to: 'statistics#common_statistics_csv'
-  get '/statistics/unsubscribe_monthly',    to: 'statistics#unsubscribe_monthly'
-  get '/statistics/statistic_res_list',     to: 'statistics#statistic_res_list'
-  get '/statistics/total_usage_stats',      to: 'statistics#total_usage_stats'
-
   resource :agreement
 
   resources :uploads, only: [:index, :new, :create], path: 'upload'
 
-  get 'myworks', to: 'user#my_works'
-  get 'account', to: 'user#account'
+  get 'myworks',             to: 'user#my_works'
+  get 'account',             to: 'user#account'
+  get 'unsubscribe_monthly', to: 'user#unsubscribe_monthly'
 
   get '/admin',                   to: 'admin#index',                 as: 'admin'
 
@@ -86,7 +77,10 @@ Rails.application.routes.draw do
     resources :deposits,            only: [:index, :show]
     resources :agreements,          only: :index
     resources :email_preferences
-    resources :email_author_reports, only: [:new, :create]
+    resources :email_author_reports,     only: [:new, :create]
+    resources :usage_statistics_reports, only: [:new, :create] do
+      get 'csv', on: :collection
+    end
   end
 
   # Resque web interface, only administrators have access
@@ -98,8 +92,6 @@ Rails.application.routes.draw do
   constraints resque_web_constraint do
     mount Resque::Server.new, at: '/admin/resque'
   end
-
-  get '/emails/get_csv_email_form', to: 'emails#get_csv_email_form'
 
   get '/logs/all_author_monthly_reports_history', to: 'logs#all_author_monthly_reports_history'
   get '/logs/log_form',                           to: 'logs#log_form'

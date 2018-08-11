@@ -45,10 +45,13 @@ class SolrDocument
     degree_grantor: 'degree_grantor_ssim',
     degree_discipline: 'degree_discipline_ssim',
     columbia_series: 'series_ssim', # Only columbia series.
+    non_columbia_series: 'non_cu_series_ssim',
     thesis_advisor: 'thesis_advisor_ssim',
     embargo_end: 'free_to_read_start_date_ssi',
     notes: 'notes_ssim',
-    author_id: 'author_uni_ssim'
+    author_id: 'author_uni_ssim',
+    organization: 'organization_ssim',
+    resource_type: 'type_of_resource_ssim'
   )
 
   def embargoed?
@@ -131,5 +134,17 @@ class SolrDocument
   def degree
     fields = [fetch('degree_name_ssim', nil), fetch('degree_grantor_ssim', nil)].compact
     fields.blank? ? nil : fields.join(', ')
+  end
+
+  def title
+    to_semantic_values[:title].first
+  end
+
+  def genre
+    to_semantic_values[:genre].first
+  end
+
+  def created_at
+    to_semantic_values[:created_at].first
   end
 end
