@@ -64,6 +64,7 @@ class Deposit < ApplicationRecord
                 xml['mods'].originInfo do
                   xml['mods'].dateIssued(year, 'encoding': 'w3cdtf')
                 end
+
                 if doi.present?
                   xml['mods'].relatedItem('type': 'host') do
                     if (m = %r{^(http:\/\/dx\.doi\.org\/|https:\/\/doi\.org\/)?(?<doi>10\..+)$}.match(doi))
@@ -73,6 +74,7 @@ class Deposit < ApplicationRecord
                     end
                   end
                 end
+
                 creators.each do |c|
                   xml['mods'].name('type': 'personal') do
                     xml.parent.set_attribute('ID', c[:uni]) if c[:uni].present?
@@ -81,6 +83,16 @@ class Deposit < ApplicationRecord
                       xml['mods'].roleTerm('Author', 'type': 'text', 'valueURI': 'http://id.loc.gov/vocabulary/relators/aut', 'authority': 'marcrelator')
                     end
                   end
+                end
+
+                if license.present?
+                  xml['mods'].accessCondition(
+                    'type': 'use and reproduction', 'displayLabel': 'License', 'xlink:href': license
+                  )
+                elsif rights.present?
+                  xml['mods'].accessCondition(
+                    'type': 'use and reproduction', 'displayLabel': 'Rights Status', 'xlink:href': rights
+                  )
                 end
 
                 xml['mods'].note(notes, 'type': 'internal') if notes.present?
