@@ -145,7 +145,7 @@ describe 'GET /api/v1/search', type: :request do
             'abstract' => 'Background -  Alice is feeling bored and drowsy while sitting on the riverbank with her older sister, who is reading a book with no pictures or conversations.',
             'date' => '1865',
             'department' => ['Bucolic Literary Society.'],
-            'subject' => ['Tea Parties', 'Wonderland', 'Rabbits', 'Nonsense literature', 'Bildungsromans'],
+            'subject' => ['Tea Parties', 'Wonderland', 'Rabbits', 'Magic', 'Nonsense literature', 'Bildungsromans'],
             'type' => ['Articles'],
             'language' => ['English'],
             'persistent_url' => 'https://doi.org/10.7916/ALICE',
@@ -156,7 +156,7 @@ describe 'GET /api/v1/search', type: :request do
         'facets' => {
           'author' => { 'Carroll, Lewis' => 1, 'Weird Old Guys.' => 1 },
           'date' => { '1865' => 1 }, 'department' => { 'Bucolic Literary Society.' => 1 },
-          'subject' => { 'Bildungsromans' => 1, 'Nonsense literature' => 1, 'Rabbits' => 1, 'Tea Parties' => 1, 'Wonderland' => 1 },
+          'subject' => { 'Bildungsromans' => 1, 'Nonsense literature' => 1, 'Rabbits' => 1, 'Magic' => 1, 'Tea Parties' => 1, 'Wonderland' => 1 },
           'type' => { 'Articles' => 1 }
         }
       }
@@ -202,7 +202,7 @@ describe 'GET /api/v1/search', type: :request do
             <pubDate>Thu, 14 Sep 2017 12:31:33 -0400</pubDate>
             <dc:date>1865</dc:date>
             <description>Background -  Alice is feeling bored and drowsy while sitting on the riverbank with her older sister, who is reading a book with no pictures or conversations.</description>
-            <dc:subject>Tea Parties, Wonderland, Rabbits, Nonsense literature, Bildungsromans</dc:subject>
+            <dc:subject>Tea Parties, Wonderland, Rabbits, Magic, Nonsense literature, Bildungsromans</dc:subject>
             <dc:type>Articles</dc:type>
             <vivo:Department>Bucolic Literary Society.</vivo:Department>
           </item>
