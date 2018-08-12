@@ -9,7 +9,7 @@ describe Admin::EmailAuthorReportsController, type: :controller do
 
   describe 'POST create' do
     context 'when admin user makes request' do
-      include_context 'admin user'
+      include_context 'admin user for controller'
 
       let(:all_authors_search) do
         { qt: 'search', rows: 100_000, fl: 'author_uni_ssim', fq: [] }

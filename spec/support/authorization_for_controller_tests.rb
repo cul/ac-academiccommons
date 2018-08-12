@@ -1,26 +1,24 @@
-# Shared context for creating administrative user.
-shared_context 'admin user' do
+# Shared context for creating administrative user in controller specs.
+shared_context 'admin user for controller' do
   before do
     ldap = instance_double('Cul::LDAP')
     allow(Cul::LDAP).to receive(:new).and_return(ldap)
     allow(ldap).to receive(:find_by_uni).with('ta123').twice.and_return(nil)
-    @admin = User.create!(uid: 'ta123', first_name: 'Test', last_name: 'Admin', email: 'ta123@columbia.edu', role: User::ADMIN)
-    # allow(@admin).to receive(:admin?).and_return(true)
-    allow(@request.env['warden']).to receive(:authenticate!).and_return(@admin)
-    allow(controller).to receive(:current_user).and_return(@admin)
+    admin = FactoryBot.create(:admin)
+    allow(request.env['warden']).to receive(:authenticate!).and_return(admin)
+    allow(controller).to receive(:current_user).and_return(admin)
   end
 end
 
-# Shared context for creating a non-administrative user.
-shared_context 'non-admin user' do
+# Shared context for creating a non-administrative user in controller specs
+shared_context 'non-admin user for controller' do
   before do
     ldap = instance_double('Cul::LDAP')
     allow(Cul::LDAP).to receive(:new).and_return(ldap)
     allow(ldap).to receive(:find_by_uni).with('tu123').twice.and_return(nil)
-    @non_admin = User.create!(uid: 'tu123', first_name: 'Test', last_name: 'User', email: 'tu123@columbia.edu')
-    # allow(@non_admin).to receive(:admin?).and_return(false)
-    allow(@request.env['warden']).to receive(:authenticate!).and_return(@non_admin)
-    allow(controller).to receive(:current_user).and_return(@non_admin)
+    non_admin = FactoryBot.create(:user)
+    allow(request.env['warden']).to receive(:authenticate!).and_return(non_admin)
+    allow(controller).to receive(:current_user).and_return(non_admin)
   end
 end
 
@@ -46,7 +44,7 @@ shared_examples 'authorization required' do
   end
 
   context 'logged in as a non-admin user' do
-    include_context 'non-admin user'
+    include_context 'non-admin user for controller'
 
     # In order to check status code, etc, need to create request specs.
     it 'fails' do
@@ -55,7 +53,7 @@ shared_examples 'authorization required' do
   end
 
   context 'logged in as an admin user' do
-    include_context 'admin user'
+    include_context 'admin user for controller'
 
     before do
       http_request
