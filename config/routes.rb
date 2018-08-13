@@ -104,4 +104,7 @@ Rails.application.routes.draw do
   # to /catalog/:id.
   get '/item/:id',    to: 'catalog#legacy_show'
   get '/catalog/:id', to: 'catalog#legacy_show'
+
+  # Temporary redirect for old deposit page url
+  get '/deposit', to: redirect('/upload')
 end
