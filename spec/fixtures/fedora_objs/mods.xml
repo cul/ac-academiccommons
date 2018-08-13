@@ -47,6 +47,9 @@
     <mods:subject>
         <mods:topic>Rabbits</mods:topic>
     </mods:subject>
+    <mods:subject authority="fast" authorityURI="http://id.worldcat.org/fast/void/0.1" valueURI="http://id.worldcat.org/fast/1005468">
+        <mods:topic>Magic</mods:topic>
+    </mods:subject>
     <mods:subject authority="fast" authorityURI="http://id.worldcat.org/fast/void/0.1" valueURI="http://id.worldcat.org/fast/1038956">
         <mods:topic>Nonsense literature</mods:topic>
     </mods:subject>

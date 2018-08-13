@@ -1,27 +1,11 @@
 require 'rails_helper'
 
 RSpec.describe 'error pages', type: :request do
-  include Warden::Test::Helpers
-
   describe '/admin' do
-    let(:uid) { 'abc123' }
-    let(:ldap) { instance_double('Cul::LDAP') }
-    let(:cul_ldap_user) do
-      instance_double('Cul::LDAP::User', uid: 'abc123', first_name: 'Jane', last_name: 'Doe', email: 'abc123@columbia.edu')
-    end
-
-    before :each do
-      OmniAuth.config.test_mode = true
-      Rails.application.env_config['devise.mapping'] = Devise.mappings[:user]
-      Rails.application.env_config['omniauth.auth'] = OmniAuth.config.mock_auth[:saml]
-      allow(Cul::LDAP).to receive(:new).and_return(ldap)
-      allow(ldap).to receive(:find_by_uni).with('abc123').and_return(cul_ldap_user)
-      login_as user
-      get '/admin'
-    end
-
     context 'when user not admin' do
-      let(:user) { User.create(uid: uid) }
+      include_context 'non-admin user for feature'
+
+      before { get '/admin' }
 
       it 'returns 403 status code' do
         expect(response).to have_http_status(:forbidden)
@@ -33,7 +17,9 @@ RSpec.describe 'error pages', type: :request do
     end
 
     context 'when user admin' do
-      let(:user) { User.create(uid: uid, role: User::ADMIN) }
+      include_context 'admin user for feature'
+
+      before { get '/admin' }
 
       it 'returns 200 status code' do
         expect(response).to have_http_status(:success)

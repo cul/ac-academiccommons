@@ -23,7 +23,7 @@ describe 'GET /api/v1/record/doi/:doi', type: :request do
         'modified_at' => '2017-09-14T16:48:05Z',
         'notes' => nil,
         'persistent_url' => 'https://doi.org/10.7916/ALICE',
-        'subject' => ['Tea Parties', 'Wonderland', 'Rabbits', 'Nonsense literature', 'Bildungsromans'],
+        'subject' => ['Tea Parties', 'Wonderland', 'Rabbits', 'Magic', 'Nonsense literature', 'Bildungsromans'],
         'thesis_advisor' => [],
         'title' => 'Alice\'s Adventures in Wonderland',
         'type' => ['Articles']

@@ -1,27 +1,27 @@
 require 'rails_helper'
 
 describe 'Search Results Page', type: :feature do
-  xit 'finds by title' do
+  it 'finds by title' do
     visit search_catalog_path(q: 'alice')
-    expect(page).to have_css('a[href="/catalog/actest:1"]', text: 'Alice\'s Adventures in Wonderland')
+    expect(page).to have_css('a[href="/doi/10.7916/ALICE"]', text: 'Alice\'s Adventures in Wonderland')
   end
 
-  xit 'finds by author' do
+  it 'finds by author' do
     visit search_catalog_path(q: 'lewis carroll')
     expect(page).to have_content('Carroll, Lewis')
-    expect(page).to have_css('a[href="/catalog/actest:1"]', text: 'Alice\'s Adventures in Wonderland')
+    expect(page).to have_css('a[href="/doi/10.7916/ALICE"]', text: 'Alice\'s Adventures in Wonderland')
   end
 
-  xit 'returns nothing when search query is not a match' do
+  it 'returns nothing when search query is not a match' do
     visit search_catalog_path(q: 'nothing')
-    expect(page).to have_content('No items found')
+    expect(page).to have_content('No entries found')
   end
 
-  xit 'indicates active search in the form widget' do
+  it 'indicates active search in the form widget' do
     visit search_catalog_path(q: 'alice')
-    select('year', from: 'sort')
-    click_on('sort results')
-    expect(page).to have_select('sort', selected: 'year')
+    click_button 'Sort by Best Match'
+    click_link 'Published Earliest'
+    expect(page).to have_button 'Sort by Published Earliest'
   end
 
   context 'expects query results page to' do
@@ -29,51 +29,65 @@ describe 'Search Results Page', type: :feature do
       visit search_catalog_path(q: 'alice')
     end
 
-    xit 'have facets for subjects' do
+    it 'have facets for subjects' do
+      click_link 'Subject'
       expect(page).to have_css('span.facet-label > a.facet_select', text: 'Bildungsromans')
       expect(page).to have_css('span.facet-label > a.facet_select', text: 'Nonsense literature')
     end
 
-    xit 'have facets for authors' do
+    it 'have facets for authors' do
+      click_link 'Author'
       expect(page).to have_css('span.facet-label > a.facet_select', text: 'Carroll, Lewis')
       expect(page).to have_css('span.facet-label > a.facet_select', text: 'Weird Old Guys.')
     end
 
-    xit 'have facets for departments' do
+    it 'have facets for academic unit' do
+      click_link 'Academic Unit'
       expect(page).to have_css('span.facet-label > a.facet_select', text: 'Bucolic Literary Society.')
     end
 
-    xit 'have facets for language' do
+    it 'have facets for language' do
+      click_link 'Language'
       expect(page).to have_css('span.facet-label > a.facet_select', text: 'English')
     end
 
-    xit 'have facets for date' do
+    it 'have facets for date' do
+      click_link 'Date Published'
       expect(page).to have_css('span.facet-label > a.facet_select', text: '1865')
     end
 
-    xit 'have facets for content type' do
+    it 'have facets for type' do
+      click_link 'Type'
       expect(page).to have_css('span.facet-label > a.facet_select', text: 'Articles')
     end
 
-    xit '\'more\' link for subject facets is present' do
-      expect(page).to have_css('ul.facet-values > li.more_facets_link > a', text: 'more ')
+    it '\'more \' link for subject facets is present' do
+      within('div.blacklight-subject_ssim') do
+        click_link 'Subject'
+        expect(page).to have_link 'more '
+      end
     end
 
-    context 'clicking on \'more\' link', js: true do
+    context 'clicking on \'more \' link', js: true do
       before do
-        click_link 'more '
+        within('div.blacklight-subject_ssim') do
+          click_link 'Subject'
+          click_link 'more '
+        end
       end
 
-      xit 'opens dialog box with correct title' do
-        expect(page).to have_css('span.ui-dialog-title', text: 'Subject')
+      it 'opens dialog box with correct title' do
+        within('#ajax-modal') do
+          expect(page).to have_content 'Subject'
+        end
       end
 
-      xit 'shows all three facets' do
-        expect(page).to have_css('ul.facet_extended_list > li > span > a.facet_select', text: 'Nonsense literature')
-        expect(page).to have_css('ul.facet_extended_list > li > span > a.facet_select', text: 'Rabbits')
-        expect(page).to have_css('ul.facet_extended_list > li > span > a.facet_select', text: 'Rabbits')
-        expect(page).to have_css('ul.facet_extended_list > li > span > a.facet_select', text: 'Tea Parties')
-        expect(page).to have_css('ul.facet_extended_list > li > span > a.facet_select', text: 'Wonderland')
+      it 'shows all six facets' do
+        within('#ajax-modal') do
+          ['Nonsense literature', 'Bildungsromans', 'Rabbits', 'Tea Parties', 'Wonderland', 'Magic'].each do |subject|
+            expect(page).to have_link subject
+          end
+        end
       end
     end
   end

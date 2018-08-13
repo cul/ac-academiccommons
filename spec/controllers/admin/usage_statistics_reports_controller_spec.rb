@@ -49,7 +49,7 @@ describe Admin::UsageStatisticsReportsController, type: :controller, integration
   #   end
   #
   #   context 'when admin makes request' do
-  #     include_context 'admin user'
+  #     include_context 'admin user for controller'
   #
   #     before do
   #       get :send_csv_report,
