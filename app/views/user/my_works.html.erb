@@ -26,7 +26,7 @@
   <h4>No works available </h4>
   <p>Visit our <%= link_to 'upload page', uploads_path %> to contribute your works.</p>
 <% else %>
-  <table class="table small">
+  <table class="table">
     <tr>
       <th class="header">
         <h3>Available Works</h3>
@@ -34,10 +34,19 @@
       <th class="header center" colspan="2">
         <h3>Downloads</h3>
       </th>
+      <th class="header center" colspan="2">
+        <h3>Views</h3>
+      </th>
     </tr>
     <tr>
       <th>
         Work
+      </th>
+      <th class="center">
+        <%= @current_works_with_stats.time_period %>
+      </th>
+      <th class="center">
+        Lifetime
       </th>
       <th class="center">
         <%= @current_works_with_stats.time_period %>
@@ -58,6 +67,12 @@
           <td class="center">
             <%= item_stats.get_stat(Statistic::DOWNLOAD, AcademicCommons::Metrics::UsageStatistics::LIFETIME) %>
           </td>
+          <td class="center">
+            <%= item_stats.get_stat(Statistic::VIEW, AcademicCommons::Metrics::UsageStatistics::PERIOD) %>
+          </td>
+          <td class="center">
+            <%= item_stats.get_stat(Statistic::VIEW, AcademicCommons::Metrics::UsageStatistics::LIFETIME) %>
+          </td>
         </tr>
     <% end %>
     <tr>
@@ -69,6 +84,12 @@
       </td>
       <td class="center">
         <%= @current_works_with_stats.total_for(Statistic::DOWNLOAD, AcademicCommons::Metrics::UsageStatistics::LIFETIME) %>
+      </td>
+      <td class="center">
+        <%= @current_works_with_stats.total_for(Statistic::VIEW, AcademicCommons::Metrics::UsageStatistics::PERIOD) %>
+      </td>
+      <td class="center">
+        <%= @current_works_with_stats.total_for(Statistic::VIEW, AcademicCommons::Metrics::UsageStatistics::LIFETIME) %>
       </td>
     </tr>
   </table>
