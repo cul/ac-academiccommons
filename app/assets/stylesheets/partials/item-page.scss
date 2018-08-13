@@ -119,7 +119,6 @@
 
   & .list-group-item span {
     padding: 3px 0;
-    width: 100%;
   }
 
   & .list-group-item span.image img {
@@ -132,11 +131,13 @@
     font-weight: 600;
     width: 85%;
     word-break: break-all;
+    width: 100%;
   }
 
   & .list-group-item span.filesize,
   & .list-group-item span.mimetype {
     color: $gray-light;
+    width: 100%;
   }
 
   & .list-group-item span.download {
@@ -194,6 +195,7 @@
     & .list-group-item span.filesize,
     & .list-group-item span.mimetype {
       margin: 0 10px;
+      width: auto;
     }
 
     & .list-group-item span.download {
