@@ -41,18 +41,24 @@
   	line-height: 2;
   }
 
-  & p.quote {
-    font-size: 18px;
+  & blockquote {
+    border: 0;
+    font-size: $font-size-large;
     font-weight: 300;
     line-height: 1.6;
-    margin: 0 0 30px 0;
+    margin: 0 0 35px 0;
     max-width: 650px;
+    padding: 0;
   }
 
-  & p.quote span {
-    color: $gray-light;
-    font-size: $font-size-small;
-    font-weight: 400;
+  & blockquote footer:before {
+    content: none;
+  }
+
+  & blockquote span {
+    display: block;
+    font-weight: 600;
+    padding-top: 10px;
   }
 }
 

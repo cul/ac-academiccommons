@@ -2,6 +2,11 @@ form,
 #main-page form,
 #main-page #dashboard form {
 
+  & .btn-add {
+    font-size: $font-size-small;
+    margin-top: 8px;
+  }
+
   & h3 {
     font-size: 18px;
     font-weight: bold;
@@ -76,6 +81,7 @@ form,
     background: $body-bg;
     border: $border;
     height: 35px;
+    margin: 2px 0;
     padding: 5px;
     width: 100%;
   }
@@ -170,6 +176,12 @@ form,
     display: block;
   }
 
+  & label.sub-label {
+    color: $gray-light;
+    margin-top: 3px;
+    padding-right: 0;
+  }
+
   & .radio input[type="radio"] {
     margin-left: 0;
     margin-top: 2px;
@@ -186,5 +198,16 @@ form,
 
   & .disabled-input input[type=text] {
     width: auto;
+  }
+}
+
+@media screen and (min-width: $screen-sm ) {
+
+  .admin-form,
+  #main-page #dashboard .admin-form {
+
+    & label.sub-label {
+      text-align: right;
+    }
   }
 }

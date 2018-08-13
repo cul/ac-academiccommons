@@ -1,11 +1,11 @@
 <h2>Usage Statistics Reports</h2>
 
-<%= form_with model: @usage_statistics_reports_form, url: admin_usage_statistics_reports_path, local: true, class: 'form-horizontal' do |f| %>
-  <h3>Select parameters to calculate usage statistics by work:</h3>
-
+<%= form_with model: @usage_statistics_reports_form, url: admin_usage_statistics_reports_path, local: true, class: 'form-horizontal admin-form' do |f| %>
+  <p>Select parameters to calculate usage statistics by work:</p>
+  <hr>
   <div class="form-group">
-    <%= f.label :filters, 'Filters', class: 'col-sm-2' %>
-    <div class="col-sm-10">
+    <%= f.label :filters, 'Filters', class: 'col-sm-3 control-label' %>
+    <div class="col-sm-9">
       <div class="row">
         <div class="col-sm-12">
           <% (@usage_statistics_reports_form.filters || [{}]).each do |filter| %>
@@ -26,34 +26,33 @@
 
       <div class="row">
         <div class="col-sm-12">
-          <%= button_tag('Add another filter', class: 'btn btn-default', 'data-duplicate-fields-template': "filter-fields") %>
+          <%= button_tag("<i class=\"fas fa-plus\"></i> Add another filter".html_safe, class: 'btn btn-default btn-add', 'data-duplicate-fields-template': "filter-fields") %>
         </div>
       </div>
+
     </div>
   </div>
 
   <div class="form-group">
-    <%= f.label :time_period, 'Time Period', class: 'col-sm-2' %>
-    <div class="col-sm-10">
-      <div class="row">
-        <div class="col-sm-12 radio">
+    <%= f.label :time_period, 'Time Period', class: 'col-sm-3  control-label' %>
+    <div class="col-sm-9 radio">
+
           <%= f.radio_button(:time_period, 'lifetime') %>
           <%= f.label(:time_period_lifetime, 'Lifetime') %>
           <%= f.radio_button(:time_period, 'date_range') %>
           <%= f.label(:time_period_date_range, 'Date Range') %>
-        </div>
-      </div>
+
 
       <div class="row">
         <%= f.fields_for :start_date do |start_date_form| %>
-          <%= f.label :start_date, 'Start Date', class: 'col-sm-3 col-xs-offset-1' %>
+          <%= f.label :start_date, 'Start Date', class: 'col-xs-3 sub-label' %>
 
-          <div class="col-sm-4">
+          <div class="col-sm-3">
             <%= start_date_form.select :month, UsageStatisticsReportsForm::MONTHS,
                                        class: 'form-control col-sm-4',
                                        selected: @usage_statistics_reports_form.start_date&.fetch(:month) %>
           </div>
-           <div class="col-sm-4">
+           <div class="col-sm-3">
             <%= start_date_form.select :year, Statistic::YEAR_BEG..Date.current.year,
                                        class: 'form-control',
                                        selected: @usage_statistics_reports_form.start_date&.fetch(:year) %>
@@ -63,14 +62,14 @@
 
       <div class="row">
         <%= f.fields_for :end_date do |start_date_form| %>
-          <%= f.label :end_date, 'End Date', class: 'col-sm-3 col-xs-offset-1' %>
+          <%= f.label :end_date, 'End Date', class: 'col-sm-3 sub-label' %>
 
-          <div class="col-sm-4">
+          <div class="col-sm-3">
             <%= start_date_form.select :month, UsageStatisticsReportsForm::MONTHS,
-                                        class: 'form-control col-sm-4',
+                                        class: 'form-control col-sm-2',
                                         selected: @usage_statistics_reports_form.end_date&.fetch(:month) %>
           </div>
-           <div class="col-sm-4">
+           <div class="col-sm-3">
             <%= start_date_form.select :year, Statistic::YEAR_BEG..Date.current.year,
                                        class: 'form-control',
                                        selected: @usage_statistics_reports_form.end_date&.fetch(:year) %>
@@ -81,15 +80,15 @@
   </div>
 
   <div class="form-group">
-    <%= f.label :order, 'Order', class: 'col-sm-2' %>
-    <div class="col-sm-10">
+    <%= f.label :order, 'Order', class: 'col-sm-3 control-label' %>
+    <div class="col-sm-4">
       <%= f.select(:order, UsageStatisticsReportsForm::ORDER) %>
     </div>
   </div>
 
   <div class="form-group">
-    <%= f.label :display, 'Display', class: 'col-sm-2' %>
-    <div class="radio col-sm-10">
+    <%= f.label :display, 'Display', class: 'col-sm-3 control-label' %>
+    <div class="radio col-sm-9">
       <%= f.radio_button(:display, 'summary') %>
       <%= f.label(:display_summary, 'Summary Table') %>
       <%= f.radio_button(:display, 'month_by_month') %>
@@ -97,7 +96,13 @@
     </div>
   </div>
 
-  <%= f.submit 'Generate Report', class: 'btn btn-primary' %>
+  <div class="form-group">
+    <div class="col-sm-offset-3 col-sm-9">
+      <%= f.submit 'Generate Report', class: 'btn btn-primary' %>
+    </div>
+  </div>
+
+
 <% end %>
 
 <hr>
