@@ -33,16 +33,23 @@ class UserController < ApplicationController
   private
 
   def pending_works
-    results = AcademicCommons.search do |params|
-      identifiers = current_user.deposits.map(&:hyacinth_identifier)
-                                .compact.map { |i| "\"#{i}\"" }.join(' OR ')
-                                .prepend('(').concat(')')
-      params.filter('fedora3_pid_ssi', identifiers)
-      params.aggregators_only
-      params.field_list('fedora3_pid_ssi')
-    end
+    return [] if current_user.deposits.blank?
 
-    hyacinth_ids_in_ac = results.documents.map { |d| d[:fedora3_pid_ssi] }
+    identifiers = current_user.deposits.map(&:hyacinth_identifier).compact
+
+    if identifiers.present?
+      results = AcademicCommons.search do |params|
+        identifiers = identifiers.map { |i| "\"#{i}\"" }.join(' OR ')
+                                 .prepend('(').concat(')')
+        params.filter('fedora3_pid_ssi', identifiers)
+        params.aggregators_only
+        params.field_list('fedora3_pid_ssi')
+      end
+
+      hyacinth_ids_in_ac = results.documents.map { |d| d[:fedora3_pid_ssi] }
+    else
+      hyacinth_ids_in_ac = []
+    end
 
     current_user.deposits.to_a.keep_if do |deposit|
       hyacinth_id = deposit.hyacinth_identifier
