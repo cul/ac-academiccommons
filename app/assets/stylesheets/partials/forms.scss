@@ -2,6 +2,10 @@ form,
 #main-page form,
 #main-page #dashboard form {
 
+  & .btn-add {
+    margin-top: 8px;
+  }
+
   & h3 {
     font-size: 18px;
     font-weight: bold;
@@ -76,6 +80,7 @@ form,
     background: $body-bg;
     border: $border;
     height: 35px;
+    margin: 2px 0;
     padding: 5px;
     width: 100%;
   }
@@ -168,6 +173,13 @@ form,
 
   & label {
     display: block;
+  }
+
+  & label.sub-label {
+    color: $gray-light;
+    margin-top: 3px;
+    padding-right: 0;
+    text-align: right;
   }
 
   & .radio input[type="radio"] {

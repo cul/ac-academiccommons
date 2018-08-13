@@ -58,11 +58,10 @@
 
     <%= '</div>'.html_safe if @deposit.errors.include?(:creators) %>
 
-    <%= button_tag 'Add another creator',
+    <%= button_tag  "<i class=\"fas fa-plus\"></i> Add another creator".html_safe,
                     type: 'button',
                     id: 'add-address',
-                    class: 'btn btn-default',
-                    style: 'margin-top: 8px;',
+                    class: 'btn btn-default btn-add',
                     data: { creator_list_id: 'creator-list'} %>
 
   </div>
