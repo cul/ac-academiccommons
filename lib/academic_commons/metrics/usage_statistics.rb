@@ -179,8 +179,8 @@ module AcademicCommons::Metrics
     # them into stats.
     def process_stats_by_month(ids, download_ids_map)
       self.months_list.each do |date|
-        start = Date.new(date.year, date.month, 1)
-        final = Date.new(date.year, date.month, -1)
+        start = Date.new(date.year, date.month, 1).in_time_zone
+        final = Date.new(date.year, date.month, -1).in_time_zone
         month_key = start.strftime(AcademicCommons::Metrics::ItemStats::MONTH_KEY)
 
         views = Statistic.event_count(ids, Statistic::VIEW, start_date: start, end_date: final)
