@@ -3,6 +3,7 @@ form,
 #main-page #dashboard form {
 
   & .btn-add {
+    font-size: $font-size-small;
     margin-top: 8px;
   }
 
@@ -179,7 +180,6 @@ form,
     color: $gray-light;
     margin-top: 3px;
     padding-right: 0;
-    text-align: right;
   }
 
   & .radio input[type="radio"] {
@@ -198,5 +198,16 @@ form,
 
   & .disabled-input input[type=text] {
     width: auto;
+  }
+}
+
+@media screen and (min-width: $screen-sm ) {
+
+  .admin-form,
+  #main-page #dashboard .admin-form {
+
+    & label.sub-label {
+      text-align: right;
+    }
   }
 }
