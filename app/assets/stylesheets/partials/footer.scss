@@ -32,7 +32,7 @@
   color: $gray-light;
   font-size: $font-size-small;
   line-height: 1.8;
-  padding: 15px 0 70px 0;
+  padding: 15px 0 90px 0;
 
   & a {
     color: $gray-light;
@@ -57,5 +57,9 @@
       text-align: right;
       width: 40%;
     }
+  }
+
+  .site-description {
+    padding-bottom: 50px;
   }
 }
