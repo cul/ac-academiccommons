@@ -27,7 +27,7 @@ module HomepageHelper
     doctoral_count = solr_response.facet_fields['degree_level_name_ssim'].each_slice(2).to_a.to_h
 
     {
-      all:                  solr_response.total['Total Works'],
+      all:                  solr_response.total,
       articles:             genre_counts['Articles'],
       reports:              genre_counts['Reports'],
       doctoral_theses:      doctoral_count['Doctoral'],
