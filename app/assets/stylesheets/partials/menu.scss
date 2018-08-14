@@ -48,7 +48,7 @@
 /* homepage menu */
 
 .homepage-menu {
-  margin: 20px -10px 0 -10px;
+  margin: 10px -10px 0 -10px;
   padding-bottom: 30px;
 
   & .collections,
@@ -138,5 +138,9 @@
     & .tile {
       width: 45%;
     }
+  }
+
+  .homepage-menu {
+    margin-top: 20px;
   }
 }

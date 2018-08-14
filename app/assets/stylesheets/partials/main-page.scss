@@ -93,6 +93,16 @@
     margin: 25px 0 2px 0;
   }
 
+  & blockquote {
+    font-size: $font-size-base;
+    padding-bottom: 0;
+    padding-top: 0;
+  }
+
+  & blockquote p {
+    margin: 25px 0;
+  }
+
   & p,
   & ul {
     font-weight: 300;
