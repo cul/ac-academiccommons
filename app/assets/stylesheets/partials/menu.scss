@@ -31,7 +31,7 @@
   & p {
     font-weight: 300;
     line-height: 1.6;
-    margin: 10px 0 25px 0;
+    margin: 3px 0 20px 0;
   }
 
   & a,
@@ -54,13 +54,14 @@
   & .collections,
   & .upload {
     box-shadow: $box-shadow;
-    padding: 30px 30px 0 30px;
+    padding: 25px 30px 8px 30px;
     width: auto;
     z-index: 100;
   }
 
   & a p {
     color: $gray-base;
+    margin-top: 7px;
   }
 
   & a:hover p {
