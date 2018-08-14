@@ -1,15 +1,17 @@
 /* homepage */
 
 #home-content {
-  padding-top: 10px;
+  padding-top: 15px;
 
   & p.summary {
-    max-width: 800px;
+    font-size: 23px;
+    letter-spacing: .5px;
+    max-width: 900px;
   }
 
-  & p.summary strong {
-    font-size: 23px;
-  }
+  // & p.summary strong {
+  //   font-size: 23px;
+  // }
 
   & h3 {
     font-size: $font-size-small;
@@ -56,6 +58,7 @@
   }
 
   & blockquote span {
+    color: $gray-base;
     display: block;
     font-weight: 600;
     padding-top: 10px;
