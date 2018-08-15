@@ -71,7 +71,7 @@ module UseAndReproductionHelper
 
   def in_copyright
     image = content_tag(:a, target: '_blank', href: IN_COPYRIGHT) do
-      tag(:img, height: '40', alt: 'In Copyright', src: image_path('in-copyright'))
+      tag(:img, height: '40', alt: 'In Copyright', src: image_path('in-copyright.svg'))
     end
 
     text = content_tag(:a, 'All Rights Reserved', target: '_blank', href: IN_COPYRIGHT)
