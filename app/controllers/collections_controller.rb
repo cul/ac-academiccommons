@@ -15,7 +15,7 @@ class CollectionsController < ApplicationController
     },
     doctoraltheses: {
       title: 'Doctoral Theses',
-      summary: 'Full-text Columbia doctoral theses from 2011 forward. Some theses dated prior to 2011 are also available.',
+      summary: 'Full-text Columbia dissertations from 2011 forward. Some dissertations dated prior to 2011 are also available.',
       filter: {
         genre_ssim: 'Theses',
         degree_level_name_ssim: 'Doctoral',
