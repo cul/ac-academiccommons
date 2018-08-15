@@ -1,8 +1,8 @@
 class CollectionsController < ApplicationController
   CONFIG = {
     featured: {
-      title: 'Featured Collections',
-      summary: 'Discover unique research produced by our featured Columbia departments, institutes and centers.',
+      title: 'Featured Partners',
+      summary: 'Works shared by six Columbia research centers.',
       facet: 'department_ssim',
       values: {
         'Center for Behavioral Cardiovascular Health' => 'The Center for Behavioral Cardiovascular Health (CBCH) is a leader in cutting-edge behavioral medicine research dedicated to understanding how and why behaviors, psychological factors, and societal forces influence hypertension and cardiovascular disease. ',
@@ -15,7 +15,7 @@ class CollectionsController < ApplicationController
     },
     doctoraltheses: {
       title: 'Doctoral Theses',
-      summary: 'Explore full-text Columbia dissertations from 2011 forward. Some theses dated prior to 2011 and others from affiliate insitutions are also available.',
+      summary: 'Full-text Columbia dissertations from 2011 forward. Some dissertations dated prior to 2011 are also available.',
       filter: {
         genre_ssim: 'Theses',
         degree_level_name_ssim: 'Doctoral',
@@ -25,12 +25,12 @@ class CollectionsController < ApplicationController
     },
     producedatcolumbia: {
       title: 'Produced at Columbia',
-      summary: 'Browse series of working papers, event videos, and technical reports created by Columbia-affiliated departments and centers.',
+      summary: 'Series of working papers, event videos, and more from departments and centers on campus.',
       facet: 'series_ssim'
     },
     journals: {
       title: 'Columbia Journals',
-      summary: 'View articles from a selection of journals published at Columbia.',
+      summary: 'The ongoing archives of journals published in collaboration with Columbia University Libraries.',
       facet: 'partner_journal_ssi'
     }
   }.freeze

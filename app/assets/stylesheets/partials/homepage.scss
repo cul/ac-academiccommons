@@ -1,10 +1,12 @@
 /* homepage */
 
 #home-content {
-  padding-top: 10px;
+  padding-top: 5px;
 
   & p.summary {
-    max-width: 800px;
+    font-size: 18px;
+    margin: 0;
+    max-width: 900px;
   }
 
   & p.summary strong {
@@ -56,6 +58,7 @@
   }
 
   & blockquote span {
+    color: $gray-base;
     display: block;
     font-weight: 600;
     padding-top: 10px;
@@ -64,6 +67,12 @@
 
 @media screen and (min-width: $screen-sm ) {
 #home-content {
+  padding-top: 15px;
+
+    & p.summary {
+      font-size: 21px;
+      letter-spacing: .5px;
+    }
 
     & p.summary strong {
       font-size: 25px;

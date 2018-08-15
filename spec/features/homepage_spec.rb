@@ -31,6 +31,6 @@ describe 'Homepage', type: :feature do
   end
 
   it 'displays correct total number of items in repository' do
-    expect(page).to have_content('1 works')
+    expect(page).to have_content('1 total works')
   end
 end
