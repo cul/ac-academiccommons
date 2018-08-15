@@ -23,6 +23,8 @@ module UseAndReproductionHelper
   }.freeze
 
   def use_and_reproduction_display(uri)
+    return if uri.blank?
+
     if uri.starts_with?('https://creativecommons.org/licenses/')
       cc_license(uri)
     elsif uri == CC0
