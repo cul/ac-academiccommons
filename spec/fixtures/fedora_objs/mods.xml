@@ -76,7 +76,7 @@
         <mods:identifier type="doi">10.1378/wonderland.01-2345</mods:identifier>
         <mods:identifier type="issn">0123-4567</mods:identifier>
     </mods:relatedItem>
-    <mods:accessCondition type="use and reproduction" xlink:href="http://creativecommons.org/licenses/by/4.0/">CC BY 4.0</mods:accessCondition>
+    <mods:accessCondition type="use and reproduction" xlink:href="http://rightsstatements.org/vocab/InC/1.0/">In Copyright</mods:accessCondition>
     <mods:identifier type="DOI">10.7916/ALICE</mods:identifier>
 
     <mods:location>

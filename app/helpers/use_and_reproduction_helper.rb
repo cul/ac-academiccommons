@@ -2,7 +2,7 @@ module UseAndReproductionHelper
   IN_COPYRIGHT = 'http://rightsstatements.org/vocab/InC/1.0/'.freeze
   CC0 = 'https://creativecommons.org/publicdomain/zero/1.0/'.freeze
   CC_LICENSES = {
-    'http://creativecommons.org/licenses/by/4.0/' => {
+    'https://creativecommons.org/licenses/by/4.0/' => {
       name: 'Attribution 4.0 International', logos: %i[cc by]
     },
     'https://creativecommons.org/licenses/by-sa/4.0/' => {
@@ -23,7 +23,7 @@ module UseAndReproductionHelper
   }.freeze
 
   def use_and_reproduction_display(uri)
-    if uri.starts_with?('http://creativecommons.org/licenses/')
+    if uri.starts_with?('https://creativecommons.org/licenses/')
       cc_license(uri)
     elsif uri == CC0
       cc0_designation
