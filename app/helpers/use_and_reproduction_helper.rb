@@ -63,7 +63,7 @@ module UseAndReproductionHelper
     end
     # rubocop:disable Rails/OutputSafety
     text = content_tag(:span) do
-      'Copyright and related rights waived via '.html_safe + content_tag(:a, 'CC0', href: CC0)
+      'Copyright and related rights waived via '.html_safe + content_tag(:a, 'CC0', target: '_blank', href: CC0)
     end
     # rubocop:enable Rails/OutputSafety
     image.concat(tag(:br)).concat(text)
