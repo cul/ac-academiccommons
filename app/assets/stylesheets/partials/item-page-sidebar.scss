@@ -105,6 +105,27 @@ li.social-buttons a {
   margin: 0 6px 0 0;
 }
 
+li.use-and-reproduction {
+  border-top: $border;
+  font-size: $font-size-small;
+  padding: 10px;
+
+  & a.license,
+  & a.in-copyright {
+    display: block;
+    margin-bottom: -10px;
+  }
+
+  & a.license img {
+    margin-right: 3px;
+    max-width: 30px;
+  }
+
+  & a.in-copyright img {
+    max-width: 100px;
+  }
+}
+
 @media screen and (min-width: $screen-sm ) {
 
   .show-tools {

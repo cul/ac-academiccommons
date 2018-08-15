@@ -38,7 +38,7 @@ module UseAndReproductionHelper
     name = CC_LICENSES[uri][:name]
     logos = CC_LICENSES[uri][:logos]
 
-    image = content_tag(:a, rel: 'license', target: '_blank', href: uri) do
+    image = content_tag(:a, class: 'license', rel: 'license', target: '_blank', href: uri) do
       content_tag(:span, 'aria-label': "Creative Commons #{name} License") do
         safe_join(
           logos.map { |logo| content_tag(:span, cc_img_tag(logo)) }
@@ -72,7 +72,7 @@ module UseAndReproductionHelper
   end
 
   def in_copyright
-    image = content_tag(:a, target: '_blank', href: IN_COPYRIGHT) do
+    image = content_tag(:a, class: 'in-copyright', target: '_blank', href: IN_COPYRIGHT) do
       tag(:img, height: '40', alt: 'In Copyright', src: image_path('in-copyright.svg'))
     end
 
