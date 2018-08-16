@@ -1,6 +1,7 @@
 /* item page sidebar */
 
 .show-tools {
+  border: 0;
   box-shadow: none;
   margin-bottom: 12px;
 
@@ -98,6 +99,9 @@ li.download-and-doi {
 }
 
 li.social-buttons {
+  border: $border;
+  border-radius: 3px;
+  margin: -5px 0 15px 0;
   padding: 10px 10px 6px 10px;
 }
 
@@ -106,14 +110,15 @@ li.social-buttons a {
 }
 
 li.use-and-reproduction {
-  border-top: $border;
-  font-size: $font-size-small;
+  border: $border;
+  border-radius: 3px;
+  font-size: 12px;
   padding: 10px;
 
   & a.license,
   & a.in-copyright {
     display: block;
-    margin-bottom: -10px;
+    margin-bottom: -12px;
   }
 
   & a.license img {
@@ -135,7 +140,10 @@ li.use-and-reproduction {
   li.download-and-doi {
     animation: none;
     background: transparent;
-    border: 0;
+    border: $border;
+    border-bottom: 0;
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
     bottom: auto;
     box-shadow: none;
     display: block;
@@ -156,6 +164,16 @@ li.use-and-reproduction {
   }
 
   li.social-buttons {
-    padding: 5px 10px 6px 10px;
+    border-radius: 0;
+    border-bottom-left-radius: 3px;
+    border-bottom-right-radius: 3px;
+    border-top: 0;
+    margin: 0;
+    padding-top: 0;
+  }
+
+  li.use-and-reproduction {
+    border: 0;
+    padding-top: 15px;
   }
 }
