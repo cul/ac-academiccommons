@@ -73,7 +73,7 @@ describe 'Item Page', type: :feature do
 
     it 'renders twitter card tag' do
       within('head', visible: false) do
-        expect(page).to have_xpath('//head/meta[@name="twitter:card"][@content="summary"]', visible: false)
+        expect(page).to have_xpath('//head/meta[@name="twitter:card"][@content="summary_large_image"]', visible: false)
       end
     end
 
