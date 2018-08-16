@@ -18,7 +18,7 @@
 
   & .top-panel-heading {
     border: $border;
-    margin: 15px 0 0 0;
+    margin: 0;
     padding-left: 15px;
   }
 
@@ -75,7 +75,6 @@
     & .top-panel-heading {
       border: 0;
       border-bottom: $border;
-      margin: 0;
     }
   }
 }
