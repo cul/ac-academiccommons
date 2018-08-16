@@ -86,10 +86,10 @@
     "info:fedora/actest:1/test_ds"
   ],
   "use_and_reproduction_uri_ssim": [
-    "https://creativecommons.org/licenses/by-nc-nd/4.0/"
+    "http://rightsstatements.org/vocab/InC/1.0/"
   ],
   "use_and_reproduction_label_ssim": [
-    "Attribution-NonCommercial-NoDerivatives 4.0 International"
+    "In Copyright"
   ],
   "suggest": [
     "Alice's Adventures in Wonderland",
