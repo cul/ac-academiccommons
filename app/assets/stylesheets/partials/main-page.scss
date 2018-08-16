@@ -136,6 +136,17 @@
       max-width: 105px;
     }
   }
+
+  & p.small-images {
+
+    & a {
+      text-decoration: none;
+    }
+
+    & img {
+      max-width: 35px;
+    }
+  }
 }
 
 @media screen and (min-width: $screen-md ) {
