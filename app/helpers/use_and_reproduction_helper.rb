@@ -47,7 +47,7 @@ module UseAndReproductionHelper
     end
     # rubocop:disable Rails/OutputSafety
     text = content_tag(:span) do
-      'This work is licensed user a '.html_safe + content_tag(:a, "Creative Commons #{name} License", rel: 'license', href: uri)
+      'This work is licensed under a '.html_safe + content_tag(:a, "Creative Commons #{name} License", rel: 'license', href: uri)
     end
     # rubocop:enable Rails/OutputSafety
     image.concat(tag(:br)).concat(text)
