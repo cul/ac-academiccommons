@@ -20,6 +20,9 @@ en:
       upload_full_text: 'Your Research'
 
     search:
+      form:
+        search:
+          placeholder: "Search for theses, data, articles, etc."
       index:
         label: ''
       show:
