@@ -101,7 +101,7 @@ li.download-and-doi {
 li.social-buttons {
   border: $border;
   border-radius: 3px;
-  margin: -5px 0 15px 0;
+  margin: -5px 0 0 0;
   padding: 10px 10px 6px 10px;
 }
 
@@ -110,8 +110,6 @@ li.social-buttons a {
 }
 
 li.use-and-reproduction {
-  border: $border;
-  border-radius: 3px;
   font-size: 12px;
   padding: 10px;
 
