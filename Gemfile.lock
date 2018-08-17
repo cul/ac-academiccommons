@@ -195,10 +195,6 @@ GEM
     docile (1.1.5)
     domain_name (0.5.20180417)
       unf (>= 0.0.5, < 1.0.0)
-    dotenv (2.5.0)
-    dotenv-rails (2.5.0)
-      dotenv (= 2.5.0)
-      railties (>= 3.2, < 6.0)
     equalizer (0.0.11)
     equivalent-xml (0.6.0)
       nokogiri (>= 1.4.3)
@@ -588,7 +584,6 @@ DEPENDENCIES
   cul_omniauth!
   database_cleaner
   devise
-  dotenv-rails
   equivalent-xml
   factory_bot_rails
   fancybox2-rails

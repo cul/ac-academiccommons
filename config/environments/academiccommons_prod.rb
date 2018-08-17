@@ -50,9 +50,9 @@ AcademicCommons::Application.configure do
   # ActionMailer::Base.deliveries array.
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
-    :address => ENV['SMTP_ADDRESS'],
-    :domain => ENV['SMTP_DOMAIN'],
-    :port => ENV['SMTP_PORT']
+    address: 'smtp.library.columbia.edu',
+    domain: 'smtp.library.columbia.edu',
+    port: 25
   }
 
   # Enable locale fallbacks for I18n (makes lookups for any locale fall back to

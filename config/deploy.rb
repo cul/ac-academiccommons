@@ -34,13 +34,12 @@ set :keep_releases, 3
 set :passenger_restart_with_touch, true
 
 set :linked_files, fetch(:linked_files, []).push(
-  ".env",
-  "config/database.yml",
-  "config/solr.yml",
-  "config/blacklight.yml",
-  "config/fedora.yml",
-  "config/secrets.yml",
-  "public/robots.txt",
+  'config/database.yml',
+  'config/solr.yml',
+  'config/blacklight.yml',
+  'config/fedora.yml',
+  'config/secrets.yml',
+  'public/robots.txt',
 )
 
 # Namespace crontab based on app environment.
