@@ -47,6 +47,11 @@ describe 'Item Page', type: :feature do
     expect(page).to have_text('Alice\'s Adventures in Wonderland')
   end
 
+  it 'has license/rights information' do
+    expect(page).to have_link 'All Rights Reserved', href: 'http://rightsstatements.org/vocab/InC/1.0/'
+    expect(page).to have_css 'img[src*="in-copyright"][alt="In Copyright"]'
+  end
+
   it 'links to asset downloads' do
     expect(page).to have_xpath '//a[@href=\'/doi/10.7916/TESTDOC2/download\']'
     expect(page).to have_xpath '//a[@href=\'/doi/10.7916/TESTDOC4/download\']'
