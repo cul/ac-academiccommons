@@ -38,6 +38,13 @@
   }
 }
 
+@media screen and (min-width: $screen-sm ) and (max-width: $screen-lg) {
+
+  #header-navbar .form-control {
+    font-size: 12px;
+  }
+}
+
 @media screen and (min-width: $screen-sm ) {
 
   #header-navbar {
