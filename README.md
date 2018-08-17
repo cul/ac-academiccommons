@@ -1,4 +1,4 @@
-# Academic Commons 3.0
+# Academic Commons 4.0
 
 [![Build Status](https://travis-ci.org/cul/ac-academiccommons.svg?branch=master)](https://travis-ci.org/cul/ac-academiccommons) [![Coverage Status](https://coveralls.io/repos/github/cul/ac-academiccommons/badge.svg?branch=master)](https://coveralls.io/github/cul/ac-academiccommons?branch=master)
 
