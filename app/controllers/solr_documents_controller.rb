@@ -92,17 +92,16 @@ class SolrDocumentsController < ApplicationController
       # Skip if notification was already sent.
       next if Notification.sent_new_item_notification?(solr_doc['cul_doi_ssi'], uni)
 
-      if author = ldap.find_by_uni(uni)
-        email, name = author.email, author.name
-      else
-        email, name = "#{uni}@columbia.edu", nil
-      end
-      success = true
-
       begin
+        if author = ldap.find_by_uni(uni)
+          email, name = author.email, author.name
+        else
+          email, name = "#{uni}@columbia.edu", nil
+        end
+        success = true
+
         UserMailer.new_item_available(doc, uni, email, name).deliver_now
-      rescue Net::SMTPAuthenticationError, Net::SMTPServerBusy, Net::SMTPUnknownError,
-        Timeout::Error, Net::SMTPFatalError, IOError, Net::SMTPSyntaxError => e
+      rescue StandardError => e
         logger.error "Error Sending Email: #{e.message}"
         logger.error e.backtrace.join("\n ")
         success = false
