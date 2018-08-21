@@ -17,7 +17,7 @@ gem 'fancybox2-rails' # Used in helper classes. TODO: Confirm that this is neede
 gem 'gaffe'
 gem 'grape'
 gem 'grape-entity'
-gem 'grape-swagger'
+gem 'grape-swagger', git: 'https://github.com/ruby-grape/grape-swagger', ref: 'da351d0f99228f31329210d21b975a64500e73ab'
 gem 'http'
 gem 'jbuilder'
 gem 'jquery-rails'

@@ -47,7 +47,7 @@ module V1
       optional :order,       coerce: Symbol, default: :desc,        values: V1::Helpers::Solr::ORDER, desc: 'ordering of results'
 
       Helpers::Solr::FILTERS.each do |filter|
-        optional filter, type: Array[String], documentation: { desc: "#{filter} filter", param_type: 'query' }
+        optional filter, type: Array[String], documentation: { desc: "#{filter} filter", param_type: 'query', collectionFormat: 'multi' }
       end
     end
 

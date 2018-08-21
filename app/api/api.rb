@@ -47,5 +47,6 @@ class API < Grape::API
       { name: 'search', description: 'Search for records' },
       { name: 'data_feed', description: 'Returns non-paginated subset of records' },
       { name: 'record', description: 'Returns full record' }
-    ]
+    ],
+    array_use_braces: true
 end
