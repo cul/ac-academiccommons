@@ -1,9 +1,27 @@
 require 'rails_helper'
 
 describe User, type: :model do
-  context '#set_personal_info_via_ldap' do
-    let(:ldap) { instance_double(Cul::LDAP) }
+  let(:ldap) { instance_double(Cul::LDAP) }
+
+  context '#full_name' do
     let(:uni)  { 'abc123' }
+    let(:user) { User.new(uid: uni) }
+
+    context 'when user does not have first and last name' do
+      before do
+        allow(Cul::LDAP).to receive(:new).and_return(ldap)
+        allow(ldap).to receive(:find_by_uni).with(uni).twice.and_return(nil)
+        user.save!
+      end
+
+      it 'return uni if user doesn\'t have a first and last name' do
+        expect(user.full_name).to eql uni
+      end
+    end
+  end
+
+  context '#set_personal_info_via_ldap' do
+    let(:uni) { 'abc123' }
     let(:cul_ldap_entry) do
       instance_double('Cul::LDAP::Entry', email: 'abc123@columbia.edu', first_name: 'Jane Doe', last_name: 'Doe')
     end
