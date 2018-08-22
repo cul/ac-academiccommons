@@ -20,6 +20,14 @@ GIT
       i18n
       rubyzip (~> 1.0)
 
+GIT
+  remote: https://github.com/ruby-grape/grape-swagger
+  revision: da351d0f99228f31329210d21b975a64500e73ab
+  ref: da351d0f99228f31329210d21b975a64500e73ab
+  specs:
+    grape-swagger (0.30.1)
+      grape (>= 0.16.2)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -221,7 +229,7 @@ GEM
       rails (>= 4.0.0)
     globalid (0.4.1)
       activesupport (>= 4.2.0)
-    grape (1.0.3)
+    grape (1.1.0)
       activesupport
       builder
       mustermann-grape (~> 1.0.0)
@@ -231,8 +239,6 @@ GEM
     grape-entity (0.7.1)
       activesupport (>= 4.0)
       multi_json (>= 1.3.2)
-    grape-swagger (0.29.0)
-      grape (>= 0.16.2)
     haml (5.0.4)
       temple (>= 0.8.0)
       tilt
@@ -249,7 +255,7 @@ GEM
       domain_name (~> 0.5)
     http-form_data (2.1.1)
     http_parser.rb (0.6.0)
-    i18n (1.0.1)
+    i18n (1.1.0)
       concurrent-ruby (~> 1.0)
     ice_nine (0.11.2)
     io-like (0.3.0)
@@ -294,7 +300,7 @@ GEM
     msgpack (1.2.4)
     multi_json (1.13.1)
     multipart-post (2.0.0)
-    mustermann (1.0.2)
+    mustermann (1.0.3)
     mustermann-grape (1.0.0)
       mustermann (~> 1.0.0)
     mysql2 (0.5.1)
@@ -590,7 +596,7 @@ DEPENDENCIES
   gaffe
   grape
   grape-entity
-  grape-swagger
+  grape-swagger!
   http
   jbuilder
   jettywrapper (>= 1.4.0)!
