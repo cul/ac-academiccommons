@@ -5,7 +5,7 @@ module V1
 
       SEARCH_TYPES = %i[keyword title subject].freeze
       FILTERS = %i[author author_id date department subject type columbia_series degree_level].freeze
-      SORT    = %i[best_match date title created_at].freeze
+      SORT    = %i[best_match date title].freeze
       ORDER   = %i[desc asc].freeze
       FACETS  = %i[author date department subject type columbia_series].freeze
       REQUIRED_FILTERS = ["has_model_ssim:\"#{ContentAggregator.to_class_uri}\""].freeze
