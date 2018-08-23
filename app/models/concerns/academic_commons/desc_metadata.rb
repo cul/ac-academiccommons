@@ -35,12 +35,15 @@ module AcademicCommons
     # Please see the configuration for more details.
 
     # In some cases fields are indexed multiple times:
-    #   1. Fields with _q prefix are indexed for better querying results (by using
+    #   1. Fields with `_q` suffix are indexed for better querying results (by using
     #      different tokenizers) and are copied into the general query search field. Some
     #      of these fields are also used to specify weighting when returning search
     #      results. Please consult schema.xml and solrconfig.xml before removing any of these fields.
     #   2. `suggest` field is used to populate the suggest handler used by the
     #      autocomplete dropdown.
+    #   3. Fields with a `_sort` suffix are used for alphanumeric sorting. Filters
+    #      are applied to the field that lowercase the content and remove any
+    #      non-alphanumeric characters.
     def index_descmetadata(solr_doc = {})
       raise 'called index_descMetadata twice' if (@index_descmetadata ? (@index_descmetadata += 1) : (@index_descmetadata = 1)) > 1
 
@@ -85,9 +88,10 @@ module AcademicCommons
 
       # TITLE
       # related_titles = mods.css('relatedItem[@type=\'host\']:not([displayLabel=Project])>titleInfo').css('>nonSort,title')
-      add_field.call 'title_ssi', mods.at_css('> titleInfo > title')
-      add_field.call 'title_q',   mods.at_css('> titleInfo > title')
-      add_field.call 'suggest',   mods.at_css('> titleInfo > title')
+      add_field.call 'title_ssi',  mods.at_css('> titleInfo > title')
+      add_field.call 'title_sort', mods.at_css('> titleInfo > title')
+      add_field.call 'title_q',    mods.at_css('> titleInfo > title')
+      add_field.call 'suggest',    mods.at_css('> titleInfo > title')
 
       # PERSONAL NAMES
       all_author_names = []

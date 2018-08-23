@@ -17,16 +17,16 @@ module V1
 
       SORT_TO_SOLR_SORT = {
         best_match: {
-          asc: 'score desc, pub_date_isi desc, title_ssi asc',
-          desc: 'score desc, pub_date_isi desc, title_ssi asc'
+          asc: 'score desc, pub_date_isi desc, title_sort asc',
+          desc: 'score desc, pub_date_isi desc, title_sort asc'
         },
         date: {
-          asc: 'pub_date_isi asc, title_ssi asc',
-          desc: 'pub_date_isi desc, title_ssi asc'
+          asc: 'pub_date_isi asc, title_sort asc',
+          desc: 'pub_date_isi desc, title_sort asc'
         },
         title: {
-          asc: 'title_ssi asc, pub_date_isi desc',
-          desc: 'title_ssi desc, pub_date_isi desc'
+          asc: 'title_sort asc, pub_date_isi desc',
+          desc: 'title_sort desc, pub_date_isi desc'
         }
       }.freeze
 

@@ -201,27 +201,27 @@ class CatalogController < ApplicationController
     # label is key, solr field is value
 
     config.add_sort_field('Best Match') do |field|
-      field.sort = 'score desc, pub_date_isi desc, title_ssi asc'
+      field.sort = 'score desc, pub_date_isi desc, title_sort asc'
       field.label = 'Best Match'
     end
 
     config.add_sort_field('Published Latest') do |field|
-      field.sort = 'pub_date_isi desc, title_ssi asc'
+      field.sort = 'pub_date_isi desc, title_sort asc'
       field.label = 'Published Latest'
     end
 
     config.add_sort_field('Published Earliest') do |field|
-      field.sort = 'pub_date_isi asc, title_ssi asc'
+      field.sort = 'pub_date_isi asc, title_sort asc'
       field.label = 'Published Earliest'
     end
 
     config.add_sort_field('Title A-Z') do |field|
-      field.sort = 'title_ssi asc, pub_date_isi desc'
+      field.sort = 'title_sort asc, pub_date_isi desc'
       field.label = 'Title A-Z'
     end
 
     config.add_sort_field('Title Z-A') do |field|
-     field.sort = 'title_ssi desc, pub_date_isi desc'
+     field.sort = 'title_sort desc, pub_date_isi desc'
      field.label = 'Title Z-A'
     end
 
