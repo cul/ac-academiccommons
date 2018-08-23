@@ -16,7 +16,7 @@ class UploadsController < ApplicationController
   def new
     @deposit ||= Deposit.new(
       creators: [
-        { first_name: current_user.first_name, last_name: current_user.last_name, uni: current_user.uid }
+        { first_name: current_user.first_name || nil, last_name: current_user.last_name || nil, uni: current_user.uid }
       ]
     )
   end

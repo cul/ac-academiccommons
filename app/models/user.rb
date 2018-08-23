@@ -1,7 +1,7 @@
 class User < ApplicationRecord
- # Connects this user object to Blacklights Bookmarks and Folders.
- include Blacklight::User
- include Cul::Omniauth::Users
+  # Connects this user object to Blacklights Bookmarks and Folders.
+  include Blacklight::User
+  include Cul::Omniauth::Users
 
   # User information is updated before every save and before validation when an
   # object is created. We have to explicitly make the two calls because on
@@ -26,7 +26,13 @@ class User < ApplicationRecord
   end
 
   def to_s
-    full_name # TODO: or uni?
+    full_name
+  end
+
+  # Use uni as full_name in case an ldap entry can't be found and thus no
+  # first name or last name can be retrieved.
+  def full_name
+    first_name.present? && last_name.present? ? "#{first_name} #{last_name}" : uid
   end
 
   # Password methods required by Devise.
@@ -40,6 +46,9 @@ class User < ApplicationRecord
 
   def set_personal_info_via_ldap
     return if uid.blank?
+
+    # Set email, in case ldap query fails or there isn't an ldap record for this user.
+    self.email = "#{uid}@columbia.edu" if email.blank?
 
     begin
       ldap = Cul::LDAP.new
