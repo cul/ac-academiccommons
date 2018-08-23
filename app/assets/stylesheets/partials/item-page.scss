@@ -121,6 +121,10 @@
     padding: 3px 0;
   }
 
+  & .list-group-item span.image {
+    width: 100%;
+  }
+
   & .list-group-item span.image img {
     border: $border;
     margin-right: 10px;
@@ -131,7 +135,6 @@
     font-weight: 600;
     width: 85%;
     word-break: break-all;
-    width: 100%;
   }
 
   & .list-group-item span.filesize,
