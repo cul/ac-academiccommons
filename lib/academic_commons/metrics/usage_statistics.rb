@@ -47,11 +47,8 @@ module AcademicCommons::Metrics
       generate_stats
     end
 
-    def get_stat_for(id, event, time='Period') # time can be Lifetime, Period, month year
-      item = @item_stats.find { |i| i.id == id }
-      raise "Could not find #{id}" unless item
-
-      item.get_stat(event, time)
+    def item(id)
+      (item = @item_stats.find { |i| i.id == id }) ? item : raise("Could not find #{id}")
     end
 
     def each(&block)

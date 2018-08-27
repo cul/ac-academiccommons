@@ -271,7 +271,7 @@ RSpec.describe AcademicCommons::Metrics::UsageStatistics, integration: true do
     end
   end
 
-  describe '#get_stat_for' do
+  describe '#item' do
     subject do
       AcademicCommons::Metrics::UsageStatistics.new(
         solr_request, Date.parse('Dec 2015'), Date.parse('Apr 2016'), per_month: true
@@ -290,35 +290,35 @@ RSpec.describe AcademicCommons::Metrics::UsageStatistics, integration: true do
     end
 
     it 'return correct value for view period stats' do
-      expect(subject.get_stat_for(doi, Statistic::VIEW)).to be 2
+      expect(subject.item(doi).get_stat(Statistic::VIEW, 'Period')).to be 2
     end
 
     it 'returns correct value for view month stats' do
-      expect(subject.get_stat_for(doi, Statistic::VIEW, 'Jan 2016')).to be 1
+      expect(subject.item(doi).get_stat(Statistic::VIEW, 'Jan 2016')).to be 1
     end
 
     it 'returns correct value of Lifetime download stats' do
-      expect(subject.get_stat_for(doi, Statistic::DOWNLOAD, 'Lifetime')).to be 2
+      expect(subject.item(doi).get_stat(Statistic::DOWNLOAD, 'Lifetime')).to be 2
     end
 
     it 'returns correct value of download April 2016 stats' do
-      expect(subject.get_stat_for(doi, Statistic::DOWNLOAD, 'Apr 2016')).to be 2
+      expect(subject.item(doi).get_stat(Statistic::DOWNLOAD, 'Apr 2016')).to be 2
     end
 
     it 'returns error if month and year are not part of the period' do
       expect {
-        subject.get_stat_for(doi, Statistic::VIEW, 'May 2017')
+        subject.item(doi).get_stat(Statistic::VIEW, 'May 2017')
       }.to raise_error 'View May 2017 not part of stats. Check parameters.'
     end
 
     it 'returns error if id not part of results' do
       expect {
-        subject.get_stat_for('actest:134', Statistic::VIEW, 'Jan 2016')
+        subject.item('actest:134').get_stat(Statistic::VIEW, 'Jan 2016')
       }.to raise_error 'Could not find actest:134'
     end
 
     it 'returns 0 if id not present, but id part of results' do
-      expect(subject.get_stat_for('10.7916/TESTDOC5', Statistic::VIEW, 'Jan 2016')).to be 0
+      expect(subject.item('10.7916/TESTDOC5').get_stat(Statistic::VIEW, 'Jan 2016')).to be 0
     end
   end
 
