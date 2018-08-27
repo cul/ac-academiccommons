@@ -28,6 +28,9 @@ Style/SymbolArray:
     - 'lib/tasks/**/*'
     - Rakefile
 
+Metrics/BlockLength:
+  ExcludedMethods: ['describe', 'context']
+
 Metrics/AbcSize:
   Exclude:
     - 'app/models/concerns/academic_commons/desc_metadata.rb'
