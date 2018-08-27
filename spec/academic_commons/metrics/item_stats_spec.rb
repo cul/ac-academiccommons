@@ -20,6 +20,10 @@ RSpec.describe AcademicCommons::Metrics::ItemStats do
       expect(subject.get_stat(Statistic::VIEW, 'Jan 2001')).to eq 178
     end
 
+    it 'synonymous method returns correct value' do
+      expect(subject.number_of_views('Jan 2001')).to eq 178
+    end
+
     it 'returns error if parameters not valid' do
       expect{
         subject.get_stat(Statistic::VIEW, 'Feb 2001')

@@ -22,6 +22,14 @@ module AcademicCommons::Metrics
       end
     end
 
+    # Dynamically defines method for each type of statistic: number_of_views,
+    # number_of_streams, number_of_downloads.
+    Statistic::EVENTS.each do |event|
+      define_method :"number_of_#{event.downcase.pluralize}" do |time|
+        get_stat(event, time)
+      end
+    end
+
     def add_stat(event, time, value)
       raise 'Not a valid event' unless Statistic.valid_event?(event)
       stats[event][time] = value
