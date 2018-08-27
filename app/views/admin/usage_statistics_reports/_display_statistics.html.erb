@@ -19,9 +19,9 @@
     <% when 'summary' %>
       <% case @usage_statistics_reports_form.time_period %>
       <% when 'lifetime' %>
-        <%= render 'table', array: usage_stats.lifetime_summary %>
+        <%= render 'table', array: usage_stats.lifetime_table %>
       <% when 'date_range' %>
-        <%= render 'table', array: usage_stats.time_period_summary %>
+        <%= render 'table', array: usage_stats.time_period_table %>
       <% end %>
     <% when 'month_by_month' %>
       <h4>Views</h4>

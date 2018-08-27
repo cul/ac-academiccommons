@@ -2,7 +2,7 @@ module AcademicCommons::Metrics
   class UsageStatistics
     include Enumerable
     include AcademicCommons::Embargoes
-    include AcademicCommons::Metrics::OutputCSV
+    include AcademicCommons::Metrics::Output
 
     attr_reader :start_date, :end_date, :months_list, :solr_params,
                 :options, :item_stats
@@ -47,7 +47,7 @@ module AcademicCommons::Metrics
       generate_stats
     end
 
-    def get_stat_for(id, event, time='Period') # time can be Lifetime, Period, month-year
+    def get_stat_for(id, event, time='Period') # time can be Lifetime, Period, month year
       item = @item_stats.find { |i| i.id == id }
       raise "Could not find #{id}" unless item
 
@@ -72,7 +72,7 @@ module AcademicCommons::Metrics
       if lifetime_only?
         LIFETIME
       else
-        [start_date.strftime('%b %Y'), end_date.strftime('%b %Y')].uniq.join(' - ')
+        [start_date.strftime(MONTH_KEY), end_date.strftime(MONTH_KEY)].uniq.join(' - ')
       end
     end
 
@@ -115,7 +115,7 @@ module AcademicCommons::Metrics
       end
     end
 
-    # Creates list of month-year strings in order from the startdate to the
+    # Creates list of month and year strings in order from the startdate to the
     # enddate given.
     #
     # @param recent_first flag that reverses array

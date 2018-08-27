@@ -171,7 +171,7 @@ RSpec.describe AcademicCommons::Metrics::UsageStatistics, integration: true do
 
   describe '#make_months_list' do
     let(:dates) do
-      ['Dec-2015', 'Jan-2016', 'Feb-2016', 'Mar-2016', 'Apr-2016'].map { |d| Date.parse(d) }
+      ['Dec 2015', 'Jan 2016', 'Feb 2016', 'Mar 2016', 'Apr 2016'].map { |d| Date.parse(d) }
     end
     let(:usage_stats) { AcademicCommons::Metrics::UsageStatistics.new({}, dates.first, dates.last) }
 
@@ -198,12 +198,12 @@ RSpec.describe AcademicCommons::Metrics::UsageStatistics, integration: true do
         ['Total number of items:', '2'],
         [],
         ['VIEWS'],
-        ['Title', 'Genre', 'DOI', 'Record Creation Date', 'Jan-2015', 'Feb-2015', 'Mar-2015', 'Apr-2015', 'May-2015', 'Jun-2015', 'Jul-2015', 'Aug-2015', 'Sep-2015', 'Oct-2015', 'Nov-2015', 'Dec-2015', 'Jan-2016', 'Feb-2016', 'Mar-2016', 'Apr-2016', 'May-2016', 'Jun-2016', 'Jul-2016', 'Aug-2016', 'Sep-2016', 'Oct-2016', 'Nov-2016', 'Dec-2016'],
+        ['Title', 'Genre', 'DOI', 'Record Creation Date', 'Jan 2015', 'Feb 2015', 'Mar 2015', 'Apr 2015', 'May 2015', 'Jun 2015', 'Jul 2015', 'Aug 2015', 'Sep 2015', 'Oct 2015', 'Nov 2015', 'Dec 2015', 'Jan 2016', 'Feb 2016', 'Mar 2016', 'Apr 2016', 'May 2016', 'Jun 2016', 'Jul 2016', 'Aug 2016', 'Sep 2016', 'Oct 2016', 'Nov 2016', 'Dec 2016'],
         ['First Test Document', '', '10.7916/ALICE', '08/07/2018', '1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '1', '0', '0', '0', '0', '0', '0', '0', '0', '0'],
         ['Second Test Document', '', '10.7916/TESTDOC5', '08/07/2018', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0'],
         [],
         ['DOWNLOADS'],
-        ['Title', 'Genre', 'DOI', 'Record Creation Date', 'Jan-2015', 'Feb-2015', 'Mar-2015', 'Apr-2015', 'May-2015', 'Jun-2015', 'Jul-2015', 'Aug-2015', 'Sep-2015', 'Oct-2015', 'Nov-2015', 'Dec-2015', 'Jan-2016', 'Feb-2016', 'Mar-2016', 'Apr-2016', 'May-2016', 'Jun-2016', 'Jul-2016', 'Aug-2016', 'Sep-2016', 'Oct-2016', 'Nov-2016', 'Dec-2016'],
+        ['Title', 'Genre', 'DOI', 'Record Creation Date', 'Jan 2015', 'Feb 2015', 'Mar 2015', 'Apr 2015', 'May 2015', 'Jun 2015', 'Jul 2015', 'Aug 2015', 'Sep 2015', 'Oct 2015', 'Nov 2015', 'Dec 2015', 'Jan 2016', 'Feb 2016', 'Mar 2016', 'Apr 2016', 'May 2016', 'Jun 2016', 'Jul 2016', 'Aug 2016', 'Sep 2016', 'Oct 2016', 'Nov 2016', 'Dec 2016'],
         ['First Test Document', '', '10.7916/ALICE', '08/07/2018', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '2', '0', '0', '0', '0', '0', '0', '0', '0'],
         ['Second Test Document', '', '10.7916/TESTDOC5', '08/07/2018', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0']
       ]
