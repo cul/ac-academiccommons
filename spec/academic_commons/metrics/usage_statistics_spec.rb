@@ -185,9 +185,48 @@ RSpec.describe AcademicCommons::Metrics::UsageStatistics, integration: true do
     end
   end
 
-  describe '#month_by_month_csv' do
-    let(:pid) { 'actest:1' }
+  describe '#time_period_csv' do
     let(:uni) { 'abc123' }
+    let(:expected_csv) do
+      [
+        ['Period Covered by Report:', 'Jan 2015 - Dec 2016'],
+        ['Raw Query:', '{:q=>nil, :fq=>["author_uni_ssim:\\"abc123\\""]}'],
+        ['Order:', 'Views'],
+        ['Report created by:', 'N/A'],
+        ['Report created on:', Time.current.strftime('%Y-%m-%d')],
+        ['Total number of items:', '2'],
+        [],
+        ['Title', 'Genre', 'DOI', 'Record Creation Date', 'Views', 'Downloads'],
+        ['First Test Document', '', '10.7916/ALICE', '08/07/2018', '2', '2'],
+        ['Second Test Document', '', '10.7916/TESTDOC5', '08/07/2018', '0', '0']
+      ]
+    end
+    let(:usage_stats) do
+      AcademicCommons::Metrics::UsageStatistics.new(
+        solr_request, Time.zone.parse('Jan 2015'), Time.zone.parse('Dec 2016'),
+        order_by: 'views', include_zeroes: true
+      )
+    end
+
+    before :each do
+      FactoryBot.create(:view_stat, at_time: Time.zone.parse('Jan 15, 2015'))
+      FactoryBot.create(:view_stat, at_time: Time.zone.parse('March 9, 2016'))
+      FactoryBot.create(:download_stat, at_time: Time.zone.parse('April 2, 2016'))
+      FactoryBot.create(:download_stat, at_time: Time.zone.parse('April 2, 2016'))
+      FactoryBot.create(:streaming_stat, at_time: Time.zone.parse('May 3, 2015'))
+      FactoryBot.create(:view_stat, at_time: Time.zone.parse('Jan 7, 2017'))
+
+      allow(Blacklight.default_index).to receive(:search)
+        .with(solr_params).and_return(solr_response)
+    end
+
+    it 'creates the expected csv' do
+      csv = usage_stats.time_period_csv
+      expect(CSV.parse(csv)).to match expected_csv
+    end
+  end
+
+  describe '#month_by_month_csv' do
     let(:expected_csv) do
       [
         ['Period Covered by Report:', 'Jan 2015 - Dec 2016'],

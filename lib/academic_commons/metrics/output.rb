@@ -25,7 +25,7 @@ module AcademicCommons
         CSV.generate do |csv|
           report_details.each { |a| csv.add_row(a) }
           csv.add_row [] # Blank row
-          time_period_summary.each { |a| csv.add_row(a) }
+          time_period_table.each { |a| csv.add_row(a) }
         end
       end
 
@@ -34,7 +34,7 @@ module AcademicCommons
         CSV.generate do |csv|
           report_details(period_covered: 'Lifetime').each { |a| csv.add_row(a) }
           csv.add_row [] # Blank row
-          lifetime_summary.each { |a| csv.add_row(a) }
+          lifetime_table.each { |a| csv.add_row(a) }
         end
       end
 
