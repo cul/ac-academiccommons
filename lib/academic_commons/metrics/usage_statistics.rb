@@ -1,7 +1,6 @@
 module AcademicCommons::Metrics
   class UsageStatistics
     include Enumerable
-    include AcademicCommons::Embargoes
     include AcademicCommons::Metrics::Output
 
     attr_reader :start_date, :end_date, :months_list, :solr_params,
