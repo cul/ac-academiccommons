@@ -62,16 +62,16 @@
             <%= link_to document.title, solr_document_path(document.to_semantic_values[:id].first) %>
           </td>
           <td class="center">
-            <%= item_stats.get_stat(Statistic::DOWNLOAD, AcademicCommons::Metrics::UsageStatistics::PERIOD) %>
+            <%= item_stats.get_stat(Statistic::DOWNLOAD, AcademicCommons::Metrics::PERIOD) %>
           </td>
           <td class="center">
-            <%= item_stats.get_stat(Statistic::DOWNLOAD, AcademicCommons::Metrics::UsageStatistics::LIFETIME) %>
+            <%= item_stats.get_stat(Statistic::DOWNLOAD, AcademicCommons::Metrics::LIFETIME) %>
           </td>
           <td class="center">
-            <%= item_stats.get_stat(Statistic::VIEW, AcademicCommons::Metrics::UsageStatistics::PERIOD) %>
+            <%= item_stats.get_stat(Statistic::VIEW, AcademicCommons::Metrics::PERIOD) %>
           </td>
           <td class="center">
-            <%= item_stats.get_stat(Statistic::VIEW, AcademicCommons::Metrics::UsageStatistics::LIFETIME) %>
+            <%= item_stats.get_stat(Statistic::VIEW, AcademicCommons::Metrics::LIFETIME) %>
           </td>
         </tr>
     <% end %>
@@ -80,16 +80,16 @@
         <em>Totals:</em>
       </td>
       <td class="center">
-        <%= @current_works_with_stats.total_for(Statistic::DOWNLOAD, AcademicCommons::Metrics::UsageStatistics::PERIOD) %>
+        <%= @current_works_with_stats.total_for(Statistic::DOWNLOAD, AcademicCommons::Metrics::PERIOD) %>
       </td>
       <td class="center">
-        <%= @current_works_with_stats.total_for(Statistic::DOWNLOAD, AcademicCommons::Metrics::UsageStatistics::LIFETIME) %>
+        <%= @current_works_with_stats.total_for(Statistic::DOWNLOAD, AcademicCommons::Metrics::LIFETIME) %>
       </td>
       <td class="center">
-        <%= @current_works_with_stats.total_for(Statistic::VIEW, AcademicCommons::Metrics::UsageStatistics::PERIOD) %>
+        <%= @current_works_with_stats.total_for(Statistic::VIEW, AcademicCommons::Metrics::PERIOD) %>
       </td>
       <td class="center">
-        <%= @current_works_with_stats.total_for(Statistic::VIEW, AcademicCommons::Metrics::UsageStatistics::LIFETIME) %>
+        <%= @current_works_with_stats.total_for(Statistic::VIEW, AcademicCommons::Metrics::LIFETIME) %>
       </td>
     </tr>
   </table>

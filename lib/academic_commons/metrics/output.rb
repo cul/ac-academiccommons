@@ -6,7 +6,6 @@ module AcademicCommons
       # time_period and month_by_month). It also offers methods to return the
       # data in an array of an array. These additional methods can be used to
       # render the data in different formats.
-      MONTH_KEY = '%b %Y'.freeze
 
       # Returns array with details of usage stats generated.
       def report_details(period_covered: nil)
@@ -53,11 +52,11 @@ module AcademicCommons
       end
 
       def time_period_table
-        summary_table(AcademicCommons::Metrics::UsageStatistics::PERIOD)
+        summary_table(PERIOD)
       end
 
       def lifetime_table
-        summary_table(AcademicCommons::Metrics::UsageStatistics::LIFETIME)
+        summary_table(LIFETIME)
       end
 
       # Event should be one of Statistic::VIEW or Statistic::DOWNLOAD

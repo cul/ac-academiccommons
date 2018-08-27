@@ -16,10 +16,6 @@ module AcademicCommons::Metrics
       fl: 'title_ssi,id,cul_doi_ssi,fedora3_pid_ssi,publisher_doi_ssi,genre_ssim,record_creation_dtsi,object_state_ssi,free_to_read_start_date_ssi'
     }.freeze
 
-    PERIOD = 'Period'.freeze
-    LIFETIME = 'Lifetime'.freeze
-    MONTH_KEY = '%b %Y'.freeze
-
     # Create statistics object that calculates usage statistics (views,
     # downloads, and streams) for all the items that match the solr query. If a
     # time period is given, stats for that time period are calculated. If :per_month
@@ -177,7 +173,7 @@ module AcademicCommons::Metrics
       self.months_list.each do |date|
         start = Date.new(date.year, date.month, 1).in_time_zone
         final = Date.new(date.year, date.month, -1).in_time_zone
-        month_key = start.strftime(AcademicCommons::Metrics::ItemStats::MONTH_KEY)
+        month_key = start.strftime(MONTH_KEY)
 
         views = Statistic.event_count(ids, Statistic::VIEW, start_date: start, end_date: final)
         add_item_stats(Statistic::VIEW, month_key, views)
