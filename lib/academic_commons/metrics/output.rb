@@ -74,6 +74,9 @@ module AcademicCommons
           ].concat(monthly_stats)
         end
 
+        total_stats = months_list.map { |m| total_for(event, m.strftime(MONTH_KEY)) }
+        table << [nil, nil, nil, 'Totals:'].concat(total_stats)
+
         table
       end
 
@@ -89,6 +92,8 @@ module AcademicCommons
             item.get_stat(Statistic::VIEW, time), item.get_stat(Statistic::DOWNLOAD, time)
           ]
         end
+
+        table << [nil, nil, nil, 'Totals:', total_for(Statistic::VIEW, time), total_for(Statistic::DOWNLOAD, time)]
 
         table
       end

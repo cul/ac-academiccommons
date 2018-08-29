@@ -1,11 +1,15 @@
 <table class="table datatables">
   <thead>
-    <tr><%= safe_join(array.shift.map { |cell| content_tag :th, cell }) %></tr>
+    <tr><%= safe_join(array[0].map { |cell| content_tag :th, cell }) %></tr>
   </thead>
 
   <tbody>
-    <% array.each do |row| %>
+    <% array[1..-2].each do |row| %>
       <tr><%= safe_join(row.map { |cell| content_tag :td, cell }) %></tr>
     <% end %>
   </tbody>
+
+  <tfoot>
+    <tr><%= safe_join(array[-1].map { |cell| content_tag :th, cell }) %></tr>
+  </tfoot>
 </table>
