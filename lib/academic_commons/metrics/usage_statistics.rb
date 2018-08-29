@@ -4,8 +4,7 @@ module AcademicCommons
       include Enumerable
       include AcademicCommons::Metrics::Output
 
-      attr_reader :start_date, :end_date, :months_list, :solr_params,
-                  :options, :item_stats
+      attr_reader :start_date, :end_date, :solr_params, :options, :item_stats
 
       DEFAULT_OPTIONS = {
         include_zeroes: true, include_streaming: false, per_month: false,
@@ -89,7 +88,9 @@ module AcademicCommons
 
         return if @item_stats.empty?
 
-        process_stats
+        generate_lifetime_stats
+        generate_period_stats
+        generate_month_by_month_stats
 
         unless options[:include_zeroes]
           @item_stats.reject! { |i| i.get_stat(Statistic::VIEW, PERIOD).zero? && i.get_stat(Statistic::DOWNLOAD, PERIOD).zero? }
@@ -110,17 +111,19 @@ module AcademicCommons
 
       # Creates list of month and year strings in order from the startdate to the
       # enddate given.
-      #
-      # @param recent_first flag that reverses array
-      def make_months_list(recent_first = false)
-        months = []
-        date = start_date
-        while date <= end_date
-          months << date
-          date += 1.month
+      def months_list
+        unless @months_list
+          months = []
+          date = start_date
+          while date <= end_date
+            months << date
+            date += 1.month
+          end
+
+          @month_list = options[:recent_first] ? months.reverse : months
         end
 
-        recent_first ? months.reverse : months
+        @month_list
       end
 
       def add_item_stats(event, time, stats)
@@ -130,70 +133,64 @@ module AcademicCommons
         end
       end
 
-      def process_stats
-        # Get all the aggregator pids.
-        ids = @item_stats.collect(&:id)
+      def ids
+        @ids ||= @item_stats.collect(&:id)
+      end
 
-        # Get pid of most downloaded file for each resource/item.
-        download_ids_map = @item_stats.map { |item| [item.id, most_downloaded_asset(item.document)] }.to_h
+      # Map of IDs from item id to most downloaded asset id.
+      def item_to_asset_ids
+        @item_to_asset_ids ||= @item_stats.map { |item| [item.id, most_downloaded_asset(item.document)] }.to_h
+      end
 
-        # lifetime
-        add_item_stats(Statistic::VIEW, LIFETIME, Statistic.event_count(ids, Statistic::VIEW))
+      def calculate_stats_for(time_key, event, start_date = nil, end_date = nil)
+        stats = case event
+                when Statistic::VIEW, Statistic::STREAM
+                  Statistic.event_count(ids, event, start_date: start_date, end_date: end_date)
+                when Statistic::DOWNLOAD
+                  downloads = Statistic.event_count(item_to_asset_ids.values, event, start_date: start_date, end_date: end_date)
+                  map_download_stats_to_aggregator(downloads)
+                end
 
-        lifetime_downloads = Statistic.event_count(download_ids_map.values, Statistic::DOWNLOAD)
-        lifetime_downloads = map_download_stats_to_aggregator(lifetime_downloads, download_ids_map)
-        add_item_stats(Statistic::DOWNLOAD, LIFETIME, lifetime_downloads)
-
-        add_item_stats(Statistic::STREAM, LIFETIME, Statistic.event_count(ids, Statistic::STREAM)) if options[:include_streaming]
-
-        # Period (if start and end date provided)
-        unless lifetime_only?
-          view_period = Statistic.event_count(ids, Statistic::VIEW, start_date: start_date, end_date: end_date)
-          add_item_stats(Statistic::VIEW, PERIOD, view_period)
-
-          period_downloads = Statistic.event_count(download_ids_map.values, Statistic::DOWNLOAD, start_date: start_date, end_date: end_date)
-          period_downloads = map_download_stats_to_aggregator(period_downloads, download_ids_map)
-          add_item_stats(Statistic::DOWNLOAD, PERIOD, period_downloads)
-
-          if options[:include_streaming]
-            period_streams = Statistic.event_count(ids, Statistic::STREAM, start_date: start_date, end_date: end_date)
-            add_item_stats(Statistic::STREAM, PERIOD, period_streams)
-          end
+        @item_stats.each do |i|
+          value = stats.key?(i.id) ? stats[i.id] : 0
+          i.add_stat(event, time_key, value)
         end
+      end
 
-        # Monthly stats (if flag true)
-        if options[:per_month]
-          @months_list = make_months_list(options[:recent_first])
-          process_stats_by_month(ids, download_ids_map)
-        end
+      def generate_lifetime_stats
+        calculate_stats_for(LIFETIME, Statistic::VIEW)
+        calculate_stats_for(LIFETIME, Statistic::DOWNLOAD)
+        calculate_stats_for(LIFETIME, Statistic::STREAM) if options[:include_streaming]
+      end
+
+      # Generate Period stats if start and end date provided
+      def generate_period_stats
+        return if lifetime_only?
+        calculate_stats_for(PERIOD, Statistic::VIEW, start_date, end_date)
+        calculate_stats_for(PERIOD, Statistic::DOWNLOAD, start_date, end_date)
+        calculate_stats_for(PERIOD, Statistic::STREAM, start_date, end_date) if options[:include_streaming]
       end
 
       # For each month get the number of view and downloads for each id and populate
       # them into stats.
-      def process_stats_by_month(ids, download_ids_map)
+      def generate_month_by_month_stats
+        return unless options[:per_month]
+
         months_list.each do |date|
           start = Date.new(date.year, date.month, 1).in_time_zone
           final = Date.new(date.year, date.month, -1).in_time_zone
           month_key = start.strftime(MONTH_KEY)
 
-          views = Statistic.event_count(ids, Statistic::VIEW, start_date: start, end_date: final)
-          add_item_stats(Statistic::VIEW, month_key, views)
-
-          if options[:include_streaming]
-            streams = Statistic.event_count(ids, Statistic::STREAM, start_date: start, end_date: final)
-            add_item_stats(Statistic::STREAM, month_key, streams)
-          end
-
-          download_stats = Statistic.event_count(download_ids_map.values, Statistic::DOWNLOAD, start_date: start, end_date: final)
-          download_stats = map_download_stats_to_aggregator(download_stats, download_ids_map)
-          add_item_stats(Statistic::DOWNLOAD, month_key, download_stats)
+          calculate_stats_for(month_key, Statistic::VIEW, start, final)
+          calculate_stats_for(month_key, Statistic::STREAM, start, final) if options[:include_streaming]
+          calculate_stats_for(month_key, Statistic::DOWNLOAD, start, final)
         end
       end
 
       # Maps download stats from asset pids to aggregator pids.
-      def map_download_stats_to_aggregator(download_stats, download_ids_map)
+      def map_download_stats_to_aggregator(download_stats)
         downloads = {}
-        download_ids_map.each_pair do |id, asset_id|
+        item_to_asset_ids.each_pair do |id, asset_id|
           if (num = download_stats[asset_id])
             downloads[id] = num
           end

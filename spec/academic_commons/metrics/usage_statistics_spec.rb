@@ -174,18 +174,20 @@ RSpec.describe AcademicCommons::Metrics::UsageStatistics, integration: true do
     end
   end
 
-  describe '#make_months_list' do
+  describe '#months_list' do
     let(:dates) do
       ['Dec 2015', 'Jan 2016', 'Feb 2016', 'Mar 2016', 'Apr 2016'].map { |d| Date.parse(d) }
     end
-    let(:usage_stats) { AcademicCommons::Metrics::UsageStatistics.new({}, dates.first, dates.last) }
 
     it 'returns correct list' do
-      result = usage_stats.instance_eval { make_months_list }
+      usage_stats = AcademicCommons::Metrics::UsageStatistics.new({}, dates.first, dates.last)
+      result = usage_stats.instance_eval { months_list }
       expect(result).to eq dates
     end
+
     it 'returns correct list in reverse' do
-      result = usage_stats.instance_eval { make_months_list(true) }
+      usage_stats = AcademicCommons::Metrics::UsageStatistics.new({}, dates.first, dates.last, recent_first: true)
+      result = usage_stats.instance_eval { months_list }
       expect(result).to eq dates.reverse
     end
   end
