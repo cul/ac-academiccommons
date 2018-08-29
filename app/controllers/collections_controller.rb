@@ -2,7 +2,7 @@ class CollectionsController < ApplicationController
   CONFIG = {
     featured: {
       title: 'Featured Partners',
-      summary: 'Works shared by six Columbia research centers.',
+      summary: 'Works shared by six Columbia research centers. Want to showcase the work of your department or center here? Contact us at <a href="mailto:ac@columbia.edu">ac@columbia.edu</a>',
       facet: 'department_ssim',
       values: {
         'Center for Behavioral Cardiovascular Health' => 'The Center for Behavioral Cardiovascular Health (CBCH) is a leader in cutting-edge behavioral medicine research dedicated to understanding how and why behaviors, psychological factors, and societal forces influence hypertension and cardiovascular disease. ',
