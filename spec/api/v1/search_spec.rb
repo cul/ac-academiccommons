@@ -5,7 +5,7 @@ describe 'GET /api/v1/search', type: :request do
   let(:empty_response) { { 'response' => { 'docs' => [] } } }
   let(:base_parameters) do
     {
-      q: nil, sort: 'score desc, pub_date_isi desc, title_ssi asc',
+      q: nil, sort: 'score desc, pub_date_isi desc, title_sort asc',
       start: 0, rows: 25,
       fq: ['has_model_ssim:"info:fedora/ldpd:ContentAggregator"'],
       fl: '*', qt: 'search', facet: 'true',
@@ -93,7 +93,7 @@ describe 'GET /api/v1/search', type: :request do
   end
 
   context 'applies sort order' do
-    let(:parameters) { base_parameters.merge(sort: 'title_ssi asc, pub_date_isi desc') }
+    let(:parameters) { base_parameters.merge(sort: 'title_sort asc, pub_date_isi desc') }
 
     it 'creates correct solr query' do
       allow(AcademicCommons::Utils).to receive(:rsolr).and_return(connection)

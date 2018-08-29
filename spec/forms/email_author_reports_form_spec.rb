@@ -13,7 +13,7 @@ describe EmailAuthorReportsForm, type: :model do
 
     let(:author_search) do
       {
-        rows: 100_000, sort: 'title_ssi asc', q: nil, page: 1,
+        rows: 100_000, sort: 'title_sort asc', q: nil, page: 1,
         fq: ['author_uni_ssim:"abc123"', 'has_model_ssim:"info:fedora/ldpd:ContentAggregator"'],
         fl: 'title_ssi,id,cul_doi_ssi,fedora3_pid_ssi,publisher_doi_ssi,genre_ssim,record_creation_dtsi,object_state_ssi,free_to_read_start_date_ssi'
       }
