@@ -55,8 +55,8 @@ class EmailAuthorReportsForm < FormObject
     @skipped_counter = 0
     @sent_exceptions = 0
 
-    startdate = Date.parse(month + ' ' + year)
-    enddate   = Date.new(startdate.year, startdate.month, -1) # end_date needs to be last day of month
+    startdate = Time.zone.parse(month + ' ' + year)
+    enddate   = startdate.end_of_month
 
     authors.each do |author|
       begin

@@ -76,7 +76,7 @@ RSpec.describe AcademicCommons::Metrics::UsageStatistics, integration: true do
 
       context 'when request lifetime stats' do
         before do
-          FactoryBot.create(:view_stat, at_time: Date.new(2001, 4, 12))
+          FactoryBot.create(:view_stat, at_time: Date.new(2001, 4, 12).in_time_zone)
         end
 
         subject(:usage_stats) do
@@ -176,7 +176,7 @@ RSpec.describe AcademicCommons::Metrics::UsageStatistics, integration: true do
 
   describe '#months_list' do
     let(:dates) do
-      ['Dec 2015', 'Jan 2016', 'Feb 2016', 'Mar 2016', 'Apr 2016'].map { |d| Date.parse(d) }
+      ['Dec 2015', 'Jan 2016', 'Feb 2016', 'Mar 2016', 'Apr 2016'].map { |d| Time.zone.parse(d) }
     end
 
     it 'returns correct list' do
@@ -285,16 +285,16 @@ RSpec.describe AcademicCommons::Metrics::UsageStatistics, integration: true do
   describe '#item' do
     subject(:usage_stats) do
       AcademicCommons::Metrics::UsageStatistics.new(
-        solr_request, Date.parse('Dec 2015'), Date.parse('Apr 2016'), per_month: true
+        solr_request, Time.zone.parse('Dec 2015'), Time.zone.parse('Apr 2016'), per_month: true
       )
     end
 
     before do
-      FactoryBot.create(:view_stat, at_time: Date.parse('Jan 15, 2016'))
-      FactoryBot.create(:view_stat, at_time: Date.parse('March 9, 2016'))
-      FactoryBot.create(:download_stat, at_time: Date.parse('April 2, 2016'))
-      FactoryBot.create(:download_stat, at_time: Date.parse('April 2, 2016'))
-      FactoryBot.create(:streaming_stat, at_time: Date.parse('May 3, 2015'))
+      FactoryBot.create(:view_stat, at_time: Time.zone.parse('Jan 15, 2016'))
+      FactoryBot.create(:view_stat, at_time: Time.zone.parse('March 9, 2016'))
+      FactoryBot.create(:download_stat, at_time: Time.zone.parse('April 2, 2016'))
+      FactoryBot.create(:download_stat, at_time: Time.zone.parse('April 2, 2016'))
+      FactoryBot.create(:streaming_stat, at_time: Time.zone.parse('May 3, 2015'))
 
       allow(Blacklight.default_index).to receive(:search)
         .with(solr_params).and_return(solr_response)
@@ -383,7 +383,7 @@ RSpec.describe AcademicCommons::Metrics::UsageStatistics, integration: true do
     subject(:time_period) { usage_stats.instance_eval { time_period } }
 
     context 'when start and end date available' do
-      let(:usage_stats) { AcademicCommons::Metrics::UsageStatistics.new(solr_params, Date.parse('Jan 2015'), Date.parse('Dec 2016')) }
+      let(:usage_stats) { AcademicCommons::Metrics::UsageStatistics.new(solr_params, Time.zone.parse('Jan 2015'), Time.zone.parse('Dec 2016')) }
 
       it { is_expected.to eq 'Jan 2015 - Dec 2016' }
     end

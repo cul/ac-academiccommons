@@ -48,11 +48,11 @@ class UsageStatisticsReportsForm < FormObject
     options[:requested_by] = requested_by
 
     if time_period == 'lifetime'
-      s_date = Date.new(Statistic::YEAR_BEG).in_time_zone
-      e_date = Date.current.prev_month.end_of_month
+      s_date = Time.zone.parse("Jan #{Statistic::YEAR_BEG}")
+      e_date = Time.current.prev_month.end_of_month
     elsif time_period == 'date_range'
-      s_date = Date.parse("#{start_date[:month]} #{start_date[:year]}").in_time_zone
-      e_date = Date.parse("#{end_date[:month]} #{end_date[:year]}").end_of_month.in_time_zone
+      s_date = Time.zone.parse("#{start_date[:month]} #{start_date[:year]}")
+      e_date = Time.zone.parse("#{end_date[:month]} #{end_date[:year]}").end_of_month
     end
 
     @usage_stats = AcademicCommons::Metrics::UsageStatistics.new(

@@ -24,8 +24,8 @@ module AcademicCommons
       # calculated.
       #
       # @param [Hash] solr_params parameters to conduct solr query with
-      # @param [Date] start_date
-      # @param [Date] end_date
+      # @param [Date|Time] start_date starting date to calculate stats for, time of day is ignored and set to 00:00
+      # @param [Date|Time] end_date end date to calculate stats for, time of day is ignored and set to 23:59
       # @param [Hash] options options to use when creating/rendering stats
       # @option options [Boolean] :include_zeroes flag to indicate whether records with no usage stats should be included
       # @option options [Boolean] :include_streaming flag to indicate whether streaming statistics should be calculated
@@ -177,8 +177,8 @@ module AcademicCommons
         return unless options[:per_month]
 
         months_list.each do |date|
-          start = Date.new(date.year, date.month, 1).in_time_zone
-          final = Date.new(date.year, date.month, -1).in_time_zone
+          start = date.beginning_of_month
+          final = date.end_of_month
           month_key = start.strftime(MONTH_KEY)
 
           calculate_stats_for(month_key, Statistic::VIEW, start, final)
@@ -198,13 +198,13 @@ module AcademicCommons
         downloads
       end
 
-    def get_solr_documents(params)
-      params = params.merge(DEFAULT_SOLR_PARAMS)
-      params[:sort] = 'title_sort asc' if(params[:sort].blank? || options[:order_by] == 'title')
-      params[:fq] = params.fetch(:fq, []).clone << "has_model_ssim:\"#{ContentAggregator.to_class_uri}\""
-      # Add filter to remove embargoed items, free_to_read date must be equal to or less than Date.current
-      Blacklight.default_index.search(params).documents
-    end
+      def get_solr_documents(params)
+        params = params.merge(DEFAULT_SOLR_PARAMS)
+        params[:sort] = 'title_sort asc' if(params[:sort].blank? || options[:order_by] == 'title')
+        params[:fq] = params.fetch(:fq, []).clone << "has_model_ssim:\"#{ContentAggregator.to_class_uri}\""
+        # Add filter to remove embargoed items, free_to_read date must be equal to or less than Date.current
+        Blacklight.default_index.search(params).documents
+      end
 
       # Most downloaded asset over entire lifetime.
       # Eventually may have to reevaluate this for queries that are for a specific
