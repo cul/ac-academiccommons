@@ -7,15 +7,15 @@ describe 'Agreement', type: :feature do
     visit agreement_path
   end
 
-  it "renders agreement title" do
+  it 'renders agreement title' do
     expect(page).to have_css('h2', text: 'Columbia Academic Commons Deposit Agreement')
   end
 
-  it "renders agreement form" do
+  it 'renders agreement form' do
     expect(page).to have_css('form.agreement')
   end
 
-  it "shows error when fields missing" do
+  it 'shows error when fields missing' do
     click_button 'Accept'
     expect(page).to have_css('div.alert-danger', text: 'You must accept the participation agreement')
   end
@@ -45,7 +45,7 @@ describe 'Agreement', type: :feature do
         expect(page).to have_css('p.alert-info', text: 'You have already signed this agreement')
       end
 
-      it "renders agreement form" do
+      it 'renders agreement form' do
         expect(page).not_to have_css('form.agreement')
       end
     end
