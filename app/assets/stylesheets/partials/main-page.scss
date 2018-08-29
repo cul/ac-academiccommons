@@ -197,6 +197,7 @@
 /* link lists */
 
 #main-page ul.link-list {
+  border-top: $border;
   color: $gray-light;
   column-count: auto;
   column-gap: 50px;
@@ -220,6 +221,7 @@
   }
 
   & a {
+    font-weight: bold;
     text-decoration: none;
   }
 }
