@@ -47,7 +47,9 @@ class UsageStatisticsReportsForm < FormObject
     options[:order_by] = order
     options[:requested_by] = requested_by
 
-    if time_period == 'lifetime'
+    s_date = nil
+    e_date = nil
+    if time_period == 'lifetime' && display == 'month_by_month'
       s_date = Time.zone.parse("Jan #{Statistic::YEAR_BEG}")
       e_date = Time.current.prev_month.end_of_month
     elsif time_period == 'date_range'
