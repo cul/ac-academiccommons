@@ -10,12 +10,12 @@
   </table>
 <% end %>
 
-<% unless @embargoed_works.empty? %>
+<% unless @embargoed_works.docs.empty? %>
   <h3>Embargoed Works</h3>
   <table class="table small">
-  <% @pending_works.each do |document| %>
+  <% @embargoed_works.docs.each do |document| %>
     <tr>
-      <td><%= link_to document.to_semantic_values[:title].first, solr_document_path(document.to_semantic_values[:id].first) %></td>
+      <td><%= link_to document.title, solr_document_path(document.to_semantic_values[:id].first) %></td>
     </tr>
   <% end %>
   </table>
@@ -59,7 +59,7 @@
       <% document = item_stats.document %>
         <tr>
           <td>
-            <%= link_to document.to_semantic_values[:title].first, solr_document_path(document.to_semantic_values[:id].first) %>
+            <%= link_to document.title, solr_document_path(document.to_semantic_values[:id].first) %>
           </td>
           <td class="center">
             <%= item_stats.get_stat(Statistic::DOWNLOAD, AcademicCommons::Metrics::UsageStatistics::PERIOD) %>
