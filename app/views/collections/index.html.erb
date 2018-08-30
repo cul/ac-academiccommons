@@ -11,7 +11,7 @@
     <% @categories.each do |category| %>
       <div class="col-md-4 tile">
         <h2><%= link_to category.title, category.url %></h2>
-        <p><%= category.summary %></p>
+        <p><%= raw category.summary %></p>
       </div>
     <% end %>
   </div>
