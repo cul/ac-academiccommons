@@ -65,7 +65,7 @@ class EmailAuthorReportsForm < FormObject
         solr_params = { q: nil, fq: ["author_uni_ssim:\"#{author_id}\""] }
         usage_stats = AcademicCommons::Metrics::UsageStatistics.new(
           solr_params, startdate, enddate,
-          order_by: order_works_by, include_zeroes: true, include_streaming: false
+          order_by: order_works_by, include_streaming: false
         )
 
         send_to = deliver == 'all_reports_to_one_email' ? email : author[:email]

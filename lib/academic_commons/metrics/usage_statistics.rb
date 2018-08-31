@@ -4,11 +4,10 @@ module AcademicCommons
       include Enumerable
       include AcademicCommons::Metrics::Output
 
-      attr_reader :start_date, :end_date, :solr_params, :options, :item_stats
+      attr_reader :to_calculate, :start_date, :end_date, :solr_params, :options, :item_stats
 
       DEFAULT_OPTIONS = {
-        include_zeroes: true, include_streaming: false, per_month: false,
-        recent_first: false, order_by: nil, requested_by: nil
+        include_streaming: false, order_by: nil, requested_by: nil
       }.freeze
 
       DEFAULT_SOLR_PARAMS = {
@@ -17,29 +16,61 @@ module AcademicCommons
       }.freeze
 
       # Create statistics object that calculates usage statistics (views,
-      # downloads, and streams) for all the items that match the solr query. If a
-      # time period is given, stats for that time period are calculated. If :per_month
-      # is true statistics are broken down by month. Monthly breakdown of stats
-      # requires a start and end date. Lifetime statistics are always
+      # downloads, and streams) for all the items that match the solr query.
+      #
+      # The first parameter is an array of all the statistics to calculate. The
+      # three following types of statistics can be calculated:
+      #  1. `:lifetime`
+      #  2. `:period`; total stats during the start and end dates given
+      #  3. `:month_by_month`; stats are broken down by month for the date range given
+      #
+      # The second parameter is the solr search that should be conducted. When
+      # calculating period and month by month statistics, a start and end date
+      # is required. Order can only be applied when one type of statistics is
       # calculated.
       #
+      # @example
+      #   solr_params = { q: nil }
+      #   AcademicCommons::Metrics::UsageStatistics.new(
+      #     :lifetime, solr_params, order_by: 'views'
+      #   )
+      #
+      # @param [Symbol|Array] to_calculate lists statistics that should be calculated
       # @param [Hash] solr_params parameters to conduct solr query with
-      # @param [Date|Time] start_date starting date to calculate stats for, time of day is ignored and set to 00:00
-      # @param [Date|Time] end_date end date to calculate stats for, time of day is ignored and set to 23:59
       # @param [Hash] options options to use when creating/rendering stats
-      # @option options [Boolean] :include_zeroes flag to indicate whether records with no usage stats should be included
+      # @option options [Date|Time] :start_date starting date to calculate stats for, time of day is ignored and set to 00:00
+      # @option options [Date|Time] :end_date end date to calculate stats for, time of day is ignored and set to 23:59
       # @option options [Boolean] :include_streaming flag to indicate whether streaming statistics should be calculated
-      # @option options [Boolean] :per_month flag to organize/calculate statistics by month
-      # @option options [Boolean] :recent_first if true, when listing months list most recent month first
-      # @option options [String] :order_by most number of downloads or views, by default orders by title
+      # @option options [String] :order_by most number of downloads or views, by default orders by title, order can only be done if only one type of stats are calculated
       # @option options [User|nil] :requested_by User that requested the report, nil if no use provided
-      def initialize(solr_params, start_date = nil, end_date = nil, **options)
-        @start_date = start_date
-        @end_date = end_date
+      def initialize(to_calculate, solr_params, **options)
+        @to_calculate = Array.wrap(to_calculate)
         @solr_params = solr_params
         @options = DEFAULT_OPTIONS.merge(options)
+        @start_date = options.delete(:start_date)
+        @end_date = options.delete(:end_date)
         @totals = { Statistic::VIEW => {}, Statistic::DOWNLOAD => {}, Statistic::STREAM => {} }
-        generate_stats
+
+        if @to_calculate.include?(:period) || @to_calculate.include?(:month_by_month)
+          raise ArgumentError, 'Start date must be provided' unless start_date
+          raise ArgumentError, 'End date must be provided' unless end_date
+        end
+
+        return if solr_params.blank?
+
+        results = get_solr_documents(solr_params)
+        Rails.logger.debug "Solr request returned #{results.count} results."
+
+        # Filtering out embargoed material
+        results.reject!(&:embargoed?)
+        @item_stats = results.map { |doc| AcademicCommons::Metrics::ItemStats.new(doc) }
+
+        return if @item_stats.empty?
+
+        generate_lifetime_stats
+        generate_period_stats
+        generate_month_by_month_stats
+        order_results
       end
 
       def item(id)
@@ -61,50 +92,24 @@ module AcademicCommons
 
       # @return [String] time_period
       def time_period
-        if lifetime_only?
+        if to_calculate == [:lifetime]
           LIFETIME
         else
           [start_date.strftime(MONTH_KEY), end_date.strftime(MONTH_KEY)].uniq.join(' - ')
         end
       end
 
-      def lifetime_only?
-        start_date.blank? && end_date.blank?
-      end
-
       private
 
-      # Returns statistics for all the items returned by the given solr query.
-      def generate_stats
-        Rails.logger.debug "In generate_stats for #{solr_params.inspect}"
-        return if solr_params.blank?
-
-        results = get_solr_documents(solr_params)
-        Rails.logger.debug "Solr request returned #{results.count} results."
-
-        # Filtering out embargoed material
-        results.reject!(&:embargoed?)
-        @item_stats = results.map { |doc| AcademicCommons::Metrics::ItemStats.new(doc) }
-
-        return if @item_stats.empty?
-
-        generate_lifetime_stats
-        generate_period_stats
-        generate_month_by_month_stats
-
-        unless options[:include_zeroes]
-          @item_stats.reject! { |i| i.get_stat(Statistic::VIEW, PERIOD).zero? && i.get_stat(Statistic::DOWNLOAD, PERIOD).zero? }
-        end
+      def order_results
+        return if to_calculate.count > 1 || to_calculate.first == :month_by_month
 
         if options[:order_by] == 'views' || options[:order_by] == 'downloads'
+          time = to_calculate.first.to_s.titlecase
+          event = options[:order_by].singularize.titlecase
+
           @item_stats.sort! do |x, y|
-            event = if options[:order_by] == 'downloads'
-                      Statistic::DOWNLOAD
-                    elsif options[:order_by] == 'views'
-                      Statistic::VIEW
-                    end
-            y.get_stat(event, PERIOD) <=> x.get_stat(event, PERIOD)
-            # sort_by title
+            y.get_stat(event, time) <=> x.get_stat(event, time)
           end
         end
       end
@@ -119,8 +124,7 @@ module AcademicCommons
             months << date
             date += 1.month
           end
-
-          @month_list = options[:recent_first] ? months.reverse : months
+          @month_list = months
         end
 
         @month_list
@@ -158,6 +162,7 @@ module AcademicCommons
       end
 
       def generate_lifetime_stats
+        return unless to_calculate.include?(:lifetime)
         calculate_stats_for(LIFETIME, Statistic::VIEW)
         calculate_stats_for(LIFETIME, Statistic::DOWNLOAD)
         calculate_stats_for(LIFETIME, Statistic::STREAM) if options[:include_streaming]
@@ -165,7 +170,7 @@ module AcademicCommons
 
       # Generate Period stats if start and end date provided
       def generate_period_stats
-        return if lifetime_only?
+        return unless to_calculate.include?(:period)
         calculate_stats_for(PERIOD, Statistic::VIEW, start_date, end_date)
         calculate_stats_for(PERIOD, Statistic::DOWNLOAD, start_date, end_date)
         calculate_stats_for(PERIOD, Statistic::STREAM, start_date, end_date) if options[:include_streaming]
@@ -174,7 +179,7 @@ module AcademicCommons
       # For each month get the number of view and downloads for each id and populate
       # them into stats.
       def generate_month_by_month_stats
-        return unless options[:per_month]
+        return unless to_calculate.include?(:month_by_month)
 
         months_list.each do |date|
           start = date.beginning_of_month

@@ -5,7 +5,7 @@ RSpec.describe AcademicCommons::Metrics::UsageStatistics, integration: true do
   let(:doi) { '10.7916/ALICE' }
   let(:doi5) { '10.7916/TESTDOC5' }
   let(:empty_response) { { 'response' => { 'docs' => [] } } }
-  let(:usage_stats) { AcademicCommons::Metrics::UsageStatistics.new({}, nil, nil) }
+  let(:usage_stats) { AcademicCommons::Metrics::UsageStatistics.new(:lifetime, {}) }
   let(:solr_request) { { q: nil, fq: ["author_uni_ssim:\"#{uni}\""] } }
   let(:solr_params) do
     {
@@ -19,10 +19,10 @@ RSpec.describe AcademicCommons::Metrics::UsageStatistics, integration: true do
       {
         'response' => {
           'docs' => [
-            { 'id' => doi5, 'title_ssi' => 'Second Test Document', 'object_state_ssi' => 'A', 'record_creation_dtsi' => '2018-08-07T03:40:22Z',
-              'cul_doi_ssi' => doi5, 'fedora3_pid_ssi' => 'actest:5', 'publisher_doi_ssi' => '', 'genre_ssim' => '' },
             { 'id' => doi, 'title_ssi' => 'First Test Document', 'object_state_ssi' => 'A', 'record_creation_dtsi' => '2018-08-07T03:40:22Z',
-              'cul_doi_ssi' => doi, 'fedora3_pid_ssi' => 'actest:1', 'publisher_doi_ssi' => '', 'genre_ssim' => '' }
+              'cul_doi_ssi' => doi, 'fedora3_pid_ssi' => 'actest:1', 'publisher_doi_ssi' => '', 'genre_ssim' => '' },
+            { 'id' => doi5, 'title_ssi' => 'Second Test Document', 'object_state_ssi' => 'A', 'record_creation_dtsi' => '2018-08-07T03:40:22Z',
+              'cul_doi_ssi' => doi5, 'fedora3_pid_ssi' => 'actest:5', 'publisher_doi_ssi' => '', 'genre_ssim' => '' }
           ]
         }
       }, {}
@@ -43,7 +43,7 @@ RSpec.describe AcademicCommons::Metrics::UsageStatistics, integration: true do
       end
 
       context 'when requesting stats for an author with embargoed material' do
-        subject(:usage_stats) { AcademicCommons::Metrics::UsageStatistics.new(solr_request) }
+        subject(:usage_stats) { AcademicCommons::Metrics::UsageStatistics.new(:lifetime, solr_request) }
 
         let(:solr_response) do
           Blacklight::Solr::Response.new(
@@ -80,7 +80,7 @@ RSpec.describe AcademicCommons::Metrics::UsageStatistics, integration: true do
         end
 
         subject(:usage_stats) do
-          AcademicCommons::Metrics::UsageStatistics.new(solr_request, include_streaming: true)
+          AcademicCommons::Metrics::UsageStatistics.new(:lifetime, solr_request, include_streaming: true)
         end
 
         it 'returns correct results' do
@@ -103,8 +103,9 @@ RSpec.describe AcademicCommons::Metrics::UsageStatistics, integration: true do
       context 'when requesting stats for current month' do
         subject(:usage_stats) do
           AcademicCommons::Metrics::UsageStatistics.new(
-            solr_request, Date.current - 1.month, Date.current,
-            include_zeroes: true, include_streaming: true
+            %i[lifetime period], solr_request,
+            start_date: Date.current - 1.month, end_date: Date.current,
+            include_streaming: true
           )
         end
 
@@ -125,8 +126,9 @@ RSpec.describe AcademicCommons::Metrics::UsageStatistics, integration: true do
       context 'when requesting stats for previous month' do
         subject(:usage_stats) do
           AcademicCommons::Metrics::UsageStatistics.new(
-            solr_request, Date.current - 2.months, Date.current - 1.month,
-            include_zeroes: true, include_streaming: true
+            %i[lifetime period], solr_request,
+            start_date: Date.current - 2.months, end_date: Date.current - 1.month,
+            include_streaming: true
           )
         end
 
@@ -147,7 +149,8 @@ RSpec.describe AcademicCommons::Metrics::UsageStatistics, integration: true do
       context 'when requesting stats without streaming' do
         subject(:usage_stats) do
           AcademicCommons::Metrics::UsageStatistics.new(
-            solr_request, Date.current - 1.month, Date.current, include_zeroes: true
+            %i[lifetime period], solr_request, start_date: Date.current - 1.month,
+            end_date: Date.current
           )
         end
 
@@ -156,19 +159,6 @@ RSpec.describe AcademicCommons::Metrics::UsageStatistics, integration: true do
           expect(usage_stats.total_for(Statistic::DOWNLOAD, 'Period')).to be 1
           expect(usage_stats.total_for(Statistic::VIEW, 'Lifetime')).to be 2
           expect(usage_stats.total_for(Statistic::DOWNLOAD, 'Lifetime')).to be 1
-        end
-      end
-
-      context 'when requesting stats without zeroes' do
-        subject(:usage_stats) do
-          AcademicCommons::Metrics::UsageStatistics.new(
-            solr_request, Date.current - 2.months, Date.current - 1.month,
-            include_zeroes: false, include_streaming: true
-          )
-        end
-
-        it 'results does not include records with zero for view and download stats' do
-          expect(usage_stats.map(&:id)).not_to include 'actest:5'
         end
       end
     end
@@ -180,15 +170,9 @@ RSpec.describe AcademicCommons::Metrics::UsageStatistics, integration: true do
     end
 
     it 'returns correct list' do
-      usage_stats = AcademicCommons::Metrics::UsageStatistics.new({}, dates.first, dates.last)
+      usage_stats = AcademicCommons::Metrics::UsageStatistics.new(:month_by_month, {}, start_date: dates.first, end_date: dates.last)
       result = usage_stats.instance_eval { months_list }
       expect(result).to eq dates
-    end
-
-    it 'returns correct list in reverse' do
-      usage_stats = AcademicCommons::Metrics::UsageStatistics.new({}, dates.first, dates.last, recent_first: true)
-      result = usage_stats.instance_eval { months_list }
-      expect(result).to eq dates.reverse
     end
   end
 
@@ -211,8 +195,8 @@ RSpec.describe AcademicCommons::Metrics::UsageStatistics, integration: true do
     end
     let(:usage_stats) do
       AcademicCommons::Metrics::UsageStatistics.new(
-        solr_request, Time.zone.parse('Jan 2015'), Time.zone.parse('Dec 2016'),
-        order_by: 'views', include_zeroes: true
+        :period, solr_request, start_date: Time.zone.parse('Jan 2015'),
+        end_date: Time.zone.parse('Dec 2016'), order_by: 'views'
       )
     end
 
@@ -239,7 +223,7 @@ RSpec.describe AcademicCommons::Metrics::UsageStatistics, integration: true do
       [
         ['Period Covered by Report:', 'Jan 2015 - Dec 2016'],
         ['Raw Query:', '{:q=>nil, :fq=>["author_uni_ssim:\\"abc123\\""]}'],
-        ['Order:', 'Views'],
+        ['Order:', 'Title'],
         ['Report created by:', 'N/A'],
         ['Report created on:', Time.current.strftime('%Y-%m-%d')],
         ['Total number of items:', '2'],
@@ -255,13 +239,12 @@ RSpec.describe AcademicCommons::Metrics::UsageStatistics, integration: true do
         ['First Test Document', '', '10.7916/ALICE', '08/07/2018', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '2', '0', '0', '0', '0', '0', '0', '0', '0'],
         ['Second Test Document', '', '10.7916/TESTDOC5', '08/07/2018', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0'],
         [nil, nil, nil, 'Totals:', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '2', '0', '0', '0', '0', '0', '0', '0', '0']
-
       ]
     end
     let(:usage_stats) do
       AcademicCommons::Metrics::UsageStatistics.new(
-        solr_request, Time.zone.parse('Jan 2015'), Time.zone.parse('Dec 2016'),
-        order_by: 'views', include_zeroes: true, per_month: true
+        :month_by_month, solr_request, per_month: true,
+        start_date: Time.zone.parse('Jan 2015'), end_date: Time.zone.parse('Dec 2016')
       )
     end
 
@@ -285,7 +268,9 @@ RSpec.describe AcademicCommons::Metrics::UsageStatistics, integration: true do
   describe '#item' do
     subject(:usage_stats) do
       AcademicCommons::Metrics::UsageStatistics.new(
-        solr_request, Time.zone.parse('Dec 2015'), Time.zone.parse('Apr 2016'), per_month: true
+        %i[lifetime period month_by_month], solr_request,
+        start_date: Time.zone.parse('Dec 2015'), end_date: Time.zone.parse('Apr 2016'),
+        per_month: true
       )
     end
 
@@ -382,21 +367,21 @@ RSpec.describe AcademicCommons::Metrics::UsageStatistics, integration: true do
   describe '.time_period' do
     subject(:time_period) { usage_stats.instance_eval { time_period } }
 
-    context 'when start and end date available' do
-      let(:usage_stats) { AcademicCommons::Metrics::UsageStatistics.new(solr_params, Time.zone.parse('Jan 2015'), Time.zone.parse('Dec 2016')) }
+    context 'when calculating period stats' do
+      let(:usage_stats) { AcademicCommons::Metrics::UsageStatistics.new(:period, solr_params, start_date: Time.zone.parse('Jan 2015'), end_date: Time.zone.parse('Dec 2016')) }
 
       it { is_expected.to eq 'Jan 2015 - Dec 2016' }
     end
 
-    context 'when start and end date not available' do
-      let(:usage_stats) { AcademicCommons::Metrics::UsageStatistics.new(solr_params) }
+    context 'when only calculating lifetime stats' do
+      let(:usage_stats) { AcademicCommons::Metrics::UsageStatistics.new(:lifetime, solr_params) }
 
       it { is_expected.to eq 'Lifetime' }
     end
 
     context 'when stats are for one month' do
       let(:date) { Date.current }
-      let(:usage_stats) { AcademicCommons::Metrics::UsageStatistics.new(solr_params, date, date) }
+      let(:usage_stats) { AcademicCommons::Metrics::UsageStatistics.new(:period, solr_params, start_date: date, end_date: date) }
 
       it { is_expected.to eq date.strftime('%b %Y') }
     end
