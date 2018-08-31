@@ -93,8 +93,7 @@ class CatalogController < ApplicationController
                                                          fq: 'degree_grantor_ssim:("Columbia University" OR "Teachers College" OR "Union Theological Seminary")'
                                                        }
                                                      }
-
-    # config.add_facet_field 'type_of_resource_ssim', label: 'Resource Type', if: current_user.admin?
+    config.add_facet_field 'type_of_resource_ssim', label: 'Resource Type', if: ->(context, _, _) { context.current_user&.admin? }
 
     # Have BL send all facet field names to Solr, which has been the default
     # previously. Simply remove these lines if you'd rather use Solr request
