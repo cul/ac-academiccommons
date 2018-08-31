@@ -18,9 +18,9 @@ class UsageStatisticsReportsForm < FormObject
   }.freeze
 
   ORDER = {
-    'Title (A-Z)' => 'title',
-    'Most Views' => 'views',
-    'Most Downloads' => 'downloads'
+    'Title (A-Z)' => 'Title',
+    'Most Views' => Statistic::VIEW,
+    'Most Downloads' => Statistic::DOWNLOAD
   }.freeze
 
   attr_accessor :filters, :time_period, :order, :display, :usage_stats,

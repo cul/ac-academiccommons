@@ -43,35 +43,35 @@
     <% @usage_stats.each do |item| %>
       <tr>
         <td><%= link_to item.document["title_ssi"], item.document.full_doi %></td>
-        <td class="cell"><%= item.get_stat(Statistic::VIEW, 'Period') %></td>
+        <td class="cell"><%= item.get_stat(Statistic::VIEW, :period) %></td>
         <% if @streams %>
-          <td class="cell"><%= item.get_stat(Statistic::STREAM, 'Period') %></td>
+          <td class="cell"><%= item.get_stat(Statistic::STREAM, :period) %></td>
         <% end %>
-        <td class="cell"><%= item.get_stat(Statistic::DOWNLOAD, 'Period') %></td>
+        <td class="cell"><%= item.get_stat(Statistic::DOWNLOAD, :period) %></td>
 
         <% if lifetime %>
-          <td style="padding: 0px 10px 0px 20px"><%= item.get_stat(Statistic::VIEW, 'Lifetime') %></td>
+          <td style="padding: 0px 10px 0px 20px"><%= item.get_stat(Statistic::VIEW, :lifetime) %></td>
           <% if @streams %>
-            <td class="cell"><%= item.get_stat(Statistic::STREAM, 'Lifetime') %></td>
+            <td class="cell"><%= item.get_stat(Statistic::STREAM, :lifetime) %></td>
           <% end %>
-          <td class="cell"><%= item.get_stat(Statistic::DOWNLOAD, 'Lifetime') %></td>
+          <td class="cell"><%= item.get_stat(Statistic::DOWNLOAD, :lifetime) %></td>
         <% end %>
       </tr>
     <% end %>
 
     <tr>
       <td><b>Totals:</b></td>
-      <td class="cell"><b><%= @usage_stats.total_for(Statistic::VIEW, 'Period') %></b></td>
+      <td class="cell"><b><%= @usage_stats.total_for(Statistic::VIEW, :period) %></b></td>
       <% if @streams %>
-        <td class="cell"><b><%= @usage_stats.total_for(Statistic::STREAM, 'Period') %></b></td>
+        <td class="cell"><b><%= @usage_stats.total_for(Statistic::STREAM, :period) %></b></td>
       <% end %>
-      <td class="cell"><b><%= @usage_stats.total_for(Statistic::DOWNLOAD, "Period") %></b></td>
+      <td class="cell"><b><%= @usage_stats.total_for(Statistic::DOWNLOAD, :period) %></b></td>
       <% if lifetime %>
-        <td style="padding: 0px 10px 0px 20px"><b><%= @usage_stats.total_for(Statistic::VIEW, 'Lifetime') %></b></td>
+        <td style="padding: 0px 10px 0px 20px"><b><%= @usage_stats.total_for(Statistic::VIEW, :lifetime) %></b></td>
         <% if @streams %>
-          <td class="cell"><b><%= @usage_stats.total_for(Statistic::STREAM, "Lifetime") %></b></td>
+          <td class="cell"><b><%= @usage_stats.total_for(Statistic::STREAM, :lifetime) %></b></td>
         <% end %>
-        <td class="cell"><b><%= @usage_stats.total_for(Statistic::DOWNLOAD, "Lifetime") %></b></td>
+        <td class="cell"><b><%= @usage_stats.total_for(Statistic::DOWNLOAD, :lifetime) %></b></td>
       <% end %>
     </tr>
   </table>

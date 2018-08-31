@@ -9,10 +9,10 @@ module AcademicCommons
         @stats = { Statistic::VIEW => {}, Statistic::DOWNLOAD => {}, Statistic::STREAM => {} }
       end
 
-      def get_stat(event, time='Period') # time can be Lifetime, Period, month-year
-        unless /Lifetime|Period|\w{3} \d{4}/.match(time)
+      def get_stat(event, time = :period) # time can be Lifetime, Period, month-year
+        unless [PERIOD, LIFETIME].include?(time) || /^\w{3} \d{4}$/.match(time)
           # Mon year format can only be used if per_month is true
-          raise 'time must be Lifetime, Period or Mon Year'
+          raise 'time must be :lifetime, :period or \'Mon Year\''
         end
 
         if @stats.key?(event) && @stats[event].key?(time)

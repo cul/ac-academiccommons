@@ -4,10 +4,11 @@ module AcademicCommons
       include Enumerable
       include AcademicCommons::Metrics::Output
 
-      attr_reader :to_calculate, :start_date, :end_date, :solr_params, :options, :item_stats
+      attr_reader :to_calculate, :start_date, :end_date, :solr_params, :options,
+                  :item_stats, :ordered_by
 
       DEFAULT_OPTIONS = {
-        include_streaming: false, order_by: nil, requested_by: nil
+        include_streaming: false, requested_by: nil
       }.freeze
 
       DEFAULT_SOLR_PARAMS = {
@@ -26,14 +27,13 @@ module AcademicCommons
       #
       # The second parameter is the solr search that should be conducted. When
       # calculating period and month by month statistics, a start and end date
-      # is required. Order can only be applied when one type of statistics is
-      # calculated.
+      # is required.
       #
       # @example
       #   solr_params = { q: nil }
       #   AcademicCommons::Metrics::UsageStatistics.new(
-      #     :lifetime, solr_params, order_by: 'views'
-      #   )
+      #     :lifetime, solr_params
+      #   ).order_by(:lifetime, :views)
       #
       # @param [Symbol|Array] to_calculate lists statistics that should be calculated
       # @param [Hash] solr_params parameters to conduct solr query with
@@ -41,7 +41,6 @@ module AcademicCommons
       # @option options [Date|Time] :start_date starting date to calculate stats for, time of day is ignored and set to 00:00
       # @option options [Date|Time] :end_date end date to calculate stats for, time of day is ignored and set to 23:59
       # @option options [Boolean] :include_streaming flag to indicate whether streaming statistics should be calculated
-      # @option options [String] :order_by most number of downloads or views, by default orders by title, order can only be done if only one type of stats are calculated
       # @option options [User|nil] :requested_by User that requested the report, nil if no use provided
       def initialize(to_calculate, solr_params, **options)
         @to_calculate = Array.wrap(to_calculate)
@@ -70,7 +69,6 @@ module AcademicCommons
         generate_lifetime_stats
         generate_period_stats
         generate_month_by_month_stats
-        order_results
       end
 
       def item(id)
@@ -93,26 +91,25 @@ module AcademicCommons
       # @return [String] time_period
       def time_period
         if to_calculate == [:lifetime]
-          LIFETIME
+          LIFETIME.to_s.titlecase
         else
           [start_date.strftime(MONTH_KEY), end_date.strftime(MONTH_KEY)].uniq.join(' - ')
         end
       end
 
-      private
-
-      def order_results
-        return if to_calculate.count > 1 || to_calculate.first == :month_by_month
-
-        if options[:order_by] == 'views' || options[:order_by] == 'downloads'
-          time = to_calculate.first.to_s.titlecase
-          event = options[:order_by].singularize.titlecase
-
-          @item_stats.sort! do |x, y|
-            y.get_stat(event, time) <=> x.get_stat(event, time)
-          end
+      # Method to order item stats by the provided time and event.
+      #
+      # @param [String] event one of View, Download or Stream
+      # @param [String] time one of Period, Lifetime, Month Year
+      def order_by(time, event)
+        @item_stats.sort! do |x, y|
+          y.get_stat(event, time) <=> x.get_stat(event, time)
         end
+        @ordered_by = "#{time} #{event.pluralize}"
+        self
       end
+
+      private
 
       # Creates list of month and year strings in order from the startdate to the
       # enddate given.
@@ -205,7 +202,7 @@ module AcademicCommons
 
       def get_solr_documents(params)
         params = params.merge(DEFAULT_SOLR_PARAMS)
-        params[:sort] = 'title_sort asc' if(params[:sort].blank? || options[:order_by] == 'title')
+        params[:sort] = 'title_sort asc'
         params[:fq] = params.fetch(:fq, []).clone << "has_model_ssim:\"#{ContentAggregator.to_class_uri}\""
         # Add filter to remove embargoed items, free_to_read date must be equal to or less than Date.current
         Blacklight.default_index.search(params).documents

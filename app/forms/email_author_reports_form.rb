@@ -1,7 +1,11 @@
 class EmailAuthorReportsForm < FormObject
   MONTHS = Date::ABBR_MONTHNAMES.dup[1..12].freeze
   REPORTS_FOR_OPTIONS = ['one', 'all'].freeze
-  ORDER_WORKS_BY_OPTIONS = ['titles', 'views', 'downloads'].freeze
+  ORDER = {
+    'Title (A-Z)' => 'Title',
+    'Most Views' => Statistic::VIEW,
+    'Most Downloads' => Statistic::DOWNLOAD
+  }.freeze
   DELIVER_OPTIONS = ['reports_to_each_author', 'do_not_send_email', 'all_reports_to_one_email'].freeze
 
   attr_accessor :reports_for, :uni, :month, :year, :order_works_by,
@@ -15,7 +19,7 @@ class EmailAuthorReportsForm < FormObject
   validates :deliver,        inclusion: { in: DELIVER_OPTIONS }
   validates :reports_for,    inclusion: { in: REPORTS_FOR_OPTIONS }
   validates :month,          inclusion: { in: MONTHS }
-  validates :order_works_by, inclusion: { in: ORDER_WORKS_BY_OPTIONS }
+  validates :order_works_by, inclusion: { in: ORDER.values }
 
   def send_emails
     return false unless valid?
@@ -65,8 +69,8 @@ class EmailAuthorReportsForm < FormObject
         solr_params = { q: nil, fq: ["author_uni_ssim:\"#{author_id}\""] }
         usage_stats = AcademicCommons::Metrics::UsageStatistics.new(
           %i[lifetime period], solr_params,
-          start_date: startdate, end_date: enddate, order_by: order_works_by
-        )
+          start_date: startdate, end_date: enddate
+        ).order_by(:period, order_works_by)
 
         send_to = deliver == 'all_reports_to_one_email' ? email : author[:email]
         raise 'no email address found' if send_to.nil?
