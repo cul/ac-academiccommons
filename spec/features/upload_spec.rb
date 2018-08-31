@@ -110,6 +110,7 @@ RSpec.describe 'Upload', type: :feature do
         fill_in 'Year Created*', with: '2017'
         select 'No Copyright', from: 'Copyright Status*'
         attach_file nil, fixture('test_file.txt'), class: 'dz-hidden-input', visible: false
+        sleep(3) # Adding sleep so file properly attaches
         click_button 'Submit'
       end
 
