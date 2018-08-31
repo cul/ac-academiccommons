@@ -23,7 +23,12 @@ RSpec.describe StatisticsMailer, type: :mailer do
         }, {}
       )
     end
-    let(:usage_stats) { AcademicCommons::Metrics::UsageStatistics.new(solr_request, Date.new(2017, 1, 1).in_time_zone, Date.new(2017, 1, 31).in_time_zone) }
+    let(:usage_stats) do
+      AcademicCommons::Metrics::UsageStatistics.new(
+        %i[lifetime period], solr_request,
+        start_date: Date.new(2017, 1, 1).in_time_zone, end_date: Date.new(2017, 1, 31).in_time_zone
+      )
+    end
     let(:mail) do
       StatisticsMailer.author_monthly('abc123@columbia.edu', 'abc123', usage_stats, '')
     end

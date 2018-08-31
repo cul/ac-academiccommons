@@ -71,7 +71,7 @@ class UserController < ApplicationController
     solr_params = { q: nil, fq: ["author_uni_ssim:\"#{current_user.uid}\""] }
 
     AcademicCommons::Metrics::UsageStatistics.new(
-      solr_params, startdate, enddate, order_by: 'titles'
+      %i[lifetime period], solr_params, start_date: startdate, end_date: enddate
     )
   end
 end

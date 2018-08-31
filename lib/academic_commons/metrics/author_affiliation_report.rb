@@ -7,7 +7,7 @@ module AcademicCommons
         # Usage stats for all items
         solr_params = { q: nil } # sort by id?
 
-        usage_stats = UsageStatistics.new(solr_params)
+        usage_stats = UsageStatistics.new(:lifetime, solr_params)
 
         headers = [
           'doi', 'legacy id', 'lifetime downloads', 'lifetime views',
