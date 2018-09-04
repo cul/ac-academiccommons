@@ -24,6 +24,18 @@ describe 'Search Results Page', type: :feature do
     expect(page).to have_button 'Sort by Published Earliest'
   end
 
+  context 'when admin logged in' do
+    include_context 'admin user for feature'
+
+    before do
+      visit search_catalog_path(q: 'alice')
+    end
+
+    it 'displays resource type facet' do
+      expect(page).to have_content 'Resource Type'
+    end
+  end
+
   context 'expects query results page to' do
     before do
       visit search_catalog_path(q: 'alice')
@@ -59,6 +71,10 @@ describe 'Search Results Page', type: :feature do
     it 'have facets for type' do
       click_link 'Type'
       expect(page).to have_css('span.facet-label > a.facet_select', text: 'Articles')
+    end
+
+    it 'does not have facet for resource type' do
+      expect(page).not_to have_content('Resource Type')
     end
 
     it '\'more \' link for subject facets is present' do
