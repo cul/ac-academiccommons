@@ -6,7 +6,7 @@
     </agent>
   </metsHdr>
   <dmdSec ID="sword-mets-dmd-1">
-    <mdwrap MDTYPE="MODS">
+    <mdWrap MDTYPE="MODS">
       <xmlData>
         <mods:mods>
           <mods:titleInfo>
