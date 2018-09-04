@@ -54,7 +54,7 @@ class Deposit < ApplicationRecord
           end
         end
         xml.dmdSec('ID': 'sword-mets-dmd-1') do
-          xml.mdwrap('MDTYPE': 'MODS') do
+          xml.mdWrap('MDTYPE': 'MODS') do
             xml.xmlData do
               xml['mods'].mods do
                 xml['mods'].titleInfo do
