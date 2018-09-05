@@ -62,6 +62,7 @@ describe SolrDocument do
         allow(Blacklight.default_index.connection).to receive(:get)
           .with('select', params: expected_params)
           .and_return(solr_response)
+          .once
       end
 
       it 'calls solr with expected params' do
@@ -72,23 +73,6 @@ describe SolrDocument do
         expect(document.assets.map { |a| a[:id] }).to match_array ['actest:2', 'actest:10']
         non_urls = document.assets.map(&:thumbnail).detect { |val| val !~ %r{http:\/\/.*jpg} }
         expect(non_urls).to be_falsey
-      end
-    end
-
-    context 'includes non-active' do
-      let(:expected_params) do
-        {
-          qt: 'search', fl: '*',
-          fq: ["cul_member_of_ssim:\"info:fedora/#{document[:id]}\""],
-          rows: 10_000, facet: false
-        }
-      end
-
-      it 'calls solr with expected params' do
-        expect(Blacklight.default_index.connection).to receive(:get)
-          .with('select', params: expected_params)
-          .and_return(:empty_response)
-        document.assets(include_inactive: true)
       end
     end
 
@@ -103,7 +87,7 @@ describe SolrDocument do
 
       it 'calls solr with expected params' do
         expect(Blacklight.default_index.connection).not_to receive(:get)
-        document.assets(include_inactive: true)
+        document.assets
       end
     end
 
@@ -118,7 +102,7 @@ describe SolrDocument do
 
       it 'calls solr with expected params' do
         expect(Blacklight.default_index.connection).not_to receive(:get)
-        document.assets(include_inactive: true)
+        document.assets
       end
     end
 
@@ -134,7 +118,7 @@ describe SolrDocument do
       let(:expected_params) do
         {
           qt: 'search', fl: '*',
-          fq: ["cul_member_of_ssim:\"info:fedora/#{document[:fedora3_pid_ssi]}\""],
+          fq: ["cul_member_of_ssim:\"info:fedora/#{document[:fedora3_pid_ssi]}\"", 'object_state_ssi:A'],
           rows: 10_000, facet: false
         }
       end
@@ -143,7 +127,7 @@ describe SolrDocument do
         expect(Blacklight.default_index.connection).to receive(:get)
           .with('select', params: expected_params)
           .and_return(:empty_response)
-        document.assets(include_inactive: true)
+        document.assets
       end
     end
   end

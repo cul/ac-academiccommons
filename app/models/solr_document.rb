@@ -87,21 +87,26 @@ class SolrDocument
     AcademicCommons.identifier_url(doi)
   end
 
-  def assets(include_inactive: false)
-    return [] unless free_to_read?(self)
-    obj_display = fetch('fedora3_pid_ssi', nil)
+  # Returns all active child assets.
+  def assets
+    return @assets if @assets
 
-    member_search = {
-      qt: 'search',
-      fl: '*',
-      fq: ["cul_member_of_ssim:\"info:fedora/#{obj_display}\""],
-      rows: 10_000,
-      facet: false
-    }
-    member_search[:fq] << 'object_state_ssi:A' unless include_inactive
-    response = Blacklight.default_index.connection.get 'select', params: member_search
-    docs = response['response']['docs']
-    @assets ||= docs.map { |member| SolrDocument.new(member) }
+    if free_to_read?(self)
+      obj_display = fetch('fedora3_pid_ssi', nil)
+
+      member_search = {
+        qt: 'search',
+        fl: '*',
+        fq: ["cul_member_of_ssim:\"info:fedora/#{obj_display}\"", 'object_state_ssi:A'],
+        rows: 10_000,
+        facet: false
+      }
+      response = Blacklight.default_index.connection.get 'select', params: member_search
+      docs = response['response']['docs']
+      @assets = docs.map { |member| SolrDocument.new(member) }
+    else
+      @assets = []
+    end
   rescue StandardError => e
     Rails.logger.error e.message
     return []
