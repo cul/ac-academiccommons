@@ -13,7 +13,7 @@ module AcademicCommons
           ['Period Covered by Report:', period_covered || time_period],
           ['Raw Query:', solr_params.inspect],
           ['Order:', (ordered_by || 'Title').titlecase],
-          ['Report created by:', options[:requested_by].nil? ? 'N/A' : "#{options[:requested_by]} (#{options[:requested_by].uid})"],
+          ['Report created by:', requested_by.nil? ? 'N/A' : "#{requested_by} (#{requested_by.uid})"],
           ['Report created on:', Time.current.strftime('%Y-%m-%d')],
           ['Total number of items:', count]
         ]

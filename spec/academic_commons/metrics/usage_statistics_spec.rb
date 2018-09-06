@@ -5,7 +5,7 @@ RSpec.describe AcademicCommons::Metrics::UsageStatistics, integration: true do
   let(:doi) { '10.7916/ALICE' }
   let(:doi5) { '10.7916/TESTDOC5' }
   let(:empty_response) { { 'response' => { 'docs' => [] } } }
-  let(:usage_stats) { AcademicCommons::Metrics::UsageStatistics.new(:lifetime, {}) }
+  let(:usage_stats) { AcademicCommons::Metrics::UsageStatistics.new.calculate_lifetime }
   let(:solr_request) { { q: nil, fq: ["author_uni_ssim:\"#{uni}\""] } }
   let(:solr_params) do
     {
@@ -43,7 +43,9 @@ RSpec.describe AcademicCommons::Metrics::UsageStatistics, integration: true do
       end
 
       context 'when requesting stats for an author with embargoed material' do
-        subject(:usage_stats) { AcademicCommons::Metrics::UsageStatistics.new(:lifetime, solr_request) }
+        subject(:usage_stats) do
+          AcademicCommons::Metrics::UsageStatistics.new(solr_params: solr_request).calculate_lifetime
+        end
 
         let(:solr_response) do
           Blacklight::Solr::Response.new(
@@ -80,7 +82,9 @@ RSpec.describe AcademicCommons::Metrics::UsageStatistics, integration: true do
         end
 
         subject(:usage_stats) do
-          AcademicCommons::Metrics::UsageStatistics.new(:lifetime, solr_request, include_streaming: true)
+          AcademicCommons::Metrics::UsageStatistics.new(
+            solr_params: solr_request, include_streaming: true
+          ).calculate_lifetime
         end
 
         it 'returns correct results' do
@@ -103,10 +107,9 @@ RSpec.describe AcademicCommons::Metrics::UsageStatistics, integration: true do
       context 'when requesting stats for current month' do
         subject(:usage_stats) do
           AcademicCommons::Metrics::UsageStatistics.new(
-            %i[lifetime period], solr_request,
-            start_date: Date.current - 1.month, end_date: Date.current,
-            include_streaming: true
-          )
+            solr_params: solr_request, start_date: Date.current - 1.month,
+            end_date: Date.current, include_streaming: true
+          ).calculate_lifetime.calculate_period
         end
 
         it 'returns correct results' do
@@ -126,10 +129,9 @@ RSpec.describe AcademicCommons::Metrics::UsageStatistics, integration: true do
       context 'when requesting stats for previous month' do
         subject(:usage_stats) do
           AcademicCommons::Metrics::UsageStatistics.new(
-            %i[lifetime period], solr_request,
-            start_date: Date.current - 2.months, end_date: Date.current - 1.month,
-            include_streaming: true
-          )
+            solr_params: solr_request, start_date: Date.current - 2.months,
+            end_date: Date.current - 1.month, include_streaming: true
+          ).calculate_lifetime.calculate_period
         end
 
         it 'returns correct results' do
@@ -149,9 +151,9 @@ RSpec.describe AcademicCommons::Metrics::UsageStatistics, integration: true do
       context 'when requesting stats without streaming' do
         subject(:usage_stats) do
           AcademicCommons::Metrics::UsageStatistics.new(
-            %i[lifetime period], solr_request, start_date: Date.current - 1.month,
+            solr_params: solr_request, start_date: Date.current - 1.month,
             end_date: Date.current
-          )
+          ).calculate_lifetime.calculate_period
         end
 
         it 'returns correct totals' do
@@ -170,7 +172,7 @@ RSpec.describe AcademicCommons::Metrics::UsageStatistics, integration: true do
     end
 
     it 'returns correct list' do
-      usage_stats = AcademicCommons::Metrics::UsageStatistics.new(:month_by_month, {}, start_date: dates.first, end_date: dates.last)
+      usage_stats = AcademicCommons::Metrics::UsageStatistics.new(start_date: dates.first, end_date: dates.last).calculate_month_by_month
       result = usage_stats.instance_eval { months_list }
       expect(result).to eq dates
     end
@@ -195,9 +197,9 @@ RSpec.describe AcademicCommons::Metrics::UsageStatistics, integration: true do
     end
     let(:usage_stats) do
       AcademicCommons::Metrics::UsageStatistics.new(
-        :period, solr_request, start_date: Time.zone.parse('Jan 2015'),
+        solr_params: solr_request, start_date: Time.zone.parse('Jan 2015'),
         end_date: Time.zone.parse('Dec 2016')
-      ).order_by(:period, Statistic::VIEW)
+      ).calculate_period.order_by(:period, Statistic::VIEW)
     end
 
     before do
@@ -243,9 +245,9 @@ RSpec.describe AcademicCommons::Metrics::UsageStatistics, integration: true do
     end
     let(:usage_stats) do
       AcademicCommons::Metrics::UsageStatistics.new(
-        :month_by_month, solr_request, per_month: true,
-        start_date: Time.zone.parse('Jan 2015'), end_date: Time.zone.parse('Dec 2016')
-      )
+        solr_params: solr_request, start_date: Time.zone.parse('Jan 2015'),
+        end_date: Time.zone.parse('Dec 2016')
+      ).calculate_month_by_month
     end
 
     before do
@@ -268,10 +270,9 @@ RSpec.describe AcademicCommons::Metrics::UsageStatistics, integration: true do
   describe '#item' do
     subject(:usage_stats) do
       AcademicCommons::Metrics::UsageStatistics.new(
-        %i[lifetime period month_by_month], solr_request,
-        start_date: Time.zone.parse('Dec 2015'), end_date: Time.zone.parse('Apr 2016'),
-        per_month: true
-      )
+        solr_params: solr_request, start_date: Time.zone.parse('Dec 2015'),
+        end_date: Time.zone.parse('Apr 2016')
+      ).calculate_lifetime.calculate_period.calculate_month_by_month
     end
 
     before do
@@ -368,20 +369,20 @@ RSpec.describe AcademicCommons::Metrics::UsageStatistics, integration: true do
     subject(:time_period) { usage_stats.instance_eval { time_period } }
 
     context 'when calculating period stats' do
-      let(:usage_stats) { AcademicCommons::Metrics::UsageStatistics.new(:period, solr_params, start_date: Time.zone.parse('Jan 2015'), end_date: Time.zone.parse('Dec 2016')) }
+      let(:usage_stats) { AcademicCommons::Metrics::UsageStatistics.new(solr_params: solr_params, start_date: Time.zone.parse('Jan 2015'), end_date: Time.zone.parse('Dec 2016')).calculate_period }
 
       it { is_expected.to eq 'Jan 2015 - Dec 2016' }
     end
 
     context 'when only calculating lifetime stats' do
-      let(:usage_stats) { AcademicCommons::Metrics::UsageStatistics.new(:lifetime, solr_params) }
+      let(:usage_stats) { AcademicCommons::Metrics::UsageStatistics.new(solr_params: solr_params).calculate_lifetime }
 
       it { is_expected.to eq 'Lifetime' }
     end
 
     context 'when stats are for one month' do
       let(:date) { Date.current }
-      let(:usage_stats) { AcademicCommons::Metrics::UsageStatistics.new(:period, solr_params, start_date: date, end_date: date) }
+      let(:usage_stats) { AcademicCommons::Metrics::UsageStatistics.new(solr_params: solr_params, start_date: date, end_date: date).calculate_period }
 
       it { is_expected.to eq date.strftime('%b %Y') }
     end
