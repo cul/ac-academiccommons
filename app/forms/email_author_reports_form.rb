@@ -66,11 +66,16 @@ class EmailAuthorReportsForm < FormObject
       begin
         author_id = author[:id]
 
-        solr_params = { q: nil, fq: ["author_uni_ssim:\"#{author_id}\""] }
-        usage_stats = AcademicCommons::Metrics::UsageStatistics.new(
-          %i[lifetime period], solr_params,
-          start_date: startdate, end_date: enddate
-        ).order_by(:period, order_works_by)
+        options = {
+          start_date: startdate,
+          end_date: enddate,
+          solr_params: { q: nil, fq: ["author_uni_ssim:\"#{author_id}\""] }
+        }
+
+        usage_stats = AcademicCommons::Metrics::UsageStatistics.new(options)
+                                                               .calculate_lifetime
+                                                               .calculate_period
+                                                               .order_by(:period, order_works_by)
 
         send_to = deliver == 'all_reports_to_one_email' ? email : author[:email]
         raise 'no email address found' if send_to.nil?

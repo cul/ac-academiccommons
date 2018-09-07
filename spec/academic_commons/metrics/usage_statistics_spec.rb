@@ -44,7 +44,8 @@ RSpec.describe AcademicCommons::Metrics::UsageStatistics, integration: true do
 
       context 'when requesting stats for an author with embargoed material' do
         subject(:usage_stats) do
-          AcademicCommons::Metrics::UsageStatistics.new(solr_params: solr_request).calculate_lifetime
+          options = { solr_params: solr_request }
+          AcademicCommons::Metrics::UsageStatistics.new(options).calculate_lifetime
         end
 
         let(:solr_response) do

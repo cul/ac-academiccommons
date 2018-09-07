@@ -25,9 +25,9 @@ RSpec.describe StatisticsMailer, type: :mailer do
     end
     let(:usage_stats) do
       AcademicCommons::Metrics::UsageStatistics.new(
-        %i[lifetime period], solr_request,
+        solr_params: solr_request,
         start_date: Date.new(2017, 1, 1).in_time_zone, end_date: Date.new(2017, 1, 31).in_time_zone
-      )
+      ).calculate_lifetime.calculate_period
     end
     let(:mail) do
       StatisticsMailer.author_monthly('abc123@columbia.edu', 'abc123', usage_stats, '')

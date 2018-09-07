@@ -9,7 +9,7 @@ class StatisticsMailer < ApplicationMailer
     full_from = "\"Academic Commons\" <#{from}>"
 
     subject = "Academic Commons Monthly Download Report for #{@usage_stats.time_period}"
-    @streams = @usage_stats.options[:include_streaming]
+    @streams = @usage_stats.include_streaming
     @optional_note = optional_note
 
     mail(to: recipients, from: full_from, subject: subject)

@@ -42,11 +42,11 @@ module AcademicCommons
       # @param [Boolean] include_streaming flag to indicate whether streaming statistics should be calculated
       # @param [User|nil] requested_by User that requested the report, nil if no use provided
       def initialize(solr_params: {}, start_date: nil, end_date: nil, include_streaming: false, requested_by: nil)
-        @solr_params = solr_params
-        @start_date = start_date
-        @end_date = end_date
+        @solr_params       = solr_params
+        @start_date        = start_date
+        @end_date          = end_date
         @include_streaming = include_streaming
-        @requested_by = requested_by
+        @requested_by      = requested_by
 
         @calculated = []
         @totals = { Statistic::VIEW => {}, Statistic::DOWNLOAD => {}, Statistic::STREAM => {} }
