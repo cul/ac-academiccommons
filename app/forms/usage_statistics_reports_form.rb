@@ -26,11 +26,11 @@ class UsageStatisticsReportsForm < FormObject
   attr_accessor :filters, :time_period, :order, :display, :usage_stats,
                 :start_date, :end_date, :requested_by
 
-  validates :time_period, :display, :order, presence: true
+  validates :time_period, :display, presence: true
   validates :start_date, :end_date, presence: true, if: proc { |a| a.time_period == 'date_range' }
   validates :display,     inclusion: { in: DISPLAY_OPTIONS }
   validates :time_period, inclusion: { in: TIME_PERIOD_OPTIONS }
-  validates :order,       inclusion: { in: ORDER.values }
+  validates :order,       inclusion: { in: ORDER.values }, unless: proc { |a| a.order.blank? }
   validate  :filters_must_have_a_value
 
   def generate_statistics

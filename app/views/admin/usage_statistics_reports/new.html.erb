@@ -36,12 +36,10 @@
   <div class="form-group">
     <%= f.label :time_period, 'Time Period', class: 'col-sm-3  control-label' %>
     <div class="col-sm-9 radio">
-
-          <%= f.radio_button(:time_period, 'lifetime') %>
-          <%= f.label(:time_period_lifetime, 'Lifetime') %>
-          <%= f.radio_button(:time_period, 'date_range') %>
-          <%= f.label(:time_period_date_range, 'Date Range') %>
-
+      <%= f.radio_button(:time_period, 'lifetime') %>
+      <%= f.label(:time_period_lifetime, 'Lifetime') %>
+      <%= f.radio_button(:time_period, 'date_range') %>
+      <%= f.label(:time_period_date_range, 'Date Range') %>
 
       <div class="row">
         <%= f.fields_for :start_date do |start_date_form| %>
@@ -49,13 +47,15 @@
 
           <div class="col-sm-3">
             <%= start_date_form.select :month, UsageStatisticsReportsForm::MONTHS,
-                                       class: 'form-control col-sm-4',
-                                       selected: @usage_statistics_reports_form.start_date&.fetch(:month) %>
+                                       { selected: @usage_statistics_reports_form.start_date&.fetch(:month) },
+                                       disabled: @usage_statistics_reports_form.time_period == 'lifetime',
+                                       class: 'form-control col-sm-4'%>
           </div>
            <div class="col-sm-3">
             <%= start_date_form.select :year, Statistic::YEAR_BEG..Date.current.year,
-                                       class: 'form-control',
-                                       selected: @usage_statistics_reports_form.start_date&.fetch(:year) %>
+                                       { selected: @usage_statistics_reports_form.start_date&.fetch(:year) },
+                                       disabled: @usage_statistics_reports_form.time_period == 'lifetime',
+                                       class: 'form-control' %>
           </div>
         <% end %>
       </div>
@@ -66,13 +66,15 @@
 
           <div class="col-sm-3">
             <%= start_date_form.select :month, UsageStatisticsReportsForm::MONTHS,
-                                        class: 'form-control col-sm-2',
-                                        selected: @usage_statistics_reports_form.end_date&.fetch(:month) %>
+                                       { selected: @usage_statistics_reports_form.end_date&.fetch(:month) },
+                                       disabled: @usage_statistics_reports_form.time_period == 'lifetime',
+                                       class: 'form-control col-sm-2' %>
           </div>
            <div class="col-sm-3">
             <%= start_date_form.select :year, Statistic::YEAR_BEG..Date.current.year,
-                                       class: 'form-control',
-                                       selected: @usage_statistics_reports_form.end_date&.fetch(:year) %>
+                                       { selected: @usage_statistics_reports_form.end_date&.fetch(:year) },
+                                       disabled: @usage_statistics_reports_form.time_period == 'lifetime',
+                                       class: 'form-control' %>
           </div>
         <% end %>
       </div>
@@ -82,7 +84,10 @@
   <div class="form-group">
     <%= f.label :order, 'Order', class: 'col-sm-3 control-label' %>
     <div class="col-sm-4">
-      <%= f.select(:order, UsageStatisticsReportsForm::ORDER) %>
+      <%= f.select(:order, UsageStatisticsReportsForm::ORDER, {}, disabled: @usage_statistics_reports_form.display == 'month_by_month') %>
+    </div>
+    <div class="col-sm-5">
+      <span class="help-block">Order can only be applied to a summary table.</span>
     </div>
   </div>
 
@@ -92,7 +97,7 @@
       <%= f.radio_button(:display, 'summary') %>
       <%= f.label(:display_summary, 'Summary Table') %>
       <%= f.radio_button(:display, 'month_by_month') %>
-      <%= f.label(:display_month_by_month, 'Month-by-month totals') %>
+      <%= f.label(:display_month_by_month, 'Month-by-Month Totals') %>
     </div>
   </div>
 

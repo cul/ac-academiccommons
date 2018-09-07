@@ -86,6 +86,12 @@ form,
     width: 100%;
   }
 
+  & select:disabled {
+    background-color: #ddd;
+    opacity: .7;
+    cursor: not-allowed;
+  }
+
   & .field_with_errors {
 
     & input,
@@ -198,6 +204,11 @@ form,
 
   & .disabled-input input[type=text] {
     width: auto;
+  }
+
+  & .help-block {
+    font-size: 87%;
+    margin-top: 0px;
   }
 }
 
