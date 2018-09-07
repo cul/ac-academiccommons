@@ -179,7 +179,7 @@ RSpec.describe AcademicCommons::Metrics::UsageStatistics, integration: true do
     end
   end
 
-  describe '#time_period_csv' do
+  describe '#period_csv' do
     let(:uni) { 'abc123' }
     let(:expected_csv) do
       [
@@ -216,7 +216,7 @@ RSpec.describe AcademicCommons::Metrics::UsageStatistics, integration: true do
     end
 
     it 'creates the expected csv' do
-      csv = usage_stats.time_period_csv
+      csv = usage_stats.period_csv
       expect(CSV.parse(csv)).to match expected_csv
     end
   end

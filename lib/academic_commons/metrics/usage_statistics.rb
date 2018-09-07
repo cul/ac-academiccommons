@@ -60,7 +60,7 @@ module AcademicCommons
         results.reject!(&:embargoed?)
         @item_stats = results.map { |doc| AcademicCommons::Metrics::ItemStats.new(doc) }
 
-        return if @item_stats.empty?
+        # return if @item_stats.empty?
       end
 
       def item(id)
@@ -91,8 +91,8 @@ module AcademicCommons
 
       # Order items by the provided time and event stats.
       #
-      # @param [String] event one of View, Download or Stream
       # @param [String] time one of Period, Lifetime, Month Year
+      # @param [String] event one of View, Download or Stream
       def order_by(time, event)
         @item_stats.sort! do |x, y|
           y.get_stat(event, time) <=> x.get_stat(event, time)

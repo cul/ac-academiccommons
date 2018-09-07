@@ -42,38 +42,37 @@ class UsageStatisticsReportsForm < FormObject
       solr_params.filter(f[:field], f[:value])
     end
 
-    options = {}
-    options[:per_month] = true if display == 'month_by_month'
-    options[:order_by] = order
-    options[:requested_by] = requested_by
-
-    s_date = nil
-    e_date = nil
     if time_period == 'lifetime' && display == 'month_by_month'
       s_date = Time.zone.parse("Jan #{Statistic::YEAR_BEG}")
       e_date = Time.current.prev_month.end_of_month
     elsif time_period == 'date_range'
       s_date = Time.zone.parse("#{start_date[:month]} #{start_date[:year]}")
       e_date = Time.zone.parse("#{end_date[:month]} #{end_date[:year]}").end_of_month
+    else
+      s_date = nil
+      e_date = nil
     end
 
     @usage_stats = AcademicCommons::Metrics::UsageStatistics.new(
-      solr_params.to_h, s_date, e_date, options
+      solr_params: solr_params.to_h, start_date: s_date, end_date: e_date, requested_by: requested_by
     )
+
+    @stat_key = if display == 'month_by_month'
+                  :month_by_month
+                elsif time_period == 'date_range'
+                  :period
+                elsif time_period == 'lifetime'
+                  :lifetime
+                end
+
+    usage_stats.send("calculate_#{@stat_key}")
+    usage_stats.order_by(@stat_key, order) if order != 'Title' && @stat_key != :month_by_month
+
+    true
   end
 
   def to_csv
-    case display
-    when 'month_by_month'
-      usage_stats.month_by_month_csv
-    when 'summary'
-      case time_period
-      when 'lifetime'
-        usage_stats.lifetime_csv
-      when 'date_range'
-        usage_stats.time_period_csv
-      end
-    end
+    usage_stats.send("#{@stat_key}_csv")
   end
 
   private

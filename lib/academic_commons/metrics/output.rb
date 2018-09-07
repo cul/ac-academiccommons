@@ -20,7 +20,7 @@ module AcademicCommons
       end
 
       # Returns CSV with statistics for the time period given.
-      def time_period_csv
+      def period_csv
         CSV.generate do |csv|
           report_details.each { |a| csv.add_row(a) }
           csv.add_row [] # Blank row
