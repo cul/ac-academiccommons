@@ -17,7 +17,7 @@ class SwordDepositJob < ApplicationJob
                      .post(credentials['url'], body: deposit.sword_zip)
     rescue StandardError => e
       message = "There was an error deliving a SWORD deposit for deposit record id: #{deposit.id}. Please check logs."
-      ErrorMailer.sword_deposit_error('Error Delivering SWORD Deposit', message).deliver
+      ErrorMailer.sword_deposit_error(message).deliver
       raise e
     end
 
@@ -34,7 +34,7 @@ class SwordDepositJob < ApplicationJob
       AdministrativeMailer.new_deposit(deposit).deliver
     else
       message = "There was an error deliving a SWORD deposit for deposit record id: #{deposit.id}. SWORD deposit returned a status code of #{response.code}. Please check logs."
-      ErrorMailer.sword_deposit_error('Error Delivering SWORD Deposit', message).deliver
+      ErrorMailer.sword_deposit_error(message).deliver
     end
   end
 end
