@@ -58,7 +58,7 @@ module UseAndReproductionHelper
   end
 
   def cc0_designation
-    image = content_tag(:a, rel: 'license', target: '_blank', href: CC0) do
+    image = content_tag(:a, class: 'license', rel: 'license', target: '_blank', href: CC0) do
       content_tag(:span, 'aria-label': 'CC0') do
         content_tag(:span, cc_img_tag(:cc)) + content_tag(:span, cc_img_tag(:zero))
       end
