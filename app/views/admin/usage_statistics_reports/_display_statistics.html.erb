@@ -13,7 +13,7 @@
   <% else %>
     <div class="row">
       <% usage_statistics_paramters = params.to_unsafe_h.slice(:usage_statistics_reports_form) %>
-      <%= button_to 'Export Results to CSV', { action: 'csv' },  { method: :get, params: usage_statistics_paramters, class: 'btn btn-link' } %>
+      <%= button_to 'Export Results to CSV', { action: :create }, { method: :post, params: usage_statistics_paramters.merge!(format: :csv), class: 'btn btn-link' } %>
     </div>
 
     <% case @usage_statistics_reports_form.display %>

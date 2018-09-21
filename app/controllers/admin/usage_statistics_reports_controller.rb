@@ -10,17 +10,11 @@ module Admin
       @usage_statistics_reports_form = UsageStatisticsReportsForm.new(usage_statistics_reports_params)
       @usage_statistics_reports_form.requested_by = current_user
 
-      flash[:error] = @usage_statistics_reports_form.errors.full_messages.to_sentence unless @usage_statistics_reports_form.generate_statistics
-
-      render :new
-    end
-
-    def csv
-      @usage_statistics_reports_form = UsageStatisticsReportsForm.new(usage_statistics_reports_params)
-      @usage_statistics_reports_form.requested_by = current_user
-
       if @usage_statistics_reports_form.generate_statistics
-        send_data @usage_statistics_reports_form.to_csv, type: 'application/csv', filename: 'usage_statistics.csv'
+        respond_to do |f|
+          f.html { render :new }
+          f.csv  { send_data @usage_statistics_reports_form.to_csv, type: 'application/csv', filename: 'usage_statistics.csv' }
+        end
       else
         flash[:error] = @usage_statistics_reports_form.errors.full_messages.to_sentence
         render :new
