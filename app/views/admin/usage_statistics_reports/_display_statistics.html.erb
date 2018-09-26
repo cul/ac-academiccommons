@@ -12,23 +12,19 @@
     <p>No results matched your search</p>
   <% else %>
     <div class="row">
-      <% usage_statistics_paramters = params.to_unsafe_h.slice(:usage_statistics_reports_form) %>
-      <%= button_to 'Export Results to CSV', { action: :create }, { method: :post, params: usage_statistics_paramters.merge!(format: :csv), class: 'btn btn-link' } %>
+      <div class="col-sm-6">
+        <% usage_statistics_paramters = params.to_unsafe_h.slice(:usage_statistics_reports_form) %>
+        <%= button_to 'Export Results to CSV', { action: :create }, { method: :post, params: usage_statistics_paramters.merge!(format: :csv), class: 'btn btn-link' } %>
+      </div>
+      <div class="col-sm-6">
+        <button class="btn btn-link" data-toggle="modal" data-target="#email-modal">Email Results</button>
+      </div>
     </div>
 
-    <% case @usage_statistics_reports_form.display %>
-    <% when 'summary' %>
-      <% case @usage_statistics_reports_form.time_period %>
-      <% when 'lifetime' %>
-        <%= render 'table', array: usage_stats.lifetime_table %>
-      <% when 'date_range' %>
-        <%= render 'table', array: usage_stats.time_period_table %>
-      <% end %>
-    <% when 'month_by_month' %>
-      <h4>Views</h4>
-      <%= render 'table', array: usage_stats.month_by_month_table(Statistic::VIEW) %>
-      <h4>Downloads</h4>
-      <%= render 'table', array: usage_stats.month_by_month_table(Statistic::DOWNLOAD) %>
-    <% end %>
+    <% stats_presenter = UsageStatisticsPresenter.new(usage_stats, @usage_statistics_reports_form.stat_key, self) %>
+
+    <%= stats_presenter.render_html_table(table_class: 'table datatables') %>
+
+    <%= render partial: 'email_modal' %>
   <% end %>
 <% end %>

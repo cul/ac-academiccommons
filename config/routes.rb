@@ -79,7 +79,7 @@ Rails.application.routes.draw do
     resources :email_preferences
     resources :email_author_reports,     only: [:new, :create]
     resources :usage_statistics_reports, only: [:new, :create] do
-      get 'csv', on: :collection
+      post 'email', on: :collection
     end
   end
 

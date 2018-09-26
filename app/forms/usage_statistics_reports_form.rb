@@ -24,7 +24,7 @@ class UsageStatisticsReportsForm < FormObject
   }.freeze
 
   attr_accessor :filters, :time_period, :order, :display, :usage_stats,
-                :start_date, :end_date, :requested_by
+                :start_date, :end_date, :requested_by, :stat_key
 
   validates :time_period, :display, presence: true
   validates :start_date, :end_date, presence: true, if: proc { |a| a.time_period == 'date_range' }

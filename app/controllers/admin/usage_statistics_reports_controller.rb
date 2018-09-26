@@ -21,6 +21,24 @@ module Admin
       end
     end
 
+    def email
+      email_parameters = usage_statistics_reports_params.merge(email_params)
+      @usage_statistics_reports_form = UsageStatisticsReportsEmailForm.new(email_parameters)
+      @usage_statistics_reports_form.requested_by = current_user
+
+      respond_to do |f|
+        if @usage_statistics_reports_form.send_email
+          f.json { head :no_content }
+        else
+          f.json { render json: @usage_statistics_reports_form.errors.full_messages.to_sentence, status: :unprocessable_entity }
+        end
+      end
+    end
+
+    def email_params
+      params.require(:email).permit(:to, :subject, :body, :csv)
+    end
+
     def usage_statistics_reports_params
       params.require(:usage_statistics_reports_form).permit(
         :time_period, :order, :display,
