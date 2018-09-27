@@ -8,7 +8,7 @@ class UsageStatisticsReportsEmailForm < UsageStatisticsReportsForm
 
     generate_statistics
 
-    csv_data = csv ? to_csv : nil
+    csv_data = csv == 'yes' ? to_csv : nil
 
     begin
       StatisticsMailer.usage_statistics(to, subject, body, csv_data, usage_stats, stat_key).deliver
