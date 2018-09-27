@@ -5,9 +5,9 @@ describe Admin::UsageStatisticsReportsController, type: :controller, integration
   let(:params) do
     {
       usage_statistics_reports_form: {
-        date_range: 'lifetime',
+        time_period: 'lifetime',
         display: 'summary',
-        order:   'title',
+        order: 'Title',
         filters: [{ field: 'author_ssim', value: 'Carroll, Lewis' }]
       }
     }
@@ -19,18 +19,20 @@ describe Admin::UsageStatisticsReportsController, type: :controller, integration
     end
   end
 
-  describe 'GET csv' do
-    include_examples 'authorization required' do
-      let(:http_request) do
-        get :csv, params: params
+  describe 'POST create' do
+    context 'html' do
+      include_examples 'authorization required' do
+        let(:http_request) do
+          post :create, params: params
+        end
       end
     end
-  end
 
-  describe 'POST create' do
-    include_examples 'authorization required' do
-      let(:http_request) do
-        post :create, params: params
+    context 'csv' do
+      include_examples 'authorization required' do
+        let(:http_request) do
+          post :create, params: params, format: 'csv'
+        end
       end
     end
   end

@@ -10,14 +10,15 @@ module Admin
       @usage_statistics_reports_form = UsageStatisticsReportsForm.new(usage_statistics_reports_params)
       @usage_statistics_reports_form.requested_by = current_user
 
-      if @usage_statistics_reports_form.generate_statistics
-        respond_to do |f|
+      respond_to do |f|
+        if @usage_statistics_reports_form.generate_statistics
           f.html { render :new }
           f.csv  { send_data @usage_statistics_reports_form.to_csv, type: 'application/csv', filename: 'usage_statistics.csv' }
+        else
+          flash[:error] = @usage_statistics_reports_form.errors.full_messages.to_sentence
+          f.html { render :new }
+          f.csv  { head :unprocessable_entity }
         end
-      else
-        flash[:error] = @usage_statistics_reports_form.errors.full_messages.to_sentence
-        render :new
       end
     end
 
@@ -28,7 +29,7 @@ module Admin
 
       respond_to do |f|
         if @usage_statistics_reports_form.send_email
-          f.json { head :no_content }
+          f.json { head :ok }
         else
           f.json { render json: @usage_statistics_reports_form.errors.full_messages.to_sentence, status: :unprocessable_entity }
         end
