@@ -128,7 +128,7 @@ class CatalogController < ApplicationController
     config.add_show_field 'volume_ssi',             label: 'Volume'
     config.add_show_field 'issue_ssi',              label: 'Issue'
     config.add_show_field 'pages',                  label: 'Pages', accessor: true, unless: ->(_, _, doc) { doc.pages.blank? }
-    config.add_show_field 'uri_ssi',                label: 'Url', helper_method: :link_value
+    config.add_show_field 'uri_ssi',                label: 'Url', auto_link: true
     config.add_show_field 'publisher_ssi',          label: 'Publisher'
     config.add_show_field 'publisher_location_ssi', label: 'Publication Origin'
     config.add_show_field 'series_ssim',            label: 'Series', helper_method: :combine_title_and_part_number
@@ -136,10 +136,10 @@ class CatalogController < ApplicationController
     config.add_show_field 'department_ssim',        label: 'Academic Units', link_to_search: 'department_ssim'
     config.add_show_field 'thesis_advisor_ssim',    label: 'Thesis Advisors'
     config.add_show_field 'degree',                 label: 'Degree', accessor: true, unless: ->(_, _, doc) { doc.degree.blank? }
-    config.add_show_field 'related_url_ssi',        label: 'Related URL', helper_method: :link_value
+    config.add_show_field 'related_url_ssi',        label: 'Related URL', auto_link: true
     config.add_show_field 'fedora3_pid_ssi',        label: 'Fedora 3 PID', if: ->(context, _, _) { context.current_user&.admin? }
 
-    config.add_show_field 'notes_ssim',             display: :notes
+    config.add_show_field 'notes_ssim',             display: :notes, auto_link: true
 
     # Only renders metatags for schema.org, does not display anything on the page.
     config.add_show_field 'full_doi',       display: :main_content, accessor: true, itemprop: 'url',        helper_method: :metatags

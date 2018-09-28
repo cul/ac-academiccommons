@@ -2,4 +2,5 @@ Blacklight::Rendering::Pipeline.operations = [Blacklight::Rendering::HelperMetho
                                               Blacklight::Rendering::LinkToFacet,
                                               Blacklight::Rendering::Microdata,
                                               Rendering::PreserveNewLines,
+                                              Rendering::AutoLink,
                                               Rendering::CustomJoin]
