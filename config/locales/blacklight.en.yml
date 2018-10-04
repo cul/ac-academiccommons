@@ -20,12 +20,15 @@ en:
       upload_full_text: 'Your Research'
 
     search:
+      page_title:
+        title: '%{constraints} | Search Results | %{application_name}'
       form:
         search:
           placeholder: "Search for theses, data, articles, etc."
       index:
         label: ''
       show:
+        title: '%{document_title} | %{application_name}'
         label: '%{label}'
         panels:
           files: 'Files'

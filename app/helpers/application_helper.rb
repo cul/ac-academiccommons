@@ -22,4 +22,8 @@ module ApplicationHelper
   def active_class(link_path)
     current_page?(link_path) ? 'active' : ''
   end
+
+  def title(page_title)
+    content_for :page_title, "#{page_title} | #{application_name}"
+  end
 end
