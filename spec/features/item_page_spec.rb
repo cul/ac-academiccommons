@@ -21,6 +21,10 @@ describe 'Item Page', type: :feature do
     expect(page).to have_content('Background - Alice is feeling bored and drowsy while sitting on the riverbank with her older sister, who is reading a book with no pictures or conversations.')
   end
 
+  # it 'displays abstract with paragraph breaks' do
+  #   expect(page).to have_html # to have an abstract with a p break <br>
+  # end
+
   it 'has volume' do
     expect(page).to have_xpath('//dt[contains(text(),\'Volume\')]/following-sibling::dd', text: '1')
   end
@@ -31,6 +35,10 @@ describe 'Item Page', type: :feature do
 
   it 'has journal title' do
     expect(page).to have_xpath('//dt[contains(text(),\'Published In\')]/following-sibling::dd', text: 'Project Gutenberg')
+  end
+
+  it 'has linked url' do
+    expect(page).to have_link 'https://www.gutenberg.org/ebooks/28885'
   end
 
   it 'has linked subject' do
