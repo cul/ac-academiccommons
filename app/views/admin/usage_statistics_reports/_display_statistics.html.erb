@@ -12,15 +12,13 @@
     <p>No results matched your search</p>
   <% else %>
     <div class="row">
-      <div class="col-sm-6">
+      <div class="col-sm-8">
         <% usage_statistics_paramters = params.to_unsafe_h.slice(:usage_statistics_reports_form) %>
-        <%= button_to 'Export Results to CSV', { action: :create }, { method: :post, params: usage_statistics_paramters.merge!(format: :csv), class: 'btn btn-link' } %>
-      </div>
-      <div class="col-sm-6">
-        <button class="btn btn-link" data-toggle="modal" data-target="#email-modal">Email Results</button>
+        <%= link_to raw("<i class=\"fas fa-file-export\"></i> Export Results to CSV"), { action: :create }, { method: :post, params: usage_statistics_paramters.merge!(format: :csv), class: 'btn btn-primary' } %>
+        <button class="btn btn-primary" data-toggle="modal" data-target="#email-modal"><i class="far fa-envelope"></i> Email Results</button>
       </div>
     </div>
-
+    <hr>
     <% stats_presenter = UsageStatisticsPresenter.new(usage_stats, @usage_statistics_reports_form.stat_key, self) %>
 
     <%= stats_presenter.render_html_table(table_class: 'table datatables') %>
