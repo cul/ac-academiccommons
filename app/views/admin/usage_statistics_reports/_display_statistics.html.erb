@@ -1,28 +1,31 @@
 <% usage_stats = @usage_statistics_reports_form.usage_stats %>
 
 <% if usage_stats %>
-  <h3>Usage Statistics</h3>
-  <ul>
-    <% usage_stats.report_details.each do |a| %>
-      <li><%= content_tag(:b, a[0]) + ' ' + a[1].to_s %></li>
-    <% end %>
-  </ul>
-
-  <% if usage_stats.empty? %>
-    <p>No results matched your search</p>
-  <% else %>
-    <div class="row">
-      <div class="col-sm-8">
-        <% usage_statistics_paramters = params.to_unsafe_h.slice(:usage_statistics_reports_form) %>
-        <%= link_to raw("<i class=\"fas fa-file-export\"></i> Export Results to CSV"), { action: :create }, { method: :post, params: usage_statistics_paramters.merge!(format: :csv), class: 'btn btn-primary' } %>
-        <button class="btn btn-primary" data-toggle="modal" data-target="#email-modal"><i class="far fa-envelope"></i> Email Results</button>
-      </div>
-    </div>
+  <div class="usage-stats">
     <hr>
-    <% stats_presenter = UsageStatisticsPresenter.new(usage_stats, @usage_statistics_reports_form.stat_key, self) %>
+    <h2>Usage Statistics</h2>
+    <% if usage_stats.empty? %>
+      <p>No results matched your search</p>
+    <% else %>
+      <div class="row">
+        <div class="col-sm-8">
+          <% usage_statistics_paramters = params.to_unsafe_h.slice(:usage_statistics_reports_form) %>
+          <%= link_to raw("<small><i class=\"fas fa-file-export\"></i> Export Results to CSV</small>"), { action: :create }, { method: :post, params: usage_statistics_paramters.merge!(format: :csv), class: 'btn btn-primary' } %>
+          <button class="btn btn-primary" data-toggle="modal" data-target="#email-modal"><small><i class="far fa-envelope"></i> Email Results</small></button>
+        </div>
+      </div>
+      <hr>
+      <% stats_presenter = UsageStatisticsPresenter.new(usage_stats, @usage_statistics_reports_form.stat_key, self) %>
 
-    <%= stats_presenter.render_html_table(table_class: 'table datatables') %>
+      <%= stats_presenter.render_html_table(table_class: 'table datatables') %>
 
-    <%= render partial: 'email_modal' %>
-  <% end %>
+      <%= render partial: 'email_modal' %>
+    <% end %>
+    <hr>
+    <ul>
+      <% usage_stats.report_details.each do |a| %>
+        <li><%= content_tag(:b, a[0]) + ' ' + a[1].to_s %></li>
+      <% end %>
+    </ul>
+  </div>
 <% end %>
