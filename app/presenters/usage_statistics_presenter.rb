@@ -13,7 +13,7 @@ class UsageStatisticsPresenter
       array = usage_stats.lifetime_table
       html_table(array, table_class: table_class)
     when :period
-      array = usage_stats.period_table
+      array = usage_stats.time_period_table
       html_table(array, table_class: table_class)
     when :month_by_month
       view.content_tag(heading, 'Views')
