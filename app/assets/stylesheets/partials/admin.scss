@@ -96,3 +96,37 @@ p.admin-intro-message:before {
     padding: 0 30px 20px 30px;
   }
 }
+
+/* usage stats */
+
+#main-page .usage-stats {
+
+  & ul.two-col {
+    border: 1px dotted #ccc;
+    border-bottom: 0;
+    flex-wrap: wrap;
+    font-size: $font-size-small;
+    max-width: none;
+    padding: 0;
+  }
+
+  & ul.two-col li {
+    border-bottom: 1px dotted #ccc;
+    list-style: none;
+    padding: 2px 6px;
+  }
+}
+
+@media screen and (min-width: $screen-sm ) {
+
+  #main-page .usage-stats {
+
+    & ul.two-col {
+      display: flex;
+    }
+
+    & ul.two-col li {
+      width: 50%;
+    }
+  }
+}
