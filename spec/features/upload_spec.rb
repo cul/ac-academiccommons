@@ -19,7 +19,7 @@ RSpec.describe 'Upload', type: :feature do
     end
   end
 
-  context 'when user logged in', js: true do
+  context 'when user logged in, but has not signed agreement', js: true do
     include_context 'non-admin user for feature'
 
     before do
@@ -27,7 +27,25 @@ RSpec.describe 'Upload', type: :feature do
     end
 
     it 'display status of agreement' do
-      expect(page).to have_content 'PARTICIPATION AGREEMENT'
+      expect(page).to have_content 'To upload your research, you must sign the Academic Commons participation agreement.'
+    end
+
+    it 'disabled title field' do
+      expect(page).to have_field 'Title*', disabled: true
+    end
+  end
+
+  context 'when user logged in', js: true do
+    include_context 'non-admin user for feature'
+
+    before do
+      # Added signed agreement for logged in user, tried mocking :signed_latest_agreement? but it did not work
+      Agreement.create(user: User.first, name: 'Test User', email: 'tu123@columbia.edu', agreement_version: Agreement::LATEST_AGREEMENT_VERSION)
+      visit uploads_path
+    end
+
+    it 'display status of agreement' do
+      expect(page).to have_content 'You have signed the Academic Commons participation agreement.'
     end
 
     it 'render title field' do
