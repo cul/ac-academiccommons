@@ -75,7 +75,7 @@ class EmailAuthorReportsForm < FormObject
         usage_stats = AcademicCommons::Metrics::UsageStatistics.new(options)
                                                                .calculate_lifetime
                                                                .calculate_period
-                                                               .order_by(:period, order_works_by)
+        usage_stats.order_by(:period, order_works_by) unless order_works_by == 'Title'
 
         send_to = deliver == 'all_reports_to_one_email' ? email : author[:email]
         raise 'no email address found' if send_to.nil?
