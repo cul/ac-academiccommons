@@ -16,7 +16,10 @@
       <div class="row">
         <div class="col-sm-8">
           <% usage_statistics_paramters = params.to_unsafe_h.slice(:usage_statistics_reports_form) %>
-          <%= link_to raw("<small><i class=\"fas fa-file-export\"></i> Export Results to CSV</small>"), { action: :create }, { method: :post, params: usage_statistics_paramters.merge!(format: :csv), class: 'btn btn-primary' } %>
+          <%= button_to nil, action: :create, method: :post, params: usage_statistics_paramters.merge!(format: :csv), class: 'btn btn-primary' do %>
+            <small><i class="fas fa-file-export"></i> Export Results to CSV</small>
+          <% end %>
+
           <button class="btn btn-primary" data-toggle="modal" data-target="#email-modal"><small><i class="far fa-envelope"></i> Email Results</small></button>
         </div>
       </div>
