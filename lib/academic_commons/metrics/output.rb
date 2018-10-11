@@ -61,21 +61,18 @@ module AcademicCommons
 
       # Event should be one of Statistic::VIEW or Statistic::DOWNLOAD
       def month_by_month_table(event)
-        headers = ['Title', 'Genre', 'DOI', 'Record Creation Date']
+        headers = ['Title']
         month_column_headers = months_list.map { |m| m.strftime(MONTH_KEY) }
         headers.concat(month_column_headers)
         table = [headers]
 
         each do |item|
           monthly_stats = months_list.map { |m| item.get_stat(event, m.strftime(MONTH_KEY)) }
-          table << [
-            item.document.title, item.document.genre, item.document.doi,
-            Date.strptime(item.document.created_at).strftime('%m/%d/%Y')
-          ].concat(monthly_stats)
+          table << [item.document.title].concat(monthly_stats)
         end
 
         total_stats = months_list.map { |m| total_for(event, m.strftime(MONTH_KEY)) }
-        table << [nil, nil, nil, 'Totals:'].concat(total_stats)
+        table << ['Totals:'].concat(total_stats)
 
         table
       end
@@ -83,17 +80,16 @@ module AcademicCommons
       private
 
       def summary_table(time)
-        table = [['Title', 'Genre', 'DOI', 'Record Creation Date', 'Views', 'Downloads']]
+        table = [['Title', 'Views', 'Downloads']]
 
         each do |item|
           table << [
-            item.document.title, item.document.genre, item.document.doi,
-            Date.strptime(item.document.created_at).strftime('%m/%d/%Y'),
-            item.get_stat(Statistic::VIEW, time), item.get_stat(Statistic::DOWNLOAD, time)
+            item.document.title, item.get_stat(Statistic::VIEW, time),
+            item.get_stat(Statistic::DOWNLOAD, time)
           ]
         end
 
-        table << [nil, nil, nil, 'Totals:', total_for(Statistic::VIEW, time), total_for(Statistic::DOWNLOAD, time)]
+        table << ['Totals:', total_for(Statistic::VIEW, time), total_for(Statistic::DOWNLOAD, time)]
 
         table
       end
