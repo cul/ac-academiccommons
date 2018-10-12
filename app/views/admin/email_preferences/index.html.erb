@@ -33,7 +33,7 @@
         <%= link_to 'Edit', edit_admin_email_preference_path(email_preference), role: 'button', class: 'btn btn-sm btn-primary' %>
       </td>
       <td>
-        <%= button_to 'Destroy', admin_email_preference_path(email_preference), confirm: 'Are you sure?', class: 'btn btn-sm btn-danger', data: { confirm: 'Are you sure?' }%>
+        <%= button_to 'Destroy', admin_email_preference_path(email_preference), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-sm btn-danger' %>
       </td>
     </tr>
   <% end %>

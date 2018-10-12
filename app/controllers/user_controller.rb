@@ -3,7 +3,9 @@ class UserController < ApplicationController
 
   layout 'dashboard'
 
-  def account; end
+  def account
+    @email_preference = current_user.email_preference
+  end
 
   def my_works
     @pending_works = pending_works

@@ -7,5 +7,33 @@
 
 <h3>Email Preferences</h3>
 <p>
-  <em>This feature is in progress.</em>
+  We send you emails when one of your works is first published in Academic
+  Commons. We also send a monthly email with statistics on downloads and views
+  for your works. Occasionally we may send other notifications about Academic Commons.
 </p>
+<p>
+  You can change your Academic Commons email preferences below.
+</p>
+
+<%= form_with model: @email_preference, url: admin_email_preference_path(@email_preference), class: 'form-horizontal' do |f| %>
+  <div class="form-group">
+    <%= f.label :email, 'Preferred Email', class: 'col-sm-4 control-label' %>
+    <div class="col-sm-8">
+      <%= f.text_field :email, class: 'form-control' %>
+      <span class="help-block">(Current email: <%= @email_preference.email %>)</span>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :monthly_opt_out, 'Unsubscribe all email communications', class: 'col-sm-4 control-label' %>
+    <div class="col-sm-4">
+      <%= f.check_box :monthly_opt_out %>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <div class="col-sm-offset-3 col-sm-9">
+      <%= f.submit 'Save', class: 'btn btn-primary', data: { disable_with: 'Saving...' } %>
+    </div>
+  </div>
+<% end %>

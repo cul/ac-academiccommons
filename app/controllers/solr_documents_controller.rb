@@ -88,18 +88,16 @@ class SolrDocumentsController < ApplicationController
     doc = SolrDocument.new(solr_doc)
     ldap = Cul::LDAP.new
 
-    solr_doc.fetch('author_uni_ssim', []).each do |uni|
+    unis = solr_doc.fetch('author_uni_ssim', [])
+    prefered_emails = EmailPreference.prefered_emails(unis)
+
+    prefered_emails.each do |uni, email|
       # Skip if notification was already sent.
       next if Notification.sent_new_item_notification?(solr_doc['cul_doi_ssi'], uni)
 
       begin
-        if author = ldap.find_by_uni(uni)
-          email, name = author.email, author.name
-        else
-          email, name = "#{uni}@columbia.edu", nil
-        end
+        name = (author = ldap.find_by_uni(uni)) ? author.name : nil
         success = true
-
         UserMailer.new_item_available(doc, uni, email, name).deliver_now
       rescue StandardError => e
         logger.error "Error Sending Email: #{e.message}"

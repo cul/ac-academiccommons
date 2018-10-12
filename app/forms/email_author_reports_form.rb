@@ -62,10 +62,8 @@ class EmailAuthorReportsForm < FormObject
     startdate = Time.zone.parse(month + ' ' + year)
     enddate   = startdate.end_of_month
 
-    authors.each do |author|
+    authors.each do |author_id, author_email|
       begin
-        author_id = author[:id]
-
         options = {
           start_date: startdate,
           end_date: enddate,
@@ -77,7 +75,7 @@ class EmailAuthorReportsForm < FormObject
                                                                .calculate_period
         usage_stats.order_by(:period, order_works_by) unless order_works_by == 'Title'
 
-        send_to = deliver == 'all_reports_to_one_email' ? email : author[:email]
+        send_to = deliver == 'all_reports_to_one_email' ? email : author_email
         raise 'no email address found' if send_to.nil?
 
         if usage_stats.empty?
@@ -92,7 +90,7 @@ class EmailAuthorReportsForm < FormObject
           @sent_counter += 1
         end
       rescue StandardError => e
-        reports_logger.error "For #{author_id}, email: #{author[:email]}"
+        reports_logger.error "For #{author_id}, email: #{author_email}"
         reports_logger.error "#{e}\n\t#{e.backtrace.join("\n\t")}"
         @sent_exceptions += 1
       end
@@ -116,23 +114,14 @@ class EmailAuthorReportsForm < FormObject
   end
 
   def authors
-    if reports_for == 'one'
-      ids = [uni]
-    else
-      results = AcademicCommons.search do |params|
-        params.field_list('author_uni_ssim')
-      end
+    ids = if reports_for == 'one'
+            [uni]
+          else
+            AcademicCommons.search { |i| i.field_list('author_uni_ssim') }
+                           .docs.map { |f| f['author_uni_ssim'] }
+          end
 
-      ids = results.docs.map { |f| f['author_uni_ssim'] }.flatten.compact.uniq - EmailPreference.where(monthly_opt_out: true).map(&:author)
-    end
-
-    alternate_emails = {}
-
-    EmailPreference.where('email is NOT NULL and monthly_opt_out = 0').each do |ep|
-      alternate_emails[ep.author] = ep.email
-    end
-
-    ids.collect { |id| { id: id, email: alternate_emails[id] || "#{id}@columbia.edu" } }
+    EmailPreference.prefered_emails(ids)
   end
 
   def monthly_reports_in_process?
