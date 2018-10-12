@@ -12,7 +12,12 @@ Have more to deposit: <%= link_to 'click here', uploads_url %>
 <div></div>
 <br/>
 
-Wish to unsubscribe:
+Tell us to use a different email address: log in to Academic Commons and go to the My Account tab.
+
+<div></div>
+<br/>
+
+Unsubscribe from Academic Commons emails:
 <%= link_to('click here', unsubscribe_monthly_url(author_id: @author_id, chk: Rails.application.message_verifier(:unsubscribe).generate(@author_id))) %>
 
 <br/><br/>
