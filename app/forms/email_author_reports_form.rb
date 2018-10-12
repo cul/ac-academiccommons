@@ -121,7 +121,7 @@ class EmailAuthorReportsForm < FormObject
                            .docs.map { |f| f['author_uni_ssim'] }
           end
 
-    EmailPreference.prefered_emails(ids)
+    EmailPreference.preferred_emails(ids)
   end
 
   def monthly_reports_in_process?

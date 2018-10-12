@@ -75,7 +75,7 @@ class User < ApplicationRecord
 
   def email_preference
     @email_preference ||= EmailPreference.for(uid)
-    @email_preference ||= EmailPreference.create(author: uid, email: email, monthly_opt_out: false)
+    @email_preference ||= EmailPreference.create(uni: uid, email: email, unsubscribe: false)
     @email_preference
   end
 end

@@ -20,8 +20,8 @@ class UserController < ApplicationController
       raise 'Request missing parameters.' if author_id.blank? || params[:chk].blank?
       raise 'Cannot be verified.' unless Rails.application.message_verifier(:unsubscribe).verify(params[:chk]) == author_id
 
-      epref = EmailPreference.find_or_initialize_by(author: author_id)
-      epref.monthly_opt_out = true
+      epref = EmailPreference.find_or_initialize_by(uni: author_id)
+      epref.unsubscribe = true
       epref.save!
 
       flash[:success] = 'Unsubscribe request successful'

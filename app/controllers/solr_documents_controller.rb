@@ -89,9 +89,9 @@ class SolrDocumentsController < ApplicationController
     ldap = Cul::LDAP.new
 
     unis = solr_doc.fetch('author_uni_ssim', [])
-    prefered_emails = EmailPreference.prefered_emails(unis)
+    preferred_emails = EmailPreference.preferred_emails(unis)
 
-    prefered_emails.each do |uni, email|
+    preferred_emails.each do |uni, email|
       # Skip if notification was already sent.
       next if Notification.sent_new_item_notification?(solr_doc['cul_doi_ssi'], uni)
 

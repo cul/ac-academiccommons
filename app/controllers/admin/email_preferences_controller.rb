@@ -50,7 +50,7 @@ module Admin
     private
 
     def email_preference_params
-      params.require(:email_preference).permit(:author, :monthly_opt_out, :email)
+      params.require(:email_preference).permit(:uni, :unsubscribe, :email)
     end
   end
 end

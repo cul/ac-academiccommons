@@ -31,14 +31,14 @@ describe UserController, type: :controller do
       end
 
       it 'unsubscribes user' do
-        expect(EmailPreference.first.author).to eq uni
-        expect(EmailPreference.first.monthly_opt_out).to be true
+        expect(EmailPreference.first.uni).to eq uni
+        expect(EmailPreference.first.unsubscribe).to be true
       end
 
       it 'changes email preference' do
-        EmailPreference.first.update!(monthly_opt_out: false)
+        EmailPreference.first.update!(unsubscribe: false)
         get :unsubscribe_monthly, params: { author_id: uni, chk: Rails.application.message_verifier(:unsubscribe).generate(uni) }
-        expect(EmailPreference.first.monthly_opt_out).to be true
+        expect(EmailPreference.first.unsubscribe).to be true
       end
     end
 
