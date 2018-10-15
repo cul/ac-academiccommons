@@ -27,6 +27,9 @@ Rails.application.configure do
   # ActiveStorage test environment.
   config.active_storage.service = :test
 
+  # ActiveJob test environment
+  config.active_job.queue_adapter = :test
+
   # Setting host so that url helpers can be used in mailer views.
   config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
 
