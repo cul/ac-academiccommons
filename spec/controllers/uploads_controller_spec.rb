@@ -1,92 +1,50 @@
 require 'rails_helper'
 
 RSpec.describe UploadsController, type: :controller do
-  # rubocop:disable all
-  describe 'POST submit' do
-    context 'when user has a uni' do
-      before do
-        post :submit,
+  describe 'POST create' do
+    context 'when user logged in ' do
+      include_context 'non-admin user for controller'
+
+      let(:deposit) { Deposit.first }
+
+      let(:http_request) do
+        file = fixture_file_upload(fixture('test_file.txt'))
+        post :create,
              params: {
-               acceptedAgreement: 'agree',
-               uni: 'xxx123', name: 'Jane Doe', 'AC-agreement-version': '1.1',
-               email: 'xxx123@columbia.edu', title: 'Test Deposit', author: 'Jane Doe',
-               abstr: 'Blah blah blah', file: fixture_file_upload('/test_file.txt')
-             }
-      end
-
-      after do # Deleting file created by deposit.
-        FileUtils.rm(File.join(Rails.root, Deposit.first.file_path))
-      end
-
-      xit 'response is successful' do
-        expect(response).to have_http_status :success
-      end
-
-      xit 'emails about submission' do
-        email = ActionMailer::Base.deliveries.pop
-        expect(email.to).to eq Rails.application.config_for(:emails)['administrative_notifications']
-        expect(email.subject).to eq 'SD xxx123 - Test Deposit'
-        expect(email.attachments[0].filename).to eq 'test_file.txt'
-      end
-
-      xit 'creates a deposit record' do
-        expect(Deposit.count).to eq 1
-        expect(Deposit.first.name).to eq 'Jane Doe'
-        expect(Deposit.first.uni).to eq 'xxx123'
-        expect(Deposit.first.file_path).to eq 'data/self-deposit-uploads/xxx123/test_file.txt'
-      end
-    end
-
-    context 'when user does not have a uni' do
-      before do
-        post :submit,
-             params: {
-               acceptedAgreement: 'agree', name: 'Jane Doe',
-               :'AC-agreement-version' => '1.1', email: 'xxx123@columbia.edu',
-               title: 'Test Deposit', author: 'Jane Doe',
-               abstr: 'Blah blah blah', file: fixture_file_upload('/test_file.txt')
-             }
-      end
-
-      after do # Deleting file created by deposit.
-        FileUtils.rm(Rails.root.join(Deposit.first.file_path))
-      end
-
-      xit 'response is successful' do
-        expect(response).to have_http_status :success
-      end
-
-      xit 'creates a deposit record' do
-        expect(Deposit.count).to eq 1
-        expect(Deposit.first.uni).to eq nil
-        expect(Deposit.first.email).to eq 'xxx123@columbia.edu'
-      end
-
-      context 'when the same file is deposited twice' do
-        before do
-          post :submit,
-               params: {
-                 acceptedAgreement: 'agree', name: 'Jane Doe',
-                 'AC-agreement-version': '1.1', email: 'xxx123@columbia.edu',
-                 title: 'Test Deposit 2', author: 'Jane Doe',
-                 abstr: 'Blah blah blah', file: fixture_file_upload('/test_file.txt')
+               deposit: {
+                 title: 'Test Deposit',
+                 abstract: 'blah blah blah',
+                 year: '2008',
+                 rights: 'http://rightsstatements.org/vocab/InC/1.0/',
+                 creators: [{ first_name: 'Jane', last_name: 'Doe', uni: 'abc123' }],
+                 files: [file]
                }
-        end
+             }
+      end
 
-        after do
-          FileUtils.rm(Rails.root.join(Deposit.last.file_path))
-        end
+      it 'response is successful' do
+        http_request
+        expect(response).to have_http_status :success
+      end
 
-        xit 'creates a second deposit record' do
-           expect(Deposit.count).to eq 2
-           expect(Deposit.last.title).to eq 'Test Deposit 2'
-        end
+      it 'enqueues sword deposit job' do
+        expect { http_request }.to have_enqueued_job(SwordDepositJob) # with deposit object
+      end
 
-        xit 'does not override previous file' do
-          expect(Deposit.last.file_path).to eq 'data/self-deposit-uploads/test_file-1.txt'
-        end
+      it 'saves deposit properly' do
+        http_request
+        expect(deposit.title).to eql 'Test Deposit'
+        expect(deposit.abstract).to eql 'blah blah blah'
+        expect(deposit.year).to eql '2008'
+      end
+
+      it 'saves deposit with depositor information' do
+        http_request
+        expect(deposit.name).to eql 'Test User'
+        expect(deposit.uni).to eql 'tu123'
+        expect(deposit.authenticated).to be true
+        expect(deposit.user).to eql controller.current_user
       end
     end
   end
-  # rubocop:enable all
 end

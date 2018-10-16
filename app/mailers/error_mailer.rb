@@ -10,6 +10,6 @@ class ErrorMailer < ApplicationMailer
 
   def send_error_to_developers(subject, message)
     @message = message
-    mail(subject: subject)
+    mail(subject: subject, template_name: 'send_error_to_developers')
   end
 end

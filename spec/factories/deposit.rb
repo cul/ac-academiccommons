@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :deposit do
-    title 'Test Depost'
+    title 'Test Deposit'
     creators [
       { first_name: 'Jane', last_name: 'Doe', uni: 'abc123' },
       { first_name: 'John', last_name: 'Doe', uni: '' }
