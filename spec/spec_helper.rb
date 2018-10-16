@@ -21,6 +21,9 @@ require 'capybara/rspec'
 require 'selenium-webdriver'
 require 'equivalent-xml/rspec_matchers'
 
+require 'webmock/rspec'
+WebMock.disable_net_connect!(allow_localhost: true)
+
 Capybara.javascript_driver = :headless_chrome
 
 Capybara.register_driver :headless_chrome do |app|
