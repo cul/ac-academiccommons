@@ -126,6 +126,7 @@ RSpec.describe 'Upload', type: :feature do
         fill_in 'Title*', with: 'Test Deposit'
         fill_in 'Abstract*', with: 'Blah Blah Blah'
         fill_in 'Year Created*', with: '2017'
+        check 'Check here if you are a current student at Columbia or one of its affiliate institutions.'
         select 'No Copyright', from: 'Copyright Status*'
         attach_file nil, fixture('test_file.txt'), class: 'dz-hidden-input', visible: false
         sleep(3) # Adding sleep so file properly attaches
@@ -140,6 +141,12 @@ RSpec.describe 'Upload', type: :feature do
         deposit = Deposit.last
         expect(deposit.title).to eql 'Test Deposit'
         expect(deposit.creators).to eql [{ 'first_name' => 'Test', 'last_name' => 'User', 'uni' => 'tu123' }]
+      end
+
+      it 'sends student reminder email' do
+        email = ActionMailer::Base.deliveries.pop
+        expect(email.subject).to eql 'Request Department Approval'
+        expect(email.to).to include 'tu123@columbia.edu'
       end
     end
 
