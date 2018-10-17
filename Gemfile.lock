@@ -183,6 +183,8 @@ GEM
       thor (~> 0.19.4)
       tins (~> 1.6)
     crass (1.0.4)
+    css_parser (1.6.0)
+      addressable
     cul-ldap (0.0.1)
       net-ldap (~> 0.16)
     daemons (1.2.6)
@@ -338,6 +340,13 @@ GEM
     parser (2.5.1.0)
       ast (~> 2.4.0)
     powerpack (0.1.2)
+    premailer (1.11.1)
+      addressable
+      css_parser (>= 1.6.0)
+      htmlentities (>= 4.0.0)
+    premailer-rails (1.10.2)
+      actionmailer (>= 3, < 6)
+      premailer (~> 1.7, >= 1.7.9)
     public_suffix (3.0.2)
     raabro (1.1.6)
     rack (2.0.5)
@@ -605,6 +614,7 @@ DEPENDENCIES
   mysql2
   nokogiri (~> 1.8.1)
   okcomputer
+  premailer-rails
   rails (= 5.2.0)
   rainbow
   resque (~> 1.27)
