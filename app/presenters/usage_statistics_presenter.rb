@@ -7,6 +7,16 @@ class UsageStatisticsPresenter
     @view = view
   end
 
+  def render_details_table
+    view.content_tag :ul, class: 'two-col' do
+      view.safe_join(
+        usage_stats.report_details.map { |a|
+          view.content_tag :li, view.content_tag(:b, a[0]) + ' ' + a[1].to_s
+        }
+      )
+    end
+  end
+
   def render_html_table(table_class: nil, heading: :h4)
     case display
     when :lifetime
