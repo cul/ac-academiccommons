@@ -118,7 +118,7 @@ class CatalogController < ApplicationController
 
     config.add_show_field 'author_ssim',  display: :main_content, itemprop: 'creator', link_to_search: 'author_ssim',
                                           separator_options: { words_connector: '; ', two_words_connector: '; ', last_word_connector: '; ' }
-    config.add_show_field 'abstract_ssi', display: :main_content, itemprop: 'description'
+    config.add_show_field 'abstract_ssi', display: :main_content, itemprop: 'description', auto_link: true
 
     config.add_show_field 'geographic_area_ssim', display: :table, label: 'Geographic Areas', link_to_search: 'geographic_area_ssim'
     config.add_show_field 'subject_ssim',         display: :table, label: 'Subjects',         link_to_search: 'subject_ssim',        itemprop: 'keywords'
