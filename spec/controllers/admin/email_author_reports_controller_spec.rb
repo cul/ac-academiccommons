@@ -64,7 +64,7 @@ describe Admin::EmailAuthorReportsController, type: :controller do
       end
 
       it 'email contains correct documents' do
-        expect(email.body.to_s).to match(/First Test Document/)
+        expect(email.html_part.body).to match(/First Test Document/)
       end
     end
   end

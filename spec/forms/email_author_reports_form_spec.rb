@@ -49,11 +49,11 @@ describe EmailAuthorReportsForm, type: :model do
       end
 
       it 'with appropriate title' do
-        expect(email.body.to_s).to match(/Usage Statistics for abc123/)
+        expect(email.html_part.body).to match(/Usage Statistics for abc123/)
       end
 
       it 'with correct documents' do
-        expect(email.body.to_s).to match(/First Test Document/)
+        expect(email.html_part.body).to match(/First Test Document/)
       end
     end
 
