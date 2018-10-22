@@ -25,7 +25,7 @@ describe 'My Account', type: :feature do
 
     before do
       fill_in 'Preferred Email', with: 'tu123@example.com'
-      check 'Unsubscribe all email communications'
+      check 'Unsubscribe from all emails'
       click_button 'Save'
     end
 
