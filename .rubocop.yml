@@ -53,3 +53,6 @@ Rails/Output:
 RSpec/DescribeClass:
   Exclude:
     - 'spec/tasks/*'
+
+RSpec/NestedGroups:
+  Max: 4
