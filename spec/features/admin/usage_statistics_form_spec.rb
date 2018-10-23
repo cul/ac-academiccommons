@@ -56,7 +56,7 @@ describe 'Usage Statistics Form', type: :feature, js: true do
           fill_in 'Body', with: 'Below are the Academic Commons statistics that you requested'
           choose 'Yes'
           click_button 'Send Email'
-          sleep(0.25) # Emails don't show up in array immediately
+          sleep(0.5) # Emails don't show up in array immediately
         end
 
         it 'displays success message' do
