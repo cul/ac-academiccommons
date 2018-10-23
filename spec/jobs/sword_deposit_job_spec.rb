@@ -31,7 +31,7 @@ RSpec.describe SwordDepositJob, type: :job do
         email = ActionMailer::Base.deliveries.pop
         expect(email.subject).to eql 'SD Test Deposit'
         expect(email.to).to include 'example@columbia.edu'
-        expect(email.body).to include 'Test Deposit'
+        expect(email.html_part.body).to include 'Test Deposit'
       end
 
       it 'removes all files' do
@@ -59,7 +59,7 @@ RSpec.describe SwordDepositJob, type: :job do
         email = ActionMailer::Base.deliveries.pop
         expect(email.to).to include 'developers@library.columbia.edu'
         expect(email.subject).to eql 'Error Delivering SWORD Deposit'
-        expect(email.body).to include 'Oops! A problem came up in Academic Commons.'
+        expect(email.html_part.body).to include 'Oops! A problem came up in Academic Commons.'
       end
 
       it 'does not remove files' do
