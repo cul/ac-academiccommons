@@ -17,6 +17,9 @@ AllCops:
     - 'bin/**/*'
     - 'vendor/**/*'
 
+Style/BlockDelimiters:
+  EnforcedStyle: braces_for_chaining
+
 Style/Documentation:
   Enabled: false
 
@@ -27,6 +30,9 @@ Style/SymbolArray:
   Exclude:
     - 'lib/tasks/**/*'
     - Rakefile
+
+Metrics/BlockLength:
+  ExcludedMethods: ['describe', 'context']
 
 Metrics/AbcSize:
   Exclude:
@@ -47,3 +53,6 @@ Rails/Output:
 RSpec/DescribeClass:
   Exclude:
     - 'spec/tasks/*'
+
+RSpec/NestedGroups:
+  Max: 4

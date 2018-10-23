@@ -7,7 +7,7 @@ describe EmailAuthorReportsForm, type: :model do
     let(:params) do
       {
         year: Date.current.strftime('%Y'), month: Date.current.strftime('%b'),
-        reports_for: 'one', uni: 'abc123', order_works_by: 'titles', deliver: 'reports_to_each_author'
+        reports_for: 'one', uni: 'abc123', order_works_by: 'Title', deliver: 'reports_to_each_author'
       }
     end
 
@@ -49,11 +49,11 @@ describe EmailAuthorReportsForm, type: :model do
       end
 
       it 'with appropriate title' do
-        expect(email.body.to_s).to match(/Usage Statistics for abc123/)
+        expect(email.html_part.body).to match(/Usage Statistics for abc123/)
       end
 
       it 'with correct documents' do
-        expect(email.body.to_s).to match(/First Test Document/)
+        expect(email.html_part.body).to match(/First Test Document/)
       end
     end
 

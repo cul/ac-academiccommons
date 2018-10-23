@@ -53,7 +53,7 @@ describe Admin::EmailAuthorReportsController, type: :controller do
             reports_for: 'all',
             month: Date.current.prev_month.strftime('%b'),
             year: Date.current.prev_month.strftime('%Y'),
-            order_works_by: 'titles',
+            order_works_by: 'Title',
             deliver: 'reports_to_each_author'
           }
         }
@@ -64,7 +64,7 @@ describe Admin::EmailAuthorReportsController, type: :controller do
       end
 
       it 'email contains correct documents' do
-        expect(email.body.to_s).to match(/First Test Document/)
+        expect(email.html_part.body).to match(/First Test Document/)
       end
     end
   end

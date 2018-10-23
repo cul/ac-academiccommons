@@ -5,9 +5,9 @@ describe Admin::UsageStatisticsReportsController, type: :controller, integration
   let(:params) do
     {
       usage_statistics_reports_form: {
-        date_range: 'lifetime',
+        time_period: 'lifetime',
         display: 'summary',
-        order:   'title',
+        order: 'Title',
         filters: [{ field: 'author_ssim', value: 'Carroll, Lewis' }]
       }
     }
@@ -19,52 +19,55 @@ describe Admin::UsageStatisticsReportsController, type: :controller, integration
     end
   end
 
-  describe 'GET csv' do
-    include_examples 'authorization required' do
-      let(:http_request) do
-        get :csv, params: params
+  describe 'POST create' do
+    context 'html' do
+      include_examples 'authorization required' do
+        let(:http_request) do
+          post :create, params: params
+        end
       end
     end
-  end
 
-  describe 'POST create' do
-    include_examples 'authorization required' do
-      let(:http_request) do
-        post :create, params: params
+    context 'csv' do
+      include_examples 'authorization required' do
+        let(:http_request) do
+          post :create, params: params, format: :csv
+        end
       end
     end
   end
 
   # Needs to be implemented
-  # describe 'GET email' do
-  #   include_examples 'authorization required' do
-  #     let(:http_request) do
-  #       get :send_csv_report,
-  #           params: {
-  #             f: { 'author_ssim' => ['Carroll, Lewis'] },
-  #             email_to: 'example@example.com',
-  #             email_from: 'me@example.com'
-  #           }
-  #     end
-  #   end
-  #
-  #   context 'when admin makes request' do
-  #     include_context 'admin user for controller'
-  #
-  #     before do
-  #       get :send_csv_report,
-  #           params: {
-  #             f: { 'author_ssim' => ['Carroll, Lewis.'] },
-  #             email_to: 'example@example.com',
-  #             email_from: 'me@example.com'
-  #           }
-  #     end
-  #
-  #     it 'sends email' do
-  #       email = ActionMailer::Base.deliveries.pop
-  #       expect(email.to).to include 'example@example.com'
-  #       expect(email.from).to include 'me@example.com'
-  #     end
-  #   end
-  # end
+  describe 'POST email' do
+    let(:email_params) do
+      {
+        email: {
+          to: 'researcher@example.com',
+          subject: 'Testing Usage Statistics',
+          body: 'Dear Researcher, \n\nHere are the statistics you requests.\n\nBest,\n\nAcademic Commons Staff',
+          csv: false
+        }
+      }
+    end
+
+    include_examples 'authorization required' do
+      let(:http_request) do
+        post :email, params: params.merge(email_params), format: :json
+      end
+    end
+
+    context 'when admin makes request' do
+      include_context 'admin user for controller'
+
+      before do
+        post :email, params: params.merge(email_params), format: :json
+      end
+
+      it 'sends email' do
+        email = ActionMailer::Base.deliveries.pop
+        expect(email.to).to include 'researcher@example.com'
+        expect(email.from).to include 'ac@columbia.edu'
+      end
+    end
+  end
 end

@@ -41,9 +41,9 @@ module V1
       end
 
       def solr_parameters(parameters, with_facets)
-        filters = FILTERS.map do |filter|
+        filters = FILTERS.map { |filter|
           parameters.fetch(filter, []).map { |value| "#{MAP_TO_SOLR_FIELD[filter]}:\"#{value}\"" }
-        end.flatten
+        }.flatten
 
         solr_params = {
           q: parameters[:q],

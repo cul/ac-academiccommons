@@ -16,6 +16,7 @@ class ApplicationController < ActionController::Base
       respond_to do |format|
         format.json { render json: { 'error' => 'forbidden' }, status: :forbidden }
         format.html { redirect_to new_user_session_path }
+        format.csv  { redirect_to new_user_session_path }
       end
     else
       raise exception

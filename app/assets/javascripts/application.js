@@ -28,3 +28,4 @@
 //= require datatables.net/js/jquery.dataTables.min
 //= require datatables.net-bs/js/dataTables.bootstrap.min
 //= require admin/datatables
+//= require admin/usage-statistics

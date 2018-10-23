@@ -15,8 +15,8 @@ class Statistic < ApplicationRecord
   #
   # @param [Array<String>|String] ids
   # @param [String] event
-  # @param [Date] start_date
-  # @param [Date] end_date
+  # @param [Date|Time] start_date
+  # @param [Date|Time] end_date
   # @return [Hash<String,Integer>] keys are ids and the value is the number of times said event occured
   def self.event_count(ids, event, start_date: nil, end_date: nil)
     # Check parameters.

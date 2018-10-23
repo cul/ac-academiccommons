@@ -18,19 +18,19 @@ class UsageStatisticsReportsForm < FormObject
   }.freeze
 
   ORDER = {
-    'Title (A-Z)' => 'title',
-    'Most Views' => 'views',
-    'Most Downloads' => 'downloads'
+    'Title (A-Z)' => 'Title',
+    'Most Views' => Statistic::VIEW,
+    'Most Downloads' => Statistic::DOWNLOAD
   }.freeze
 
   attr_accessor :filters, :time_period, :order, :display, :usage_stats,
-                :start_date, :end_date, :requested_by
+                :start_date, :end_date, :requested_by, :stat_key
 
-  validates :time_period, :display, :order, presence: true
+  validates :time_period, :display, presence: true
   validates :start_date, :end_date, presence: true, if: proc { |a| a.time_period == 'date_range' }
   validates :display,     inclusion: { in: DISPLAY_OPTIONS }
   validates :time_period, inclusion: { in: TIME_PERIOD_OPTIONS }
-  validates :order,       inclusion: { in: ORDER.values }
+  validates :order,       inclusion: { in: ORDER.values }, unless: proc { |a| a.order.blank? }
   validate  :filters_must_have_a_value
 
   def generate_statistics
@@ -42,36 +42,37 @@ class UsageStatisticsReportsForm < FormObject
       solr_params.filter(f[:field], f[:value])
     end
 
-    options = {}
-    options[:per_month] = true if display == 'month_by_month'
-    options[:order_by] = order
-    options[:requested_by] = requested_by
-
-    if time_period == 'lifetime'
-      s_date = Date.new(Statistic::YEAR_BEG).in_time_zone
-      e_date = Date.current.prev_month.end_of_month
+    if time_period == 'lifetime' && display == 'month_by_month'
+      s_date = Time.zone.parse("Jan #{Statistic::YEAR_BEG}")
+      e_date = Time.current.prev_month.end_of_month
     elsif time_period == 'date_range'
-      s_date = Date.parse("#{start_date[:month]} #{start_date[:year]}").in_time_zone
-      e_date = Date.parse("#{end_date[:month]} #{end_date[:year]}").end_of_month.in_time_zone
+      s_date = Time.zone.parse("#{start_date[:month]} #{start_date[:year]}")
+      e_date = Time.zone.parse("#{end_date[:month]} #{end_date[:year]}").end_of_month
+    else
+      s_date = nil
+      e_date = nil
     end
 
     @usage_stats = AcademicCommons::Metrics::UsageStatistics.new(
-      solr_params.to_h, s_date, e_date, options
+      solr_params: solr_params.to_h, start_date: s_date, end_date: e_date, requested_by: requested_by
     )
+
+    @stat_key = if display == 'month_by_month'
+                  :month_by_month
+                elsif time_period == 'date_range'
+                  :period
+                elsif time_period == 'lifetime'
+                  :lifetime
+                end
+
+    usage_stats.send("calculate_#{@stat_key}")
+    usage_stats.order_by(@stat_key, order) if order != 'Title' && @stat_key != :month_by_month
+
+    true
   end
 
   def to_csv
-    case display
-    when 'month_by_month'
-      usage_stats.month_by_month_csv
-    when 'summary'
-      case time_period
-      when 'lifetime'
-        usage_stats.lifetime_csv
-      when 'date_range'
-        usage_stats.time_period_csv
-      end
-    end
+    usage_stats.send("#{@stat_key}_csv")
   end
 
   private

@@ -66,12 +66,14 @@ class UserController < ApplicationController
   end
 
   def current_works_with_stats
-    startdate = Date.current.prev_month.beginning_of_month
-    enddate   = startdate.end_of_month
-    solr_params = { q: nil, fq: ["author_uni_ssim:\"#{current_user.uid}\""] }
+    options = {
+      start_date:  Date.current.prev_month.beginning_of_month,
+      end_date:    Date.current.prev_month.end_of_month,
+      solr_params: { q: nil, fq: ["author_uni_ssim:\"#{current_user.uid}\""] }
+    }
 
-    AcademicCommons::Metrics::UsageStatistics.new(
-      solr_params, startdate, enddate, order_by: 'titles'
-    )
+    AcademicCommons::Metrics::UsageStatistics.new(options)
+                                             .calculate_lifetime
+                                             .calculate_period
   end
 end

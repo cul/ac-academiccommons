@@ -30,7 +30,7 @@
   <div class="form-group">
     <%= f.label :order_works_by, 'Order Works By', class: 'col-sm-3 control-label' %>
     <div class="col-sm-4">
-      <%= f.select :order_works_by, [['Titles (A-Z)', 'titles'], ['Most Viewed', 'views'], ['Most Downloaded', 'downloads']], class: 'form-control' %>
+      <%= f.select :order_works_by, EmailAuthorReportsForm::ORDER, class: 'form-control' %>
     </div>
   </div>
 

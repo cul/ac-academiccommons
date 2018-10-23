@@ -1,0 +1,13 @@
+<%= stylesheet_link_tag 'email', media: 'all' %>
+
+<%= simple_format @body %>
+
+<br/>
+
+<h3>Academic Commons Usage Statistics Report</h3>
+
+<% stats_presenter = UsageStatisticsPresenter.new(@usage_stats, @stats_display, self) %>
+
+<%= stats_presenter.render_details_table %>
+
+<%= stats_presenter.render_html_table(table_class: 'stats-table') %>

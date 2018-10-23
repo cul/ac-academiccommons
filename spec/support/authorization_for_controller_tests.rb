@@ -37,11 +37,17 @@ shared_examples 'authorization required' do
       http_request
     end
 
-    it 'redirects to new_user_session_path' do
-      expect(response.status).to be 302
-      expect(response).to redirect_to new_user_session_url
+    # rubocop:disable RSpec/ExampleLength
+    it 'returns correct status code based on content type' do
+      if response.content_type == 'application/json'
+        expect(response.status).to be 403
+      else
+        expect(response.status).to be 302
+        expect(response).to redirect_to new_user_session_url
+      end
     end
   end
+  # rubocop:enable RSpec/ExampleLength
 
   context 'logged in as a non-admin user' do
     include_context 'non-admin user for controller'

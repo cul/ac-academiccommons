@@ -20,19 +20,19 @@ RSpec.describe UserMailer, type: :mailer do
       end
 
       it 'renders depositor name' do
-        expect(mail.body.encoded).to match 'Jane Doe'
+        expect(mail.html_part.body).to match 'Jane Doe'
       end
 
       it 'renders record title' do
-        expect(mail.body.encoded).to match 'Alice&#39;s Adventures in Wonderland'
+        expect(mail.html_part.body).to match 'Alice\'s Adventures in Wonderland'
       end
 
       it 'renders record persistent url' do
-        expect(mail.body.encoded).to match 'https://doi.org/10.7945/ALICE'
+        expect(mail.html_part.body).to match 'https://doi.org/10.7945/ALICE'
       end
 
       it 'renders date available' do
-        expect(mail.body.encoded).to match Date.tomorrow.strftime('%Y-%m-%d')
+        expect(mail.html_part.body).to match Date.tomorrow.strftime('%Y-%m-%d')
       end
     end
 
@@ -49,15 +49,15 @@ RSpec.describe UserMailer, type: :mailer do
       end
 
       it 'renders depositor name' do
-        expect(mail.body.encoded).to match 'Jane Doe'
+        expect(mail.html_part.body).to match 'Jane Doe'
       end
 
       it 'renders record title' do
-        expect(mail.body.encoded).to match 'Alice&#39;s Adventures in Wonderland'
+        expect(mail.html_part.body).to match 'Alice\'s Adventures in Wonderland'
       end
 
       it 'renders record persistent url' do
-        expect(mail.body.encoded).to match 'https://doi.org/10.7945/ALICE'
+        expect(mail.html_part.body).to match 'https://doi.org/10.7945/ALICE'
       end
     end
   end

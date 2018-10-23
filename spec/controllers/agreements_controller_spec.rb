@@ -41,7 +41,7 @@ describe AgreementsController, type: :controller do
       it 'sends email' do
         email = ActionMailer::Base.deliveries.pop
         expect(email.subject).to eql 'Academic Commons Author Agreement Accepted'
-        expect(email.body).to include 'Accepted Author Agreement'
+        expect(email.html_part.body).to include 'Accepted Author Agreement'
       end
 
       it 'if missing accepting agreement does not create record'
@@ -71,7 +71,7 @@ describe AgreementsController, type: :controller do
       it 'send email' do
         email = ActionMailer::Base.deliveries.pop
         expect(email.subject).to eql 'Academic Commons Author Agreement Accepted'
-        expect(email.body).to include 'Test User with Token'
+        expect(email.html_part.body).to include 'Test User with Token'
       end
     end
 
