@@ -1,11 +1,20 @@
+<% title 'Upload' %>
+
 <p><em>* Required fields</em></p>
 
-<%= form_with(model: @deposit, url: uploads_path, method: :create, local: true, id: :upload) do |form| %>
+<%= form_with(model: @deposit,
+              url: uploads_path,
+              method: :create,
+              local: true,
+              class: current_user.signed_latest_agreement? ? nil : 'disable',
+              id: :upload) do |form| %>
 
-  <h3>Participation Agreement</h3>
-  <p>
-    <%= render 'agreement' %>
-  </p>
+  <div class="notice">
+    <h3>Participation Agreement</h3>
+    <p>
+      <%= render 'agreement' %>
+    </p>
+  </div>
 
   <div class="form-group">
     <%= form.label(:title, 'Title*', class: 'control-label') %>
@@ -33,37 +42,38 @@
     <%= form.label :student, 'Check here if you are a current student at Columbia or one of its affiliate institutions.' %>
   </div>
 
-  <h3>Creator(s)*</h3>
-  <div class="creators">
+  <div class="form-group">
+    <h3>Creator(s)*</h3>
+    <div class="creators">
 
-    <%= '<div class="field_with_errors">'.html_safe if @deposit.errors.include?(:creators) %>
+      <%= '<div class="field_with_errors">'.html_safe if @deposit.errors.include?(:creators) %>
 
-      <div class="creator-header">
-        <label for="deposit_creators_first_name">First Name*</label>
-        <label for="deposit_creators_last_name">Last Name*</label>
-        <label for="deposit_creators_uni">UNI</label>
-        <span class="placeholder"></span>
-      </div>
+        <div class="creator-header">
+          <label for="deposit_creators_first_name">First Name*</label>
+          <label for="deposit_creators_last_name">Last Name*</label>
+          <label for="deposit_creators_uni">UNI</label>
+          <span class="placeholder"></span>
+        </div>
 
-      <div id='creator-list'>
-        <% (@deposit.creators || [{}]).each do |c| %>
-          <div>
-            <input type="text" name="deposit[creators][][first_name]" class="deposit_creators_first_name", value="<%= c['first_name'] %>">
-            <input type="text" name="deposit[creators][][last_name]" class="deposit_creators_last_name", value="<%= c['last_name'] %>">
-            <input type="text" name="deposit[creators][][uni]" class="deposit_creators_uni",  value="<%= c['uni'] %>" <%= 'readonly="readonly"' if c['uni'] == current_user.uid %>>
-            <span class="sort-icon"><i class="fas fa-arrows-alt" title="Sort creators" aria-hidden></i></span><span class="visually-hidden">Sort creators</span>
-          </div>
-        <% end %>
-      </div>
+        <div id='creator-list'>
+          <% (@deposit.creators || [{}]).each do |c| %>
+            <div>
+              <input type="text" name="deposit[creators][][first_name]" class="deposit_creators_first_name", value="<%= c['first_name'] %>">
+              <input type="text" name="deposit[creators][][last_name]" class="deposit_creators_last_name", value="<%= c['last_name'] %>">
+              <input type="text" name="deposit[creators][][uni]" class="deposit_creators_uni",  value="<%= c['uni'] %>" <%= 'readonly="readonly"' if c['uni'] == current_user.uid %>>
+              <span class="sort-icon"><i class="fas fa-arrows-alt" title="Sort creators" aria-hidden></i></span><span class="visually-hidden">Sort creators</span>
+            </div>
+          <% end %>
+        </div>
 
-    <%= '</div>'.html_safe if @deposit.errors.include?(:creators) %>
+      <%= '</div>'.html_safe if @deposit.errors.include?(:creators) %>
 
-    <%= button_tag  "<i class=\"fas fa-plus\"></i> Add another creator".html_safe,
-                    type: 'button',
-                    id: 'add-address',
-                    class: 'btn btn-default btn-add',
-                    data: { creator_list_id: 'creator-list'} %>
-
+      <%= button_tag  "<i class=\"fas fa-plus\"></i> Add another creator".html_safe,
+                      type: 'button',
+                      id: 'add-address',
+                      class: 'btn btn-default btn-add',
+                      data: { creator_list_id: 'creator-list'} %>
+    </div>
   </div>
 
   <div class="form-group">

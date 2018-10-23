@@ -27,10 +27,6 @@ module CatalogHelper
     end
   end
 
-  def link_value(**options)
-    options.fetch(:value, []).map { |v| link_to(v, v) }
-  end
-
   # Wraps spans around each value.
   def wrap_in_spans(**options)
     safe_join(options.fetch(:value, []).map { |v| content_tag(:span, html_escape(v)) })

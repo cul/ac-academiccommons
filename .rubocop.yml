@@ -44,7 +44,7 @@ Metrics/ClassLength:
 
 Rails/OutputSafety:
   Exclude:
-    - 'app/presenters/custom_join.rb'
+    - 'app/presenters/rendering/*'
 
 Rails/Output:
   Exclude:

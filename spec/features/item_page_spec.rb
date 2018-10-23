@@ -33,6 +33,10 @@ describe 'Item Page', type: :feature do
     expect(page).to have_xpath('//dt[contains(text(),\'Published In\')]/following-sibling::dd', text: 'Project Gutenberg')
   end
 
+  it 'has linked url' do
+    expect(page).to have_link 'https://www.gutenberg.org/ebooks/28885'
+  end
+
   it 'has linked subject' do
     expect(page).to have_xpath('//a[@href=\'/search?f%5Bsubject_ssim%5D%5B%5D=Tea+Parties\']', text: 'Tea Parties')
   end

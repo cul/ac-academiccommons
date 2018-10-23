@@ -223,6 +223,26 @@ form,
   }
 }
 
+/* disabled forms */
+
+form.disable {
+
+  & .notice {
+    border: 1px solid $gray-light;
+    border-radius: 6px;
+    box-shadow: $box-shadow;
+    padding: 30px 30px 0 30px;
+  }
+
+  & .form-group {
+    opacity: .5;
+  }
+
+  & input {
+    background-color: #ddd;
+  }
+}
+
 form.button_to {
   display: inline;
 }
