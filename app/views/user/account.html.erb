@@ -15,12 +15,14 @@
   You can change your Academic Commons email preferences below.
 </p>
 
-<%= form_with model: @email_preference, url: admin_email_preference_path(@email_preference), class: 'form-horizontal' do |f| %>
+<%= form_with model: @email_preference, url: admin_email_preference_path(@email_preference, format: :json), method: :patch, class: 'form-horizontal ajax-flash-messages' do |f| %>
   <div class="form-group">
     <%= f.label :email, 'Preferred Email', class: 'col-sm-4 control-label' %>
     <div class="col-sm-8">
       <%= f.text_field :email, class: 'form-control' %>
-      <span class="help-block">(Current email: <%= @email_preference.email %>)</span>
+      <% if @email_preference.email.blank? %>
+        <span class="help-block">If a preferred email is not provided, the following email will be used: <%= "#{@email_preference.uni}@columbia.edu" %></span>
+      <% end %>
     </div>
   </div>
 
