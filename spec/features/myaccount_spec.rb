@@ -34,5 +34,9 @@ describe 'My Account', type: :feature do
       expect(email_preference.email).to eql 'tu123@example.com'
       expect(email_preference.unsubscribe).to be true
     end
+
+    it 'renders flash message' do
+      expect(page).to have_content 'Successfully updated email preference.'
+    end
   end
 end
