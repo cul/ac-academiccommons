@@ -32,7 +32,8 @@ en:
         label: '%{label}'
         panels:
           files: 'Files'
-          more_info: 'More Information'
+          published_in: 'Also Published In'
+          more_info: 'More About This Work'
           notes: 'Notes'
         assets:
           embargoed: 'This item is currently under embargo. It will be available starting %{date}.'
