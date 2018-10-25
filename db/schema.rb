@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_06_06_143542) do
+ActiveRecord::Schema.define(version: 2018_10_12_171010) do
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
@@ -86,12 +86,13 @@ ActiveRecord::Schema.define(version: 2018_06_06_143542) do
   end
 
   create_table "email_preferences", force: :cascade do |t|
-    t.string "author", null: false
-    t.boolean "monthly_opt_out"
+    t.string "uni", null: false
+    t.boolean "unsubscribe"
     t.string "email"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.index ["author", "monthly_opt_out"], name: "index_email_preferences_on_author_and_monthly_opt_out"
+    t.index ["uni", "unsubscribe"], name: "index_email_preferences_on_uni_and_unsubscribe"
+    t.index ["uni"], name: "index_email_preferences_on_uni", unique: true
   end
 
   create_table "eventlogs", id: false, force: :cascade do |t|

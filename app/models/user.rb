@@ -72,4 +72,10 @@ class User < ApplicationRecord
   def signed_latest_agreement?
     agreements.map(&:agreement_version).include?(Agreement::LATEST_AGREEMENT_VERSION)
   end
+
+  def email_preference
+    @email_preference ||= EmailPreference.for(uid)
+    @email_preference ||= EmailPreference.create(uni: uid, email: email, unsubscribe: false)
+    @email_preference
+  end
 end

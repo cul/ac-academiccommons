@@ -1,12 +1,12 @@
 
 <%= form_with model: [:admin, @email_preference], local: true do |f| %>
   <p>
-    <%= f.label :author %>
-    <%= f.text_field :author %>
+    <%= f.label :uni %>
+    <%= f.text_field :uni %>
   </p>
   <p>
-    <%= f.label :monthly_opt_out %>
-    <%= f.check_box :monthly_opt_out %>
+    <%= f.label :unsubscribe %>
+    <%= f.check_box :unsubscribe %>
   </p>
   <p>
     <%= f.label :alternate_email %>

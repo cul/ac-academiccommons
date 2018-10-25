@@ -29,3 +29,4 @@
 //= require datatables.net-bs/js/dataTables.bootstrap.min
 //= require admin/datatables
 //= require admin/usage-statistics
+//= require flash-messages-for-ajax-requests

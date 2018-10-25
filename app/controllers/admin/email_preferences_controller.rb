@@ -31,12 +31,21 @@ module Admin
 
     def update
       @email_preference = EmailPreference.find(params[:id])
-      if @email_preference.update_attributes(email_preference_params)
-        flash[:success] = 'Successfully updated email preference.'
-        render :show
-      else
-        flash[:error] = @email_preference.errors.full_messages.to_sentence
-        render :edit
+
+      respond_to do |f|
+        if @email_preference.update_attributes(email_preference_params)
+          f.html do
+            flash[:success] = 'Successfully updated email preference.'
+            render :show
+          end
+          f.json { render json: { message: 'Successfully updated email preference.' }.to_json, status: 200 }
+        else
+          f.html do
+            flash[:error] = @email_preference.errors.full_messages.to_sentence
+            render :edit
+          end
+          f.json { render json: { message: @email_preference.errors.full_messages.to_sentence }.to_json, status: 500 }
+        end
       end
     end
 
@@ -50,7 +59,7 @@ module Admin
     private
 
     def email_preference_params
-      params.require(:email_preference).permit(:author, :monthly_opt_out, :email)
+      params.require(:email_preference).permit(:uni, :unsubscribe, :email)
     end
   end
 end

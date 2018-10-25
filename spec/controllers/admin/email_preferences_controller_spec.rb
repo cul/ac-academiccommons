@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 describe Admin::EmailPreferencesController, type: :controller do
-  let(:deposit) { EmailPreference.create(author: 'John Doe', monthly_opt_out: false, email: 'john.doe@example.com') }
+  let(:deposit) { EmailPreference.create(uni: 'John Doe', unsubscribe: false, email: 'john.doe@example.com') }
 
   describe 'GET index' do
     include_examples 'authorization required' do
@@ -23,7 +23,7 @@ describe Admin::EmailPreferencesController, type: :controller do
 
   describe 'POST create' do
     let(:http_request) do
-      post :create, params: { email_preference: { author: 'John Doe', monthly_opt_out: true, email: 'john.doe@example.com' } }
+      post :create, params: { email_preference: { uni: 'John Doe', unsubscribe: true, email: 'john.doe@example.com' } }
     end
 
     context 'without being logged in' do
@@ -66,7 +66,7 @@ describe Admin::EmailPreferencesController, type: :controller do
   end
 
   describe 'PUT update' do
-    let(:http_request) { put :update, params: { id: deposit.id, email_preference: { author: 'John Doe', monthly_opt_out: false, email: 'john.doe@example.com' } } }
+    let(:http_request) { put :update, params: { id: deposit.id, email_preference: { uni: 'John Doe', unsubscribe: false, email: 'john.doe@example.com' } } }
 
     context 'without being logged in' do
       before do
@@ -99,8 +99,8 @@ describe Admin::EmailPreferencesController, type: :controller do
         expect(response.status).to be 200
       end
 
-      it 'updates monthly_opt_out preference' do
-        expect(EmailPreference.first.monthly_opt_out).to be false
+      it 'updates unsubscribe preference' do
+        expect(EmailPreference.first.unsubscribe).to be false
       end
     end
   end
