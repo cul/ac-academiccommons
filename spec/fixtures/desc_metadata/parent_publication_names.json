@@ -10,8 +10,8 @@
   "language_ssim": [
     "English"
   ],
-  "publisher_ssi": "Driesen",
-  "publisher_q": [
+  "host_publisher_ssi": "Driesen",
+  "host_publisher_q": [
     "Driesen"
   ],
   "publisher_location_ssi": "Taunusstein",

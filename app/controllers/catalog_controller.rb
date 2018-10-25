@@ -124,7 +124,7 @@ class CatalogController < ApplicationController
     config.add_show_field 'subject_ssim',           display: :table, label: 'Subjects',         link_to_search: 'subject_ssim',        itemprop: 'keywords'
 
     config.add_show_field 'book_journal_title_ssi', display: :published_in, label: 'Title'
-    config.add_show_field 'publisher_ssi',          display: :published_in, label: 'Publisher'
+    config.add_show_field 'host_publisher_ssi',     display: :published_in, label: 'Publisher'
     config.add_show_field 'publisher_doi_ssi',      display: :published_in, label: 'DOI', helper_method: :link_identifier
     config.add_show_field 'uri_ssi',                display: :published_in, label: 'URL',           auto_link: true
     config.add_show_field 'related_url_ssi',        display: :published_in, label: 'Related URL',   auto_link: true
@@ -137,6 +137,7 @@ class CatalogController < ApplicationController
     config.add_show_field 'department_ssim',        label: 'Academic Units', link_to_search: 'department_ssim'
     config.add_show_field 'thesis_advisor_ssim',    label: 'Thesis Advisors'
     config.add_show_field 'degree',                 label: 'Degree', accessor: true, unless: ->(_, _, doc) { doc.degree.blank? }
+    config.add_show_field 'publisher_ssi',          label: 'Publisher'
     config.add_show_field 'series_ssim',            label: 'Series', helper_method: :combine_title_and_part_number
     config.add_show_field 'non_cu_series_ssim',     label: 'Series', helper_method: :combine_title_and_part_number
     config.add_show_field 'record_creation_dtsi',   label: 'Published Here', helper_method: :date_format
