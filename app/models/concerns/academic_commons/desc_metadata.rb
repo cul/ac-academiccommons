@@ -143,8 +143,8 @@ module AcademicCommons
       add_field.call 'edition_ssi',  mods.at_css('> originInfo > edition')
 
       # PUBLISHER
-      add_field.call 'publisher_ssi', mods.at_css('originInfo > publisher')
-      add_field.call 'publisher_q',   mods.at_css('originInfo > publisher')
+      add_field.call 'publisher_ssi', mods.at_css('> originInfo > publisher')
+      add_field.call 'publisher_q',   mods.at_css('> originInfo > publisher')
 
       add_field.call 'publisher_location_ssi', mods.at_css('originInfo > place > placeTerm')
 
@@ -190,13 +190,15 @@ module AcademicCommons
           book_journal_title = book_journal_title.content + ': ' + book_journal_subtitle.content.to_s if book_journal_subtitle
         end
 
-        add_field.call 'volume_ssi',        related_host.at_css('part > detail[@type=\'volume\']>number')
-        add_field.call 'issue_ssi',         related_host.at_css('part > detail[@type=\'issue\']>number')
-        add_field.call 'start_page_ssi',    related_host.at_css('part > extent[@unit=\'page\'] > start')
-        add_field.call 'end_page_ssi',      related_host.at_css('part > extent[@unit=\'page\'] > end')
-        add_field.call 'date_ssi',          related_host.at_css('part > date')
-        add_field.call 'publisher_doi_ssi', related_host.at_css('identifier[@type=\'doi\']')
-        add_field.call 'uri_ssi',           related_host.at_css('identifier[@type=\'uri\']')
+        add_field.call 'volume_ssi',         related_host.at_css('part > detail[@type=\'volume\']>number')
+        add_field.call 'issue_ssi',          related_host.at_css('part > detail[@type=\'issue\']>number')
+        add_field.call 'start_page_ssi',     related_host.at_css('part > extent[@unit=\'page\'] > start')
+        add_field.call 'end_page_ssi',       related_host.at_css('part > extent[@unit=\'page\'] > end')
+        add_field.call 'date_ssi',           related_host.at_css('part > date')
+        add_field.call 'publisher_doi_ssi',  related_host.at_css('identifier[@type=\'doi\']')
+        add_field.call 'uri_ssi',            related_host.at_css('identifier[@type=\'uri\']')
+        add_field.call 'host_publisher_ssi', related_host.at_css('originInfo > publisher')
+        add_field.call 'host_publisher_q',   related_host.at_css('originInfo > publisher')
 
         add_field.call 'book_journal_title_ssi', book_journal_title
         add_field.call 'book_journal_title_q',   book_journal_title

@@ -21,16 +21,12 @@ describe 'Item Page', type: :feature do
     expect(page).to have_content('Background - Alice is feeling bored and drowsy while sitting on the riverbank with her older sister, who is reading a book with no pictures or conversations.')
   end
 
-  it 'has volume' do
-    expect(page).to have_xpath('//dt[contains(text(),\'Volume\')]/following-sibling::dd', text: '1')
-  end
-
   it 'has doi' do
     expect(page).to have_content('10.7916/ALICE')
   end
 
   it 'has journal title' do
-    expect(page).to have_xpath('//dt[contains(text(),\'Published In\')]/following-sibling::dd', text: 'Project Gutenberg')
+    expect(page).to have_xpath('//dt[contains(text(),\'Title\')]/following-sibling::dd', text: 'Project Gutenberg')
   end
 
   it 'has linked url' do

@@ -44,7 +44,28 @@
 <%# Render asset information %>
 <%= render 'show_assets', document: document %>
 
-<%# Render more information %>
+<%# Render also published in %>
+<% if document_show_fields(document).any? { |name, f| f[:display] == :published_in && should_render_show_field?(document, f) } -%>
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h2 class="panel-title"><%= t('blacklight.search.show.panels.published_in') %></h2>
+    </div>
+    <div class="panel-body">
+      <dl>
+        <% document_show_fields(document).select { |name, f| f[:display] == :published_in }.each do |field_name, field| -%>
+           <% if should_render_show_field? document, field %>
+             <dt><%= render_document_show_field_label document, field: field_name %></dt>
+             <% doc_presenter.field_value(field_name, join: false).each do |value| %>
+               <dd><%= value %></dd>
+             <% end %>
+           <% end -%>
+        <% end -%>
+      </dl>
+    </div>
+  </div>
+<% end %>
+
+<%# Render more about this work %>
 <div class="panel panel-default">
   <div class="panel-heading">
     <h2 class="panel-title"><%= t('blacklight.search.show.panels.more_info') %></h2>

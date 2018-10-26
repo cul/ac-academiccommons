@@ -27,6 +27,13 @@ module CatalogHelper
     end
   end
 
+  def date_format(**options)
+    options[:value].map do |v|
+      # convert to a date time object and then format date
+      Time.zone.parse(v).strftime('%B %-d, %Y')
+    end
+  end
+
   # Wraps spans around each value.
   def wrap_in_spans(**options)
     safe_join(options.fetch(:value, []).map { |v| content_tag(:span, html_escape(v)) })
