@@ -19,6 +19,12 @@ describe EmailPreference, type: :model do
     before do
       EmailPreference.create!(uni: 'abc123', unsubscribe: true)
       EmailPreference.create!(uni: 'edf123', unsubscribe: false, email: 'e@example.com')
+      EmailPreference.create!(uni: 'hji123', unsubscribe: false, email: 'e@example.com')
+      EmailPreference.create!(uni: 'lkm123', unsubscribe: true)
+    end
+
+    it 'returns expected hash' do
+      expect(preferred_emails).to eql('edf123' => 'e@example.com')
     end
 
     it 'removes unsubcribed users' do
