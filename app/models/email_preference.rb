@@ -15,7 +15,7 @@ class EmailPreference < ApplicationRecord
 
     unis.each { |uni| map[uni] = "#{uni}@columbia.edu" }
 
-    EmailPreference.where('email is NOT NULL and unsubscribe = 0').find_each do |e|
+    EmailPreference.where('email is NOT NULL and email != \'\' and unsubscribe = 0').find_each do |e|
       map[e.uni] = e.email if map[e.uni]
     end
 

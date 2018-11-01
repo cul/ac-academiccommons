@@ -14,17 +14,22 @@ describe EmailPreference, type: :model do
   context '.preferred_emails' do
     subject(:preferred_emails) { EmailPreference.preferred_emails(unis) }
 
-    let(:unis) { ['abc123', 'edf123'] }
+    let(:unis) { ['abc123', 'edf123', 'nop123'] }
 
     before do
       EmailPreference.create!(uni: 'abc123', unsubscribe: true)
       EmailPreference.create!(uni: 'edf123', unsubscribe: false, email: 'e@example.com')
       EmailPreference.create!(uni: 'hji123', unsubscribe: false, email: 'e@example.com')
       EmailPreference.create!(uni: 'lkm123', unsubscribe: true)
+      EmailPreference.create!(uni: 'nop123', unsubscribe: false, email: '')
     end
 
     it 'returns expected hash' do
-      expect(preferred_emails).to eql('edf123' => 'e@example.com')
+      expect(preferred_emails).to eql('edf123' => 'e@example.com', 'nop123' => 'nop123@columbia.edu')
+    end
+
+    it 'uses default email when email empty' do
+      expect(preferred_emails).to include('nop123' => 'nop123@columbia.edu')
     end
 
     it 'removes unsubcribed users' do
