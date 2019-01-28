@@ -31,15 +31,7 @@ class API < Grape::API
                    'displaying the entire record and not having an upper limit '\
                    'on the number of results displayed.'\
                    "\n\n All endpoints accept `format` as a query parameter to "\
-                   'specify format response instead of accept headers. For example: `format=json`'\
-                   "\n\n RSS responses are only available for the `/search` endpoint. "\
-                   'This response returns a link to the search and contains an '\
-                   'xml/rss serialization of each record. Multiple authors are '\
-                   'separated by `;`. Multiple subjects, departments and types '\
-                   'are separated by `,`. Because of the limitations of the rss '\
-                   'specification this format will not display facets and other '\
-                   'details shown in the json serialization. The guid should be '\
-                   'used when linking to any resource.',
+                   'specify format response instead of accept headers. For example: `format=json`.',
       contact_name: 'Academic Commons Staff',
       contact_email: 'ac@columbia.edu'
     },

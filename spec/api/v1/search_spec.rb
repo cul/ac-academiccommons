@@ -22,7 +22,7 @@ describe 'GET /api/v1/search', type: :request do
     it 'creates correct solr query' do
       allow(AcademicCommons::Utils).to receive(:rsolr).and_return(connection)
       expect(connection).to receive(:get).with('select', params: parameters).and_return(empty_response)
-      get '/api/v1/search?format=rss&q=alice'
+      get '/api/v1/search?q=alice'
     end
   end
 
@@ -65,7 +65,7 @@ describe 'GET /api/v1/search', type: :request do
       it 'creates correct solr query' do
         allow(AcademicCommons::Utils).to receive(:rsolr).and_return(connection)
         expect(connection).to receive(:get).with('select', params: parameters).and_return(empty_response)
-        get '/api/v1/search?format=rss&author_id[]=abc123'
+        get '/api/v1/search?author_id[]=abc123'
       end
     end
   end
@@ -182,37 +182,6 @@ describe 'GET /api/v1/search', type: :request do
       allow(AcademicCommons::Utils).to receive(:rsolr).and_return(connection)
       expect(connection).to receive(:get).with('select', params: parameters).and_return(empty_response)
       get '/api/v1/search?per_page=50'
-    end
-  end
-
-  context 'searches and returns rss' do
-    let(:expected_xml) do
-      '<?xml version="1.0" encoding="UTF-8"?>
-        <rss xmlns:dc="http://purl.org/dc/elements/1.1" xmlns:vivo="http://vivoweb.org/ontology/core" version="2.0">
-        <channel>
-          <title>Academic Commons Search Results</title>
-          <link>http://www.example.com/api/v1/search?format=rss&amp;q=alice</link>
-          <description>Academic Commons Search Results</description>
-          <language>en-us</language>
-          <item>
-            <title>Alice\'s Adventures in Wonderland</title>
-            <link>https://doi.org/10.7916/ALICE</link>
-            <dc:creator>Carroll, Lewis; Weird Old Guys.</dc:creator>
-            <guid>https://doi.org/10.7916/ALICE</guid>
-            <pubDate>Thu, 14 Sep 2017 12:31:33 -0400</pubDate>
-            <dc:date>1865</dc:date>
-            <description>Background -  Alice is feeling bored and drowsy while sitting on the riverbank with her older sister, who is reading a book with no pictures or conversations.</description>
-            <dc:subject>Tea Parties, Wonderland, Rabbits, Magic, Nonsense literature, Bildungsromans</dc:subject>
-            <dc:type>Articles</dc:type>
-            <vivo:Department>Bucolic Literary Society.</vivo:Department>
-          </item>
-       </channel>
-     </rss>'
-    end
-
-    it 'returns correct rss feed' do
-      get '/api/v1/search?format=rss&q=alice'
-      expect(Nokogiri::XML(response.body)).to be_equivalent_to expected_xml
     end
   end
 end
