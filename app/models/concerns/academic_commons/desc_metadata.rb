@@ -149,8 +149,8 @@ module AcademicCommons
       add_field.call 'publisher_location_ssi', mods.at_css('originInfo > place > placeTerm')
 
       mods.css('genre').each do |genre_node|
-        add_field.call 'genre_ssim',  genre_node
-        add_field.call 'genre_q',     genre_node
+        add_field.call 'genre_ssim',  genre_node.content&.titlecase
+        add_field.call 'genre_q',     genre_node.content&.titlecase
       end
 
       add_field.call 'abstract_ssi', mods.at_css('> abstract')

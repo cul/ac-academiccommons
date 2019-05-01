@@ -43,6 +43,13 @@ RSpec.describe AcademicCommons::DescMetadata do
 
     include_examples 'indexing mods'
 
+    context 'contains title cased genre value' do
+      let(:mods_fixture) { fixture_to_str('desc_metadata/genre_title_case.xml') }
+      let(:expected_json) { fixture_to_json('desc_metadata/genre_title_case.json') }
+
+      include_examples 'indexing mods'
+    end
+
     context 'contains degree information' do
       let(:mods_fixture) { fixture_to_str('desc_metadata/etd_mods.xml') }
       let(:expected_json) { fixture_to_json('desc_metadata/etd_to_solr.json') }
