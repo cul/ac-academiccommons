@@ -31,8 +31,8 @@ module HomepageHelper
       articles:             genre_counts['Articles'],
       reports:              genre_counts['Reports'],
       doctoral_theses:      doctoral_count['Doctoral'],
-      conference_materials: genre_counts['Conference objects'],
-      datasets:             genre_counts['Data (information)']
+      conference_materials: genre_counts['Conference Objects'],
+      datasets:             genre_counts['Data (Information)']
     }.transform_values { |v| number_with_delimiter(v.to_i) }
   end
 end
