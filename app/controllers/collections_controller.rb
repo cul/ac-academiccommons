@@ -1,4 +1,5 @@
 class CollectionsController < ApplicationController
+  # rubocop:disable Metrics/LineLength
   CONFIG = {
     featured: {
       title: 'Featured Partners',
@@ -35,6 +36,7 @@ class CollectionsController < ApplicationController
       facet: 'partner_journal_ssi'
     }
   }.freeze
+  # rubocop:enable Metrics/LineLength
 
   # GET /explore
   # NB custom resource path for collections
