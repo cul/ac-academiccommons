@@ -21,7 +21,7 @@ class CollectionsController < ApplicationController
       filter: {
         genre_ssim: 'Theses',
         degree_level_name_ssim: 'Doctoral',
-        degree_grantor_ssim: '("Columbia University" OR "Teachers College" OR "Union Theological Seminary")'
+        degree_grantor_ssim: '("Columbia University" OR "Teachers College, Columbia University" OR "Union Theological Seminary" OR "Mailman School of Public Health, Columbia University")'
       },
       facet: 'department_ssim'
     },
