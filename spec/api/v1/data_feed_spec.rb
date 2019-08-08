@@ -53,12 +53,11 @@ describe 'GET /api/v1/data_feed/:key', type: :request do
     end
 
     context 'if records match feed' do
-      let(:connection) { double }
       let(:parameters) do
         {
           q: nil, sort: nil, start: 0, rows: 100_000,
-          fq: ["has_model_ssim:\"#{ContentAggregator.to_class_uri}\"", 'genre_ssim:"Theses"', 'degree_level_name_ssim:"Master\'s"'],
-          fl: '*', qt: 'search'
+          fq: ['genre_ssim:"Theses"', 'degree_level_name_ssim:"Master\'s"', "has_model_ssim:\"#{ContentAggregator.to_class_uri}\""],
+          qt: 'search'
         }
       end
 
@@ -126,12 +125,8 @@ describe 'GET /api/v1/data_feed/:key', type: :request do
         }
       end
 
-      before do
-        allow(AcademicCommons::Utils).to receive(:rsolr).and_return(connection)
-      end
-
       it 'returns matching records' do
-        allow(connection).to receive(:get).with('select', params: parameters).and_return(solr_response)
+        allow(Blacklight.default_index).to receive(:search).with(parameters).and_return(solr_response)
 
         get '/api/v1/data_feed/masters', headers: headers
 

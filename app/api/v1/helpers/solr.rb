@@ -8,12 +8,6 @@ module V1
       SORT    = %i[best_match date title].freeze
       ORDER   = %i[desc asc].freeze
       FACETS  = %i[author date department subject type columbia_series].freeze
-      REQUIRED_FILTERS = ["has_model_ssim:\"#{ContentAggregator.to_class_uri}\""].freeze
-
-      SEARCH_TYPES_TO_QUERY = {
-        title: { 'spellcheck.dictionary': 'title', qf: '${title_qf}', pf: '${title_pf}' },
-        subject: { 'spellcheck.dictionary': 'subject', qf: '${subject_qf}', pf: '${subject_pf}' }
-      }.freeze
 
       SORT_TO_SOLR_SORT = {
         best_match: {
@@ -33,41 +27,26 @@ module V1
       MAP_TO_SOLR_FIELD = SolrDocument.field_semantics
 
       def query_solr(params: {}, with_facets: true)
-        AcademicCommons::Utils
-          .rsolr
-          .get('select', params: solr_parameters(params, with_facets))
+        AcademicCommons.search do |solr_params|
+          FILTERS.map do |filter|
+            params.fetch(filter, []).map { |value| solr_params.filter(MAP_TO_SOLR_FIELD[filter], value) }
+          end
+
+          solr_params.q params[:q]
+          solr_params.sort_by SORT_TO_SOLR_SORT.dig(params[:sort], params[:order])
+          solr_params.start((params[:page].to_i - 1) * params[:per_page].to_i)
+          solr_params.rows params[:per_page].to_i
+          solr_params.aggregators_only
+
+          if with_facets
+            solr_params.facet_by(*FACETS.map { |f| MAP_TO_SOLR_FIELD[f] })
+            solr_params.facet_limit(5)
+          end
+
+          solr_params.search_type(params[:search_type]) if params.key?(:search_type)
+        end
       rescue StandardError
         error! 'unexpected error', 500
-      end
-
-      def solr_parameters(parameters, with_facets)
-        filters = FILTERS.map { |filter|
-          parameters.fetch(filter, []).map { |value| "#{MAP_TO_SOLR_FIELD[filter]}:\"#{value}\"" }
-        }.flatten
-
-        solr_params = {
-          q: parameters[:q],
-          sort: SORT_TO_SOLR_SORT.dig(parameters[:sort], parameters[:order]),
-          start: (parameters[:page].to_i - 1) * parameters[:per_page].to_i,
-          rows: parameters[:per_page].to_i,
-          fq: ["has_model_ssim:\"#{ContentAggregator.to_class_uri}\""].concat(filters),
-          fl: '*', # default blacklight solr param
-          qt: 'search' # default blacklight solr param
-        }
-
-        if with_facets
-          solr_params[:facet] = 'true'
-          solr_params['facet.field'] = []
-          FACETS.each do |f|
-            solr_key = MAP_TO_SOLR_FIELD[f]
-            solr_params['facet.field'].append(solr_key)
-            solr_params["f.#{solr_key}.limit"] = 5
-          end
-        end
-
-        solr_params.merge!(SEARCH_TYPES_TO_QUERY[parameters[:search_type]]) if SEARCH_TYPES_TO_QUERY.key? parameters[:search_type]
-
-        solr_params
       end
     end
   end

@@ -2,17 +2,14 @@ require 'rails_helper'
 
 describe 'GET /api/v1/search', type: :request do
   let(:connection) { double }
-  let(:empty_response) { { 'response' => { 'docs' => [] } } }
+  let(:empty_response) { Blacklight::Solr::Response.new({ 'response' => { 'docs' => [] } }, {}) }
   let(:base_parameters) do
     {
-      q: nil, sort: 'score desc, pub_date_isi desc, title_sort asc',
-      start: 0, rows: 25,
-      fq: ['has_model_ssim:"info:fedora/ldpd:ContentAggregator"'],
-      fl: '*', qt: 'search', facet: 'true',
-      'facet.field' => ['author_ssim', 'pub_date_isi', 'department_ssim', 'subject_ssim', 'genre_ssim', 'series_ssim'],
-      'f.author_ssim.limit' => 5, 'f.pub_date_isi.limit' => 5,
-      'f.department_ssim.limit' => 5, 'f.subject_ssim.limit' => 5,
-      'f.genre_ssim.limit' => 5, 'f.series_ssim.limit' => 5
+      qt: 'search', fq: ['has_model_ssim:"info:fedora/ldpd:ContentAggregator"'],
+      rows: 25, q: nil, sort: 'score desc, pub_date_isi desc, title_sort asc',
+      start: 0, facet: true,
+      'facet.field': ['author_ssim', 'pub_date_isi', 'department_ssim', 'subject_ssim', 'genre_ssim', 'series_ssim'],
+      'facet.limit': 5
     }
   end
 
@@ -20,8 +17,7 @@ describe 'GET /api/v1/search', type: :request do
     let(:parameters) { base_parameters.merge(q: 'alice') }
 
     it 'creates correct solr query' do
-      allow(AcademicCommons::Utils).to receive(:rsolr).and_return(connection)
-      expect(connection).to receive(:get).with('select', params: parameters).and_return(empty_response)
+      expect(Blacklight.default_index).to receive(:search).with(parameters).and_return(empty_response)
       get '/api/v1/search?q=alice'
     end
   end
@@ -30,13 +26,12 @@ describe 'GET /api/v1/search', type: :request do
     context 'by departments' do
       let(:parameters) do
         base_parameters.merge(
-          fq: ['has_model_ssim:"info:fedora/ldpd:ContentAggregator"', 'department_ssim:"Computer Science"', 'department_ssim:"Bioinformatics"']
+          fq: ['department_ssim:"Computer Science"', 'department_ssim:"Bioinformatics"', 'has_model_ssim:"info:fedora/ldpd:ContentAggregator"']
         )
       end
 
       it 'creates correct solr query' do
-        allow(AcademicCommons::Utils).to receive(:rsolr).and_return(connection)
-        expect(connection).to receive(:get).with('select', params: parameters).and_return(empty_response)
+        expect(Blacklight.default_index).to receive(:search).with(parameters).and_return(empty_response)
         get '/api/v1/search?department[]=Computer+Science&department[]=Bioinformatics'
       end
     end
@@ -44,13 +39,12 @@ describe 'GET /api/v1/search', type: :request do
     context 'by author' do
       let(:parameters) do
         base_parameters.merge(
-          fq: ['has_model_ssim:"info:fedora/ldpd:ContentAggregator"', 'author_ssim:"Carroll, Lewis"']
+          fq: ['author_ssim:"Carroll, Lewis"', 'has_model_ssim:"info:fedora/ldpd:ContentAggregator"']
         )
       end
 
       it 'creates correct solr query' do
-        allow(AcademicCommons::Utils).to receive(:rsolr).and_return(connection)
-        expect(connection).to receive(:get).with('select', params: parameters).and_return(empty_response)
+        expect(Blacklight.default_index).to receive(:search).with(parameters).and_return(empty_response)
         get '/api/v1/search?author[]=Carroll,+Lewis'
       end
     end
@@ -58,13 +52,12 @@ describe 'GET /api/v1/search', type: :request do
     context 'by author id' do
       let(:parameters) do
         base_parameters.merge(
-          fq: ['has_model_ssim:"info:fedora/ldpd:ContentAggregator"', 'author_uni_ssim:"abc123"']
+          fq: ['author_uni_ssim:"abc123"', 'has_model_ssim:"info:fedora/ldpd:ContentAggregator"']
         )
       end
 
       it 'creates correct solr query' do
-        allow(AcademicCommons::Utils).to receive(:rsolr).and_return(connection)
-        expect(connection).to receive(:get).with('select', params: parameters).and_return(empty_response)
+        expect(Blacklight.default_index).to receive(:search).with(parameters).and_return(empty_response)
         get '/api/v1/search?author_id[]=abc123'
       end
     end
@@ -78,8 +71,7 @@ describe 'GET /api/v1/search', type: :request do
     end
 
     it 'creates correct solr query' do
-      allow(AcademicCommons::Utils).to receive(:rsolr).and_return(connection)
-      expect(connection).to receive(:get).with('select', params: parameters).and_return(empty_response)
+      expect(Blacklight.default_index).to receive(:search).with(parameters).and_return(empty_response)
       get '/api/v1/search?search_type=title'
     end
 
@@ -96,8 +88,7 @@ describe 'GET /api/v1/search', type: :request do
     let(:parameters) { base_parameters.merge(sort: 'title_sort asc, pub_date_isi desc') }
 
     it 'creates correct solr query' do
-      allow(AcademicCommons::Utils).to receive(:rsolr).and_return(connection)
-      expect(connection).to receive(:get).with('select', params: parameters).and_return(empty_response)
+      expect(Blacklight.default_index).to receive(:search).with(parameters).and_return(empty_response)
       get '/api/v1/search?sort=title&order=asc'
     end
 
@@ -114,8 +105,7 @@ describe 'GET /api/v1/search', type: :request do
     let(:parameters) { base_parameters.merge(start: 50) }
 
     it 'creates correct solr query' do
-      allow(AcademicCommons::Utils).to receive(:rsolr).and_return(connection)
-      expect(connection).to receive(:get).with('select', params: parameters).and_return(empty_response)
+      expect(Blacklight.default_index).to receive(:search).with(parameters).and_return(empty_response)
       get '/api/v1/search?page=3'
     end
 
@@ -156,7 +146,7 @@ describe 'GET /api/v1/search', type: :request do
         'facets' => {
           'author' => { 'Carroll, Lewis' => 1, 'Weird Old Guys.' => 1 },
           'date' => { '1865' => 1 }, 'department' => { 'Bucolic Literary Society.' => 1 },
-          'subject' => { 'Bildungsromans' => 1, 'Nonsense literature' => 1, 'Rabbits' => 1, 'Magic' => 1, 'Tea Parties' => 1, 'Wonderland' => 1 },
+          'subject' => { 'Bildungsromans' => 1, 'Nonsense literature' => 1, 'Rabbits' => 1, 'Magic' => 1, 'Tea Parties' => 1 },
           'type' => { 'Articles' => 1 }
         }
       }
@@ -179,8 +169,7 @@ describe 'GET /api/v1/search', type: :request do
     end
 
     it 'creates correct solr query' do # when per_page is something other than the default
-      allow(AcademicCommons::Utils).to receive(:rsolr).and_return(connection)
-      expect(connection).to receive(:get).with('select', params: parameters).and_return(empty_response)
+      expect(Blacklight.default_index).to receive(:search).with(parameters).and_return(empty_response)
       get '/api/v1/search?per_page=50'
     end
   end

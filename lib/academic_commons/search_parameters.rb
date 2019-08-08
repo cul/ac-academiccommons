@@ -2,6 +2,12 @@ module AcademicCommons
   class SearchParameters
     MAX_ROWS = 100_000
 
+    SEARCH_TYPES = {
+      keyword: {},
+      title: { 'spellcheck.dictionary': 'title', qf: '${title_qf}', pf: '${title_pf}' },
+      subject: { 'spellcheck.dictionary': 'subject', qf: '${subject_qf}', pf: '${subject_pf}' }
+    }.freeze
+
     attr_reader :parameters
 
     def initialize
@@ -49,6 +55,11 @@ module AcademicCommons
       self
     end
 
+    def start(start)
+      @parameters[:start] = start
+      self
+    end
+
     def member_of(pid); end
 
     def fedora3_pid(pid); end
@@ -74,6 +85,12 @@ module AcademicCommons
 
     def sort_by(sort)
       @parameters[:sort] = sort
+      self
+    end
+
+    def search_type(type)
+      raise ArgumentError, 'search type not valid' unless SEARCH_TYPES.key?(type)
+      @parameters.merge!(SEARCH_TYPES[type])
       self
     end
 
