@@ -69,7 +69,7 @@ group :development, :test do
   gem 'database_cleaner'
   gem 'equivalent-xml'
   gem 'factory_bot_rails'
-  gem 'jettywrapper', '>=1.4.0', git: 'https://github.com/projecthydra/jettywrapper.git', branch: 'master'
+  gem 'jettywrapper', '>=1.4.0', git: 'https://github.com/samvera-deprecated/jettywrapper.git', branch: 'master'
   gem 'rspec-its'
   gem 'rspec-rails', '~> 3.5'
   gem 'selenium-webdriver'
