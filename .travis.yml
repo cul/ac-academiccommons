@@ -1,6 +1,7 @@
 language: ruby
 rvm:
   - 2.3.3
+jdk: openjdk8
 cache: bundler
 addons:
   chrome: stable

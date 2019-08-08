@@ -88,9 +88,9 @@ class CatalogController < ApplicationController
     config.add_facet_field 'partner_journal_ssi',    label: 'Journal',         limit: 5, show: false
     config.add_facet_field 'degree_grantor_ssim',    label: 'Degree Grantor',  limit: 5, show: false,
                                                      query: {
-                                                       '("Columbia University" OR "Teachers College" OR "Union Theological Seminary")' => {
-                                                         label: 'Columbia University, Teachers College, or Union Theological Seminary',
-                                                         fq: 'degree_grantor_ssim:("Columbia University" OR "Teachers College" OR "Union Theological Seminary")'
+                                                       '("Columbia University" OR "Teachers College, Columbia University" OR "Union Theological Seminary" OR "Mailman School of Public Health, Columbia University")' => {
+                                                         label: 'Columbia University, Teachers College, Union Theological Seminary, or Mailman School of Public Health',
+                                                         fq: 'degree_grantor_ssim:("Columbia University" OR "Teachers College, Columbia University" OR "Union Theological Seminary" OR "Mailman School of Public Health, Columbia University")'
                                                        }
                                                      }
     config.add_facet_field 'type_of_resource_ssim', label: 'Resource Type', if: ->(context, _, _) { context.current_user&.admin? }
