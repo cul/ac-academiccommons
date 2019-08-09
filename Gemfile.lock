@@ -375,7 +375,7 @@ GEM
     rails-dom-testing (2.0.3)
       activesupport (>= 4.2.0)
       nokogiri (>= 1.6)
-    rails-html-sanitizer (1.1.0)
+    rails-html-sanitizer (1.2.0)
       loofah (~> 2.2, >= 2.2.2)
     railties (5.2.3)
       actionpack (= 5.2.3)
@@ -541,7 +541,7 @@ GEM
       ref
     thor (0.19.4)
     thread_safe (0.3.6)
-    tilt (2.0.8)
+    tilt (2.0.9)
     tins (1.19.0)
     turbolinks (5.1.1)
       turbolinks-source (~> 5.1)
@@ -594,7 +594,7 @@ DEPENDENCIES
   blacklight_oai_provider
   blacklight_range_limit
   bootsnap
-  bootstrap-sass (~> 3.4.1)
+  bootstrap-sass
   byebug
   cancancan (~> 2.0)
   capistrano (= 3.8)
