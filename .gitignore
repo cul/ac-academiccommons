@@ -39,6 +39,5 @@ coverage/*
 /.env*
 .byebug_history
 .ruby-gemset
-.ruby-version
 /storage/*
 /node_modules/
