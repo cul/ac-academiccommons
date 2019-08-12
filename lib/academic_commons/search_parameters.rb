@@ -23,11 +23,6 @@ module AcademicCommons
       self
     end
 
-    def id(id)
-      filter('id', id)
-      self
-    end
-
     def filter(key, value)
       @parameters[:fq] << if value.start_with?('(', '[') && value.end_with?(']', ')')
                             "#{key}:#{value}"
@@ -38,16 +33,9 @@ module AcademicCommons
       self
     end
 
-    def assets_only; end
-
-    def aggregators_only
-      filter('has_model_ssim', ContentAggregator.to_class_uri)
+    def sort_by(sort)
+      @parameters[:sort] = sort
       self
-    end
-
-    def embargoed_only
-      filter('object_state_ssi', 'A')
-      @parameters[:fq] << 'free_to_read_start_date_dtsi:[NOW+1DAYS TO *]'
     end
 
     def rows(rows)
@@ -60,9 +48,67 @@ module AcademicCommons
       self
     end
 
+    # Only returns fields specified, the default behavior is to return all the
+    # fields. Modifies the :fl solr parameter. Use carefully! This limits the
+    # fields returned and could lead to unintended results.
+    def field_list(*fields)
+      @parameters[:fl] = Array.wrap(fields).join(',')
+      self
+    end
+
+    def id(id)
+      filter('id', id)
+      self
+    end
+
+    def aggregators_only
+      filter('has_model_ssim', ContentAggregator.to_class_uri)
+      self
+    end
+
+    # USE CAREFULLY!!
+    #
+    # This method does not filter out embargoed assets. Assets are embargoed at the item level and
+    # therefore the embargo status of an item should be checked before using this method.
+    def assets_for(fedora3_pid)
+      raise ArgumentError, 'Fedora 3 pid required' if fedora3_pid.blank?
+
+      filter('cul_member_of_ssim', "info:fedora/#{fedora3_pid}")
+      filter('object_state_ssi', 'A')
+      rows(MAX_ROWS)
+      without_facets
+      self
+    end
+
+    # USE CAREFULLY!!
+    #
+    # Returns aggregators with a search results for its assets in a field named 'assets'.
+    #
+    # This method does not filter out embargoed assets. Assets are embargoed at the item level and
+    # therefore the embargo status of an item should be checked before using this data.
+    def aggregators_with_assets
+      aggegators_only
+
+      # Adding subquery for assets
+      filter_list('*', 'assets:[subquery]')
+      @parameters['assets.q'] = '{!terms f=cul_member_of_ssim v=$row.fedora3_uri_ssi}'
+      @parameters['assets.rows'] = MAX_ROWS
+      self
+    end
+
+    def embargoed_only
+      filter('object_state_ssi', 'A')
+      @parameters[:fq] << 'free_to_read_start_date_dtsi:[NOW+1DAYS TO *]'
+    end
+
     def member_of(pid); end
 
     def fedora3_pid(pid); end
+
+    def without_facets
+      @parameters[:facet] = false
+      self
+    end
 
     def facet_by(*fields)
       @parameters[:facet] = true
@@ -72,19 +118,6 @@ module AcademicCommons
 
     def facet_limit(limit)
       @parameters[:'facet.limit'] = limit
-      self
-    end
-
-    # Only returns fields specified, the default behavior is to return all the
-    # fields. Modifies the :fl solr parameter. Use carefully! This limits the
-    # fields returned and could lead to unintended results.
-    def field_list(*fields)
-      @parameters[:fl] = Array.wrap(fields).join(',')
-      self
-    end
-
-    def sort_by(sort)
-      @parameters[:sort] = sort
       self
     end
 

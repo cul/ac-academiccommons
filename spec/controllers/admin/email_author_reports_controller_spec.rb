@@ -45,6 +45,7 @@ describe Admin::EmailAuthorReportsController, type: :controller do
 
       before do
         FactoryBot.create_list(:view_stat, 5)
+        allow(Blacklight.default_index).to receive(:search).with(any_args).and_call_original
         allow(Blacklight.default_index).to receive(:search).with(all_authors_search).and_return(authors)
         allow(Blacklight.default_index).to receive(:search).with(author_search).and_return(author_docs)
 

@@ -92,18 +92,9 @@ class SolrDocument
     return @assets if @assets
 
     if free_to_read?(self)
-      obj_display = fetch('fedora3_pid_ssi', nil)
+      item_pid = fetch('fedora3_pid_ssi', nil)
 
-      member_search = {
-        qt: 'search',
-        fl: '*',
-        fq: ["cul_member_of_ssim:\"info:fedora/#{obj_display}\"", 'object_state_ssi:A'],
-        rows: 10_000,
-        facet: false
-      }
-      response = Blacklight.default_index.connection.get 'select', params: member_search
-      docs = response['response']['docs']
-      @assets = docs.map { |member| SolrDocument.new(member) }
+      @assets = AcademicCommons.search { |p| p.assets_for(item_pid) }.docs
     else
       @assets = []
     end

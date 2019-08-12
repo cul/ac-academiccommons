@@ -54,7 +54,7 @@ describe 'myworks', type: :feature do
     end
 
     before do
-      allow(Blacklight.default_index).to receive(:search).with(any_args).and_call_original.once
+      allow(Blacklight.default_index).to receive(:search).with(any_args).and_call_original
       allow(Blacklight.default_index).to receive(:search).with(embargoed_solr_params).and_return(solr_response)
       visit myworks_path
     end

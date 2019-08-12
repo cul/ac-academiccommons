@@ -38,8 +38,8 @@ RSpec.describe AcademicCommons::Metrics::UsageStatistics, integration: true do
         FactoryBot.create(:download_stat)
         FactoryBot.create(:streaming_stat)
 
-        allow(Blacklight.default_index).to receive(:search)
-          .with(solr_params).and_return(solr_response)
+        allow(Blacklight.default_index).to receive(:search).with(any_args).and_call_original
+        allow(Blacklight.default_index).to receive(:search).with(solr_params).and_return(solr_response)
       end
 
       context 'when requesting stats for an author with embargoed material' do
@@ -211,8 +211,8 @@ RSpec.describe AcademicCommons::Metrics::UsageStatistics, integration: true do
       FactoryBot.create(:streaming_stat, at_time: Time.zone.parse('May 3, 2015'))
       FactoryBot.create(:view_stat, at_time: Time.zone.parse('Jan 7, 2017'))
 
-      allow(Blacklight.default_index).to receive(:search)
-        .with(solr_params).and_return(solr_response)
+      allow(Blacklight.default_index).to receive(:search).with(any_args).and_call_original
+      allow(Blacklight.default_index).to receive(:search).with(solr_params).and_return(solr_response)
     end
 
     it 'creates the expected csv' do
@@ -258,8 +258,8 @@ RSpec.describe AcademicCommons::Metrics::UsageStatistics, integration: true do
       FactoryBot.create(:download_stat, at_time: Time.zone.parse('April 2, 2016'))
       FactoryBot.create(:streaming_stat, at_time: Time.zone.parse('May 3, 2015'))
 
-      allow(Blacklight.default_index).to receive(:search)
-        .with(solr_params).and_return(solr_response)
+      allow(Blacklight.default_index).to receive(:search).with(any_args).and_call_original
+      allow(Blacklight.default_index).to receive(:search).with(solr_params).and_return(solr_response).once
     end
 
     it 'creates the expected csv' do
@@ -283,6 +283,7 @@ RSpec.describe AcademicCommons::Metrics::UsageStatistics, integration: true do
       FactoryBot.create(:download_stat, at_time: Time.zone.parse('April 2, 2016'))
       FactoryBot.create(:streaming_stat, at_time: Time.zone.parse('May 3, 2015'))
 
+      allow(Blacklight.default_index).to receive(:search).with(any_args).and_call_original
       allow(Blacklight.default_index).to receive(:search)
         .with(solr_params).and_return(solr_response)
     end
