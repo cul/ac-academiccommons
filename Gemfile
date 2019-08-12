@@ -31,6 +31,7 @@ gem 'rinku'
 gem 'rsolr-ext'
 gem 'rubyzip', require: 'zip'
 gem 'sass-rails'
+gem 'sassc', '2.1.0.pre3' # Should be moved off this version from 2.1.0 is released.
 gem 'sentry-raven'
 gem 'sitemap_generator'
 gem 'social-share-button'
