@@ -122,9 +122,9 @@ GEM
       rails (>= 3.0)
     bootsnap (1.3.0)
       msgpack (~> 1.0)
-    bootstrap-sass (3.4.1)
+    bootstrap-sass (3.3.7)
       autoprefixer-rails (>= 5.2.1)
-      sassc (>= 2.0.0)
+      sass (>= 3.3.4)
     builder (3.2.3)
     byebug (10.0.2)
     cancancan (2.2.0)
@@ -375,7 +375,7 @@ GEM
     rails-dom-testing (2.0.3)
       activesupport (>= 4.2.0)
       nokogiri (>= 1.6)
-    rails-html-sanitizer (1.1.0)
+    rails-html-sanitizer (1.2.0)
       loofah (~> 2.2, >= 2.2.2)
     railties (5.2.3)
       actionpack (= 5.2.3)
@@ -486,9 +486,6 @@ GEM
       sprockets (>= 2.8, < 4.0)
       sprockets-rails (>= 2.0, < 4.0)
       tilt (>= 1.1, < 3)
-    sassc (2.0.1)
-      ffi (~> 1.9)
-      rake
     selenium-webdriver (3.13.0)
       childprocess (~> 0.5)
       rubyzip (~> 1.2)
@@ -541,7 +538,7 @@ GEM
       ref
     thor (0.19.4)
     thread_safe (0.3.6)
-    tilt (2.0.8)
+    tilt (2.0.9)
     tins (1.19.0)
     turbolinks (5.1.1)
       turbolinks-source (~> 5.1)
@@ -594,7 +591,7 @@ DEPENDENCIES
   blacklight_oai_provider
   blacklight_range_limit
   bootsnap
-  bootstrap-sass (~> 3.4.1)
+  bootstrap-sass (~> 3.3.0)
   byebug
   cancancan (~> 2.0)
   capistrano (= 3.8)
@@ -653,4 +650,4 @@ DEPENDENCIES
   whenever
 
 BUNDLED WITH
-   1.16.1
+   2.0.2
