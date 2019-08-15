@@ -87,12 +87,12 @@ module AcademicCommons
     # This method does not filter out embargoed assets. Assets are embargoed at the item level and
     # therefore the embargo status of an item should be checked before using this data.
     def aggregators_with_assets
-      aggegators_only
+      aggregators_only
 
       # Adding subquery for assets
-      filter_list('*', 'assets:[subquery]')
-      @parameters['assets.q'] = '{!terms f=cul_member_of_ssim v=$row.fedora3_uri_ssi}'
-      @parameters['assets.rows'] = MAX_ROWS
+      field_list('*', 'assets:[subquery]')
+      @parameters[:'assets.q'] = '{!terms f=cul_member_of_ssim v=$row.fedora3_uri_ssi}'
+      @parameters[:'assets.rows'] = MAX_ROWS
       self
     end
 

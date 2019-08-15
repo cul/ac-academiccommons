@@ -130,5 +130,37 @@ describe SolrDocument do
         document.assets
       end
     end
+
+    context 'when assets are already included in solr response' do
+      let(:document) do
+        described_class.new(
+          id: 'test:obj', fedora3_pid_ssi: 'test:obj', object_state_ssi: 'A',
+          free_to_read_start_date_ssi: Date.current.strftime('%Y-%m-%d'),
+          assets: {
+            numFound: 1, start: 0, docs: [
+              {
+                object_state_ssi: 'A',
+                active_fedora_model_ssi: 'GenericResource',
+                id: 'test:asset',
+                rdf_type_ssim: ['http://purl.oclc.org/NET/CUL/Resource'],
+                cc_license_ssim: ['info:fedora/'],
+                has_model_ssim: ['info:fedora/ldpd:GenericResource'],
+                pid: 'test:asset',
+                fedora3_pid_ssi: 'test:asset'
+              }
+            ]
+          }
+        )
+      end
+
+      it 'does not query solr' do
+        expect(Blacklight.default_index).not_to receive(:search).with(any_args)
+        document.assets
+      end
+
+      it 'returns assets' do
+        expect(document.assets.first.id).to eql 'test:asset'
+      end
+    end
   end
 end
