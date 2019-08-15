@@ -72,7 +72,6 @@ class SolrDocument
       super
       # Custom values
       @semantic_value_hash[:identifier] = full_doi
-      # @semantic_value_hash[:persistent_url] = full_doi
       @semantic_value_hash[:date] = @semantic_value_hash[:date].map(&:to_s)
     end
 
@@ -135,18 +134,6 @@ class SolrDocument
   def degree
     fields = [fetch('degree_name_ssim', nil), fetch('degree_grantor_ssim', nil)].compact
     fields.blank? ? nil : fields.join(', ')
-  end
-
-  def title
-    to_semantic_values[:title].first
-  end
-
-  def genre
-    to_semantic_values[:genre].first
-  end
-
-  def created_at
-    to_semantic_values[:created_at].first
   end
 
   field_semantics.except(:id).each do |field, solr_key|

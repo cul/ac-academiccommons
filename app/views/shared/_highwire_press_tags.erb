@@ -1,28 +1,28 @@
 <% if @document %>
-  <% semantics_hash = @document.to_semantic_values %>
+  <%= highwire_press_tags 'citation_title',            @document.title %>
+  <%= highwire_press_tags 'citation_author',           @document.author %>
+  <%= highwire_press_tags 'citation_publication_date', @document.date %>
+  <%= highwire_press_tags 'citation_date',             @document.date %>
+  <%= highwire_press_tags 'citation_volume',           @document['volume_ssi'] %>
+  <%= highwire_press_tags 'citation_issue',            @document['issue_ssi'] %>
+  <%= highwire_press_tags 'citation_firstpage',        @document['start_page_ssi'] %>
+  <%= highwire_press_tags 'citation_lastpage',         @document['end_page_ssi'] %>
+  <%= highwire_press_tags 'citation_doi',              @document.doi %>
+  <%= highwire_press_tags 'citation_keywords',         @document.subject %>
 
-  <%= highwire_press_tags 'citation_title',            semantics_hash[:title] %>
-  <%= highwire_press_tags 'citation_author',           semantics_hash[:author] %>
-  <%= highwire_press_tags 'citation_publication_date', semantics_hash[:date] %>
-  <%= highwire_press_tags 'citation_date',             semantics_hash[:date] %>
-  <%= highwire_press_tags 'citation_volume',    @document['volume_ssi'] %>
-  <%= highwire_press_tags 'citation_issue',     @document['issue_ssi'] %>
-  <%= highwire_press_tags 'citation_firstpage', @document['start_page_ssi'] %>
-  <%= highwire_press_tags 'citation_lastpage',  @document['end_page_ssi'] %>
-  <%= highwire_press_tags 'citation_doi',       @document.doi %>
-  <%= highwire_press_tags 'citation_keywords',  semantics_hash[:subject] %>
+  <% types = @document.type %>
 
-  <% if semantics_hash[:type].include?('Articles') && semantics_hash[:type].include?('Reviews') %>
+  <% if types.include?('Articles') && types.include?('Reviews') %>
     <%= highwire_press_tags 'citation_journal_title', @document['book_journal_title_ssi'] %>
   <% end %>
 
-  <% if semantics_hash[:type].include?('Chapters (layout features)') %>
+  <% if types.include?('Chapters (layout features)') %>
     <%= highwire_press_tags 'citation_inbook_title', @document['book_journal_title_ssi'] %>
   <% end %>
 
-  <% if semantics_hash[:type].include?('Theses') %>
-    <%= highwire_press_tags 'citation_dissertation_name',        semantics_hash[:degree_name] %>
-    <%= highwire_press_tags 'citation_dissertation_institution', semantics_hash[:degree_grantor] %>
+  <% if types.include?('Theses') %>
+    <%= highwire_press_tags 'citation_dissertation_name',        @document.degree_name %>
+    <%= highwire_press_tags 'citation_dissertation_institution', @document.degree_grantor %>
   <% end %>
 
   <%= highwire_press_tags 'citation_pdf_url',
