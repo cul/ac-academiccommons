@@ -14,7 +14,7 @@ module V1
       expose(:persistent_url) { |r| r.full_doi }
 
       expose(:resource_paths) do |r|
-        r.assets.map { |a| "/doi/#{a.doi}/download" }
+        r.assets.map(&:download_path)
       end
 
       expose(:created_at)  { |r| r.created_at }

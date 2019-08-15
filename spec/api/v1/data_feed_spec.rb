@@ -96,7 +96,8 @@ describe 'GET /api/v1/data_feed/:key', type: :request do
                   'docs' => [
                     {
                       'id' => '10.7916/D8WS9155',
-                      'cul_doi_ssi' => '10.7916/D8WS9155'
+                      'cul_doi_ssi' => '10.7916/D8WS9155',
+                      'active_fedora_model_ssi' => 'GenericResource'
                     }
                   ]
                 }
