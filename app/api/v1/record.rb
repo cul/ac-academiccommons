@@ -6,7 +6,7 @@ module V1
     helpers do
       def get_document(doi)
         response = AcademicCommons.search do |params|
-          params.aggregators_only
+          params.aggregators_with_assets
           params.id(doi)
           params.rows(1)
         end
@@ -26,7 +26,7 @@ module V1
       if record.blank?
         error! 'Record not found', 404
       else
-        present record.to_semantic_values, with: Entities::FullRecord
+        present record, with: Entities::FullRecord
       end
     end
   end

@@ -36,7 +36,7 @@ module V1
           solr_params.sort_by SORT_TO_SOLR_SORT.dig(params[:sort], params[:order])
           solr_params.start((params[:page].to_i - 1) * params[:per_page].to_i)
           solr_params.rows params[:per_page].to_i
-          solr_params.aggregators_only
+          solr_params.aggregators_with_assets
 
           if with_facets
             solr_params.facet_by(*FACETS.map { |f| MAP_TO_SOLR_FIELD[f] })
@@ -45,7 +45,8 @@ module V1
 
           solr_params.search_type(params[:search_type]) if params.key?(:search_type)
         end
-      rescue StandardError
+      rescue StandardError => e
+        Rails.logger.error e
         error! 'unexpected error', 500
       end
     end

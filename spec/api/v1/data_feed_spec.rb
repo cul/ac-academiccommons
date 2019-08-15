@@ -57,12 +57,13 @@ describe 'GET /api/v1/data_feed/:key', type: :request do
         {
           q: nil, sort: nil, start: 0, rows: 100_000,
           fq: ['genre_ssim:"Theses"', 'degree_level_name_ssim:"Master\'s"', "has_model_ssim:\"#{ContentAggregator.to_class_uri}\""],
-          qt: 'search'
+          qt: 'search', fl: '*,assets:[subquery]',
+          'assets.q': '{!terms f=cul_member_of_ssim v=$row.fedora3_uri_ssi}', 'assets.rows': 100_000
         }
       end
 
       let(:solr_response) do
-        {
+        Blacklight::Solr::Response.new({
           'response' => {
             'numFound' => 1,
             'docs' => [
@@ -70,7 +71,8 @@ describe 'GET /api/v1/data_feed/:key', type: :request do
                 'id' => '10.7916/D8WS9153',
                 'record_creation_dtsi' => '2011-02-25T18:57:00Z',
                 'record_change_dtsi' => '2011-02-25T18:57:00Z',
-                'language_ssim' => 'English',
+                'object_state_ssi' => 'A',
+                'language_ssim' => ['English'],
                 'cul_doi_ssi' => '10.7916/D8WS9153',
                 'fedora3_pid_ssi' => 'actest:9',
                 'title_ssi' => 'The Warburg effect and its role in cancer detection and therapy',
@@ -87,11 +89,21 @@ describe 'GET /api/v1/data_feed/:key', type: :request do
                 'degree_discipline_ssim' => ['Biotechnology'],
                 'notes_ssim' => ['M.S. Columbia University'],
                 'free_to_read_start_date_ssi' => '2018-01-01',
-                'thesis_advisor_ssim' => ['Smith, John']
+                'thesis_advisor_ssim' => ['Smith, John'],
+                'assets' => {
+                  'numFound' => 1,
+                  'start' => 0,
+                  'docs' => [
+                    {
+                      'id' => '10.7916/D8WS9155',
+                      'cul_doi_ssi' => '10.7916/D8WS9155'
+                    }
+                  ]
+                }
               }
             ]
           }
-        }
+        }, {})
       end
 
       let(:json_response) do
@@ -110,6 +122,7 @@ describe 'GET /api/v1/data_feed/:key', type: :request do
               'type' => ['Theses'],
               'language' => ['English'],
               'persistent_url' => 'https://doi.org/10.7916/D8WS9153',
+              'resource_paths' => ['/doi/10.7916/D8WS9155/download'],
               'created_at' => '2011-02-25T18:57:00Z',
               'modified_at' => '2011-02-25T18:57:00Z',
               'columbia_series' => [],

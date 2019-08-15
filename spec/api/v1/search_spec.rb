@@ -7,7 +7,8 @@ describe 'GET /api/v1/search', type: :request do
     {
       qt: 'search', fq: ['has_model_ssim:"info:fedora/ldpd:ContentAggregator"'],
       rows: 25, q: nil, sort: 'score desc, pub_date_isi desc, title_sort asc',
-      start: 0, facet: true,
+      start: 0, fl: '*,assets:[subquery]', 'assets.q': '{!terms f=cul_member_of_ssim v=$row.fedora3_uri_ssi}',
+      'assets.rows': 100_000, facet: true,
       'facet.field': ['author_ssim', 'pub_date_isi', 'department_ssim', 'subject_ssim', 'genre_ssim', 'series_ssim'],
       'facet.limit': 5
     }
@@ -139,6 +140,7 @@ describe 'GET /api/v1/search', type: :request do
             'type' => ['Articles'],
             'language' => ['English'],
             'persistent_url' => 'https://doi.org/10.7916/ALICE',
+            'resource_paths' => ['/doi/10.7916/TESTDOC2/download', '/doi/10.7916/TESTDOC4/download'],
             'created_at' => '2017-09-14T16:31:33Z',
             'modified_at' => '2017-09-14T16:48:05Z'
           }
