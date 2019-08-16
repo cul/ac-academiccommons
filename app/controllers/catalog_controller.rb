@@ -26,12 +26,10 @@ class CatalogController < ApplicationController
     config.navbar.partials.delete(:saved_searches)
     config.navbar.partials.delete(:search_history)
 
-    config.default_solr_params = {
-      qt: 'search',
-      fq: ["has_model_ssim:\"#{ContentAggregator.to_class_uri}\""],
-      rows: 10,
-      fl: '*' # Return all fields
-    }
+    config.default_solr_params = AcademicCommons::SearchParameters.new
+                                                                  .rows(10)
+                                                                  .aggregators_only
+                                                                  .to_h
 
     # solr field configuration for search results/index views
     config.show.title_field = 'title_ssi'
@@ -42,13 +40,11 @@ class CatalogController < ApplicationController
     config.show.partials = [:show] # Removing :show_header partial
 
     # Default values of parameters to send when requesting a single document
-    config.default_document_solr_params = {
-      fq: ["has_model_ssim:\"#{ContentAggregator.to_class_uri}\""]
-      # fl: '*',
-      # facet: false,
-      # rows: 1
-      # q: '{!raw f=id v=$id}'
-    }
+    config.default_document_solr_params = AcademicCommons::SearchParameters.new
+                                                                           .rows(1)
+                                                                           .request_handler('document')
+                                                                           .aggregators_with_assets
+                                                                           .to_h
 
     # solr field configuration for search results/index views
     config.index.title_field = 'title_ssi'

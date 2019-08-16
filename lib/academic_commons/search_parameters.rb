@@ -56,6 +56,11 @@ module AcademicCommons
       self
     end
 
+    def request_handler(handler)
+      @parameters[:qt] = handler
+      self
+    end
+
     def id(id)
       filter('id', id)
       self
