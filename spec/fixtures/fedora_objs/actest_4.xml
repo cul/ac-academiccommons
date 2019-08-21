@@ -4,7 +4,7 @@
   xsi:schemaLocation="info:fedora/fedora-system:def/foxml# http://www.fedora.info/definitions/1/0/foxml1-1.xsd">
   <foxml:objectProperties>
     <foxml:property NAME="info:fedora/fedora-system:def/model#state" VALUE="Active"/>
-    <foxml:property NAME="info:fedora/fedora-system:def/model#label" VALUE="alice_in_wonderland.json"/>
+    <foxml:property NAME="info:fedora/fedora-system:def/model#label" VALUE="alice_in_wonderland_cover.jpg"/>
     <foxml:property NAME="info:fedora/fedora-system:def/model#ownerId" VALUE="fedoraAdmin"/>
     <foxml:property NAME="info:fedora/fedora-system:def/model#createdDate" VALUE="2016-12-01T16:48:52.000Z"/>
     <foxml:property NAME="info:fedora/fedora-system:def/view#lastModifiedDate" VALUE="2016-12-01T20:48:53.105Z"/>
@@ -31,8 +31,8 @@
         <oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
           <dc:creator>BATCH</dc:creator>
           <dc:publisher>Columbia University Libraries</dc:publisher>
-          <dc:type></dc:type>
-          <dc:format>application/json</dc:format>
+          <dc:type>StillImage</dc:type>
+          <dc:format>application/jpg</dc:format>
           <dc:identifier>actest:4</dc:identifier>
           <dc:source></dc:source>
         </oai_dc:dc>
