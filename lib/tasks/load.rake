@@ -25,9 +25,16 @@ namespace :load do
 
     # Create the content datastream on actest:4 with the pdf fixture
     fedora_server.add_datastream(
-      pid: 'actest:4', dsid: 'content', dsLabel: 'to_solr.json',
-      content: File.open('spec/fixtures/fedora_objs/to_solr.json'),
-      controlGroup: 'M', mimeType: 'application/json'
+      pid: 'actest:4', dsid: 'content', dsLabel: 'alice_in_wonderland_cover.jpg',
+      content: File.open('spec/fixtures/fedora_objs/alice_in_wonderland_cover.jpg'),
+      controlGroup: 'M', mimeType: 'image/jpeg'
+    )
+
+    # Create access datastream on actest:4 referencing access copy
+    fedora_server.add_datastream(
+      pid: 'actest:4', dsid: 'access', dsLabel: 'access.jpg',
+      dsLocation: 'file:' + Rails.root.join('spec', 'fixtures', 'fedora_objs', 'alice_in_wonderland_cover.jpg').to_s,
+      controlGroup: 'E', mimeType: 'image/jpeg', versionable: false
     )
   end
 end

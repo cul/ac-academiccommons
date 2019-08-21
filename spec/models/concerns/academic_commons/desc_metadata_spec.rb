@@ -1,6 +1,6 @@
 require 'rails_helper'
 RSpec.describe AcademicCommons::DescMetadata do
-  let(:expected_json) { fixture_to_json('fedora_objs/to_solr.json') }
+  let(:expected_json) { fixture_to_json('desc_metadata/to_solr.json') }
   let(:start_solr_doc) { { 'doi_ssim' => '10.7916/TESTTEST' } }
 
   # rubocop:disable RSpec/DescribedClass
