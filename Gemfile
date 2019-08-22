@@ -40,6 +40,7 @@ gem 'uglifier'
 gem 'unicode'
 gem 'voight_kampff'
 gem 'whenever', require: false
+gem 'wowza-secure_token'
 
 # Database
 gem 'mysql2'
