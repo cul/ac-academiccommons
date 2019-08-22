@@ -11,6 +11,7 @@
     "datatables.net-bs": "^1.10.19",
     "dropzone": "^5.4.0",
     "jquery-ui": "^1.12.1",
+    "mediaelement": "^4.2.12",
     "readmore-js": "^2.1.0"
   }
 }
