@@ -31,9 +31,22 @@ delegate@^3.1.2:
   version "3.2.0"
   resolved "https://registry.yarnpkg.com/delegate/-/delegate-3.2.0.tgz#b66b71c3158522e8ab5744f720d8ca0c2af59166"
 
+dom-walk@^0.1.0:
+  version "0.1.1"
+  resolved "https://registry.yarnpkg.com/dom-walk/-/dom-walk-0.1.1.tgz#672226dc74c8f799ad35307df936aba11acd6018"
+  integrity sha1-ZyIm3HTI95mtNTB9+TaroRrNYBg=
+
 dropzone@^5.4.0:
   version "5.4.0"
   resolved "https://registry.yarnpkg.com/dropzone/-/dropzone-5.4.0.tgz#3290c07f59b189eb5a11e99a58c9b2adae5acfec"
+
+global@^4.3.1:
+  version "4.4.0"
+  resolved "https://registry.yarnpkg.com/global/-/global-4.4.0.tgz#3e7b105179006a323ed71aafca3e9c57a5cc6406"
+  integrity sha512-wv/LAoHdRE3BeTGz53FAamhGlPLhlssK45usmGFThIi4XqnBmjKQ16u+RNbP7WvigRZDxUsM0J3gcQ5yicaL0w==
+  dependencies:
+    min-document "^2.19.0"
+    process "^0.11.10"
 
 good-listener@^1.2.2:
   version "1.2.2"
@@ -52,6 +65,25 @@ jquery@>=1.7:
 jquery@~2.1.4:
   version "2.1.4"
   resolved "https://registry.yarnpkg.com/jquery/-/jquery-2.1.4.tgz#228bde698a0c61431dc2630a6a154f15890d2317"
+
+mediaelement@^4.2.12:
+  version "4.2.12"
+  resolved "https://registry.yarnpkg.com/mediaelement/-/mediaelement-4.2.12.tgz#904ad1088a65b216f9c19ac3b47b6d2c0fb0dea9"
+  integrity sha512-nKeV55tDTsKY5ZUkSWW9dBQdF6CjCkW00VyzbXmP1KhEtDApNmm77CAnCJIaFcco/hfAzQrCd8IevL0y9YVPGg==
+  dependencies:
+    global "^4.3.1"
+
+min-document@^2.19.0:
+  version "2.19.0"
+  resolved "https://registry.yarnpkg.com/min-document/-/min-document-2.19.0.tgz#7bd282e3f5842ed295bb748cdd9f1ffa2c824685"
+  integrity sha1-e9KC4/WELtKVu3SM3Z8f+iyCRoU=
+  dependencies:
+    dom-walk "^0.1.0"
+
+process@^0.11.10:
+  version "0.11.10"
+  resolved "https://registry.yarnpkg.com/process/-/process-0.11.10.tgz#7332300e840161bda3e69a1d1d91a7d4bc16f182"
+  integrity sha1-czIwDoQBYb2j5podHZGn1LwW8YI=
 
 readmore-js@^2.1.0:
   version "2.1.0"
