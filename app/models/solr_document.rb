@@ -113,8 +113,7 @@ class SolrDocument
   end
 
   def thumbnail
-    return nil unless asset?
-    "#{Rails.application.secrets.iiif[:urls].sample}/#{fetch(:fedora3_pid_ssi)}/full/!256,256/0/native.jpg"
+    image_url(256)
   end
 
   def filename
@@ -151,5 +150,44 @@ class SolrDocument
 
   def created_at
     to_semantic_values[:created_at].first
+  end
+
+  def video?
+    asset? && (dc_type.include?('MovingImage') || dc_type.include?('Video'))
+  end
+
+  def audio?
+    asset? && (dc_type.include?('Sound') || dc_type.include?('Audio'))
+  end
+
+  def image_url(size = 256)
+    return nil unless asset?
+    "#{Rails.application.secrets.iiif[:urls].sample}/#{fetch(:fedora3_pid_ssi)}/full/!#{size},#{size}/0/native.jpg"
+  end
+
+  def wowza_media_url(request)
+    raise ArgumentError, 'Request object invalid' unless request.is_a?(ActionDispatch::Request)
+    return unless audio? || video?
+    # Check that it is free to read
+
+    wowza_config = Rails.application.secrets[:wowza]
+    access_copy_location = fetch('access_copy_location_ssi', nil)&.gsub(/^file:/, '')
+
+    return unless access_copy_location
+
+    Wowza::SecureToken::Params.new(
+      stream: wowza_config[:application] + '/_definst_/mp4:' + access_copy_location.gsub(%r{^\/}, ''),
+      secret: wowza_config[:shared_secret],
+      client_ip: request.remote_ip,
+      starttime: Time.now.to_i,
+      endtime: Time.now.to_i + wowza_config[:token_lifetime].to_i,
+      prefix: wowza_config[:token_prefix]
+    ).to_url_with_token_hash(wowza_config[:host], wowza_config[:ssl_port], 'hls-ssl')
+  end
+
+  private
+
+  def dc_type
+    fetch('dc_type_ssm', [])
   end
 end
