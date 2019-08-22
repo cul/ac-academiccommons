@@ -45,7 +45,7 @@ module AcademicCommons::Resource
   def repository_inbound_count(predicate)
     begin
       riquery = riquery_for_inbound(predicate)
-      options = {lang: 'itql', format: 'count', limit: '', flush: true }
+      options = { lang: 'itql', format: 'count', limit: '', flush: true }
       rubydora = ActiveFedora::Base.connection_for_pid(pid)
       result = rubydora.risearch(riquery, options)
       result.body.to_i
