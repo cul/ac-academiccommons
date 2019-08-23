@@ -16,14 +16,18 @@
             <span class="filename"><%= asset.filename %></span>
             <span class="mimetype"><%= asset.fetch(:downloadable_content_type_ssi, nil) %></span>
             <span class="filesize"><%= number_to_human_size(asset.fetch(:downloadable_content_size_isi, nil)) %></span>
-            <span class="icon play"><%= link_to ('<span class="far fa-play-circle" aria-hidden="true" title="Play"></span><span class="visually-hidden">Play</span>').html_safe, "#play-collapse-#{asset.id.gsub(/\/|\./, '-')}", data: { toggle: 'collapse' } %></span>
+            <% if asset.video? || asset.audio? %>
+              <span class="icon play"><%= link_to ('<span class="far fa-play-circle" aria-hidden="true" title="Play"></span><span class="visually-hidden">Play</span>').html_safe, "#play-collapse-#{asset.id.gsub(/\/|\./, '-')}", data: { toggle: 'collapse' } %></span>
+            <% end %>
             <span class="icon download"><%= link_to ('<span class="far fa-arrow-alt-circle-down" aria-hidden="true" title="Download file"></span><span class="visually-hidden">Download File</span>').html_safe, asset.download_path %></span>
           </li>
         </ul>
-        <div class="collapse" id="<%= "play-collapse-#{asset.id.gsub(/\/|\./, '-')}" %>">
-          <%= player(asset) %>
-        </div>
 
+        <% if asset.video? || asset.audio? %>
+          <div class="collapse" id="<%= "play-collapse-#{asset.id.gsub(/\/|\./, '-')}" %>">
+            <%= player(asset) %>
+          </div>
+        <% end %>
       <% end %>
     <% else %>
       <p><em><%= t('blacklight.search.show.assets.unavailable') %></em></p>
