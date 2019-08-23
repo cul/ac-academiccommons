@@ -1,14 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe DownloadController, type: :controller do
-  describe 'GET download_log' do
-    include_context 'log'
-
-    include_examples 'authorization required' do
-      let(:http_request) { get :download_log, params: { log_folder: 'ac-indexing', id: id } }
-    end
-  end
-
+RSpec.describe AssetsController, type: :controller do
   describe 'GET legacy_fedora_content' do
     let(:mock_resource) do
       double(docs: [SolrDocument.new(id: '10.7616/TESTTEST', object_state_ssi: 'A', cul_member_of_ssim: ['info:fedora/parent:id'])])

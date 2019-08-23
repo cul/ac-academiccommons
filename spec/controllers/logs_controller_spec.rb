@@ -20,4 +20,12 @@ describe LogsController, type: :controller do
       let(:http_request) { get :log_form, params: { log_id: id, log_folder: 'ac-indexing' } }
     end
   end
+
+  describe 'GET download_log' do
+    include_context 'log'
+
+    include_examples 'authorization required' do
+      let(:http_request) { get :download_log, params: { log_folder: 'ac-indexing', id: id } }
+    end
+  end
 end
