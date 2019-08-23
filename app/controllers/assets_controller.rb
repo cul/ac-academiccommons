@@ -1,20 +1,11 @@
-class DownloadController < ApplicationController
-  include LogsHelper
+class AssetsController < ApplicationController
   include AcademicCommons::Embargoes
-
-  authorize_resource class: false, only: :download_log
 
   STANDARD_SEARCH_PARAMS = {
     qt: 'search',
     fl: '*',
     facet: false
   }.freeze
-
-  def download_log
-    headers['Content-Type'] = 'application/octet-stream'
-    headers['Content-Disposition'] = "attachment;filename=\"#{params[:id]}.log\""
-    render plain: getLogContent(params[:log_folder], params[:id])
-  end
 
   def content
     # TODO: check that we are only downloading assets?
