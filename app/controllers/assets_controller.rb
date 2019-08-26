@@ -7,43 +7,30 @@ class AssetsController < ApplicationController
     facet: false
   }.freeze
 
-  def content
-    # TODO: check that we are only downloading assets?
-    search_params = STANDARD_SEARCH_PARAMS.merge(
-      fq: ["id:\"#{params[:id]}\""]
-    )
-    docs = Blacklight.default_index.search(search_params).docs
-    # did the resource doc exist? is it active?
-    resource_doc = docs.first
-    fail_fast = resource_doc.nil? || resource_doc.embargoed?
+  before_action :load_asset, except: :legacy_fedora_content
 
-    if !fail_fast # check that at least one of the parent docs is active and readable
-      ids = resource_doc.fetch(:cul_member_of_ssim,[]).map { |val| val.split('/').last }
-      ids = ids.map { |val| val.gsub(':','\:') }
-      fail_fast = !any_free_to_read?(ids)
+  def embed
+    if restricted? # TODO: check that is is playable content here or should that check be later?
+      render body: nil, status: 404
+    else
+      render body: 'embeded video should be here', status: 200
     end
+  end
 
-    if !fail_fast # check that the content datastream exists for this object in fedora
-      url = Rails.application.config_for(:fedora)['url'] + '/objects/' + resource_doc.fetch(:fedora3_pid_ssi, nil) + '/datastreams/content/content'
-      fail_fast ||= (HTTP.head(url).code != 200)
-    end
-
-    if fail_fast
+  def download
+    if restricted? || !content_datastream?
       render body: nil, status: 404
     else
       record_stats
-      headers['X-Accel-Redirect'] = x_accel_url(url, resource_doc.filename)
+      headers['X-Accel-Redirect'] = x_accel_url(content_url, @resource_doc.filename)
       render body: nil
     end
   end
 
   def legacy_fedora_content
-    # Get the resource doc and its parent docs.
-    search_params = STANDARD_SEARCH_PARAMS.merge(
-      fq: ["fedora3_pid_ssi:\"#{params[:uri]}\""]
-    )
-    solr_response = Blacklight.default_index.search(search_params)
-    resource_doc = solr_response.docs.first
+    resource_doc = AcademicCommons.search { |p|
+      p.filter('fedora3_pid_ssi', params[:uri])
+    }.docs.first
 
     # did the resource doc exist?
     if resource_doc.nil?
@@ -54,6 +41,35 @@ class AssetsController < ApplicationController
   end
 
   private
+
+  def load_asset
+    @resource_doc ||= AcademicCommons.search { |p|
+      p.id params[:id]
+      # TODO: restrict to assets only
+    }.docs.first
+  end
+
+  # Returns true if asset is restricted or if it does not exist.
+  def restricted?
+    fail_fast = @resource_doc.nil? || @resource_doc.embargoed?
+
+    unless fail_fast # check that at least one of the parent docs is active and readable
+      ids = @resource_doc.fetch(:cul_member_of_ssim, [])
+                         .map { |val| val.split('/').last }
+                         .map { |val| val.gsub(':', '\:') }
+      fail_fast = !any_free_to_read?(ids)
+    end
+
+    fail_fast
+  end
+
+  def content_datastream?
+    HTTP.head(content_url).code == 200
+  end
+
+  def content_url
+    Rails.application.config_for(:fedora)['url'] + '/objects/' + @resource_doc.fetch(:fedora3_pid_ssi, nil) + '/datastreams/content/content'
+  end
 
   # Downloading of files is handed off to nginx to improve performance.
   # Uses the x-accel-redirect header in combination with nginx config location
