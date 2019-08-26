@@ -21,7 +21,7 @@ RSpec.describe AssetsController, type: :controller do
     end
   end
 
-  describe 'GET content' do
+  describe 'GET download' do
     let(:resource_doc)  { SolrDocument.new(id: '10.7616/TESTTEST', object_state_ssi: 'A', cul_member_of_ssim: ['info:fedora/parent:id']) }
     let(:parent_doc)    { SolrDocument.new(object_state_ssi: 'A') }
     let(:mock_resource) { double(docs: [resource_doc]) }
@@ -32,7 +32,7 @@ RSpec.describe AssetsController, type: :controller do
       allow(Blacklight.default_index).to receive(:search).and_return(mock_resource, mock_parent)
       allow(HTTP).to receive(:head).and_return(mock_head_response)
 
-      get :content, params: { id: '10.7616/TESTTEST' }
+      get :download, params: { id: '10.7616/TESTTEST' }
     end
 
     context 'when resource is active, parent is active' do

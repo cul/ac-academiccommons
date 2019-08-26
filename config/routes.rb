@@ -47,8 +47,9 @@ Rails.application.routes.draw do
   #     concerns :exportable
   #   end
   # Specifying routes using glob (*) in id param, this way slashes and period are accepted as part of the id.
-  match 'doi/*id/download', to: 'assets#content', via: :get,          as: 'content_download'
-  match 'doi/*id',          to: 'catalog#show',   via: :get,          as: :solr_document
+  match 'doi/*id/download', to: 'assets#download', via: :get, as: 'content_download'
+  match 'doi/*id/embed',    to: 'assets#embed',    via: :get
+  match 'doi/*id',          to: 'catalog#show',    via: :get, as: :solr_document
 
   mount Blacklight::Engine => '/'
 
@@ -56,7 +57,6 @@ Rails.application.routes.draw do
   delete '/solr_documents/:id', to: 'solr_documents#destroy'
   put '/solr_documents/:id', to: 'solr_documents#update'
   get '/solr_documents/:id', to: 'solr_documents#show'
-
 
   resource :agreement
 
