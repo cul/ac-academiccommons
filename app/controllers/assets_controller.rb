@@ -1,19 +1,13 @@
 class AssetsController < ApplicationController
   include AcademicCommons::Embargoes
 
-  STANDARD_SEARCH_PARAMS = {
-    qt: 'search',
-    fl: '*',
-    facet: false
-  }.freeze
-
-  before_action :load_asset, except: :legacy_fedora_content
+  before_action :load_asset
 
   def embed
     if restricted? # TODO: check that is is playable content here or should that check be later?
       render body: nil, status: 404
     else
-      render body: 'embeded video should be here', status: 200
+      render layout: 'embed'
     end
   end
 
@@ -22,41 +16,38 @@ class AssetsController < ApplicationController
       render body: nil, status: 404
     else
       record_stats
-      headers['X-Accel-Redirect'] = x_accel_url(content_url, @resource_doc.filename)
+      headers['X-Accel-Redirect'] = x_accel_url(content_url, @asset.filename)
       render body: nil
     end
   end
 
   def legacy_fedora_content
-    resource_doc = AcademicCommons.search { |p|
-      p.filter('fedora3_pid_ssi', params[:uri])
-    }.docs.first
-
     # did the resource doc exist?
-    if resource_doc.nil?
+    if @asset.nil?
       render body: nil, status: 404
     else
-      redirect_to content_download_url(resource_doc.id), status: :moved_permanently
+      redirect_to content_download_url(@asset.id), status: :moved_permanently
     end
   end
 
   private
 
   def load_asset
-    @resource_doc ||= AcademicCommons.search { |p|
-      p.id params[:id]
-      # TODO: restrict to assets only
-    }.docs.first
+    solr_response = AcademicCommons.search do |p|
+      action_name == 'legacy_fedora_content' ? p.filter('fedora3_pid_ssi', params[:uri]) : p.id(params[:id])
+      p.assets_only
+      p.rows 1
+    end
+    @asset = solr_response.docs.first
   end
 
   # Returns true if asset is restricted or if it does not exist.
   def restricted?
-    fail_fast = @resource_doc.nil? || @resource_doc.embargoed?
+    fail_fast = @asset.nil? || @asset.embargoed?
 
     unless fail_fast # check that at least one of the parent docs is active and readable
-      ids = @resource_doc.fetch(:cul_member_of_ssim, [])
-                         .map { |val| val.split('/').last }
-                         .map { |val| val.gsub(':', '\:') }
+      ids = @asset.fetch(:cul_member_of_ssim, [])
+                  .map { |val| val.split('/').last.gsub(':', '\:') }
       fail_fast = !any_free_to_read?(ids)
     end
 
@@ -68,7 +59,7 @@ class AssetsController < ApplicationController
   end
 
   def content_url
-    Rails.application.config_for(:fedora)['url'] + '/objects/' + @resource_doc.fetch(:fedora3_pid_ssi, nil) + '/datastreams/content/content'
+    Rails.application.config_for(:fedora)['url'] + '/objects/' + @asset.fetch(:fedora3_pid_ssi, nil) + '/datastreams/content/content'
   end
 
   # Downloading of files is handed off to nginx to improve performance.
@@ -87,10 +78,10 @@ class AssetsController < ApplicationController
   # Returns true if any of the ids are free to read.
   def any_free_to_read?(ids)
     return false if ids.blank?
-    search_params = STANDARD_SEARCH_PARAMS.merge(
-      q: "fedora3_pid_ssi:(#{ids.join(' OR ')})"
-    )
-    solr_response = Blacklight.default_index.search(search_params)
+
+    solr_response = AcademicCommons.search do |p|
+      p.filter 'fedora3_pid_ssi', "(#{ids.join(' OR ')})"
+    end
     solr_response.docs.find { |d| !d.embargoed? }
   end
 
