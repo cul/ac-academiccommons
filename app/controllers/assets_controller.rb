@@ -7,6 +7,7 @@ class AssetsController < ApplicationController
     if restricted? # TODO: check that is is playable content here or should that check be later?
       render body: nil, status: 404
     else
+      response.headers.delete 'X-Frame-Options'
       render layout: 'embed'
     end
   end
