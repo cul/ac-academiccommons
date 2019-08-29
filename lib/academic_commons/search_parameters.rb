@@ -32,7 +32,10 @@ module AcademicCommons
       self
     end
 
-    def assets_only; end
+    def assets_only
+      filter('has_model_ssim', "(\"#{GenericResource.to_class_uri}\" OR \"#{::Resource.to_class_uri}\")")
+      self
+    end
 
     def aggregators_only
       filter('has_model_ssim', ContentAggregator.to_class_uri)

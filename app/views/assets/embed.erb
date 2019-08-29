@@ -1,0 +1,6 @@
+
+<% if @asset.video? || @asset.audio? %>
+  <%= player(@asset) %>
+<% else %>
+  <p>Resource not playable.</p>
+<% end %>
