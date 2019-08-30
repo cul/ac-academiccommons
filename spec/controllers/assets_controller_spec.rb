@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe AssetsController, type: :controller do
   describe 'GET legacy_fedora_content' do
-    let(:resource_params) { { qt: 'search', fq: ['fedora3_pid_ssi:"good:id"', 'has_model_ssim:(info:fedora/ldpd:GenericResource OR info:fedora/ldpd:Resource)'], rows: 1 } }
+    let(:resource_params) { { qt: 'search', fq: ['fedora3_pid_ssi:"good:id"', 'has_model_ssim:("info:fedora/ldpd:GenericResource" OR "info:fedora/ldpd:Resource")'], rows: 1 } }
     let(:mock_resource) do
       double(docs: [SolrDocument.new(id: '10.7616/TESTTEST', object_state_ssi: 'A', cul_member_of_ssim: ['info:fedora/parent:id'])])
     end
@@ -28,7 +28,7 @@ RSpec.describe AssetsController, type: :controller do
     let(:mock_resource) { double(docs: [resource_doc]) }
     let(:mock_parent)   { double(docs: [parent_doc]) }
     let(:mock_head_response) { double('headers', code: 200) }
-    let(:resource_params) { { qt: 'search', fq: ['id:"10.7616/TESTTEST"', 'has_model_ssim:(info:fedora/ldpd:GenericResource OR info:fedora/ldpd:Resource)'], rows: 1 } }
+    let(:resource_params) { { qt: 'search', fq: ['id:"10.7616/TESTTEST"', 'has_model_ssim:("info:fedora/ldpd:GenericResource" OR "info:fedora/ldpd:Resource")'], rows: 1 } }
     let(:parent_params)   { { qt: 'search', fq: ['fedora3_pid_ssi:(parent\:id)'], rows: 100_000 } }
 
     before do
