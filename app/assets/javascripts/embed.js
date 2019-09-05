@@ -4,3 +4,4 @@
 
 //= require jquery
 //= require mediaelement/build/mediaelement-and-player.min.js
+//= require mediaelement
