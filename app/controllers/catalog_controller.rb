@@ -18,7 +18,8 @@ class CatalogController < ApplicationController
     config.show.document_actions.delete(:citation)
     config.show.document_actions.delete(:email)
 
-    add_show_tools_partial :download_and_doi,     partial: 'download_and_doi'
+    add_show_tools_partial :asset_buttons,        partial: 'asset_buttons'
+    add_show_tools_partial :doi,                  partial: 'doi'
     add_show_tools_partial :social_buttons,       partial: 'social_buttons'
     add_show_tools_partial :use_and_reproduction, partial: 'use_and_reproduction'
 
@@ -54,7 +55,6 @@ class CatalogController < ApplicationController
     config.index.title_field = 'title_ssi'
     config.index.num_per_page = 10
     config.index.display_type_field = 'format'
-
 
     # solr fields that will be treated as facets by the blacklight application
     # The ordering of the field names is the order of the display
