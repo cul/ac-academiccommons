@@ -25,6 +25,20 @@ namespace :load do
 
     # Create the content datastream on actest:4 with the pdf fixture
     fedora_server.add_datastream(
+      pid: 'actest:3', dsid: 'content', dsLabel: 'alice_in_wonderland_video.mp4',
+      content: File.open('spec/fixtures/fedora_objs/alice_in_wonderland_video.mp4'),
+      controlGroup: 'M', mimeType: 'video/mp4'
+    )
+
+    # Create access datastream on actest:4 referencing access copy
+    fedora_server.add_datastream(
+      pid: 'actest:3', dsid: 'access', dsLabel: 'access.mp4',
+      dsLocation: 'file:' + Rails.root.join('spec', 'fixtures', 'fedora_objs', 'alice_in_wonderland_video.mp4').to_s,
+      controlGroup: 'E', mimeType: 'video/mp4', versionable: false
+    )
+
+    # Create the content datastream on actest:4 with the pdf fixture
+    fedora_server.add_datastream(
       pid: 'actest:4', dsid: 'content', dsLabel: 'alice_in_wonderland_cover.jpg',
       content: File.open('spec/fixtures/fedora_objs/alice_in_wonderland_cover.jpg'),
       controlGroup: 'M', mimeType: 'image/jpeg'
