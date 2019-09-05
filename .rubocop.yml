@@ -33,6 +33,8 @@ Style/SymbolArray:
 
 Metrics/BlockLength:
   ExcludedMethods: ['describe', 'context']
+  Exclude:
+    - 'app/controllers/catalog_controller.rb'
 
 Metrics/AbcSize:
   Exclude:

@@ -20,7 +20,7 @@
   }
 }
 
-li.download-and-doi {
+li.asset-buttons {
   align-items: center;
   animation: slideInUp;
   animation-duration: .7s;
@@ -50,7 +50,9 @@ li.download-and-doi {
     margin: 0;
     padding: 5px;
   }
+}
 
+li.doi {
   & .doi-container {
     flex: 2;
     line-height: 1;
@@ -135,7 +137,7 @@ li.use-and-reproduction {
     margin-top: 15px;
   }
 
-  li.download-and-doi {
+  li.asset-buttons {
     animation: none;
     background: transparent;
     border: $border;
@@ -151,7 +153,9 @@ li.use-and-reproduction {
     & .download-button {
       padding: 8px;
     }
+  }
 
+  li.doi {
     & .doi-container {
       margin: 10px 0 0 0;
     }
