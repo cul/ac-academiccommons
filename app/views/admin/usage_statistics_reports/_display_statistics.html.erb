@@ -26,7 +26,11 @@
 
     <%= stats_presenter.render_html_table(table_class: 'table datatables') %>
 
-    <%= render partial: 'email_modal' %>
+    <%=
+      modal('email-modal', 'lg', 'Email Usage Statistics') do
+        render partial: 'email_form'
+      end
+    %>
 
   <% end %>
 <% end %>
