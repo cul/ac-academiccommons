@@ -26,4 +26,18 @@ module ApplicationHelper
   def title(page_title)
     content_for :page_title, "#{page_title} | #{application_name}"
   end
+
+  def modal(id, size, title)
+    tag.div class: 'modal fade', id: id, tabindex: '-1', role: 'dialog' do
+      tag.div class: "modal-dialog modal-#{size}", role: 'document' do
+        tag.div class: 'modal-content' do
+          tag.div(class: 'modal-header') {
+            tag.button(type: 'button', class: 'close', data: { dismiss: 'modal' }, aria: { label: 'Close' }) {
+              tag.span sanitize('&times;'), aria: { hidden: true }
+            }.concat(tag.h3(title, class: 'modal-title'))
+          }.concat(tag.div(class: 'modal-body') { yield if block_given? })
+        end
+      end
+    end
+  end
 end
