@@ -149,6 +149,10 @@ class SolrDocument
     asset? && (dc_type.include?('Sound') || dc_type.include?('Audio'))
   end
 
+  def playable?
+    video? || audio?
+  end
+
   def image_url(size = 256)
     return nil unless asset?
     "#{Rails.application.secrets.iiif[:urls].sample}/#{fetch(:fedora3_pid_ssi)}/full/!#{size},#{size}/0/native.jpg"
@@ -156,7 +160,7 @@ class SolrDocument
 
   def wowza_media_url(request)
     raise ArgumentError, 'Request object invalid' unless request.is_a?(ActionDispatch::Request)
-    return unless audio? || video?
+    return unless playable?
     # Check that it is free to read
 
     wowza_config = Rails.application.secrets[:wowza]
