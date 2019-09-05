@@ -1,10 +1,10 @@
-<foxml:digitalObject VERSION="1.1" PID="actest:4"
+<foxml:digitalObject VERSION="1.1" PID="actest:3"
   xmlns:foxml="info:fedora/fedora-system:def/foxml#"
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="info:fedora/fedora-system:def/foxml# http://www.fedora.info/definitions/1/0/foxml1-1.xsd">
   <foxml:objectProperties>
     <foxml:property NAME="info:fedora/fedora-system:def/model#state" VALUE="Active"/>
-    <foxml:property NAME="info:fedora/fedora-system:def/model#label" VALUE="alice_in_wonderland_cover.jpg"/>
+    <foxml:property NAME="info:fedora/fedora-system:def/model#label" VALUE="alice_in_wonderland_video.mp4"/>
     <foxml:property NAME="info:fedora/fedora-system:def/model#ownerId" VALUE="fedoraAdmin"/>
     <foxml:property NAME="info:fedora/fedora-system:def/model#createdDate" VALUE="2016-12-01T16:48:52.000Z"/>
     <foxml:property NAME="info:fedora/fedora-system:def/view#lastModifiedDate" VALUE="2016-12-01T20:48:53.105Z"/>
@@ -31,9 +31,9 @@
         <oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
           <dc:creator>BATCH</dc:creator>
           <dc:publisher>Columbia University Libraries</dc:publisher>
-          <dc:type>StillImage</dc:type>
-          <dc:format>application/jpg</dc:format>
-          <dc:identifier>actest:4</dc:identifier>
+          <dc:type>MovingImage</dc:type>
+          <dc:format>video/mp4</dc:format>
+          <dc:identifier>actest:3</dc:identifier>
           <dc:source></dc:source>
         </oai_dc:dc>
       </foxml:xmlContent>
@@ -43,12 +43,12 @@
     <foxml:datastreamVersion ID="RELS-EXT1.0" LABEL="RDF Statements about this object" CREATED="2016-12-01T16:48:52.000Z" MIMETYPE="application/rdf+xml" FORMAT_URI="info:fedora/fedora-system:FedoraRELSExt-1.0">
       <foxml:xmlContent>
         <rdf:RDF xmlns:fedora-model="info:fedora/fedora-system:def/model#" xmlns:dcmi="http://purl.org/dc/terms/" xmlns:si-basic="http://purl.oclc.org/NET/CUL/RESOURCE/STILLIMAGE/BASIC/" xmlns:si-assess="http://purl.oclc.org/NET/CUL/RESOURCE/STILLIMAGE/ASSESSMENT/" xmlns:local="http://purl.oclc.org/NET/CUL/" xmlns:rel="info:fedora/fedora-system:def/relations-external#" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:bibo="http://purl.org/ontology/bibo/">
-          <rdf:Description rdf:about="info:fedora/actest:4">
+          <rdf:Description rdf:about="info:fedora/actest:3">
             <rdf:type rdf:resource="http://purl.oclc.org/NET/CUL/Resource"></rdf:type>
             <fedora-model:hasModel rdf:resource="info:fedora/ldpd:GenericResource"></fedora-model:hasModel>
             <local:memberOf rdf:resource="info:fedora/actest:1"></local:memberOf>
             <cc:license rdf:resource="info:fedora/"></cc:license>
-            <bibo:doi rdf:resource="doi:10.7916/TESTDOC4"/>
+            <bibo:doi rdf:resource="doi:10.7916/TESTDOC3"/>
           </rdf:Description>
         </rdf:RDF>
       </foxml:xmlContent>
@@ -58,8 +58,8 @@
      <foxml:datastreamVersion ID="RELS-INT.0" LABEL="Relationships" CREATED="2016-09-14T16:48:52.000Z" MIMETYPE="application/rdf+xml" FORMAT_URI="info:fedora/fedora-system:FedoraRELSInt-1.0" SIZE="219">
        <foxml:xmlContent>
          <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
-           <rdf:Description rdf:about="info:fedora/actest:4/content">
-             <extent xmlns="http://purl.org/dc/terms/">310449</extent>
+           <rdf:Description rdf:about="info:fedora/actest:3/content">
+             <extent xmlns="http://purl.org/dc/terms/">24964</extent>
            </rdf:Description>
          </rdf:RDF>
        </foxml:xmlContent>
