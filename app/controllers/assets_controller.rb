@@ -83,7 +83,8 @@ class AssetsController < ApplicationController
     solr_response = AcademicCommons.search do |p|
       p.filter 'fedora3_pid_ssi', "(#{ids.join(' OR ')})"
     end
-    solr_response.docs.find { |d| !d.embargoed? }
+    @items = solr_response.docs
+    @items.find { |d| !d.embargoed? }
   end
 
   def record_stats

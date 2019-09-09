@@ -25,7 +25,7 @@
 
         <% if asset.playable? %>
           <div class="collapse" id="<%= "play-collapse-#{asset.id.gsub(/\/|\./, '-')}" %>">
-            <%= player(asset) %>
+            <%= player(asset, solr_document_url(document.doi)) %>
 
             <button class="btn btn-link btn-sm" data-toggle="modal" data-target="#embed-code-modal"><small><i class="fas fa-code"></i> Embed</small></button>
 

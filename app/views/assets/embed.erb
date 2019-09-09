@@ -1,6 +1,6 @@
 
 <% if @asset.playable? %>
-  <%= player(@asset) %>
+  <%= player(@asset, solr_document_url(@items.first.doi)) %>
 <% else %>
   <div class="not-playable">Resource not playable.</div>
 <% end %>
