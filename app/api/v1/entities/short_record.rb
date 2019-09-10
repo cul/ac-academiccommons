@@ -1,31 +1,24 @@
 module V1
   module Entities
     class ShortRecord < Grape::Entity
-      format_with(:singular) { |v| v.first }
+      expose(:id)         { |r| r.id }
+      expose(:legacy_id)  { |r| r.legacy_id }
+      expose(:title)      { |r| r.title }
+      expose(:author)     { |r| r.author }
+      expose(:abstract)   { |r| r.abstract }
+      expose(:date)       { |r| r.date.to_s }
+      expose(:department) { |r| r.department }
+      expose(:subject)    { |r| r.subject }
+      expose(:type)       { |r| r.type }
+      expose(:language)   { |r| r.language }
+      expose(:persistent_url) { |r| r.full_doi }
 
-      with_options(format_with: :singular) do
-        expose :id
-        expose :legacy_id
-        expose :title
+      expose(:resource_paths) do |r|
+        r.assets.map(&:download_path)
       end
 
-      expose :author
-
-      with_options(format_with: :singular) do
-        expose :abstract
-        expose :date
-      end
-
-      expose :department
-      expose :subject
-      expose :type
-      expose :language
-      expose :persistent_url
-
-      with_options(format_with: :singular) do
-        expose :created_at
-        expose :modified_at
-      end
+      expose(:created_at)  { |r| r.created_at }
+      expose(:modified_at) { |r| r.modified_at }
     end
   end
 end

@@ -16,7 +16,7 @@
   <table class="table small">
   <% @embargoed_works.docs.each do |document| %>
     <tr>
-      <td><%= link_to document.title, solr_document_path(document.to_semantic_values[:id].first) %></td>
+      <td><%= link_to document.title, solr_document_path(document.id) %></td>
     </tr>
   <% end %>
   </table>
@@ -60,7 +60,7 @@
       <% document = item_stats.document %>
         <tr>
           <td>
-            <%= link_to document.title, solr_document_path(document.to_semantic_values[:id].first) %>
+            <%= link_to document.title, solr_document_path(document.id) %>
           </td>
           <td class="center">
             <%= item_stats.get_stat(Statistic::DOWNLOAD, AcademicCommons::Metrics::PERIOD) %>

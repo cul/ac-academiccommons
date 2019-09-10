@@ -21,8 +21,8 @@ describe EmailAuthorReportsForm, type: :model do
 
     before do
       FactoryBot.create_list(:view_stat, 5)
-      allow(Blacklight.default_index).to receive(:search)
-        .with(author_search).and_return(author_docs)
+      allow(Blacklight.default_index).to receive(:search).with(any_args).and_call_original
+      allow(Blacklight.default_index).to receive(:search).with(author_search).and_return(author_docs)
       EmailAuthorReportsForm.new(params).send_emails
     end
 

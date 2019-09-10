@@ -30,7 +30,7 @@ module V1
       end
 
       expose :records, using: ShortRecord do |solr_response, _options|
-        solr_response['response']['docs'].map { |d| SolrDocument.new(d).to_semantic_values }
+        solr_response.docs
       end
 
       expose :facets do |solr_response, _options|

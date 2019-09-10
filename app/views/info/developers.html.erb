@@ -6,8 +6,7 @@
 
 <h3>API</h3>
 <p>The Academic Commons RESTful API can be used to query/search for records. We support JSON responses. Documentation and a GUI can be found at:<br>
-
-<a href="http://petstore.swagger.io/?url=https://academiccommons.columbia.edu/api/v1/swagger_doc">http://petstore.swagger.io/?url=https://academiccommons.columbia.edu/api/v1/swagger_doc</a></p>
+<%= link_to nil, "http://petstore.swagger.io/?url=#{root_url}api/v1/swagger_doc" %></p>
 
 <h3>OAI-PMH</h3>
 <p>Academic Commons supports the <a href="https://www.openarchives.org/OAI/openarchivesprotocol.html">Open Archives Initiative Protocol for Metadata Harvesting (OAI-PMH)</a>, version 2.0.
@@ -18,7 +17,7 @@ The base URL is: <%= link_to oai_catalog_url, oai_catalog_url %></p>
 <p>Academic Commons can receive content via <a href="http://swordapp.org/">SWORD deposit</a>. SWORD is best used for recurrent deposits. If you would like to deposit content via SWORD, contact us at <a href="mailto:ac@columbia.edu">ac@columbia.edu</a>.</p>
 
 <h3>Sitemap</h3>
-<p>The sitemap for Academic Commons is regenerated every weekday. <a href="https://academiccommons.columbia.edu/sitemap.xml.gz">https://academiccommons.columbia.edu/sitemap.xml.gz</a></p>
+<p>The sitemap for Academic Commons is regenerated every weekday. <%= link_to nil, "#{root_url}sitemap.xml.gz" %></p>
 
 <h3>Metadata license</h3>
 <p>Academic Commons bibliographic metadata — excluding abstracts, which may be under copyright — is available under a <a href="https://creativecommons.org/publicdomain/zero/1.0/">Creative Commons 0 1.0 Universal</a> license.</p>

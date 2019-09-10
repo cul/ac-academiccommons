@@ -72,7 +72,6 @@ class SolrDocument
       super
       # Custom values
       @semantic_value_hash[:identifier] = full_doi
-      @semantic_value_hash[:persistent_url] = full_doi
       @semantic_value_hash[:date] = @semantic_value_hash[:date].map(&:to_s)
     end
 
@@ -92,18 +91,14 @@ class SolrDocument
     return @assets if @assets
 
     if free_to_read?(self)
-      obj_display = fetch('fedora3_pid_ssi', nil)
+      # check if solr response already included assets
+      if (asset_response = fetch('assets', nil))
+        @assets = Blacklight::Solr::Response.new({ response: asset_response }, {}).docs
+      else
+        item_pid = fetch('fedora3_pid_ssi', nil)
 
-      member_search = {
-        qt: 'search',
-        fl: '*',
-        fq: ["cul_member_of_ssim:\"info:fedora/#{obj_display}\"", 'object_state_ssi:A'],
-        rows: 10_000,
-        facet: false
-      }
-      response = Blacklight.default_index.connection.get 'select', params: member_search
-      docs = response['response']['docs']
-      @assets = docs.map { |member| SolrDocument.new(member) }
+        @assets = AcademicCommons.search { |p| p.assets_for(item_pid) }.docs
+      end
     else
       @assets = []
     end
@@ -141,15 +136,9 @@ class SolrDocument
     fields.blank? ? nil : fields.join(', ')
   end
 
-  def title
-    to_semantic_values[:title].first
-  end
-
-  def genre
-    to_semantic_values[:genre].first
-  end
-
-  def created_at
-    to_semantic_values[:created_at].first
+  field_semantics.except(:id).each do |field, solr_key|
+    define_method(field) do
+      solr_key.ends_with?('m') ? fetch(solr_key, []) : fetch(solr_key, nil)
+    end
   end
 end

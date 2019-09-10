@@ -7,12 +7,11 @@
 <meta property="og:image:height" content="512" />
 
 <% if @document %>
-  <% semantics_hash = @document.to_semantic_values %>
-  <meta name="description" content="<%= semantics_hash[:abstract].first %>"/>
+  <meta name="description" content="<%= @document.abstract %>"/>
   <meta property="og:url" content="<%= @document.full_doi %>"/>
   <meta property="og:type" content="article" />
-  <meta property="og:title" content="<%= semantics_hash[:title].first %>"/>
-  <meta property="og:description" content="<%= semantics_hash[:abstract].first %>"/>
+  <meta property="og:title" content="<%= @document.title %>"/>
+  <meta property="og:description" content="<%= @document.abstract %>"/>
 <% else %>
   <meta property="og:url" content="<%= request.url %>"/>
   <meta property="og:title" content="<%= render_page_title %>"/>

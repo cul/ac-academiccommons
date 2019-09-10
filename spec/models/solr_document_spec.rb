@@ -27,14 +27,14 @@ describe SolrDocument do
     context 'defaults to non-active exclusion' do
       let(:expected_params) do
         {
-          qt: 'search', fl: '*',
-          fq: ["cul_member_of_ssim:\"info:fedora/#{document[:fedora3_pid_ssi]}\"", 'object_state_ssi:A'],
-          rows: 10_000, facet: false
+          qt: 'search',
+          fq: ["cul_member_of_ssim:\"info:fedora/#{document[:fedora3_pid_ssi]}\"", 'object_state_ssi:"A"'],
+          rows: 100_000, facet: false
         }
       end
 
       let(:solr_response) do
-        {
+        Blacklight::Solr::Response.new({
           'response' => {
             'docs' => [
               {
@@ -55,12 +55,12 @@ describe SolrDocument do
               }
             ]
           }
-        }
+        }, {})
       end
 
       before do
-        allow(Blacklight.default_index.connection).to receive(:get)
-          .with('select', params: expected_params)
+        allow(Blacklight.default_index).to receive(:search)
+          .with(expected_params)
           .and_return(solr_response)
           .once
       end
@@ -86,7 +86,7 @@ describe SolrDocument do
       end
 
       it 'calls solr with expected params' do
-        expect(Blacklight.default_index.connection).not_to receive(:get)
+        expect(Blacklight.default_index).not_to receive(:search)
         document.assets
       end
     end
@@ -101,7 +101,7 @@ describe SolrDocument do
       end
 
       it 'calls solr with expected params' do
-        expect(Blacklight.default_index.connection).not_to receive(:get)
+        expect(Blacklight.default_index).not_to receive(:search)
         document.assets
       end
     end
@@ -117,17 +117,49 @@ describe SolrDocument do
 
       let(:expected_params) do
         {
-          qt: 'search', fl: '*',
-          fq: ["cul_member_of_ssim:\"info:fedora/#{document[:fedora3_pid_ssi]}\"", 'object_state_ssi:A'],
-          rows: 10_000, facet: false
+          qt: 'search',
+          fq: ["cul_member_of_ssim:\"info:fedora/#{document[:fedora3_pid_ssi]}\"", 'object_state_ssi:"A"'],
+          facet: false, rows: 100_000
         }
       end
 
       it 'calls solr with expected params' do
-        expect(Blacklight.default_index.connection).to receive(:get)
-          .with('select', params: expected_params)
+        expect(Blacklight.default_index).to receive(:search)
+          .with(expected_params)
           .and_return(:empty_response)
         document.assets
+      end
+    end
+
+    context 'when assets are already included in solr response' do
+      let(:document) do
+        described_class.new(
+          id: 'test:obj', fedora3_pid_ssi: 'test:obj', object_state_ssi: 'A',
+          free_to_read_start_date_ssi: Date.current.strftime('%Y-%m-%d'),
+          assets: {
+            numFound: 1, start: 0, docs: [
+              {
+                object_state_ssi: 'A',
+                active_fedora_model_ssi: 'GenericResource',
+                id: 'test:asset',
+                rdf_type_ssim: ['http://purl.oclc.org/NET/CUL/Resource'],
+                cc_license_ssim: ['info:fedora/'],
+                has_model_ssim: ['info:fedora/ldpd:GenericResource'],
+                pid: 'test:asset',
+                fedora3_pid_ssi: 'test:asset'
+              }
+            ]
+          }
+        )
+      end
+
+      it 'does not query solr' do
+        expect(Blacklight.default_index).not_to receive(:search).with(any_args)
+        document.assets
+      end
+
+      it 'returns assets' do
+        expect(document.assets.first.id).to eql 'test:asset'
       end
     end
   end
