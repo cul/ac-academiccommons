@@ -11,7 +11,7 @@ module AssetHelper
 
   def video_player(url, poster_path, brand_link)
     tag.div class: 'mediaelement-player' do
-      tag.video width: '100%', height: '100%', style: 'width:100%;height:100%;', poster: poster_path, controls: 'controls', preload: 'none', data: { brand_link: brand_link } do
+      tag.video style: 'width:100%;height:100%;', poster: poster_path, controls: 'controls', preload: 'none', data: { brand_link: brand_link } do
         tag.source type: 'application/x-mpegURL', src: url
       end
     end
@@ -19,7 +19,7 @@ module AssetHelper
 
   def audio_player(url, brand_link)
     tag.div class: 'mediaelement-player' do
-      tag.audio style: 'width:100%;', controls: 'controls', preload: 'none', data: { brand_link: brand_link } do
+      tag.audio controls: 'controls', preload: 'none', data: { brand_link: brand_link } do
         tag.source type: 'application/x-mpegURL', src: url
       end
     end
