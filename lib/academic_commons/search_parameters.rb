@@ -33,7 +33,6 @@ module AcademicCommons
       self
     end
 
-<<<<<<< HEAD
     def sort_by(sort)
       @parameters[:sort] = sort
       self
@@ -64,10 +63,10 @@ module AcademicCommons
 
     def id(id)
       filter('id', id)
-=======
+    end
+
     def assets_only
       filter('has_model_ssim', "(\"#{GenericResource.to_class_uri}\" OR \"#{::Resource.to_class_uri}\")")
->>>>>>> Adding layout and templates for embed page
       self
     end
 
