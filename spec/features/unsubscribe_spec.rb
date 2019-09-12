@@ -28,7 +28,7 @@ RSpec.describe 'Unsubscribe', type: :feature do
   end
 
   context 'when successful request' do
-    before :each do
+    before do
       visit "unsubscribe_monthly?author_id=#{uni}&chk=#{Rails.application.message_verifier(:unsubscribe).generate(uni)}"
     end
 

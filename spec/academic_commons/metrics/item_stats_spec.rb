@@ -1,10 +1,10 @@
 require 'rails_helper'
 
 RSpec.describe AcademicCommons::Metrics::ItemStats do
+  subject(:item_stats) { described_class.new(doc) }
+
   let(:doi) { '10.7916/ALICE' }
   let(:doc) { SolrDocument.new(id: doi) }
-
-  subject { AcademicCommons::Metrics::ItemStats.new(doc) }
 
   describe '.new' do
     its(:document) { is_expected.to eq doc }
@@ -12,29 +12,29 @@ RSpec.describe AcademicCommons::Metrics::ItemStats do
   end
 
   describe '#get_stat' do
-    before :each do
-      subject.add_stat(Statistic::VIEW, 'Jan 2001', 178)
+    before do
+      item_stats.add_stat(Statistic::VIEW, 'Jan 2001', 178)
     end
 
     it 'returns correct value' do
-      expect(subject.get_stat(Statistic::VIEW, 'Jan 2001')).to eq 178
+      expect(item_stats.get_stat(Statistic::VIEW, 'Jan 2001')).to eq 178
     end
 
     it 'synonymous method returns correct value' do
-      expect(subject.number_of_views('Jan 2001')).to eq 178
+      expect(item_stats.number_of_views('Jan 2001')).to eq 178
     end
 
     it 'returns error if parameters not valid' do
-      expect{
-        subject.get_stat(Statistic::VIEW, 'Feb 2001')
+      expect {
+        item_stats.get_stat(Statistic::VIEW, 'Feb 2001')
       }.to raise_error 'View Feb 2001 not part of stats. Check parameters.'
     end
   end
 
   describe '#add_stat' do
     it 'updates stats hash' do
-      subject.add_stat(Statistic::DOWNLOAD, 'June 2003', 14)
-      expect(subject.stats).to match(
+      item_stats.add_stat(Statistic::DOWNLOAD, 'June 2003', 14)
+      expect(item_stats.stats).to match(
         Statistic::VIEW => {},
         Statistic::DOWNLOAD => { 'June 2003' => 14 },
         Statistic::STREAM => {}
@@ -44,18 +44,18 @@ RSpec.describe AcademicCommons::Metrics::ItemStats do
 
   describe '#zero?' do
     context 'when there are stats present when all stats are 0' do
-      before :each do
-        subject.add_stat(Statistic::VIEW, 'Lifetime', 14)
+      before do
+        item_stats.add_stat(Statistic::VIEW, 'Lifetime', 14)
       end
 
       it 'returns false' do
-        expect(subject.zero?).to eq false
+        expect(item_stats.zero?).to eq false
       end
     end
 
     context 'when all stats are 0' do
       it 'return false' do
-        expect(subject.zero?).to eq true
+        expect(item_stats.zero?).to eq true
       end
     end
   end

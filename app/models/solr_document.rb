@@ -104,7 +104,7 @@ class SolrDocument
     end
   rescue StandardError => e
     Rails.logger.error e.message
-    return []
+    []
   end
 
   def thumbnail

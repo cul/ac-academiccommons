@@ -12,7 +12,7 @@ module AcademicCommons::Aggregator
     "\"#{self.pid}\""
   end
 
-  def to_solr(solr_doc={}, options={})
+  def to_solr(solr_doc = {}, options = {})
     super.tap do |doc|
       index_descmetadata(doc)
     end

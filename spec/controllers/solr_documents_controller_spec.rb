@@ -139,13 +139,13 @@ describe SolrDocumentsController, type: :controller do
 
     let(:sent_to) { ActionMailer::Base.deliveries.map(&:to).flatten }
 
-    before :each do
+    before do
       Rails.application.config.prod_environment = true # Pretend to be running in prod.
       allow_any_instance_of(Cul::LDAP).to receive(:find_by_uni).with(author_one).and_return(entry_for_author_one)
       allow_any_instance_of(Cul::LDAP).to receive(:find_by_uni).with(author_two).and_return(entry_for_author_two)
     end
 
-    after :each do
+    after do
       Rails.application.config.prod_environment = false
     end
 
@@ -160,7 +160,7 @@ describe SolrDocumentsController, type: :controller do
     end
 
     context 'when a notification for each author has previously been sent' do
-      before :each do
+      before do
         Notification.record_new_item_notification(doi, nil, author_one, true)
         Notification.record_new_item_notification(doi, nil, author_two, true)
         subject
@@ -172,7 +172,7 @@ describe SolrDocumentsController, type: :controller do
     end
 
     context 'when notifications have not previously been sent' do
-      before :each do
+      before do
         subject
       end
 
@@ -194,7 +194,7 @@ describe SolrDocumentsController, type: :controller do
     end
 
     context 'when notification has not been sent to one author' do
-      before :each do
+      before do
         Notification.record_new_item_notification(doi, nil, author_one, true)
         subject
       end
@@ -217,7 +217,7 @@ describe SolrDocumentsController, type: :controller do
     end
 
     context 'when author is not in LDAP' do
-      before :each do
+      before do
         allow_any_instance_of(Cul::LDAP).to receive(:find_by_uni).with(author_one).and_return(nil)
         subject
       end
@@ -229,7 +229,7 @@ describe SolrDocumentsController, type: :controller do
     end
 
     context 'when notification fails to sends' do
-      before :each do
+      before do
         email = double
         allow(email).to receive(:deliver_now).and_raise(Net::SMTPSyntaxError)
         allow(UserMailer).to receive(:new_item_available).and_return(email)

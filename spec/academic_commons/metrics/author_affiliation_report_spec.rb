@@ -1,52 +1,60 @@
 require 'rails_helper'
 
 RSpec.describe AcademicCommons::Metrics::AuthorAffiliationReport do
+  subject { described_class.generate_csv }
+
   let(:solr_response) do
     Blacklight::Solr::Response.new(
       {
         'response' => {
           'docs' => [
             { 'id' => '10.7916/ALICE', 'cul_doi_ssi' => '10.7916/ALICE', 'object_state_ssi' => 'A' },
-            { 'id' => '10.7916/PRIDE', 'cul_doi_ssi' => '10.7916/PRIDE', 'object_state_ssi' => 'A' },
+            { 'id' => '10.7916/PRIDE', 'cul_doi_ssi' => '10.7916/PRIDE', 'object_state_ssi' => 'A' }
           ]
         }
-      },
-      {})
+      }, {}
+    )
   end
 
   let(:solr_doc_alice) do
-    Blacklight::Solr::Response.new({
-      'response' => {
-        'docs' => [
-          { 'id' => '10.7916/ALICE', 'cul_doi_ssi' => '10.7916/ALICE',
-            'title_ssi' => 'Alice\'s Adventures in Wonderland',
-            'author_uni_ssim' => ['abc123', 'xyz567'], 'object_state_ssi' => 'A',
-            'department_ssim' => ['English Department', 'Creative Writing Department'],
-            'genre_ssim' => ['Books'], 'fedora3_pid_ssi' => 'actest:6',
-            'system_create_dtsi' => '2016-11-21T13:03:42Z',
+    Blacklight::Solr::Response.new(
+      {
+        'response' => {
+          'docs' => [
+            {
+              'id' => '10.7916/ALICE', 'cul_doi_ssi' => '10.7916/ALICE',
+              'title_ssi' => 'Alice\'s Adventures in Wonderland',
+              'author_uni_ssim' => ['abc123', 'xyz567'], 'object_state_ssi' => 'A',
+              'department_ssim' => ['English Department', 'Creative Writing Department'],
+              'genre_ssim' => ['Books'], 'fedora3_pid_ssi' => 'actest:6',
+              'system_create_dtsi' => '2016-11-21T13:03:42Z'
             }
-        ]
-      }
-    }, {})
+          ]
+        }
+      }, {}
+    )
   end
 
   let(:solr_doc_pride) do
-    Blacklight::Solr::Response.new({
-      'response' => {
-        'docs' => [
-          { 'id' => '10.7916/PRIDE', 'cul_doi_ssi' => '10.7916/PRIDE',
-            'title_ssi' => 'Pride and Prejudice',
-            'author_uni_ssim' => ['xyz567'], 'object_state_ssi' => 'A',
-            'genre_ssim' => ['Books'], 'fedora3_pid_ssi' => 'actest:7',
-            'author_ssim' => ['Austen, Jane', 'Doe, Jane'],
-            'system_create_dtsi' => '2016-11-21T10:43:15Z'
+    Blacklight::Solr::Response.new(
+      {
+        'response' => {
+          'docs' => [
+            {
+              'id' => '10.7916/PRIDE', 'cul_doi_ssi' => '10.7916/PRIDE',
+              'title_ssi' => 'Pride and Prejudice',
+              'author_uni_ssim' => ['xyz567'], 'object_state_ssi' => 'A',
+              'genre_ssim' => ['Books'], 'fedora3_pid_ssi' => 'actest:7',
+              'author_ssim' => ['Austen, Jane', 'Doe, Jane'],
+              'system_create_dtsi' => '2016-11-21T10:43:15Z'
             }
-        ]
-      }
-    }, {})
+          ]
+        }
+      }, {}
+    )
   end
 
-  before :each do
+  before do
     FactoryBot.create(:view_stat, identifier: '10.7916/ALICE')
     FactoryBot.create(:download_stat, identifier: '10.7916/PRIDE')
 
@@ -66,8 +74,6 @@ RSpec.describe AcademicCommons::Metrics::AuthorAffiliationReport do
       instance_double('Cul::LDAP::Entry', uni: 'abc123', name: 'Lewis Carroll', title: 'Professor of Creative Writing', organizational_unit: 'English Department')
     )
   end
-
-  subject { AcademicCommons::Metrics::AuthorAffiliationReport.generate_csv }
 
   context 'generates' do
     let(:expected_csv) do

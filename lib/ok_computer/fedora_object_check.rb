@@ -15,9 +15,9 @@ module OkComputer
     # Throws error if HEAD request not successful.
     def perform_request
       Timeout.timeout(request_timeout) do
-        options = { use_ssl: self.url.scheme == 'https', read_timeout: request_timeout }
-        Net::HTTP.start(self.url.host, self.url.port, options) { |r|
-          r.head(self.url)
+        options = { use_ssl: url.scheme == 'https', read_timeout: request_timeout }
+        Net::HTTP.start(url.host, url.port, options) { |r|
+          r.head(url)
         }.value
       end
     rescue => e
@@ -26,7 +26,7 @@ module OkComputer
 
     def create_url
       fedora_url = ActiveFedora.config.credentials[:url]
-      URI.parse("#{fedora_url}/objects/#{self.pid}/datastreams/#{self.ds}/content")
+      URI.parse("#{fedora_url}/objects/#{pid}/datastreams/#{ds}/content")
     end
   end
 end

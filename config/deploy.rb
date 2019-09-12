@@ -26,7 +26,7 @@ set :deploy_to,   "/opt/passenger/#{fetch(:instance)}/#{fetch(:deploy_name)}"
 set :log_level, :info
 
 # Default value for linked_dirs is []
-set :linked_dirs, fetch(:linked_dirs, []).push('log','tmp/pids', 'storage')
+set :linked_dirs, fetch(:linked_dirs, []).push('log', 'tmp/pids', 'storage')
 
 # Default value for keep_releases is 5
 set :keep_releases, 3
@@ -39,18 +39,18 @@ set :linked_files, fetch(:linked_files, []).push(
   'config/blacklight.yml',
   'config/fedora.yml',
   'config/secrets.yml',
-  'public/robots.txt',
+  'public/robots.txt'
 )
 
 # Namespace crontab based on app environment.
-set :whenever_identifier, ->{ fetch(:deploy_name) }
+set :whenever_identifier, -> { fetch(:deploy_name) }
 
 namespace :deploy do
   desc "Report the environment"
   task :report do
     run_locally do
-      puts "cap called with stage = \"#{fetch(:stage,'none')}\""
-      puts "cap would deploy to = \"#{fetch(:deploy_to,'none')}\""
+      puts "cap called with stage = \"#{fetch(:stage, 'none')}\""
+      puts "cap would deploy to = \"#{fetch(:deploy_to, 'none')}\""
       puts "cap would install from #{fetch(:repo_url)}"
       puts "cap would install in Rails env #{fetch(:rails_env)}"
     end

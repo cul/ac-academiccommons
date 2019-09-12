@@ -9,7 +9,7 @@ shared_context 'mock ldap request' do
     )
   end
 
-  before :each do
+  before do
     allow_any_instance_of(Cul::LDAP).to receive(:find_by_uni).with(uni).and_return(cul_ldap_entry)
   end
 end

@@ -29,7 +29,7 @@ RSpec.describe 'error pages', type: :request do
 
   describe '/doi/NOT_VALID_ID' do
     context 'when doi not valid' do
-      before :each do
+      before do
         get '/doi/NOT_VALID_ID'
       end
 

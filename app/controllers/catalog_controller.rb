@@ -106,7 +106,6 @@ class CatalogController < ApplicationController
     config.add_index_field 'genre_ssim',   label: 'Type'
     config.add_index_field 'subject_ssim', label: 'Subjects', helper_method: :wrap_in_spans
 
-
     # :display configuration is for our customized show view, it describes where on the page it should go.
     config.add_show_field 'pub_date_isi',           display: :tag, itemprop: 'datePublished'
     config.add_show_field 'genre_ssim',             display: :tag, itemprop: 'genre'
@@ -144,9 +143,6 @@ class CatalogController < ApplicationController
     # Only renders metatags for schema.org, does not display anything on the page.
     config.add_show_field 'full_doi',               display: :main_content, accessor: true, itemprop: 'url',        helper_method: :metatags
     config.add_show_field 'language_ssim',          display: :main_content,                 itemprop: 'inLanguage', helper_method: :metatags
-
-
-
 
     # "fielded" search configuration. Used by pulldown among other places.
     # For supported keys in hash, see rdoc for Blacklight::SearchFields
@@ -298,7 +294,6 @@ class CatalogController < ApplicationController
         'Conference proceedings'       => 'http://schema.org/CreativeWork'
       }
     }
-
   end
 
   def streaming

@@ -11,7 +11,7 @@ class UploadedFile < ApplicationRecord
     filename = original_filename
 
     i = 1
-    while File.exists?(File.join(directory, filename))
+    while File.exist?(File.join(directory, filename))
       extension = File.extname(original_filename)
       filename = "#{File.basename(original_filename, extension)}-#{i}#{extension}"
       i += 1

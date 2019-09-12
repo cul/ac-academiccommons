@@ -14,9 +14,10 @@ module AcademicCommons
     def initialize(executed_by: nil, start: nil, verbose: false) # eventually will have to add flag for full text indexing
       @start = start || Time.current
       @indexing_logger = setup_logger(start_timestamp)
-      @error, @success = [], []
+      @error = []
+      @success = []
       @verbose = verbose
-      log_info "This re-index executed by: #{(executed_by || 'n/a').to_s}"
+      log_info "This re-index executed by: #{(executed_by || 'n/a')}"
       log_info 'START REINDEX'
     end
 
@@ -30,7 +31,7 @@ module AcademicCommons
         fq: ["has_model_ssim:\"#{ContentAggregator.to_class_uri}\""]
       }
       response = rsolr.get('select', params: solr_params)
-      pids = response['response']['docs'].map{ |doc| doc['fedora3_pid_ssi'] }
+      pids = response['response']['docs'].map { |doc| doc['fedora3_pid_ssi'] }
       items(*pids)
     end
 
@@ -94,7 +95,7 @@ module AcademicCommons
       log_info 'FINISH REINDEX '
       log_info "Time spent: #{readable_time_spent}"
       log_info "Successfully indexed #{success.count} item(s)."
-      log_info "The following #{error.count} item(s) returned errors #{error.join(", ")}" unless error.count.zero?
+      log_info "The following #{error.count} item(s) returned errors #{error.join(', ')}" unless error.count.zero?
       indexing_logger.close
 
       Rails.cache.delete('repository_statistics') # Invalidating stats on homepage.

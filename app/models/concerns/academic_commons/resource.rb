@@ -16,14 +16,14 @@ module AcademicCommons::Resource
     relationships(CUL_MEMBER_OF).map { |obj| obj.to_s.split('/')[-1] }
   end
 
-  def repository_inbound(predicate, pids_only=false)
+  def repository_inbound(predicate, pids_only = false)
     begin
       i = 1
       size = repository_inbound_count(predicate)
       items = []
       while (i <= size)
         riquery = riquery_for_inbound(predicate, limit: MAX_LIST_MEMBERS_PER_REQUEST, offset: i - 1)
-        options = {lang: 'itql', format: 'sparql', flush: true}
+        options = { lang: 'itql', format: 'sparql', flush: true }
         rubydora = ActiveFedora::Base.connection_for_pid(pid)
         result = rubydora.risearch(riquery, options)
 

@@ -60,10 +60,10 @@ module CatalogHelper
 
   # TODO: Move to a browse controller
   def single_facet_values(facet_field)
-    query_params = { q: '', rows: '0', 'facet.limit'=> -1, 'facet.field' => facet_field}
+    query_params = { q: '', rows: '0', 'facet.limit' => -1, 'facet.field' => facet_field }
     solr_results = repository.search(query_params)
     facet_field_results = solr_results.facet_counts['facet_fields']
-    collect_facet_field_values(facet_field_results).fetch(facet_field,[])
+    collect_facet_field_values(facet_field_results).fetch(facet_field, [])
   end
 
   def get_metadata_list(doc)

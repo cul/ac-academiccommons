@@ -10,7 +10,7 @@ RSpec.describe Users::OmniauthCallbacksController, type: :controller do
     instance_double('Cul::LDAP::Entry', uni: 'abc123', email: 'abc123@columbia.edu', last_name: 'Doe', first_name: 'Jane')
   end
 
-  before :each do
+  before do
     OmniAuth.config.test_mode = true
     OmniAuth.config.mock_auth[:saml] = saml_hash
     @request.env['devise.mapping'] = Devise.mappings[:user]
@@ -20,7 +20,7 @@ RSpec.describe Users::OmniauthCallbacksController, type: :controller do
 
   # GET :saml
   describe '#saml' do
-    before :each do
+    before do
       get :saml
     end
 

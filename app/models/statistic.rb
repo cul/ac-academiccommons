@@ -60,7 +60,6 @@ class Statistic < ApplicationRecord
     startdate = DateTime.parse('5/1/2011')
 
     File.open(File.join('tmp', 'access.log')).each_with_index do |line, i|
-
       if (match = fedora_download_match.match(line))
         pid = match[3].gsub('%3A', ':')
         datetime = DateTime.parse(match[2].sub(':', ' '))

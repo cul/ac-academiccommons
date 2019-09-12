@@ -13,6 +13,6 @@ class ContentAggregator < ActiveFedora::Base
 
   def descMetadata_content
     content_ds = descmetadata_datastream
-    return content_ds ? content_ds.content : nil
+    content_ds ? content_ds.content : nil
   end
 end

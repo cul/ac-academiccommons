@@ -142,95 +142,95 @@ module AcademicCommons
 
       private
 
-      def check_for_dates
-        raise ArgumentError, 'Start date must be provided' unless start_date
-        raise ArgumentError, 'End date must be provided' unless end_date
-      end
+        def check_for_dates
+          raise ArgumentError, 'Start date must be provided' unless start_date
+          raise ArgumentError, 'End date must be provided' unless end_date
+        end
 
-      # Creates list of month and year strings in order from the startdate to the
-      # enddate given.
-      def months_list
-        unless @months_list
-          months = []
-          date = start_date
-          while date <= end_date
-            months << date
-            date += 1.month
+        # Creates list of month and year strings in order from the startdate to the
+        # enddate given.
+        def months_list
+          unless @months_list
+            months = []
+            date = start_date
+            while date <= end_date
+              months << date
+              date += 1.month
+            end
+            @month_list = months
           end
-          @month_list = months
+
+          @month_list
         end
 
-        @month_list
-      end
-
-      def add_item_stats(event, time, stats)
-        @item_stats.each do |i|
-          value = stats.key?(i.id) ? stats[i.id] : 0
-          i.add_stat(event, time, value)
-        end
-      end
-
-      def ids
-        @ids ||= @item_stats.collect(&:id)
-      end
-
-      # Map of IDs from item id to most downloaded asset id.
-      def item_to_asset_ids
-        @item_to_asset_ids ||= @item_stats.map { |item| [item.id, most_downloaded_asset(item.document)] }.to_h
-      end
-
-      def calculate_stats_for(time_key, event, start_date = nil, end_date = nil)
-        stats = case event
-                when Statistic::VIEW, Statistic::STREAM
-                  Statistic.event_count(ids, event, start_date: start_date, end_date: end_date)
-                when Statistic::DOWNLOAD
-                  downloads = Statistic.event_count(item_to_asset_ids.values, event, start_date: start_date, end_date: end_date)
-                  map_download_stats_to_aggregator(downloads)
-                end
-
-        @item_stats.each do |i|
-          value = stats.key?(i.id) ? stats[i.id] : 0
-          i.add_stat(event, time_key, value)
-        end
-      end
-
-      # Maps download stats from asset pids to aggregator pids.
-      def map_download_stats_to_aggregator(download_stats)
-        downloads = {}
-        item_to_asset_ids.each_pair do |id, asset_id|
-          if (num = download_stats[asset_id])
-            downloads[id] = num
+        def add_item_stats(event, time, stats)
+          @item_stats.each do |i|
+            value = stats.key?(i.id) ? stats[i.id] : 0
+            i.add_stat(event, time, value)
           end
         end
-        downloads
-      end
 
-      def get_solr_documents(params)
-        params = params.merge(DEFAULT_SOLR_PARAMS)
-        params[:sort] = 'title_sort asc'
-        params[:fq] = params.fetch(:fq, []).clone << "has_model_ssim:\"#{ContentAggregator.to_class_uri}\""
-        # Add filter to remove embargoed items, free_to_read date must be equal to or less than Date.current
-        Blacklight.default_index.search(params).documents
-      end
+        def ids
+          @ids ||= @item_stats.collect(&:id)
+        end
 
-      # Most downloaded asset over entire lifetime.
-      # Eventually may have to reevaluate this for queries that are for a specific
-      # time range. For now, we are okay with this assumption.
-      def most_downloaded_asset(doc)
-        asset_ids = doc.assets.map(&:id)
+        # Map of IDs from item id to most downloaded asset id.
+        def item_to_asset_ids
+          @item_to_asset_ids ||= @item_stats.map { |item| [item.id, most_downloaded_asset(item.document)] }.to_h
+        end
 
-        return asset_ids.first if asset_ids.count == 1
+        def calculate_stats_for(time_key, event, start_date = nil, end_date = nil)
+          stats = case event
+                  when Statistic::VIEW, Statistic::STREAM
+                    Statistic.event_count(ids, event, start_date: start_date, end_date: end_date)
+                  when Statistic::DOWNLOAD
+                    downloads = Statistic.event_count(item_to_asset_ids.values, event, start_date: start_date, end_date: end_date)
+                    map_download_stats_to_aggregator(downloads)
+                  end
 
-        # Get the higest value stored here.
-        counts = Statistic.event_count(asset_ids, Statistic::DOWNLOAD)
+          @item_stats.each do |i|
+            value = stats.key?(i.id) ? stats[i.id] : 0
+            i.add_stat(event, time_key, value)
+          end
+        end
 
-        # Return first pid, if items have never been downloaded.
-        return asset_ids.first if counts.empty?
+        # Maps download stats from asset pids to aggregator pids.
+        def map_download_stats_to_aggregator(download_stats)
+          downloads = {}
+          item_to_asset_ids.each_pair do |id, asset_id|
+            if (num = download_stats[asset_id])
+              downloads[id] = num
+            end
+          end
+          downloads
+        end
 
-        # Get key of most downloaded asset.
-        key, = counts.max_by { |_, v| v }
-        key
-      end
+        def get_solr_documents(params)
+          params = params.merge(DEFAULT_SOLR_PARAMS)
+          params[:sort] = 'title_sort asc'
+          params[:fq] = params.fetch(:fq, []).clone << "has_model_ssim:\"#{ContentAggregator.to_class_uri}\""
+          # Add filter to remove embargoed items, free_to_read date must be equal to or less than Date.current
+          Blacklight.default_index.search(params).documents
+        end
+
+        # Most downloaded asset over entire lifetime.
+        # Eventually may have to reevaluate this for queries that are for a specific
+        # time range. For now, we are okay with this assumption.
+        def most_downloaded_asset(doc)
+          asset_ids = doc.assets.map(&:id)
+
+          return asset_ids.first if asset_ids.count == 1
+
+          # Get the higest value stored here.
+          counts = Statistic.event_count(asset_ids, Statistic::DOWNLOAD)
+
+          # Return first pid, if items have never been downloaded.
+          return asset_ids.first if counts.empty?
+
+          # Get key of most downloaded asset.
+          key, = counts.max_by { |_, v| v }
+          key
+        end
     end
   end
 end

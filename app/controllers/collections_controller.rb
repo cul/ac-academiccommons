@@ -72,31 +72,31 @@ class CollectionsController < ApplicationController
 
   private
 
-  def collections_config
-    @collections_config ||= generate_config
-  end
-
-  def generate_config
-    c = {}
-
-    CONFIG.each do |category, config|
-      struct = OpenStruct.new(config)
-      struct.url = collection_path(category_id: category)
-      struct.top_partial = "#{category}_top"
-      struct.bottom_partial = "#{category}_bottom"
-      c[category] = struct
+    def collections_config
+      @collections_config ||= generate_config
     end
 
-    c
-  end
+    def generate_config
+      c = {}
 
-  def search_url(filters)
-    filters.transform_values! { |v| Array.wrap(v) }
-    facet_params = search_state.reset.params_for_search(f: filters)
-    search_action_path(facet_params)
-  end
+      CONFIG.each do |category, config|
+        struct = OpenStruct.new(config)
+        struct.url = collection_path(category_id: category)
+        struct.top_partial = "#{category}_top"
+        struct.bottom_partial = "#{category}_bottom"
+        c[category] = struct
+      end
 
-  def valid_category?(category)
-    collections_config[category.to_sym]
-  end
+      c
+    end
+
+    def search_url(filters)
+      filters.transform_values! { |v| Array.wrap(v) }
+      facet_params = search_state.reset.params_for_search(f: filters)
+      search_action_path(facet_params)
+    end
+
+    def valid_category?(category)
+      collections_config[category.to_sym]
+    end
 end

@@ -1,9 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe Statistic, type: :model do
-
   describe '.merge_stats' do
-    before :each do
+    before do
       FactoryBot.create_list(:view_stat, 2)
       FactoryBot.create(:download_stat, identifier: '10.7916/ALICE')
       FactoryBot.create(:view_stat, identifier: 'ac:duplicate')
@@ -43,7 +42,7 @@ RSpec.describe Statistic, type: :model do
     end
 
     context 'when query is limited by date' do
-      before :each do
+      before do
         FactoryBot.create(:view_stat, at_time: Time.local(2015, 12, 31, 23, 0))
         FactoryBot.create(:view_stat, at_time: Time.local(2015, 1, 1))
         FactoryBot.create(:view_stat, at_time: Time.local(2015, 1, 31, 23, 0))

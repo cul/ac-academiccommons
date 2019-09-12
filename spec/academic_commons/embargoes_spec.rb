@@ -7,7 +7,7 @@ RSpec.describe AcademicCommons::Embargoes do
   describe '#free_to_read?' do
     let(:document) do
       SolrDocument.new(
-        { id: 'test:obj', free_to_read_start_date_ssi: date, object_state_ssi: 'A'}, {}
+        { id: 'test:obj', free_to_read_start_date_ssi: date, object_state_ssi: 'A' }, {}
       )
     end
 

@@ -1,6 +1,6 @@
 namespace :ac do
   desc "Adds item and collection to the repository."
-  task :populate_solr => :environment do
+  task populate_solr: :environment do
     Rake::Task["load:fixtures"].invoke
 
     item = ActiveFedora::Base.find('actest:1')
@@ -19,10 +19,11 @@ namespace :ac do
   end
 
   desc "Adds notification entry for each item in the solr core"
-  task :add_new_item_notification => :environment do
+  task add_new_item_notification: :environment do
     rsolr = AcademicCommons::Utils.rsolr
 
-    start, rows = 0, 100
+    start = 0
+    rows = 100
     while true
       solr_params = {
         start: start, rows: rows, fl: 'id,author_uni_ssim,cul_doi_ssi',

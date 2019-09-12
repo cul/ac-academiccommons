@@ -43,20 +43,20 @@ class UploadsController < ApplicationController
 
   private
 
-  def upload_params
-    params.require(:deposit)
-          .permit(:title, :abstract, :year, :doi, :license, :rights, :notes, files: [], creators: %i[first_name last_name uni])
-  end
-
-  def send_student_reminder_email
-    return unless ActiveRecord::Type::Boolean.new.cast(params[:deposit][:student])
-
-    begin
-      UserMailer.reminder_to_request_departmental_approval(current_user.full_name, current_user.email_preference.email).deliver
-    rescue Net::SMTPFatalError, Net::SMTPSyntaxError, IOError, Net::SMTPAuthenticationError,
-           Net::SMTPServerBusy, Net::SMTPUnknownError => e
-
-      Rails.logger.warn "Error sending new student reminder email to #{current_user.full_name}. ERROR: #{e.message}"
+    def upload_params
+      params.require(:deposit)
+            .permit(:title, :abstract, :year, :doi, :license, :rights, :notes, files: [], creators: %i[first_name last_name uni])
     end
-  end
+
+    def send_student_reminder_email
+      return unless ActiveRecord::Type::Boolean.new.cast(params[:deposit][:student])
+
+      begin
+        UserMailer.reminder_to_request_departmental_approval(current_user.full_name, current_user.email_preference.email).deliver
+      rescue Net::SMTPFatalError, Net::SMTPSyntaxError, IOError, Net::SMTPAuthenticationError,
+             Net::SMTPServerBusy, Net::SMTPUnknownError => e
+
+        Rails.logger.warn "Error sending new student reminder email to #{current_user.full_name}. ERROR: #{e.message}"
+      end
+    end
 end
