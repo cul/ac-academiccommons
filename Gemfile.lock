@@ -10,6 +10,14 @@ GIT
       rails (~> 5.0)
 
 GIT
+  remote: https://github.com/cul/rubocul
+  revision: ec8a7257cce43571646d55b96ca65763f7d40969
+  branch: master
+  specs:
+    rubocul (0.0.1)
+      bixby (= 2.0.0.pre.beta1)
+
+GIT
   remote: https://github.com/ruby-grape/grape-swagger
   revision: da351d0f99228f31329210d21b975a64500e73ab
   ref: da351d0f99228f31329210d21b975a64500e73ab
@@ -102,6 +110,9 @@ GEM
       ice_nine (~> 0.11.0)
       thread_safe (~> 0.3, >= 0.3.1)
     bcrypt (3.1.12)
+    bixby (2.0.0.pre.beta1)
+      rubocop (= 0.63.1)
+      rubocop-rspec (= 1.31.0)
     blacklight (6.15.0)
       bootstrap-sass (~> 3.2)
       deprecation
@@ -264,6 +275,7 @@ GEM
       concurrent-ruby (~> 1.0)
     ice_nine (0.11.2)
     io-like (0.3.0)
+    jaro_winkler (1.5.3)
     jbuilder (2.7.0)
       activesupport (>= 4.2.0)
       multi_json (>= 1.2)
@@ -342,8 +354,8 @@ GEM
       nokogiri (~> 1.5)
       omniauth (~> 1.2)
     orm_adapter (0.5.0)
-    parallel (1.12.1)
-    parser (2.5.1.0)
+    parallel (1.17.0)
+    parser (2.6.4.1)
       ast (~> 2.4.0)
     powerpack (0.1.2)
     premailer (1.11.1)
@@ -461,15 +473,16 @@ GEM
       rspec-mocks (~> 3.7.0)
       rspec-support (~> 3.7.0)
     rspec-support (3.7.1)
-    rubocop (0.52.1)
+    rubocop (0.63.1)
+      jaro_winkler (~> 1.5.1)
       parallel (~> 1.10)
-      parser (>= 2.4.0.2, < 3.0)
+      parser (>= 2.5, != 2.5.1.1)
       powerpack (~> 0.1)
       rainbow (>= 2.2.2, < 4.0)
       ruby-progressbar (~> 1.7)
-      unicode-display_width (~> 1.0, >= 1.0.1)
-    rubocop-rspec (1.22.2)
-      rubocop (>= 0.52.1)
+      unicode-display_width (~> 1.4.0)
+    rubocop-rspec (1.31.0)
+      rubocop (>= 0.60.0)
     ruby-progressbar (1.9.0)
     rubydora (2.1.0)
       activemodel (>= 4.2.10)
@@ -565,7 +578,7 @@ GEM
       unf_ext
     unf_ext (0.0.7.5)
     unicode (0.4.4.4)
-    unicode-display_width (1.4.0)
+    unicode-display_width (1.4.1)
     vegas (0.1.11)
       rack (>= 1.0.0)
     virtus (1.0.5)
@@ -645,8 +658,7 @@ DEPENDENCIES
   rsolr-ext
   rspec-its
   rspec-rails (~> 3.5)
-  rubocop (~> 0.52.1)
-  rubocop-rspec (~> 1.22.2)
+  rubocul!
   rubyzip
   sass-rails
   selenium-webdriver

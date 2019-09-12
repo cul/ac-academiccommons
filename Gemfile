@@ -61,8 +61,6 @@ group :development, :test do
   gem 'capistrano-resque', '~> 0.2.2', require: false
   gem 'capistrano-rvm', '~> 0.1', require: false
 
-  gem 'rubocop', '~> 0.52.1', require: false
-  gem 'rubocop-rspec', '~> 1.22.2', require: false
 
   gem 'byebug'
   gem 'capybara', '~>2.2'
@@ -75,6 +73,7 @@ group :development, :test do
   gem 'json_spec'
   gem 'rspec-its'
   gem 'rspec-rails', '~> 3.5'
+  gem 'rubocul', git: 'https://github.com/cul/rubocul', branch: 'master'
   gem 'selenium-webdriver'
   gem 'solr_wrapper', '>= 0.18.0'
   gem 'webmock'

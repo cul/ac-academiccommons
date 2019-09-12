@@ -1,11 +1,8 @@
-require: rubocop-rspec
-
-inherit_from: .rubocop_todo.yml
-
-Rails:
-  Enabled: true
+inherit_gem:
+  rubocul: rubocul_default.yml
 
 AllCops:
+<<<<<<< HEAD
   TargetRubyVersion: 2.3.3
   TargetRailsVersion: 4.2
   Include:
@@ -59,3 +56,7 @@ RSpec/DescribeClass:
 
 RSpec/NestedGroups:
   Max: 4
+=======
+  TargetRubyVersion: 2.5.3
+  TargetRailsVersion: 5.2.3
+>>>>>>> Using rubocul configuration for rubocop
