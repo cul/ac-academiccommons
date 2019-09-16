@@ -77,7 +77,7 @@ class UsageStatisticsReportsForm < FormObject
 
   private
 
-  def filters_must_have_a_value
-    errors.add(:filters, 'must have a field and value') if (filters || {}).any? { |f| f[:field].present? && f[:value].blank? }
-  end
+    def filters_must_have_a_value
+      errors.add(:filters, 'must have a field and value') if (filters || {}).any? { |f| f[:field].present? && f[:value].blank? }
+    end
 end

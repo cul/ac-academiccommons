@@ -116,7 +116,7 @@ class CatalogController < ApplicationController
     config.add_show_field 'abstract_ssi', display: :main_content, itemprop: 'description', auto_link: true
 
     config.add_show_field 'geographic_area_ssim',   display: :table, label: 'Geographic Areas', link_to_search: 'geographic_area_ssim'
-    config.add_show_field 'subject_ssim',           display: :table, label: 'Subjects',         link_to_search: 'subject_ssim',        itemprop: 'keywords'
+    config.add_show_field 'subject_ssim',           display: :table, label: 'Subjects',         link_to_search: 'subject_ssim', itemprop: 'keywords'
 
     config.add_show_field 'book_journal_title_ssi', display: :published_in, label: 'Title'
     config.add_show_field 'host_publisher_ssi',     display: :published_in, label: 'Publisher'
@@ -216,8 +216,8 @@ class CatalogController < ApplicationController
     end
 
     config.add_sort_field('Title Z-A') do |field|
-     field.sort = 'title_sort desc, pub_date_isi desc'
-     field.label = 'Title Z-A'
+      field.sort = 'title_sort desc, pub_date_isi desc'
+      field.label = 'Title Z-A'
     end
 
     # If there are more than this many search results, no spelling ("did you
@@ -323,16 +323,16 @@ class CatalogController < ApplicationController
 
   private
 
-  def record_view_stats
-    record_stats(params['id'], Statistic::VIEW)
-  end
+    def record_view_stats
+      record_stats(params['id'], Statistic::VIEW)
+    end
 
-  def record_stats(id, event)
-    return if is_bot?(request.user_agent)
-    Statistic.create!(
-      session_id: request.session_options[:id],
-      ip_address: request.env['HTTP_X_FORWARDED_FOR'] || request.remote_addr,
-      event: event, identifier: id, at_time: Time.current
-    )
-  end
+    def record_stats(id, event)
+      return if is_bot?(request.user_agent)
+      Statistic.create!(
+        session_id: request.session_options[:id],
+        ip_address: request.env['HTTP_X_FORWARDED_FOR'] || request.remote_addr,
+        event: event, identifier: id, at_time: Time.current
+      )
+    end
 end

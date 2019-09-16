@@ -9,7 +9,7 @@ describe LogsController, type: :controller do
 
   describe 'GET all_author_monthly_reports_history' do
     include_examples 'authorization required' do
-      let(:http_request) { get :all_author_monthly_reports_history}
+      let(:http_request) { get :all_author_monthly_reports_history }
     end
   end
 

@@ -78,14 +78,14 @@ RSpec.describe AcademicCommons::Metrics::UsageStatistics, integration: true do
       end
 
       context 'when request lifetime stats' do
-        before do
-          FactoryBot.create(:view_stat, at_time: Date.new(2001, 4, 12).in_time_zone)
-        end
-
         subject(:usage_stats) do
           AcademicCommons::Metrics::UsageStatistics.new(
             solr_params: solr_request, include_streaming: true
           ).calculate_lifetime
+        end
+
+        before do
+          FactoryBot.create(:view_stat, at_time: Date.new(2001, 4, 12).in_time_zone)
         end
 
         it 'returns correct results' do

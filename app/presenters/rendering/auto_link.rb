@@ -7,8 +7,8 @@ module Rendering
 
     private
 
-    def auto_link(values)
-      values.map { |x| Rinku.auto_link(x, :all, 'target="_blank"').html_safe }
-    end
+      def auto_link(values)
+        values.map { |x| Rinku.auto_link(x, :all, 'target="_blank"').html_safe }
+      end
   end
 end

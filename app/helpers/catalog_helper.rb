@@ -51,7 +51,7 @@ module CatalogHelper
   def collect_facet_field_values(facet_field_results)
     results = {}
     facet_field_results.each do |facet_field, facet_counts|
-      results[facet_field] = (0...facet_counts.length/2).map do |ix|
+      results[facet_field] = (0...facet_counts.length / 2).map do |ix|
         { name: facet_counts[ix * 2], count: facet_counts[1 + ix * 2] }
       end
     end
@@ -67,11 +67,11 @@ module CatalogHelper
   end
 
   def get_metadata_list(doc)
-    #catch any error and return an error message that resources are unavailable
-    #this prevents fedora server outages from making ac2 item page inaccessible
+    # catch any error and return an error message that resources are unavailable
+    # this prevents fedora server outages from making ac2 item page inaccessible
     begin
-      #TODO: is this side effect on doc necessary?
-      doc['object_display'] = [ "#{fedora_config["url"]}" + '/objects/' + doc['id'] + '/methods' ]
+      # TODO: is this side effect on doc necessary?
+      doc['object_display'] = ["#{fedora_config["url"]}" + '/objects/' + doc['id'] + '/methods']
       results = doc['described_by_ssim'].map do |ds_uri|
         res = {}
         pid = ds_uri.split('/')[1]
@@ -79,7 +79,7 @@ module CatalogHelper
         # res[:id] = pid is not used
         # res[:title] = 'description' is not used
         # constant suffix for backwards compatibility with AC2
-        filename = "#{pid.gsub(/\:/,'')}_description.xml"
+        filename = "#{pid.gsub(/\:/, '')}_description.xml"
         res[:show_url] = fedora_content_path(:show_pretty, pid, dsid, filename)
         res[:download_url] = fedora_content_path(:download, pid, dsid, filename)
         res

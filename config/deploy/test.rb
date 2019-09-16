@@ -17,7 +17,6 @@ set :linked_files, fetch(:linked_files, []).push('config/resque.yml')
 
 after 'deploy:restart', 'resque:restart'
 
-
 server "cdrs-nginx-#{fetch(:stage)}1.cul.columbia.edu", user: fetch(:remote_user), roles: %w(app db web)
 # In test/prod, deploy from release tags; most recent version is default
 ask :branch, `git rev-parse --abbrev-ref HEAD`.chomp

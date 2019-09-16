@@ -69,7 +69,7 @@ module AcademicCommons
 
           # For each author that does not have a author, row with just basic item information
           total_authors = doc.fetch(:author_ssim, []).count
-          while(total_authors >= author_count) do
+          while (total_authors >= author_count) do
             row = CSV::Row.new(headers, start_of_row)
             row['multi-author count'] = author_count
 

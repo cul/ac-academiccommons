@@ -16,8 +16,8 @@ module Rendering
 
     private
 
-    def html_escape(*args)
-      ERB::Util.html_escape(*args)
-    end
+      def html_escape(*args)
+        ERB::Util.html_escape(*args)
+      end
   end
 end

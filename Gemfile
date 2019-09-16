@@ -61,7 +61,6 @@ group :development, :test do
   gem 'capistrano-resque', '~> 0.2.2', require: false
   gem 'capistrano-rvm', '~> 0.1', require: false
 
-
   gem 'byebug'
   gem 'capybara', '~>2.2'
   gem 'chromedriver-helper'

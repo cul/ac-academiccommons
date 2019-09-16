@@ -49,8 +49,8 @@ class Statistic < ApplicationRecord
   end
 
   def self.merge_stats(pid, duplicate_pid)
-     stats = Statistic.where(identifier: duplicate_pid)
-     stats.each { |stat| stat.update!(identifier: pid) }
+    stats = Statistic.where(identifier: duplicate_pid)
+    stats.each { |stat| stat.update!(identifier: pid) }
   end
 
   def self.reset_downloads

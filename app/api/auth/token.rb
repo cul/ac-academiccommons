@@ -21,36 +21,36 @@ module Auth
 
     private
 
-    def challenge
-      'Token realm="%s"' % realm
-    end
-
-    def valid?(auth)
-      @authenticator.call(*auth.credentials)
-    end
-
-    class Request < Rack::Auth::AbstractRequest
-      def token?
-        /^(token|bearer)$/ =~ scheme && !token.nil? && token.present?
+      def challenge
+        'Token realm="%s"' % realm
       end
 
-      def credentials
-        @credentials ||= [token, params.except('token')]
+      def valid?(auth)
+        @authenticator.call(*auth.credentials)
       end
 
-      def token
-        @token ||= params['token']
-      end
+      class Request < Rack::Auth::AbstractRequest
+        def token?
+          /^(token|bearer)$/ =~ scheme && !token.nil? && token.present?
+        end
 
-      def params
-        @params ||= (parts.last || '').split(/\s*(?:,|;|\t+)\s*/).map.with_index { |part, i|
-                      pair = part.split('=', 2)
-                      pair.unshift('token') if i.zero? && pair.length == 1
-                      pair.push('') if pair.length == 1
-                      pair[1].gsub!(%r/^"|"$/, '')
-                      pair
-                    }.to_h
+        def credentials
+          @credentials ||= [token, params.except('token')]
+        end
+
+        def token
+          @token ||= params['token']
+        end
+
+        def params
+          @params ||= (parts.last || '').split(/\s*(?:,|;|\t+)\s*/).map.with_index { |part, i|
+                        pair = part.split('=', 2)
+                        pair.unshift('token') if i.zero? && pair.length == 1
+                        pair.push('') if pair.length == 1
+                        pair[1].gsub!(%r/^"|"$/, '')
+                        pair
+                      }.to_h
+        end
       end
-    end
   end
 end

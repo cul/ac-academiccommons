@@ -45,21 +45,21 @@ class AgreementsController < ApplicationController
 
   private
 
-  def token
-    params.dig(:agreement, :token)
-  end
+    def token
+      params.dig(:agreement, :token)
+    end
 
-  def token?
-    token.present?
-  end
+    def token?
+      token.present?
+    end
 
-  def verify_token
-    creds = Rails.application.message_verifier(:agreement).verify(token)
-    raise CanCanCan::AccessDenied if creds.nil? || creds.is_a?(ActiveSupport::MessageVerifier::InvalidSignature) || creds[2] != Agreement::LATEST_AGREEMENT_VERSION
-    params[:agreement] = (params[:agreement] || {}).merge(email: creds[0], uni: creds[1])
-  end
+    def verify_token
+      creds = Rails.application.message_verifier(:agreement).verify(token)
+      raise CanCanCan::AccessDenied if creds.nil? || creds.is_a?(ActiveSupport::MessageVerifier::InvalidSignature) || creds[2] != Agreement::LATEST_AGREEMENT_VERSION
+      params[:agreement] = (params[:agreement] || {}).merge(email: creds[0], uni: creds[1])
+    end
 
-  def agreement_params
-    params.require(:agreement).permit(:uni, :agreement_version, :name, :email)
-  end
+    def agreement_params
+      params.require(:agreement).permit(:uni, :agreement_version, :name, :email)
+    end
 end

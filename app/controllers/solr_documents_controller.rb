@@ -72,7 +72,7 @@ class SolrDocumentsController < ApplicationController
       render status: status, plain: ''
       return
     end
-    doc = rsolr.find(filters: {fedora3_pid_ssi: "\"#{params[:id]}\""})['response']['docs'].first
+    doc = rsolr.find(filters: { fedora3_pid_ssi: "\"#{params[:id]}\"" })['response']['docs'].first
     if doc
       render json: doc
     else
@@ -82,29 +82,29 @@ class SolrDocumentsController < ApplicationController
 
   private
 
-  # Checks to see if new item notification has been sent to author. If one has
-  # already been sent does not sent another one.
-  def notify_authors_of_new_item(solr_doc)
-    doc = SolrDocument.new(solr_doc)
-    ldap = Cul::LDAP.new
+    # Checks to see if new item notification has been sent to author. If one has
+    # already been sent does not sent another one.
+    def notify_authors_of_new_item(solr_doc)
+      doc = SolrDocument.new(solr_doc)
+      ldap = Cul::LDAP.new
 
-    unis = solr_doc.fetch('author_uni_ssim', [])
-    preferred_emails = EmailPreference.preferred_emails(unis)
+      unis = solr_doc.fetch('author_uni_ssim', [])
+      preferred_emails = EmailPreference.preferred_emails(unis)
 
-    preferred_emails.each do |uni, email|
-      # Skip if notification was already sent.
-      next if Notification.sent_new_item_notification?(solr_doc['cul_doi_ssi'], uni)
+      preferred_emails.each do |uni, email|
+        # Skip if notification was already sent.
+        next if Notification.sent_new_item_notification?(solr_doc['cul_doi_ssi'], uni)
 
-      begin
-        name = (author = ldap.find_by_uni(uni)) ? author.name : nil
-        success = true
-        UserMailer.new_item_available(doc, uni, email, name).deliver_now
-      rescue StandardError => e
-        logger.error "Error Sending Email: #{e.message}"
-        logger.error e.backtrace.join("\n ")
-        success = false
+        begin
+          name = (author = ldap.find_by_uni(uni)) ? author.name : nil
+          success = true
+          UserMailer.new_item_available(doc, uni, email, name).deliver_now
+        rescue StandardError => e
+          logger.error "Error Sending Email: #{e.message}"
+          logger.error e.backtrace.join("\n ")
+          success = false
+        end
+        Notification.record_new_item_notification(doc[:cul_doi_ssi], email, uni, success)
       end
-      Notification.record_new_item_notification(doc[:cul_doi_ssi], email, uni, success)
     end
-  end
 end

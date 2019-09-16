@@ -2,7 +2,7 @@ require 'rails_helper'
 
 describe Resource do
   let(:resource) do
-    resource = Resource.new(pid: 'test:resource')
+    resource = described_class.new(pid: 'test:resource')
     resource.state = 'A'
     downloadable = resource.create_datastream(
       ActiveFedora::Datastream, 'content', dsLabel: 'foo.pdf', mimeType: 'application/pdf'

@@ -34,48 +34,48 @@ class UserController < ApplicationController
 
   private
 
-  def pending_works
-    return [] if current_user.deposits.blank?
+    def pending_works
+      return [] if current_user.deposits.blank?
 
-    identifiers = current_user.deposits.map(&:hyacinth_identifier).compact
+      identifiers = current_user.deposits.map(&:hyacinth_identifier).compact
 
-    if identifiers.present?
-      results = AcademicCommons.search do |params|
-        identifiers = identifiers.map { |i| "\"#{i}\"" }.join(' OR ')
-                                 .prepend('(').concat(')')
-        params.filter('fedora3_pid_ssi', identifiers)
-        params.aggregators_only
-        params.field_list('fedora3_pid_ssi')
+      if identifiers.present?
+        results = AcademicCommons.search do |params|
+          identifiers = identifiers.map { |i| "\"#{i}\"" }.join(' OR ')
+                                   .prepend('(').concat(')')
+          params.filter('fedora3_pid_ssi', identifiers)
+          params.aggregators_only
+          params.field_list('fedora3_pid_ssi')
+        end
+
+        hyacinth_ids_in_ac = results.documents.map { |d| d[:fedora3_pid_ssi] }
+      else
+        hyacinth_ids_in_ac = []
       end
 
-      hyacinth_ids_in_ac = results.documents.map { |d| d[:fedora3_pid_ssi] }
-    else
-      hyacinth_ids_in_ac = []
+      current_user.deposits.to_a.keep_if do |deposit|
+        hyacinth_id = deposit.hyacinth_identifier
+        hyacinth_id.blank? || !hyacinth_ids_in_ac.include?(hyacinth_id)
+      end
     end
 
-    current_user.deposits.to_a.keep_if do |deposit|
-      hyacinth_id = deposit.hyacinth_identifier
-      hyacinth_id.blank? || !hyacinth_ids_in_ac.include?(hyacinth_id)
+    def embargoed_works
+      AcademicCommons.search do |params|
+        params.filter('author_uni_ssim', current_user.uid)
+        params.embargoed_only
+        params.aggregators_only
+      end
     end
-  end
 
-  def embargoed_works
-    AcademicCommons.search do |params|
-      params.filter('author_uni_ssim', current_user.uid)
-      params.embargoed_only
-      params.aggregators_only
+    def current_works_with_stats
+      options = {
+        start_date:  Date.current.prev_month.beginning_of_month,
+        end_date:    Date.current.prev_month.end_of_month,
+        solr_params: { q: nil, fq: ["author_uni_ssim:\"#{current_user.uid}\""] }
+      }
+
+      AcademicCommons::Metrics::UsageStatistics.new(options)
+                                               .calculate_lifetime
+                                               .calculate_period
     end
-  end
-
-  def current_works_with_stats
-    options = {
-      start_date:  Date.current.prev_month.beginning_of_month,
-      end_date:    Date.current.prev_month.end_of_month,
-      solr_params: { q: nil, fq: ["author_uni_ssim:\"#{current_user.uid}\""] }
-    }
-
-    AcademicCommons::Metrics::UsageStatistics.new(options)
-                                             .calculate_lifetime
-                                             .calculate_period
-  end
 end

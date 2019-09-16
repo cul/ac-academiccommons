@@ -7,9 +7,9 @@ module Rendering
 
     private
 
-    def preserve_new_lines(value)
-      return value unless value.is_a? String
-      value.gsub(/\r\n?/, "\n").gsub(/(?:\n)/, '<br/>').html_safe
-    end
+      def preserve_new_lines(value)
+        return value unless value.is_a? String
+        value.gsub(/\r\n?/, "\n").gsub(/(?:\n)/, '<br/>').html_safe
+      end
   end
 end

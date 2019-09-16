@@ -66,7 +66,7 @@ Rails.application.routes.draw do
   get 'account',             to: 'user#account'
   get 'unsubscribe_monthly', to: 'user#unsubscribe_monthly'
 
-  get '/admin',                   to: 'admin#index',                 as: 'admin'
+  get '/admin',              to: 'admin#index', as: 'admin'
 
   namespace :admin do
     get 'author_affiliation_report/index'

@@ -18,7 +18,7 @@ module AcademicCommons::Aggregator
     end
   end
 
-  def list_members(pids_only=false)
+  def list_members(pids_only = false)
     repository_inbound(AcademicCommons::Resource::CUL_MEMBER_OF, pids_only)
   end
 

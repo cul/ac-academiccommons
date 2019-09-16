@@ -22,8 +22,8 @@ module Admin
 
     private
 
-    def email_author_reports_params
-      params.require(:email_author_reports_form).permit(:reports_for, :uni, :month, :year, :order_works_by, :optional_note, :deliver, :email)
-    end
+      def email_author_reports_params
+        params.require(:email_author_reports_form).permit(:reports_for, :uni, :month, :year, :order_works_by, :optional_note, :deliver, :email)
+      end
   end
 end

@@ -27,14 +27,14 @@ class Resource < ActiveFedora::Base
   end
 
   def downloadable_content
-    return datastreams['content'] if (datastreams.has_key?('content'))
-    return datastreams['CONTENT'] if (datastreams.has_key?('CONTENT'))
-    return nil
+    return datastreams['content'] if datastreams.key?('content')
+    return datastreams['CONTENT'] if datastreams.key?('CONTENT')
+    nil
   end
 
   # Return string with fulltext or nil if there isn't a datastream to pull from
   def fulltext
-    datastreams.has_key?('fulltext') ? datastreams['fulltext'].content : nil
+    datastreams.key?('fulltext') ? datastreams['fulltext'].content : nil
   end
 
   def rels_int

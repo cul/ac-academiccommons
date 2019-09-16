@@ -35,19 +35,19 @@ class UsageStatisticsPresenter
 
   private
 
-  def html_table(array, table_class: nil)
-    view.content_tag :table, class: table_class do
-      view.content_tag(:thead, view.content_tag(:tr, row(:th, array[0])))
-          .concat(view.content_tag(:tbody, body_rows(array[1..-2])))
-          .concat(view.content_tag(:tfoot, view.content_tag(:tr, row(:th, array[-1]))))
+    def html_table(array, table_class: nil)
+      view.content_tag :table, class: table_class do
+        view.content_tag(:thead, view.content_tag(:tr, row(:th, array[0])))
+            .concat(view.content_tag(:tbody, body_rows(array[1..-2])))
+            .concat(view.content_tag(:tfoot, view.content_tag(:tr, row(:th, array[-1]))))
+      end
     end
-  end
 
-  def body_rows(array_of_arrays)
-    view.safe_join(array_of_arrays.map { |row| view.content_tag :tr, row(:td, row) })
-  end
+    def body_rows(array_of_arrays)
+      view.safe_join(array_of_arrays.map { |row| view.content_tag :tr, row(:td, row) })
+    end
 
-  def row(tag, array)
-    view.safe_join(array.map { |cell| view.content_tag(tag, cell) })
-  end
+    def row(tag, array)
+      view.safe_join(array.map { |cell| view.content_tag(tag, cell) })
+    end
 end

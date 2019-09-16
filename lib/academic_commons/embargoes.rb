@@ -21,7 +21,7 @@ module AcademicCommons
     # @param [Date|String] date
     # @return [Boolean]
     def available_today?(date)
-      raise 'Date must be a String or Date object' unless(date.is_a?(String) || date.is_a?(Date))
+      raise 'Date must be a String or Date object' unless (date.is_a?(String) || date.is_a?(Date))
       date = Date.strptime(date, '%Y-%m-%d') if date.is_a?(String)
       Date.current >= date
     end

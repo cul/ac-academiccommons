@@ -1,6 +1,5 @@
 module OkComputer
   class FedoraObjectCheck < HttpCheck
-
     attr_accessor :pid, :ds
 
     # Checking that fedora object exists.

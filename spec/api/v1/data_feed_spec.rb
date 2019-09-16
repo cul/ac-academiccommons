@@ -63,48 +63,50 @@ describe 'GET /api/v1/data_feed/:key', type: :request do
       end
 
       let(:solr_response) do
-        Blacklight::Solr::Response.new({
-          'response' => {
-            'numFound' => 1,
-            'docs' => [
-              {
-                'id' => '10.7916/D8WS9153',
-                'record_creation_dtsi' => '2011-02-25T18:57:00Z',
-                'record_change_dtsi' => '2011-02-25T18:57:00Z',
-                'object_state_ssi' => 'A',
-                'language_ssim' => ['English'],
-                'cul_doi_ssi' => '10.7916/D8WS9153',
-                'fedora3_pid_ssi' => 'actest:9',
-                'title_ssi' => 'The Warburg effect and its role in cancer detection and therapy',
-                'author_ssim' => ['Christ, Ethan J.'],
-                'pub_date_isi' => '2009',
-                'genre_ssim' => ['Theses'],
-                'abstract_ssi' => 'The Warburg effect is a cellular phenomenon in cancer cells...',
-                'subject_ssim' => ['Biology'],
-                'department_ssim' => ['Biotechnology'],
-                'degree_grantor_ssim' => ['Columbia University'],
-                'degree_level_ssim' => ['1'],
-                'degree_level_name_ssim' => ['Master\'s'],
-                'degree_name_ssim' => ['M.S.'],
-                'degree_discipline_ssim' => ['Biotechnology'],
-                'notes_ssim' => ['M.S. Columbia University'],
-                'free_to_read_start_date_ssi' => '2018-01-01',
-                'thesis_advisor_ssim' => ['Smith, John'],
-                'assets' => {
-                  'numFound' => 1,
-                  'start' => 0,
-                  'docs' => [
-                    {
-                      'id' => '10.7916/D8WS9155',
-                      'cul_doi_ssi' => '10.7916/D8WS9155',
-                      'active_fedora_model_ssi' => 'GenericResource'
-                    }
-                  ]
+        Blacklight::Solr::Response.new(
+          {
+            'response' => {
+              'numFound' => 1,
+              'docs' => [
+                {
+                  'id' => '10.7916/D8WS9153',
+                  'record_creation_dtsi' => '2011-02-25T18:57:00Z',
+                  'record_change_dtsi' => '2011-02-25T18:57:00Z',
+                  'object_state_ssi' => 'A',
+                  'language_ssim' => ['English'],
+                  'cul_doi_ssi' => '10.7916/D8WS9153',
+                  'fedora3_pid_ssi' => 'actest:9',
+                  'title_ssi' => 'The Warburg effect and its role in cancer detection and therapy',
+                  'author_ssim' => ['Christ, Ethan J.'],
+                  'pub_date_isi' => '2009',
+                  'genre_ssim' => ['Theses'],
+                  'abstract_ssi' => 'The Warburg effect is a cellular phenomenon in cancer cells...',
+                  'subject_ssim' => ['Biology'],
+                  'department_ssim' => ['Biotechnology'],
+                  'degree_grantor_ssim' => ['Columbia University'],
+                  'degree_level_ssim' => ['1'],
+                  'degree_level_name_ssim' => ['Master\'s'],
+                  'degree_name_ssim' => ['M.S.'],
+                  'degree_discipline_ssim' => ['Biotechnology'],
+                  'notes_ssim' => ['M.S. Columbia University'],
+                  'free_to_read_start_date_ssi' => '2018-01-01',
+                  'thesis_advisor_ssim' => ['Smith, John'],
+                  'assets' => {
+                    'numFound' => 1,
+                    'start' => 0,
+                    'docs' => [
+                      {
+                        'id' => '10.7916/D8WS9155',
+                        'cul_doi_ssi' => '10.7916/D8WS9155',
+                        'active_fedora_model_ssi' => 'GenericResource'
+                      }
+                    ]
+                  }
                 }
-              }
-            ]
-          }
-        }, {})
+              ]
+            }
+          }, {}
+        )
       end
 
       let(:json_response) do

@@ -139,21 +139,21 @@ class Deposit < ApplicationRecord
 
   private
 
-  def cco_must_be_selected
-    errors.add(:license, 'CCO must be selected') unless license == 'https://creativecommons.org/publicdomain/zero/1.0/'
-  end
-
-  def one_creator_must_be_present
-    one_creator_present = creators.any? do |c|
-      c[:first_name].present? && c[:last_name].present? && c[:uni].present?
+    def cco_must_be_selected
+      errors.add(:license, 'CCO must be selected') unless license == 'https://creativecommons.org/publicdomain/zero/1.0/'
     end
-    errors.add(:creators, 'must have one creator with first name, last name and uni.') unless one_creator_present
-  end
 
-  # Remove any creators with empty first name, last name and uni.
-  def clean_up_creators
-    (creators || []).delete_if do |creator|
-      %i[first_name last_name uni].all? { |k| creator[k].blank? }
+    def one_creator_must_be_present
+      one_creator_present = creators.any? do |c|
+        c[:first_name].present? && c[:last_name].present? && c[:uni].present?
+      end
+      errors.add(:creators, 'must have one creator with first name, last name and uni.') unless one_creator_present
     end
-  end
+
+    # Remove any creators with empty first name, last name and uni.
+    def clean_up_creators
+      (creators || []).delete_if do |creator|
+        %i[first_name last_name uni].all? { |k| creator[k].blank? }
+      end
+    end
 end

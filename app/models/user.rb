@@ -37,7 +37,7 @@ class User < ApplicationRecord
 
   # Password methods required by Devise.
   def password
-    Devise.friendly_token[0,20]
+    Devise.friendly_token[0, 20]
   end
 
   def password=(*val)

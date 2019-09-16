@@ -125,6 +125,16 @@ describe SolrDocumentsController, type: :controller do
   end
 
   describe '#notify_authors_of_new_item' do
+    subject do
+      solr_doc = {
+        'id' => 'actest:1', 'cul_doi_ssi' => doi,
+        'title_ssi' => 'Alice\'s Adventures in Wonderland',
+        'author_uni_ssim' => [author_one, author_two],
+        'free_to_read_start_date_ssi' => (Date.current - 1.month).to_s
+      }
+      @controller.instance_eval { notify_authors_of_new_item(solr_doc) }
+    end
+
     let(:author_one) { 'abc123' }
     let(:author_two) { 'xyz123' }
     let(:email_author_one) { "#{author_one}@columbia.edu" }
@@ -147,16 +157,6 @@ describe SolrDocumentsController, type: :controller do
 
     after do
       Rails.application.config.prod_environment = false
-    end
-
-    subject do
-      solr_doc = {
-        'id' => 'actest:1', 'cul_doi_ssi' => doi,
-        'title_ssi' => 'Alice\'s Adventures in Wonderland',
-        'author_uni_ssim' => [author_one, author_two],
-        'free_to_read_start_date_ssi' => (Date.current - 1.month).to_s
-      }
-      @controller.instance_eval { notify_authors_of_new_item(solr_doc) }
     end
 
     context 'when a notification for each author has previously been sent' do

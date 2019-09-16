@@ -1,5 +1,4 @@
 class UploadedFile < ApplicationRecord
-
   # Saves file in directory given. If there is already a file by the same name
   # present in the directory, appends numbers to the filename.
   #

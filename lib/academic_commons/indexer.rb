@@ -107,34 +107,34 @@ module AcademicCommons
 
     private
 
-    # Writes errors to logger and stdout.
-    def log_error(string)
-      indexing_logger.error(string)
-      puts(Rainbow(string).red) if verbose
-    end
+      # Writes errors to logger and stdout.
+      def log_error(string)
+        indexing_logger.error(string)
+        puts(Rainbow(string).red) if verbose
+      end
 
-    # Writes information to logger and stdout.
-    def log_info(string)
-      indexing_logger.info(string)
-      puts(string) if verbose
-    end
+      # Writes information to logger and stdout.
+      def log_info(string)
+        indexing_logger.info(string)
+        puts(string) if verbose
+      end
 
-    # Helper to determain whether or not the fedora id exists in solr core.
-    def solr_id_exists?(id)
-      response = rsolr.get('select', params: { q: "{!raw f=fedora3_pid_ssi}#{id}", rows: 0 })
-      response['response']['numFound'].to_i == 1
-    end
+      # Helper to determain whether or not the fedora id exists in solr core.
+      def solr_id_exists?(id)
+        response = rsolr.get('select', params: { q: "{!raw f=fedora3_pid_ssi}#{id}", rows: 0 })
+        response['response']['numFound'].to_i == 1
+      end
 
-    def rsolr
-      @rsolr ||= AcademicCommons::Utils.rsolr
-    end
+      def rsolr
+        @rsolr ||= AcademicCommons::Utils.rsolr
+      end
 
-    def setup_logger(time_id)
-      filepath = File.join(Rails.root, 'log', 'ac-indexing', "#{time_id}.log")
-      log = ActiveSupport::Logger.new(filepath)
-      log.level = Logger::INFO
-      log.formatter = Rails.application.config.log_formatter
-      log
-    end
+      def setup_logger(time_id)
+        filepath = File.join(Rails.root, 'log', 'ac-indexing', "#{time_id}.log")
+        log = ActiveSupport::Logger.new(filepath)
+        log.level = Logger::INFO
+        log.formatter = Rails.application.config.log_formatter
+        log
+      end
   end
 end

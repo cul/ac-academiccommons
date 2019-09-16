@@ -6,7 +6,7 @@ class AdminController < ApplicationController
 
   private
 
-  def root_admin_controller?
-    request.controller_class == AdminController
-  end
+    def root_admin_controller?
+      request.controller_class == AdminController
+    end
 end

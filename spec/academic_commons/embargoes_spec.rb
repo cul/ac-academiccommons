@@ -1,6 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe AcademicCommons::Embargoes do
+  subject { dummy_class.free_to_read?(document) }
+
   let(:class_rig) { Class.new { include AcademicCommons::Embargoes } }
   let(:dummy_class) { class_rig.new }
 
@@ -11,11 +13,9 @@ RSpec.describe AcademicCommons::Embargoes do
       )
     end
 
-    subject { dummy_class.free_to_read?(document) }
-
     context 'when free_to_read_state_date is today' do
       let(:date) { Date.current.strftime('%Y-%m-%d') }
-      it { is_expected.to be true}
+      it { is_expected.to be true }
     end
 
     context 'when free_to_read_state_date is after today' do

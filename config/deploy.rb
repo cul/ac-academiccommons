@@ -12,7 +12,7 @@ set :rails_env, fetch(:deploy_name)
 # use the rvm wrapper
 set :rvm_ruby_version, fetch(:deploy_name)
 
-set :repo_url,  "git@github.com:cul/ac-academiccommons.git"
+set :repo_url, "git@github.com:cul/ac-academiccommons.git"
 
 set :remote_user, "#{fetch(:instance)}serv"
 

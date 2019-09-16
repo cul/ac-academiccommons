@@ -8,7 +8,6 @@ class SolrDocument
   # self.unique_key = 'id'
   self.timestamp_key = 'record_creation_dtsi'
 
-
   # Email uses the semantic field mappings below to generate the body of an email.
   SolrDocument.use_extension(Blacklight::Document::Email)
 

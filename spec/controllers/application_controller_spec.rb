@@ -1,7 +1,6 @@
 require 'rails_helper'
 
 RSpec.describe ApplicationController, type: :controller do
-
   describe '#is_bot?' do
     context 'return true' do
       it 'when user agent is a bot' do
@@ -10,7 +9,7 @@ RSpec.describe ApplicationController, type: :controller do
       end
 
       it 'when user agent name is empty' do
-        expect(controller.is_bot? '').to be true
+        expect(controller.is_bot?('')).to be true
       end
     end
 

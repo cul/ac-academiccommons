@@ -79,20 +79,20 @@ module AcademicCommons
 
       private
 
-      def summary_table(time)
-        table = [['Title', 'Views', 'Downloads']]
+        def summary_table(time)
+          table = [['Title', 'Views', 'Downloads']]
 
-        each do |item|
-          table << [
-            item.document.title, item.get_stat(Statistic::VIEW, time),
-            item.get_stat(Statistic::DOWNLOAD, time)
-          ]
+          each do |item|
+            table << [
+              item.document.title, item.get_stat(Statistic::VIEW, time),
+              item.get_stat(Statistic::DOWNLOAD, time)
+            ]
+          end
+
+          table << ['Totals:', total_for(Statistic::VIEW, time), total_for(Statistic::DOWNLOAD, time)]
+
+          table
         end
-
-        table << ['Totals:', total_for(Statistic::VIEW, time), total_for(Statistic::DOWNLOAD, time)]
-
-        table
-      end
     end
   end
 end
