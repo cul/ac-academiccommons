@@ -143,11 +143,16 @@
     width: 100%;
   }
 
-  & .list-group-item span.download {
+  & .list-group-item span.download,
+  & .list-group-item span.play {
     font-size: 30px;
     position: absolute;
     right: 10px;
     text-align: right;
+  }
+
+  & .list-group-item span.play {
+    bottom: 0;
   }
 
   & dl {
@@ -206,6 +211,10 @@
       position: relative;
       right: auto;
       text-align: right;
+    }
+
+    & .list-group-item span.play {
+      position: relative;
     }
 
     & dt,
