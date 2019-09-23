@@ -10,8 +10,8 @@ module AssetHelper
   end
 
   def video_player(url, poster_path, brand_link)
-    tag.div class: 'mediaelement-player', style: 'width:100%;height:100%;' do
-      tag.video width: 1024, height: 576, style: 'max-width:100%;', poster: poster_path, controls: 'controls', preload: 'none', data: { brand_link: brand_link } do
+    tag.div class: 'mediaelement-player' do
+      tag.video poster: poster_path, controls: 'controls', preload: 'none', data: { brand_link: brand_link } do
         tag.source type: 'application/x-mpegURL', src: url
       end
     end

@@ -21,8 +21,7 @@ $(document).ready(function(){
     $(this).mediaelementplayer({
       customError: '<p>There was an error loading this file.</p>',
       features: ['playpause', 'current', 'progress', 'duration', 'tracks', 'volume', 'fullscreen', 'branding'],
-      videoWidth: '100%',
-      videoHeight: '100%'
+      stretching: 'responsive'
     })
   });
 });
