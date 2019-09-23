@@ -1,4 +1,8 @@
 .media-player-container {
-  border: 10px solid white;
   overflow: hidden;
+  padding: 10px;
+}
+
+.mejs__container {
+  max-width: 100%;
 }
