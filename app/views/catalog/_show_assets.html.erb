@@ -26,12 +26,10 @@
         <% if asset.playable? %>
           <div class="collapse media-player-container" id="<%= "play-collapse-#{asset.id.gsub(/\/|\./, '-')}" %>">
             <%= player(asset, solr_document_url(document.doi)) %>
-
-            <button class="btn btn-link btn-sm" data-toggle="modal" data-target="#embed-code-modal"><small><i class="fas fa-code"></i> Embed</small></button>
-
-            <%=
-              modal('embed-code-modal', 'md', 'Embed Player') do
-                tag.p class: 'small' do
+            <button class="btn btn-link btn-sm embed-link" data-toggle="modal" data-target="#embed-code-modal"><i class="fas fa-code"></i> Embed</button>
+              <%=
+                modal('embed-code-modal', 'md', 'Embed Player') do
+                  tag.textarea onclick: 'this.focus();this.select()', class: 'embed-code', rows: '4' do
                   "<iframe width=\"560\" height=\"315\" src=\"#{embed_url(asset.id)}\" frameborder=\"0\" allowfullscreen></iframe>"
                 end
               end
