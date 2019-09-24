@@ -17,13 +17,11 @@
 <% if show_doc_actions? %>
   <div class="panel panel-default show-tools">
     <div class="panel-body">
-      <ul>
-        <%= render_show_doc_actions @document do |config, inner| %>
-          <li class="<%= config.key.to_s.gsub('_', '-') %>">
-            <%= inner %>
-          </li>
-        <% end %>
-      </ul>
+      <%= render_show_doc_actions @document do |config, inner| %>
+        <div class="<%= config.key.to_s.gsub('_', '-') %>">
+          <%= inner %>
+        </div>
+      <% end %>
     </div>
   </div>
 <% end %>
