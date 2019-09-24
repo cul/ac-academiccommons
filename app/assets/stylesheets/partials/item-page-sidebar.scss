@@ -3,6 +3,7 @@
 .show-tools {
   border: $border;
   box-shadow: none;
+  padding: 10px;
 
   & .panel-body {
     padding: 0;
@@ -22,7 +23,7 @@
   border-top: 1px solid $brand-dark;
   bottom: 0;
   box-shadow: 0 0 17px 2px #ccc;
-  margin-left: -15px;
+  margin-left: -26px;
   padding: 10px;
   position: fixed;
   width: 100%;
@@ -96,14 +97,8 @@
   }
 }
 
-.social-buttons,
-.use-and-reproduction {
-  padding: 10px;
-}
-
 .social-buttons {
-  border-bottom: $border;
-  border-bottom-style: dashed;
+  line-height: 1;
 }
 
 .social-buttons a {
@@ -112,6 +107,10 @@
 
 .use-and-reproduction {
   font-size: 12px;
+
+  & a {
+    margin: 10px 0 0 0;
+  }
 
   & a.license,
   & a.in-copyright {
@@ -143,6 +142,7 @@
     box-shadow: none;
     display: block;
     margin-left: inherit;
+    padding: 0;
     position: relative;
 
     & .download-button {
@@ -159,7 +159,7 @@
     width: 100%;
 
     & .doi-container {
-      padding: 0 10px 5px 10px;
+      padding: 10px 0 15px 0;
     }
 
     & h4.doi-label {
