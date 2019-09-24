@@ -1,35 +1,27 @@
 /* item page sidebar */
 
 .show-tools {
-  border: 0;
+  border: $border;
   box-shadow: none;
-  margin-bottom: 12px;
 
   & .panel-body {
     padding: 0;
   }
-
-  & ul {
-    margin: 0;
-    padding: 0;
-  }
-
-  & li {
-    list-style: none;
-    padding: 0;
-  }
 }
 
-li.asset-buttons {
-  align-items: center;
+.asset-buttons,
+.doi {
   animation: slideInUp;
   animation-duration: .7s;
   animation-fill-mode: both;
+}
+
+.asset-buttons {
+  align-items: center;
   background: $body-bg;
   border-top: 1px solid $brand-dark;
   bottom: 0;
   box-shadow: 0 0 17px 2px #ccc;
-  display: flex;
   margin-left: -15px;
   padding: 10px;
   position: fixed;
@@ -37,26 +29,30 @@ li.asset-buttons {
   z-index: 100;
 
   & .download-button {
-    flex: 1;
     padding: 11px 8px;
-    width: 100%;
+    width: 30%;
   }
 
   & p {
     background: $gray-lighter-custom;
     border-radius: 6px;
-    flex: 2;
     font-size: 12px;
     margin: 0;
     padding: 5px;
   }
 }
 
-li.doi {
+.doi {
+  animation-duration: .9s;
+  bottom: 11px;
+  position: fixed;
+  right: 8px;
+  width: 65%;
+  z-index: 1000;
+
   & .doi-container {
-    flex: 2;
     line-height: 1;
-    margin-left: 8px;
+    padding-left: 8px;
   }
 
   & label.doi-label {
@@ -100,20 +96,22 @@ li.doi {
   }
 }
 
-li.social-buttons {
-  border: $border;
-  border-radius: 3px;
-  margin: -5px 0 0 0;
-  padding: 10px 10px 6px 10px;
+.social-buttons,
+.use-and-reproduction {
+  padding: 10px;
 }
 
-li.social-buttons a {
+.social-buttons {
+  border-bottom: $border;
+  border-bottom-style: dashed;
+}
+
+.social-buttons a {
   margin: 0 6px 0 0;
 }
 
-li.use-and-reproduction {
+.use-and-reproduction {
   font-size: 12px;
-  padding: 10px;
 
   & a.license,
   & a.in-copyright {
@@ -137,13 +135,10 @@ li.use-and-reproduction {
     margin-top: 15px;
   }
 
-  li.asset-buttons {
+  .asset-buttons {
     animation: none;
     background: transparent;
-    border: $border;
-    border-bottom: 0;
-    border-top-left-radius: 3px;
-    border-top-right-radius: 3px;
+    border: 0;
     bottom: auto;
     box-shadow: none;
     display: block;
@@ -152,30 +147,23 @@ li.use-and-reproduction {
 
     & .download-button {
       padding: 8px;
+      width: 100%;
     }
   }
 
-  li.doi {
+  .doi {
+    animation: none;
+    bottom: auto;
+    position: relative;
+    right: auto;
+    width: 100%;
+
     & .doi-container {
-      margin: 10px 0 0 0;
+      padding: 0 10px 5px 10px;
     }
 
     & h4.doi-label {
       margin-bottom: 4px;
     }
-  }
-
-  li.social-buttons {
-    border-radius: 0;
-    border-bottom-left-radius: 3px;
-    border-bottom-right-radius: 3px;
-    border-top: 0;
-    margin: 0;
-    padding-top: 0;
-  }
-
-  li.use-and-reproduction {
-    border: 0;
-    padding-top: 15px;
   }
 }
