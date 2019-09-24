@@ -7,7 +7,9 @@
 <% elsif assets.count == 1 %>
   <% if assets.first.playable? %>
 
-    <%# <%= link_to t('blacklight.tools.play_button'), assets.first.download_path, class: 'btn btn-primary play-button', 'aria-label': 'Play file' %> %>
+    <% if false %>
+      <%= link_to t('blacklight.tools.play_button'), assets.first.download_path, class: 'btn btn-primary play-button', 'aria-label': 'Play file' %>
+    <% end %>
 
   <% end %>
 
@@ -15,7 +17,9 @@
 <% else %>
   <% if assets.any?(&:playable?) %>
 
-    <!-- <a href="#assets-panel" class="btn btn-primary play-button scroll" aria-label="Play file"><%= t('blacklight.tools.play_button') %></a> -->
+    <% if false %>
+      <a href="#assets-panel" class="btn btn-primary play-button scroll" aria-label="Play file"><%= t('blacklight.tools.play_button') %></a>
+    <% end %>
 
   <% end %>
 
