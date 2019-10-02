@@ -164,6 +164,8 @@ class SolrDocument
     # Check that it is free to read
 
     wowza_config = Rails.application.secrets[:wowza]
+    raise 'Missing wowza config' unless wowza_config
+
     access_copy_location = fetch('access_copy_location_ssi', nil)&.gsub(/^file:/, '')
 
     return unless access_copy_location
