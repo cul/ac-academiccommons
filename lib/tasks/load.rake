@@ -3,7 +3,7 @@ namespace :load do
     fedora_config = Rails.application.config_for(:fedora)
     fedora_server = ActiveFedora::Base.connection_for_pid('actest:1')
 
-    # Ingest the actest:1 aggregator, actest:2 + actest:4 assets
+    # Ingest the actest:1 aggregator, actest:2 + actest:3 + actest:4 assets
     Dir.glob('spec/fixtures/fedora_objs/actest_*.xml') do |path|
       pid = File.basename(path, '.xml').sub('_',':')
       fedora_server.ingest(pid: pid, file: File.read(path))

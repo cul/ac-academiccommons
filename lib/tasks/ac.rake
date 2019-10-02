@@ -5,8 +5,9 @@ namespace :ac do
 
     item = ActiveFedora::Base.find('actest:1')
     tries = 0
-    while((length = item.list_members(true).length) == 0 && tries < 50) do
-      puts "(actest:1).list_members was zero, waiting for buffer to flush"
+
+    while(item.list_members(true).length < 3 && tries < 50) do
+      puts "(actest:1).list_members was less than 3, waiting for buffer to flush"
       sleep(1)
       tries += 1
     end
