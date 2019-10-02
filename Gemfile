@@ -71,6 +71,7 @@ group :development, :test do
   gem 'equivalent-xml'
   gem 'factory_bot_rails'
   gem 'jettywrapper', '>=1.4.0', git: 'https://github.com/samvera-deprecated/jettywrapper.git', branch: 'master'
+  gem 'json_spec'
   gem 'rspec-its'
   gem 'rspec-rails', '~> 3.5'
   gem 'selenium-webdriver'

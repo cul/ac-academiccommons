@@ -121,7 +121,7 @@ describe 'GET /api/v1/search', type: :request do
 
   context 'when searching and filtering by multiple filters' do
     before { get '/api/v1/search?type[]=Articles&date[]=1865' }
-    let(:expected_json) do
+    let(:expected_response) do
       {
         'total_number_of_results' => 1,
         'page' => 1,
@@ -140,7 +140,7 @@ describe 'GET /api/v1/search', type: :request do
             'type' => ['Articles'],
             'language' => ['English'],
             'persistent_url' => 'https://doi.org/10.7916/ALICE',
-            'resource_paths' => ['/doi/10.7916/TESTDOC2/download', '/doi/10.7916/TESTDOC4/download'],
+            'resource_paths' => ['/doi/10.7916/TESTDOC2/download', '/doi/10.7916/TESTDOC3/download', '/doi/10.7916/TESTDOC4/download'],
             'created_at' => '2017-09-14T16:31:33Z',
             'modified_at' => '2017-09-14T16:48:05Z'
           }
@@ -151,11 +151,11 @@ describe 'GET /api/v1/search', type: :request do
           'subject' => { 'Bildungsromans' => 1, 'Nonsense literature' => 1, 'Rabbits' => 1, 'Magic' => 1, 'Tea Parties' => 1 },
           'type' => { 'Articles' => 1 }
         }
-      }
+      }.to_json
     end
 
     it 'returns correct json response' do
-      expect(JSON.parse(response.body)).to match expected_json
+      expect(response.body).to be_json_eql expected_response
     end
   end
 
