@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe 'Item Page', type: :feature do
+describe 'Item Page', type: :feature, js: true do
   before do
     visit solr_document_path('10.7916/ALICE')
   end
@@ -54,11 +54,16 @@ describe 'Item Page', type: :feature do
 
   it 'links to asset downloads' do
     expect(page).to have_xpath '//a[@href=\'/doi/10.7916/TESTDOC2/download\']'
+    expect(page).to have_xpath '//a[@href=\'/doi/10.7916/TESTDOC3/download\']'
     expect(page).to have_xpath '//a[@href=\'/doi/10.7916/TESTDOC4/download\']'
   end
 
   it 'has correct itemtype' do
     expect(page).to have_xpath('//div[@itemtype="http://schema.org/ScholarlyArticle"]', visible: false)
+  end
+
+  it 'has button to watch video for video asset' do
+    expect(page).to have_xpath('//span[@class="icon play"]/a[@href="#play-collapse-10-7916-TESTDOC3"]')
   end
 
   describe 'download links for' do
@@ -91,6 +96,7 @@ describe 'Item Page', type: :feature do
     it 'renders additional highwire tags' do
       expect(page).to have_xpath('//head/meta[@name="citation_keywords"][@content="Tea Parties"]', visible: false)
       expect(page).to have_xpath('//head/meta[@name="citation_pdf_url"][@content="http://www.example.com/doi/10.7916/TESTDOC2/download"]', visible: false)
+      expect(page).to have_xpath('//head/meta[@name="citation_pdf_url"][@content="http://www.example.com/doi/10.7916/TESTDOC3/download"]', visible: false)
       expect(page).to have_xpath('//head/meta[@name="citation_pdf_url"][@content="http://www.example.com/doi/10.7916/TESTDOC4/download"]', visible: false)
     end
   end
