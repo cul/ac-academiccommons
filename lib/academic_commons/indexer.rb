@@ -87,7 +87,7 @@ module AcademicCommons
     end
 
     def close
-      # commit to solr RSolr.commit if doing autoCommit
+      rsolr.commit # commit changes to solr
       seconds = Time.current - start
       readable_time_spent = format('%02d hours %02d minutes %02d seconds', seconds / 3_600, (seconds / 60) % 60, seconds % 60)
 
