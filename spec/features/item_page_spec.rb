@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe 'Item Page', type: :feature, js: true do
+describe 'Item Page', type: :feature do
   before do
     visit solr_document_path('10.7916/ALICE')
   end
