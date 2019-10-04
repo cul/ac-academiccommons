@@ -39,6 +39,7 @@ RSpec.configure do |config|
   config.include Devise::Test::ControllerHelpers, type: :controller
   config.include Devise::Test::ControllerHelpers, type: :view
   config.include ActiveJob::TestHelper,           type: :job
+  config.include JsonSpec::Helpers
   config.include FixtureHelpers
   config.include Warden::Test::Helpers
 

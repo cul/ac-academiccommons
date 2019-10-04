@@ -37,7 +37,7 @@ Rails.application.routes.draw do
   match :oai, to: 'catalog#oai', via: [:post, :get], as: :oai_catalog
 
   # Redirect for old download links
-  get '/download/fedora_content/download/:uri/:block/:filename', to: 'download#legacy_fedora_content', as: 'legacy_fedora_content',
+  get '/download/fedora_content/download/:uri/:block/:filename', to: 'assets#legacy_fedora_content', as: 'legacy_fedora_content',
     block: /(CONTENT|content)/, uri: /.+/, filename: /.+/
 
   # Routes for Solr Document using DOI as identifier
@@ -47,8 +47,9 @@ Rails.application.routes.draw do
   #     concerns :exportable
   #   end
   # Specifying routes using glob (*) in id param, this way slashes and period are accepted as part of the id.
-  match 'doi/*id/download', to: 'download#content', via: :get,          as: 'content_download'
-  match 'doi/*id',          to: 'catalog#show',     via: :get,          as: :solr_document
+  match 'doi/*id/download', to: 'assets#download', via: :get, as: 'content_download'
+  match 'doi/*id/embed',    to: 'assets#embed',    via: :get, as: 'embed'
+  match 'doi/*id',          to: 'catalog#show',    via: :get, as: :solr_document
 
   mount Blacklight::Engine => '/'
 
@@ -56,8 +57,6 @@ Rails.application.routes.draw do
   delete '/solr_documents/:id', to: 'solr_documents#destroy'
   put '/solr_documents/:id', to: 'solr_documents#update'
   get '/solr_documents/:id', to: 'solr_documents#show'
-
-  get '/download/download_log/:id', to: 'download#download_log', as: 'download_log'
 
   resource :agreement
 
@@ -96,6 +95,7 @@ Rails.application.routes.draw do
   get '/logs/all_author_monthly_reports_history', to: 'logs#all_author_monthly_reports_history'
   get '/logs/log_form',                           to: 'logs#log_form'
   get '/logs/ingest_history',                     to: 'logs#ingest_history'
+  get '/download/download_log/:id',               to: 'logs#download_log', as: 'download_log'
 
   # Route used to render error page.
   get '/500', to: 'errors#internal_server_error'

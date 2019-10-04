@@ -30,3 +30,5 @@
 //= require admin/datatables
 //= require admin/usage-statistics
 //= require flash-messages-for-ajax-requests
+//= require mediaelement/build/mediaelement-and-player.min.js
+//= require mediaelement

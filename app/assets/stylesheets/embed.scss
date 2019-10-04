@@ -1,0 +1,21 @@
+@import 'mediaelement/build/mediaelementplayer.min.css';
+@import '../../assets/stylesheets/partials/media-player-branding.scss';
+
+html, body {
+  width: 100%;
+  height: 100%;
+}
+
+body {
+  margin: 0px;
+  padding: 0px;
+  position: absolute;
+}
+
+.not-playable {
+  width: 100%;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+  display: flex;
+}

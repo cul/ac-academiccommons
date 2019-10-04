@@ -1,0 +1,23 @@
+.mejs__branding-button {
+  background: url('/assets/logo-media-player-badge.svg') 0 12px no-repeat;
+  background-size: contain;
+  cursor: pointer;
+  margin-left: 15px;
+  width: 200px;
+
+  & span {
+    position: absolute !important;
+    height: 1px; width: 1px;
+    overflow: hidden;
+    clip: rect(1px, 1px, 1px, 1px);
+  }
+}
+
+@media screen and (max-width: 680px ) {
+
+  .mejs__branding-button {
+    background: url('/assets/logo-media-player-badge-small.svg') 0 8px no-repeat;
+    background-size: 60px;
+    width: 60px;
+  }
+}

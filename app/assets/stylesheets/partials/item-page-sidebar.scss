@@ -1,60 +1,59 @@
 /* item page sidebar */
 
 .show-tools {
-  border: 0;
+  border: $border;
   box-shadow: none;
-  margin-bottom: 12px;
+  padding: 10px;
 
   & .panel-body {
     padding: 0;
   }
-
-  & ul {
-    margin: 0;
-    padding: 0;
-  }
-
-  & li {
-    list-style: none;
-    padding: 0;
-  }
 }
 
-li.download-and-doi {
-  align-items: center;
+.asset-buttons,
+.doi {
   animation: slideInUp;
   animation-duration: .7s;
   animation-fill-mode: both;
+}
+
+.asset-buttons {
+  align-items: center;
   background: $body-bg;
   border-top: 1px solid $brand-dark;
   bottom: 0;
   box-shadow: 0 0 17px 2px #ccc;
-  display: flex;
-  margin-left: -15px;
+  margin-left: -26px;
   padding: 10px;
   position: fixed;
   width: 100%;
   z-index: 100;
 
   & .download-button {
-    flex: 1;
     padding: 11px 8px;
-    width: 100%;
+    width: 30%;
   }
 
   & p {
     background: $gray-lighter-custom;
     border-radius: 6px;
-    flex: 2;
     font-size: 12px;
     margin: 0;
     padding: 5px;
   }
+}
+
+.doi {
+  animation-duration: .9s;
+  bottom: 11px;
+  position: fixed;
+  right: 8px;
+  width: 65%;
+  z-index: 1000;
 
   & .doi-container {
-    flex: 2;
     line-height: 1;
-    margin-left: 8px;
+    padding-left: 8px;
   }
 
   & label.doi-label {
@@ -98,20 +97,20 @@ li.download-and-doi {
   }
 }
 
-li.social-buttons {
-  border: $border;
-  border-radius: 3px;
-  margin: -5px 0 0 0;
-  padding: 10px 10px 6px 10px;
+.social-buttons {
+  line-height: 1;
 }
 
-li.social-buttons a {
+.social-buttons a {
   margin: 0 6px 0 0;
 }
 
-li.use-and-reproduction {
+.use-and-reproduction {
   font-size: 12px;
-  padding: 10px;
+
+  & a {
+    margin: 10px 0 0 0;
+  }
 
   & a.license,
   & a.in-copyright {
@@ -135,43 +134,36 @@ li.use-and-reproduction {
     margin-top: 15px;
   }
 
-  li.download-and-doi {
+  .asset-buttons {
     animation: none;
     background: transparent;
-    border: $border;
-    border-bottom: 0;
-    border-top-left-radius: 3px;
-    border-top-right-radius: 3px;
+    border: 0;
     bottom: auto;
     box-shadow: none;
     display: block;
     margin-left: inherit;
+    padding: 0;
     position: relative;
 
     & .download-button {
       padding: 8px;
+      width: 100%;
     }
+  }
+
+  .doi {
+    animation: none;
+    bottom: auto;
+    position: relative;
+    right: auto;
+    width: 100%;
 
     & .doi-container {
-      margin: 10px 0 0 0;
+      padding: 10px 0 15px 0;
     }
 
     & h4.doi-label {
       margin-bottom: 4px;
     }
-  }
-
-  li.social-buttons {
-    border-radius: 0;
-    border-bottom-left-radius: 3px;
-    border-bottom-right-radius: 3px;
-    border-top: 0;
-    margin: 0;
-    padding-top: 0;
-  }
-
-  li.use-and-reproduction {
-    border: 0;
-    padding-top: 15px;
   }
 }

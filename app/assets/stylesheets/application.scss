@@ -36,6 +36,10 @@
 
 @import 'partials/main-page';
 
+@import 'partials/media-player';
+
+@import 'partials/media-player-branding';
+
 @import 'partials/menu';
 
 @import 'partials/search-results';
@@ -51,3 +55,5 @@
 @import 'partials/file-upload';
 
 @import 'datatables.net-bs/css/dataTables.bootstrap.min';
+
+@import 'mediaelement/build/mediaelementplayer.min.css';

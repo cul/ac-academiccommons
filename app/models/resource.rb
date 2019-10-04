@@ -18,6 +18,9 @@ class Resource < ActiveFedora::Base
         doc['downloadable_content_size_isi'] = size
       end
 
+      doc['access_copy_location_ssi'] = access.dsLocation if access
+
+      doc['dc_type_ssm'] = dc_types
       # fulltext_str = fulltext.to_s.force_encoding('utf-8').gsub(/\s+/, ' ')
       # doc['fulltext_tsi'] = fulltext_str if fulltext_str.present?
     end
@@ -38,11 +41,26 @@ class Resource < ActiveFedora::Base
     datastreams['RELS-INT']
   end
 
+  def access
+    datastreams['access']
+  end
+
+  def dc
+    datastreams['DC']
+  end
+
+  def dc_types
+    return [] unless dc&.content
+    content = Nokogiri::XML(dc.content.to_s)
+    return [] unless content
+    content.xpath('/oai_dc:dc/dc:type')&.map(&:text)
+  end
+
   # Retrieves size stored in the RELS-INT datastream for resources.
   # Returns nil if not found.
   def size
     return unless rels_int
-    content_ds = Nokogiri::XML(rels_int.content.body)
+    content_ds = Nokogiri::XML(rels_int.content.to_s)
                          .at_xpath("rdf:RDF/rdf:Description[@rdf:about='info:fedora/#{pid}/content']")
     return unless content_ds
     size = content_ds.at_xpath('//dc:extent', dc: 'http://purl.org/dc/terms/')
