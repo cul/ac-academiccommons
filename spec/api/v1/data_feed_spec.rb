@@ -58,7 +58,7 @@ describe 'GET /api/v1/data_feed/:key', type: :request do
           q: nil, sort: nil, start: 0, rows: 100_000,
           fq: ['genre_ssim:"Theses"', 'degree_level_name_ssim:"Master\'s"', "has_model_ssim:\"#{ContentAggregator.to_class_uri}\""],
           qt: 'search', fl: '*,assets:[subquery]',
-          'assets.q': '{!terms f=cul_member_of_ssim v=$row.fedora3_uri_ssi}', 'assets.rows': 100_000
+          'assets.q': '{!terms f=cul_member_of_ssim v=$row.fedora3_uri_ssi} object_state_ssi:A', 'assets.rows': 100_000
         }
       end
 
