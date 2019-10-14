@@ -1,5 +1,5 @@
 .mejs__branding-button {
-  background: url('logo-media-player-badge.svg') 0 12px no-repeat;
+  background: image_url('logo-media-player-badge.svg') 0 12px no-repeat;
   background-size: contain;
   cursor: pointer;
   margin-left: 15px;
@@ -16,7 +16,7 @@
 @media screen and (max-width: 680px ) {
 
   .mejs__branding-button {
-    background: url('logo-media-player-badge-small.svg') 0 8px no-repeat;
+    background: image_url('logo-media-player-badge-small.svg') 0 8px no-repeat;
     background-size: 60px;
     width: 60px;
   }
