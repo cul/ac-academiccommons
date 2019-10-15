@@ -7,8 +7,8 @@ describe 'GET /api/v1/search', type: :request do
     {
       qt: 'search', fq: ['has_model_ssim:"info:fedora/ldpd:ContentAggregator"'],
       rows: 25, q: nil, sort: 'score desc, pub_date_isi desc, title_sort asc',
-      start: 0, fl: '*,assets:[subquery]', 'assets.q': '{!terms f=cul_member_of_ssim v=$row.fedora3_uri_ssi} object_state_ssi:A',
-      'assets.rows': 100_000, facet: true,
+      start: 0, fl: '*,assets:[subquery]', 'assets.q': '{!terms f=cul_member_of_ssim v=$row.fedora3_uri_ssi}',
+      'assets.fq': 'object_state_ssi:A', 'assets.rows': 100_000, facet: true,
       'facet.field': ['author_ssim', 'pub_date_isi', 'department_ssim', 'subject_ssim', 'genre_ssim', 'series_ssim'],
       'facet.limit': 5
     }
