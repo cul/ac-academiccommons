@@ -11,7 +11,7 @@ GIT
 
 GIT
   remote: https://github.com/cul/rubocul
-  revision: ec8a7257cce43571646d55b96ca65763f7d40969
+  revision: 88c93a719a9439ce67d39b1a6a79e25a8daacfa9
   branch: master
   specs:
     rubocul (0.0.1)
@@ -354,8 +354,8 @@ GEM
       nokogiri (~> 1.5)
       omniauth (~> 1.2)
     orm_adapter (0.5.0)
-    parallel (1.17.0)
-    parser (2.6.4.1)
+    parallel (1.18.0)
+    parser (2.6.5.0)
       ast (~> 2.4.0)
     powerpack (0.1.2)
     premailer (1.11.1)
@@ -483,7 +483,7 @@ GEM
       unicode-display_width (~> 1.4.0)
     rubocop-rspec (1.31.0)
       rubocop (>= 0.60.0)
-    ruby-progressbar (1.9.0)
+    ruby-progressbar (1.10.1)
     rubydora (2.1.0)
       activemodel (>= 4.2.10)
       activesupport
