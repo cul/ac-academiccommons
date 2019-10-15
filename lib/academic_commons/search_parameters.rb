@@ -101,6 +101,7 @@ module AcademicCommons
       # Adding subquery for assets
       field_list('*', 'assets:[subquery]')
       @parameters[:'assets.q'] = '{!terms f=cul_member_of_ssim v=$row.fedora3_uri_ssi}'
+      @parameters[:'assets.fq'] = 'object_state_ssi:A'
       @parameters[:'assets.rows'] = MAX_ROWS
       self
     end

@@ -39,6 +39,7 @@ gem 'turbolinks'
 gem 'uglifier'
 gem 'unicode'
 gem 'voight_kampff'
+gem 'webpacker', '~> 4.x'
 gem 'whenever', require: false
 gem 'wowza-secure_token'
 
