@@ -15,4 +15,9 @@
 // const images = require.context('../images', true)
 // const imagePath = (name) => images(name, true)
 
-console.log('Hello World from Webpacker')
+// MediaElement Library
+import 'mediaelement/full'
+import 'mediaelement/build/mediaelementplayer.min.css';
+
+// Customization for MediaElement Player
+import 'src/mediaelement'
