@@ -2,61 +2,59 @@ inherit_gem:
   rubocul: rubocul_default.yml
 
 AllCops:
-<<<<<<< HEAD
-  TargetRubyVersion: 2.3.3
-  TargetRailsVersion: 4.2
-  Include:
-    - '**/Rakefile'
-    - '**/config.ru'
-  Exclude:
-    - 'db/**/*'
-    - 'config/**/*'
-    - 'bin/**/*'
-    - 'vendor/**/*'
-    - 'node_modules/**/*'
-
-Style/BlockDelimiters:
-  EnforcedStyle: braces_for_chaining
-
-Style/Documentation:
-  Enabled: false
-
-Style/FrozenStringLiteralComment:
-  Enabled: false
-
-Style/SymbolArray:
-  Exclude:
-    - 'lib/tasks/**/*'
-    - Rakefile
-
-Metrics/BlockLength:
-  ExcludedMethods: ['describe', 'context']
-  Exclude:
-    - 'app/controllers/catalog_controller.rb'
-
-Metrics/AbcSize:
-  Exclude:
-    - 'app/models/concerns/academic_commons/desc_metadata.rb'
-
-Metrics/ClassLength:
-  Exclude:
-    - 'app/controllers/catalog_controller.rb'
-
-Rails/OutputSafety:
-  Exclude:
-    - 'app/presenters/rendering/*'
-
-Rails/Output:
-  Exclude:
-    - 'lib/academic_commons/indexer.rb'
-
-RSpec/DescribeClass:
-  Exclude:
-    - 'spec/tasks/*'
-
-RSpec/NestedGroups:
-  Max: 4
-=======
   TargetRubyVersion: 2.5.3
   TargetRailsVersion: 5.2.3
->>>>>>> Using rubocul configuration for rubocop
+
+# Old Configuration
+# AllCops:
+#   Include:
+#     - '**/Rakefile'
+#     - '**/config.ru'
+#   Exclude:
+#     - 'db/**/*'
+#     - 'config/**/*'
+#     - 'bin/**/*'
+#     - 'vendor/**/*'
+#     - 'node_modules/**/*'
+#
+# Style/BlockDelimiters:
+#   EnforcedStyle: braces_for_chaining
+#
+# Style/Documentation:
+#   Enabled: false
+#
+# Style/FrozenStringLiteralComment:
+#   Enabled: false
+#
+# Style/SymbolArray:
+#   Exclude:
+#     - 'lib/tasks/**/*'
+#     - Rakefile
+#
+# Metrics/BlockLength:
+#   ExcludedMethods: ['describe', 'context']
+#   Exclude:
+#     - 'app/controllers/catalog_controller.rb'
+#
+# Metrics/AbcSize:
+#   Exclude:
+#     - 'app/models/concerns/academic_commons/desc_metadata.rb'
+#
+# Metrics/ClassLength:
+#   Exclude:
+#     - 'app/controllers/catalog_controller.rb'
+#
+# Rails/OutputSafety:
+#   Exclude:
+#     - 'app/presenters/rendering/*'
+#
+# Rails/Output:
+#   Exclude:
+#     - 'lib/academic_commons/indexer.rb'
+#
+# RSpec/DescribeClass:
+#   Exclude:
+#     - 'spec/tasks/*'
+#
+# RSpec/NestedGroups:
+#   Max: 4
