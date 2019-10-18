@@ -17,30 +17,4 @@ namespace :ac do
     index.items('actest:1', only_in_solr: false)
     index.close
   end
-
-  desc "Adds notification entry for each item in the solr core"
-  task :add_new_item_notification => :environment do
-    rsolr = AcademicCommons::Utils.rsolr
-
-    start, rows = 0, 100
-    while true
-      solr_params = {
-        start: start, rows: rows, fl: 'id,author_uni_ssim,cul_doi_ssi',
-        fq: ["has_model_ssim:\"#{ContentAggregator.to_class_uri}\""],
-        qt: 'search'
-      }
-
-      docs = rsolr.get('select', params: solr_params)["response"]["docs"]
-
-      break if docs.blank?
-
-      docs.each do |d|
-        d.fetch('author_uni_ssim', []).each do |uni|
-          Notification.record_new_item_notification(d['cul_doi_ssi'], nil, uni, true)
-        end
-      end
-
-      start += rows
-    end
-  end
 end
