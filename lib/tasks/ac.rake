@@ -18,29 +18,30 @@ namespace :ac do
     index.close
   end
 
-  desc "Adds notification entry for each item in the solr core"
-  task :add_new_item_notification => :environment do
-    rsolr = AcademicCommons::Utils.rsolr
+  desc "Returns list of author emails. Removes authors that have opted out and uses preferred email if one is present."
+  task author_emails: :environment do
+    if (output = ENV['output'])
+      if File.exist?(output)
+        puts Rainbow('File exists. Please re-run with new filepath.').red
+      else
+        # Retrieve all authors.
+        ids = AcademicCommons.all_author_unis
+        puts Rainbow("Found #{ids.count} unique author UNIs.").cyan
 
-    start, rows = 0, 100
-    while true
-      solr_params = {
-        start: start, rows: rows, fl: 'id,author_uni_ssim,cul_doi_ssi',
-        fq: ["has_model_ssim:\"#{ContentAggregator.to_class_uri}\""],
-        qt: 'search'
-      }
+        # Filter out any emails and used preferred email if present.
+        emails = EmailPreference.preferred_emails(ids)
 
-      docs = rsolr.get('select', params: solr_params)["response"]["docs"]
-
-      break if docs.blank?
-
-      docs.each do |d|
-        d.fetch('author_uni_ssim', []).each do |uni|
-          Notification.record_new_item_notification(d['cul_doi_ssi'], nil, uni, true)
+        # Format Output into CSV.
+        puts Rainbow("Writing out CSV to #{output}").cyan
+        CSV.open(output, "wb") do |csv|
+          csv << ['UNI', 'Email']
+          emails.each do |uni, email|
+            csv << [uni, email]
+          end
         end
       end
-
-      start += rows
+    else
+      puts Rainbow('Incorrect arguments. Pass output=/path/to/file').red
     end
   end
 end

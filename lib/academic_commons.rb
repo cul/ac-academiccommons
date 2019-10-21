@@ -17,6 +17,15 @@ module AcademicCommons
     end
   end
 
+  # Returns list of all author unis (removes any duplicates).
+  #
+  # @return [String]
+  def self.all_author_unis
+    AcademicCommons.search { |i| i.field_list('author_uni_ssim') }
+                   .docs.map { |f| f['author_uni_ssim'] }
+                   .flatten.compact.uniq
+  end
+
   # Returns solr search response. User must provide a block which changes the
   # SearchParameters object. This method uses Blacklight to conduct a search with
   # our own parameters. Use this method when retriving records outside of the

@@ -114,12 +114,7 @@ class EmailAuthorReportsForm < FormObject
   end
 
   def authors
-    ids = if reports_for == 'one'
-            [uni]
-          else
-            AcademicCommons.search { |i| i.field_list('author_uni_ssim') }
-                           .docs.map { |f| f['author_uni_ssim'] }
-          end
+    ids = reports_for == 'one' ? [uni] : AcademicCommons.all_author_unis
 
     EmailPreference.preferred_emails(ids)
   end

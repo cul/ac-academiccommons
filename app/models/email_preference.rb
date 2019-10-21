@@ -11,7 +11,7 @@ class EmailPreference < ApplicationRecord
   # @param [String] array of unis
   def self.preferred_emails(unis)
     map = {}
-    unis = unis.flatten.compact.uniq - EmailPreference.where(unsubscribe: true).map(&:uni)
+    unis = unis.compact.uniq - EmailPreference.where(unsubscribe: true).map(&:uni)
 
     unis.each { |uni| map[uni] = "#{uni}@columbia.edu" }
 
