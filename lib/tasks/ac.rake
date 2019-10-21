@@ -24,12 +24,12 @@ namespace :ac do
       if File.exist?(output)
         puts Rainbow('File exists. Please re-run with new filepath.').red
       else
-        # Retrieve all authors
+        # Retrieve all authors.
         ids = AcademicCommons.all_author_unis
         puts Rainbow("Found #{ids.count} unique author UNIs.").cyan
 
         # Filter out any emails and used preferred email if present.
-        emails = EmailPreference.preferred_emails(ids) # { "UNI1" => "example@example.com" }
+        emails = EmailPreference.preferred_emails(ids)
 
         # Format Output into CSV.
         puts Rainbow("Writing out CSV to #{output}").cyan
