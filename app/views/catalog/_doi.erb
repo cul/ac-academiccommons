@@ -1,11 +1,6 @@
-
-<div class="doi-container">
-  <label for="doi" class="doi-label">DOI</label>
-  <div class="doi-and-copy-button">
-    <textarea rows="1" readonly onclick="this.focus();this.select()" id="doi" title="<%= @document.full_doi %>"><%= @document.full_doi %></textarea>
-    <button class="btn copy-to-clipboard" type="button" data-clipboard-target="#doi" aria-label="Copy DOI to clipboard">
-      <i class="fas fa-paste" title="Copy DOI to clipboard" aria-hidden></i>
-      <span class="visually-hidden">Copy DOI to clipboard</span>
-    </button>
-  </div>
-</div>
+<label for="doi" class="doi-label">DOI</label>
+<input type="text" id="doi" value="<%= @document.full_doi %>">
+<button class="btn copy-to-clipboard" type="button" data-clipboard-target="#doi" aria-label="Copy DOI to clipboard">
+  <i class="fas fa-paste" title="Copy DOI to clipboard" aria-hidden></i>
+  <span class="visually-hidden">Copy DOI to clipboard</span>
+</button>

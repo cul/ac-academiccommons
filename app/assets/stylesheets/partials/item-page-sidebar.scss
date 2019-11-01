@@ -45,54 +45,45 @@
 
 .doi {
   animation-duration: .9s;
+  align-items: center;
   bottom: 11px;
+  display: flex;
+  font-size: 14px;
   position: fixed;
   right: 8px;
-  width: 65%;
+  width: 63%;
   z-index: 1000;
 
-  & .doi-container {
-    line-height: 1;
-    padding-left: 8px;
-  }
-
   & label.doi-label {
-    font-size: 12px;
-    line-height: 1;
-    margin: 0 0 2px 0;
+    flex: 0 1 auto;
+    margin-right: 5px;
   }
 
-  & .doi-and-copy-button {
-    display: flex;
-  }
-
-  & .doi-and-copy-button textarea {
+  & input#doi {
     border: $border;
-    border-color: $gray-lighter;
-    box-shadow: inset -8px 0 7px -7px $gray-lighter;
-    color: $gray-light;
-    font-size: 12px;
-    line-height: 2;
-    overflow: auto;
-    padding: 2px 6px;
-    resize: none;
-    white-space: nowrap;
-    width: 80%;
+    border-radius: 3px;
+    border-bottom-right-radius: 0;
+    border-top-right-radius: 0;
+    box-shadow: inset -8px 0 7px -7px #ccc;
+    flex: 1 1 auto;
+    padding: 11px 8px;
+    vertical-align: middle;
     z-index: 1;
   }
 
-  & .doi-and-copy-button .btn {
+  & button.copy-to-clipboard {
     background-image: linear-gradient(#fbfbfb,#eee);
     border: $border;
     border-color: $gray-lighter;
-    border-top-left-radius: 0;
     border-bottom-left-radius: 0;
-    margin-left: -1px;
-    padding: 2px 6px;
-    width: 20%;
+    border-top-left-radius: 0;
+    flex: 0 1 auto;
+    font-size: 14px;
+    margin-left: -2px;
+    padding: 11px 13px;
   }
 
-  & .doi-and-copy-button .btn:hover {
+  & button.copy-to-clipboard:hover {
     background-image: linear-gradient(#ebebeb,#ddd);
   }
 }
@@ -154,16 +145,30 @@
   .doi {
     animation: none;
     bottom: auto;
+    flex-wrap: wrap;
+    padding: 13px 0;
     position: relative;
     right: auto;
     width: 100%;
 
-    & .doi-container {
-      padding: 10px 0 15px 0;
+    & label.doi-label {
+      flex: none;
+      margin-bottom: 2px;
+      margin-right: 0;
+      width: 100%;
     }
 
-    & h4.doi-label {
-      margin-bottom: 4px;
+    & input#doi,
+    & button.copy-to-clipboard {
+      padding: 8px 10px;
+    }
+
+    & input#doi {
+      width: 80%;
+    }
+
+    & button.copy-to-clipboard {
+      width: 20%;
     }
   }
 }
