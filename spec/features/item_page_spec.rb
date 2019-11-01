@@ -22,7 +22,7 @@ describe 'Item Page', type: :feature do
   end
 
   it 'has doi' do
-    expect(page).to have_field('#doi', with: '10.7916/ALICE')
+    expect(page).to have_field('doi', with: '10.7916/ALICE')
   end
 
   it 'has journal title' do
