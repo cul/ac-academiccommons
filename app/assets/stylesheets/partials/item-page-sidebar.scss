@@ -67,7 +67,7 @@
     border-top-right-radius: 0;
     box-shadow: inset -8px 0 7px -7px #ccc;
     flex: 1 1 auto;
-    padding: 11px 8px;
+    padding: 11px 0 11px 8px;
     vertical-align: middle;
     z-index: 1;
   }
@@ -169,6 +169,7 @@
     }
 
     & input#doi {
+      padding-right: 0;
       width: 80%;
     }
 
