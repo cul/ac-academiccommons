@@ -62,10 +62,8 @@
 
   & input#doi {
     border: $border;
-    border-radius: 3px;
-    border-bottom-right-radius: 0;
-    border-top-right-radius: 0;
-    box-shadow: inset -8px 0 7px -7px #ccc;
+    border-radius: 3px 0 0 3px;
+    box-shadow: inset -8px 0 7px -9px #aaa;
     flex: 1 1 auto;
     padding: 11px 0 11px 8px;
     vertical-align: middle;
@@ -77,8 +75,7 @@
     background-image: linear-gradient(#fbfbfb,#eee);
     border: $border;
     border-color: $gray-lighter;
-    border-bottom-left-radius: 0;
-    border-top-left-radius: 0;
+    border-radius: 0 3px 3px 0;
     flex: 0 1 auto;
     font-size: 14px;
     margin-left: -2px;
