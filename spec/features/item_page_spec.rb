@@ -91,6 +91,7 @@ describe 'Item Page', type: :feature do
       expect(page).to have_xpath('//head/meta[@name="citation_title"][@content="Alice\'s Adventures in Wonderland"]', visible: false)
       expect(page).to have_xpath('//head/meta[@name="citation_author"][@content="Carroll, Lewis"]', visible: false)
       expect(page).to have_xpath('//head/meta[@name="citation_publication_date"][@content="1865"]', visible: false)
+      expect(page).to have_xpath('//head/meta[@name="citation_abstract_html_url"][@content="http://www.example.com/doi/10.7916/ALICE"]', visible: false)
     end
 
     it 'renders additional highwire tags' do
