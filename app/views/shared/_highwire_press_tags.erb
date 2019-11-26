@@ -1,14 +1,15 @@
 <% if @document %>
-  <%= highwire_press_tags 'citation_title',            @document.title %>
-  <%= highwire_press_tags 'citation_author',           @document.author %>
-  <%= highwire_press_tags 'citation_publication_date', @document.date %>
-  <%= highwire_press_tags 'citation_date',             @document.date %>
-  <%= highwire_press_tags 'citation_volume',           @document['volume_ssi'] %>
-  <%= highwire_press_tags 'citation_issue',            @document['issue_ssi'] %>
-  <%= highwire_press_tags 'citation_firstpage',        @document['start_page_ssi'] %>
-  <%= highwire_press_tags 'citation_lastpage',         @document['end_page_ssi'] %>
-  <%= highwire_press_tags 'citation_doi',              @document.doi %>
-  <%= highwire_press_tags 'citation_keywords',         @document.subject %>
+  <%= highwire_press_tags 'citation_title',             @document.title %>
+  <%= highwire_press_tags 'citation_author',            @document.author %>
+  <%= highwire_press_tags 'citation_publication_date',  @document.date %>
+  <%= highwire_press_tags 'citation_date',              @document.date %>
+  <%= highwire_press_tags 'citation_volume',            @document['volume_ssi'] %>
+  <%= highwire_press_tags 'citation_issue',             @document['issue_ssi'] %>
+  <%= highwire_press_tags 'citation_firstpage',         @document['start_page_ssi'] %>
+  <%= highwire_press_tags 'citation_lastpage',          @document['end_page_ssi'] %>
+  <%= highwire_press_tags 'citation_doi',               @document.doi %>
+  <%= highwire_press_tags 'citation_keywords',          @document.subject %>
+  <%= highwire_press_tags 'citation_abstract_html_url', solr_document_url(@document.doi) %>
 
   <% types = @document.type %>
 
