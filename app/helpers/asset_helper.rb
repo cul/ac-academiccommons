@@ -13,8 +13,7 @@ module AssetHelper
   def video_player(url, poster_path, brand_link, caption_link)
     tag.div class: 'mediaelement-player' do
       tag.video poster: poster_path, controls: 'controls', preload: 'none', data: { brand_link: brand_link } do
-        tag.source type: 'application/x-mpegURL', src: url
-        tag.track(label: 'English', kind: 'subtitles', srclang: 'en', src: caption_link) if caption_link
+        source_element(url, caption_link)
       end
     end
   end
@@ -22,10 +21,13 @@ module AssetHelper
   def audio_player(url, brand_link, caption_link)
     tag.div class: 'mediaelement-player' do
       tag.audio width: 1024, controls: 'controls', preload: 'none', data: { brand_link: brand_link } do
-        tag.source type: 'application/x-mpegURL', src: url
-        tag.track(label: 'English', kind: 'subtitles', srclang: 'en', src: caption_link) if caption_link
+        source_element(url, caption_link)
       end
     end
+  end
+
+  def source_element(url, caption_link)
+    tag.source(type: 'application/x-mpegURL', src: url) + (caption_link ? tag.track(label: 'English', kind: 'subtitles', srclang: 'en', src: caption_link) : "").html_safe
   end
 
   def captions?(document)
