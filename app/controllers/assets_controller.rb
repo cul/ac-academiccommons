@@ -27,7 +27,7 @@ class AssetsController < ApplicationController
       render body: nil, status: 404
     else
       record_stats
-      headers['X-Accel-Redirect'] = x_accel_url(ds_content_url('captions'), "captions.vtt")
+      headers['X-Accel-Redirect'] = x_accel_url(ds_content_url('captions'), 'captions.vtt')
       render body: nil
     end
   end

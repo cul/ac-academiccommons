@@ -37,7 +37,8 @@ describe Resource do
       it { is_expected.to include('access_copy_location_ssi' => 'file:/example/example/access.pdf') }
       context "['datastreams_ssim']" do
         subject { (resource.to_solr['datastreams_ssim'] || []).sort }
-        it { is_expected.to eql(["DC", "RELS-EXT", "access", "content"]) }
+
+        it { is_expected.to eql(['DC', 'RELS-EXT', 'access', 'content']) }
       end
     end
   end
