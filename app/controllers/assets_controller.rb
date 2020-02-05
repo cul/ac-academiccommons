@@ -17,7 +17,17 @@ class AssetsController < ApplicationController
       render body: nil, status: 404
     else
       record_stats
-      headers['X-Accel-Redirect'] = x_accel_url(content_url, @asset.filename)
+      headers['X-Accel-Redirect'] = x_accel_url(ds_content_url('content'), @asset.filename)
+      render body: nil
+    end
+  end
+
+  def captions
+    if restricted? || !captions_datastream?
+      render body: nil, status: 404
+    else
+      record_stats
+      headers['X-Accel-Redirect'] = x_accel_url(ds_content_url('captions'), "captions.vtt")
       render body: nil
     end
   end
@@ -56,11 +66,16 @@ class AssetsController < ApplicationController
   end
 
   def content_datastream?
-    HTTP.head(content_url).code == 200
+    # TODO: can be refactored after a general reindex of assets to use datastreams_ssim
+    HTTP.head(ds_content_url('content')).code == 200
   end
 
-  def content_url
-    Rails.application.config_for(:fedora)['url'] + '/objects/' + @asset.fetch(:fedora3_pid_ssi, nil) + '/datastreams/content/content'
+  def ds_content_url(dsid)
+    Rails.application.config_for(:fedora)['url'] + '/objects/' + @asset.fetch(:fedora3_pid_ssi, nil) + '/datastreams/' + dsid + '/content'
+  end
+
+  def captions_datastream?
+    @asset.fetch(:datastreams_ssim, []).include?('captions')
   end
 
   # Downloading of files is handed off to nginx to improve performance.

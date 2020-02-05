@@ -21,6 +21,7 @@ class Resource < ActiveFedora::Base
       doc['access_copy_location_ssi'] = access.dsLocation if access
 
       doc['dc_type_ssm'] = dc_types
+      doc['datastreams_ssim'] = datastreams.keys.map(&:to_s)
       # fulltext_str = fulltext.to_s.force_encoding('utf-8').gsub(/\s+/, ' ')
       # doc['fulltext_tsi'] = fulltext_str if fulltext_str.present?
     end
