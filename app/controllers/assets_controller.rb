@@ -23,7 +23,7 @@ class AssetsController < ApplicationController
   end
 
   def captions
-    if restricted? || !captions_datastream?
+    if restricted? || !@asset.captions?
       render body: nil, status: 404
     else
       record_stats
@@ -72,10 +72,6 @@ class AssetsController < ApplicationController
 
   def ds_content_url(dsid)
     Rails.application.config_for(:fedora)['url'] + '/objects/' + @asset.fetch(:fedora3_pid_ssi, nil) + '/datastreams/' + dsid + '/content'
-  end
-
-  def captions_datastream?
-    @asset.fetch(:datastreams_ssim, []).include?('captions')
   end
 
   # Downloading of files is handed off to nginx to improve performance.

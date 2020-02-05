@@ -1,6 +1,6 @@
 module AssetHelper
   def player(document, brand_link)
-    caption_link = captions_download_url(document['cul_doi_ssi']) if captions?(document)
+    caption_link = captions_download_url(document['cul_doi_ssi']) if document.captions?
     if document.audio?
       audio_player document.wowza_media_url(request), brand_link, caption_link
     elsif document.video?
@@ -27,10 +27,8 @@ module AssetHelper
   end
 
   def source_element(url, caption_link)
-    tag.source(type: 'application/x-mpegURL', src: url) + (caption_link ? tag.track(label: 'English', kind: 'subtitles', srclang: 'en', src: caption_link) : "").html_safe
-  end
-
-  def captions?(document)
-    document['datastreams_ssim']&.include?('captions')
+    src = tag.source(type: 'application/x-mpegURL', src: url)
+    src.concat(tag.track(label: 'English', kind: 'subtitles', srclang: 'en', src: caption_link)) if caption_link
+    src
   end
 end

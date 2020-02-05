@@ -153,6 +153,10 @@ class SolrDocument
     video? || audio?
   end
 
+  def captions?
+    fetch('datastreams_ssim', []).include?('captions')
+  end
+
   def image_url(size = 256)
     return nil unless asset?
     "#{Rails.application.secrets.iiif[:urls].sample}/#{fetch(:fedora3_pid_ssi)}/full/!#{size},#{size}/0/native.jpg"
