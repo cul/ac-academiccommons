@@ -30,6 +30,30 @@ h4 {
   font-weight: 500;
 }
 
+a.skip-link {
+  height: 1px;
+  left: -1000px;
+  overflow: hidden;
+  position: absolute;
+  text-align: left;
+  top: -1000px;
+  width: 1px;
+}
+
+a.skip-link:focus,
+a.skip-link:active,
+a.skip-link:hover {
+  background-color: #fff;
+  border: 1px dotted #000;
+  height:auto;
+  left:0;
+  overflow:visible;
+  padding: 5px;
+  position:absolute;
+  top:0;
+  width:auto;
+}
+
 p.summary,
 #main-page p.summary {
   font-size: 18px;
