@@ -6,7 +6,7 @@
   - Adds cul banner
 %>
 
-<div id="header-navbar">
+<header id="header-navbar" role="banner">
   <div class="<%= container_classes %>">
     <div class="row">
       <div class="col-sm-8 logo">
@@ -17,10 +17,10 @@
       </div>
     </div>
   </div>
-</div>
+</header>
 
-<div id="links-navbar" class="" role="navigation">
-  <nav class="navbar navbar-default">
+<div id="links-navbar">
+  <nav class="navbar navbar-default" role="navigation">
     <div class="<%= container_classes %>">
       <ul class="nav navbar-nav about-links">
         <li><%= link_to t('blacklight.header_links.about'), about_path, 'aria-label': 'About Academic Commons' %></li>
