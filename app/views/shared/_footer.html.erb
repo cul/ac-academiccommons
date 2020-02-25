@@ -5,7 +5,7 @@
   - adds ac email
 %>
 
-<div class="footer">
+<footer role="contentinfo">
   <div class="<%= container_classes %>">
     <div class="row">
       <div class="col-xs-6 footer-links">
@@ -16,14 +16,13 @@
         <%= link_to t('blacklight.header_links.credits'), credits_path %>
       </div>
       <div class="col-xs-6 contact">
-        <i class="far fa-envelope" aria-hidden></i> <%= mail_to "ac@columbia.edu" %>
+        <i class="far fa-envelope" aria-hidden="true"></i> <%= mail_to "ac@columbia.edu" %>
       </div>
     </div>
   </div>
-</div>
-
-<div class="site-description">
-  <div class="<%= container_classes %>">
-    Academic Commons provides global access to research and scholarship produced at <a href="https://www.columbia.edu/">Columbia University</a>, <a href="https://barnard.edu/">Barnard College</a>, <a href="http://www.tc.columbia.edu/">Teachers College</a>, <a href="https://utsnyc.edu/">Union Theological Seminary</a> and <a href="http://www.jtsa.edu/">Jewish Theological Seminary</a>. Academic Commons is managed by the <a href="http://library.columbia.edu/">Columbia University Libraries</a>.
+  <div class="site-description">
+    <div class="<%= container_classes %>">
+      Academic Commons provides global access to research and scholarship produced at <a href="https://www.columbia.edu/">Columbia University</a>, <a href="https://barnard.edu/">Barnard College</a>, <a href="http://www.tc.columbia.edu/">Teachers College</a>, <a href="https://utsnyc.edu/">Union Theological Seminary</a> and <a href="http://www.jtsa.edu/">Jewish Theological Seminary</a>. Academic Commons is managed by the <a href="http://library.columbia.edu/">Columbia University Libraries</a>.
+    </div>
   </div>
-</div>
+</footer>

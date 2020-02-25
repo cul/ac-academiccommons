@@ -1,10 +1,10 @@
 // Adds creator first name, last name and uni input fields.
 function addCreatorField(creatorListId) {
   var div = $("<div></div>");
-  div.append('<input type="text" name="deposit[creators][][first_name]" class="deposit_creators_first_name"/>')
-  div.append('<input type="text" name="deposit[creators][][last_name]" class="deposit_creators_last_name"/>')
-  div.append('<input type="text" name="deposit[creators][][uni]" class="deposit_creators_uni"/>')
-  div.append('<span class="sort-icon"><i class="fas fa-arrows-alt" title="Sort creators" aria-hidden></i></span><span class="visually-hidden">Sort creators</span>')
+  div.append('<input type="text" name="deposit[creators][][first_name]" aria-labelledby="deposit_creators_first_name" class="deposit_creators_first_name"/>')
+  div.append('<input type="text" name="deposit[creators][][last_name]" aria-labelledby="deposit_creators_last_name" class="deposit_creators_last_name"/>')
+  div.append('<input type="text" name="deposit[creators][][uni]" aria-labelledby="deposit_creators_uni" class="deposit_creators_uni"/>')
+  div.append('<span class="sort-icon"><i class="fas fa-arrows-alt" title="Sort creators" aria-hidden="true"></i></span><span class="visually-hidden">Sort creators</span>')
 
   $('#' + creatorListId).append(div);
 }

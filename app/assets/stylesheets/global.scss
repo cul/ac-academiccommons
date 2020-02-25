@@ -9,7 +9,7 @@ h2,
 h3,
 h4 {
   font-weight: 600;
-  line-height: 1.6;
+  line-height: 1.5;
 }
 
 h1 {
@@ -30,11 +30,35 @@ h4 {
   font-weight: 500;
 }
 
+a.skip-link {
+  height: 1px;
+  left: -1000px;
+  overflow: hidden;
+  position: absolute;
+  text-align: left;
+  top: -1000px;
+  width: 1px;
+}
+
+a.skip-link:focus,
+a.skip-link:active,
+a.skip-link:hover {
+  background-color: #fff;
+  border: 1px dotted #000;
+  height:auto;
+  left:0;
+  overflow:visible;
+  padding: 5px;
+  position:absolute;
+  top:0;
+  width:auto;
+}
+
 p.summary,
 #main-page p.summary {
   font-size: 18px;
   font-weight: 300;
-  line-height: 1.6;
+  line-height: 1.5;
   margin: 0 0 15px 0;
   max-width: 700px;
 }
@@ -54,7 +78,6 @@ p.summary strong {
   p.summary,
   #main-page p.summary {
     font-size: 20px;
-    letter-spacing: .4px;
   }
 
   h1 {

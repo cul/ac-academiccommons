@@ -11,11 +11,11 @@
       <div class="col-md-2 side-nav">
         <%= yield(:sidebar) %>
       </div>
-      <div class="col-md-10 main-content left-border">
+      <div id="content" class="col-md-10 post-content left-border">
         <%= yield %>
       </div>
     <% else %>
-      <div class="col-md-12 main-content">
+      <div id="content" class="col-md-12 post-content">
         <%= yield %>
       </div>
     <% end %>
