@@ -12,7 +12,7 @@ module AssetHelper
 
   def video_player(url, poster_path, brand_link, caption_link)
     tag.div class: 'mediaelement-player' do
-      tag.video poster: poster_path, controls: 'controls', preload: 'none', data: { brand_link: brand_link } do
+      tag.video style: 'position: absolute; top: 0; left: 0;', poster: poster_path, controls: 'controls', preload: 'none', data: { brand_link: brand_link } do
         source_element(url, caption_link)
       end
     end

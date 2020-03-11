@@ -30,7 +30,7 @@
               <%=
                 modal('embed-code-modal', 'md', 'Embed Player') do
                   tag.textarea onclick: 'this.focus();this.select()', class: 'embed-code', rows: '4' do
-                  "<iframe width=\"560\" height=\"315\" src=\"#{embed_url(asset.id)}\" frameborder=\"0\" allowfullscreen></iframe>"
+                  "<iframe title=\"Academic Commons media player\" width=\"560\" height=\"315\" src=\"#{embed_url(asset.id)}\" frameborder=\"0\" allowfullscreen></iframe>"
                 end
               end
             %>
