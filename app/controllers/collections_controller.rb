@@ -3,7 +3,7 @@ class CollectionsController < ApplicationController
   CONFIG = {
     featured: {
       title: 'Featured Partners',
-      summary: 'Works shared by seven Columbia research centers. Want to showcase the work of your department or center here? Contact us at <a href="mailto:ac@columbia.edu">ac@columbia.edu</a>',
+      summary: 'Works shared by eight Columbia research centers. Want to showcase the work of your department or center here? Contact us at <a href="mailto:ac@columbia.edu">ac@columbia.edu</a>',
       facet: 'department_ssim',
       values: {
         'Center for Behavioral Cardiovascular Health' => 'The Center for Behavioral Cardiovascular Health is a leader in cutting-edge behavioral medicine research dedicated to understanding how and why behaviors, psychological factors, and societal forces influence hypertension and cardiovascular disease. ',
