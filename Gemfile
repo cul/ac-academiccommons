@@ -11,7 +11,7 @@ gem 'bootsnap'
 gem 'bootstrap-sass', '~> 3.3.0'
 gem 'cancancan', '~> 2.0'
 gem 'cul-ldap'
-gem 'cul_omniauth', git: 'https://github.com/cul/cul_omniauth', branch: 'rails-5'
+gem 'cul_omniauth', '~> 0.6.1'
 gem 'devise'
 gem 'fancybox2-rails' # Used in helper classes. TODO: Confirm that this is needed and used by the application.
 gem 'gaffe'
