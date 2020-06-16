@@ -48,7 +48,7 @@ describe 'Usage Statistics Form', type: :feature, js: true do
       end
 
       context 'when submitting email form' do
-        subject(:email) { ActionMailer::Base.deliveries.pop }
+        let(:email) { ActionMailer::Base.deliveries.pop }
 
         before do
           fill_in 'To', with: 'example@example.com'
