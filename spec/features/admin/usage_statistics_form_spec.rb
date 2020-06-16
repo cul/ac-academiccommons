@@ -70,8 +70,8 @@ describe 'Usage Statistics Form', type: :feature, js: true do
         it 'sends email' do
           expect(email.to).to include 'example@example.com'
           expect(email.subject).to eql 'Testing Usage Statistics'
-          expect(email.html_part.body).to match 'Below are the Academic Commons statistics that you requested'
-          expect(email.html_part.body).to match 'Alice\'s Adventures in Wonderland'
+          expect(email.html_part.body).to include 'Below are the Academic Commons statistics that you requested'
+          expect(email.html_part.body).to include 'Alice\'s Adventures in Wonderland'
         end
       end
     end
