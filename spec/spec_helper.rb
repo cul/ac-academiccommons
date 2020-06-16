@@ -22,7 +22,12 @@ require 'selenium-webdriver'
 require 'equivalent-xml/rspec_matchers'
 
 require 'webmock/rspec'
-WebMock.disable_net_connect!(allow_localhost: true)
+WebMock.disable_net_connect!(
+  allow_localhost: true,
+  allow: 'chromedriver.storage.googleapis.com'
+)
+
+Capybara.server = :webrick # Setting needed until we upgrade to puma
 
 Capybara.javascript_driver = :headless_chrome
 
