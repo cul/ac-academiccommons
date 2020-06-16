@@ -65,8 +65,7 @@ group :development, :test do
   gem 'rubocop-rspec', '~> 1.22.2', require: false
 
   gem 'byebug'
-  gem 'capybara', '~>2.2'
-  gem 'chromedriver-helper'
+  gem 'capybara', '~> 3.0'
   gem 'coveralls', require: false
   gem 'database_cleaner'
   gem 'equivalent-xml'
@@ -77,5 +76,6 @@ group :development, :test do
   gem 'rspec-rails', '~> 3.5'
   gem 'selenium-webdriver'
   gem 'solr_wrapper', '>= 0.18.0'
+  gem 'webdrivers', '~> 4.0'
   gem 'webmock'
 end
