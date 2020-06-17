@@ -1,6 +1,8 @@
 inherit_gem:
   rubocul: rubocul_default.yml
 
+inherit_from: .rubocop_todo.yml
+
 AllCops:
   TargetRubyVersion: 2.5.3
   TargetRailsVersion: 5.2.3
