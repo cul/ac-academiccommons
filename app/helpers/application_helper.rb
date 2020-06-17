@@ -28,7 +28,8 @@ module ApplicationHelper
   end
 
   def modal(id, size, title)
-    tag.div class: 'modal fade', id: id, tabindex: '-1', role: 'dialog' do
+    # Removed 'fade' class from test environment because the animation prevents forms from being filled in correctly.
+    tag.div class: Rails.env.test? ? 'modal' : 'modal fade', id: id, tabindex: '-1', role: 'dialog' do
       tag.div class: "modal-dialog modal-#{size}", role: 'document' do
         tag.div class: 'modal-content' do
           tag.div(class: 'modal-header') {
