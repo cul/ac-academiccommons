@@ -42,6 +42,7 @@ RSpec.configure do |config|
   config.include JsonSpec::Helpers
   config.include FixtureHelpers
   config.include Warden::Test::Helpers
+  config.include ActiveSupport::Testing::TimeHelpers
 
   config.fixture_path = File.join(::Rails.root, 'spec', 'fixtures')
 

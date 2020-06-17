@@ -6,6 +6,10 @@ RSpec.describe SwordDepositJob, type: :job do
   let(:deposit) { FactoryBot.create(:deposit) }
   let(:credentials) { Rails.application.secrets.sword }
 
+  # Freezing time because the generated METS file contains a timestamp.
+  before { freeze_time }
+  after  { travel_back }
+
   it 'enqueues the job' do
     expect { job }.to have_enqueued_job(SwordDepositJob).with(deposit)
   end
