@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 source 'https://rubygems.org'
 
 gem 'rails', '5.2.3'
@@ -61,8 +63,7 @@ group :development, :test do
   gem 'capistrano-resque', '~> 0.2.2', require: false
   gem 'capistrano-rvm', '~> 0.1', require: false
 
-  gem 'rubocop', '~> 0.52.1', require: false
-  gem 'rubocop-rspec', '~> 1.22.2', require: false
+  gem 'rubocul', '2.0.0', require: false
 
   gem 'byebug'
   gem 'capybara', '~> 3.0'
