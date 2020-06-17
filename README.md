@@ -4,7 +4,7 @@
 
 ## Checking out and working with a local development instance
 
-CURRENT RECOMMENDED VERSION OF RUBY: 2.3.3
+CURRENT RECOMMENDED VERSION OF RUBY: 2.5.3
 
 1. Clone the repository to a location of your choosing
    ```
@@ -93,6 +93,12 @@ If you would like to see pages that require authentication follow the steps belo
    For administrative privileges, log in as `ta123`.
 
    For a user without administrative privileges, log in as `tu123`.
+
+## Rubocop
+We use the `rubocul` to centralize our rubocop config and share it among repos. In order to regenerate `.rubocop_todo` please use the following command. Using the following command creates a rubocop_todo configuration that only excludes files from cops instead of enabling/disabling cops and changing configuration values.
+```
+rubocop --auto-gen-config  --auto-gen-only-exclude --exclude-limit 10000
+```
 
 ## Running tests
 1. In order to run tests that require javascript you will might need `chrome` installed (needs to be tested).
