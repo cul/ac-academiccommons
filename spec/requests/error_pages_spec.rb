@@ -33,8 +33,8 @@ RSpec.describe 'error pages', type: :request do
         get '/doi/NOT_VALID_ID'
       end
 
-      it 'returns 500 status code' do
-        expect(response).to have_http_status(:internal_server_error)
+      it 'returns 404 status code' do
+        expect(response).to have_http_status(:not_found)
       end
 
       it 'renders record not found page' do
