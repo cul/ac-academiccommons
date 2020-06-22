@@ -17,18 +17,11 @@ test: *local
 # Emails for deployed dev/test environments.
 deployed: &deployed
   mail_deliverer: ac@columbia.edu
-  administrative_notifications:
-    - ac@columbia.edu
-    - cmg2228@columbia.edu
-  error_notifications: cmg2228@columbia.edu
+  administrative_notifications: ac@columbia.edu
+  error_notifications: diag@library.columbia.edu
 
 academiccommons_dev: *deployed
 academiccommons_test: *deployed
 academiccommons_prod: *deployed
 ac4_dev: *deployed
 ac4_test: *deployed
-
-academiccommons_prod:
-  mail_deliverer: ac@columbia.edu
-  administrative_notifications: ac@columbia.edu
-  error_notifications: diag@library.columbia.edu
