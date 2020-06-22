@@ -294,7 +294,7 @@ GEM
     mime-types-data (3.2016.0521)
     mimemagic (0.3.3)
     mini_mime (1.0.2)
-    mini_portile2 (2.3.0)
+    mini_portile2 (2.4.0)
     minitest (5.14.1)
     mono_logger (1.1.0)
     msgpack (1.2.4)
@@ -310,8 +310,8 @@ GEM
     net-ssh (5.0.2)
     netrc (0.11.0)
     nio4r (2.4.0)
-    nokogiri (1.8.5)
-      mini_portile2 (~> 2.3.0)
+    nokogiri (1.10.9)
+      mini_portile2 (~> 2.4.0)
     nom-xml (0.6.0)
       activesupport (>= 3.2.18)
       i18n
@@ -634,7 +634,7 @@ DEPENDENCIES
   json_spec
   multipart-post (~> 2.0.0)
   mysql2
-  nokogiri (~> 1.8.1)
+  nokogiri (~> 1.10.8)
   okcomputer
   premailer-rails
   rails (= 5.2.3)
