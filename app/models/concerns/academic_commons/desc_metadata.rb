@@ -239,6 +239,26 @@ module AcademicCommons
         end
       end
 
+      # RELATED ITEM
+      #
+      # Creates a json structure that is an Array of Hashes. Each hash is a related items entry.
+      related_items_selector = '//relatedItem[@otherType=\'isVersionOf\' or @otherType=\'isNewVersionOf\'' \
+                               ' or @otherType=\'isPreviousVersionOf\' or @otherType=\'isSupplementedBy\'' \
+                               ' or @otherType=\'isSupplementTo\' or @type=\'reviewOf\']'
+      related_items = mods.xpath(related_items_selector).map do |related_item|
+        identifier = related_item.at_css('> identifier') # There should only be one identifier
+
+        {
+          relation_type: related_item.attribute('otherType')&.content || related_item.attribute('type')&.content, # Attribute
+          title: related_item.at_css('> titleInfo > title')&.content,
+          identifier: {
+            type: identifier.attribute('type')&.content,
+            value: identifier&.content
+          }
+        }
+      end
+      solr_doc['related_items_ss'] = related_items.to_json
+
       mods.css('> physicalDescription > internetMediaType').each { |mt| add_field.call('media_type_ssim', mt) }
 
       mods.css('> typeOfResource').each do |tr|

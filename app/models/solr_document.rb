@@ -184,6 +184,33 @@ class SolrDocument
     ).to_url_with_token_hash(wowza_config[:host], wowza_config[:ssl_port], 'hls-ssl')
   end
 
+  def related_items
+    # Related types should be displayed in this order.
+    ordered_related_types = ['isVersionOf', 'isNewVersionOf', 'isPreviousVersionOf', 'isSupplementedBy', 'isSupplementTo', 'reviewOf']
+
+    related_items = JSON.parse(fetch('related_items_ss', '[]')).map do |related_item|
+      {
+        relation_type: related_item['relation_type'],
+        title: related_item['title'],
+        link: related_item_link(related_item['identifier']['type'], related_item['identifier']['value'])
+      }
+    end
+    related_items.sort_by { |related_item| ordered_related_types.find_index(related_item['relation_type']) }
+  end
+
+  def related_item_link(type, value)
+    case type
+    when 'doi'
+      'https://doi.org/' + value
+    when 'issn'
+      'https://www.worldcat.org/issn/' + value.remove('-')
+    when 'isbn'
+      'https://www.worldcat.org/isbn/' + value.remove('-')
+    else
+      value
+    end
+  end
+
   private
 
   def dc_type

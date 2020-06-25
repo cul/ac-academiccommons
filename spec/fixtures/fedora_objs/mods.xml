@@ -84,6 +84,13 @@
         <mods:physicalLocation authority="marcorg">NNC</mods:physicalLocation>
     </mods:location>
 
+    <mods:relatedItem otherType="isVersionOf" otherTypeAuth="DataCite">
+      <mods:titleInfo>
+        <mods:title>Alice's adventures in wonderland &amp; through the looking-glass</mods:title>
+      </mods:titleInfo>
+      <mods:identifier type="isbn">9780062936639</mods:identifier>
+    </mods:relatedItem>
+
     <mods:recordInfo>
         <mods:recordContentSource authority="marcorg">NNC</mods:recordContentSource>
         <mods:recordCreationDate encoding="w3cdtf">2017-09-14T16:31:33Z</mods:recordCreationDate>

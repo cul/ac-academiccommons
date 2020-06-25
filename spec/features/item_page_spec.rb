@@ -66,6 +66,10 @@ describe 'Item Page', type: :feature do
     expect(page).to have_xpath('//span[@class="icon play"]/a[@href="#play-collapse-10-7916-TESTDOC3"]')
   end
 
+  it 'links to related item' do
+    expect(page).to have_xpath '//a[@href=\'https://www.worldcat.org/isbn/9780062936639\']', text: 'Alice\'s adventures in wonderland & through the looking-glass'
+  end
+
   describe 'download links for' do
     xit 'download links return X-Accel-Redirect header' do
       click_on 'alice_in_wonderland.pdf'

@@ -1,0 +1,103 @@
+<mods:mods xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:mods="http://www.loc.gov/mods/v3" version="3.6" xsi:schemaLocation="http://www.loc.gov/mods/v3 http://www.loc.gov/standards/mods/v3/mods-3-6.xsd">
+  <mods:titleInfo>
+    <mods:title>Footprints v1.0</mods:title>
+  </mods:titleInfo>
+  <mods:abstract>Source code for the Footprints database. Footprints is a project to develop a database that tracks individual books through time and space to uncover patterns of trade and learning throughout the Jewish communities of Europe, Asia and the Americas during the modern period.</mods:abstract>
+  <mods:relatedItem type="host" displayLabel="Project">
+    <mods:titleInfo>
+      <mods:title>Academic Commons</mods:title>
+    </mods:titleInfo>
+  </mods:relatedItem>
+  <mods:name type="corporate" valueURI="temp:fed43e2562ed30670ca62db9db30452ed39b266d7c6c1096ae1251498c6e5c1b">
+    <mods:namePart>Columbia University. Libraries</mods:namePart>
+    <mods:role>
+      <mods:roleTerm type="text" valueURI="http://id.loc.gov/vocabulary/relators/org" authority="marcrelator">Originator</mods:roleTerm>
+    </mods:role>
+  </mods:name>
+  <mods:name type="corporate" valueURI="temp:a5f69a9be15077b2ca168eefe07244acea5350a4965f36714890129829c7647a">
+    <mods:namePart>Columbia University. Center for Teaching and Learning</mods:namePart>
+    <mods:role>
+      <mods:roleTerm type="text" valueURI="http://id.loc.gov/vocabulary/relators/org" authority="marcrelator">Originator</mods:roleTerm>
+    </mods:role>
+  </mods:name>
+  <mods:name type="corporate" valueURI="temp:6f8e0d9871e14d7e2c73537fbd73b2a29c24f4588d55133cc61ca4befee58ea6">
+    <mods:namePart>Jewish Theological Seminary. Jewish Theological Seminary</mods:namePart>
+    <mods:role>
+      <mods:roleTerm type="text" valueURI="http://id.loc.gov/vocabulary/relators/org" authority="marcrelator">Originator</mods:roleTerm>
+    </mods:role>
+  </mods:name>
+  <mods:name type="personal" ID="kah2197" valueURI="temp:d627830461f530fb3b3b719e91c61ef86bd47092ce8192f7e415cc77a705da03">
+    <mods:namePart>Hirschmann, Kenneth Alan</mods:namePart>
+    <mods:role>
+      <mods:roleTerm type="text" valueURI="http://id.loc.gov/vocabulary/relators/aut" authority="marcrelator">Author</mods:roleTerm>
+    </mods:role>
+  </mods:name>
+  <mods:name type="personal" ID="sld2131" valueURI="temp:1c43ce558ff146b4ff230b50bb8cba5f66ac24aabe25eff470f96b1915c317f5">
+    <mods:namePart>Dreher, Susan L.</mods:namePart>
+    <mods:role>
+      <mods:roleTerm type="text" valueURI="http://id.loc.gov/vocabulary/relators/aut" authority="marcrelator">Author</mods:roleTerm>
+    </mods:role>
+  </mods:name>
+  <mods:name type="personal" valueURI="temp:673f6b74e9a5958ea20d579823d8eade71b1084d2e8d5eac6d4ad48daee33030">
+    <mods:namePart>White, Rachelle</mods:namePart>
+    <mods:role>
+      <mods:roleTerm type="text" valueURI="http://id.loc.gov/vocabulary/relators/aut" authority="marcrelator">Author</mods:roleTerm>
+    </mods:role>
+  </mods:name>
+  <mods:name type="personal" ID="zm4" valueURI="temp:3e76845249718c33625d8dedbcca708bc3c05e5289e37456f34c988862184c7c">
+    <mods:namePart>Mustapha, Zarina</mods:namePart>
+    <mods:role>
+      <mods:roleTerm type="text" valueURI="http://id.loc.gov/vocabulary/relators/aut" authority="marcrelator">Author</mods:roleTerm>
+    </mods:role>
+  </mods:name>
+  <mods:name type="personal" ID="jb2410" valueURI="temp:c76c0d784c65dc908eedce13bbb79bea884a126bd6f4c1890f1f63258ad817ff">
+    <mods:namePart>Bossewitch, Jonah S.</mods:namePart>
+    <mods:role>
+      <mods:roleTerm type="text" valueURI="http://id.loc.gov/vocabulary/relators/aut" authority="marcrelator">Author</mods:roleTerm>
+    </mods:role>
+  </mods:name>
+  <mods:name type="personal" ID="nb2413" valueURI="temp:d82152bb931684f75584ac3dc251c8de7ae8f398e32a019f46194efd2b075b44">
+    <mods:namePart>Buonincontri, Nicholas</mods:namePart>
+    <mods:role>
+      <mods:roleTerm type="text" valueURI="http://id.loc.gov/vocabulary/relators/aut" authority="marcrelator">Author</mods:roleTerm>
+    </mods:role>
+  </mods:name>
+  <mods:genre type="text" valueURI="http://vocab.getty.edu/aat/300028566" authority="aat">Software</mods:genre>
+  <mods:language>
+    <mods:languageTerm type="text" valueURI="http://id.loc.gov/vocabulary/iso639-2/eng.html" authority="iso639-2">English</mods:languageTerm>
+  </mods:language>
+  <mods:subject valueURI="http://id.worldcat.org/fast/983287" authority="fast">
+    <mods:topic>Jews--Intellectual life</mods:topic>
+  </mods:subject>
+  <mods:subject valueURI="http://id.worldcat.org/fast/983154" authority="fast">
+    <mods:topic>Jews--Books and reading</mods:topic>
+  </mods:subject>
+  <mods:subject valueURI="http://id.worldcat.org/fast/1423717" authority="fast">
+    <mods:topic>Bibliography</mods:topic>
+  </mods:subject>
+  <mods:note>View the Footprints project website at https://footprints.ccnmtl.columbia.edu. View the GitHub repository at https://github.com/ccnmtl/footprints.</mods:note>
+  <mods:relatedItem otherType="isSupplementTo" otherTypeAuth="DataCite">
+    <mods:titleInfo>
+      <mods:title>Footprints: Jewish Books through Time and Place</mods:title>
+    </mods:titleInfo>
+    <mods:identifier type="url">https://footprints.ctl.columbia.edu/</mods:identifier>
+  </mods:relatedItem>
+  <mods:relatedItem otherType="isVersionOf" otherTypeAuth="DataCite">
+    <mods:titleInfo>
+      <mods:title>footprints</mods:title>
+    </mods:titleInfo>
+    <mods:identifier type="url">https://github.com/ccnmtl/footprints</mods:identifier>
+  </mods:relatedItem>
+  <mods:typeOfResource>software, multimedia</mods:typeOfResource>
+  <mods:originInfo>
+    <mods:dateIssued encoding="w3cdtf">2018</mods:dateIssued>
+  </mods:originInfo>
+  <mods:recordInfo>
+    <mods:languageOfCataloging>
+      <mods:languageTerm valueURI="http://id.loc.gov/vocabulary/iso639-2/eng" authority="iso639-2b">eng</mods:languageTerm>
+    </mods:languageOfCataloging>
+    <mods:recordCreationDate encoding="w3cdtf">2018-10-05T17:29:43Z</mods:recordCreationDate>
+    <mods:recordChangeDate encoding="w3cdtf">2020-06-17T14:53:33Z</mods:recordChangeDate>
+  </mods:recordInfo>
+  <mods:identifier type="DOI">10.7916/D8515G3Z</mods:identifier>
+</mods:mods>
