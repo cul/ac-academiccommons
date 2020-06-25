@@ -34,6 +34,7 @@ en:
           files: 'Files'
           published_in: 'Also Published In'
           more_info: 'More About This Work'
+          related_items: 'Related Items'
           notes: 'Notes'
         assets:
           embargoed: 'This item is currently under embargo. It will be available starting %{date}.'

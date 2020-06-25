@@ -64,6 +64,13 @@ RSpec.describe AcademicCommons::DescMetadata do
       include_examples 'indexing mods'
     end
 
+    context 'contains related items' do
+      let(:mods_fixture) { fixture_to_str('desc_metadata/related_items.xml') }
+      let(:expected_json) { fixture_to_json('desc_metadata/related_items.json') }
+
+      include_examples 'indexing mods'
+    end
+
     context 'contains subject titles and subject names' do
       let(:mods_fixture) { fixture_to_str('desc_metadata/subject_names_and_titles.xml') }
       let(:expected_json) { fixture_to_json('desc_metadata/subject_names_and_titles.json') }

@@ -84,6 +84,9 @@
   </div>
 </div>
 
+<%# Render related items %>
+<%= render 'show_related_items', document: document %>
+
 <%# Render note %>
 <% note_text = [] -%>
 <% document_show_fields(document).select { |name, f| f[:display] == :notes }.each do |field_name, field| -%>

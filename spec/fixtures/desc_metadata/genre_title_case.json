@@ -6,7 +6,6 @@
   "fedora3_uri_ssi": "info:fedora/actest:1",
   "genre_q": ["Articles"],
   "genre_ssim": ["Articles"],
+  "related_items_ss": "[]",
   "id": "10.7916/TESTTEST"
 }
-
-
