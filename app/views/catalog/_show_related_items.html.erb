@@ -1,15 +1,19 @@
-<% if related_items = document.related_items %>
+<% related_items = document.related_items %>
+
+<% if related_items.present? %>
   <div class="panel panel-default">
     <div class="panel-heading">
       <h2 class="panel-title"><%= t('blacklight.search.show.panels.related_items') %></h2>
     </div>
     <div class="panel-body">
-      <% related_items.each do |related_item| -%>
-        <div>
-          <%= related_item[:relation_type].remove(/^is/).underscore.gsub('_', ' ').upcase_first %> <br>
-          <%= link_to related_item[:title], related_item[:link], target: '_blank' %>
-        </div>
-      <% end %>
+      <ul class="list-unstyled">
+        <% related_items.each do |related_item| -%>
+          <li>
+            <%= related_item[:relation_type].remove(/^is/).underscore.gsub('_', ' ').upcase_first %> <br>
+            <%= link_to related_item[:title], related_item[:link], target: '_blank' %>
+          </li>
+        <% end %>
+      </ul>
     </div>
   </div>
 <% end %>
