@@ -73,10 +73,5 @@ module AcademicCommons
     config.active_job.queue_adapter = :async
 
     config.active_storage.service = :local
-
-    Raven.configure do |config|
-      config.dsn = 'https://540449d6c8c34cfbbd2e4d27b31838b5:4e3f2268bdac41e396c99db85113691c@sentry.io/163579'
-      config.environments = ['ac4_dev', 'ac4_test', 'academiccommons_dev', 'academiccommons_test', 'academiccommons_prod']
-    end
   end
 end

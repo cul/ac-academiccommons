@@ -9,8 +9,6 @@ class ApplicationController < ActionController::Base
   helper :all # include all helpers, all the time
   helper_method :fedora_config # share some methods w/ views via helpers
 
-  before_action :set_raven_context
-
   rescue_from CanCan::AccessDenied do |exception|
     if current_user.nil?
       respond_to do |format|
@@ -40,10 +38,5 @@ class ApplicationController < ActionController::Base
   # Redirect to last page a user visited before log in.
   def after_sign_in_path_for(resource)
     request.env['omniauth.origin'] || stored_location_for(resource) || root_path
-  end
-
-  def set_raven_context
-    Raven.user_context(id: session[:current_user_id]) # or anything else in session
-    Raven.extra_context(params: params.to_unsafe_h, url: request.url)
   end
 end
