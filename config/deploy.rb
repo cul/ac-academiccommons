@@ -2,10 +2,8 @@ lock '3.8.0'
 
 set :instance, 'ac'
 set :application, 'academiccommons'
-set :deploy_name do
-  stage = fetch(:stage)
-  (stage.match(/^ac4/)) ? stage : "#{fetch(:application)}_#{stage}"
-end
+set :deploy_name, "#{fetch(:application)}_#{fetch(:stage)}"
+
 # used to run rake db:migrate, etc
 # Default value for :rails_env is fetch(:stage)
 set :rails_env, fetch(:deploy_name)
@@ -60,8 +58,7 @@ namespace :deploy do
   task :generate_500_html do
     on roles(:web) do |host|
       public_500_html = File.join(release_path, "public", "500.html")
-      sub_domain = fetch(:stage).match(/^ac4/) ? 'cul' : 'cdrs'
-      env = fetch(:stage) == :prod ? fetch(:application) : "#{fetch(:deploy_name).to_s.gsub('_', '-')}.#{sub_domain}"
+      env = fetch(:stage) == :prod ? fetch(:application) : "#{fetch(:deploy_name).to_s.gsub('_', '-')}.cdrs"
       execute :curl, "https://#{env}.columbia.edu/500", "-sS", "-o", public_500_html
     end
   end
