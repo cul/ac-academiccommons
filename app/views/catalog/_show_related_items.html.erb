@@ -6,13 +6,12 @@
       <h2 class="panel-title"><%= t('blacklight.search.show.panels.related_items') %></h2>
     </div>
     <div class="panel-body">
-      <% related_items.each do |related_item| -%>
-        <div>
-          <%= related_item[:relation_type].remove(/^is/).underscore.gsub('_', ' ').upcase_first.concat(':') %>
-          <br>
-          <%= link_to related_item[:title], related_item[:link], target: '_blank' %>
-        </div>
-      <% end %>
+      <dl>
+        <% related_items.each do |related_item| -%>
+          <dt><%= related_item[:relation_type].remove(/^is/).underscore.gsub('_', ' ').upcase_first.concat(':') %></dt>
+          <dd><%= link_to related_item[:title], related_item[:link], target: '_blank' %></dd>
+        <% end %>
+      </dl>
     </div>
   </div>
 <% end %>
