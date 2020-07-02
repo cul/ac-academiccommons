@@ -25,5 +25,3 @@ test: *SAML
 academiccommons_dev: *SAML
 academiccommons_test: *SAML
 academiccommons_prod: *SAML
-ac4_dev: *SAML
-ac4_test: *SAML

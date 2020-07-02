@@ -23,5 +23,3 @@ deployed: &deployed
 academiccommons_dev: *deployed
 academiccommons_test: *deployed
 academiccommons_prod: *deployed
-ac4_dev: *deployed
-ac4_test: *deployed
