@@ -135,3 +135,46 @@ For every asset and item in Academic Commons we store view and download statisti
 - Academic Commons staff are sent an email when a new deposit is added or when a new agreement is signed.
 
 - Depositors that self-identify as students are sent a notification that serves as a reminder that departmental approval is required for student works.
+
+### Worker Queue
+We are using redis and resque for our worker queue. The worker queue UI can be accessed by administrators are `/admin/resque`. Redis/resque are configured for our deployed production and test environments. Development does not have a worker queue yet. 
+
+### Indexing Digital Objects
+
+#### Synchronously (for deployed and local development environments)
+To index all items/assets currently in AC, use the following rake task:
+```
+ac:reindex:all
+```
+
+To index specific items and related assets (that are already in AC), use the following rake task:
+```
+# available parameters: pids
+# pids should be a comma-delineated list of pids
+
+ac:reindex:by_item_pid
+```
+
+To index specific items/assets, use the following rake task:
+```
+# available parameters: pids and pidlist
+# pids should be a comma-delineated list of pids
+# pidlist should be a file with a pid in everyline
+
+ac:reindex_by_pid
+```
+
+#### Asynchronously (for deployed test and production environments)
+To index all items/assets currently in AC, use the following rake task:
+```
+rake ac:index:all
+```
+
+To index select item/assets, use the following rake task:
+```
+# available parameters: pids and pidlist
+# pids should be a comma-delineated list of pids
+# pidlist should be a file with a pid in everyline 
+
+rake ac:index:by_pid pids=ac:test1,ac:test2
+```
