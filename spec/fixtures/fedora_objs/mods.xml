@@ -84,7 +84,7 @@
         <mods:physicalLocation authority="marcorg">NNC</mods:physicalLocation>
     </mods:location>
 
-    <mods:relatedItem otherType="isVersionOf" otherTypeAuth="DataCite">
+    <mods:relatedItem otherType="isVersionOf" otherTypeAuth="datacite">
       <mods:titleInfo>
         <mods:title>Alice's adventures in wonderland &amp; through the looking-glass</mods:title>
       </mods:titleInfo>

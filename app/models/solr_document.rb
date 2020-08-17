@@ -8,7 +8,6 @@ class SolrDocument
   # self.unique_key = 'id'
   self.timestamp_key = 'record_creation_dtsi'
 
-
   # Email uses the semantic field mappings below to generate the body of an email.
   SolrDocument.use_extension(Blacklight::Document::Email)
 
@@ -185,17 +184,14 @@ class SolrDocument
   end
 
   def related_items
-    # Related types should be displayed in this order.
-    ordered_related_types = ['isVersionOf', 'isNewVersionOf', 'isPreviousVersionOf', 'isSupplementedBy', 'isSupplementTo', 'reviewOf']
-
     related_items = JSON.parse(fetch('related_items_ss', '[]')).map do |related_item|
       {
         relation_type: related_item['relation_type'],
-        title: related_item['title'],
+        title: related_item['title'].present? ? related_item['title'] : related_item['identifier']['value'],
         link: related_item_link(related_item['identifier']['type'], related_item['identifier']['value'])
       }
     end
-    related_items.sort_by { |related_item| ordered_related_types.find_index(related_item['relation_type']) }
+    related_items.sort_by { |related_item| AcademicCommons::DescMetadata::ORDERED_RELATED_ITEM_TYPES.find_index(related_item['relation_type']) }
   end
 
   def related_item_link(type, value)
