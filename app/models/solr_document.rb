@@ -191,7 +191,7 @@ class SolrDocument
         link: related_item_link(related_item['identifier']['type'], related_item['identifier']['value'])
       }
     end
-    related_items.sort_by { |related_item| AcademicCommons::DescMetadata::ORDERED_RELATED_ITEM_TYPES.find_index(related_item['relation_type']) }
+    related_items.sort_by { |related_item| AcademicCommons::DescMetadata::ORDERED_RELATED_ITEM_TYPES.find_index(related_item[:relation_type]) }
   end
 
   def related_item_link(type, value)

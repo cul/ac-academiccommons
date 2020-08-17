@@ -163,4 +163,74 @@ describe SolrDocument do
       end
     end
   end
+
+  describe '#related_items' do
+    let(:solr_doc) {
+      described_class.new(
+        'id' => '10.7916/TESTDOC2',
+        'related_items_ss' => JSON.generate([
+          {
+            'relation_type' => 'isPreviousVersionOf',
+            'title' => 'Great Title 3',
+            'identifier' => {
+              'type' => 'uri',
+              'value' => 'https://www.example.com/3',
+            }
+          },
+          {
+            'relation_type' => 'isNewVersionOf',
+            'title' => 'Great Title 1',
+            'identifier' => {
+              'type' => 'uri',
+              'value' => 'https://www.example.com/1',
+            }
+          }
+        ])
+      )
+    }
+
+    context "produces the expected output" do
+      it "returns an empty array when there are no related items" do
+        solr_doc.delete('related_items_ss')
+        expect(solr_doc.related_items).to eq([])
+      end
+
+      it "returns related items in the expected order" do
+        expect(solr_doc.related_items).to eq([
+          {
+            relation_type: 'isNewVersionOf',
+            title: 'Great Title 1',
+            link: 'https://www.example.com/1'
+          },
+          {
+            relation_type: 'isPreviousVersionOf',
+            title: 'Great Title 3',
+            link: 'https://www.example.com/3'
+          }
+        ])
+      end
+
+      it "returns an identifier as the title when a title is not present" do
+        solr_doc['related_items_ss'] = JSON.generate([
+          {
+            'relation_type' => 'isIdenticalTo',
+            'identifier' => {
+              'type' => 'uri',
+              'value' => 'https://www.example.com/something'
+            }
+          }
+        ])
+
+        expect(solr_doc.related_items).to eq([
+          {
+            relation_type: 'isIdenticalTo',
+            title: 'https://www.example.com/something',
+            link: 'https://www.example.com/something'
+          }
+        ])
+      end
+
+    end
+
+  end
 end
