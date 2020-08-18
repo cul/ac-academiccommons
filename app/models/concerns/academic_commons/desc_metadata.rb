@@ -24,6 +24,18 @@ module AcademicCommons
       '1' => 'Master\'s',
       '2' => 'Doctoral'
     }.freeze
+    # Related item types should be displayed in this order.
+    ORDERED_RELATED_ITEM_TYPES = [
+      'isIdenticalTo',
+      'isVersionOf',
+      'isNewVersionOf',
+      'isPreviousVersionOf',
+      'isSupplementedBy',
+      'isSupplementTo',
+      'referencedBy',
+      'references',
+      'reviewOf'
+    ].freeze
 
     # Keeping track of multivalued fields.
     MULTIVALUED_FIELDS = %w[\w+_ssm \w+_ssim \w+_q suggest].freeze
@@ -242,9 +254,7 @@ module AcademicCommons
       # RELATED ITEM
       #
       # Creates a json structure that is an Array of Hashes. Each hash is a related items entry.
-      related_items_selector = '//relatedItem[@otherType=\'isVersionOf\' or @otherType=\'isNewVersionOf\'' \
-                               ' or @otherType=\'isPreviousVersionOf\' or @otherType=\'isSupplementedBy\'' \
-                               ' or @otherType=\'isSupplementTo\' or @type=\'reviewOf\']'
+      related_items_selector = '//relatedItem[' + ORDERED_RELATED_ITEM_TYPES.map { |type| "@otherType='#{type}'" }.join(' or ') + ']'
       related_items = mods.xpath(related_items_selector).map do |related_item|
         identifier = related_item.at_css('> identifier') # There should only be one identifier
 
