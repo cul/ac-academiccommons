@@ -3,6 +3,10 @@ class CatalogController < ApplicationController
   include BlacklightOaiProvider::Controller
   include BlacklightRangeLimit::ControllerOverride
 
+  rescue_from Blacklight::Exceptions::InvalidRequest do
+    render plain: 'Invalid request.', status: :bad_request
+  end
+
   layout 'catalog'
 
   # rubocop:disable Rails/LexicallyScopedActionFilter
