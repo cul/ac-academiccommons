@@ -99,11 +99,13 @@ module AcademicCommons
       add_field.call 'related_url_ssi', mods.at_css('location > url')
 
       # TITLE
-      # related_titles = mods.css('relatedItem[@type=\'host\']:not([displayLabel=Project])>titleInfo').css('>nonSort,title')
-      add_field.call 'title_ssi',  mods.at_css('> titleInfo > title')
-      add_field.call 'title_sort', mods.at_css('> titleInfo > title')
-      add_field.call 'title_q',    mods.at_css('> titleInfo > title')
-      add_field.call 'suggest',    mods.at_css('> titleInfo > title')
+      # Note: We are intentionally including the non-sort portion in the title_sort field to
+      # preserve existing app behavior.  This is what the AC app owners want.
+      title = [mods.at_css('> titleInfo > nonSort'), mods.at_css('> titleInfo > title')].compact.join(' ')
+      add_field.call 'title_ssi',  title
+      add_field.call 'title_sort', title
+      add_field.call 'title_q',    title
+      add_field.call 'suggest',    title
 
       # PERSONAL NAMES
       all_author_names = []
