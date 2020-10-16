@@ -4,22 +4,43 @@
   <h1>Developers</h1>
 <% end %>
 
-<h3>API</h3>
+<% content_for :sidebar do %>
+  <ul class="anchor-links" id="sidebar">
+      <li><%= link_to 'API', '#api', class:'scroll' %></li>
+      <li><%= link_to 'OAI-PMH', '#oai', class:'scroll' %></li>
+      <li><%= link_to 'SWORD', '#sword', class:'scroll' %></li>
+      <li><%= link_to 'Sitemap', '#sitemap', class:'scroll' %></li>
+      <li><%= link_to 'Metadata License', '#metadata_license', class:'scroll' %></li>
+  </ul>
+<% end %>
+
+<h3 id="API">API</h3>
 <p>The Academic Commons RESTful API can be used to query/search for records. We support JSON responses. Documentation and a GUI can be found at:<br>
 <%= link_to nil, "http://petstore.swagger.io/?url=#{root_url}api/v1/swagger_doc" %></p>
 
-<h3>OAI-PMH</h3>
+<h3 id="oai">OAI-PMH</h3>
 <p>Academic Commons supports the <a href="https://www.openarchives.org/OAI/openarchivesprotocol.html">Open Archives Initiative Protocol for Metadata Harvesting (OAI-PMH)</a>, version 2.0.
 The base URL is: <%= link_to oai_catalog_url, oai_catalog_url %></p>
 
-<h3>SWORD</h3>
+<h3 id="sword">SWORD</h3>
 
-<p>Academic Commons can receive content via <a href="http://swordapp.org/">SWORD deposit</a>. SWORD is best used for recurrent deposits. If you would like to deposit content via SWORD, contact us at <a href="mailto:ac@columbia.edu">ac@columbia.edu</a>.</p>
+<p>Academic Commons can receive materials via <a href="http://swordapp.org/">SWORD deposit</a>. SWORD is a protocol that automates the deposit process. SWORD is best used for recurring deposits, such as regular deposits of theses or working papers from Columbia departments and regular deposits of articles from Columbia and Columbia-affiliated journals. Additionally, while the AC API does not include POST functionality, SWORD can be used in a similar manner to make deposits to AC in a more programatic way.</p>
 
-<h3>Sitemap</h3>
+<p>To use SWORD you must have:</p>
+
+<ul>
+    <li>SWORD credentials (provided by Columbia Library staff)</li>
+    <li>Deposits that in package format which include an item (often a PDF) and an xml metadata file</li>
+    <li>The ability to create metadata xml files either manually or programmatically</li>
+    <li>Access to a SWORD client or SWORD library and the ability to initiate deposits</li>
+</ul>
+
+<p>If you would like to learn more about how to deposit content via SWORD or start the process of requesting credentials, contact us at <a href="mailto:ac@columbia.edu">ac@columbia.edu</a>.</p>
+
+<h3 id="sitemap">Sitemap</h3>
 <p>The sitemap for Academic Commons is regenerated every weekday. <%= link_to nil, "#{root_url}sitemap.xml.gz" %></p>
 
-<h3>Metadata license</h3>
+<h3 id="metadata_license">Metadata License</h3>
 <p>Academic Commons bibliographic metadata — excluding abstracts, which may be under copyright — is available under a <a href="https://creativecommons.org/publicdomain/zero/1.0/">Creative Commons 0 1.0 Universal</a> license.</p>
 
 <p class="small-images">
