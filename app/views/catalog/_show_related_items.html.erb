@@ -8,7 +8,7 @@
     <div class="panel-body">
       <dl>
         <% related_items.each do |related_item| -%>
-          <dt><%= related_item[:relation_type].sub('isNewVersionOf', 'Previous version').sub('isPreviousVersionOf', 'Subsequent version').remove(/^is/).underscore.gsub('_', ' ').upcase_first.concat(':') %></dt>
+          <dt><%= related_item_relation_label(related_item) %></dt>
           <dd><%= link_to related_item[:title], related_item[:link], target: '_blank' %></dd>
         <% end %>
       </dl>
