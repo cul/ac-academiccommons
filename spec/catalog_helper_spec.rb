@@ -1,4 +1,6 @@
-require 'rails_helper'
+# require 'rails_helper'
+# require 'academic_commons'
+require './helpers/catalog_helper.rb'
 
 describe CatalogHelper, :type => :helper do
   context do
@@ -7,62 +9,39 @@ describe CatalogHelper, :type => :helper do
     end
     let(:document) do
       {
-        'title_short' => '0123456789abc',
-        'title_long' => '0123456789abcdefghijklmnopqrstuvwxyz',
-        'title_long_array' => ['0123456789abcdefghijklmnopqrstuvwxyz']
+        'related_item_version_of' => (isVersionOf.sub('isVersionOf', 'Another thing')),
+        'related_item_previous_version_of' => (isPreviousVersionOf.sub('isPreviousVersionOf', 'Subsequent version')),
+        'related_item_new_version_of' => (isNewVersionOf.sub('isNewVersionOf', 'Previous version')),
+        'related_item_other' => (isReviewOf.remove(/^is/).underscore.gsub('_', ' ').upcase_first.concat(':'))
       }
     end
-    describe '#short_title' do
-      subject { helper.short_title(document) }
-      context "a short title" do
-        let(:document_show_link_field) { 'title_short' }
-        it { is_expected.to eql('0123456789abc') }
-      end
-      context "a long title" do
-        let(:document_show_link_field) { 'title_long' }
-        it { is_expected.to eql('0123456789abcdefghijklmnopq...') }
-      end
-      context "a long title in an array" do
-        let(:document_show_link_field) { 'title_long_array' }
-        it { is_expected.to eql('0123456789abcdefghijklmnopq...') }
-      end
-      context "no title" do
-        let(:document_show_link_field) { 'title_absent' }
-        it { is_expected.to be_nil }
+    describe '#related_item_version_of' do
+      subject { helper.related_item_version_of(document) }
+      context "a version of" do
+        let(:document_show_link_field) { 'related_item_version_of' }
+        it { is_expected.to eql('Another thing') }
       end
     end
-    describe '#url_for_document' do
-      let(:slug) { 'sluggo' }
-      let(:document_show_link_field) { 'title_short' }
-      subject { helper.url_for_document(SolrDocument.new(document)) }
-      context 'with a site result' do
-        let(:document) do
-          {
-            'title_short' => '0123456789abc',
-            'title_long' => '0123456789abcdefghijklmnopqrstuvwxyz',
-            'title_long_array' => ['0123456789abcdefghijklmnopqrstuvwxyz'],
-            'dc_type_ssm' => ['Publish Target'],
-            'slug_ssim' => [slug]
-          }
-        end
-        it { is_expected.to eql('/' + slug) }
+    describe '#related_item_previous_version_of' do
+      subject { helper.related_item_previous_version_of(document) }
+      context "a previous version of" do
+        let(:document_show_link_field) { 'related_item_previous_version_of' }
+        it { is_expected.to eql('Subsquent version') }
       end
-      context 'with a non-site result' do
-        let(:document) do
-          {
-            'title_short' => '0123456789abc',
-            'title_long' => '0123456789abcdefghijklmnopqrstuvwxyz',
-            'title_long_array' => ['0123456789abcdefghijklmnopqrstuvwxyz'],
-            'dc_type_ssm' => ['Unpublish Target'],
-            'slug_ssim' => [slug]
-          }
-        end
-        # until we configure routes in this helper config
-        it { is_expected.to be_a SolrDocument }
+    end
+    describe '#related_item_new_version_of' do
+      subject { helper.related_item_new_version_of(document) }
+      context "a new version of" do
+        let(:document_show_link_field) { 'related_item_new_version_of' }
+        it { is_expected.to eql('Previous version') }
       end
-      context 'with nil' do
-        subject { helper.url_for_document(nil) }
-        it { is_expected.to be_nil }
-      end
+    end
+    describe '#related_item_other' do
+      subject { helper.related_item_other(document) }
+      context "a review of" do
+        let(:document_show_link_field) { 'related_item_other' }
+        it { is_expected.to eql('Review of') }
+      end        
     end
   end
+end

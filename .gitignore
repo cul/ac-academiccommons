@@ -1,6 +1,7 @@
 .DS_Store
 .project
 .bundle
+.bash_profile
 db/*.sqlite3
 db/*.sqlite3-journal
 db/cstore/**
