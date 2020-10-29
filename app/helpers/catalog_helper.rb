@@ -33,10 +33,10 @@ module CatalogHelper
       Time.zone.parse(v).strftime('%B %-d, %Y')
     end
   end
- 
+
   # transforms related item label information
   def related_item_relation_label(related_item)
-    related_item = related_item[:relation_type].sub('isVersionOf', 'Another thing').sub('isNewVersionOf', 'Previous version').sub('isPreviousVersionOf', 'Subsequent version').remove(/^is/).underscore.gsub('_', ' ').upcase_first.concat(':')
+    related_item[:relation_type].sub('isNewVersionOf', 'Previous version').sub('isPreviousVersionOf', 'Subsequent version').remove(/^is/).underscore.gsub('_', ' ').upcase_first.concat(':')
   end
 
   # Wraps spans around each value.

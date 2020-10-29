@@ -1,47 +1,33 @@
-# require 'rails_helper'
-# require 'academic_commons'
-require './helpers/catalog_helper.rb'
+# frozen_string_literal: true
+require 'rails_helper'
 
-describe CatalogHelper, :type => :helper do
-  context do
-    before do
-      allow(helper).to receive(:related_item_relation_label).and_return(related_item_relation_label)
-    end
+describe CatalogHelper, type: :helper do
+  describe '#related_item_relation_label' do
+    subject { helper.related_item_relation_label(document) }
     let(:document) do
       {
-        'related_item_version_of' => (isVersionOf.sub('isVersionOf', 'Another thing')),
-        'related_item_previous_version_of' => (isPreviousVersionOf.sub('isPreviousVersionOf', 'Subsequent version')),
-        'related_item_new_version_of' => (isNewVersionOf.sub('isNewVersionOf', 'Previous version')),
-        'related_item_other' => (isReviewOf.remove(/^is/).underscore.gsub('_', ' ').upcase_first.concat(':'))
+        relation_type: relation_type_value
       }
     end
-    describe '#related_item_version_of' do
-      subject { helper.related_item_version_of(document) }
-      context "a version of" do
-        let(:document_show_link_field) { 'related_item_version_of' }
-        it { is_expected.to eql('Another thing') }
-      end
+
+    context "a version of" do
+      let(:relation_type_value) { 'isVersionOf' }
+      it { is_expected.to eql('Version of:') }
     end
-    describe '#related_item_previous_version_of' do
-      subject { helper.related_item_previous_version_of(document) }
-      context "a previous version of" do
-        let(:document_show_link_field) { 'related_item_previous_version_of' }
-        it { is_expected.to eql('Subsquent version') }
-      end
+
+    context "a previous version of" do
+      let(:relation_type_value) { 'isPreviousVersionOf' }
+      it { is_expected.to eql('Subsequent version:') }
     end
-    describe '#related_item_new_version_of' do
-      subject { helper.related_item_new_version_of(document) }
-      context "a new version of" do
-        let(:document_show_link_field) { 'related_item_new_version_of' }
-        it { is_expected.to eql('Previous version') }
-      end
+
+    context "a new version of" do
+      let(:relation_type_value) { 'isNewVersionOf' }
+      it { is_expected.to eql('Previous version:') }
     end
-    describe '#related_item_other' do
-      subject { helper.related_item_other(document) }
-      context "a review of" do
-        let(:document_show_link_field) { 'related_item_other' }
-        it { is_expected.to eql('Review of') }
-      end        
+
+    context "a review of" do
+      let(:relation_type_value) { 'isReviewOf' }
+      it { is_expected.to eql('Review of:') }
     end
   end
 end
