@@ -34,12 +34,25 @@ The base URL is: <%= link_to oai_catalog_url, oai_catalog_url %></p>
 
 <ul>
     <li>SWORD credentials (provided by Columbia Libraries)</li>
+        <ul>
+            <li>Username and password to use for Basic Authentication header in POST request</li>
+            <li>URL to use for the POST request</li>
+        </ul>
+</ul>
+<ul>
     <li>Deposits in package format that include an item (often a PDF) and an xml metadata file</li>
+        <ul>
+        <li>The SWORD server expects a file in zip format. This zip file will contain the item(s) to be deposited, along with a file called mets.xml. This file will contain metadata, including the list of item files. It is based on Metadata Encoding and Transmission Standard (METS). <%= link_to "View an xml example", "/sample_sword.xml" %>.</li>
+        </ul>
+</ul>
+<ul>
     <li>The ability to create metadata xml files either manually or programmatically</li>
+</ul>
+<ul>    
     <li>Access to a SWORD client or SWORD library and the ability to initiate deposits</li>
 </ul>
 
-<p>If you would like to learn more about how to deposit content via SWORD or start the process of requesting credentials, contact us at <a href="mailto:ac@columbia.edu">ac@columbia.edu</a>.</p>
+<p>If you would like to learn more about how to deposit content via SWORD or start the process of requesting credentials, contact us at <a href="mailto:ac@columbia.edu">ac@columbia.edu</a>.</p> 
 
 <h3 id="sitemap">Sitemap</h3>
 <p>The sitemap for Academic Commons is regenerated every weekday. <%= link_to nil, "#{root_url}sitemap.xml.gz" %></p>
