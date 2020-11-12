@@ -34,6 +34,11 @@ module CatalogHelper
     end
   end
 
+  # transforms related item label information
+  def related_item_relation_label(related_item)
+    related_item[:relation_type].sub('isNewVersionOf', 'Previous version').sub('isPreviousVersionOf', 'Subsequent version').remove(/^is/).underscore.gsub('_', ' ').upcase_first.concat(':')
+  end
+
   # Wraps spans around each value.
   def wrap_in_spans(**options)
     safe_join(options.fetch(:value, []).map { |v| content_tag(:span, html_escape(v)) })
