@@ -63,6 +63,8 @@ Rails.application.routes.draw do
 
   resources :uploads, only: [:index, :new, :create], path: 'upload'
 
+  get '/features/:slug', to: 'featured_searches#show'
+
   get 'myworks',             to: 'user#my_works'
   get 'account',             to: 'user#account'
   get 'unsubscribe_monthly', to: 'user#unsubscribe_monthly'
