@@ -1,0 +1,38 @@
+h2.featured-searches-heading {
+  font-size: 14px;
+  font-weight: bold;
+  margin: 18px 0 7px 0;
+  text-transform: uppercase;
+}
+
+.featured-searches {
+  font-size: 13px;
+  padding-bottom: 20px;
+}
+
+.featured-search .logo img {
+  border-radius: 6px;
+  margin-bottom: 7px;
+  max-height: 70px;
+  max-width: 100%;
+}
+
+.featured-search .title {
+  font-weight: 600;
+  margin: 0 0 5px 0;
+}
+
+@media screen and (max-width: 800px) {
+
+  .featured-search {
+    border-bottom: 1px dotted #ddd;
+    padding-bottom: 8px;
+    padding-top: 8px;
+  }
+
+  .featured-search .logo {
+    float: right;
+    margin-left: 10px;
+    max-width: 30%;
+  }
+}

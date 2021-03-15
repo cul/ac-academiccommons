@@ -1,0 +1,19 @@
+<%- if (features = AcademicCommons::FeaturedSearches.for(@response)).present? %>
+  <h2 class="featured-searches-heading">
+    Related to your search
+  </h2>
+  <div class="row featured-searches">
+    <%- features.each do |feature| %>
+      <div class="col-md-4 featured-search">
+        <div class="logo">
+          <img src="<%= image_url(feature.image_url) %>" alt="">
+        </div>
+        <div class="title"><%= feature.filter_value %></div>
+        <%- unless params.dig(:f, feature.feature_category.field_name) == [feature.filter_value] and params[:q].blank? %>
+          <%= link_to("See all results", "/features/#{feature.slug}", class: "more-results") %>
+        <%- end %>
+        <div class="description"><%= feature.description %> <%= link_to(feature.url, feature.url) %></div>
+      </div>
+    <%- end %>
+  </div>
+<%- end %>
