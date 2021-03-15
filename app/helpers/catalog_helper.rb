@@ -97,6 +97,12 @@ module CatalogHelper
     return results
   end
 
+  def exclusive_feature_search?(feature)
+    return false if params[:q].present? || params.fetch(:f, {}).keys.length > 1
+
+    params.dig(:f, feature.feature_category.field_name) == [feature.filter_value]
+  end
+
   ############### Copied from Blacklight CatalogHelper #####################
 
   def itemscope_itemtype

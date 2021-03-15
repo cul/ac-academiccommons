@@ -9,7 +9,7 @@
           <img src="<%= image_url(feature.image_url) %>" alt="">
         </div>
         <div class="title"><%= feature.filter_value %></div>
-        <%- unless params.dig(:f, feature.feature_category.field_name) == [feature.filter_value] and params[:q].blank? %>
+        <%- unless exclusive_feature_search?(feature) %>
           <%= link_to("See all results", "/features/#{feature.slug}", class: "more-results") %>
         <%- end %>
         <div class="description"><%= feature.description %> <%= link_to(feature.url, feature.url) %></div>
