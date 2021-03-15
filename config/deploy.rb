@@ -24,7 +24,7 @@ set :deploy_to,   "/opt/passenger/#{fetch(:instance)}/#{fetch(:deploy_name)}"
 set :log_level, :info
 
 # Default value for linked_dirs is []
-set :linked_dirs, fetch(:linked_dirs, []).push('log','tmp/pids', 'storage')
+set :linked_dirs, fetch(:linked_dirs, []).push('log','tmp/pids', 'storage', 'public/feature-logos')
 
 # Default value for keep_releases is 5
 set :keep_releases, 3
