@@ -83,6 +83,7 @@ Rails.application.routes.draw do
     resources :usage_statistics_reports, only: [:new, :create] do
       post 'email', on: :collection
     end
+    resources :featured_searches, only: [:index, :edit, :new, :update, :create, :destroy]
   end
 
   # Resque web interface, only administrators have access

@@ -30,7 +30,7 @@ end
 #   include_examples 'authorization required' do
 #     let(:http_request) { get :index }
 #   end
-shared_examples 'authorization required' do
+shared_examples 'authorization required' do |success_status|
   context 'without being logged in' do
     before do
       allow(controller).to receive(:current_user).and_return(nil)
@@ -60,13 +60,13 @@ shared_examples 'authorization required' do
 
   context 'logged in as an admin user' do
     include_context 'admin user for controller'
-
+    let(:expected_status) { success_status || 200 }
     before do
       http_request
     end
 
     it 'succeeds' do
-      expect(response.status).to be 200
+      expect(response.status).to be expected_status
     end
   end
 end
