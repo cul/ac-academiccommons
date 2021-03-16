@@ -1,20 +1,9 @@
 class CollectionsController < ApplicationController
-  # rubocop:disable Metrics/LineLength
   CONFIG = {
     featured: {
       title: 'Featured Partners',
       summary: 'Works shared by eight Columbia research centers. Want to showcase the work of your department or center here? Contact us at <a href="mailto:ac@columbia.edu">ac@columbia.edu</a>',
-      facet: 'department_ssim',
-      values: {
-        'Center for Behavioral Cardiovascular Health' => 'The Center for Behavioral Cardiovascular Health is a leader in cutting-edge behavioral medicine research dedicated to understanding how and why behaviors, psychological factors, and societal forces influence hypertension and cardiovascular disease. ',
-        'Center for International Earth Science Information Network' => 'The Center for International Earth Science Information Network works at the intersection of the social, natural, and information sciences, and specializes in on-line data and information management, spatial data integration and training, and interdisciplinary research related to human interactions in the environment.',
-        'Center on Japanese Economy and Business'     => 'The Center on Japanese Economy and Business is the preeminent US academic center focused on promoting knowledge of Japanese business systems in domestic, East Asia, and international contexts.',
-        'Columbia Center on Sustainable Investment'   => 'The Columbia Center on Sustainable Investment is the only university-based applied research center and forum dedicated to the study, practice and discussion of sustainable international investment.',
-        'Libraries'                                   => 'As vital partners in the University\'s research and learning ecosystem, Columbia University Libraries connects users with rich and distinctive collections, fosters meaningful learning experiences, and provides innovative research support for a large, diverse user population. The Libraries has an open-access policy and the research of its employees is featured here.',
-        'Community College Research Center'           => 'The Community College Research Center strategically assesses the problems and performance of community colleges in order to contribute to the development of practice and policy that expands access to higher education and promotes success for all students.',
-        'National Center for Disaster Preparedness'   => 'The National Center for Disaster Preparedness at the Earth Institute works to understand and improve the nation’s capacity to prepare for, respond to and recover from disasters. ',
-        'Tow Center for Digital Journalism'           => 'The Tow Center for Digital Journalism hosts a variety of diverse research projects that explore innovation at the intersection of journalism and technology.'
-      }
+      facet: 'department_ssim'
     },
     doctoraltheses: {
       title: 'Doctoral Theses',
@@ -37,7 +26,6 @@ class CollectionsController < ApplicationController
       facet: 'partner_journal_ssi'
     }
   }.freeze
-  # rubocop:enable Metrics/LineLength
 
   # GET /explore
   # NB custom resource path for collections
@@ -52,7 +40,7 @@ class CollectionsController < ApplicationController
     raise(ActionController::RoutingError, 'not found') unless valid_category?(params[:category_id])
 
     # If category_id is valid look up any additional solr parameters
-    @category = collections_config[params[:category_id].to_sym]
+    @category = send params[:category_id].to_sym
     response = AcademicCommons.search do |parameters|
       parameters.rows(0).facet_limit(-1).facet_by(@category.facet)
       if (filters = @category.filter)
@@ -69,6 +57,32 @@ class CollectionsController < ApplicationController
       c.description = @category.values[value] if @category.values
       c
     end
+  end
+
+  def featured
+    config = collections_config[:featured]
+    unless config.values
+      feature_category = FeatureCategory.find_by(field_name: config.facet)
+      if feature_category
+        values = feature_category.featured_searches.all.order("filter_value ASC").map { |feature|
+          [feature.filter_value, feature.description]
+        }.to_h
+        config.values = values
+      end
+    end
+    config
+  end
+
+  def doctoraltheses
+    collections_config[:doctoraltheses]
+  end
+
+  def producedatcolumbia
+    collections_config[:producedatcolumbia]
+  end
+
+  def journals
+    collections_config[:journals]
   end
 
   private
