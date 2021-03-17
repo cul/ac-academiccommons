@@ -2,7 +2,7 @@ class CreateFeaturedSearches < ActiveRecord::Migration[5.2]
   def change
     create_table :featured_searches do |t|
       t.string :slug, null: false
-      t.string :filter_value, null: false
+      t.string :filter_value, null: false, index: true
       t.integer :priority, null: false, default: 0
       t.string :url
       t.string :thumbnail_url
