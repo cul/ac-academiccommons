@@ -8,9 +8,9 @@ describe FeaturedSearch, type: :model do
   let(:description_path) { File.join(temp_dir, FeaturedSearch::DESCRIPTION_FILE) }
   before { featured_search.export(temp_dir) }
   describe '.import' do
-    let(:expected) { JSON.parse featured_search.to_json(include: :feature_category) }
+    let(:expected) { featured_search.export_attributes }
     let(:import) { FeaturedSearch.import(temp_dir) }
-    let(:actual) { JSON.parse import.to_json(include: :feature_category) }
+    let(:actual) { import.export_attributes }
     before { FeaturedSearch.find(featured_search.id).destroy }
     it "imports from an export" do
       expect(actual).to eql(expected)
@@ -18,7 +18,7 @@ describe FeaturedSearch, type: :model do
     end
   end
   describe '#export' do
-    let(:expected_properties) { JSON.parse(featured_search.to_json(except: :description, include: :feature_category)).merge('description' => FeaturedSearch::DESCRIPTION_FILE) }
+    let(:expected_properties) { featured_search.export_attributes }
     let(:expected_description) { featured_search.description }
     it "exports expected properties" do
       actual = YAML.safe_load(File.read(properties_path))

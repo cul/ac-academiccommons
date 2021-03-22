@@ -64,8 +64,8 @@ class CollectionsController < ApplicationController
     unless config.values
       feature_category = FeatureCategory.find_by(field_name: config.facet)
       if feature_category
-        values = feature_category.featured_searches.all.order("filter_value ASC").map { |feature|
-          [feature.filter_value, feature.description]
+        values = feature_category.featured_searches.all.order("label ASC").map { |feature|
+          [feature.slug, feature.description]
         }.to_h
         config.values = values
       end

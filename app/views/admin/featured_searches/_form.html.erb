@@ -8,9 +8,22 @@
     <%= f.select :feature_category_id, FeatureCategory.all.map {|fc| [fc.label, fc.id]}.to_h %>
   </div>
   <div class="form-group">
-    <%= f.label :filter_value, 'Filter Value' %>
-    <%= f.text_field :filter_value %>
+    <%= f.label :label, 'Feature Label' %>
+    <%= f.text_field :label %>
   </div>
+  <%= f.fields_for :featured_search_values do |value_form| %>
+    <div class="form-group">
+      <%= value_form.label :value, 'Filter Value' %>
+      Delete: <%= value_form.check_box :_destroy %>
+      <%= value_form.text_field :value %>
+    </div>
+  <%- end %>
+  <%= f.fields_for :featured_search_values, FeaturedSearchValue.new do |value_form| %>
+    <div class="form-group">
+      <%= value_form.label :value, 'Add Filter Value' %>
+      <%= value_form.text_field :value %>
+    </div>
+  <%- end %>
   <div class="form-group">
     <%= f.label :priority, 'Priority' %>
     <%= f.text_field :priority %>

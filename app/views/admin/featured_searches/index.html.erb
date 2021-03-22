@@ -16,7 +16,7 @@
             <%= link_to featured_search.slug, edit_admin_featured_search_path(featured_search) %>
           </td>
           <td>
-            <%= link_to featured_search.filter_value, edit_admin_featured_search_path(featured_search) %>
+            <%= link_to featured_search.label, edit_admin_featured_search_path(featured_search) %>
           </td>
           <td>
               <%= link_to(admin_featured_search_path(featured_search), method: :delete, data: {confirm: "Are you sure you want to delete featured search at #{featured_search.slug}? It cannot be undone."}, class: ['btn btn-sm btn-danger']) do  %>

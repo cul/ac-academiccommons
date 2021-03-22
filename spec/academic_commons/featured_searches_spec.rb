@@ -3,10 +3,11 @@ require 'rails_helper'
 
 describe AcademicCommons::FeaturedSearches do
   let(:featured_search) { FactoryBot.create(:libraries_featured_search) }
+  let(:featured_search_value) { featured_search.featured_search_values.first }
   let(:num_docs) { described_class::MINIMUM_DOC_COUNT }
   let(:facet_field) { featured_search.feature_category.field_name }
   let(:facet_hits) { num_docs }
-  let(:facet_item) { Blacklight::Solr::Response::Facets::FacetItem.new(value: featured_search.filter_value, hits: facet_hits) }
+  let(:facet_item) { Blacklight::Solr::Response::Facets::FacetItem.new(value: featured_search_value.value, hits: facet_hits) }
   let(:facet) { Blacklight::Solr::Response::Facets::FacetField.new(facet_field, [facet_item]) }
   let(:solr_response) do
     sr = instance_double(Blacklight::Solr::Response)

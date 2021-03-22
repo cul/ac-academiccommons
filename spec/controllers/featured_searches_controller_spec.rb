@@ -15,7 +15,7 @@ describe FeaturedSearchesController, type: :controller do
         expect(response.status).to be(302)
       end
       it "sets Location header for catalog with a facet" do
-        expect(response.header['Location']).to eql("http://test.host/search?f%5B#{field_name}%5D%5B%5D=#{filter_param}")
+        expect(response.header['Location']).to eql("http://test.host/search?f%5Bfeatured_search%5D%5B%5D=#{slug}")
       end
     end
     context 'for a non-existent feature' do

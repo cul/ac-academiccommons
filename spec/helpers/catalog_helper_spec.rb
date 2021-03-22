@@ -12,14 +12,14 @@ describe CatalogHelper, type: :helper do
     allow(helper).to receive(:params).and_return(params)
   end
   describe 'exclusive_feature_search?' do
-    let(:params) { parameter_class.new(f: { field_name.to_sym => [featured_search.filter_value] }) }
+    let(:params) { parameter_class.new(f: { featured_search: [featured_search.slug] }) }
     it { expect(helper.exclusive_feature_search?(featured_search)).to be true }
     context "there is a query param" do
-      let(:params) { parameter_class.new(q: 'hello', f: { field_name.to_sym => [featured_search.filter_value] }) }
+      let(:params) { parameter_class.new(q: 'hello', f: { featured_search: [featured_search.slug] }) }
       it { expect(helper.exclusive_feature_search?(featured_search)).to be false }
     end
     context "there are multiple filters" do
-      let(:params) { parameter_class.new(f: { :hello => ['moto'], field_name.to_sym => [featured_search.filter_value] }) }
+      let(:params) { parameter_class.new(f: { hello: ['moto'], featured_search: [featured_search.slug] }) }
       it { expect(helper.exclusive_feature_search?(featured_search)).to be false }
     end
   end

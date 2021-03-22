@@ -51,7 +51,7 @@ module Admin
     private
 
       def featured_search_params
-        params.require(:featured_search).permit(:feature_category_id, :filter_value, :slug, :description, :priority, :url, :thumbnail_url)
+        params.require(:featured_search).permit(:feature_category_id, :label, :slug, :description, :priority, :url, :thumbnail_url, featured_search_values_attributes: [:id, :value, :_destroy])
       end
   end
 end

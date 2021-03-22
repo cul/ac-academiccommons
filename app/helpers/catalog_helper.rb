@@ -100,7 +100,7 @@ module CatalogHelper
   def exclusive_feature_search?(feature)
     return false if params[:q].present? || params.fetch(:f, {}).keys.length > 1
 
-    params.dig(:f, feature.feature_category.field_name) == [feature.filter_value]
+    params.dig(:f, :featured_search) == [feature.slug]
   end
 
   ############### Copied from Blacklight CatalogHelper #####################

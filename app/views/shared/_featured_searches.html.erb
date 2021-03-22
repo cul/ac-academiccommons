@@ -8,9 +8,9 @@
         <div class="logo">
           <img src="<%= image_url(feature.image_url) %>" alt="">
         </div>
-        <div class="title"><%= feature.filter_value %></div>
+        <div class="title"><%= feature.label %></div>
         <%- unless exclusive_feature_search?(feature) %>
-          <%= link_to("See all results", "/features/#{feature.slug}", class: "more-results") %>
+          <%= link_to("See all #{feature.feature_category.label} content", "/features/#{feature.slug}", class: "more-results") %>
         <%- end %>
         <div class="description"><%= feature.description %> <%= link_to(feature.url, feature.url) %></div>
       </div>

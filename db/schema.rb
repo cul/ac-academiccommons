@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_03_10_154653) do
+ActiveRecord::Schema.define(version: 2021_03_22_170653) do
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
@@ -113,9 +113,16 @@ ActiveRecord::Schema.define(version: 2021_03_10_154653) do
     t.index ["field_name"], name: "index_feature_categories_on_field_name", unique: true
   end
 
+  create_table "featured_search_values", force: :cascade do |t|
+    t.string "value", null: false
+    t.integer "featured_search_id", null: false
+    t.index ["featured_search_id"], name: "index_featured_search_values_on_featured_search_id"
+    t.index ["value"], name: "index_featured_search_values_on_value"
+  end
+
   create_table "featured_searches", force: :cascade do |t|
     t.string "slug", null: false
-    t.string "filter_value", null: false
+    t.string "label", null: false
     t.integer "priority", default: 0, null: false
     t.string "url"
     t.string "thumbnail_url"

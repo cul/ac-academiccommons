@@ -13,6 +13,19 @@ class CatalogController < ApplicationController
   before_action :record_view_stats, only: :show
   # rubocop:enable Rails/LexicallyScopedActionFilter
 
+  class LazyFeatureQueryFacet < Hash
+    def [](key)
+      fs = FeaturedSearch.where(slug: key).includes(:feature_category, :featured_search_values).first
+      if fs
+        search_value = fs.featured_search_values.map(&:value).join('" OR "')
+        {
+          label: fs.label,
+          fq: "#{fs.feature_category.field_name}:(\"#{search_value}\")"
+        }
+      end
+    end
+  end
+
   configure_blacklight do |config|
     # Delete default blacklight components we aren't using
     config.index.document_actions.delete(:bookmark)
@@ -94,6 +107,7 @@ class CatalogController < ApplicationController
                                                        }
                                                      }
     config.add_facet_field 'type_of_resource_ssim', label: 'Resource Type', if: ->(context, _, _) { context.current_user&.admin? }
+    config.add_facet_field 'featured_search',    label: 'Featured', query: LazyFeatureQueryFacet.new, show: false
 
     # Have BL send all facet field names to Solr, which has been the default
     # previously. Simply remove these lines if you'd rather use Solr request

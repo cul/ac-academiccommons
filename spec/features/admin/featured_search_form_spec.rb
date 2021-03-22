@@ -15,7 +15,8 @@ describe 'Featured Search Form', type: :feature, js: true do
       visit new_admin_featured_search_path
       select category, from: 'featured_search[feature_category_id]'
       fill_in 'featured_search[slug]', with: slug
-      fill_in 'featured_search[filter_value]', with: filter_value
+      fill_in 'featured_search[label]', with: filter_value
+      fill_in 'featured_search[featured_search_values_attributes][0][value]', with: filter_value
       fill_in 'featured_search[url]', with: feature_url
       fill_in 'featured_search[description]', with: description
       click_button 'Submit'

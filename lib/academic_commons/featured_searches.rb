@@ -9,16 +9,28 @@ module AcademicCommons
     def self.for(response)
       document_count = response&.total
       return [] if document_count.to_i < MINIMUM_DOC_COUNT
-      conditions = {}
-      feature_categories.each do |category|
-        show_threshold = (category.threshold / 100) * document_count
-        candidates = response.aggregations[category.field_name]&.items || []
-        candidates = candidates.select { |item| item.hits >= show_threshold }.map(&:value)
-        conditions[category.id] = candidates if candidates.present?
+      thresholds = category_thresholds(document_count)
+      conditions = build_conditions(response.aggregations, thresholds)
+      return [] unless conditions.present?
+      build_relation(conditions).select do |feature|
+        feature.featured_search_values.map { |val| conditions[feature.feature_category_id].fetch(val.value, 0) }.sum >= thresholds[feature.feature_category_id][:show]
       end
+    end
+
+    def self.build_conditions(aggregations, thresholds)
+      conditions = {}
+      feature_categories.each do |id, props|
+        candidates = aggregations[props[:field_name]]&.items || []
+        candidates = candidates.select { |item| item.hits >= thresholds[id][:query] }.map { |i| [i.value, i.hits] }.to_h
+        conditions[id] = candidates if candidates.present?
+      end
+      conditions
+    end
+
+    def self.build_relation(conditions)
       conditions.inject(self) { |relation, c|
-        relation.or(FeaturedSearch.where(feature_category_id: c[0], filter_value: c[1]))
-      }.order('priority DESC')
+        relation.or(FeaturedSearch.where(feature_category_id: c[0], 'featured_search_values.value'.to_sym => c[1].keys))
+      }.includes(:featured_search_values).order('priority DESC')
     end
 
     # reflect the relation back
@@ -33,10 +45,22 @@ module AcademicCommons
       []
     end
 
-    # cachable list of feature categories
-    # @return Iterable<FeatureCategory> categories
+    # cached map of feature category ids to threshold and field_name properties
+    # @return Hash<id, Hash> categories
     def self.feature_categories
-      FeatureCategory.all
+      Rails.cache.fetch(FeatureCategory::THRESHOLD_CACHE_KEY) do
+        FeatureCategory.all.map { |e| [e.id, { threshold: e.threshold, field_name: e.field_name }] }.to_h
+      end
+    end
+
+    def self.category_thresholds(document_count)
+      thresholds = {}
+      feature_categories.each do |id, props|
+        thresholds[id] = {}
+        thresholds[id][:show] = (props[:threshold] / 100) * document_count
+        thresholds[id][:query] = thresholds[id][:show] / 3
+      end
+      thresholds
     end
   end
 end
