@@ -129,6 +129,7 @@ ActiveRecord::Schema.define(version: 2021_03_22_170653) do
     t.text "description"
     t.integer "feature_category_id", null: false
     t.index ["feature_category_id"], name: "index_featured_searches_on_feature_category_id"
+    t.index ["label"], name: "index_featured_searches_on_label"
     t.index ["slug"], name: "index_featured_searches_on_slug", unique: true
   end
 
@@ -149,18 +150,6 @@ ActiveRecord::Schema.define(version: 2021_03_22_170653) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["doi"], name: "index_notifications_on_doi"
-  end
-
-  create_table "reports", force: :cascade do |t|
-    t.string "name", limit: 255, null: false
-    t.string "category", limit: 255, null: false
-    t.datetime "generated_on"
-    t.integer "user_id"
-    t.text "options"
-    t.text "data"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["category"], name: "index_reports_on_category"
   end
 
   create_table "searches", force: :cascade do |t|
