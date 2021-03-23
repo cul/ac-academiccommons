@@ -62,5 +62,10 @@ module AcademicCommons
       end
       thresholds
     end
+
+    def self.to_fq(feature)
+      search_value = feature.featured_search_values.map(&:value).join('" OR "')
+      "#{feature.feature_category.field_name}:(\"#{search_value}\")"
+    end
   end
 end

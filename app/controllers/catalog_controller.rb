@@ -17,10 +17,9 @@ class CatalogController < ApplicationController
     def [](key)
       fs = FeaturedSearch.where(slug: key).includes(:feature_category, :featured_search_values).first
       if fs
-        search_value = fs.featured_search_values.map(&:value).join('" OR "')
         {
           label: fs.label,
-          fq: "#{fs.feature_category.field_name}:(\"#{search_value}\")"
+          fq: AcademicCommons::FeaturedSearches.to_fq(fs)
         }
       end
     end

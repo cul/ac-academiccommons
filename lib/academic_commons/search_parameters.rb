@@ -24,12 +24,7 @@ module AcademicCommons
     end
 
     def filter(key, value)
-      @parameters[:fq] << if value.start_with?('(', '[') && value.end_with?(']', ')')
-                            "#{key}:#{value}"
-                          else
-                            "#{key}:\"#{value}\""
-                          end
-
+      @parameters[:fq] << (value.match?(/^[\[\(].*[\]\)]$/) ? "#{key}:#{value}" : "#{key}:\"#{value}\"")
       self
     end
 
@@ -108,12 +103,8 @@ module AcademicCommons
 
     def embargoed_only
       filter('object_state_ssi', 'A')
-      @parameters[:fq] << 'free_to_read_start_date_dtsi:[NOW+1DAYS TO *]'
+      filter('free_to_read_start_date_dtsi', '[NOW+1DAYS TO *]')
     end
-
-    def member_of(pid); end
-
-    def fedora3_pid(pid); end
 
     def without_facets
       @parameters[:facet] = false
@@ -124,6 +115,12 @@ module AcademicCommons
       @parameters[:facet] = true
       @parameters[:'facet.field'] = fields
       self
+    end
+
+    def add_facet_query(query_def)
+      return unless query_def.present?
+      @parameters[:'facet.query'] ||= []
+      @parameters[:'facet.query'] += Array(query_def)
     end
 
     def facet_limit(limit)
