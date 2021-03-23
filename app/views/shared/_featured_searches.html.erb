@@ -6,13 +6,15 @@
     <%- features.each do |feature| %>
       <div class="col-md-4 featured-search">
         <div class="logo">
-          <img src="<%= image_url(feature.image_url) %>" alt="">
+          <%= link_to feature.url, target: "_blank", rel: "noopener noreferrer" do -%>
+            <%= image_tag(image_url(feature.image_url), alt: "link to #{feature.label} site") %>
+          <%- end %>
         </div>
         <div class="title"><%= feature.label %></div>
         <%- unless exclusive_feature_search?(feature) %>
           <%= link_to("See all #{feature.feature_category.label} content", "/features/#{feature.slug}", class: "more-results") %>
         <%- end %>
-        <div class="description"><%= feature.description %> <%= link_to(feature.url, feature.url) %></div>
+        <div class="description"><%= feature.description %> <%= link_to(feature.url, feature.url, target: "_blank", rel: "noopener noreferrer") %></div>
       </div>
     <%- end %>
   </div>
