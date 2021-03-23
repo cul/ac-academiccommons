@@ -15,13 +15,14 @@ class CollectionsController < ApplicationController
         degree_level_name_ssim: 'Doctoral',
         degree_grantor_ssim: '("Columbia University" OR "Teachers College, Columbia University" OR "Union Theological Seminary" OR "Mailman School of Public Health, Columbia University")'
       },
-      labels: {}
+      values: {}
     },
     producedatcolumbia: {
       title: 'Produced at Columbia',
       summary: 'Series of working papers, event videos, and more from departments and centers on campus.',
       facet: 'series_ssim',
-      filter: {}, labels: {}
+      filter: {},
+      values: {}
     },
     journals: {
       title: 'Columbia Journals',
@@ -45,25 +46,25 @@ class CollectionsController < ApplicationController
 
     # If category_id is valid look up any additional solr parameters
     @category = send params[:category_id].to_sym
-    facet_name = @category.queries ? "featured_search" : @category.facet
+    facet_name = @category.use_queries ? "featured_search" : @category.facet
     response = AcademicCommons.search do |parameters|
       parameters.rows(0).facet_limit(-1)
-      if @category.queries # {!ex=pt key=valueKey}field:query
-        @category.queries.each { |key, query| parameters.add_facet_query "{!ex=featured_search key=#{key}}#{query}" }
+      if @category.use_queries # {!ex=pt key=valueKey}field:query
+        @category.values.each { |key, value| parameters.add_facet_query "{!ex=featured_search key=#{key}}#{value.query}" }
       else
         parameters.facet_by(facet_name)
         @category.filter.each { |f, v| parameters.filter(f, v) }
       end
     end
 
-    facet_counts = @category.queries ? response.facet_queries : response.facet_fields[facet_name].each_slice(2).to_a.to_h
-    facet_counts.keep_if { |k, _| @category.values.keys.include?(k) } if @category.values
+    facet_counts = @category.use_queries ? response.facet_queries : response.facet_fields[facet_name].each_slice(2).to_a.to_h
+    facet_counts.keep_if { |k, _| @category.values.keys.include?(k) } if @category.values.present?
 
     @collections = facet_counts.map do |value, count|
       filters = { facet_name => value }.merge(@category.filter)
-      c = OpenStruct.new(label: value, count: count, search_url: search_url(filters))
-      c.label = @category.labels.fetch(value, value)
-      c.description = @category.values&.fetch(value, nil)
+      c = @category.values.fetch(value, OpenStruct.new(label: value))
+      c.count = count
+      c.search_url = search_url(filters)
       c
     end
   end
@@ -91,15 +92,14 @@ class CollectionsController < ApplicationController
   private
 
   def add_category_data(config)
-    config.labels = {}
-    config.queries = {}
     config.values = {}
+    config.use_queries = true
     feature_category = FeatureCategory.find_by(field_name: config.facet)
     return unless feature_category
     feature_category.featured_searches.all.order("label ASC").map do |feature|
-      config.values[feature.slug] = feature.description
-      config.labels[feature.slug] = feature.label
-      config.queries[feature.slug] = AcademicCommons::FeaturedSearches.to_fq(feature)
+      struct_data = { value: feature.slug, query: AcademicCommons::FeaturedSearches.to_fq(feature) }
+      [:description, :image_url, :label].each { |key| struct_data[key] = feature.send(key) }
+      config.values[feature.slug] = OpenStruct.new(struct_data)
     end
   end
 
