@@ -49,7 +49,7 @@ module AcademicCommons
     # @return Hash<id, Hash> categories
     def self.feature_categories
       Rails.cache.fetch(FeatureCategory::THRESHOLD_CACHE_KEY) do
-        FeatureCategory.all.map { |e| [e.id, { threshold: e.threshold, field_name: e.field_name }] }.to_h
+        FeatureCategory.all.each.map { |e| [e.id, { threshold: e.threshold, field_name: e.field_name }] }.to_h
       end
     end
 
