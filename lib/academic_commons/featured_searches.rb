@@ -2,6 +2,7 @@
 module AcademicCommons
   module FeaturedSearches
     MINIMUM_DOC_COUNT = 2
+    QUERYABLE_THRESHOLD_RATIO = 5
     # Finds FeaturedSearch entities relevant to the Solr response
     #
     # @param SolrResponse solr response structure including facets and documents
@@ -58,7 +59,7 @@ module AcademicCommons
       feature_categories.each do |id, props|
         thresholds[id] = {}
         thresholds[id][:show] = (props[:threshold] / 100) * document_count
-        thresholds[id][:query] = thresholds[id][:show] / 3
+        thresholds[id][:query] = thresholds[id][:show] / QUERYABLE_THRESHOLD_RATIO
       end
       thresholds
     end
