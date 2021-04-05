@@ -1,18 +1,16 @@
-<% @collections.each do |feature| %>
-  <div class="panel">
-    <div class="panel-heading featured-search">
-      <h3 class="panel-title logo">
-        <%= link_to feature.url, target: "_blank", rel: "noopener noreferrer", style: "text-decoration:none;" do -%>
-          <%= image_tag(image_url(feature.image_url), alt: "link to #{feature.label} site") %>
-        <%- end %>
-        <%= feature.label %> (<%= feature.count %>)
-      </h3>
-    </div>
-    <div class="panel-body">
-      <%= feature.description %>
-    </div>
-    <div class="panel-footer">
-      <%= link_to("See all #{feature.label} content", "/features/#{feature.value}", class: "more-results") %>
-    </div>
+<div class="menu">
+  <div class="row">
+    <% @collections.each do |feature| %>
+      <div class="tile">
+        <div class="logo">
+          <%= link_to feature.url, target: "_blank", rel: "noopener noreferrer", style: "text-decoration:none;" do -%>
+            <%= image_tag(image_url(feature.image_url), alt: "link to #{feature.label} site") %>
+          <%- end %>
+        </div>
+        <h3><%= feature.label %> (<%= feature.count %>)</h3>
+        <p><%= feature.description %></p>
+        <%= link_to("See all #{feature.label} content", "/features/#{feature.value}", class: "more-results") %>
+      </div>
+    <% end %>
   </div>
-<% end %>
+</div>
