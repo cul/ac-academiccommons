@@ -7,9 +7,9 @@
             <%= image_tag(image_url(feature.image_url), alt: "link to #{feature.label} site") %>
           <%- end %>
         </div>
-        <h3><%= feature.label %> (<%= feature.count %>)</h3>
+        <h3><%= feature.label %></h3>
         <p><%= feature.description %></p>
-        <%= link_to("See all #{feature.label} content", "/features/#{feature.value}", class: "more-results") %>
+        <%= link_to("See all #{feature.label} content (#{feature.count} items)", "/features/#{feature.value}", class: "more-results") %>
       </div>
     <% end %>
   </div>
