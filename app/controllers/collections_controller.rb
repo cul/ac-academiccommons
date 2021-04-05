@@ -98,7 +98,7 @@ class CollectionsController < ApplicationController
     return unless feature_category
     feature_category.featured_searches.all.order("label ASC").map do |feature|
       struct_data = { value: feature.slug, query: AcademicCommons::FeaturedSearches.to_fq(feature) }
-      [:description, :image_url, :label].each { |key| struct_data[key] = feature.send(key) }
+      [:description, :image_url, :label, :url].each { |key| struct_data[key] = feature.send(key) }
       config.values[feature.slug] = OpenStruct.new(struct_data)
     end
   end
