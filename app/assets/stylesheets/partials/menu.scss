@@ -18,7 +18,7 @@
     border-radius: 3px;
     display: block;
     margin: 10px;
-    padding: 20px 25px 10px 25px;
+    padding: 20px 25px;
     width: 100%;
   }
 
@@ -37,7 +37,7 @@
   & p {
     font-weight: 300;
     line-height: 1.5;
-    margin: 3px 0 20px 0;
+    margin: 3px 0;
   }
 
   & a {
@@ -59,7 +59,7 @@
   & .collections,
   & .upload {
     box-shadow: $box-shadow;
-    padding: 25px 30px 8px 30px;
+    padding: 25px 30px;
     width: auto;
     z-index: 100;
   }
