@@ -76,13 +76,13 @@
     <mods:topic>Bibliography</mods:topic>
   </mods:subject>
   <mods:note>View the Footprints project website at https://footprints.ccnmtl.columbia.edu. View the GitHub repository at https://github.com/ccnmtl/footprints.</mods:note>
-  <mods:relatedItem otherType="isSupplementTo" otherTypeAuth="DataCite">
+  <mods:relatedItem otherType="isSupplementTo" otherTypeAuth="datacite">
     <mods:titleInfo>
       <mods:title>Footprints: Jewish Books through Time and Place</mods:title>
     </mods:titleInfo>
     <mods:identifier type="url">https://footprints.ctl.columbia.edu/</mods:identifier>
   </mods:relatedItem>
-  <mods:relatedItem otherType="isVersionOf" otherTypeAuth="DataCite">
+  <mods:relatedItem otherType="isVersionOf" otherTypeAuth="datacite">
     <mods:titleInfo>
       <mods:title>footprints</mods:title>
     </mods:titleInfo>

@@ -2,6 +2,7 @@
 .project
 .bundle
 db/*.sqlite3
+db/*.sqlite3-journal
 db/cstore/**
 db/sphinx/**
 log/*.log
@@ -48,3 +49,4 @@ coverage/*
 /yarn-error.log
 yarn-debug.log*
 .yarn-integrity
+.bash_profile

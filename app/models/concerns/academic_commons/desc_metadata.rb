@@ -24,6 +24,18 @@ module AcademicCommons
       '1' => 'Master\'s',
       '2' => 'Doctoral'
     }.freeze
+    # Related item types should be displayed in this order.
+    ORDERED_RELATED_ITEM_TYPES = [
+      'isIdenticalTo',
+      'isVersionOf',
+      'isNewVersionOf',
+      'isPreviousVersionOf',
+      'isSupplementedBy',
+      'isSupplementTo',
+      'referencedBy',
+      'references',
+      'reviewOf'
+    ].freeze
 
     # Keeping track of multivalued fields.
     MULTIVALUED_FIELDS = %w[\w+_ssm \w+_ssim \w+_q suggest].freeze
@@ -87,11 +99,13 @@ module AcademicCommons
       add_field.call 'related_url_ssi', mods.at_css('location > url')
 
       # TITLE
-      # related_titles = mods.css('relatedItem[@type=\'host\']:not([displayLabel=Project])>titleInfo').css('>nonSort,title')
-      add_field.call 'title_ssi',  mods.at_css('> titleInfo > title')
-      add_field.call 'title_sort', mods.at_css('> titleInfo > title')
-      add_field.call 'title_q',    mods.at_css('> titleInfo > title')
-      add_field.call 'suggest',    mods.at_css('> titleInfo > title')
+      # Note: We are intentionally including the non-sort portion in the title_sort field to
+      # preserve existing app behavior.  This is what the AC app owners want.
+      title = [mods.at_css('> titleInfo > nonSort'), mods.at_css('> titleInfo > title')].compact.join(' ')
+      add_field.call 'title_ssi',  title
+      add_field.call 'title_sort', title
+      add_field.call 'title_q',    title
+      add_field.call 'suggest',    title
 
       # PERSONAL NAMES
       all_author_names = []
@@ -242,9 +256,7 @@ module AcademicCommons
       # RELATED ITEM
       #
       # Creates a json structure that is an Array of Hashes. Each hash is a related items entry.
-      related_items_selector = '//relatedItem[@otherType=\'isVersionOf\' or @otherType=\'isNewVersionOf\'' \
-                               ' or @otherType=\'isPreviousVersionOf\' or @otherType=\'isSupplementedBy\'' \
-                               ' or @otherType=\'isSupplementTo\' or @type=\'reviewOf\']'
+      related_items_selector = '//relatedItem[' + ORDERED_RELATED_ITEM_TYPES.map { |type| "@otherType='#{type}'" }.join(' or ') + ']'
       related_items = mods.xpath(related_items_selector).map do |related_item|
         identifier = related_item.at_css('> identifier') # There should only be one identifier
 
