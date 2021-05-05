@@ -9,7 +9,7 @@
         </div>
         <h3><%= feature.label %></h3>
         <p><%= feature.description %></p>
-        <p><%= link_to("See all #{feature.label} content (#{feature.count} items)", "/features/#{feature.value}", class: "more-results") %></p>
+        <p><%= link_to("See all #{feature.label} content (#{feature.count} items)", featured_search_url(feature.value), class: "more-results") %></p>
       </div>
     <% end %>
   </div>
