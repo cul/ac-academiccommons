@@ -95,9 +95,9 @@ class CatalogController < ApplicationController
     config.add_facet_field 'degree_level_name_ssim', label: 'Degree Level',    limit: 5
     config.add_facet_field 'pub_date_isi',           label: 'Date Published',  limit: 5, range: { slider_js: false }
     config.add_facet_field 'series_ssim',            label: 'Series',          limit: 5
+    config.add_facet_field 'partner_journal_ssi',    label: 'Journal',         limit: 5, show: true
     config.add_facet_field 'language_ssim',          label: 'Language',        limit: 5
     config.add_facet_field 'geographic_area_ssim',   label: 'Geographic Area', limit: 5, show: false
-    config.add_facet_field 'partner_journal_ssi',    label: 'Journal',         limit: 5, show: true
     config.add_facet_field 'degree_grantor_ssim',    label: 'Degree Grantor',  limit: 5, show: false,
                                                      query: {
                                                        '("Columbia University" OR "Teachers College, Columbia University" OR "Union Theological Seminary" OR "Mailman School of Public Health, Columbia University")' => {
