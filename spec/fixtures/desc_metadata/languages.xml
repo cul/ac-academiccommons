@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<mods:mods xmlns:mods="http://www.loc.gov/mods/v3" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.loc.gov/mods/v3 http://www.loc.gov/standards/mods/v3/mods-3-4.xsd">
+<mods:language>
+<mods:languageTerm type="text" valueURI="http://id.loc.gov/vocabulary/iso639-2/eng" authority="iso639-2b">English</mods:languageTerm>
+</mods:language>
+<mods:language>
+<mods:languageTerm type="text" valueURI="http://id.loc.gov/vocabulary/iso639-2/heb" authority="iso639-2">Hebrew</mods:languageTerm>
+</mods:language>
+<mods:language>
+<mods:languageTerm type="text" valueURI="http://id.loc.gov/vocabulary/iso639-2/yid" authority="iso639-2">Yiddish</mods:languageTerm>
+</mods:language>
+<mods:language>
+<mods:languageTerm type="text" valueURI="http://id.loc.gov/vocabulary/iso639-2/ita" authority="iso639-2">Italian</mods:languageTerm>
+</mods:language>
+<mods:language>
+<mods:languageTerm type="text" valueURI="http://id.loc.gov/vocabulary/iso639-2/spa" authority="iso639-2">Spanish</mods:languageTerm>
+</mods:language>
+<mods:language>
+<mods:languageTerm type="text" valueURI="http://id.loc.gov/vocabulary/iso639-2/ara" authority="iso639-2">Arabic</mods:languageTerm>
+</mods:language>
+</mods:mods>

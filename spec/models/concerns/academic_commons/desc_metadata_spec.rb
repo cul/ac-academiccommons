@@ -98,5 +98,12 @@ RSpec.describe AcademicCommons::DescMetadata do
 
       include_examples 'indexing mods'
     end
+
+    context 'contains multiple languages' do
+      let(:mods_fixture) { fixture_to_str('desc_metadata/languages.xml') }
+      let(:expected_json) { fixture_to_json('desc_metadata/languages.json') }
+
+      include_examples 'indexing mods'
+    end
   end
 end
