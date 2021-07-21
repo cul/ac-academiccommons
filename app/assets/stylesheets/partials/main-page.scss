@@ -150,28 +150,36 @@
 
   #main-page {
 
+    & .side-nav {
+      width: 22%;
+    }
+
+    & .post-content {
+      width: 78%;
+  }
+
     & .left-border {
       border-left: $border;
       padding: 30px 40px;
     }
 
-    & .affix-top,
-    & .affix {
+    & ul.affix-top,
+    & ul.affix {
       position: static;
     }
 
-    & .affix,
-    & .affix-bottom,
-    & .affix-top {
-      width: 234px;
+    & ul.affix-bottom,
+    & ul.affix-top {
+      width: 100%;
     }
 
-    & .affix {
+    & ul.affix {
+      max-width: 22%;
       position: fixed;
       top: 0;
     }
 
-    & .affix-bottom {
+    & ul.affix-bottom {
       position: absolute;
     }
 
@@ -182,7 +190,7 @@
 
 	  & ul.anchor-links li {
 			display: block;
-      line-height: 2;
+      margin-bottom: 8px;
     }
 
 	  & ul.anchor-links li::after {
