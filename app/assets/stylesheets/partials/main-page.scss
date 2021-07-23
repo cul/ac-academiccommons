@@ -154,38 +154,35 @@
       width: 22%;
     }
 
-    & .post-content {
-      width: 78%;
-  }
-
-    & .left-border {
+    & .post-content-wrapper {
       border-left: $border;
       padding: 30px 40px;
+      width: 78%;
     }
 
     & ul.affix-top,
     & ul.affix {
+      max-width: 184px;
+      padding: 30px 0 0 0;
       position: static;
     }
 
-    & ul.affix-bottom,
-    & ul.affix-top {
+    & ul.affix-top,
+    & ul.affix-bottom {
       width: 100%;
-    }
-
-    & ul.affix {
-      max-width: 22%;
-      position: fixed;
-      top: 0;
     }
 
     & ul.affix-bottom {
       position: absolute;
     }
+    
+    & ul.affix {
+      position: fixed;
+      top: 0;
+    }
 
     & ul.anchor-links {
       font-size: $font-size-base;
-      padding: 30px 0 0 0;
     }
 
 	  & ul.anchor-links li {
