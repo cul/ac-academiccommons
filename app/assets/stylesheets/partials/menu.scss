@@ -26,6 +26,7 @@
     border-radius: 6px;
     margin-bottom: 7px;
     max-height: 70px;
+    max-width: 100%;
   }
 
   & h2 {
@@ -54,7 +55,6 @@
 
 .homepage-menu {
   margin: 10px -10px 0 -10px;
-  padding-bottom: 30px;
 
   & .collections,
   & .upload {
@@ -107,10 +107,11 @@
   }
 }
 
-.homepage-menu:after {
+.homepage-info:before {
   border-bottom: $border;
   height: auto;
   left: 50%;
+  margin-bottom: 20px;
   margin-left: -50vw;
   padding-top: 20px;
   position: relative;
@@ -146,6 +147,7 @@
   }
 
   .homepage-menu {
+    display: flex;
     margin-top: 20px;
   }
 }

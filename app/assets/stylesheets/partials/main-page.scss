@@ -150,39 +150,44 @@
 
   #main-page {
 
-    & .left-border {
-      border-left: $border;
-      padding: 30px 40px;
+    & .side-nav {
+      width: 22%;
     }
 
-    & .affix-top,
-    & .affix {
+    & .post-content-wrapper {
+      border-left: $border;
+      padding: 30px 40px;
+      width: 78%;
+    }
+
+    & ul.affix-top,
+    & ul.affix {
+      max-width: 184px;
+      padding: 30px 0 0 0;
       position: static;
     }
 
-    & .affix,
-    & .affix-bottom,
-    & .affix-top {
-      width: 234px;
+    & ul.affix-top,
+    & ul.affix-bottom {
+      width: 100%;
     }
 
-    & .affix {
+    & ul.affix-bottom {
+      position: absolute;
+    }
+    
+    & ul.affix {
       position: fixed;
       top: 0;
     }
 
-    & .affix-bottom {
-      position: absolute;
-    }
-
     & ul.anchor-links {
       font-size: $font-size-base;
-      padding: 30px 0 0 0;
     }
 
 	  & ul.anchor-links li {
 			display: block;
-      line-height: 2;
+      margin-bottom: 8px;
     }
 
 	  & ul.anchor-links li::after {
