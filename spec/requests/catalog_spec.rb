@@ -9,9 +9,9 @@ RSpec.describe 'catalog controller actions', type: :request do
       expect(response.status).to eq(200)
     end
 
-    it 'returns a 400 status when invalid search params are supplied' do
-      get '/search?per_page=zzz&sort=zzz'
-      expect(response.status).to eq(400)
+    it 'ignores bad sort values' do
+      get '/search?per_page=20&sort=zzz'
+      expect(response.status).to eq(200)
     end
   end
 end
