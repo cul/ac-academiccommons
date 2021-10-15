@@ -13,5 +13,11 @@ RSpec.describe 'catalog controller actions', type: :request do
       get '/search?per_page=20&sort=zzz'
       expect(response.status).to eq(200)
     end
+
+    # pending - ACHYDRA-842
+    xit 'validates paging values' do
+      get '/search?per_page=Bad+Value&sort=Published+Latest'
+      expect(response.status).to eq(400)
+    end
   end
 end
