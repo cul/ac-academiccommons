@@ -1,8 +1,9 @@
 require 'rails_helper'
 
 describe Resource do
+  let(:fedora_3_pid) { 'test:resource' }
   let(:resource) do
-    resource = Resource.new(pid: 'test:resource')
+    resource = Resource.new(pid: fedora_3_pid)
     resource.state = 'A'
     downloadable = resource.create_datastream(
       ActiveFedora::Datastream, 'content', dsLabel: 'foo.pdf', mimeType: 'application/pdf'
@@ -20,7 +21,8 @@ describe Resource do
         <dc:type>Text</dc:type>
       </oai_dc:dc>
     XML
-
+    resource.add_relationship(:doi, "doi:10.7916/TESTDOC3")
+    resource.datastreams["RELS-EXT"].content_will_change!
     allow(resource).to receive(:save)
     resource
   end
