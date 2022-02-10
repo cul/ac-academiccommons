@@ -61,7 +61,7 @@ module AcademicCommons
     end
 
     def assets_only
-      filter('has_model_ssim', "(\"#{GenericResource.to_class_uri}\" OR \"#{::Resource.to_class_uri}\")")
+      filter('has_model_ssim', "(\"#{::GenericResource.to_class_uri}\" OR \"#{::Resource.to_class_uri}\")")
       self
     end
 
