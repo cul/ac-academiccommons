@@ -170,7 +170,7 @@ module AcademicCommons
       add_field.call 'abstract_ssi', mods.at_css('> abstract')
       add_field.call 'abstract_q',   mods.at_css('> abstract')
 
-      add_field.call 'language_ssim', mods.at_css('> language > languageTerm')
+      mods.css('> language > languageTerm').each { |language_node| add_field.call 'language_ssim', language_node }
 
       # SUBJECT
       mods.css('> subject').each do |subject_node|

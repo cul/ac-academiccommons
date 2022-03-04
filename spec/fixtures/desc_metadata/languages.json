@@ -1,0 +1,10 @@
+{
+  "cul_doi_ssi": "10.7916/TESTTEST",
+  "described_by_ssim": ["info:fedora/actest:1/test_ds"],
+  "doi_ssim": "10.7916/TESTTEST",
+  "fedora3_pid_ssi": "actest:1",
+  "fedora3_uri_ssi": "info:fedora/actest:1",
+  "related_items_ss": "[]",
+  "id": "10.7916/TESTTEST",
+  "language_ssim": ["English", "Hebrew", "Yiddish", "Italian", "Spanish", "Arabic"]
+}

@@ -63,6 +63,8 @@ Rails.application.routes.draw do
 
   resources :uploads, only: [:index, :new, :create], path: 'upload'
 
+  get '/detail/:slug', to: 'featured_searches#show', as: 'featured_search'
+
   get 'myworks',             to: 'user#my_works'
   get 'account',             to: 'user#account'
   get 'unsubscribe_monthly', to: 'user#unsubscribe_monthly'
@@ -81,6 +83,7 @@ Rails.application.routes.draw do
     resources :usage_statistics_reports, only: [:new, :create] do
       post 'email', on: :collection
     end
+    resources :featured_searches, except: :show
   end
 
   # Resque web interface, only administrators have access

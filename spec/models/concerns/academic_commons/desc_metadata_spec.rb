@@ -33,6 +33,12 @@ RSpec.describe AcademicCommons::DescMetadata do
 
     describe '#index_descMetadata' do
       it  { is_expected.to eql(expected_json) }
+      context 'no DOI is available' do
+        let(:start_solr_doc) { { 'doi_ssim' => '' } }
+        it "raises an error" do
+          expect { indexable.index_descmetadata(start_solr_doc) }.to raise_error StandardError
+        end
+      end
     end
   end
 
@@ -95,6 +101,13 @@ RSpec.describe AcademicCommons::DescMetadata do
     context 'contains multiple series' do
       let(:mods_fixture) { fixture_to_str('desc_metadata/multiple_series.xml') }
       let(:expected_json) { fixture_to_json('desc_metadata/multiple_series.json') }
+
+      include_examples 'indexing mods'
+    end
+
+    context 'contains multiple languages' do
+      let(:mods_fixture) { fixture_to_str('desc_metadata/languages.xml') }
+      let(:expected_json) { fixture_to_json('desc_metadata/languages.json') }
 
       include_examples 'indexing mods'
     end

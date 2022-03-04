@@ -1,74 +1,144 @@
 require 'rails_helper'
 
-RSpec.describe AcademicCommons::Metrics::UsageStatistics, integration: true do
+RSpec.describe AcademicCommons::Metrics::UsageStatistics do
   let(:uni) { 'abc123' }
-  let(:doi) { '10.7916/ALICE' }
-  let(:doi5) { '10.7916/TESTDOC5' }
+  let(:item_identifier) { '10.7916/ALICE' }
+  let(:item_fedora_pid) { 'actest:1' }
+  let(:other_item_identifier) { '10.7916/TESTDOC5' }
+  let(:other_item_fedora_pid) { 'actest:5' }
+  let(:open_asset_identifier) { '10.7916/TESTDOC2' }
+  let(:open_asset_fedora_pid) { 'actest:2' }
+  let(:embargoed_asset_identifier) { '10.7916/TESTDOC10' }
   let(:empty_response) { { 'response' => { 'docs' => [] } } }
-  let(:usage_stats) { AcademicCommons::Metrics::UsageStatistics.new.calculate_lifetime }
-  let(:solr_request) { { q: nil, fq: ["author_uni_ssim:\"#{uni}\""] } }
-  let(:solr_params) do
-    {
-      rows: 100_000, sort: 'title_sort asc', q: nil, page: 1,
-      fq: ["author_uni_ssim:\"#{uni}\"", 'has_model_ssim:"info:fedora/ldpd:ContentAggregator"'],
-      fl: 'title_ssi,id,cul_doi_ssi,fedora3_pid_ssi,publisher_doi_ssi,genre_ssim,record_creation_dtsi,object_state_ssi,free_to_read_start_date_ssi'
-    }
-  end
-  let(:solr_response) do
+  let(:usage_stats) { described_class.new.calculate_lifetime }
+  let(:any_by_author_params) { { q: nil, fq: ["author_uni_ssim:\"#{uni}\""] } }
+  let(:any_by_author_response) do
     Blacklight::Solr::Response.new(
       {
         'response' => {
           'docs' => [
-            { 'id' => doi, 'title_ssi' => 'First Test Document', 'object_state_ssi' => 'A', 'record_creation_dtsi' => '2018-08-07T03:40:22Z',
-              'cul_doi_ssi' => doi, 'fedora3_pid_ssi' => 'actest:1', 'publisher_doi_ssi' => '', 'genre_ssim' => '' },
-            { 'id' => doi5, 'title_ssi' => 'Second Test Document', 'object_state_ssi' => 'A', 'record_creation_dtsi' => '2018-08-07T03:40:22Z',
-              'cul_doi_ssi' => doi5, 'fedora3_pid_ssi' => 'actest:5', 'publisher_doi_ssi' => '', 'genre_ssim' => '' }
+            { 'id' => open_asset_identifier, 'fedora3_pid_ssi' => 'actest:2', 'title_ssi' => 'Second Test Document', 'object_state_ssi' => 'A',
+              'cul_doi_ssi' => open_asset_identifier, 'genre_ssim' => '', 'publisher_doi_ssi' => '' },
+            { 'id' => item_identifier, 'title_ssi' => 'First Test Document', 'object_state_ssi' => 'A',
+              'cul_doi_ssi' => item_identifier, 'fedora3_pid_ssi' => item_fedora_pid, 'genre_ssim' => '', 'publisher_doi_ssi' => '' },
+            { 'id' => embargoed_asset_identifier, 'title_ssi' => 'First Test Document', 'object_state_ssi' => 'A',
+              'cul_doi_ssi' => embargoed_asset_identifier, 'fedora3_pid_ssi' => 'actest:10', 'genre_ssim' => '', 'publisher_doi_ssi' => '',
+              'free_to_read_start_date_ssi' => Date.current.tomorrow.strftime('%Y-%m-%d') }
           ]
         }
       }, {}
     )
   end
 
+  let(:item_by_author_params) do
+    {
+      rows: 100_000, sort: 'title_sort asc', q: nil, page: 1,
+      fq: ["author_uni_ssim:\"#{uni}\"", 'has_model_ssim:"info:fedora/ldpd:ContentAggregator"'],
+      fl: 'title_ssi,id,cul_doi_ssi,fedora3_pid_ssi,publisher_doi_ssi,genre_ssim,record_creation_dtsi,object_state_ssi,free_to_read_start_date_ssi'
+    }
+  end
+  let(:item_by_author_response) do
+    Blacklight::Solr::Response.new(
+      {
+        'response' => {
+          'docs' => [
+            { 'id' => item_identifier, 'title_ssi' => 'First Test Document', 'object_state_ssi' => 'A', 'record_creation_dtsi' => '2018-08-07T03:40:22Z',
+              'cul_doi_ssi' => item_identifier, 'fedora3_pid_ssi' => item_fedora_pid, 'publisher_doi_ssi' => '', 'genre_ssim' => '' },
+            { 'id' => other_item_identifier, 'title_ssi' => 'Second Test Document', 'object_state_ssi' => 'A', 'record_creation_dtsi' => '2018-08-07T03:40:22Z',
+              'cul_doi_ssi' => other_item_identifier, 'fedora3_pid_ssi' => other_item_fedora_pid, 'publisher_doi_ssi' => '', 'genre_ssim' => '' }
+          ]
+        }
+      }, {}
+    )
+  end
+
+  let(:assets_for_item_params) do
+    {
+      rows: 100_000, facet: false, qt: 'search',
+      fq: ["cul_member_of_ssim:\"info:fedora/#{item_fedora_pid}\"", "object_state_ssi:\"A\""]
+    }
+  end
+  let(:assets_for_item_response) do
+    Blacklight::Solr::Response.new(
+      {
+        'response' => {
+          'docs' => [
+            { 'id' => open_asset_identifier, 'fedora3_pid_ssi' => open_asset_fedora_pid, 'title_ssi' => 'Second Test Document', 'object_state_ssi' => 'A',
+              'cul_doi_ssi' => open_asset_identifier, 'genre_ssim' => '', 'publisher_doi_ssi' => '' },
+            { 'id' => embargoed_asset_identifier, 'title_ssi' => 'First Test Document', 'object_state_ssi' => 'A',
+              'cul_doi_ssi' => embargoed_asset_identifier, 'fedora3_pid_ssi' => 'actest:10', 'genre_ssim' => '', 'publisher_doi_ssi' => '',
+              'free_to_read_start_date_ssi' => Date.current.tomorrow.strftime('%Y-%m-%d') }
+          ]
+        }
+      }, {}
+    )
+  end
+
+  let(:assets_for_other_item_params) do
+    {
+      rows: 100_000, facet: false, qt: 'search',
+      fq: ["cul_member_of_ssim:\"info:fedora/#{other_item_fedora_pid}\"", "object_state_ssi:\"A\""]
+    }
+  end
+  let(:assets_for_other_item_response) do
+    Blacklight::Solr::Response.new(
+      {
+        'response' => {
+          'docs' => []
+        }
+      }, {}
+    )
+  end
+
+  let(:list_items_params) do
+    {
+      rows: 100_000, sort: 'title_sort asc', page: 1,
+      fq: ['has_model_ssim:"info:fedora/ldpd:ContentAggregator"'],
+      fl: 'title_ssi,id,cul_doi_ssi,fedora3_pid_ssi,publisher_doi_ssi,genre_ssim,record_creation_dtsi,object_state_ssi,free_to_read_start_date_ssi'
+    }
+  end
+  let(:list_items_response) do
+    Blacklight::Solr::Response.new(
+      {
+        'response' => {
+          'docs' => [
+            { 'id' => item_identifier, 'title_ssi' => 'First Test Document', 'object_state_ssi' => 'A',
+              'cul_doi_ssi' => item_identifier, 'fedora3_pid_ssi' => item_fedora_pid, 'genre_ssim' => '', 'publisher_doi_ssi' => '' },
+            { 'id' => other_item_identifier, 'title_ssi' => 'First Test Document', 'object_state_ssi' => 'A',
+              'cul_doi_ssi' => other_item_identifier, 'fedora3_pid_ssi' => other_item_fedora_pid, 'genre_ssim' => '', 'publisher_doi_ssi' => '' }
+          ]
+        }
+      }, {}
+    )
+  end
+
+  before do
+    allow(Blacklight.default_index).to receive(:search).with(any_by_author_params).and_return(any_by_author_response)
+    allow(Blacklight.default_index).to receive(:search).with(item_by_author_params).and_return(item_by_author_response)
+    allow(Blacklight.default_index).to receive(:search).with(assets_for_item_params).and_return(assets_for_item_response)
+    allow(Blacklight.default_index).to receive(:search).with(assets_for_other_item_params).and_return(assets_for_other_item_response)
+    allow(Blacklight.default_index).to receive(:search).with(list_items_params).and_return(list_items_response)
+  end
+
   describe '.new' do
     context 'when requesting usage stats for author' do
       before do
         # Add records for a pid view and download
-        FactoryBot.create(:view_stat)
-        FactoryBot.create(:view_stat)
-        FactoryBot.create(:download_stat)
-        FactoryBot.create(:streaming_stat)
-
-        allow(Blacklight.default_index).to receive(:search).with(any_args).and_call_original
-        allow(Blacklight.default_index).to receive(:search).with(solr_params).and_return(solr_response)
+        FactoryBot.create(:view_stat, identifier: item_identifier)
+        FactoryBot.create(:view_stat, identifier: item_identifier)
+        FactoryBot.create(:download_stat, identifier: open_asset_identifier)
+        FactoryBot.create(:streaming_stat, identifier: item_identifier)
       end
 
       context 'when requesting stats for an author with embargoed material' do
         subject(:usage_stats) do
-          options = { solr_params: solr_request }
-          AcademicCommons::Metrics::UsageStatistics.new(options).calculate_lifetime
-        end
-
-        let(:solr_response) do
-          Blacklight::Solr::Response.new(
-            {
-              'response' => {
-                'docs' => [
-                  { 'id' => '10.7916/TESTDOC2', 'fedora3_pid_ssi' => 'actest:2', 'title_ssi' => 'Second Test Document', 'object_state_ssi' => 'A',
-                    'cul_doi_ssi' => '10.7916/TESTDOC2', 'genre_ssim' => '', 'publisher_doi_ssi' => '' },
-                  { 'id' => doi, 'title_ssi' => 'First Test Document', 'object_state_ssi' => 'A',
-                    'cul_doi_ssi' => doi, 'fedora3_pid_ssi' => 'actest:1', 'genre_ssim' => '', 'publisher_doi_ssi' => '' },
-                  { 'id' => '10.7916/TESTDOC10', 'title_ssi' => 'First Test Document', 'object_state_ssi' => 'A',
-                    'cul_doi_ssi' => '10.7916/TESTDOC10', 'fedora3_pid_ssi' => 'actest:10', 'genre_ssim' => '', 'publisher_doi_ssi' => '',
-                    'free_to_read_start_date_ssi' => Date.current.tomorrow.strftime('%Y-%m-%d') }
-                ]
-              }
-            }, {}
-          )
+          options = { solr_params: any_by_author_params }
+          described_class.new(options).calculate_lifetime
         end
 
         it 'removes embargoed material' do
           expect(usage_stats.count).to eq 2
-          expect(usage_stats.find { |i| i.id == '10.7916/TESTDOC10' }).to eq nil
+          expect(usage_stats.find { |i| i.id == embargoed_asset_identifier }).to eq nil
         end
 
         it 'calculates stats for available material' do
@@ -83,13 +153,13 @@ RSpec.describe AcademicCommons::Metrics::UsageStatistics, integration: true do
         end
 
         subject(:usage_stats) do
-          AcademicCommons::Metrics::UsageStatistics.new(
-            solr_params: solr_request, include_streaming: true
+          described_class.new(
+            solr_params: item_by_author_params, include_streaming: true
           ).calculate_lifetime
         end
 
         it 'returns correct results' do
-          expect(usage_stats.map(&:document)).to eq solr_response.documents
+          expect(usage_stats.map(&:document).map(&:to_h)).to eq item_by_author_response.documents.map(&:to_h)
         end
 
         it 'returns correct totals for lifetime' do
@@ -107,14 +177,14 @@ RSpec.describe AcademicCommons::Metrics::UsageStatistics, integration: true do
 
       context 'when requesting stats for current month' do
         subject(:usage_stats) do
-          AcademicCommons::Metrics::UsageStatistics.new(
-            solr_params: solr_request, start_date: Date.current - 1.month,
+          described_class.new(
+            solr_params: item_by_author_params, start_date: Date.current - 1.month,
             end_date: Date.current, include_streaming: true
           ).calculate_lifetime.calculate_period
         end
 
         it 'returns correct results' do
-          expect(subject.map(&:document)).to eq solr_response.documents
+          expect(subject.map(&:document).map(&:to_h)).to eq item_by_author_response.documents.map(&:to_h)
         end
 
         it 'returns correct totals' do
@@ -129,14 +199,14 @@ RSpec.describe AcademicCommons::Metrics::UsageStatistics, integration: true do
 
       context 'when requesting stats for previous month' do
         subject(:usage_stats) do
-          AcademicCommons::Metrics::UsageStatistics.new(
-            solr_params: solr_request, start_date: Date.current - 2.months,
+          described_class.new(
+            solr_params: item_by_author_params, start_date: Date.current - 2.months,
             end_date: Date.current - 1.month, include_streaming: true
           ).calculate_lifetime.calculate_period
         end
 
         it 'returns correct results' do
-          expect(usage_stats.map(&:document)).to eq solr_response.documents
+          expect(usage_stats.map(&:document).map(&:to_h)).to eq item_by_author_response.documents.map(&:to_h)
         end
 
         it 'returns correct totals' do
@@ -151,8 +221,8 @@ RSpec.describe AcademicCommons::Metrics::UsageStatistics, integration: true do
 
       context 'when requesting stats without streaming' do
         subject(:usage_stats) do
-          AcademicCommons::Metrics::UsageStatistics.new(
-            solr_params: solr_request, start_date: Date.current - 1.month,
+          described_class.new(
+            solr_params: any_by_author_params, start_date: Date.current - 1.month,
             end_date: Date.current
           ).calculate_lifetime.calculate_period
         end
@@ -173,7 +243,7 @@ RSpec.describe AcademicCommons::Metrics::UsageStatistics, integration: true do
     end
 
     it 'returns correct list' do
-      usage_stats = AcademicCommons::Metrics::UsageStatistics.new(start_date: dates.first, end_date: dates.last).calculate_month_by_month
+      usage_stats = described_class.new(start_date: dates.first, end_date: dates.last).calculate_month_by_month
       result = usage_stats.instance_eval { months_list }
       expect(result).to eq dates
     end
@@ -197,22 +267,19 @@ RSpec.describe AcademicCommons::Metrics::UsageStatistics, integration: true do
       ]
     end
     let(:usage_stats) do
-      AcademicCommons::Metrics::UsageStatistics.new(
-        solr_params: solr_request, start_date: Time.zone.parse('Jan 2015'),
+      described_class.new(
+        solr_params: any_by_author_params, start_date: Time.zone.parse('Jan 2015'),
         end_date: Time.zone.parse('Dec 2016')
       ).calculate_period.order_by(:period, Statistic::VIEW)
     end
 
     before do
-      FactoryBot.create(:view_stat, at_time: Time.zone.parse('Jan 15, 2015'))
-      FactoryBot.create(:view_stat, at_time: Time.zone.parse('March 9, 2016'))
-      FactoryBot.create(:download_stat, at_time: Time.zone.parse('April 2, 2016'))
-      FactoryBot.create(:download_stat, at_time: Time.zone.parse('April 2, 2016'))
-      FactoryBot.create(:streaming_stat, at_time: Time.zone.parse('May 3, 2015'))
-      FactoryBot.create(:view_stat, at_time: Time.zone.parse('Jan 7, 2017'))
-
-      allow(Blacklight.default_index).to receive(:search).with(any_args).and_call_original
-      allow(Blacklight.default_index).to receive(:search).with(solr_params).and_return(solr_response)
+      FactoryBot.create(:view_stat, identifier: item_identifier, at_time: Time.zone.parse('Jan 15, 2015'))
+      FactoryBot.create(:view_stat, identifier: item_identifier, at_time: Time.zone.parse('March 9, 2016'))
+      FactoryBot.create(:view_stat, identifier: item_identifier, at_time: Time.zone.parse('Jan 7, 2017'))
+      FactoryBot.create(:download_stat, identifier: open_asset_identifier, at_time: Time.zone.parse('April 2, 2016'))
+      FactoryBot.create(:download_stat, identifier: open_asset_identifier, at_time: Time.zone.parse('April 2, 2016'))
+      FactoryBot.create(:streaming_stat, identifier: item_identifier, at_time: Time.zone.parse('May 3, 2015'))
     end
 
     it 'creates the expected csv' do
@@ -245,8 +312,8 @@ RSpec.describe AcademicCommons::Metrics::UsageStatistics, integration: true do
       ]
     end
     let(:usage_stats) do
-      AcademicCommons::Metrics::UsageStatistics.new(
-        solr_params: solr_request, start_date: Time.zone.parse('Jan 2015'),
+      described_class.new(
+        solr_params: any_by_author_params, start_date: Time.zone.parse('Jan 2015'),
         end_date: Time.zone.parse('Dec 2016')
       ).calculate_month_by_month
     end
@@ -257,9 +324,6 @@ RSpec.describe AcademicCommons::Metrics::UsageStatistics, integration: true do
       FactoryBot.create(:download_stat, at_time: Time.zone.parse('April 2, 2016'))
       FactoryBot.create(:download_stat, at_time: Time.zone.parse('April 2, 2016'))
       FactoryBot.create(:streaming_stat, at_time: Time.zone.parse('May 3, 2015'))
-
-      allow(Blacklight.default_index).to receive(:search).with(any_args).and_call_original
-      allow(Blacklight.default_index).to receive(:search).with(solr_params).and_return(solr_response).once
     end
 
     it 'creates the expected csv' do
@@ -270,43 +334,39 @@ RSpec.describe AcademicCommons::Metrics::UsageStatistics, integration: true do
 
   describe '#item' do
     subject(:usage_stats) do
-      AcademicCommons::Metrics::UsageStatistics.new(
-        solr_params: solr_request, start_date: Time.zone.parse('Dec 2015'),
+      described_class.new(
+        solr_params: any_by_author_params, start_date: Time.zone.parse('Dec 2015'),
         end_date: Time.zone.parse('Apr 2016')
       ).calculate_lifetime.calculate_period.calculate_month_by_month
     end
 
     before do
-      FactoryBot.create(:view_stat, at_time: Time.zone.parse('Jan 15, 2016'))
-      FactoryBot.create(:view_stat, at_time: Time.zone.parse('March 9, 2016'))
-      FactoryBot.create(:download_stat, at_time: Time.zone.parse('April 2, 2016'))
-      FactoryBot.create(:download_stat, at_time: Time.zone.parse('April 2, 2016'))
-      FactoryBot.create(:streaming_stat, at_time: Time.zone.parse('May 3, 2015'))
-
-      allow(Blacklight.default_index).to receive(:search).with(any_args).and_call_original
-      allow(Blacklight.default_index).to receive(:search)
-        .with(solr_params).and_return(solr_response)
+      FactoryBot.create(:view_stat, identifier: item_identifier, at_time: Time.zone.parse('Jan 15, 2016'))
+      FactoryBot.create(:view_stat, identifier: item_identifier, at_time: Time.zone.parse('March 9, 2016'))
+      FactoryBot.create(:download_stat, identifier: open_asset_identifier, at_time: Time.zone.parse('April 2, 2016'))
+      FactoryBot.create(:download_stat, identifier: open_asset_identifier, at_time: Time.zone.parse('April 2, 2016'))
+      FactoryBot.create(:streaming_stat, identifier: item_identifier, at_time: Time.zone.parse('May 3, 2015'))
     end
 
     it 'return correct value for view period stats' do
-      expect(usage_stats.item(doi).get_stat(Statistic::VIEW, :period)).to be 2
+      expect(usage_stats.item(item_identifier).get_stat(Statistic::VIEW, :period)).to be 2
     end
 
     it 'returns correct value for view month stats' do
-      expect(usage_stats.item(doi).get_stat(Statistic::VIEW, 'Jan 2016')).to be 1
+      expect(usage_stats.item(item_identifier).get_stat(Statistic::VIEW, 'Jan 2016')).to be 1
     end
 
     it 'returns correct value of Lifetime download stats' do
-      expect(usage_stats.item(doi).get_stat(Statistic::DOWNLOAD, :lifetime)).to be 2
+      expect(usage_stats.item(item_identifier).get_stat(Statistic::DOWNLOAD, :lifetime)).to be 2
     end
 
     it 'returns correct value of download April 2016 stats' do
-      expect(usage_stats.item(doi).get_stat(Statistic::DOWNLOAD, 'Apr 2016')).to be 2
+      expect(usage_stats.item(item_identifier).get_stat(Statistic::DOWNLOAD, 'Apr 2016')).to be 2
     end
 
     it 'returns error if month and year are not part of the period' do
       expect {
-        usage_stats.item(doi).get_stat(Statistic::VIEW, 'May 2017')
+        usage_stats.item(item_identifier).get_stat(Statistic::VIEW, 'May 2017')
       }.to raise_error 'View May 2017 not part of stats. Check parameters.'
     end
 
@@ -317,7 +377,7 @@ RSpec.describe AcademicCommons::Metrics::UsageStatistics, integration: true do
     end
 
     it 'returns 0 if id not present, but id part of results' do
-      expect(usage_stats.item('10.7916/TESTDOC5').get_stat(Statistic::VIEW, 'Jan 2016')).to be 0
+      expect(usage_stats.item(other_item_identifier).get_stat(Statistic::VIEW, 'Jan 2016')).to be 0
     end
   end
 
@@ -325,6 +385,8 @@ RSpec.describe AcademicCommons::Metrics::UsageStatistics, integration: true do
     subject(:most_downloaded_asset) do
       usage_stats.instance_eval do
         most_downloaded_asset(
+          # these must be literals to be evaluated in the instance context, but values
+          # are taken from item_identifier and item_fedora_pid
           SolrDocument.new(
             'id' => '10.7916/ALICE', 'title_ssi' => 'Second Test Document', 'object_state_ssi' => 'A',
             'cul_doi_ssi' => '10.7916/ALICE', 'publisher_doi_ssi' => '', 'fedora3_pid_ssi' => 'actest:1', 'genre_ssim' => ''
@@ -333,8 +395,8 @@ RSpec.describe AcademicCommons::Metrics::UsageStatistics, integration: true do
       end
     end
 
-    let(:asset1_doi) { '10.7916/TESTDOC2' }
-    let(:asset2_doi) { '10.7916/TESTDOC4' }
+    let(:other_open_asset_identifier) { '10.7916/TESTDOC4' }
+    let(:other_open_asset_fedora_pid) { 'actest:5' }
 
     it 'returns error when identifier not provided' do
       expect {
@@ -344,25 +406,40 @@ RSpec.describe AcademicCommons::Metrics::UsageStatistics, integration: true do
 
     context 'when item has one asset' do
       it 'returns only asset' do
-        expect(most_downloaded_asset).to eql asset1_doi
+        expect(most_downloaded_asset).to eql open_asset_identifier
       end
     end
 
     context 'when item has more than one asset' do
+      let(:assets_for_item_response) do
+        Blacklight::Solr::Response.new(
+          {
+            'response' => {
+              'docs' => [
+                { 'id' => open_asset_identifier, 'fedora3_pid_ssi' => open_asset_fedora_pid, 'title_ssi' => 'Second Test Document', 'object_state_ssi' => 'A',
+                  'cul_doi_ssi' => open_asset_identifier, 'genre_ssim' => '', 'publisher_doi_ssi' => '' },
+                { 'id' => other_open_asset_identifier, 'title_ssi' => 'First Test Document', 'object_state_ssi' => 'A',
+                  'cul_doi_ssi' => other_open_asset_identifier, 'fedora3_pid_ssi' => other_open_asset_fedora_pid, 'genre_ssim' => '', 'publisher_doi_ssi' => '',
+                  'free_to_read_start_date_ssi' => Date.current.tomorrow.strftime('%Y-%m-%d') }
+              ]
+            }
+          }, {}
+        )
+      end
       before do
-        FactoryBot.create(:download_stat)
-        FactoryBot.create(:download_stat, identifier: asset2_doi)
-        FactoryBot.create(:download_stat, identifier: asset2_doi)
+        FactoryBot.create(:download_stat, identifier: open_asset_identifier)
+        FactoryBot.create(:download_stat, identifier: other_open_asset_identifier)
+        FactoryBot.create(:download_stat, identifier: other_open_asset_identifier)
       end
 
       it 'returns most downloaded' do
-        expect(most_downloaded_asset).to eql asset2_doi
+        expect(most_downloaded_asset).to eql other_open_asset_identifier
       end
     end
 
     context 'when item\'s asset has never been downloaded' do
-      it 'returns first pid' do
-        expect(most_downloaded_asset).to eql asset1_doi
+      it 'returns first asset doi' do
+        expect(most_downloaded_asset).to eql open_asset_identifier
       end
     end
   end
@@ -371,20 +448,20 @@ RSpec.describe AcademicCommons::Metrics::UsageStatistics, integration: true do
     subject(:time_period) { usage_stats.instance_eval { time_period } }
 
     context 'when calculating period stats' do
-      let(:usage_stats) { AcademicCommons::Metrics::UsageStatistics.new(solr_params: solr_params, start_date: Time.zone.parse('Jan 2015'), end_date: Time.zone.parse('Dec 2016')).calculate_period }
+      let(:usage_stats) { described_class.new(solr_params: item_by_author_params, start_date: Time.zone.parse('Jan 2015'), end_date: Time.zone.parse('Dec 2016')).calculate_period }
 
       it { is_expected.to eq 'Jan 2015 - Dec 2016' }
     end
 
     context 'when only calculating lifetime stats' do
-      let(:usage_stats) { AcademicCommons::Metrics::UsageStatistics.new(solr_params: solr_params).calculate_lifetime }
+      let(:usage_stats) { described_class.new(solr_params: item_by_author_params).calculate_lifetime }
 
       it { is_expected.to eq 'Lifetime' }
     end
 
     context 'when stats are for one month' do
       let(:date) { Date.current }
-      let(:usage_stats) { AcademicCommons::Metrics::UsageStatistics.new(solr_params: solr_params, start_date: date, end_date: date).calculate_period }
+      let(:usage_stats) { described_class.new(solr_params: item_by_author_params, start_date: date, end_date: date).calculate_period }
 
       it { is_expected.to eq date.strftime('%b %Y') }
     end

@@ -8,15 +8,11 @@
    <%= render @category.top_partial %>
 <% end %>
 
-<ul class="link-list">
-  <% @collections.each do |collection| %>
-    <li>
-      <%= link_to collection.label, collection.search_url %> (<%= collection.count %>)
-      <%= content_tag(:span, collection.description) if collection.description %>
-    </li>
-  <% end %>
-</ul>
-
+<% if @category.use_queries -%>
+   <%= render 'value_panels' %>
+<%- else -%>
+   <%= render 'value_list' %>
+<%- end -%>
 <% if lookup_context.exists?(@category.bottom_partial, ['collections'], true) %>
    <%= render @category.bottom_partial %>
 <% end %>

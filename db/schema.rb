@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_10_12_171010) do
+ActiveRecord::Schema.define(version: 2021_03_22_170653) do
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
@@ -103,6 +103,34 @@ ActiveRecord::Schema.define(version: 2018_10_12_171010) do
     t.string "ip"
     t.string "session_id"
     t.datetime "timestamp"
+  end
+
+  create_table "feature_categories", force: :cascade do |t|
+    t.string "field_name", null: false
+    t.string "label", null: false
+    t.string "thumbnail_url", null: false
+    t.float "threshold", default: 80.0
+    t.index ["field_name"], name: "index_feature_categories_on_field_name", unique: true
+  end
+
+  create_table "featured_search_values", force: :cascade do |t|
+    t.string "value", null: false
+    t.integer "featured_search_id", null: false
+    t.index ["featured_search_id"], name: "index_featured_search_values_on_featured_search_id"
+    t.index ["value"], name: "index_featured_search_values_on_value"
+  end
+
+  create_table "featured_searches", force: :cascade do |t|
+    t.string "slug", null: false
+    t.string "label", null: false
+    t.integer "priority", default: 0, null: false
+    t.string "url"
+    t.string "thumbnail_url"
+    t.text "description"
+    t.integer "feature_category_id", null: false
+    t.index ["feature_category_id"], name: "index_featured_searches_on_feature_category_id"
+    t.index ["label"], name: "index_featured_searches_on_label"
+    t.index ["slug"], name: "index_featured_searches_on_slug", unique: true
   end
 
   create_table "logvalues", id: false, force: :cascade do |t|

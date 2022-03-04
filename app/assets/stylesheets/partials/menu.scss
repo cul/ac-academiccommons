@@ -18,8 +18,15 @@
     border-radius: 3px;
     display: block;
     margin: 10px;
-    padding: 20px 25px 10px 25px;
+    padding: 20px 25px;
     width: 100%;
+  }
+
+  & .logo img {
+    border-radius: 6px;
+    margin-bottom: 7px;
+    max-height: 70px;
+    max-width: 100%;
   }
 
   & h2 {
@@ -31,10 +38,9 @@
   & p {
     font-weight: 300;
     line-height: 1.5;
-    margin: 3px 0 20px 0;
+    margin: 3px 0;
   }
 
-  & a,
   & a {
     text-decoration: none;
   }
@@ -49,12 +55,11 @@
 
 .homepage-menu {
   margin: 10px -10px 0 -10px;
-  padding-bottom: 30px;
 
   & .collections,
   & .upload {
     box-shadow: $box-shadow;
-    padding: 25px 30px 8px 30px;
+    padding: 25px 30px;
     width: auto;
     z-index: 100;
   }
@@ -102,10 +107,11 @@
   }
 }
 
-.homepage-menu:after {
+.homepage-info:before {
   border-bottom: $border;
   height: auto;
   left: 50%;
+  margin-bottom: 20px;
   margin-left: -50vw;
   padding-top: 20px;
   position: relative;
@@ -141,6 +147,7 @@
   }
 
   .homepage-menu {
+    display: flex;
     margin-top: 20px;
   }
 }

@@ -16,6 +16,8 @@ module AcademicCommons
         fl: 'title_ssi,id,cul_doi_ssi,fedora3_pid_ssi,publisher_doi_ssi,genre_ssim,record_creation_dtsi,object_state_ssi,free_to_read_start_date_ssi'
       }.freeze
 
+      REQUIRED_FILTERS = ["has_model_ssim:\"#{ContentAggregator.to_class_uri}\""].freeze
+
       # Create statistics object that calculates usage statistics (views,
       # downloads, and streams) for all the items that match the solr query.
       # The class accepts a number of options that may be necessary depending on
@@ -208,9 +210,15 @@ module AcademicCommons
       def get_solr_documents(params)
         params = params.merge(DEFAULT_SOLR_PARAMS)
         params[:sort] = 'title_sort asc'
-        params[:fq] = params.fetch(:fq, []).clone << "has_model_ssim:\"#{ContentAggregator.to_class_uri}\""
+
+        params[:fq] = ensure_necessary_filters(params[:fq])
         # Add filter to remove embargoed items, free_to_read date must be equal to or less than Date.current
         Blacklight.default_index.search(params).documents
+      end
+
+      def ensure_necessary_filters(fq)
+        fq ||= []
+        fq + (REQUIRED_FILTERS - fq)
       end
 
       # Most downloaded asset over entire lifetime.

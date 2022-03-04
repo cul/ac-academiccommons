@@ -13,6 +13,18 @@ class CatalogController < ApplicationController
   before_action :record_view_stats, only: :show
   # rubocop:enable Rails/LexicallyScopedActionFilter
 
+  class LazyFeatureQueryFacet < Hash
+    def [](key)
+      fs = FeaturedSearch.where(slug: key).includes(:feature_category, :featured_search_values).first
+      if fs
+        {
+          label: fs.label,
+          fq: AcademicCommons::FeaturedSearches.to_fq(fs)
+        }
+      end
+    end
+  end
+
   configure_blacklight do |config|
     # Delete default blacklight components we aren't using
     config.index.document_actions.delete(:bookmark)
@@ -83,9 +95,9 @@ class CatalogController < ApplicationController
     config.add_facet_field 'degree_level_name_ssim', label: 'Degree Level',    limit: 5
     config.add_facet_field 'pub_date_isi',           label: 'Date Published',  limit: 5, range: { slider_js: false }
     config.add_facet_field 'series_ssim',            label: 'Series',          limit: 5
+    config.add_facet_field 'partner_journal_ssi',    label: 'Journal',         limit: 5, show: true
     config.add_facet_field 'language_ssim',          label: 'Language',        limit: 5
     config.add_facet_field 'geographic_area_ssim',   label: 'Geographic Area', limit: 5, show: false
-    config.add_facet_field 'partner_journal_ssi',    label: 'Journal',         limit: 5, show: false
     config.add_facet_field 'degree_grantor_ssim',    label: 'Degree Grantor',  limit: 5, show: false,
                                                      query: {
                                                        '("Columbia University" OR "Teachers College, Columbia University" OR "Union Theological Seminary" OR "Mailman School of Public Health, Columbia University")' => {
@@ -94,6 +106,7 @@ class CatalogController < ApplicationController
                                                        }
                                                      }
     config.add_facet_field 'type_of_resource_ssim', label: 'Resource Type', if: ->(context, _, _) { context.current_user&.admin? }
+    config.add_facet_field 'featured_search',    label: 'Featured', query: LazyFeatureQueryFacet.new, show: false
 
     # Have BL send all facet field names to Solr, which has been the default
     # previously. Simply remove these lines if you'd rather use Solr request
