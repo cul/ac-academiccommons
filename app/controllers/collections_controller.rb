@@ -2,7 +2,7 @@ class CollectionsController < ApplicationController
   CONFIG = {
     featured: {
       title: 'Featured Partners',
-      summary: 'Works shared by Columbia research centers. Want to showcase the work of your department or center here? Contact us at <a href="mailto:ac@columbia.edu">ac@columbia.edu</a>',
+      summary: 'Works shared by our partner centers and departments. These groups actively collaborate with repository staff to provide long-term access to their research.',
       facet: 'department_ssim',
       filter: {}
     },
