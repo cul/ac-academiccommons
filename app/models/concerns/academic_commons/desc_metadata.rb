@@ -17,7 +17,8 @@ module AcademicCommons
       'moving image'                => 'Video',
       'three dimensional object'    => 'Other',
       'software, multimedia'        => 'Software',
-      'mixed material'              => 'Mixed media'
+      'mixed material'              => 'Mixed media',
+      'learning object'             => 'Learning objects'
     }.freeze
     DEGREE_LABELS = {
       '0' => 'Bachelor\'s',
