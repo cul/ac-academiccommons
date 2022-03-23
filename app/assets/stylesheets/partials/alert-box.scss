@@ -5,4 +5,8 @@
   color: $gray-base;
   font-size: $font-size-small;
   padding: 6px 0;
+
+  & a {
+    text-decoration: underline;
+  }
 }
