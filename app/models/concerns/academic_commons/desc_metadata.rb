@@ -17,7 +17,8 @@ module AcademicCommons
       'moving image'                => 'Video',
       'three dimensional object'    => 'Other',
       'software, multimedia'        => 'Software',
-      'mixed material'              => 'Mixed media'
+      'mixed material'              => 'Mixed media',
+      'learning object'             => 'Learning objects'
     }.freeze
     DEGREE_LABELS = {
       '0' => 'Bachelor\'s',
@@ -26,15 +27,25 @@ module AcademicCommons
     }.freeze
     # Related item types should be displayed in this order.
     ORDERED_RELATED_ITEM_TYPES = [
+      'Continues',
+      'IsContinuedBy',
       'isIdenticalTo',
       'isVersionOf',
       'isNewVersionOf',
+      'IsPreprintOf',
       'isPreviousVersionOf',
       'isSupplementedBy',
       'isSupplementTo',
+      'translation',
+      'translationOf',
       'referencedBy',
       'references',
-      'reviewOf'
+      'reviewOf',
+      'IsCompiledBy',
+      'IsDerivedFrom',
+      'hasPart',
+      'partOf',
+      'isSourceOf'
     ].freeze
 
     # Keeping track of multivalued fields.
