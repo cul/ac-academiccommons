@@ -19,6 +19,11 @@ module AcademicCommons
       'software, multimedia'        => 'Software',
       'mixed material'              => 'Mixed media'
     }.freeze
+    
+    GENRE_TYPES = {
+      'learning object'             => 'Learning Objects'
+    }.freeze
+    
     DEGREE_LABELS = {
       '0' => 'Bachelor\'s',
       '1' => 'Master\'s',
@@ -163,7 +168,7 @@ module AcademicCommons
       add_field.call 'publisher_location_ssi', mods.at_css('originInfo > place > placeTerm')
 
       mods.css('genre').each do |genre_node|
-        add_field.call 'genre_ssim',  genre_node.content&.titlecase
+        add_field.call 'genre_ssim',  genre_node.content&.titlecase,      GENRE_TYPES.fetch(genre_node.text, nil)
         add_field.call 'genre_q',     genre_node.content&.titlecase
       end
 
