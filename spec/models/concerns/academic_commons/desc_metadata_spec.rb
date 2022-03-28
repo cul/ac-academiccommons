@@ -62,6 +62,13 @@ RSpec.describe AcademicCommons::DescMetadata do
 
       include_examples 'indexing mods'
     end
+    
+    context 'contains mapped genre value' do
+      let(:mods_fixture) { fixture_to_str('desc_metadata/genre_mapping.xml') }
+      let(:expected_json) { fixture_to_json('desc_metadata/genre_mapping.json') }
+
+      include_examples 'indexing mods'
+    end
 
     context 'contains degree information' do
       let(:mods_fixture) { fixture_to_str('desc_metadata/etd_mods.xml') }
