@@ -31,15 +31,25 @@ module AcademicCommons
     }.freeze
     # Related item types should be displayed in this order.
     ORDERED_RELATED_ITEM_TYPES = [
+      'Continues',
+      'IsContinuedBy',
       'isIdenticalTo',
       'isVersionOf',
       'isNewVersionOf',
+      'isPreprintOf',
       'isPreviousVersionOf',
       'isSupplementedBy',
       'isSupplementTo',
+      'translation',
+      'translationOf',
       'referencedBy',
       'references',
-      'reviewOf'
+      'reviewOf',
+      'IsCompiledBy',
+      'IsDerivedFrom',
+      'hasPart',
+      'partOf',
+      'IsSourceOf'
     ].freeze
 
     # Keeping track of multivalued fields.
