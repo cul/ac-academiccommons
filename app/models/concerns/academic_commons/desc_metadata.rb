@@ -36,7 +36,7 @@ module AcademicCommons
       'isIdenticalTo',
       'isVersionOf',
       'isNewVersionOf',
-      'IsPreprintOf',
+      'isPreprintOf',
       'isPreviousVersionOf',
       'isSupplementedBy',
       'isSupplementTo',
@@ -49,7 +49,7 @@ module AcademicCommons
       'IsDerivedFrom',
       'hasPart',
       'partOf',
-      'isSourceOf'
+      'IsSourceOf'
     ].freeze
 
     # Keeping track of multivalued fields.
