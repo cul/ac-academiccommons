@@ -68,7 +68,6 @@
 
  @import '../stylesheets/partials/media-player-branding';
 
- $fa-font-path: '~@fortawesome/fontawesome-free/webfonts';
-@import '~@fortawesome/fontawesome-free/scss/fontawesome';
-@import '~@fortawesome/fontawesome-free/scss/solid';
+ $fa-font-path: "~font-awesome/fonts";
+ @import 'font-awesome/scss/font-awesome';
 

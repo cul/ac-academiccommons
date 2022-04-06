@@ -17,14 +17,11 @@ require.context('../images', true);
 // const imagePath = (name) => images(name, true)
 
 import 'jquery';
-import 'rails-ujs';
-import 'blacklight';
 import 'readmore-js/readmore';
 import 'social-share-button';
-import 'activestorage';
 import 'dropzone';
 import 'clipboard/dist/clipboard.min';
-import '@fortawesome/fontawesome-free/js/all';
+import 'font-awesome/css/font-awesome.css';
 import 'datatables.net/js/jquery.dataTables.min';
 import 'datatables.net-bs/js/dataTables.bootstrap.min';
 import 'mediaelement/full'
