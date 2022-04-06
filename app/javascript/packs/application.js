@@ -12,12 +12,49 @@
 // them with the image_pack_tag helper in views (e.g <%= image_pack_tag 'rails.png' %>)
 // or the `imagePath` JavaScript helper below.
 //
+require.context('../images', true);
 // const images = require.context('../images', true)
 // const imagePath = (name) => images(name, true)
 
-// MediaElement Library
+import 'jquery';
+import 'rails-ujs';
+import 'blacklight';
+import 'readmore-js/readmore';
+import 'social-share-button';
+import 'activestorage';
+import 'dropzone';
+import 'clipboard/dist/clipboard.min';
+import '@fortawesome/fontawesome-free/js/all';
+import 'datatables.net/js/jquery.dataTables.min';
+import 'datatables.net-bs/js/dataTables.bootstrap.min';
 import 'mediaelement/full'
 import 'mediaelement/build/mediaelementplayer.min.css';
+import 'bootstrap/dist/js/bootstrap';
 
-// Customization for MediaElement Player
-import 'src/mediaelement'
+require('@rails/ujs').start()
+require("@rails/activestorage").start();
+import 'blacklight-frontend/app/assets/javascripts/blacklight/blacklight'
+//import 'blacklight_range_limit';
+
+import "./stylesheets.scss"; // prompts webpack to include css packs
+
+import '../src/admin/enable-optional-fields';
+import '../src/admin/datatables';
+import '../src/admin/usage-statistics';
+import '../src/copy-to-clipboard';
+import '../src/duplicate-input-fields';
+import '../src/flash-messages-for-ajax-requests';
+import '../src/jquery-ui-sortable';
+import '../src/read-more';
+import '../src/skip-link-focus-fix';
+import '../src/sticky-sidebar';
+import '../src/smooth-scroll';
+import '../src/upload/file-upload';
+import '../src/upload/add-creator';
+import '../src/upload/license-options';
+import '../src/upload/disable-form';
+import '../src/upload/author-reorder';
+import '../src/mediaelement'
+
+
+$(document).ready(Blacklight.onload);
