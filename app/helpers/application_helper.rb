@@ -2,8 +2,8 @@ module ApplicationHelper
   # Looks for SVG image in assets directory and outputs XML text
   # rubocop:disable Rails/OutputSafety
   def svg(name)
-    Rails.cache.fetch("svg/#{name}") do
-      file_path = Rails.root.join('app', 'assets', 'images', "#{name}.svg")
+    Rails.cache.fetch("svg/#{name}", force: Rails.env.development?) do
+      file_path = Rails.root.join('app', 'javascript', 'images', "#{name}.svg")
 
       File.exist?(file_path) ? File.read(file_path).html_safe : '(not found)'
     end

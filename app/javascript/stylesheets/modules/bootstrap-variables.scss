@@ -1,4 +1,4 @@
-/* bootstrap variables */
+//* bootstrap variables */
 
 /* typography */
 
@@ -42,8 +42,8 @@ $panel-default-heading-bg: $gray-lighter-custom;
 
 /* logos */
 
-$logo-cul-banner: '../images/logo-cul-banner.png';
+$logo-cul-banner: url("../images/logo-cul-banner.png");
 
-$logo-image: '../images/logo-ac.png';
+$logo-image: '../assets/blacklight/images/logo-ac.png';
 
-$logo-browse: '../images/icon-browse.svg';
+$logo-browse: url("../images/icon-browse.svg");
