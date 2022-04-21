@@ -165,8 +165,8 @@ describe SolrDocument do
   end
 
   describe '#related_items' do
-    let(:solr_doc) do
-      described_class.new(
+    let(:solr_hash) do
+      {
         'id' => '10.7916/TESTDOC2',
         'related_items_ss' => JSON.generate(
           [
@@ -188,13 +188,36 @@ describe SolrDocument do
             }
           ]
         )
-      )
+      }
     end
+
+    let(:solr_doc) { described_class.new(solr_hash) }
+
+    let(:no_rel_solr_hash) { { 'id' => '10.7916/TESTDOC2' } }
+    let(:no_rel_solr_doc)  { described_class.new(no_rel_solr_hash) }
+
+    let(:solr_hash_item_title_missing) do
+      {
+        'id' => '10.7916/TESTDOC2',
+        'related_items_ss' => JSON.generate(
+          [
+            {
+              'relation_type' => 'isIdenticalTo',
+              'identifier' => {
+                'type' => 'uri',
+                'value' => 'https://www.example.com/something'
+              }
+            }
+          ]
+        )
+      }
+    end
+
+    let(:solr_doc_item_title_missing) { described_class.new(solr_hash_item_title_missing) }
 
     context "produces the expected output" do
       it "returns an empty array when there are no related items" do
-        solr_doc.delete('related_items_ss')
-        expect(solr_doc.related_items).to eq([])
+        expect(no_rel_solr_doc.related_items).to eq([])
       end
 
       context "ordering related items" do
@@ -218,19 +241,6 @@ describe SolrDocument do
       end
 
       context "when title is missing for a related item" do
-        before do
-          solr_doc['related_items_ss'] = JSON.generate(
-            [
-              {
-                'relation_type' => 'isIdenticalTo',
-                'identifier' => {
-                  'type' => 'uri',
-                  'value' => 'https://www.example.com/something'
-                }
-              }
-            ]
-          )
-        end
         let(:expected_related_items) do
           [
             {
@@ -241,7 +251,7 @@ describe SolrDocument do
           ]
         end
         it "returns the identifier as the title" do
-          expect(solr_doc.related_items).to eq(expected_related_items)
+          expect(solr_doc_item_title_missing.related_items).to eq(expected_related_items)
         end
       end
     end

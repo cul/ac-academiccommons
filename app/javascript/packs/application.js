@@ -13,6 +13,7 @@
 // or the `imagePath` JavaScript helper below.
 //
 require.context('../images', true);
+require.context('../assets', true)
 // const images = require.context('../images', true)
 // const imagePath = (name) => images(name, true)
 
