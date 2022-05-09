@@ -190,7 +190,7 @@ module AcademicCommons
       # SUBJECT
       mods.css('> subject').each do |subject_node|
         attri = subject_node.attributes
-        next unless attri.count.zero? || (attri['authority'] && attri['authority'].value == 'fast')
+        next unless attri.count.zero? || (attri['authority'])
         subject_node.css('topic,title,namePart').each do |topic_node|
           add_field.call 'subject_ssim', topic_node
           add_field.call 'subject_q',    topic_node
