@@ -1,0 +1,47 @@
+name: CI
+
+on:
+  push:
+    branches: [ '*' ]
+
+jobs:
+  ci-rails-app:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        ruby-version: ['2.6.9']
+        node: ['10', '12']
+    env:
+      RAILS_ENV: test
+      NOKOGIRI_USE_SYSTEM_LIBRARIES: true
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Install libxslt for nokogiri gem (required for version < 1.11)
+        run: sudo apt-get install -y libxml2-dev libxslt-dev
+      - name: Add --no-document option to .gemrc file to speed up bundle install
+        run: "echo 'gem: --no-document' > ~/.gemrc"
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: ${{ matrix.ruby-version }}
+          bundler-cache: true # runs 'bundle install' and caches installed gems automatically
+      - name: Set up Java
+        uses: actions/setup-java@v2
+        with:
+          distribution: 'adopt-hotspot'
+          java-version: '8'
+      - name: Set up Node
+        uses: actions/setup-node@v2
+        with:
+          node-version: ${{ matrix.node }}
+      - run: npm install -g yarn
+      - run: yarn install --frozen-lockfile
+      - name: Create config files from config/template files
+        run: for c in config/*.template.yml; do cp $c ${c/template.}; done
+      - name: Load DB Schema
+        run: bundle exec rake db:schema:load
+      - name: Prepare DB
+        run: bundle exec rake db:test:prepare
+      - name: Run default rake task (CI)
+        run: bundle exec rake
