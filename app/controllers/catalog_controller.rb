@@ -28,16 +28,18 @@ class CatalogController < ApplicationController
   configure_blacklight do |config|
     # Delete default blacklight components we aren't using
     config.index.document_actions.delete(:bookmark)
+    
+    config.add_results_collection_tool(:sort_widget)
 
     config.show.document_actions.delete(:bookmark)
     config.show.document_actions.delete(:sms)
     config.show.document_actions.delete(:citation)
     config.show.document_actions.delete(:email)
 
-    add_show_tools_partial :asset_buttons,        partial: 'asset_buttons'
-    add_show_tools_partial :doi,                  partial: 'doi'
-    add_show_tools_partial :social_buttons,       partial: 'social_buttons'
-    add_show_tools_partial :use_and_reproduction, partial: 'use_and_reproduction'
+    config.add_show_tools_partial :asset_buttons,        partial: 'asset_buttons'
+    config.add_show_tools_partial :doi,                  partial: 'doi'
+    config.add_show_tools_partial :social_buttons,       partial: 'social_buttons'
+    config.add_show_tools_partial :use_and_reproduction, partial: 'use_and_reproduction'
 
     config.navbar.partials.delete(:bookmark)
     config.navbar.partials.delete(:saved_searches)
@@ -129,12 +131,12 @@ class CatalogController < ApplicationController
     config.add_show_field 'genre_ssim',             display: :tag, itemprop: 'genre'
     config.add_show_field 'degree_level_name_ssim', display: :tag
 
-    config.add_show_field 'author_ssim',  display: :main_content, itemprop: 'creator', link_to_search: 'author_ssim',
+    config.add_show_field 'author_ssim',  display: :main_content, itemprop: 'creator', link_to_facet: 'author_ssim',
                                           separator_options: { words_connector: '; ', two_words_connector: '; ', last_word_connector: '; ' }
     config.add_show_field 'abstract_ssi', display: :main_content, itemprop: 'description', auto_link: true
 
-    config.add_show_field 'geographic_area_ssim',   display: :table, label: 'Geographic Areas', link_to_search: 'geographic_area_ssim'
-    config.add_show_field 'subject_ssim',           display: :table, label: 'Subjects',         link_to_search: 'subject_ssim',        itemprop: 'keywords'
+    config.add_show_field 'geographic_area_ssim',   display: :table, label: 'Geographic Areas', link_to_facet: 'geographic_area_ssim'
+    config.add_show_field 'subject_ssim',           display: :table, label: 'Subjects',         link_to_facet: 'subject_ssim',        itemprop: 'keywords'
 
     config.add_show_field 'book_journal_title_ssi', display: :published_in, label: 'Title'
     config.add_show_field 'host_publisher_ssi',     display: :published_in, label: 'Publisher'
@@ -147,7 +149,7 @@ class CatalogController < ApplicationController
     # config.add_show_field 'pages',                  label: 'Pages', accessor: true, unless: ->(_, _, doc) { doc.pages.blank? }
     # config.add_show_field 'publisher_location_ssi', label: 'Publication Origin'
 
-    config.add_show_field 'department_ssim',        label: 'Academic Units', link_to_search: 'department_ssim'
+    config.add_show_field 'department_ssim',        label: 'Academic Units', link_to_facet: 'department_ssim'
     config.add_show_field 'thesis_advisor_ssim',    label: 'Thesis Advisors'
     config.add_show_field 'degree',                 label: 'Degree', accessor: true, unless: ->(_, _, doc) { doc.degree.blank? }
     config.add_show_field 'publisher_ssi',          label: 'Publisher'
