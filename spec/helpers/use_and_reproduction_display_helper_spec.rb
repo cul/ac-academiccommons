@@ -19,7 +19,6 @@ describe UseAndReproductionHelper, type: :helper do
     end
     context "license uri is for In-Copyright" do
       it "returns a label" do
-        puts helper.use_and_reproduction_display(inc)
         expect(helper.use_and_reproduction_display(inc)).to be_present
       end
     end
