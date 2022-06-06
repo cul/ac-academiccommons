@@ -20,8 +20,6 @@ require.context('../assets', true)
 import 'jquery';
 import 'readmore-js/readmore';
 import 'social-share-button';
-import 'dropzone';
-import 'clipboard/dist/clipboard.min';
 import 'font-awesome/css/font-awesome.css';
 import 'datatables.net/js/jquery.dataTables.min';
 import 'datatables.net-bs/js/dataTables.bootstrap.min';
@@ -29,8 +27,17 @@ import 'mediaelement/full'
 import 'mediaelement/build/mediaelementplayer.min.css';
 import 'bootstrap/dist/js/bootstrap';
 
-require('@rails/ujs').start()
-require("@rails/activestorage").start();
+window.Bloodhound = require('corejs-typeahead');
+import ClipboardJS from 'clipboard/dist/clipboard.min';
+window.ClipboardJS = ClipboardJS;
+import Dropzone from 'dropzone';
+window.Dropzone = Dropzone;
+
+
+require('@rails/ujs').start();
+//require("@rails/activestorage").start();
+import * as ActiveStorage from '@rails/activestorage';
+window.ActiveStorage = ActiveStorage;
 import 'blacklight-frontend/app/assets/javascripts/blacklight/blacklight'
 //import 'blacklight_range_limit';
 
@@ -53,6 +60,5 @@ import '../src/upload/license-options';
 import '../src/upload/disable-form';
 import '../src/upload/author-reorder';
 import '../src/mediaelement'
-
 
 $(document).ready(Blacklight.onload);

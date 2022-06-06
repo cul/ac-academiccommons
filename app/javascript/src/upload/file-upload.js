@@ -20,7 +20,8 @@ $(document).ready(function() {
   input.remove();
 
   // Initializing dropzone, when a file is added use activestorage to upload it.
-  $("div#deposit-drop").dropzone({
+  // via https://stackoverflow.com/questions/45800079/dropzone-js-error-uncaught-typeerror-dropzone-is-not-a-function
+  var myDropzone = new Dropzone("div#deposit-drop", {
     dictDefaultMessage: "<span class='link-color'>Select a file</span> or drag and drop here",
     url: directUploadUrl,
     paramName: fileVariableName,
