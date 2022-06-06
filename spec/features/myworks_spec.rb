@@ -49,7 +49,7 @@ describe 'myworks', type: :feature do
                 'free_to_read_start_date_ssi' => Date.current.tomorrow.strftime('%Y-%m-%d') }
             ]
           }
-        }, {}
+        }, {}, { blacklight_config: Blacklight::Configuration.new }
       )
     end
 

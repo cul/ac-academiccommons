@@ -55,7 +55,8 @@ describe SolrDocument do
               }
             ]
           }
-        }, {})
+        }, {}, { blacklight_config: Blacklight::Configuration.new }
+      )
       end
 
       before do

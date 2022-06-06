@@ -104,7 +104,8 @@ describe 'GET /api/v1/data_feed/:key', type: :request do
               }
             ]
           }
-        }, {})
+        }, {}, { blacklight_config: Blacklight::Configuration.new }
+      )
       end
 
       let(:json_response) do

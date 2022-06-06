@@ -16,7 +16,7 @@ describe Admin::EmailAuthorReportsController, type: :controller do
       end
       let(:authors) do
         Blacklight::Solr::Response.new(
-          { 'response' => { 'docs' => [{ 'author_uni_ssim' => 'abc123' }] } }, {}
+          { 'response' => { 'docs' => [{ 'author_uni_ssim' => 'abc123' }] } }, {}, { blacklight_config: Blacklight::Configuration.new }
         )
       end
       let(:author_search) do
@@ -38,7 +38,7 @@ describe Admin::EmailAuthorReportsController, type: :controller do
               ]
             }
           },
-          {}
+          {}, { blacklight_config: Blacklight::Configuration.new }
         )
       end
       let(:email) { ActionMailer::Base.deliveries.pop }

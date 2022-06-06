@@ -11,7 +11,8 @@ RSpec.describe AcademicCommons::Metrics::AuthorAffiliationReport do
           ]
         }
       },
-      {})
+      {}, { blacklight_config: Blacklight::Configuration.new }
+    )
   end
 
   let(:solr_doc_alice) do
@@ -27,7 +28,8 @@ RSpec.describe AcademicCommons::Metrics::AuthorAffiliationReport do
             }
         ]
       }
-    }, {})
+    }, {}, { blacklight_config: Blacklight::Configuration.new }
+  )
   end
 
   let(:solr_doc_pride) do
@@ -43,7 +45,8 @@ RSpec.describe AcademicCommons::Metrics::AuthorAffiliationReport do
             }
         ]
       }
-    }, {})
+    }, {}, { blacklight_config: Blacklight::Configuration.new }
+  )
   end
 
   before :each do

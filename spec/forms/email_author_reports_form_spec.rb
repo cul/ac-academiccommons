@@ -36,7 +36,7 @@ describe EmailAuthorReportsForm, type: :model do
                   'cul_doi_ssi' => '10.7916/ALICE', 'fedora3_pid_ssi' => 'actest:1', 'publisher_doi_ssi' => '', 'genre_ssim' => '' }
               ]
             }
-          }, {}
+          }, {}, { blacklight_config: Blacklight::Configuration.new }
         )
       end
 
@@ -67,7 +67,7 @@ describe EmailAuthorReportsForm, type: :model do
                   'cul_doi_ssi' => '10.7916/ALICE', 'doi' => '', 'genre_ssim' => '', 'free_to_read_start_date_ssi' => Date.tomorrow.strftime('%Y-%m-%d') }
               ]
             }
-          }, {}
+          }, {}, { blacklight_config: Blacklight::Configuration.new }
         )
       end
 

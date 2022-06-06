@@ -20,7 +20,7 @@ RSpec.describe StatisticsMailer, type: :mailer do
                 'cul_doi_ssi' => 'http://dx.doi.org/10.7916/TESTDOC1', 'doi' => '', 'genre_ssim' => '' }
             ]
           }
-        }, {}
+        }, {}, { blacklight_config: Blacklight::Configuration.new }
       )
     end
     let(:usage_stats) do

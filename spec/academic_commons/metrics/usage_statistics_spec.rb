@@ -26,7 +26,7 @@ RSpec.describe AcademicCommons::Metrics::UsageStatistics do
               'free_to_read_start_date_ssi' => Date.current.tomorrow.strftime('%Y-%m-%d') }
           ]
         }
-      }, {}
+      }, {}, { blacklight_config: Blacklight::Configuration.new }
     )
   end
 
@@ -48,7 +48,7 @@ RSpec.describe AcademicCommons::Metrics::UsageStatistics do
               'cul_doi_ssi' => other_item_identifier, 'fedora3_pid_ssi' => other_item_fedora_pid, 'publisher_doi_ssi' => '', 'genre_ssim' => '' }
           ]
         }
-      }, {}
+      }, {}, { blacklight_config: Blacklight::Configuration.new }
     )
   end
 
@@ -70,7 +70,7 @@ RSpec.describe AcademicCommons::Metrics::UsageStatistics do
               'free_to_read_start_date_ssi' => Date.current.tomorrow.strftime('%Y-%m-%d') }
           ]
         }
-      }, {}
+      }, {}, { blacklight_config: Blacklight::Configuration.new }
     )
   end
 
@@ -86,7 +86,7 @@ RSpec.describe AcademicCommons::Metrics::UsageStatistics do
         'response' => {
           'docs' => []
         }
-      }, {}
+      }, {}, { blacklight_config: Blacklight::Configuration.new }
     )
   end
 
@@ -108,7 +108,7 @@ RSpec.describe AcademicCommons::Metrics::UsageStatistics do
               'cul_doi_ssi' => other_item_identifier, 'fedora3_pid_ssi' => other_item_fedora_pid, 'genre_ssim' => '', 'publisher_doi_ssi' => '' }
           ]
         }
-      }, {}
+      }, {}, { blacklight_config: Blacklight::Configuration.new }
     )
   end
 
@@ -423,7 +423,7 @@ RSpec.describe AcademicCommons::Metrics::UsageStatistics do
                   'free_to_read_start_date_ssi' => Date.current.tomorrow.strftime('%Y-%m-%d') }
               ]
             }
-          }, {}
+          }, {}, { blacklight_config: Blacklight::Configuration.new }
         )
       end
       before do
