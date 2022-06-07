@@ -7,7 +7,7 @@ gem 'rails', '5.2.4.3'
 gem 'active-fedora', '~> 8.2'
 gem 'addressable'
 gem 'blacklight', '~> 7.2.0'
-gem 'blacklight_oai_provider', git: 'https://github.com/projectblacklight/blacklight_oai_provider'
+gem 'blacklight_oai_provider', '~>7.0.2'
 gem 'blacklight_range_limit'
 gem 'bootsnap'
 gem 'cancancan', '~> 2.0'
@@ -18,7 +18,7 @@ gem 'fancybox2-rails' # Used in helper classes. TODO: Confirm that this is neede
 gem 'gaffe'
 gem 'grape'
 gem 'grape-entity'
-gem 'grape-swagger', git: 'https://github.com/ruby-grape/grape-swagger', ref: 'da351d0f99228f31329210d21b975a64500e73ab'
+gem 'grape-swagger', '0.31.0'
 gem 'http'
 gem 'jbuilder'
 gem 'jquery-rails'
@@ -33,12 +33,11 @@ gem 'rsolr-ext'
 gem 'rubyzip', require: 'zip'
 gem 'sitemap_generator'
 gem 'social-share-button'
-gem 'therubyracer'
 gem 'turbolinks'
 gem 'uglifier'
 gem 'unicode'
 gem 'voight_kampff'
-gem 'webpacker', '~> 5.0'
+gem 'webpacker', '~> 5.4.0'
 gem 'whenever', require: false
 gem 'wowza-secure_token'
 
@@ -74,6 +73,9 @@ group :development, :test do
   gem 'rspec-rails', '~> 3.5'
   gem 'selenium-webdriver'
   gem 'solr_wrapper', '>= 0.18.0'
-  gem 'webdrivers', '4.1.2'
+  gem 'webdrivers', '~> 4.0', require: false
   gem 'webmock'
 end
+
+# Use Puma for local development
+gem 'puma', '~> 5.2'
