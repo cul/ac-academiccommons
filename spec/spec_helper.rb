@@ -17,8 +17,8 @@
 #
 # See http://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
 
+require 'webdrivers'
 require 'capybara/rspec'
-require 'selenium-webdriver'
 require 'equivalent-xml/rspec_matchers'
 
 require 'webmock/rspec'
@@ -27,18 +27,22 @@ WebMock.disable_net_connect!(
   allow: 'chromedriver.storage.googleapis.com'
 )
 
-Capybara.server = :webrick # Setting needed until we upgrade to puma
+# on-screen widgets will collapse at certain width breakpoints, so feature specs need to define window dimensions
+Capybara.register_driver :headless_chrome do |app|
+  capabilities = Selenium::WebDriver::Remote::Capabilities.chrome(
+    'goog:chromeOptions' => {
+      args: %w[
+        no-sandbox headless disable-gpu window-size=1980,1080
+      ]
+    }
+  )
+
+  Capybara::Selenium::Driver.new(app, browser: :chrome, capabilities: capabilities)
+end
 
 Capybara.javascript_driver = :headless_chrome
 
-Capybara.register_driver :headless_chrome do |app|
-  options = Selenium::WebDriver::Chrome::Options.new(args: %w[no-sandbox headless disable-gpu])
-  capabilities = Selenium::WebDriver::Remote::Capabilities.chrome(
-    chromeOptions: { w3c: false }
-  )
-
-  Capybara::Selenium::Driver.new(app, browser: :chrome, options: options, desired_capabilities: capabilities)
-end
+Capybara.disable_animation = true
 
 Capybara.default_max_wait_time = 7
 
