@@ -18,6 +18,7 @@ require.context('../assets', true)
 // const imagePath = (name) => images(name, true)
 
 import 'jquery';
+import "jquery-ui/ui/widgets/sortable";
 import 'readmore-js/readmore';
 import 'social-share-button';
 import 'font-awesome/css/font-awesome.css';
@@ -49,7 +50,6 @@ import '../src/admin/usage-statistics';
 import '../src/copy-to-clipboard';
 import '../src/duplicate-input-fields';
 import '../src/flash-messages-for-ajax-requests';
-import '../src/jquery-ui-sortable';
 import '../src/read-more';
 import '../src/skip-link-focus-fix';
 import '../src/sticky-sidebar';
