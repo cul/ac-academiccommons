@@ -1,0 +1,22 @@
+default: &default
+  port: 9983
+  version: 6.3.0
+  download_dir: <%= Rails.root.join('tmp', 'solr-download') %>
+  verbose: false
+  managed: true
+  solr_options:
+    "addlopts" : "-Djetty.host=localhost"
+
+development:
+  <<: *default
+  instance_dir: <%= Rails.root.join('tmp', 'solr-development') %>
+  collection:
+    - name: 'development'
+      dir: <%= Rails.root.join('solr', 'conf') %>
+
+test:
+  <<: *default
+  instance_dir: <%= Rails.root.join('tmp', 'solr-test') %>
+  collection:
+    - name: 'test'
+      dir: <%= Rails.root.join('solr', 'conf') %>

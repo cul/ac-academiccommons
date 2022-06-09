@@ -12,6 +12,7 @@ tmp/*_visits
 tmp/*_visitors
 config/database.yml
 config/solr.yml
+config/solr_wrapper.yml
 config/fedora.yml
 config/*.sphinx.conf
 config/s3_credentials.yml
