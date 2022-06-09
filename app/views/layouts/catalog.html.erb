@@ -5,5 +5,20 @@
   <meta name="bitly-verification" content="35191b8f3154"/>
   <meta name="baidu-site-verification" content="vQh9AyuWzB"/>
 <% end %>
+<% content_for(:content) do %>
+  <% if content_for? :sidebar %>
+    <section id="content" class="<%= main_content_classes %> order-last" aria-label="<%= t('blacklight.search.documents.aria.search_results') %>">
+      <%= yield %>
+    </section>
 
-<%= render template: 'layouts/blacklight' %>
+    <section id="sidebar" class="<%= sidebar_classes %> order-first" aria-label="<%= t('blacklight.search.documents.aria.limit_search') %>">
+      <%= content_for(:sidebar) %>
+    </section>
+  <% else %>
+    <section class="col-md-12">
+      <%= yield %>
+    </section>
+  <% end %>
+<% end %>
+
+<%= render template: "layouts/blacklight/base" %>

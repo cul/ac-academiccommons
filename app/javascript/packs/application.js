@@ -42,7 +42,7 @@ window.ActiveStorage = ActiveStorage;
 import 'blacklight-frontend/app/assets/javascripts/blacklight/blacklight'
 //import 'blacklight_range_limit';
 
-import "./stylesheets.scss"; // prompts webpack to include css packs
+import "./application.scss"; // prompts webpack to include css packs
 
 import '../src/admin/enable-optional-fields';
 import '../src/admin/datatables';

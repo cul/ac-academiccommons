@@ -1,4 +1,9 @@
-<%= content_for :content do %>
+<%- content_for :head do %>
+  <%= render 'shared/google_analytics' %>
+  <meta name="bitly-verification" content="35191b8f3154"/>
+  <meta name="baidu-site-verification" content="vQh9AyuWzB"/>
+<% end %>
+<%- content_for :content do %>
   <div id="main-page">
     <div id="dashboard-nav">
       <ul class="nav nav-tabs">
@@ -34,4 +39,4 @@
   </div>
 <% end %>
 
-<%= render template: 'layouts/catalog' %>
+<%= render template: "layouts/blacklight/base" %>

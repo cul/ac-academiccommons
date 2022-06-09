@@ -1,27 +1,16 @@
 <%#
-  Overriding Blacklight v6.14.1 template.
-
-  - removes panel heading
+  Overriding Blacklight v7.2.0 template.
+  - removes card heading
 
 %>
-
-<%-
-  # Compare with render_document_functions_partial helper, and
-  # _document_functions partial. BL actually has two groups
-  # of document-related tools. "document functions" by default
-  # contains Bookmark functionality shown on both results and
-  # item view. While "document tools" contains external export type
-  # functions by default only on detail.
-
--%>
 <% if show_doc_actions? %>
-  <div class="panel panel-default show-tools">
-    <div class="panel-body">
+  <div class="card show-tools">
+    <ul class="list-group list-group-flush">
       <%= render_show_doc_actions @document do |config, inner| %>
-        <div class="<%= config.key.to_s.gsub('_', '-') %>">
+        <li class="list-group-item <%= config.key %>">
           <%= inner %>
-        </div>
+        </li>
       <% end %>
-    </div>
+    </ul>
   </div>
 <% end %>
