@@ -7,8 +7,12 @@
   padding: 5px 0;
 
   & .navbar-brand {
+    background: transparent url($logo-image) no-repeat;
     background-size: contain;
     background-position: center center;
+    height: 50px;
+    overflow: hidden;
+    text-indent: 100%;
     width: 100%;
   }
 
