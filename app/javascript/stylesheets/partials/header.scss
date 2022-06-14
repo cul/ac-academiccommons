@@ -20,20 +20,22 @@
     overflow: hidden;
   }
 
-  & .navbar-form {
+  & .search-query-form {
     margin: 0;
     padding: 7px 0;
-    width: 100%;
+    width: 90%;
   }
 
-  & .input-group-btn {
+  & .input-group-append {
     width: 1%;
+    z-index: 1000;
   }
 
   & .form-control {
     border-right: 0;
     box-shadow: none;
     color: $gray-base;
+    height: 100%;
     z-index: 1000;
   }
 
@@ -58,7 +60,7 @@
       background-position: left center;
     }
 
-    & .navbar-form {
+    & .search-query-form {
       margin: 7px 0;
       padding: 0 0 0 15px;
     }
