@@ -70,6 +70,8 @@
   }
 
   & .panel {
+    border: 1px solid $gray-lighter;
+    border-radius: 4px;
     box-shadow: none;
     margin-bottom: 20px;
   }
@@ -78,12 +80,16 @@
     color: $gray-base;
     font-size: $font-size-base;
     font-weight: bold;
+    margin: 0;
   }
 
   & .panel-heading {
     align-items: center;
+    background-color: $gray-lighter-custom;
+    border-bottom: $border;
     display: flex;
     justify-content: space-between;
+    padding: 10px 15px;
   }
 
   & .panel-heading .download-all {
@@ -93,6 +99,10 @@
 
   & .panel p {
     padding: 15px;
+  }
+
+  & .panel-body {
+    padding: 10px 15px;
   }
 
   & .list-group {
@@ -110,6 +120,7 @@
     flex-wrap: wrap;
     font-size: $font-size-small;
     justify-content: space-between;
+    padding: 10px 15px;
     position: relative;
   }
 
