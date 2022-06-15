@@ -10,14 +10,14 @@
   }
 }
 
-.asset-buttons,
+.asset_buttons,
 .doi {
   animation: slideInUp;
   animation-duration: .7s;
   animation-fill-mode: both;
 }
 
-.asset-buttons {
+.asset_buttons {
   align-items: center;
   background: $body-bg;
   border-top: 1px solid $brand-dark;
@@ -47,17 +47,19 @@
 .doi {
   animation-duration: .9s;
   align-items: center;
-  bottom: 11px;
+  border: 0;
+  bottom: 0;
   display: flex;
   font-size: 14px;
   position: fixed;
-  right: 8px;
+  right: 0;
   width: 63%;
   z-index: 900;
 
   & label.doi-label {
     flex: 0 1 auto;
-    margin-right: 5px;
+    font-weight: bold;
+    margin: 0 5px 0 0;
   }
 
   & input#doi {
@@ -118,13 +120,13 @@
   }
 }
 
-@media screen and (min-width: $screen-sm ) {
+@include media-breakpoint-up(sm) {
 
   .show-tools {
     margin-top: 15px;
   }
 
-  .asset-buttons {
+  .asset_buttons {
     animation: none;
     background: transparent;
     border: 0;
