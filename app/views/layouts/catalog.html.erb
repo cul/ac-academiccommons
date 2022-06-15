@@ -7,11 +7,11 @@
 <% end %>
 <% content_for(:content) do %>
   <% if content_for? :sidebar %>
-    <section id="content" class="<%= main_content_classes %> order-last" aria-label="<%= t('blacklight.search.documents.aria.search_results') %>">
+    <section id="content" class="<%= main_content_classes %> order-first" aria-label="<%= t('blacklight.search.documents.aria.search_results') %>">
       <%= yield %>
     </section>
 
-    <section id="sidebar" class="<%= sidebar_classes %> order-first" aria-label="<%= t('blacklight.search.documents.aria.limit_search') %>">
+    <section id="sidebar" class="<%= sidebar_classes %> order-last" aria-label="<%= t('blacklight.search.documents.aria.limit_search') %>">
       <%= content_for(:sidebar) %>
     </section>
   <% else %>
