@@ -85,6 +85,10 @@
     min-height: auto;
   }
 
+  & .navbar .container {
+    justify-content: flex-start;
+  }
+
   & .navbar-default {
     background-color: $body-bg;
     border: 0;
@@ -94,12 +98,8 @@
   }
 
   & .navbar-nav {
-    float: left;
+    flex-direction: row;
     margin: 0;
-  }
-
-  & .navbar-nav > li {
-    float: left;
   }
 
   & .navbar-nav > li a {
@@ -130,10 +130,14 @@
   }
 }
 
-@media screen and (min-width: $screen-sm ) {
+@include media-breakpoint-up(sm) {
 
   #links-navbar {
     font-size: $font-size-base;
+
+    & .navbar .container {
+      justify-content: space-between;
+    }
 
     & .navbar-nav > li a {
       padding: 10px 15px;
