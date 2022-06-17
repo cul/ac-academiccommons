@@ -3,42 +3,40 @@
 #facets {
   padding-bottom: 0;
 
-  & h2.facets-heading {
+  & .navbar {
+    border: $border;
+    border-radius: 4px;
+    margin: 0;
+    padding-left: 10px;
+  }
+
+  & .facets-heading {
     font-size: $font-size-small;
     font-weight: bold;
+    margin: 0;
     text-transform: uppercase;
   }
 
-  & h3.facet-field-heading {
+  & .card-header .btn {
+    background-color: $body-bg;
     font-size: $font-size-small;
     font-weight: normal;
     line-height: 1;
-    margin: 0;
   }
 
-  & .top-panel-heading {
-    border: $border;
-    margin: 0;
-    padding-left: 15px;
-  }
+  // & .facet_limit-active .card-header {
+  //   background-color: $gray-lighter-custom;
+  // }
 
-  & .facet_limit .panel-heading {
-    background: $body-bg;
-  }
-
-  & .facet_limit-active .panel-heading {
-    background: $gray-lighter-custom;
-  }
-
-  & .panel-group .panel-heading:hover {
+  & .card-header .btn:hover {
     background-color: $gray-lighter-custom;
   }
 
-  & .facets-toggle {
-    margin-right: 0;
-  }
+  // & .facets-toggle {
+  //   margin-right: 0;
+  // }
 
-  & .panel {
+  & .card {
     border: 0;
     border-radius: 0;
     border-bottom: $border;
@@ -64,17 +62,18 @@
   }
 }
 
-@media screen and (min-width: $screen-sm ) {
+@include media-breakpoint-up(sm) {
 
   #facets {
 
-    & h2.facets-heading {
-      margin: 6px 0 0 0;
-    }
-
-    & .top-panel-heading {
+    & .navbar {
       border: 0;
       border-bottom: $border;
+      border-radius: 0;
+    }
+
+    & .facets-heading {
+      margin: 6px 0 0 0;
     }
   }
 }
