@@ -2,18 +2,8 @@
 
 /*  top */
 
+/* hide "Start Over" box from search results and item page */
 .constraints-container {
-  background: $gray-lighter-custom;
-  border: 0;
-  border-bottom-left-radius: 0;
-  border-bottom-right-radius: 0;
-  box-shadow: none;
-  line-height: 2.2;
-  margin: 0;
-  padding: 7px 10px 9px 10px;
-}
-
-#startOverLink {
   display: none;
 }
 
