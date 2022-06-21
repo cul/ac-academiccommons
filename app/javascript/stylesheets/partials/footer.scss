@@ -45,7 +45,7 @@ footer[role="contentinfo"] {
   }
 }
 
-@media screen and (min-width: $screen-xs ) {
+@include media-breakpoint-up(sm) {
 
   footer[role="contentinfo"] {
 

@@ -23,11 +23,10 @@
   & .search-query-form {
     margin: 0;
     padding: 7px 0;
-    width: 90%;
+    width: 100%;
   }
 
   & .input-group-append {
-    width: 1%;
     z-index: 1000;
   }
 
@@ -44,14 +43,7 @@
   }
 }
 
-@media screen and (min-width: $screen-sm ) and (max-width: $screen-lg) {
-
-  #header-navbar .form-control {
-    font-size: 12px;
-  }
-}
-
-@media screen and (min-width: $screen-sm ) {
+@include media-breakpoint-up(md) {
 
   #header-navbar {
     padding: 20px 0;
@@ -63,6 +55,10 @@
     & .search-query-form {
       margin: 7px 0;
       padding: 0 0 0 15px;
+    }
+
+    & .form-control {
+      font-size: 12px;
     }
   }
 }

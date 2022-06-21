@@ -40,7 +40,7 @@
   }
 }
 
-@media screen and (min-width: $screen-sm ) {
+@include media-breakpoint-up(sm) {
 
   #main-page #dashboard-nav {
     background-image: none;
@@ -93,7 +93,7 @@
   }
 }
 
-@media screen and (min-width: $screen-sm ) {
+@include media-breakpoint-up(sm) {
 
   #main-page #dashboard {
     border: $border;

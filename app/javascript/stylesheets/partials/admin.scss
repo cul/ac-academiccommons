@@ -13,7 +13,7 @@ p.admin-intro-message:before {
   content: '\2191';
 }
 
-@media screen and (min-width: $screen-sm ) {
+@include media-breakpoint-up(sm) {
 
   p.admin-intro-message:before {
     content: '\2190';
@@ -58,7 +58,7 @@ p.admin-intro-message:before {
   }
 }
 
-@media screen and (min-width: $screen-sm ) {
+@include media-breakpoint-up(sm) {
 
   #main-page #dashboard .admin-sidebar {
     background: $body-bg;
@@ -87,7 +87,7 @@ p.admin-intro-message:before {
   }
 }
 
-@media screen and (min-width: $screen-sm ) {
+@include media-breakpoint-up(sm) {
 
   #main-page #dashboard .admin-content {
     border-bottom: $border;
@@ -117,7 +117,7 @@ p.admin-intro-message:before {
   }
 }
 
-@media screen and (min-width: $screen-sm ) {
+@include media-breakpoint-up(sm) {
 
   #main-page .usage-stats {
 

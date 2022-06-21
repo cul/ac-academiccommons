@@ -20,7 +20,7 @@
   }
 }
 
-@media screen and (min-width: $screen-md ) {
+@include media-breakpoint-up(sm) {
 
   .cul-banner {
     text-align: left;

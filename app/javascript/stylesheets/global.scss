@@ -1,8 +1,19 @@
+/* layout */
+
+@include media-breakpoint-down(sm) {
+
+  .container {
+    max-width: 100%;
+  }
+}
+
+/* color */
+
 body {
   color: $gray-base;
 }
 
-/* headings */
+/* typography */
 
 h1,
 h2,
@@ -73,7 +84,7 @@ p.summary strong {
   font-weight: 500;
 }
 
-@media screen and (min-width: $screen-md ) {
+@include media-breakpoint-up(md) {
 
   p.summary,
   #main-page p.summary {

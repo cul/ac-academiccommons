@@ -133,7 +133,7 @@
 
 /* media queries for large screens */
 
-@media screen and (min-width: $screen-md ) {
+@include media-breakpoint-up(md) {
 
   .menu,
   .menu-small,

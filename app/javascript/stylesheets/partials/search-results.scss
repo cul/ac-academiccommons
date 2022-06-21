@@ -60,7 +60,7 @@ span.constraints-label {
   font-size: 13px;
 }
 
-@media screen and (min-width: $screen-sm ) {
+@include media-breakpoint-up(sm) {
 
   .constraints-container {
     background: $gray-lighter-custom;

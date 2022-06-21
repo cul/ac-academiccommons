@@ -65,9 +65,10 @@
   }
 }
 
-@media screen and (min-width: $screen-sm ) {
-#home-content {
-  padding-top: 15px;
+@include media-breakpoint-up(sm) {
+
+  #home-content {
+    padding-top: 15px;
 
     & p.summary {
       font-size: 21px;

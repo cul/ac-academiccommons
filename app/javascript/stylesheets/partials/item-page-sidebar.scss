@@ -18,7 +18,7 @@
   animation-fill-mode: both;
 }
 
-.asset_buttons {
+.show-tools .asset_buttons {
   align-items: center;
   background: $body-bg;
   border-top: 1px solid $brand-dark;
@@ -130,9 +130,10 @@
     }
   }
 
-  .asset_buttons {
+  .show-tools .asset_buttons {
     animation: none;
     background: transparent;
+    border: none;
     bottom: auto;
     box-shadow: none;
     display: block;
@@ -150,10 +151,11 @@
     }
   }
 
-  .doi {
+  .show-tools .doi {
     animation: none;
     bottom: auto;
     flex-wrap: wrap;
+    padding: 13px 0;
     position: relative;
     right: auto;
     width: 100%;
