@@ -1,25 +1,15 @@
 /* menu */
 
 .menu,
-.menu-small,
-#main-page .menu,
-#main-page .menu-small {
-  margin: 15px 0;
-
-  & .row {
-    display: flex;
-    flex-wrap: wrap;
-    margin: 0 -10px 60px -10px;
-  }
+#main-page .menu {
+  margin: 25px 0;
+  gap: 10px;
 
   & .tile {
     background: $body-bg;
     border: $border;
     border-radius: 3px;
-    display: block;
-    margin: 10px;
     padding: 20px 25px;
-    width: 100%;
   }
 
   & .logo img {
@@ -46,15 +36,9 @@
   }
 }
 
-.menu-small,
-#main-page .menu-small {
-  max-width: 700px;
-}
-
 /* homepage menu */
 
 .homepage-menu {
-  margin: 10px -10px 0 -10px;
 
   & .collections,
   & .upload {
@@ -107,17 +91,6 @@
   }
 }
 
-.homepage-info:before {
-  border-bottom: $border;
-  height: auto;
-  left: 50%;
-  margin-bottom: 20px;
-  margin-left: -50vw;
-  padding-top: 20px;
-  position: relative;
-  width: 100vw;
-}
-
 /* upload your research menu */
 
 .menu .log-in {
@@ -135,19 +108,7 @@
 
 @include media-breakpoint-up(md) {
 
-  .menu,
-  .menu-small,
-  #main-page .menu,
-  #main-page .menu-small,
   .homepage-menu {
-
-    & .tile {
-      width: 45%;
-    }
-  }
-
-  .homepage-menu {
-    display: flex;
-    margin-top: 20px;
+    flex-wrap: nowrap;
   }
 }

@@ -4,17 +4,15 @@
   <h1>Upload Your Research</h1>
 <% end %>
 
-<div class="menu">
-  <div class="row">
-    <div class="col-md-6 tile log-in">
-      <h2>Have a Columbia UNI?</h2>
-      <p>Log in with your Columbia UNI and password</p>
-      <p><%= link_to t('blacklight.header_links.login'), new_user_session_path, class: 'btn btn-primary' %></p>
-    </div>
-    <div class="col-md-6 tile no-log-in">
-      <h2>No Columbia UNI?</h2>
-      <p>Tell us about your work and how it meets our <%= link_to 'guidelines for participation', policies_path %>.</p>
-      <p><i class="far fa-envelope" aria-hidden></i> Email us at <%= mail_to "ac@columbia.edu" %></p>
-    </div>
+<div class="row menu">
+  <div class="col-md-5 tile log-in">
+    <h2>Have a Columbia UNI?</h2>
+    <p>Log in with your Columbia UNI and password</p>
+    <p><%= link_to t('blacklight.header_links.login'), new_user_session_path, class: 'btn btn-primary' %></p>
+  </div>
+  <div class="col-md-5 tile no-log-in">
+    <h2>No Columbia UNI?</h2>
+    <p>Tell us about your work and how it meets our <%= link_to 'guidelines for participation', policies_path %>.</p>
+    <p><i class="far fa-envelope" aria-hidden></i> Email us at <%= mail_to "ac@columbia.edu" %></p>
   </div>
 </div>
