@@ -7,13 +7,13 @@ module Ac::LayoutHelperBehavior
   # Classes used for sizing the main content of a Blacklight page
   # @return [String]
   def main_content_classes
-    'col-md-8 col-sm-7'
+    'col-md-8'
   end
 
   ## !Override
   # Classes used for sizing the sidebar content of a Blacklight page
   # @return [String]
   def sidebar_classes
-    'col-md-4 col-sm-5'
+    'col-md-4'
   end
 end

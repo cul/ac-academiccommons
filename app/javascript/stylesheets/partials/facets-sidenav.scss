@@ -24,17 +24,9 @@
     line-height: 1;
   }
 
-  // & .facet_limit-active .card-header {
-  //   background-color: $gray-lighter-custom;
-  // }
-
   & .card-header .btn:hover {
     background-color: $gray-lighter-custom;
   }
-
-  // & .facets-toggle {
-  //   margin-right: 0;
-  // }
 
   & .card {
     border: 0;
@@ -62,7 +54,7 @@
   }
 }
 
-@include media-breakpoint-up(sm) {
+@include media-breakpoint-up(md) {
 
   #facets {
 
@@ -75,5 +67,14 @@
     & .facets-heading {
       margin: 6px 0 0 0;
     }
+  }
+
+  .facets-toggleable-md .navbar-toggler {
+    display: none; 
+  }
+   
+  .facets-toggleable-md .facets-collapse {
+    display: block;
+    width: 100%;
   }
 }
