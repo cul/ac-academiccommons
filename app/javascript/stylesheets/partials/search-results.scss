@@ -111,6 +111,10 @@ span.constraints-label {
     margin: 0 0 8px 0;
   }
 
+  & .document-metadata dt {
+    display: none;
+  }
+
   & .document-metadata dd {
     font-size: $font-size-small;
     margin: 0;
@@ -123,6 +127,7 @@ span.constraints-label {
   & dd.blacklight-author_ssim {
     margin-bottom: 6px;
     overflow: hidden;
+    padding: 0;
     text-overflow: ellipsis;
     white-space: nowrap;
   }
@@ -131,11 +136,23 @@ span.constraints-label {
   & dd.blacklight-genre_ssim {
     @include tag-label;
     margin-bottom: 6px;
+    padding: 0;
   }
 
-  & dt.blacklight-genre_ssim,
-  & dt.blacklight-pub_date_isi {
-    display: none;
+  /* this is to get pub_date and genre to display inline */
+  & dd.col-md-9 {
+    flex: 0 0 100%;
+    max-width: 100%;
+  }
+
+  & dd:nth-of-type(2),
+  & dd:nth-of-type(3)  {
+    flex: none;
+    width: auto;
+  }
+
+  & dd.blacklight-subject_ssim {
+    padding: 0;
   }
 
   & dd.blacklight-subject_ssim span {
