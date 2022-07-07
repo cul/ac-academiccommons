@@ -593,6 +593,7 @@ GEM
       nokogiri (~> 1.8)
 
 PLATFORMS
+  ruby
   x86_64-darwin-19
   x86_64-darwin-21
 

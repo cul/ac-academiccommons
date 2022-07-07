@@ -18,7 +18,7 @@
     "datatables.net-bs": "^1.10.19",
     "dropzone": "^6.0.0-beta.2",
     "file-loader": "^6.2.0",
-    "font-awesome": "4.7.0",
+    "@fortawesome/fontawesome-free": "^5.2.0",
     "jquery": "^3.6.0",
     "jquery-ui": "1.12.1",
     "mediaelement": "^5.0.5",
