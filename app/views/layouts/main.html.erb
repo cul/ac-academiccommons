@@ -6,6 +6,7 @@
   <meta name="baidu-site-verification" content="vQh9AyuWzB"/>
 <% end %>
 <%= content_for :content do %>
+  
   <div id="main-page">
 
     <% if content_for? :header %>
@@ -14,18 +15,22 @@
       </div>
     <% end %>
 
-    <% if content_for? :sidebar %>
-      <div class="col-md-2 side-nav">
-        <%= yield(:sidebar) %>
-      </div>
-      <div id="content" class="col-md-10 post-content post-content-wrapper">
-        <%= yield %>
-      </div>
-    <% else %>
-      <div id="content" class="post-content">
-        <%= yield %>
-      </div>
-    <% end %>
+    <div class="row">
+
+      <% if content_for? :sidebar %>
+        <div class="col-md-2 side-nav">
+          <%= yield(:sidebar) %>
+        </div>
+        <div id="content" class="col-md-10 post-content post-content-wrapper">
+          <%= yield %>
+        </div>
+      <% else %>
+        <div id="content" class="post-content">
+          <%= yield %>
+        </div>
+      <% end %>
+
+    </div>
 
   </div>
 
