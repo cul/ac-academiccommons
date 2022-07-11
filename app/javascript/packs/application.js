@@ -52,7 +52,6 @@ import '../src/duplicate-input-fields';
 import '../src/flash-messages-for-ajax-requests';
 import '../src/read-more';
 import '../src/skip-link-focus-fix';
-import '../src/sticky-sidebar';
 import '../src/smooth-scroll';
 import '../src/upload/file-upload';
 import '../src/upload/add-creator';

@@ -2,11 +2,6 @@
 
 #main-page {
 
-  & .affix-top,
-  & .affix {
-  	position: relative;
-  }
-
   /* side-nav */
 
   & .side-nav {
@@ -151,6 +146,10 @@
   #main-page {
 
     & .side-nav {
+      bottom: auto;
+      height: 100%;
+      position: sticky;
+      top: 10px;
       width: 22%;
     }
 
@@ -158,27 +157,6 @@
       border-left: $border;
       padding: 30px 40px;
       width: 78%;
-    }
-
-    & ul.affix-top,
-    & ul.affix {
-      max-width: 184px;
-      padding: 30px 0 0 0;
-      position: static;
-    }
-
-    & ul.affix-top,
-    & ul.affix-bottom {
-      width: 100%;
-    }
-
-    & ul.affix-bottom {
-      position: absolute;
-    }
-    
-    & ul.affix {
-      position: fixed;
-      top: 0;
     }
 
     & ul.anchor-links {
