@@ -20,7 +20,7 @@
 		list-style: none;
 		margin: 0;
 		max-width: none;
-		padding: 10px 0 0 0;
+		padding: 10px 0 0 15px;
 		width: auto;
 
     & a {
@@ -43,7 +43,7 @@
   /* main-page content */
 
   & .post-content {
-    padding: 20px 15px;
+    padding: 20px 30px;
   }
 
   & a {
@@ -183,11 +183,13 @@
 
     & ul.anchor-links {
       font-size: $font-size-base;
+      padding-top: 15px;
     }
 
 	  & ul.anchor-links li {
 			display: block;
-      margin-bottom: 8px;
+      line-height: 1.3;
+      margin-bottom: 12px;
     }
 
 	  & ul.anchor-links li::after {
