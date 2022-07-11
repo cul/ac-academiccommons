@@ -6,7 +6,7 @@
   & .navbar {
     border: $border;
     border-radius: 4px;
-    margin: 0;
+    margin: 0 0 5px 0;
     padding-left: 10px;
   }
 
@@ -17,24 +17,22 @@
     text-transform: uppercase;
   }
 
-  & .card-header .btn {
+  & .facet-limit {
+    border-radius: 0;
+    margin-bottom: 5px;
+  }
+
+  & .facet-field-heading {
     background-color: $body-bg;
     font-size: $font-size-small;
-    font-weight: normal;
-    line-height: 1;
   }
 
-  & .card-header .btn:hover {
-    background-color: $gray-lighter-custom;
-  }
-
-  & .card {
-    border: 0;
+  .facet-field-heading:first-child {
     border-radius: 0;
-    border-bottom: $border;
-    box-shadow: none;
-    font-size: $font-size-small;
-    margin: 0;
+  }
+
+  & .facet-limit-active .facet-field-heading .btn {
+    color: white;
   }
 
   & .panel-heading.collapse-toggle .panel-title:after {
@@ -60,7 +58,6 @@
 
     & .navbar {
       border: 0;
-      border-bottom: $border;
       border-radius: 0;
     }
 
