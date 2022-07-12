@@ -1,3 +1,9 @@
+/* outer wrapper */
+
+#main-page {
+  width: 100%;
+}
+
 /* dashboard top nav */
 
 #main-page #dashboard-nav {
@@ -7,12 +13,9 @@
   margin: 30px 0 0 0;
   padding: 0 10px 10px 10px;
 
-  & ul {
+  & ul.nav-tabs {
     font-weight: bold;
     max-width: none;
-  }
-
-  & .nav-tabs {
     border-bottom: 0;
     margin: -30px 0 1px 0;
   }
@@ -21,7 +24,8 @@
     border-bottom: $border;
     border-color: transparent;
     color: $gray-light;
-    padding: 8px 5px;
+    display: inline-block;
+    padding: 8px;
     text-decoration: none;
   }
 
@@ -40,26 +44,21 @@
   }
 }
 
-@include media-breakpoint-up(sm) {
-
+@include media-breakpoint-up(md) {
+  
   #main-page #dashboard-nav {
     background-image: none;
     border: 0;
     font-size: $font-size-base;
-    margin: 10px 10px 0 10px;
-    padding: 0 10px;
+    margin: 15px 15px 0 15px;
+    padding: 0;
 
-    & .nav-tabs {
-      border-bottom: $border;
+    & ul.nav-tabs {
       margin: 0 0 -1px 0;
     }
 
     & li a {
       padding: 15px 20px;
-    }
-
-    & li a:hover {
-      border-bottom: $border;
     }
 
     & li.active a {
@@ -93,11 +92,11 @@
   }
 }
 
-@include media-breakpoint-up(sm) {
+@include media-breakpoint-up(md) {
 
   #main-page #dashboard {
     border: $border;
-    margin: 0 20px 15px 20px;
+    margin: 0 15px 15px 15px;
 
     & h3 {
       margin-top: 15px;

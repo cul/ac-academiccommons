@@ -1,36 +1,29 @@
-<nav class="navbar navbar-default admin-sidebar">
-  <div class="navbar-header admin-sidebar-header">
-    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-      <span class="sr-only">Toggle navigation</span>
-      <span class="icon-bar"></span>
-      <span class="icon-bar"></span>
-      <span class="icon-bar"></span>
-    </button>
+<nav class="admin-sidebar">
+  <div class="admin-sidebar-header">
     <h3>Administration</h3>
   </div>
-  <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-    <!-- <ul class="nav navbar-nav"> -->
-    <ul class="nav navbar-nav">
+  <div class="admin-sidebar-content">
+    <ul>
       <li><%= link_to 'Edit Alert Message', edit_admin_alert_message_path %></li>
       <li><%= link_to 'Self-Deposits', admin_deposits_path %></li>
       <li><%= link_to 'Email Preferences', admin_email_preferences_path %></li>
     </ul>
     <h4>Participation Agreements</h4>
-    <ul class="nav navbar-nav">
+    <ul>
       <li><%= link_to 'Signed Agreements', admin_agreements_path %></li>
       <li><%= link_to 'Request Agreement', new_admin_request_agreement_path %></li>
     </ul>
     <h4>Index Management</h4>
-    <ul class="nav navbar-nav">
+    <ul>
       <li><%= link_to 'Ingest History', logs_ingest_history_path %></li>
     </ul>
     <h4>Featured Searches</h4>
-    <ul class="nav navbar-nav">
+    <ul>
       <li><%= link_to 'List Features', admin_featured_searches_path %></li>
       <li><%= link_to 'Create New Feature', new_admin_featured_search_path %></li>
     </ul>
     <h4>Statistics & Reports</h4>
-    <ul class="nav navbar-nav">
+    <ul>
       <li><%= link_to 'Author Affiliation Report', admin_author_affiliation_report_index_path %></li>
       <li><%= link_to 'Usage Statistics Report', new_admin_usage_statistics_report_path %></li>
       <li><%= link_to 'Email Author Reports', new_admin_email_author_report_path %></li>

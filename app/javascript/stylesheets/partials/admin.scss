@@ -13,7 +13,7 @@ p.admin-intro-message:before {
   content: '\2191';
 }
 
-@include media-breakpoint-up(sm) {
+@include media-breakpoint-up(md) {
 
   p.admin-intro-message:before {
     content: '\2190';
@@ -23,56 +23,49 @@ p.admin-intro-message:before {
 /* admin sidebar */
 
 #main-page #dashboard .admin-sidebar {
-  background: $gray-lighter-custom;
-  border: 0;
   border-bottom: $border;
-  margin: 0 -15px;
+  padding: 15px 0;
+
+  & .admin-sidebar-content {
+    column-count: 2;
+  }
 
   & h3 {
-    margin: 9px 15px;
+    display: none;
   }
 
   & h4 {
     font-size: $font-size-small;
-    line-height: 1.4;
-    margin: 0;
+    margin: 5px 0;
   }
 
   & ul {
-    margin: 6px 0 25px 0;
+    margin: 0 0 10px 0;
+    padding: 0;
   }
 
   & li {
+    list-style: none;
     font-size: $font-size-small;
-    line-height: 1.4;
+    margin-bottom: 4px;
   }
 
   & li a {
-    color: $link-color;
-    padding: 3px 0;
     text-decoration: none;
-  }
-
-  & li a:hover {
-    text-decoration: underline;
   }
 }
 
-@include media-breakpoint-up(sm) {
+@include media-breakpoint-up(md) {
 
   #main-page #dashboard .admin-sidebar {
-    background: $body-bg;
-    border: 0;
-    margin: 0;
+    border-bottom: 0;
 
-    & h3 {
-      margin-top: 31px;
+    & .admin-sidebar-content {
+      column-count: 1;
     }
 
-    & .admin-sidebar-header,
-    & ul,
-    & li {
-      float: none;
+    & h3 {
+      display: block;
     }
   }
 }
@@ -87,7 +80,7 @@ p.admin-intro-message:before {
   }
 }
 
-@include media-breakpoint-up(sm) {
+@include media-breakpoint-up(md) {
 
   #main-page #dashboard .admin-content {
     border-bottom: $border;
@@ -117,7 +110,7 @@ p.admin-intro-message:before {
   }
 }
 
-@include media-breakpoint-up(sm) {
+@include media-breakpoint-up(md) {
 
   #main-page .usage-stats {
 
