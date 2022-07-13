@@ -20,7 +20,6 @@ require.context('../assets', true)
 import 'jquery';
 import "jquery-ui/ui/widgets/sortable";
 import 'readmore-js/readmore';
-import 'social-share-button';
 import '@fortawesome/fontawesome-free/js/all.js'
 import 'datatables.net/js/jquery.dataTables.min';
 import 'datatables.net-bs/js/dataTables.bootstrap.min';

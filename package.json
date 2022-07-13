@@ -25,7 +25,6 @@
     "popper.js": "1.16.1",
     "readmore-js": "^2.2.1",
     "resolve-url-loader": "^4.0.0",
-    "social-share-button": "^2.2.0",
     "typeahead.js": "^0.11.1",
     "url-loader": "^4.1.1",
     "webpack": "^4.46.0",

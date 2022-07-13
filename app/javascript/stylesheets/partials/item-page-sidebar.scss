@@ -1,5 +1,9 @@
 /* item page sidebar */
 
+#sidebar {
+  margin-bottom: 20px;
+}
+
 .show-tools {
   border: $border;
   box-shadow: none;
@@ -90,19 +94,28 @@
 }
 
 .social_buttons {
+  font-size: 1.7rem;
   line-height: 1;
 }
 
 .social_buttons a {
-  margin: 0 6px 0 0;
+  margin: 0 4px 0 0;
+}
+
+.social_buttons a.twitter-button {
+  color: #1DA1F2;
+}
+
+.social_buttons a.facebook-button {
+  color: #4267B2;
+}
+
+.social_buttons a.email-button {
+  color: #999;
 }
 
 .use_and_reproduction {
   font-size: 12px;
-
-  & a {
-    margin: 10px 0 0 0;
-  }
 
   & a.license,
   & a.in-copyright {

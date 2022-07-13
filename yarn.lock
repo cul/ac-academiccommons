@@ -6343,14 +6343,6 @@ snapdragon@^0.8.1:
     source-map-resolve "^0.5.0"
     use "^3.1.0"
 
-social-share-button@^2.2.0:
-  version "2.2.0"
-  resolved "https://registry.yarnpkg.com/social-share-button/-/social-share-button-2.2.0.tgz#429b4de78eb9c24a8d621a6a0e5f73c733fa8db9"
-  integrity sha512-8OatmjB10MFqnbgVFJe4SjRXBIwepla/FOo2gsC6w/PsQ1RuS5oKwe9kixv2TfWcTA1GCcT6m+lEylFRPrr71g==
-  dependencies:
-    domassist "^2.2.0"
-    domodule "^8.0.0"
-
 sockjs-client@^1.5.0:
   version "1.5.2"
   resolved "https://registry.yarnpkg.com/sockjs-client/-/sockjs-client-1.5.2.tgz#4bc48c2da9ce4769f19dc723396b50f5c12330a3"

@@ -1,4 +1,5 @@
-<%= social_share_button_tag(@document[:title_ssi],
-                            allow_sites: %w(twitter facebook email),
-                            url: @document.full_doi,
-                            desc: @document[:title_ssi]) %>
+<a class="twitter-button" href="https://twitter.com/intent/tweet?text=<%= @document.full_doi %>"><i class="fab fa-twitter-square"></i></a>
+
+<a class="facebook-button" href="https://www.facebook.com/sharer/sharer.php?u=<%= @document.full_doi %>"><i class="fab fa-facebook-square"></i></a>
+
+<a class="email-button" href="mailto:?subject=<%= @document.title %>&body=<%= @document.full_doi %>"><i class="fas fa-envelope-square"></i></a>
