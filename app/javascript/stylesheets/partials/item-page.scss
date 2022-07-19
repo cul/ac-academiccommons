@@ -164,7 +164,6 @@
 
   & dl {
     font-size: $font-size-small;
-    line-height: 1.7;
     margin: 0;
   }
 
@@ -224,16 +223,21 @@
       position: relative;
     }
 
+    & dl {
+      display: grid;
+      grid-template-columns: 25% auto;
+      row-gap: 5px;
+    }
+
     & dt,
     & dt:first-child {
-      float: left;
-      line-height: 1.8;
+      grid-column: 1;
       padding: 0;
     }
 
     & dd {
-      line-height: 1.8;
-      margin-left: 18%;
+      grid-column: 2;
+      margin: 0;
     }
   }
 }
