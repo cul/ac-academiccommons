@@ -90,6 +90,15 @@
   & p.note {
     margin: 0 0 10px 0;
   }
+
+  /* for usage statistics page in admin */
+  & .date-ranges {
+    margin: 10px 0 0 20px;
+
+    & .form-group {
+      margin-bottom: 0;
+    }
+  }
 }
 
 @include media-breakpoint-up(md) {
