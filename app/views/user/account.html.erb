@@ -16,26 +16,21 @@
 </p>
 
 <%= form_with model: @email_preference, url: admin_email_preference_path(@email_preference, format: :json), method: :patch, class: 'form-horizontal ajax-flash-messages' do |f| %>
+
   <div class="form-group">
-    <%= f.label :email, 'Preferred Email', class: 'col-sm-4 control-label' %>
-    <div class="col-sm-8">
-      <%= f.text_field :email, class: 'form-control' %>
-      <% if @email_preference.email.blank? %>
-        <span class="help-block">If a preferred email is not provided, the following email will be used: <%= "#{@email_preference.uni}@columbia.edu" %></span>
-      <% end %>
-    </div>
+    <%= f.label :email, 'Preferred Email', class: 'control-label' %>
+    <%= f.text_field :email, class: 'form-control' %>
+    <% if @email_preference.email.blank? %>
+      <span class="help-block">If a preferred email is not provided, the following email will be used: <%= "#{@email_preference.uni}@columbia.edu" %></span>
+    <% end %>
+  </div>
+
+  <div class="form-check">
+    <%= f.check_box :unsubscribe, class: 'form-check-input' %>
+    <%= f.label :unsubscribe, 'Unsubscribe from all emails', class: 'form-check-label' %>
   </div>
 
   <div class="form-group">
-    <%= f.label :unsubscribe, 'Unsubscribe from all emails', class: 'col-sm-4 control-label' %>
-    <div class="col-sm-4">
-      <%= f.check_box :unsubscribe %>
-    </div>
-  </div>
-
-  <div class="form-group">
-    <div class="col-sm-offset-3 col-sm-9">
-      <%= f.submit 'Save', class: 'btn btn-primary', data: { disable_with: 'Saving...' } %>
-    </div>
+    <%= f.submit 'Save', class: 'btn btn-primary', data: { disable_with: 'Saving...' } %>
   </div>
 <% end %>
