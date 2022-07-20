@@ -34,7 +34,7 @@ span.constraints-label {
   line-height: 1;
 }
 
-.page_links {
+.page-links {
   background: darken($gray-lighter-custom, 5%);
   border-top-width: 1px;
   border-radius: 3px;
@@ -45,7 +45,7 @@ span.constraints-label {
   padding: 7px 10px;
 }
 
-.page_links a {
+.page-links a {
   font-weight: bold;
 }
 
@@ -74,7 +74,7 @@ span.constraints-label {
     display: block;
   }
 
-  .page_links {
+  .page-links {
     background: transparent;
     border: 0;
     display: inline-block;
