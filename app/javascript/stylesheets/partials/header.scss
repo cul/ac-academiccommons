@@ -38,6 +38,11 @@
     z-index: 1000;
   }
 
+  & .input-group-append svg {
+    margin-left: -3px;
+    margin-top: -5px;
+  }
+
   & .submit-search-text {
     @include visually-hidden;
   }
