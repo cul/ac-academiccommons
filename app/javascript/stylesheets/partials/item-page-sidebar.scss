@@ -1,12 +1,9 @@
 /* item page sidebar */
 
-#sidebar {
-  margin-bottom: 20px;
-}
-
 .show-tools {
   border: $border;
   box-shadow: none;
+  margin-bottom: 15px;
   padding: 10px 10px 0 10px;
 
   & .list-group-item {

@@ -60,8 +60,12 @@ span.constraints-label {
   font-size: 13px;
 }
 
-@include media-breakpoint-up(sm) {
+@include media-breakpoint-up(md) {
 
+  #sidebar {
+    margin-bottom: 20px;
+  }
+  
   .constraints-container {
     background: $gray-lighter-custom;
     border: 0;
