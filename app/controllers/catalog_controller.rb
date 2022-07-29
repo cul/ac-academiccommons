@@ -28,7 +28,7 @@ class CatalogController < ApplicationController
   configure_blacklight do |config|
     # Delete default blacklight components we aren't using
     config.index.document_actions.delete(:bookmark)
-    
+
     config.add_results_collection_tool(:sort_widget)
 
     config.show.document_actions.delete(:bookmark)

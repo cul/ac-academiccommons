@@ -1,5 +1,4 @@
 class InfoController < ApplicationController
-
   def about; end
   def policies; end
   def faq; end
