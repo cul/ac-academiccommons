@@ -1,10 +1,12 @@
 FactoryBot.define do
   factory :deposit do
     title { 'Test Deposit' }
-    creators { [
-      { first_name: 'Jane', last_name: 'Doe', uni: 'abc123' },
-      { first_name: 'John', last_name: 'Doe', uni: '' }
-    ] }
+    creators do
+      [
+        { first_name: 'Jane', last_name: 'Doe', uni: 'abc123' },
+        { first_name: 'John', last_name: 'Doe', uni: '' }
+      ]
+    end
     abstract { 'foobar' }
     year { '2018' }
     doi  { 'https://www.example.com' }
