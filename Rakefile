@@ -40,7 +40,7 @@ begin
       target_yml_path = Rails.root.join('config', File.basename(template_yml_path).sub(".template.yml.erb", ".yml"))
       next if File.exist?(target_yml_path)
       FileUtils.touch(target_yml_path) # Create if it doesn't exist
-      target_yml = YAML.load_file(target_yml_path) || YAML.safe_load(ERB.new(File.read(template_yml_path)).result(binding))
+      target_yml = YAML.load_file(target_yml_path) || YAML.safe_load(ERB.new(File.read(template_yml_path)).result(binding), aliases: true)
       File.open(target_yml_path, 'w') { |f| f.write target_yml.to_yaml }
     end
   end
