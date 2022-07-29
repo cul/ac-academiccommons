@@ -92,7 +92,7 @@ class SolrDocument
     if free_to_read?(self)
       # check if solr response already included assets
       if (asset_response = fetch('assets', nil))
-        @assets = Blacklight::Solr::Response.new({ response: asset_response }, {}, { blacklight_config: Blacklight::Configuration.new }).docs
+        @assets = Blacklight::Solr::Response.new({ response: asset_response }, {}, blacklight_config: Blacklight::Configuration.new).docs
       else
         item_pid = fetch('fedora3_pid_ssi', nil)
 
