@@ -162,3 +162,7 @@ RSpec.configure do |config|
     DatabaseCleaner.clean
   end
 end
+
+def wrap_solr_response_data(data)
+  Blacklight::Solr::Response.new(data, {}, blacklight_config: Blacklight::Configuration.new)
+end

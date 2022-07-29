@@ -40,16 +40,14 @@ describe 'myworks', type: :feature do
       }
     end
     let(:solr_response) do
-      Blacklight::Solr::Response.new(
-        {
-          'response' => {
-            'docs' => [
-              { 'id' => '10.7916/TESTDOC10', 'title_ssi' => 'First Test Document', 'object_state_ssi' => 'A',
-                'cul_doi_ssi' => '10.7916/TESTDOC10', 'fedora3_pid_ssi' => 'actest:10', 'genre_ssim' => '', 'publisher_doi_ssi' => '',
-                'free_to_read_start_date_ssi' => Date.current.tomorrow.strftime('%Y-%m-%d') }
-            ]
-          }
-        }, {}, { blacklight_config: Blacklight::Configuration.new }
+      wrap_solr_response_data(
+        'response' => {
+          'docs' => [
+            { 'id' => '10.7916/TESTDOC10', 'title_ssi' => 'First Test Document', 'object_state_ssi' => 'A',
+              'cul_doi_ssi' => '10.7916/TESTDOC10', 'fedora3_pid_ssi' => 'actest:10', 'genre_ssim' => '', 'publisher_doi_ssi' => '',
+              'free_to_read_start_date_ssi' => Date.current.tomorrow.strftime('%Y-%m-%d') }
+          ]
+        }
       )
     end
 

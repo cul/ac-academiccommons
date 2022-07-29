@@ -34,7 +34,7 @@ describe SolrDocument do
       end
 
       let(:solr_response) do
-        Blacklight::Solr::Response.new({
+        wrap_solr_response_data(
           'response' => {
             'docs' => [
               {
@@ -55,8 +55,7 @@ describe SolrDocument do
               }
             ]
           }
-        }, {}, { blacklight_config: Blacklight::Configuration.new }
-      )
+        )
       end
 
       before do

@@ -13,20 +13,18 @@ RSpec.describe AcademicCommons::Metrics::UsageStatistics do
   let(:usage_stats) { described_class.new.calculate_lifetime }
   let(:any_by_author_params) { { q: nil, fq: ["author_uni_ssim:\"#{uni}\""] } }
   let(:any_by_author_response) do
-    Blacklight::Solr::Response.new(
-      {
-        'response' => {
-          'docs' => [
-            { 'id' => open_asset_identifier, 'fedora3_pid_ssi' => 'actest:2', 'title_ssi' => 'Second Test Document', 'object_state_ssi' => 'A',
-              'cul_doi_ssi' => open_asset_identifier, 'genre_ssim' => '', 'publisher_doi_ssi' => '' },
-            { 'id' => item_identifier, 'title_ssi' => 'First Test Document', 'object_state_ssi' => 'A',
-              'cul_doi_ssi' => item_identifier, 'fedora3_pid_ssi' => item_fedora_pid, 'genre_ssim' => '', 'publisher_doi_ssi' => '' },
-            { 'id' => embargoed_asset_identifier, 'title_ssi' => 'First Test Document', 'object_state_ssi' => 'A',
-              'cul_doi_ssi' => embargoed_asset_identifier, 'fedora3_pid_ssi' => 'actest:10', 'genre_ssim' => '', 'publisher_doi_ssi' => '',
-              'free_to_read_start_date_ssi' => Date.current.tomorrow.strftime('%Y-%m-%d') }
-          ]
-        }
-      }, {}, { blacklight_config: Blacklight::Configuration.new }
+    wrap_solr_response_data(
+      'response' => {
+        'docs' => [
+          { 'id' => open_asset_identifier, 'fedora3_pid_ssi' => 'actest:2', 'title_ssi' => 'Second Test Document', 'object_state_ssi' => 'A',
+            'cul_doi_ssi' => open_asset_identifier, 'genre_ssim' => '', 'publisher_doi_ssi' => '' },
+          { 'id' => item_identifier, 'title_ssi' => 'First Test Document', 'object_state_ssi' => 'A',
+            'cul_doi_ssi' => item_identifier, 'fedora3_pid_ssi' => item_fedora_pid, 'genre_ssim' => '', 'publisher_doi_ssi' => '' },
+          { 'id' => embargoed_asset_identifier, 'title_ssi' => 'First Test Document', 'object_state_ssi' => 'A',
+            'cul_doi_ssi' => embargoed_asset_identifier, 'fedora3_pid_ssi' => 'actest:10', 'genre_ssim' => '', 'publisher_doi_ssi' => '',
+            'free_to_read_start_date_ssi' => Date.current.tomorrow.strftime('%Y-%m-%d') }
+        ]
+      }
     )
   end
 
@@ -38,17 +36,15 @@ RSpec.describe AcademicCommons::Metrics::UsageStatistics do
     }
   end
   let(:item_by_author_response) do
-    Blacklight::Solr::Response.new(
-      {
-        'response' => {
-          'docs' => [
-            { 'id' => item_identifier, 'title_ssi' => 'First Test Document', 'object_state_ssi' => 'A', 'record_creation_dtsi' => '2018-08-07T03:40:22Z',
-              'cul_doi_ssi' => item_identifier, 'fedora3_pid_ssi' => item_fedora_pid, 'publisher_doi_ssi' => '', 'genre_ssim' => '' },
-            { 'id' => other_item_identifier, 'title_ssi' => 'Second Test Document', 'object_state_ssi' => 'A', 'record_creation_dtsi' => '2018-08-07T03:40:22Z',
-              'cul_doi_ssi' => other_item_identifier, 'fedora3_pid_ssi' => other_item_fedora_pid, 'publisher_doi_ssi' => '', 'genre_ssim' => '' }
-          ]
-        }
-      }, {}, { blacklight_config: Blacklight::Configuration.new }
+    wrap_solr_response_data(
+      'response' => {
+        'docs' => [
+          { 'id' => item_identifier, 'title_ssi' => 'First Test Document', 'object_state_ssi' => 'A', 'record_creation_dtsi' => '2018-08-07T03:40:22Z',
+            'cul_doi_ssi' => item_identifier, 'fedora3_pid_ssi' => item_fedora_pid, 'publisher_doi_ssi' => '', 'genre_ssim' => '' },
+          { 'id' => other_item_identifier, 'title_ssi' => 'Second Test Document', 'object_state_ssi' => 'A', 'record_creation_dtsi' => '2018-08-07T03:40:22Z',
+            'cul_doi_ssi' => other_item_identifier, 'fedora3_pid_ssi' => other_item_fedora_pid, 'publisher_doi_ssi' => '', 'genre_ssim' => '' }
+        ]
+      }
     )
   end
 
@@ -59,18 +55,16 @@ RSpec.describe AcademicCommons::Metrics::UsageStatistics do
     }
   end
   let(:assets_for_item_response) do
-    Blacklight::Solr::Response.new(
-      {
-        'response' => {
-          'docs' => [
-            { 'id' => open_asset_identifier, 'fedora3_pid_ssi' => open_asset_fedora_pid, 'title_ssi' => 'Second Test Document', 'object_state_ssi' => 'A',
-              'cul_doi_ssi' => open_asset_identifier, 'genre_ssim' => '', 'publisher_doi_ssi' => '' },
-            { 'id' => embargoed_asset_identifier, 'title_ssi' => 'First Test Document', 'object_state_ssi' => 'A',
-              'cul_doi_ssi' => embargoed_asset_identifier, 'fedora3_pid_ssi' => 'actest:10', 'genre_ssim' => '', 'publisher_doi_ssi' => '',
-              'free_to_read_start_date_ssi' => Date.current.tomorrow.strftime('%Y-%m-%d') }
-          ]
-        }
-      }, {}, { blacklight_config: Blacklight::Configuration.new }
+    wrap_solr_response_data(
+      'response' => {
+        'docs' => [
+          { 'id' => open_asset_identifier, 'fedora3_pid_ssi' => open_asset_fedora_pid, 'title_ssi' => 'Second Test Document', 'object_state_ssi' => 'A',
+            'cul_doi_ssi' => open_asset_identifier, 'genre_ssim' => '', 'publisher_doi_ssi' => '' },
+          { 'id' => embargoed_asset_identifier, 'title_ssi' => 'First Test Document', 'object_state_ssi' => 'A',
+            'cul_doi_ssi' => embargoed_asset_identifier, 'fedora3_pid_ssi' => 'actest:10', 'genre_ssim' => '', 'publisher_doi_ssi' => '',
+            'free_to_read_start_date_ssi' => Date.current.tomorrow.strftime('%Y-%m-%d') }
+        ]
+      }
     )
   end
 
@@ -81,12 +75,10 @@ RSpec.describe AcademicCommons::Metrics::UsageStatistics do
     }
   end
   let(:assets_for_other_item_response) do
-    Blacklight::Solr::Response.new(
-      {
-        'response' => {
-          'docs' => []
-        }
-      }, {}, { blacklight_config: Blacklight::Configuration.new }
+    wrap_solr_response_data(
+      'response' => {
+        'docs' => []
+      }
     )
   end
 
@@ -98,17 +90,15 @@ RSpec.describe AcademicCommons::Metrics::UsageStatistics do
     }
   end
   let(:list_items_response) do
-    Blacklight::Solr::Response.new(
-      {
-        'response' => {
-          'docs' => [
-            { 'id' => item_identifier, 'title_ssi' => 'First Test Document', 'object_state_ssi' => 'A',
-              'cul_doi_ssi' => item_identifier, 'fedora3_pid_ssi' => item_fedora_pid, 'genre_ssim' => '', 'publisher_doi_ssi' => '' },
-            { 'id' => other_item_identifier, 'title_ssi' => 'First Test Document', 'object_state_ssi' => 'A',
-              'cul_doi_ssi' => other_item_identifier, 'fedora3_pid_ssi' => other_item_fedora_pid, 'genre_ssim' => '', 'publisher_doi_ssi' => '' }
-          ]
-        }
-      }, {}, { blacklight_config: Blacklight::Configuration.new }
+    wrap_solr_response_data(
+      'response' => {
+        'docs' => [
+          { 'id' => item_identifier, 'title_ssi' => 'First Test Document', 'object_state_ssi' => 'A',
+            'cul_doi_ssi' => item_identifier, 'fedora3_pid_ssi' => item_fedora_pid, 'genre_ssim' => '', 'publisher_doi_ssi' => '' },
+          { 'id' => other_item_identifier, 'title_ssi' => 'First Test Document', 'object_state_ssi' => 'A',
+            'cul_doi_ssi' => other_item_identifier, 'fedora3_pid_ssi' => other_item_fedora_pid, 'genre_ssim' => '', 'publisher_doi_ssi' => '' }
+        ]
+      }
     )
   end
 
@@ -412,18 +402,16 @@ RSpec.describe AcademicCommons::Metrics::UsageStatistics do
 
     context 'when item has more than one asset' do
       let(:assets_for_item_response) do
-        Blacklight::Solr::Response.new(
-          {
-            'response' => {
-              'docs' => [
-                { 'id' => open_asset_identifier, 'fedora3_pid_ssi' => open_asset_fedora_pid, 'title_ssi' => 'Second Test Document', 'object_state_ssi' => 'A',
-                  'cul_doi_ssi' => open_asset_identifier, 'genre_ssim' => '', 'publisher_doi_ssi' => '' },
-                { 'id' => other_open_asset_identifier, 'title_ssi' => 'First Test Document', 'object_state_ssi' => 'A',
-                  'cul_doi_ssi' => other_open_asset_identifier, 'fedora3_pid_ssi' => other_open_asset_fedora_pid, 'genre_ssim' => '', 'publisher_doi_ssi' => '',
-                  'free_to_read_start_date_ssi' => Date.current.tomorrow.strftime('%Y-%m-%d') }
-              ]
-            }
-          }, {}, { blacklight_config: Blacklight::Configuration.new }
+        wrap_solr_response_data(
+          'response' => {
+            'docs' => [
+              { 'id' => open_asset_identifier, 'fedora3_pid_ssi' => open_asset_fedora_pid, 'title_ssi' => 'Second Test Document', 'object_state_ssi' => 'A',
+                'cul_doi_ssi' => open_asset_identifier, 'genre_ssim' => '', 'publisher_doi_ssi' => '' },
+              { 'id' => other_open_asset_identifier, 'title_ssi' => 'First Test Document', 'object_state_ssi' => 'A',
+                'cul_doi_ssi' => other_open_asset_identifier, 'fedora3_pid_ssi' => other_open_asset_fedora_pid, 'genre_ssim' => '', 'publisher_doi_ssi' => '',
+                'free_to_read_start_date_ssi' => Date.current.tomorrow.strftime('%Y-%m-%d') }
+            ]
+          }
         )
       end
       before do
