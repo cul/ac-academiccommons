@@ -2,17 +2,17 @@
 
 source 'https://rubygems.org'
 
-gem 'rails', '5.2.4.3'
+gem 'rails', '6.0.4'
 
 gem 'active-fedora', '~> 8.2'
 gem 'addressable'
-gem 'blacklight', '~> 7.2.0'
-gem 'blacklight_oai_provider', '~>7.0.2'
+gem 'blacklight', '~> 7.5.1'
+gem 'blacklight_oai_provider'
 gem 'blacklight_range_limit'
 gem 'bootsnap'
-gem 'cancancan', '~> 2.0'
+gem 'cancancan'
 gem 'cul-ldap'
-gem 'cul_omniauth', '~> 0.6.1'
+gem 'cul_omniauth', '>= 0.7.0'
 gem 'devise'
 gem 'fancybox2-rails' # Used in helper classes. TODO: Confirm that this is needed and used by the application.
 gem 'gaffe'
@@ -45,6 +45,7 @@ gem 'mysql2'
 gem 'sqlite3', '>= 1.3.5'
 
 group :development do
+  gem 'listen'
   gem 'spring'
 end
 
@@ -69,7 +70,7 @@ group :development, :test do
   gem 'jettywrapper', '>=1.4.0', git: 'https://github.com/samvera-deprecated/jettywrapper.git', branch: 'master'
   gem 'json_spec'
   gem 'rspec-its'
-  gem 'rspec-rails', '~> 3.5'
+  gem 'rspec-rails'
   gem 'selenium-webdriver'
   gem 'solr_wrapper', '~> 2.0'
   gem 'webdrivers', '~> 4.0', require: false

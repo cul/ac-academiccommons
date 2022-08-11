@@ -39,7 +39,7 @@ shared_examples 'authorization required' do |success_status|
 
     # rubocop:disable RSpec/ExampleLength
     it 'returns correct status code based on content type' do
-      if response.content_type == 'application/json'
+      if response.media_type == 'application/json'
         expect(response.status).to eq(403)
       else
         expect(response.status).to eq(302)
