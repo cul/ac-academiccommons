@@ -19,7 +19,6 @@ require.context('../assets', true)
 
 import 'jquery';
 import "jquery-ui/ui/widgets/sortable";
-import 'readmore-js/readmore';
 import '@fortawesome/fontawesome-free/js/all.js'
 import 'datatables.net/js/jquery.dataTables.min';
 import 'datatables.net-bs/js/dataTables.bootstrap.min';
@@ -38,6 +37,10 @@ require('@rails/ujs').start();
 //require("@rails/activestorage").start();
 import * as ActiveStorage from '@rails/activestorage';
 window.ActiveStorage = ActiveStorage;
+
+import * as Readmore from 'readmore-js';
+window.Readmore = Readmore;
+
 import 'blacklight-frontend/app/assets/javascripts/blacklight/blacklight'
 //import 'blacklight_range_limit';
 

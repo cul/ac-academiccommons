@@ -856,6 +856,13 @@
   dependencies:
     regenerator-runtime "^0.13.4"
 
+"@babel/runtime@^7.3.1":
+  version "7.19.0"
+  resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.19.0.tgz#22b11c037b094d27a8a2504ea4dcff00f50e2259"
+  integrity sha512-eR8Lo9hnDS7tqkO7NsV+mKvCmv5boaXFSZ70DnfhcgiEne8hv9oCEd36Klw74EtizEqLsy4YnW8UWwpBVolHZA==
+  dependencies:
+    regenerator-runtime "^0.13.4"
+
 "@babel/template@^7.16.0":
   version "7.16.0"
   resolved "https://registry.yarnpkg.com/@babel/template/-/template-7.16.0.tgz#d16a35ebf4cd74e202083356fab21dd89363ddd6"
@@ -3982,7 +3989,7 @@ jquery-ui@1.12.1:
   resolved "https://registry.yarnpkg.com/jquery-ui/-/jquery-ui-1.12.1.tgz#bcb4045c8dd0539c134bc1488cdd3e768a7a9e51"
   integrity sha512-K/kDBMXkTky5LH+gqbMvttU1ipqCTaecKyAFjwHjUnPTVfm5I5PZC7We31iNR3yWtAHNqoxkLoit06lR/gKVlA==
 
-jquery@>2.1.4, jquery@>=1.11, jquery@>=1.7, jquery@^3.4.1, jquery@^3.6.0:
+jquery@>=1.11, jquery@>=1.7, jquery@^3.4.1, jquery@^3.6.0:
   version "3.6.0"
   resolved "https://registry.yarnpkg.com/jquery/-/jquery-3.6.0.tgz#c72a09f15c1bdce142f49dbf1170bdf8adac2470"
   integrity sha512-JVzAR/AjBvVt2BmYhxRCSYysDsPcssdmTFnzyLEts9qNwmjmu4JTAMYubEfwVOSwpQ1I1sKKFcxhZCI2buerfw==
@@ -5847,12 +5854,12 @@ readdirp@~3.6.0:
   dependencies:
     picomatch "^2.2.1"
 
-readmore-js@^2.2.1:
-  version "2.2.1"
-  resolved "https://registry.yarnpkg.com/readmore-js/-/readmore-js-2.2.1.tgz#ab75036c8a47b6ffa2d3d14cd527c7f479edc117"
-  integrity sha512-hbPP0nQpYYkAywCEZ8ozHivvhWyHic37KJ2IXrHES4qzjp0+nmw8R33MeyMAtXBZfXX4Es8cpd5JBVf9qj47+Q==
+readmore-js@^3.0.0-beta-1:
+  version "3.0.0-beta-1"
+  resolved "https://registry.yarnpkg.com/readmore-js/-/readmore-js-3.0.0-beta-1.tgz#730172e6dd21e32b5d4774b4ebc9f849eb6b3f62"
+  integrity sha512-yfaoEghzR2V2j8okpOg9D12AttQ9odVLVx51oKKpsk/GTbhIt6O6mprZEN1MZxz69Waye3catBV7mXXkg9sC5Q==
   dependencies:
-    jquery ">2.1.4"
+    "@babel/runtime" "^7.3.1"
 
 regenerate-unicode-properties@^9.0.0:
   version "9.0.0"
