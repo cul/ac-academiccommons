@@ -92,12 +92,16 @@ GEM
     bixby (2.0.0)
       rubocop (= 0.63.1)
       rubocop-rspec (= 1.31.0)
-    blacklight (7.5.1)
+    blacklight (7.29.0)
       deprecation
       globalid
+      hashdiff
+      i18n (>= 1.7.0)
       jbuilder (~> 2.7)
       kaminari (>= 0.15)
-      rails (>= 5.1, < 7)
+      ostruct (>= 0.3.2)
+      rails (>= 5.1, < 7.1)
+      view_component (~> 2.43)
     blacklight_oai_provider (7.0.2)
       blacklight (~> 7.0)
       oai (~> 1.2)
@@ -311,7 +315,7 @@ GEM
     mime-types-data (3.2022.0105)
     mini_mime (1.1.2)
     mini_portile2 (2.4.0)
-    minitest (5.16.2)
+    minitest (5.16.3)
     mono_logger (1.1.1)
     msgpack (1.5.1)
     multi_json (1.15.0)
@@ -350,6 +354,7 @@ GEM
       nokogiri (~> 1.5)
       omniauth (~> 1.2)
     orm_adapter (0.5.0)
+    ostruct (0.5.5)
     parallel (1.22.1)
     parser (3.1.2.0)
       ast (~> 2.4.1)
@@ -570,6 +575,10 @@ GEM
     unicode-display_width (1.4.1)
     vegas (0.1.11)
       rack (>= 1.0.0)
+    view_component (2.71.0)
+      activesupport (>= 5.0.0, < 8.0)
+      concurrent-ruby (~> 1.0)
+      method_source (~> 1.0)
     voight_kampff (1.1.4)
       rack (>= 1.4, < 3.0)
     warden (1.2.9)
@@ -607,7 +616,7 @@ PLATFORMS
 DEPENDENCIES
   active-fedora (~> 8.2)
   addressable
-  blacklight (~> 7.5.1)
+  blacklight (~> 7.25)
   blacklight_oai_provider
   blacklight_range_limit
   bootsnap

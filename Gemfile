@@ -6,7 +6,7 @@ gem 'rails', '6.0.4'
 
 gem 'active-fedora', '~> 8.2'
 gem 'addressable'
-gem 'blacklight', '~> 7.5.1'
+gem 'blacklight', '~> 7.25'
 gem 'blacklight_oai_provider'
 gem 'blacklight_range_limit'
 gem 'bootsnap'
