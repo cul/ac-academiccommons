@@ -106,8 +106,8 @@ GEM
       blacklight (~> 7.0)
       oai (~> 1.2)
       rexml
-    blacklight_range_limit (8.1.0)
-      blacklight (~> 7.0)
+    blacklight_range_limit (8.2.3)
+      blacklight (>= 7.25.2, < 9)
     bootsnap (1.11.1)
       msgpack (~> 1.2)
     builder (3.2.4)
