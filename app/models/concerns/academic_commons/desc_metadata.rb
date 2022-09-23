@@ -19,11 +19,11 @@ module AcademicCommons
       'software, multimedia'        => 'Software',
       'mixed material'              => 'Mixed media'
     }.freeze
-    
+
     GENRE_TYPES = {
       'learning object'             => 'Learning Objects'
     }.freeze
-    
+
     DEGREE_LABELS = {
       '0' => 'Bachelor\'s',
       '1' => 'Master\'s',
