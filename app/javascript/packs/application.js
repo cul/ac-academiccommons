@@ -41,8 +41,9 @@ window.ActiveStorage = ActiveStorage;
 import * as Readmore from 'readmore-js';
 window.Readmore = Readmore;
 
-import 'blacklight-frontend/app/assets/javascripts/blacklight/blacklight'
-//import 'blacklight_range_limit';
+import 'blacklight-frontend/app/assets/javascripts/blacklight/blacklight';
+import '../src/blacklight_range_limit/blacklight_range_limit';
+
 
 import "./application.scss"; // prompts webpack to include css packs
 

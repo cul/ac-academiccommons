@@ -9,7 +9,9 @@
 
 @import 'blacklight-frontend/app/assets/stylesheets/blacklight/blacklight_base';
 
-//  @import '../stylesheets/vendor/blacklight_range_limit';
+@import '~bootstrap-slider/src/sass/bootstrap-slider';
+
+@import '../stylesheets/vendor/blacklight_range_limit';
 
 @import '../stylesheets/modules/mixins';
 
