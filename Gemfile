@@ -73,7 +73,7 @@ group :development, :test do
   gem 'rspec-rails'
   gem 'selenium-webdriver'
   gem 'solr_wrapper', '~> 4.0'
-  gem 'webdrivers', '~> 4.0', require: false
+  gem 'webdrivers', '~> 5.2', require: false
   gem 'webmock'
 end
 
