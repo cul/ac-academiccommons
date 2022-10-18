@@ -59,7 +59,7 @@ group :development, :test do
   gem 'capistrano-resque', '~> 0.2.2', require: false
   gem 'capistrano-rvm', '~> 0.1', require: false
 
-  gem 'rubocul', '2.0.0', require: false
+  gem 'rubocul', '~> 4.0', require: false
 
   gem 'byebug'
   gem 'capybara', '~> 3.0'
