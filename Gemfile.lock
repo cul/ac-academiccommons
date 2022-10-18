@@ -427,7 +427,7 @@ GEM
     redis (4.6.0)
     redis-namespace (1.8.2)
       redis (>= 3.0.4)
-    regexp_parser (2.5.0)
+    regexp_parser (2.6.0)
     responders (3.0.1)
       actionpack (>= 5.0)
       railties (>= 5.0)
@@ -502,7 +502,7 @@ GEM
       rubocop (>= 1.33.0, < 2.0)
     rubocop-rspec (2.13.2)
       rubocop (~> 1.33)
-    rubocul (4.0.5)
+    rubocul (4.0.6)
       rubocop (~> 1.26)
       rubocop-ast
       rubocop-graphql
@@ -619,7 +619,7 @@ GEM
       rexml
     xpath (3.2.0)
       nokogiri (~> 1.8)
-    zeitwerk (2.6.0)
+    zeitwerk (2.6.1)
 
 PLATFORMS
   ruby
