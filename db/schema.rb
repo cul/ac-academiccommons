@@ -237,4 +237,8 @@ ActiveRecord::Schema.define(version: 2022_08_04_183223) do
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "agreements", "users"
+  add_foreign_key "deposits", "users"
+  add_foreign_key "featured_search_values", "featured_searches"
+  add_foreign_key "featured_searches", "feature_categories"
 end
