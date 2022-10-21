@@ -1,4 +1,12 @@
 GIT
+  remote: https://github.com/JackBlackLight/blacklight_range_limit.git
+  revision: d2a3c9402fa00bcfe28873437e27540a2a409fa3
+  branch: use_blacklight_component
+  specs:
+    blacklight_range_limit (8.2.4)
+      blacklight (>= 7.25.2, < 9)
+
+GIT
   remote: https://github.com/samvera-deprecated/jettywrapper.git
   revision: 6b03c21726a83dcecf09d9b20683bfcd63f106d1
   branch: master
@@ -106,8 +114,6 @@ GEM
       blacklight (~> 7.0)
       oai (~> 1.2)
       rexml
-    blacklight_range_limit (8.2.3)
-      blacklight (>= 7.25.2, < 9)
     bootsnap (1.11.1)
       msgpack (~> 1.2)
     builder (3.2.4)
@@ -618,7 +624,7 @@ DEPENDENCIES
   addressable
   blacklight (~> 7.25)
   blacklight_oai_provider
-  blacklight_range_limit
+  blacklight_range_limit!
   bootsnap
   byebug
   cancancan
