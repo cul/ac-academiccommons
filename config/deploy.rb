@@ -40,7 +40,7 @@ set :linked_files, fetch(:linked_files, []).push(
   'public/robots.txt',
 )
 
-set :ssh_options, :forward_agent, true
+set :ssh_options, { forward_agent: true }
 
 # Namespace crontab based on app environment.
 set :whenever_identifier, ->{ fetch(:deploy_name) }

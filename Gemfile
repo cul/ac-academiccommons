@@ -8,9 +8,8 @@ gem 'active-fedora', '~> 8.2'
 gem 'addressable'
 gem 'blacklight', '~> 7.25'
 gem 'blacklight_oai_provider'
-# rubocop:disable Layout/LineLength
-gem 'blacklight_range_limit', git: 'https://github.com/JackBlackLight/blacklight_range_limit.git', branch: 'use_blacklight_component'
-# rubocop:enable Layout/LineLength
+gem 'blacklight_range_limit',
+    git: 'https://github.com/JackBlackLight/blacklight_range_limit.git', branch: 'use_blacklight_component'
 gem 'bootsnap'
 gem 'cancancan'
 gem 'cul-ldap'
@@ -65,7 +64,6 @@ group :development, :test do
 
   gem 'byebug'
   gem 'capybara', '~> 3.0'
-  gem 'coveralls', require: false
   gem 'database_cleaner'
   gem 'equivalent-xml'
   gem 'factory_bot_rails'
@@ -74,6 +72,7 @@ group :development, :test do
   gem 'rspec-its'
   gem 'rspec-rails'
   gem 'selenium-webdriver'
+  gem 'simplecov', require: false
   gem 'solr_wrapper', '~> 4.0'
   gem 'webdrivers', '~> 5.2', require: false
   gem 'webmock'
