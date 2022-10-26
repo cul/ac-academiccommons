@@ -79,7 +79,7 @@ RSpec.describe AcademicCommons::Metrics::AuthorAffiliationReport do
     end
 
     it 'expected csv' do
-      expect(CSV.parse(subject)[3..-1]).to match expected_csv
+      expect(CSV.parse(subject)[3..]).to match expected_csv
     end
   end
 end

@@ -63,6 +63,7 @@ begin
   task ci: [:config_files, 'jetty:clean'] do
     ENV['RAILS_ENV'] = 'test'
     Rails.env = ENV['RAILS_ENV']
+    rspec_system_exit_failure_exception = nil
 
     error = Jettywrapper.wrap(Jettywrapper.load_config) do
       solr_wrapper_config = Rails.application.config_for(:solr_wrapper).deep_symbolize_keys
@@ -82,12 +83,15 @@ begin
           system 'RAILS_ENV=test rake ac:populate_solr'
           Rake::Task['spec_all'].invoke
         rescue SystemExit => e
-          print "ignoring rspec system exit signal: #{e.message}"
+          rspec_system_exit_failure_exception = e
         end
 
         print 'Stopping solr...'
       end
       puts 'stopped.'
+      # Re-raise caught exit exception (if present) AFTER solr shutdown and CI duration display.
+      # This exception triggers an exit call with the original error code sent out by rspec failure.
+      raise rspec_system_exit_failure_exception unless rspec_system_exit_failure_exception.nil?
     end
 
     raise "test failures: #{error}" if error
