@@ -17,7 +17,7 @@
 #
 # See http://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
 
-require 'webdrivers'
+require 'webdrivers/chromedriver'
 require 'capybara/rspec'
 require 'equivalent-xml/rspec_matchers'
 
