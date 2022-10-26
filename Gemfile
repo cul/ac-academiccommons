@@ -8,7 +8,9 @@ gem 'active-fedora', '~> 8.2'
 gem 'addressable'
 gem 'blacklight', '~> 7.25'
 gem 'blacklight_oai_provider'
+# rubocop:disable Layout/LineLength
 gem 'blacklight_range_limit', git: 'https://github.com/JackBlackLight/blacklight_range_limit.git', branch: 'use_blacklight_component'
+# rubocop:enable Layout/LineLength
 gem 'bootsnap'
 gem 'cancancan'
 gem 'cul-ldap'
