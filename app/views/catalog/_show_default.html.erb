@@ -6,7 +6,7 @@
     organized in tables), files (assets), more information, and notes.
 %>
 
-<% doc_presenter = show_presenter(document) %>
+<% doc_presenter = document_presenter(document) %>
 
 <%# Render tags above title %>
 <p class="genre-labels">
@@ -16,7 +16,7 @@
 </p>
 
 <%# Render title %>
-<%= render_document_heading(document, :tag => :h1) %>
+<%= content_tag(:h1, document_presenter(@document).html_title, itemprop: "name") %>
 
 <%# Render author and abstract %>
 <% doc_presenter.fields_to_render().select { |name, f| f[:display] == :main_content }.each do |field_name, field| -%>
@@ -26,7 +26,7 @@
 <%# Render table fields %>
 <% doc_presenter.fields_to_render().select { |name, f| f[:display] == :table }.each do |field_name, field| -%>
   <div class="subjects">
-    <h2><%= render_document_show_field_label document, field: field_name %></h2>
+    <h2><%= field.label %></h2>
     <ul>
       <% doc_presenter.field_value(field, join: false).each do |value| %>
         <li><%= value %></li>
@@ -47,7 +47,7 @@
     <div class="panel-body">
       <dl>
         <% doc_presenter.fields_to_render().select { |name, f| f[:display] == :published_in }.each do |field_name, field| -%>
-          <dt><%= render_document_show_field_label document, field: field_name %></dt>
+          <dt><%= field.label %></dt>
           <% doc_presenter.field_value(field, join: false).each do |value| %>
             <dd><%= value %></dd>
           <% end %>
@@ -65,7 +65,7 @@
   <div class="panel-body">
     <dl>
       <% doc_presenter.fields_to_render().select { |name, f| f[:display].blank? }.each do |field_name, field| -%>
-        <dt><%= render_document_show_field_label document, field: field_name %></dt>
+        <dt><%= field.label %></dt>
         <% doc_presenter.field_value(field, join: false).each do |value| %>
           <dd><%= value %></dd>
         <% end %>
