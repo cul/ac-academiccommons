@@ -21,27 +21,12 @@
     overflow: hidden;
   }
 
-  & .search-query-form {
-    margin: 0;
-    padding: 7px 0;
-    width: 100%;
-  }
-
-  & .input-group-append {
-    z-index: 1000;
-  }
-
-  & .form-control {
-    border-right: 0;
-    box-shadow: none;
-    color: $gray-base;
-    height: 100%;
-    z-index: 1000;
+  & .row {
+    align-items: center;
   }
 
   & .input-group-append svg {
-    margin-left: -3px;
-    margin-top: -5px;
+    max-height: 20px;
   }
 
   & .submit-search-text {
@@ -56,15 +41,6 @@
 
     & .navbar-brand {
       background-position: left center;
-    }
-
-    & .search-query-form {
-      margin: 7px 0;
-      padding: 0 0 0 15px;
-    }
-
-    & .form-control {
-      font-size: 12px;
     }
   }
 }
