@@ -1,6 +1,29 @@
 /* search results */
 
-/*  top */
+/* constraints container */
+
+.constraints-container {
+  background: $gray-lighter-custom;
+  border: 0;
+  border-radius: 3px;
+  line-height: 2.5;
+  margin-top: 15px;
+  padding: 10px 15px;
+
+  & .constraint-value,
+  & .remove {
+    background-color: $well-bg;
+    border-color: $gray-lighter;
+    font-size: $font-size-small;
+  }
+
+  & a.catalog_startOverLink,
+  & a.catalog_startOverLink:active {
+    font-size: $font-size-small;
+  }
+}
+
+/*  sort box */
 
 #sortAndPerPage {
   border-bottom-style: dotted;
@@ -10,23 +33,6 @@
 
 #sortAndPerPage .pull-right {
   width: 100%;
-}
-
-span.constraints-label {
-  font-size: $font-size-small;
-  margin: 0;
-}
-
-.constraint-value,
-.appliedFilter .constraint-value:hover {
-  border-color: $gray-lighter;
-  font-size: $font-size-small;
-  line-height: 1.2;
-}
-
-.constraint .remove {
-  border-color: $gray-lighter;
-  line-height: 1;
 }
 
 .page-links {
@@ -61,18 +67,6 @@ span.constraints-label {
     margin-bottom: 20px;
   }
   
-  .constraints-container {
-    background: $gray-lighter-custom;
-    border: 0;
-    border-radius: 3px;
-    margin-top: 15px;
-    padding: 6px 15px;
-  }
-
-  #startOverLink {
-    display: block;
-  }
-
   .page-links {
     background: transparent;
     border: 0;
