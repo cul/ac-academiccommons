@@ -85,49 +85,36 @@ RSpec.describe 'Upload', type: :feature do
       expect(page).to have_field 'deposit[creators][][uni]',        count: 2
     end
 
-    context 'when user selects "No Copyright"' do
-      before do
-        select 'No Copyright', from: 'Copyright Status*'
-      end
-
-      it 'renders "Use by Others" with correct licenses' do
-        expect(page).to have_select 'Use by Others*', options: ['CC0']
-      end
-    end
-
-    context 'when use selects "In Copyright"' do
-      let(:license_options) do
-        [
-          'Use by others as provided for by copyright laws - All rights reserved',
-          'Attribution (CC BY)',
-          'Attribution-ShareAlike (CC BY-SA)',
-          'Attribution-NoDerivs (CC BY-ND)',
-          'Attribution-NonCommercial (CC BY-NC)',
-          'Attribution-NonCommercial-ShareAlike (CC BY-NC-SA)',
-          'Attribution-NonCommercial-NoDerivs (CC BY-NC-ND)'
-        ]
-      end
-
-      before do
-        select 'In Copyright', from: 'Copyright Status*'
-      end
-
-      it 'renders "Use of Others" with correct license' do
-        expect(page).to have_select('Use by Others*', options: license_options)
-      end
-    end
-
     it 'contains file field' do
       expect(page).to have_css 'input[type="file"]', visible: false
     end
 
-    context 'when submitting form with all required data' do
+    context 'when user selects current student' do
       before do
+        check 'Check here if you are a current student at Columbia or one of its affiliate institutions.'
+      end
+
+      it 'contains degree program input' do
+        expect(page).to have_css 'input[name="deposit[degree_program]"]'
+      end
+    end
+
+    context 'when user does not select current student' do
+      it 'does not contain academic advisor input' do
+        expect(page).not_to have_css 'input[name="deposit[academic_advisor]"]', visible: true
+      end
+    end
+
+    context 'when student submits form with all required data' do
+      before do
+        check 'Check here if you are a current student at Columbia or one of its affiliate institutions.'
         fill_in 'Title*', with: 'Test Deposit'
         fill_in 'Abstract*', with: 'Blah Blah Blah'
         fill_in 'Year Created*', with: '2017'
-        check 'Check here if you are a current student at Columbia or one of its affiliate institutions.'
-        select 'No Copyright', from: 'Copyright Status*'
+        fill_in 'Academic Advisor*', with: 'Advisor Name'
+        fill_in 'Degree Program*', with: 'Economics'
+        choose 'deposit[thesis_or_dissertation]', option: 'dissertation'
+        choose 'deposit[license]', option: 'https://creativecommons.org/publicdomain/zero/1.0/'
         attach_file nil, fixture('test_file.txt'), class: 'dz-hidden-input', visible: false
         sleep(3) # Adding sleep so file properly attaches
         click_button 'Submit'
@@ -150,8 +137,9 @@ RSpec.describe 'Upload', type: :feature do
       end
     end
 
-    context 'when submitting form with missing required data' do
+    context 'when student submits form with missing required data' do
       before do
+        check 'Check here if you are a current student at Columbia or one of its affiliate institutions.'
         fill_in 'Title*', with: 'Test Deposit'
         fill_in 'Abstract*', with: 'Blah Blah Blah'
         fill_in 'Year Created*', with: '2017'
@@ -168,10 +156,11 @@ RSpec.describe 'Upload', type: :feature do
         expect(page).to have_field 'Year Created*', with: '2017'
       end
 
-      it 'render error message' do
+      it 'renders error messages' do
+        save_page
         expect(page).to have_css(
           '.flash_messages > .alert-danger',
-          text: 'Rights can\'t be blank, Rights is not included in the list, and Files can\'t be blank'
+          text: 'Files can\'t be blank, Degree program can\'t be blank, Academic advisor can\'t be blank, and Thesis or dissertation can\'t be blank'
         )
       end
     end
