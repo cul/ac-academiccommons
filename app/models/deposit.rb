@@ -164,6 +164,7 @@ def finalize_notes_contents
 
   self.notes = <<-TEXT
   #{self.notes}
+
   Degree Program: #{self.degree_program}
   Advisor Name: #{self.academic_advisor}
   Thesis or Dissertation: #{self.thesis_or_dissertation}

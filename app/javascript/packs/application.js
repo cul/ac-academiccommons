@@ -57,7 +57,7 @@ import '../src/read-more';
 import '../src/skip-link-focus-fix';
 import '../src/upload/file-upload';
 import '../src/upload/add-creator';
-import '../src/upload/license-options';
+import '../src/upload/current-student';
 import '../src/upload/disable-form';
 import '../src/upload/author-reorder';
 import '../src/mediaelement'

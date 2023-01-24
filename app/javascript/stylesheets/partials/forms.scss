@@ -2,6 +2,10 @@ form,
 #main-page form,
 #main-page #dashboard form {
 
+  & .student-section {
+    display: none;
+  }
+  
   & .btn-add {
     font-size: $font-size-small;
     margin-top: 8px;
