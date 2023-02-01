@@ -16,6 +16,7 @@ class Deposit < ApplicationRecord
   ].freeze
 
   before_validation :clean_up_creators
+  before_save :convert_embargo_value_to_date_string, :finalize_notes_contents
 
   # validates_presence_of :agreement_version
   # validates_presence_of :name
@@ -30,7 +31,7 @@ class Deposit < ApplicationRecord
   validates :title, :abstract, :year, :rights, :files, presence: true, on: :create
   validates :rights,  inclusion: { in: RIGHTS_OPTIONS.values }, on: :create
   validates :license, inclusion: { in: LICENSE_OPTIONS },       on: :create, if: proc { |a| a.license.present? }
-
+  validates :degree_program, :academic_advisor, :thesis_or_dissertation, presence: true, on: :create, if: proc { |a| a.current_student == true }
   has_many_attached :files
 
   belongs_to :user, optional: true
@@ -156,4 +157,30 @@ class Deposit < ApplicationRecord
       %i[first_name last_name uni].all? { |k| creator[k].blank? }
     end
   end
+end
+
+def finalize_notes_contents
+  return unless self.current_student
+
+  self.notes = <<-TEXT
+  #{self.notes}
+
+  Degree Program: #{self.degree_program}
+  Advisor Name: #{self.academic_advisor}
+  Thesis or Dissertation: #{self.thesis_or_dissertation}
+  Degree Earned: #{self.degree_earned}
+  Embargo Date: #{self.embargo_date}
+  Previously Published: #{self.previously_published}
+  Article Version: #{self.article_version}
+  Keywords: #{self.keywords}
+  TEXT
+end
+
+def convert_embargo_value_to_date_string
+  return unless embargo_date
+
+  embargo_date_int = Integer(self.embargo_date)
+  return self.embargo_date = 'None' unless embargo_date_int.positive?
+
+  self.embargo_date = embargo_date_int.year.from_now.strftime('%-Y-%-m-%-y')
 end
