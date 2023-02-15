@@ -15,6 +15,23 @@ class Deposit < ApplicationRecord
     'https://creativecommons.org/publicdomain/zero/1.0/'
   ].freeze
 
+  THESIS_EMBARGO = {
+    '1 year' => '1',
+    '2 years' => '2',
+    'No embargo' => '0'
+  }.freeze
+
+  PREVIOUSLY_PUBLISHED = {
+    'Yes' => true,
+    'No' => false
+  }.freeze
+
+  ARTICLE_VERSION = {
+    'Author\'s manuscript/preprint' => 'preprint',
+    'Accepted manuscript/postprint' => 'postprint',
+    'Final published version' => 'final'
+  }.freeze
+
   before_validation :clean_up_creators
   before_save :convert_embargo_value_to_date_string, :finalize_notes_contents
 
@@ -177,10 +194,10 @@ def finalize_notes_contents
 end
 
 def convert_embargo_value_to_date_string
-  return unless embargo_date
+  return self.embargo_date = '' unless embargo_date&.present?
 
   embargo_date_int = Integer(self.embargo_date)
-  return self.embargo_date = 'None' unless embargo_date_int.positive?
+  return self.embargo_date = '' unless embargo_date_int.positive?
 
   self.embargo_date = embargo_date_int.year.from_now.strftime('%-Y-%-m-%-y')
 end

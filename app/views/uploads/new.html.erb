@@ -92,7 +92,7 @@
 
   <div class="form-group">
     <h3>Thesis or Dissertation?*</h3>
-    <p>With the exception of dissertations completed for Union Theological Seminary (UTS), which does not require deposit in Academic Commons, all doctoral dissertations published after 2011 are automatically deposited in Academic Commons by the degree program. Masters theses are only automatically deposited in Academic Commons if a school or program has an established workflow for doing so. Contact ac@columbia.edu for more information.
+    <p>With the exception of dissertations completed for Union Theological Seminary (UTS), which does not require deposit in Academic Commons, all doctoral dissertations published after February 2011 are automatically deposited in Academic Commons by the degree program. Masters theses are only deposited in Academic Commons if a school or program has an established workflow for doing so. Contact ac@columbia.edu for more information.
 </p>
       <%= form.radio_button(:thesis_or_dissertation, 'dissertation') %>
       <%= form.label(:thesis_or_dissertation, 'This is a doctoral dissertation.') %></br>
@@ -113,35 +113,22 @@
   <div class="form-group">
     <h3>Thesis Embargo</h3>
     <p>Students may request an optional embargo for one or two years. Embargos are approved by your department. If you are not certain about what embargo options are available to you, please contact ac@columbia.edu and staff will reach out to your department.</p>
-      <%= form.radio_button(:embargo_date, '1') %>
-      <%= form.label(:embargo_date, '1 year') %></br>
-      <%= form.radio_button(:embargo_date, '2') %>
-      <%= form.label(:embargo_date, '2 years') %></br>
-      <%= form.radio_button(:embargo_date, '0') %>
-      <%= form.label(:embargo_date, 'No embargo') %></br>
+     <%= form.select :embargo_date, Deposit::THESIS_EMBARGO, class: 'form-control', prompt: 'Thesis Embargo' %>
   </div>
 </div>
 
   <div class="form-group">
     <h3>Have You Previously Published This Work?</h3>
     <p>If you are uploading a previously published work, the publication agreement that you signed may affect what version you can upload to Academic Commons. Check the terms of your agreement. You can also view many journal and publisher open access policies using the <a href="https://v2.sherpa.ac.uk/romeo/">Sherpa Romeo database</a>. </p>
-      <%= form.radio_button(:previously_published, 'true') %>
-      <%= form.label(:previously_published, 'Yes') %></br>
-      <%= form.radio_button(:previously_published, 'false') %>
-      <%= form.label(:previously_published, 'No') %></br>
+     <%= form.select :previously_published, Deposit::PREVIOUSLY_PUBLISHED, class: 'form-control', prompt: 'Previously published?' %>
   </div>
 
 
 
   <div class="form-group">
-    <h3>If You Are Uploading An Article, Please Indicate The Version Of The Article You Are Uploading.</h3>
+    <h3>If You Are Uploading a Previously Published Work, Please Indicate The Version You Are Uploading.</h3>
     <p>Learn more about different versions of articles <a href="https://libfaq.nus.edu.sg/faq/257412">here</a>.</p>
-      <%= form.radio_button(:article_version, 'preprint') %>
-      <%= form.label(:article_version, 'Author\'s original/preprint') %></br>
-      <%= form.radio_button(:article_version, 'postprint') %>
-      <%= form.label(:article_version, 'Accepted manuscript/postprint') %></br>
-      <%= form.radio_button(:article_version, 'final') %>
-      <%= form.label(:article_version, 'Final published version') %></br>
+     <%= form.select :article_version, Deposit::ARTICLE_VERSION, class: 'form-control', prompt: 'Article Version' %>
   </div>
 
   <div class="form-group" id='licensing'>
@@ -166,8 +153,6 @@ Learn more about the Creative Commons <a href="https://creativecommons.org/licen
       <%= form.label(:license, 'CC BY-NC-ND 4.0') %></br>
       <%= form.radio_button(:license, 'https://creativecommons.org/publicdomain/zero/1.0/') %>
       <%= form.label(:license, 'CC0') %></br>
-      <%= form.radio_button(:license, 'MIT') %>
-      <%= form.label(:license, 'MIT License (for software)') %></br>
       <%= form.radio_button(:license, '') %>
       <%= form.label(:license, 'All Rights Reserved') %></br>
       <%= form.hidden_field(:rights, :value => 'http://rightsstatements.org/vocab/InC/1.0/') %>
