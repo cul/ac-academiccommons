@@ -22,13 +22,12 @@
             <span class="icon download"><%= link_to ('<span class="far fa-arrow-alt-circle-down" aria-hidden="true" title="Download file"></span><span class="visually-hidden">Download File</span>').html_safe, asset.download_path %></span>
           </li>
         </ul>
-
         <% if asset.playable? %>
           <div class="collapse media-player-container" id="<%= "play-collapse-#{asset.id.gsub(/\/|\./, '-')}" %>">
             <%= player(asset, solr_document_url(document.doi)) %>
-            <button class="btn btn-link btn-sm embed-link" data-toggle="modal" data-target="#embed-code-modal"><i class="fas fa-code"></i> Embed</button>
+            <button class="btn btn-link btn-sm embed-link" data-toggle="modal" data-target="#<%= "embed-code-modal-#{asset.id.gsub(/\/|\./, '-')}" %>"><i class="fas fa-code"></i> Embed</button>
               <%=
-                modal('embed-code-modal', 'md', 'Embed Player') do
+                modal("embed-code-modal-#{asset.id.gsub(/\/|\./, '-')}", "md", "Embed Player") do
                   tag.textarea onclick: 'this.focus();this.select()', class: 'embed-code', rows: '4' do
                   "<iframe title=\"Academic Commons media player\" width=\"560\" height=\"315\" src=\"#{embed_url(asset.id)}\" frameborder=\"0\" allowfullscreen></iframe>"
                 end
