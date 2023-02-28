@@ -17,9 +17,13 @@ module AcademicCommons
       'moving image'                => 'Video',
       'three dimensional object'    => 'Other',
       'software, multimedia'        => 'Software',
-      'mixed material'              => 'Mixed media',
-      'learning object'             => 'Learning objects'
+      'mixed material'              => 'Mixed media'
     }.freeze
+
+    GENRE_TYPES = {
+      'learning object'             => 'Learning Objects'
+    }.freeze
+
     DEGREE_LABELS = {
       '0' => 'Bachelor\'s',
       '1' => 'Master\'s',
@@ -32,7 +36,7 @@ module AcademicCommons
       'isIdenticalTo',
       'isVersionOf',
       'isNewVersionOf',
-      'IsPreprintOf',
+      'isPreprintOf',
       'isPreviousVersionOf',
       'isSupplementedBy',
       'isSupplementTo',
@@ -45,7 +49,7 @@ module AcademicCommons
       'IsDerivedFrom',
       'hasPart',
       'partOf',
-      'isSourceOf'
+      'IsSourceOf'
     ].freeze
 
     # Keeping track of multivalued fields.
@@ -174,8 +178,8 @@ module AcademicCommons
       add_field.call 'publisher_location_ssi', mods.at_css('originInfo > place > placeTerm')
 
       mods.css('genre').each do |genre_node|
-        add_field.call 'genre_ssim',  genre_node.content&.titlecase
-        add_field.call 'genre_q',     genre_node.content&.titlecase
+        add_field.call 'genre_ssim',  GENRE_TYPES.fetch(genre_node.text, genre_node.content&.titlecase)
+        add_field.call 'genre_q',     GENRE_TYPES.fetch(genre_node.text, genre_node.content&.titlecase)
       end
 
       add_field.call 'abstract_ssi', mods.at_css('> abstract')
@@ -186,7 +190,7 @@ module AcademicCommons
       # SUBJECT
       mods.css('> subject').each do |subject_node|
         attri = subject_node.attributes
-        next unless attri.count.zero? || (attri['authority'] && attri['authority'].value == 'fast')
+        next unless attri.count.zero? || (attri['authority'])
         subject_node.css('topic,title,namePart').each do |topic_node|
           add_field.call 'subject_ssim', topic_node
           add_field.call 'subject_q',    topic_node
