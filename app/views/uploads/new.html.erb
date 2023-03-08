@@ -106,21 +106,29 @@
 
 
   <div class="form-group">
-    <%= form.label(:degree_earned, 'Degree Earned (If Thesis)', class: 'control-label') %>
+    <%= form.label(:degree_earned, 'Degree Earned (If Thesis)*', class: 'control-label') %>
     <%= form.text_field(:degree_earned) %>
   </div>
 
   <div class="form-group">
-    <h3>Thesis Embargo</h3>
+    <h3>Thesis Embargo*</h3>
     <p>Students may request an optional embargo for one or two years. Embargos are approved by your department. If you are not certain about what embargo options are available to you, please contact ac@columbia.edu and staff will reach out to your department.</p>
-     <%= form.select :embargo_date, Deposit::THESIS_EMBARGO, class: 'form-control', prompt: 'Thesis Embargo' %>
+      <%= form.radio_button(:embargo_date, '1') %>
+      <%= form.label(:embargo_date, '1 year') %></br>
+      <%= form.radio_button(:embargo_date, '2') %>
+      <%= form.label(:embargo_date, '2 years') %></br>
+      <%= form.radio_button(:embargo_date, '0') %>
+      <%= form.label(:embargo_date, 'No embargo') %></br>
   </div>
 </div>
 
   <div class="form-group">
-    <h3>Have You Previously Published This Work?</h3>
+    <h3>Have You Previously Published This Work?*</h3>
     <p>If you are uploading a previously published work, the publication agreement that you signed may affect what version you can upload to Academic Commons. Check the terms of your agreement. You can also view many journal and publisher open access policies using the <a href="https://v2.sherpa.ac.uk/romeo/">Sherpa Romeo database</a>. </p>
-     <%= form.select :previously_published, Deposit::PREVIOUSLY_PUBLISHED, class: 'form-control', prompt: 'Previously published?' %>
+      <%= form.radio_button(:previously_published, 'true') %>
+      <%= form.label(:previously_published, 'Yes') %></br>
+      <%= form.radio_button(:previously_published, 'false') %>
+      <%= form.label(:previously_published, 'No') %></br>
   </div>
 
 
@@ -128,7 +136,7 @@
   <div class="form-group">
     <h3>If You Are Uploading a Previously Published Work, Please Indicate The Version You Are Uploading.</h3>
     <p>Learn more about different versions of articles <a href="https://libfaq.nus.edu.sg/faq/257412">here</a>.</p>
-     <%= form.select :article_version, Deposit::ARTICLE_VERSION, class: 'form-control', prompt: 'Article Version' %>
+     <%= form.select :article_version, Deposit::ARTICLE_VERSION, class: 'form-control', prompt: 'Article Version?' %>
   </div>
 
   <div class="form-group" id='licensing'>

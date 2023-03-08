@@ -15,17 +15,6 @@ class Deposit < ApplicationRecord
     'https://creativecommons.org/publicdomain/zero/1.0/'
   ].freeze
 
-  THESIS_EMBARGO = {
-    '1 year' => '1',
-    '2 years' => '2',
-    'No embargo' => '0'
-  }.freeze
-
-  PREVIOUSLY_PUBLISHED = {
-    'Yes' => true,
-    'No' => false
-  }.freeze
-
   ARTICLE_VERSION = {
     'Author\'s manuscript/preprint' => 'preprint',
     'Accepted manuscript/postprint' => 'postprint',
@@ -46,9 +35,11 @@ class Deposit < ApplicationRecord
   validate :one_creator_must_be_present, on: :create
   validate :cco_must_be_selected, if: proc { |a| a.rights == RIGHTS_OPTIONS['No Copyright'] }
   validates :title, :abstract, :year, :rights, :files, presence: true, on: :create
+  validates :previously_published, inclusion: { in: [true, false] }, on: :create
   validates :rights,  inclusion: { in: RIGHTS_OPTIONS.values }, on: :create
   validates :license, inclusion: { in: LICENSE_OPTIONS },       on: :create, if: proc { |a| a.license.present? }
-  validates :degree_program, :academic_advisor, :thesis_or_dissertation, presence: true, on: :create, if: proc { |a| a.current_student == true }
+  validates :degree_program, :academic_advisor, :thesis_or_dissertation, :embargo_date, :degree_earned,
+            presence: true, on: :create, if: proc { |a| a.current_student == true }
   has_many_attached :files
 
   belongs_to :user, optional: true

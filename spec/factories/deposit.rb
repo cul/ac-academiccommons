@@ -13,6 +13,7 @@ FactoryBot.define do
     notes { 'This deposit is just for testing purposes.' }
     rights { 'http://rightsstatements.org/vocab/InC/1.0/' }
     license { 'https://creativecommons.org/licenses/by/4.0/' }
+    previously_published { true }
 
     after(:build) do |deposit|
       deposit.files.attach(
