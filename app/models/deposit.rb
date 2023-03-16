@@ -21,6 +21,12 @@ class Deposit < ApplicationRecord
     'Final published version' => 'final'
   }.freeze
 
+  THESIS_EMBARGO = {
+    '1 year' => '1',
+    '2 years' => '2',
+    'No embargo' => '0'
+  }.freeze
+
   before_validation :clean_up_creators
   before_save :convert_embargo_value_to_date_string, :finalize_notes_contents
 
@@ -38,7 +44,7 @@ class Deposit < ApplicationRecord
   validates :previously_published, inclusion: { in: [true, false] }, on: :create
   validates :rights,  inclusion: { in: RIGHTS_OPTIONS.values }, on: :create
   validates :license, inclusion: { in: LICENSE_OPTIONS },       on: :create, if: proc { |a| a.license.present? }
-  validates :degree_program, :academic_advisor, :thesis_or_dissertation, :embargo_date, :degree_earned,
+  validates :degree_program, :academic_advisor, :thesis_or_dissertation,
             presence: true, on: :create, if: proc { |a| a.current_student == true }
   has_many_attached :files
 

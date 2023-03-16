@@ -113,8 +113,6 @@ RSpec.describe 'Upload', type: :feature do
         fill_in 'Year Created*', with: '2017'
         fill_in 'Academic Advisor*', with: 'Advisor Name'
         fill_in 'Degree Program*', with: 'Economics'
-        fill_in 'Degree Earned (If Thesis)*', with: 'MA'
-        choose 'deposit[embargo_date]', option: '1'
         choose 'deposit[thesis_or_dissertation]', option: 'dissertation'
         choose 'deposit[license]', option: 'https://creativecommons.org/publicdomain/zero/1.0/'
         choose 'deposit[previously_published]', option: true
@@ -163,7 +161,7 @@ RSpec.describe 'Upload', type: :feature do
         save_page
         expect(page).to have_css(
           '.flash_messages > .alert-danger',
-          text: 'Files can\'t be blank, Previously published is not included in the list, Degree program can\'t be blank, Academic advisor can\'t be blank, Thesis or dissertation can\'t be blank, Embargo date can\'t be blank, and Degree earned can\'t be blank'
+          text: 'Files can\'t be blank, Previously published is not included in the list, Degree program can\'t be blank, Academic advisor can\'t be blank, and Thesis or dissertation can\'t be blank'
         )
       end
     end

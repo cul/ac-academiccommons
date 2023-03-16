@@ -106,19 +106,14 @@
 
 
   <div class="form-group">
-    <%= form.label(:degree_earned, 'Degree Earned (If Thesis)*', class: 'control-label') %>
+    <%= form.label(:degree_earned, 'Degree Earned (If Thesis)', class: 'control-label') %>
     <%= form.text_field(:degree_earned) %>
   </div>
 
   <div class="form-group">
-    <h3>Thesis Embargo*</h3>
+    <h3>Thesis Embargo</h3>
     <p>Students may request an optional embargo for one or two years. Embargos are approved by your department. If you are not certain about what embargo options are available to you, please contact ac@columbia.edu and staff will reach out to your department.</p>
-      <%= form.radio_button(:embargo_date, '1') %>
-      <%= form.label(:embargo_date, '1 year') %></br>
-      <%= form.radio_button(:embargo_date, '2') %>
-      <%= form.label(:embargo_date, '2 years') %></br>
-      <%= form.radio_button(:embargo_date, '0') %>
-      <%= form.label(:embargo_date, 'No embargo') %></br>
+     <%= form.select :embargo_date, Deposit::THESIS_EMBARGO, class: 'form-control', prompt: 'Thesis Embargo?' %>
   </div>
 </div>
 
