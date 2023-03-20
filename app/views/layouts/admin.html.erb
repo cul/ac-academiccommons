@@ -26,10 +26,10 @@
     </div>
     <div id="dashboard">
       <div class="row admin-container">
-        <div class="col-sm-3">
+        <div class="col-md-3">
           <%= render 'shared/admin_sidebar' %>
         </div>
-        <div id="content" class="col-sm-9 admin-content">
+        <div id="content" class="col-md-9 admin-content">
           <%= yield %>
         </div>
       </div>
@@ -37,4 +37,4 @@
   </div>
 <% end %>
 
-<%= render template: 'layouts/catalog' %>
+<%= render template: "layouts/blacklight/base" %>

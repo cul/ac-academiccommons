@@ -63,7 +63,7 @@ describe 'GET /api/v1/data_feed/:key', type: :request do
       end
 
       let(:solr_response) do
-        Blacklight::Solr::Response.new({
+        wrap_solr_response_data(
           'response' => {
             'numFound' => 1,
             'docs' => [
@@ -104,7 +104,7 @@ describe 'GET /api/v1/data_feed/:key', type: :request do
               }
             ]
           }
-        }, {})
+        )
       end
 
       let(:json_response) do

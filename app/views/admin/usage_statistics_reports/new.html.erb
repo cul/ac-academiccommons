@@ -1,110 +1,119 @@
 <h2>Usage Statistics</h2>
 
 <%= form_with model: @usage_statistics_reports_form, url: admin_usage_statistics_reports_path, local: true, class: 'form-horizontal admin-form' do |f| %>
-  <p>Select parameters to calculate usage statistics by work:</p>
-  <hr>
-  <div class="form-group">
-    <%= f.label :filters, 'Filters', class: 'col-sm-3 control-label' %>
-    <div class="col-sm-9">
-      <div class="row">
-        <div class="col-sm-12">
-          <% (@usage_statistics_reports_form.filters || [{}]).each do |filter| %>
-            <%= f.fields_for :filters, index: nil do |filter_form| %>
-            <div class="row filter-fields">
-              <div class="col-xs-4">
-                <%= filter_form.select(:field, UsageStatisticsReportsForm::FILTERS, class: 'form-control', include_blank: true, selected: filter[:field]) %>
-              </div>
-              <div class="col-xs-1">=</div>
-              <div class="col-xs-4">
-                <%= filter_form.text_field(:value, class: 'form-control', value: filter[:value]) %>
-              </div>
-            </div>
+<p><em>Select parameters to calculate usage statistics by work:</em></p>
+
+<hr>
+
+  <%= f.label :filters, 'Filters', class: 'control-label' %>
+    <% (@usage_statistics_reports_form.filters || [{}]).each do |filter| %>
+      <%= f.fields_for :filters, index: nil do |filter_form| %>
+      <div class="form-row filter-fields">
+        <div class="form-group col-xs-3">
+          <%= filter_form.select(:field, UsageStatisticsReportsForm::FILTERS, class: 'form-control', include_blank: true, selected: filter[:field]) %>
+        </div>
+        <div class="form-group equals-sign "> 
+          <i class="fas fa-equals"></i> 
+        </div>
+        <div class="form-group col-xs-4">
+          <%= filter_form.text_field(:value, class: 'form-control', value: filter[:value]) %>
+        </div>
+      </div>
+      <% end %>
+    <% end %>
+    <%= button_tag("<i class=\"fas fa-plus\"></i> Add another filter".html_safe, class: 'btn btn-outline-secondary', 'data-duplicate-fields-template': "filter-fields") %>
+
+<hr>
+
+  <fieldset class="form-group">
+    <div class="row">
+      <legend class="col-form-label col-sm-2 pt-0">
+        <%= f.label :time_period, 'Time Period', class: 'control-label' %>
+      </legend>
+      <div class="col-sm-10">
+        <div class="form-check">
+          <%= f.radio_button(:time_period, 'lifetime', class: 'form-check-input') %>
+          <%= f.label(:time_period_lifetime, 'Lifetime', class: 'form-check-label') %>
+        </div>
+        <div class="form-check">
+          <%= f.radio_button(:time_period, 'date_range', class: 'form-check-input') %>
+          <%= f.label(:time_period_date_range, 'Date Range', class: 'form-check-label') %>
+        </div>
+        <div class="form-row date-ranges">
+          <div class="form-group col-sm-4">
+            <%= f.fields_for :start_date do |start_date_form| %>
+              <%= f.label :start_date, 'Start Date', class: 'text-secondary' %>
+                <div class="form-row">
+                  <div class="form-group">
+                    <%= start_date_form.select :month, UsageStatisticsReportsForm::MONTHS,
+                                              { selected: @usage_statistics_reports_form.start_date&.fetch(:month) },
+                                              disabled: @usage_statistics_reports_form.time_period == 'lifetime',
+                                              class: 'form-control'%>
+                  </div>
+                  <div class="form-group">
+                    <%= start_date_form.select :year, Statistic::YEAR_BEG..Date.current.year,
+                                              { selected: @usage_statistics_reports_form.start_date&.fetch(:year) },
+                                              disabled: @usage_statistics_reports_form.time_period == 'lifetime',
+                                              class: 'form-control' %>
+                  </div>
+                </div>
             <% end %>
-          <% end %>
+          </div>
+          <div class="form-group col-sm-4">
+            <%= f.fields_for :end_date do |start_date_form| %>
+              <%= f.label :end_date, 'End Date', class: 'text-secondary' %>
+                <div class="form-row">
+                  <div class="form-group">
+                    <%= start_date_form.select :month, UsageStatisticsReportsForm::MONTHS,
+                                                { selected: @usage_statistics_reports_form.end_date&.fetch(:month) },
+                                                disabled: @usage_statistics_reports_form.time_period == 'lifetime',
+                                                class: 'form-control' %>
+                  </div>
+                  <div class="form-group">
+                    <%= start_date_form.select :year, Statistic::YEAR_BEG..Date.current.year,
+                                              { selected: @usage_statistics_reports_form.end_date&.fetch(:year) },
+                                              disabled: @usage_statistics_reports_form.time_period == 'lifetime',
+                                              class: 'form-control' %>
+                  </div>
+                </div>
+            <% end %>
+          </div>
         </div>
-      </div>
-
-      <div class="row">
-        <div class="col-sm-12">
-          <%= button_tag("<i class=\"fas fa-plus\"></i> Add another filter".html_safe, class: 'btn btn-default btn-add', 'data-duplicate-fields-template': "filter-fields") %>
-        </div>
-      </div>
-
     </div>
-  </div>
+  </fieldset>
 
-  <div class="form-group">
-    <%= f.label :time_period, 'Time Period', class: 'col-sm-3  control-label' %>
-    <div class="col-sm-9 radio">
-      <%= f.radio_button(:time_period, 'lifetime') %>
-      <%= f.label(:time_period_lifetime, 'Lifetime') %>
-      <%= f.radio_button(:time_period, 'date_range') %>
-      <%= f.label(:time_period_date_range, 'Date Range') %>
+<hr>
 
-      <div class="row">
-        <%= f.fields_for :start_date do |start_date_form| %>
-          <%= f.label :start_date, 'Start Date', class: 'col-xs-3 sub-label' %>
-
-          <div class="col-sm-3">
-            <%= start_date_form.select :month, UsageStatisticsReportsForm::MONTHS,
-                                       { selected: @usage_statistics_reports_form.start_date&.fetch(:month) },
-                                       disabled: @usage_statistics_reports_form.time_period == 'lifetime',
-                                       class: 'form-control col-sm-4'%>
-          </div>
-           <div class="col-sm-3">
-            <%= start_date_form.select :year, Statistic::YEAR_BEG..Date.current.year,
-                                       { selected: @usage_statistics_reports_form.start_date&.fetch(:year) },
-                                       disabled: @usage_statistics_reports_form.time_period == 'lifetime',
-                                       class: 'form-control' %>
-          </div>
-        <% end %>
-      </div>
-
-      <div class="row">
-        <%= f.fields_for :end_date do |start_date_form| %>
-          <%= f.label :end_date, 'End Date', class: 'col-sm-3 sub-label' %>
-
-          <div class="col-sm-3">
-            <%= start_date_form.select :month, UsageStatisticsReportsForm::MONTHS,
-                                       { selected: @usage_statistics_reports_form.end_date&.fetch(:month) },
-                                       disabled: @usage_statistics_reports_form.time_period == 'lifetime',
-                                       class: 'form-control col-sm-2' %>
-          </div>
-           <div class="col-sm-3">
-            <%= start_date_form.select :year, Statistic::YEAR_BEG..Date.current.year,
-                                       { selected: @usage_statistics_reports_form.end_date&.fetch(:year) },
-                                       disabled: @usage_statistics_reports_form.time_period == 'lifetime',
-                                       class: 'form-control' %>
-          </div>
-        <% end %>
-      </div>
-    </div>
-  </div>
-
-  <div class="form-group">
-    <%= f.label :order, 'Order', class: 'col-sm-3 control-label' %>
-    <div class="col-sm-4">
+  <div class="form-row">
+    <div class="form-group col-md-5">
+      <%= f.label :order, 'Order', class: 'control-label' %>
       <%= f.select(:order, UsageStatisticsReportsForm::ORDER, {}, disabled: @usage_statistics_reports_form.display == 'month_by_month') %>
-    </div>
-    <div class="col-sm-5">
       <span class="help-block">Order can only be applied to a summary table.</span>
     </div>
   </div>
 
-  <div class="form-group">
-    <%= f.label :display, 'Display', class: 'col-sm-3 control-label' %>
-    <div class="radio col-sm-9">
-      <%= f.radio_button(:display, 'summary') %>
-      <%= f.label(:display_summary, 'Summary Table') %>
-      <%= f.radio_button(:display, 'month_by_month') %>
-      <%= f.label(:display_month_by_month, 'Month-by-Month Totals') %>
-    </div>
-  </div>
+<hr>
 
-  <div class="form-group">
-    <div class="col-sm-offset-3 col-sm-9">
-      <%= f.submit 'Generate Report', class: 'btn btn-primary' %>
+  <fieldset class="form-group">
+    <div class="row">
+      <div class="form-group">
+        <%= f.label :display, 'Display', class: 'col-form-label col-sm-2 pt-0 control-label' %>
+        <div class="col-sm-12">
+          <div class="form-check">
+            <%= f.radio_button(:display, 'summary', class: 'form-check-input') %>
+            <%= f.label(:display_summary, 'Summary Table', class: 'form-check-label') %>
+          </div>
+          <div class="form-check">
+            <%= f.radio_button(:display, 'month_by_month', class: 'form-check-input') %>
+            <%= f.label(:display_month_by_month, 'Month-by-Month Totals', class: 'form-check-label') %>
+          </div>
+        </div>  
+      </div>
     </div>
+  </fieldset>
+
+  <div class="form-row">  
+    <%= f.submit 'Generate Report', class: 'btn btn-primary' %>
   </div>
 
 <% end %>

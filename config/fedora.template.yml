@@ -1,8 +1,12 @@
 # Copy this file to config/fedora.yml
-local: &local
+default: &default
   user: fedoraAdmin
   password: fedoraAdmin
-  url: http://localhost:8983/fedora
 
-development: *local
-test: *local
+development:
+  <<: *default
+  url: http://localhost:8080/fedora
+
+test:
+  <<: *default
+  url: http://localhost:9090/fedora

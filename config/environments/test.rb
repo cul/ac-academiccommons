@@ -34,4 +34,15 @@ Rails.application.configure do
   config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
 
   config.default_host = 'http://localhost:3000'
+
+  # Configure public file server for tests with Cache-Control for performance.
+  config.public_file_server.enabled = true
+  config.public_file_server.headers = {
+    'Cache-Control' => "public, max-age=#{1.hour.to_i}"
+  }
+
+  config.cache_store = :null_store
+  config.action_dispatch.show_exceptions = true
+  config.action_controller.allow_forgery_protection = false
+  config.action_mailer.perform_caching = false
 end

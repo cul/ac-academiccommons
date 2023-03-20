@@ -1,0 +1,119 @@
+/* outer wrapper */
+
+#main-page {
+  width: 100%;
+}
+
+/* dashboard top nav */
+
+#main-page #dashboard-nav {
+  background-image: linear-gradient(to bottom, #fff 0%, #f3f5f3 100%);
+  border-bottom: $border;
+  font-size: $font-size-small;
+  margin: 30px 0 0 0;
+  padding: 0 10px 10px 10px;
+
+  & ul.nav-tabs {
+    font-weight: bold;
+    max-width: none;
+    border-bottom: 0;
+    margin: -30px 0 1px 0;
+  }
+
+  & li a {
+    border-bottom: $border;
+    border-color: transparent;
+    color: $gray-light;
+    display: inline-block;
+    padding: 8px;
+    text-decoration: none;
+  }
+
+  & li a:hover {
+    background-color: $gray-lighter-custom;
+  }
+
+  & li.active a {
+    background: transparent;
+    color: $gray-base;
+    font-weight: bold;
+  }
+
+  & li.active a:hover {
+    background: transparent;
+  }
+}
+
+@include media-breakpoint-up(md) {
+  
+  #main-page #dashboard-nav {
+    background-image: none;
+    border: 0;
+    font-size: $font-size-base;
+    margin: 15px 15px 0 15px;
+    padding: 0;
+
+    & ul.nav-tabs {
+      margin: 0 0 -1px 0;
+    }
+
+    & li a {
+      padding: 15px 20px;
+    }
+
+    & li.active a {
+      border: $border;
+      border-bottom-color: $body-bg;
+    }
+  }
+}
+
+/* dashboard main-page content */
+
+#main-page #dashboard {
+
+  & .dashboard-container {
+    padding: 20px;
+  }
+
+  & h3 {
+    font-size: 25px;
+    font-weight: 300;
+    margin: 0 0 10px 0;
+  }
+
+  & p {
+    margin: 0 0 30px 0;
+    max-width: none;
+  }
+
+  & p.note {
+    margin: 0 0 10px 0;
+  }
+
+  /* for usage statistics page in admin */
+  & .date-ranges {
+    margin: 10px 0 0 20px;
+
+    & .form-group {
+      margin-bottom: 0;
+    }
+  }
+}
+
+@include media-breakpoint-up(md) {
+
+  #main-page #dashboard {
+    border: $border;
+    margin: 0 15px 15px 15px;
+
+    & h3 {
+      margin-top: 15px;
+    }
+
+    .dashboard-container {
+      padding: 30px;
+      width: 75%;
+    }
+  }
+}

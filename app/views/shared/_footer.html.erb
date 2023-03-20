@@ -8,14 +8,14 @@
 <footer role="contentinfo">
   <div class="<%= container_classes %>">
     <div class="row">
-      <div class="col-xs-6 footer-links">
+      <div class="col-md-9 footer-links">
         <%= link_to t('blacklight.header_links.about'), about_path, 'aria-label': 'About Academic Commons' %> <span>|</span>
         <%= link_to t('blacklight.header_links.faq'), faq_path %> <span>|</span>
         <%= link_to t('blacklight.header_links.policies'), policies_path %> <span>|</span>
         <%= link_to t('blacklight.header_links.developers'), developers_path %><span>|</span>
         <%= link_to t('blacklight.header_links.credits'), credits_path %>
       </div>
-      <div class="col-xs-6 contact">
+      <div class="col-md-3 contact">
         <i class="far fa-envelope" aria-hidden="true"></i> <%= mail_to "ac@columbia.edu" %>
       </div>
     </div>

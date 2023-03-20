@@ -1,0 +1,51 @@
+//* bootstrap variables */
+
+/* typography */
+
+$font-family-sans-serif: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+
+$font-size-base: 1rem;
+
+$font-size-large: $font-size-base * 1.125;
+
+/* colors */
+
+$brand-primary: #008EE0;
+
+$brand-secondary: #C4D8E2;
+
+$brand-dark: #000d74;
+
+$link-color: #0071C2;
+
+$link-color-dark: #006BB8;
+
+$link-hover-color: lighten($link-color, 15%);
+
+$gray-base: #111;
+
+$gray-light: #767676;
+
+$gray-lighter: #ddd;
+
+$gray-lighter-custom: #f3f5f3;
+
+$state-success-text: #5cb85c;
+
+$green: #2b913f;
+
+/* wells */
+
+$well-bg: #fff;
+
+/* panels */
+
+$panel-default-heading-bg: $gray-lighter-custom;
+
+/* logos */
+
+$logo-image: "../images/logo-ac.png";
+
+$logo-cul-banner: url("../images/logo-cul-banner.png");
+
+$logo-browse: url("../images/icon-browse.svg");

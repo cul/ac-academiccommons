@@ -14,12 +14,12 @@
   </ul>
 <% end %>
 
-<h3 id="API">API</h3>
+<h2 id="api">API</h2>
 <p>The Academic Commons RESTful API can be used to query/search for records. We support JSON responses. Documentation and a GUI can be found at:<br>
 <%= link_to nil, "http://petstore.swagger.io/?url=#{root_url}api/v1/swagger_doc" %></p>
 <p>To see an example of an AC API integration, visit the <a href="https://www.earth.columbia.edu/users">Earth Institute Directory</a>.</p>
 
-<h3 id="oai">OAI-PMH</h3>
+<h2 id="oai">OAI-PMH</h2>
 <p>Academic Commons supports the <a href="https://www.openarchives.org/OAI/openarchivesprotocol.html">Open Archives Initiative Protocol for Metadata Harvesting (OAI-PMH)</a>, version 2.0.
 The base URL is: <%= link_to oai_catalog_url, oai_catalog_url %></p>
 
@@ -27,7 +27,7 @@ The base URL is: <%= link_to oai_catalog_url, oai_catalog_url %></p>
 
 <p>For questions about how to integrate an API feed into your Columbia Site, please contact <a href="mailto:ac@columbia.edu">ac@columbia.edu</a>.</p>
 
-<h3 id="sword">SWORD</h3>
+<h2 id="sword">SWORD</h2>
 
 <p>Academic Commons can receive materials via <a href="http://swordapp.org/">SWORD deposit</a>. SWORD is a protocol that automates the deposit process. SWORD is best used for recurring deposits, such as regular deposits of theses or working papers from Columbia departments and regular deposits of articles from Columbia-affiliated journals. Additionally, while the Academic Commons API does not include POST functionality, SWORD can be used in a similar manner to make deposits to Academic Commons in a more programatic way.</p>
 
@@ -55,10 +55,10 @@ The base URL is: <%= link_to oai_catalog_url, oai_catalog_url %></p>
 
 <p>If you would like to learn more about how to deposit content via SWORD or start the process of requesting credentials, contact us at <a href="mailto:ac@columbia.edu">ac@columbia.edu</a>.</p> 
 
-<h3 id="sitemap">Sitemap</h3>
+<h2 id="sitemap">Sitemap</h2>
 <p>The sitemap for Academic Commons is regenerated every weekday. <%= link_to nil, "#{root_url}sitemap.xml.gz" %></p>
 
-<h3 id="metadata_license">Metadata License</h3>
+<h2 id="metadata_license">Metadata License</h2>
 <p>Academic Commons bibliographic metadata—excluding abstracts, which may be under copyright—is available under a <a href="https://creativecommons.org/publicdomain/zero/1.0/">Creative Commons 0 1.0 Universal</a> license.</p>
 
 <p class="small-images">

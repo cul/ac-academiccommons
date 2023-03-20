@@ -52,8 +52,32 @@
   <dt>DOI/URL</dt>
   <dd><%= (@deposit.doi.blank?) ? 'None' : @deposit.doi %></dd>
 
+  <dt>Deposit Program</dt>
+  <dd><%= (@deposit.degree_program.blank?) ? 'None' : @deposit.degree_program %></dd>
+
+  <dt>Academic Advisor</dt>
+  <dd><%= (@deposit.academic_advisor.blank?) ? 'None' : @deposit.academic_advisor %></dd>
+
+  <dt>Thesis or Dissertation</dt>
+  <dd><%= (@deposit.thesis_or_dissertation.blank?) ? 'None' : @deposit.thesis_or_dissertation %></dd>
+
+  <dt>Degree Earned</dt>
+  <dd><%= (@deposit.degree_earned.blank?) ? 'None' : @deposit.degree_earned %></dd>
+
+  <dt>Thesis Embargo</dt>
+  <dd><%= (@deposit.embargo_date.blank?) ? 'None' : @deposit.embargo_date %></dd>
+
+  <dt>Previously Published</dt>
+  <dd><%= (@deposit.previously_published.blank?) ? 'None' : @deposit.previously_published %></dd>
+
+  <dt>Article Version</dt>
+  <dd><%= (@deposit.article_version.blank?) ? 'None' : @deposit.article_version %></dd>
+
+  <dt>Keywords</dt>
+  <dd><%= (@deposit.keywords.blank?) ? 'None' : @deposit.keywords %></dd>
+
   <dt>Notes</dt>
-  <dd><%= (@deposit.notes.blank?) ? 'None' : @deposit.notes %></dd>
+  <dd><pre><%= (@deposit.notes.blank?) ? 'None' : @deposit.notes %></pre></dd>
 
   <dt>Rights Statement</dt>
   <dd><%= (@deposit.rights.blank?) ? 'None' : @deposit.rights %></dd>

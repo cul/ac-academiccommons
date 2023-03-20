@@ -8,13 +8,11 @@
   Academic Commons hosts research and scholarship from across Columbia University and its affiliate institutions. You can use the collections below to begin exploring or <%= link_to('browse everything in the repository', search_action_path) %>.
 </p>
 
-<div class="menu">
-  <div class="row">
-    <% @categories.each do |category| %>
-      <div class="col-md-4 tile">
-        <h2><%= link_to category.title, category.url %></h2>
-        <p><%= raw category.summary %></p>
-      </div>
-    <% end %>
-  </div>
+<div class="row menu">
+  <% @categories.each do |category| %>
+    <div class="col-md-5 tile">
+      <h2><%= link_to category.title, category.url %></h2>
+      <p><%= raw category.summary %></p>
+    </div>
+  <% end %>
 </div>

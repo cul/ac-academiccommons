@@ -1,0 +1,125 @@
+/* admin */
+
+.admin-container {
+  margin: 0;
+}
+
+p.admin-intro-message {
+  padding: 130px 0 100px 0;
+  text-align: center;
+}
+
+p.admin-intro-message:before {
+  content: '\2191';
+}
+
+@include media-breakpoint-up(md) {
+
+  p.admin-intro-message:before {
+    content: '\2190';
+  }
+}
+
+/* admin sidebar */
+
+#main-page #dashboard .admin-sidebar {
+  border-bottom: $border;
+  padding: 15px 0;
+
+  & .admin-sidebar-content {
+    column-count: 2;
+  }
+
+  & h3 {
+    display: none;
+  }
+
+  & h4 {
+    font-size: $font-size-small;
+    margin: 5px 0;
+  }
+
+  & ul {
+    margin: 0 0 10px 0;
+    padding: 0;
+  }
+
+  & li {
+    list-style: none;
+    font-size: $font-size-small;
+    margin-bottom: 6px;
+  }
+
+  & li a {
+    text-decoration: none;
+  }
+}
+
+@include media-breakpoint-up(md) {
+
+  #main-page #dashboard .admin-sidebar {
+    border-bottom: 0;
+
+    & .admin-sidebar-content {
+      column-count: 1;
+    }
+
+    & h3 {
+      display: block;
+    }
+  }
+}
+
+/* admin content */
+
+#main-page #dashboard .admin-content {
+  padding: 0 15px 25px 15px;
+
+  & h2 {
+    margin: 25px 0 15px 0;
+  }
+}
+
+@include media-breakpoint-up(md) {
+
+  #main-page #dashboard .admin-content {
+    border-bottom: $border;
+    border-left: $border;
+    margin-bottom: 50px;
+    padding: 0 30px 20px 30px;
+  }
+}
+
+/* usage stats */
+
+#main-page .usage-stats {
+
+  & ul.two-col {
+    border: 1px dotted #ccc;
+    border-bottom: 0;
+    flex-wrap: wrap;
+    font-size: $font-size-small;
+    max-width: none;
+    padding: 0;
+  }
+
+  & ul.two-col li {
+    border-bottom: 1px dotted #ccc;
+    list-style: none;
+    padding: 2px 6px;
+  }
+}
+
+@include media-breakpoint-up(md) {
+
+  #main-page .usage-stats {
+
+    & ul.two-col {
+      display: flex;
+    }
+
+    & ul.two-col li {
+      width: 50%;
+    }
+  }
+}

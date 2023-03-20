@@ -34,8 +34,8 @@ class UploadsController < ApplicationController
       SwordDepositJob.perform_later(@deposit)
       render template: 'uploads/successful_upload'
     else
-      @deposit.files.attachments.destroy_all # Remove attachment until we can presist them across requests.
-      flash[:error] = @deposit.errors.full_messages.to_sentence
+      @deposit.files.attachments.each(&:destroy) # Remove attachment until we can persist them across requests.
+      flash.now[:error] = @deposit.errors.full_messages.to_sentence
       Rails.logger.error @deposit.errors.inspect
       render :new, status: :bad_request
     end
@@ -45,11 +45,13 @@ class UploadsController < ApplicationController
 
   def upload_params
     params.require(:deposit)
-          .permit(:title, :abstract, :year, :doi, :license, :rights, :notes, files: [], creators: %i[first_name last_name uni])
+          .permit(:title, :abstract, :year, :doi, :license, :rights, :notes, :degree_program, :academic_advisor,
+                  :thesis_or_dissertation, :degree_earned, :embargo_date, :previously_published, :article_version, :keywords,
+                  :current_student, files: [], creators: %i[first_name last_name uni])
   end
 
   def send_student_reminder_email
-    return unless ActiveRecord::Type::Boolean.new.cast(params[:deposit][:student])
+    return unless ActiveRecord::Type::Boolean.new.cast(params[:deposit][:current_student])
 
     begin
       UserMailer.reminder_to_request_departmental_approval(current_user.full_name, current_user.email_preference.email).deliver

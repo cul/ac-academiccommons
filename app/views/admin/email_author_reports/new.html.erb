@@ -3,66 +3,86 @@
 <hr>
 
 <%= form_with model: @email_author_reports_form, url: admin_email_author_reports_path, class: 'form-horizontal admin-form', local: true do |f| %>
-  <div class="form-group">
-    <%= f.label :reports_for, 'For', class: 'col-sm-3 control-label' %>
-    <div class="col-sm-9 radio">
-      <%= f.radio_button(:reports_for, 'all') %>
-      <%= f.label(:reports_for_all_authors, 'All authors') %>
-      <%= f.radio_button(:reports_for, 'one') %>
-      <%= f.label(:reports_for_one_author, 'One author') %>
-      <div class="disabled-input">
-        <%= f.label(:uni, 'UNI', class: 'control-label visually-hidden') %>
-        <%= f.text_field(:uni, disabled: true, placeholder: 'UNI', class: 'col-sm-3 form-control') %>
+
+<fieldset class="form-group">
+  <div class="row">
+    <%= f.label :reports_for, 'For', class: 'control-label col-form-label col-sm-2 pt-0' %>
+    <div class="col-sm-10">
+      <div class="form-check">
+        <%= f.radio_button(:reports_for, 'all', class: 'form-check-input') %>
+        <%= f.label(:reports_for_all_authors, 'All authors', class: 'form-check-label') %>
+      </div>
+      <div class="form-check">
+        <%= f.radio_button(:reports_for, 'one', class: 'form-check-input') %>
+        <%= f.label(:reports_for_one_author, 'One author', class: 'form-check-label') %>
+        <div class="disabled-input">
+          <%= f.label(:uni, 'UNI', class: 'control-label visually-hidden') %>
+          <%= f.text_field(:uni, disabled: true, placeholder: 'UNI', class: 'col-sm-5 form-control') %>
+        </div>
       </div>
     </div>
   </div>
+</fieldset>
 
-  <div class="form-group">
-    <%= f.label :month, 'Report Month', class: 'col-sm-3 control-label' %>
-    <div class="col-sm-2 dropdown-horizontal">
+<hr>
+
+  <%= f.label :month, 'Report Month', class: 'control-label' %>
+  <div class="form-row">
+    <div class="form-group col-md-3 dropdown-horizontal">
       <%= f.select :month, EmailAuthorReportsForm::MONTHS, class: 'form-control' %>
     </div>
-    <div class="col-sm-2 dropdown-horizontal">
+    <div class="form-group col-md-3 dropdown-horizontal">
       <%= f.select :year, Statistic::YEAR_BEG..Date.current.year, class: 'form-control' %>
     </div>
   </div>
 
-  <div class="form-group">
-    <%= f.label :order_works_by, 'Order Works By', class: 'col-sm-3 control-label' %>
-    <div class="col-sm-4">
-      <%= f.select :order_works_by, EmailAuthorReportsForm::ORDER, class: 'form-control' %>
-    </div>
+<hr>
+
+<div class="form-row">
+  <div class="form-group col-md-6">
+    <%= f.label :order_works_by, 'Order Works By', class: 'control-label' %>
+    <%= f.select :order_works_by, EmailAuthorReportsForm::ORDER, class: 'form-control' %>
   </div>
+</div>
 
-  <div class="form-group">
-    <%= f.label :optional_note, 'Optional note', class: 'col-sm-3 control-label' %>
-    <div class="col-sm-9">
-      <%= f.text_area :optional_note, class: 'form-control' %>
-    </div>
+<hr>
+
+<div class="form-row">
+  <div class="form-group  col-md-6">
+    <%= f.label :optional_note, 'Optional note', class: 'control-label' %>
+    <%= f.text_area :optional_note, class: 'form-control' %>
   </div>
+</div>
 
-  <div class="form-group">
-    <%= f.label :deliver, 'Delivery Options', class: 'col-sm-3 control-label' %>
-    <div class="col-sm-9 radio">
-      <%= f.radio_button(:deliver, :reports_to_each_author) %>
-      <%= f.label(:deliver_email_reports_to_each_author, 'Email report(s) to each author') %>
+<hr>
 
-      <%= f.radio_button(:deliver, :do_not_send_email) %>
-      <%= f.label(:deliver_do_not_send_email, 'Do not send email, log only') %>
-
-      <%= f.radio_button(:deliver, :all_reports_to_one_email) %>
-      <%= f.label(:deliver_all_reports_to_one_email, 'Email all reports to one email') %>
-      <div class="disabled-input">
-        <%= f.label(:email, 'Email', class: 'control-label visually-hidden') %>
-        <%= f.text_field(:email, disabled: true, placeholder: 'EMAIL', class: 'col-sm-3 form-control') %>
+<fieldset class="form-group">
+  <div class="row">
+    <%= f.label :deliver, 'Delivery Options', class: 'control-label col-form-label col-sm-2 pt-0' %>
+      <div class="col-sm-10">
+        <div class="form-check">
+          <%= f.radio_button(:deliver, :reports_to_each_author, class: 'form-check-input') %>
+          <%= f.label(:deliver_email_reports_to_each_author, 'Email report(s) to each author', class: 'form-check-label') %>
+        </div>
+        <div class="form-check">
+          <%= f.radio_button(:deliver, :do_not_send_email, class: 'form-check-input') %>
+          <%= f.label(:deliver_do_not_send_email, 'Do not send email, log only', class: 'form-check-label') %>
+        </div>
+        <div class="form-check">
+          <%= f.radio_button(:deliver, :all_reports_to_one_email, class: 'form-check-input') %>
+          <%= f.label(:deliver_all_reports_to_one_email, 'Email all reports to one email', class: 'form-check-label') %>
+        </div>
+        <div class="form-check">
+          <div class="disabled-input">
+            <%= f.label(:email, 'Email', class: 'control-label visually-hidden form-check-label') %>
+            <%= f.text_field(:email, disabled: true, placeholder: 'EMAIL', class: 'col-sm-5 form-control') %>
+          </div>
+        </div>
       </div>
-    </div>
   </div>
+</fieldset>
 
-   <div class="form-group">
-     <div class="col-sm-offset-3 col-sm-9">
-       <br>
-       <%= f.submit 'Send Reports', data: { confirm: 'This will send most likely hundreds of emails. Are you sure?' }, class: 'btn btn-primary'  %>
-     </div>
-   </div>
+<div class="form-group">
+  <%= f.submit 'Send Reports', data: { confirm: 'This will send most likely hundreds of emails. Are you sure?' }, class: 'btn btn-primary'  %>
+</div>
 <% end %>

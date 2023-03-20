@@ -1,0 +1,18 @@
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:site" content="<%= application_name %>">
+<meta name="twitter:creator" content="Columbia University Libraries">
+<meta property="og:site_name" content="<%= application_name %>"/>
+<meta property="og:image" content="<%= asset_pack_path 'media/images/social-media-card.jpg' %>" />
+<meta property="og:image:width" content="1024" />
+<meta property="og:image:height" content="512" />
+
+<% if @document %>
+  <meta name="description" content="<%= @document.abstract %>"/>
+  <meta property="og:url" content="<%= @document.full_doi %>"/>
+  <meta property="og:type" content="article" />
+  <meta property="og:title" content="<%= @document.title %>"/>
+  <meta property="og:description" content="<%= @document.abstract %>"/>
+<% else %>
+  <meta property="og:url" content="<%= request.url %>"/>
+  <meta property="og:title" content="<%= render_page_title %>"/>
+<% end %>

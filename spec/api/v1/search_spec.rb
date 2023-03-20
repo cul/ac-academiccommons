@@ -2,7 +2,7 @@ require 'rails_helper'
 
 describe 'GET /api/v1/search', type: :request do
   let(:connection) { double }
-  let(:empty_response) { Blacklight::Solr::Response.new({ 'response' => { 'docs' => [] } }, {}) }
+  let(:empty_response) { wrap_solr_response_data('response' => { 'docs' => [] }) }
   let(:base_parameters) do
     {
       qt: 'search', fq: ['has_model_ssim:"info:fedora/ldpd:ContentAggregator"'],

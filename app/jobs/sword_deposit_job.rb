@@ -11,7 +11,7 @@ class SwordDepositJob < ApplicationJob
 
     # Send request to SWORD
     begin
-      response = HTTP.timeout(:global, write: 60, connect: 60, read: 60)
+      response = HTTP.timeout(write: 60, connect: 60, read: 60)
                      .basic_auth(user: credentials['user'], pass: credentials['password'])
                      .headers(content_type: 'application/zip')
                      .post(credentials['url'], body: deposit.sword_zip)

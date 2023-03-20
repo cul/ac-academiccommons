@@ -2,20 +2,18 @@ require 'rails_helper'
 
 RSpec.describe AcademicCommons::Metrics::AuthorAffiliationReport do
   let(:solr_response) do
-    Blacklight::Solr::Response.new(
-      {
-        'response' => {
-          'docs' => [
-            { 'id' => '10.7916/ALICE', 'cul_doi_ssi' => '10.7916/ALICE', 'object_state_ssi' => 'A' },
-            { 'id' => '10.7916/PRIDE', 'cul_doi_ssi' => '10.7916/PRIDE', 'object_state_ssi' => 'A' },
-          ]
-        }
-      },
-      {})
+    wrap_solr_response_data(
+      'response' => {
+        'docs' => [
+          { 'id' => '10.7916/ALICE', 'cul_doi_ssi' => '10.7916/ALICE', 'object_state_ssi' => 'A' },
+          { 'id' => '10.7916/PRIDE', 'cul_doi_ssi' => '10.7916/PRIDE', 'object_state_ssi' => 'A' },
+        ]
+      }
+    )
   end
 
   let(:solr_doc_alice) do
-    Blacklight::Solr::Response.new({
+    wrap_solr_response_data(
       'response' => {
         'docs' => [
           { 'id' => '10.7916/ALICE', 'cul_doi_ssi' => '10.7916/ALICE',
@@ -27,11 +25,11 @@ RSpec.describe AcademicCommons::Metrics::AuthorAffiliationReport do
             }
         ]
       }
-    }, {})
+    )
   end
 
   let(:solr_doc_pride) do
-    Blacklight::Solr::Response.new({
+    wrap_solr_response_data(
       'response' => {
         'docs' => [
           { 'id' => '10.7916/PRIDE', 'cul_doi_ssi' => '10.7916/PRIDE',
@@ -43,7 +41,7 @@ RSpec.describe AcademicCommons::Metrics::AuthorAffiliationReport do
             }
         ]
       }
-    }, {})
+    )
   end
 
   before :each do
@@ -81,7 +79,7 @@ RSpec.describe AcademicCommons::Metrics::AuthorAffiliationReport do
     end
 
     it 'expected csv' do
-      expect(CSV.parse(subject)[3..-1]).to match expected_csv
+      expect(CSV.parse(subject)[3..]).to match expected_csv
     end
   end
 end

@@ -36,11 +36,6 @@
     <%= form.text_field(:doi, placeholder: 'DOI or URL of work online (if applicable)') %>
   </div>
 
-  <div class="form-group checkbox">
-    <h3>Current student?</h3>
-    <%= form.check_box :student %>
-    <%= form.label :student, 'Check here if you are a current student at Columbia or one of its affiliate institutions.' %>
-  </div>
 
   <div class="form-group">
     <h3>Creator(s)*</h3>
@@ -76,22 +71,105 @@
     </div>
   </div>
 
+
+  <div class="form-group checkbox">
+    <h3>Current student?</h3>
+    <%= form.check_box :current_student %>
+    <%= form.label :current_student, 'Check here if you are a current student at Columbia or one of its affiliate institutions.' %>
+  </div>
+
+<div class="student-section" >
+  <div class="form-group">
+    <%= form.label(:degree_program, 'Degree Program*', class: 'control-label') %>
+    <%= form.text_field(:degree_program) %>
+  </div>
+
+
+  <div class="form-group">
+    <%= form.label(:academic_advisor, 'Academic Advisor*', class: 'control-label') %>
+    <%= form.text_field(:academic_advisor) %>
+  </div>
+
+  <div class="form-group">
+    <h3>Thesis or Dissertation?*</h3>
+    <p>With the exception of dissertations completed for Union Theological Seminary (UTS), which does not require deposit in Academic Commons, all doctoral dissertations published after February 2011 are automatically deposited in Academic Commons by the degree program. Masters theses are only deposited in Academic Commons if a school or program has an established workflow for doing so. Contact ac@columbia.edu for more information.
+</p>
+      <%= form.radio_button(:thesis_or_dissertation, 'dissertation') %>
+      <%= form.label(:thesis_or_dissertation, 'This is a doctoral dissertation.') %></br>
+      <%= form.radio_button(:thesis_or_dissertation, 'masters thesis') %>
+      <%= form.label(:thesis_or_dissertation, 'This is a master\'s thesis.') %></br>
+      <%= form.radio_button(:thesis_or_dissertation, 'undergraduate thesis') %>
+      <%= form.label(:thesis_or_dissertation, 'This is an undergraduate thesis.') %></br>
+      <%= form.radio_button(:thesis_or_dissertation, 'Not a thesis or dissertation.') %>
+      <%= form.label(:thesis_or_dissertation, 'This is not a thesis or a dissertation.') %></br>
+  </div>
+
+
+  <div class="form-group">
+    <%= form.label(:degree_earned, 'Degree Earned (If Thesis)', class: 'control-label') %>
+    <%= form.text_field(:degree_earned) %>
+  </div>
+
+  <div class="form-group">
+    <h3>Thesis Embargo</h3>
+    <p>Students may request an optional embargo for one or two years. Embargos are approved by your department. If you are not certain about what embargo options are available to you, please contact ac@columbia.edu and staff will reach out to your department.</p>
+     <%= form.select :embargo_date, Deposit::THESIS_EMBARGO, class: 'form-control', prompt: 'Thesis Embargo?' %>
+  </div>
+</div>
+
+  <div class="form-group">
+    <h3>Have You Previously Published This Work?*</h3>
+    <p>If you are uploading a previously published work, the publication agreement that you signed may affect what version you can upload to Academic Commons. Check the terms of your agreement. You can also view many journal and publisher open access policies using the <a href="https://v2.sherpa.ac.uk/romeo/">Sherpa Romeo database</a>. </p>
+      <%= form.radio_button(:previously_published, 'true') %>
+      <%= form.label(:previously_published, 'Yes') %></br>
+      <%= form.radio_button(:previously_published, 'false') %>
+      <%= form.label(:previously_published, 'No') %></br>
+  </div>
+
+
+
+  <div class="form-group">
+    <h3>If You Are Uploading a Previously Published Work, Please Indicate The Version You Are Uploading.</h3>
+    <p>Learn more about different versions of articles <a href="https://libfaq.nus.edu.sg/faq/257412">here</a>.</p>
+     <%= form.select :article_version, Deposit::ARTICLE_VERSION, class: 'form-control', prompt: 'Article Version?' %>
+  </div>
+
+  <div class="form-group" id='licensing'>
+    <%= form.label(:rights, 'Licensing*', class: 'control-label') %>
+    <p>You may wish to consider adding a license that will govern how others re-use your work. You are not obligated to do so but a license provides others with greater certainty about what they can or cannot do with your research output. For more information about how copyright works, see <a href="https://copyright.columbia.edu/basics/copyright-quick-guide.html">Columbia University Library's Copyright Advisory Service's Copyright Quick Guide</a>.  
+
+If you decide not to set specific licensing terms for re-use, then you must choose the option "All Rights Reserved.” This means that domestic and international copyright laws alone will determine the ways in which your work can be used and distributed. Generally, copyright laws prevent further reuse and distribution of a work without the explicit permission of the copyright holder. 
+
+Learn more about the Creative Commons <a href="https://creativecommons.org/licenses/">CC BY licenses</a>, <a href="https://creativecommons.org/share-your-work/public-domain/cc0">CC0 license</a>, and <a href="https://mit-license.org/">the MIT license</a>. Note that while the CC0 license may be appropriate for data sets, by selecting this license you waive, to the extent possible, any copyrights you hold in the work. Creative Commons recommends the CC BY license, which it considers its most accommodating license, for maximum dissemination and use of licensed materials. 
+</p>
+      <%= form.radio_button(:license, 'https://creativecommons.org/licenses/by/4.0/') %>
+      <%= form.label(:license, 'CC BY 4.0') %></br>
+      <%= form.radio_button(:license, 'https://creativecommons.org/licenses/by-sa/4.0/') %>
+      <%= form.label(:license, 'CC BY-SA 4.0') %></br>
+      <%= form.radio_button(:license, 'https://creativecommons.org/licenses/by-nd/4.0/') %>
+      <%= form.label(:license, 'CC BY-ND 4.0') %></br>
+      <%= form.radio_button(:license, 'https://creativecommons.org/licenses/by-nc/4.0/') %>
+      <%= form.label(:license, 'CC BY-NC 4.0') %></br>
+      <%= form.radio_button(:license, 'https://creativecommons.org/licenses/by-nc-sa/4.0/') %>
+      <%= form.label(:license, 'CC BY-NC-SA 4.0') %></br>
+      <%= form.radio_button(:license, 'https://creativecommons.org/licenses/by-nc-nd/4.0/') %>
+      <%= form.label(:license, 'CC BY-NC-ND 4.0') %></br>
+      <%= form.radio_button(:license, 'https://creativecommons.org/publicdomain/zero/1.0/') %>
+      <%= form.label(:license, 'CC0') %></br>
+      <%= form.radio_button(:license, '') %>
+      <%= form.label(:license, 'All Rights Reserved') %></br>
+      <%= form.hidden_field(:rights, :value => 'http://rightsstatements.org/vocab/InC/1.0/') %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label(:keywords, 'Keywords', class: 'control-label') %>
+    <%= form.text_area(:keywords, placeholder: 'Suggested keywords for this work.') %>
+  </div>
+
   <div class="form-group">
     <%= form.label(:notes, 'Notes', class: 'control-label') %>
     <%= form.text_area(:notes, placeholder: 'Additional information you want included in the record (such as suggested keywords) and/or notes for repository staff') %>
   </div>
-
-  <div class="form-group">
-    <%= form.label(:rights, 'Copyright Status*', class: 'control-label') %>
-    <p class="note">
-      Please confirm whether your deposit is copyright protected. If you are choosing to designate your work as public domain (i.e., having no copyright), you confirm that you have the full authority to do so. For more information about copyright protection, please consult
-      <%= link_to "Columbia University Library’s Copyright Advisory Service’s Copyright Quick Guide", 'https://copyright.columbia.edu/basics/copyright-quick-guide.html' %>.
-    </p>
-    <%= form.select(:rights, Deposit::RIGHTS_OPTIONS, prompt: 'Choose copyright status of this work') %>
-  </div>
-
-  <%# div for license information populated via javascript %>
-  <div id="use-by-others" class="item"></div>
 
   <div class="form-group" id="file-upload">
     <div><%= form.label(:files, 'Upload File(s)*', class: 'control-label') %></div>

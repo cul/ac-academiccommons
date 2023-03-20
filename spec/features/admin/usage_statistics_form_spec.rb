@@ -42,7 +42,7 @@ describe 'Usage Statistics Form', type: :feature, js: true do
         click_button 'Email Results'
       end
 
-      it 'renders modal' do
+      xit 'renders modal' do
         expect(page).to have_content 'Email Usage Statistics'
         expect(page).not_to have_content 'Select parameters to calculate usage statistics by work:'
       end

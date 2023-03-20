@@ -1,0 +1,103 @@
+/* header */
+
+/* banner */
+
+#header-navbar {
+  border-bottom: 1px dotted $gray-lighter;
+  padding: 5px 0;
+
+  & .navbar-brand {
+    background: transparent url($logo-image) no-repeat;
+    background-size: contain;
+    background-position: center center;
+    height: 50px;
+    overflow: hidden;
+    text-indent: 100%;
+    width: 100%;
+  }
+
+  & .logo {
+    line-height: 1;
+    overflow: hidden;
+  }
+
+  & .row {
+    align-items: center;
+  }
+
+  & .input-group-append svg {
+    max-height: 20px;
+  }
+
+  & .submit-search-text {
+    @include visually-hidden;
+  }
+}
+
+@include media-breakpoint-up(md) {
+
+  #header-navbar {
+    padding: 20px 0;
+
+    & .navbar-brand {
+      background-position: left center;
+    }
+  }
+}
+
+/* links navbar */
+
+#links-navbar {
+  font-size: $font-size-small;
+  border-bottom: $border;
+  box-shadow: 0 1px 2px $gray-lighter;
+
+  & nav {
+    display: flex;
+    justify-content: space-between;
+    margin-left: -5px;
+  }
+
+  & nav ul {
+    margin: 0;
+    padding: 0;
+  }
+
+  & nav li {
+    display: inline;
+  }
+
+  & nav li a {
+    display: inline-block;
+    padding: 10px 5px;
+  }
+
+  & .navbar-nav > li a:hover {
+    background: $gray-lighter-custom;
+    color: $link-hover-color;
+  }
+
+  & .navbar-nav .open .dropdown-menu {
+    position: absolute;
+    float: left;
+    background-color: $body-bg;
+    border: $border;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
+    padding: 0;
+  }
+
+  & .share-button span {
+    display: none;
+  }
+
+  & .dropdown-menu > li > a {
+    padding: 5px 20px;
+  }
+}
+
+@include media-breakpoint-up(sm) {
+
+  #links-navbar {
+    font-size: $font-size-base;
+  }
+}

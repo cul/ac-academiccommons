@@ -28,15 +28,13 @@ describe EmailAuthorReportsForm, type: :model do
 
     context 'sends email' do
       let(:author_docs) do
-        Blacklight::Solr::Response.new(
-          {
-            'response' => {
-              'docs' => [
-                { 'id' => '10.7916/ALICE', 'title_ssi' => 'First Test Document', 'object_state_ssi' => 'A',
-                  'cul_doi_ssi' => '10.7916/ALICE', 'fedora3_pid_ssi' => 'actest:1', 'publisher_doi_ssi' => '', 'genre_ssim' => '' }
-              ]
-            }
-          }, {}
+        wrap_solr_response_data(
+          'response' => {
+            'docs' => [
+              { 'id' => '10.7916/ALICE', 'title_ssi' => 'First Test Document', 'object_state_ssi' => 'A',
+                'cul_doi_ssi' => '10.7916/ALICE', 'fedora3_pid_ssi' => 'actest:1', 'publisher_doi_ssi' => '', 'genre_ssim' => '' }
+            ]
+          }
         )
       end
 
@@ -59,15 +57,13 @@ describe EmailAuthorReportsForm, type: :model do
 
     context 'when all items embargoed' do
       let(:author_docs) do
-        Blacklight::Solr::Response.new(
-          {
-            'response' => {
-              'docs' => [
-                { 'id' => 'actest:1', 'title_ssi' => 'First Test Document', 'object_state_ssi' => 'A', 'fedora3_pid_ssi' => 'actest:1',
-                  'cul_doi_ssi' => '10.7916/ALICE', 'doi' => '', 'genre_ssim' => '', 'free_to_read_start_date_ssi' => Date.tomorrow.strftime('%Y-%m-%d') }
-              ]
-            }
-          }, {}
+        wrap_solr_response_data(
+          'response' => {
+            'docs' => [
+              { 'id' => 'actest:1', 'title_ssi' => 'First Test Document', 'object_state_ssi' => 'A', 'fedora3_pid_ssi' => 'actest:1',
+                'cul_doi_ssi' => '10.7916/ALICE', 'doi' => '', 'genre_ssim' => '', 'free_to_read_start_date_ssi' => Date.tomorrow.strftime('%Y-%m-%d') }
+            ]
+          }
         )
       end
 

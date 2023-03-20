@@ -1,0 +1,250 @@
+/* item page */
+
+/* main-page content */
+
+#document {
+  padding-top: 5px;
+
+  & h1 {
+    font-size: 26px;
+    line-height: 1.3;
+    margin: 0 0 6px 0;
+  }
+
+  & p.genre-labels {
+    margin: 0 0 6px 0;
+  }
+
+  & span.tag-label {
+    @include tag-label;
+  }
+
+  & .blacklight-author_ssim {
+    color: $gray-light;
+    display: inline-block;
+    font-size: $font-size-base;
+    line-height: 1.7;
+    margin: 0;
+  }
+
+  & .blacklight-author_ssim span {
+    white-space: nowrap;
+  }
+
+  & .blacklight-author_ssim + [data-readmore-toggle] {
+    background: $gray-lighter-custom;
+    font-size: 12px;
+    display: inline-block;
+    padding: 2px 5px;
+  }
+
+  & p.blacklight-abstract_ssi {
+    font-size: $font-size-base;
+    margin: 20px 0;
+  }
+
+  & .subjects h2 {
+    font-size: $font-size-base;
+    font-weight: bold;
+  }
+
+  & .subjects ul {
+    margin: 0 0 20px 0;
+    padding: 0;
+  }
+
+  & .subjects li {
+    font-size: $font-size-small;
+    display: inline;
+    list-style: none;
+    margin: 0 0 12px 0;
+  }
+
+  & .subjects li a {
+    @include tag-link;
+  }
+
+  & .subjects li a:hover {
+    background: $link-hover-color;
+    text-decoration: none;
+  }
+
+  & .panel {
+    border: 1px solid $gray-lighter;
+    border-radius: 4px;
+    box-shadow: none;
+    margin-bottom: 20px;
+  }
+
+  & .panel-title {
+    color: $gray-base;
+    font-size: $font-size-base;
+    font-weight: bold;
+    margin: 0;
+  }
+
+  & .panel-heading {
+    align-items: center;
+    background-color: $gray-lighter-custom;
+    border-bottom: $border;
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 15px;
+  }
+
+  & .panel-heading .download-all {
+    display: inline-block;
+    font-weight: bold;
+  }
+
+  & .panel p {
+    padding: 15px;
+  }
+
+  & .panel-body {
+    padding: 10px 15px;
+  }
+
+  & .list-group {
+    border-bottom: 1px dotted $gray-lighter;
+  }
+
+  & .list-group:last-child {
+    border-bottom: 0;
+  }
+
+  & .list-group-item {
+    align-items: center;
+    border: 0;
+    display: flex;
+    flex-wrap: wrap;
+    font-size: $font-size-small;
+    justify-content: space-between;
+    padding: 10px 15px;
+    position: relative;
+  }
+
+  & .list-group-item span {
+    padding: 3px 0;
+  }
+
+  & .list-group-item span.image {
+    width: 100%;
+  }
+
+  & .list-group-item span.image img {
+    border: $border;
+    margin-right: 10px;
+    max-height: 50px;
+  }
+
+  & .list-group-item span.filename {
+    font-weight: 600;
+    width: 85%;
+    word-break: break-all;
+  }
+
+  & .list-group-item span.filesize,
+  & .list-group-item span.mimetype {
+    color: $gray-light;
+    width: 100%;
+  }
+
+  & .list-group-item span.download,
+  & .list-group-item span.play {
+    font-size: 30px;
+    position: absolute;
+    right: 10px;
+    text-align: right;
+  }
+
+  & .list-group-item span.play {
+    bottom: 0;
+  }
+
+  & dl {
+    font-size: $font-size-small;
+    margin: 0;
+  }
+
+  & dt {
+    padding-top: 20px;
+  }
+
+  & dt:first-child {
+    padding-top: 0;
+  }
+}
+
+@include media-breakpoint-up(md) {
+
+  #document {
+
+    & h1 {
+      font-size: 31px;
+      line-height: 1.25;
+      margin: 0 0 8px 0;
+    }
+
+    & .blacklight-abstract {
+      padding-right: 10%;
+    }
+
+    & p.blacklight-abstract_ssi {
+      font-size: 17px;
+    }
+
+    & .list-group-item span {
+      flex: .5 0 0;
+      padding: 0;
+      width: auto;
+    }
+
+    & .list-group-item span.filename {
+      flex: 3 0 0;
+      margin-right: 10px;
+      width: auto;
+    }
+
+    & .list-group-item span.filesize,
+    & .list-group-item span.mimetype {
+      margin: 0 10px;
+      width: auto;
+    }
+
+    & .list-group-item span.download {
+      flex: .3 0 0;
+      position: relative;
+      right: auto;
+      text-align: right;
+    }
+
+    & .list-group-item span.play {
+      position: relative;
+    }
+
+    & dl {
+      display: grid;
+      grid-template-columns: 25% auto;
+      row-gap: 5px;
+    }
+
+    & dt,
+    & dt:first-child {
+      grid-column: 1;
+      padding: 0;
+    }
+
+    & dd {
+      grid-column: 2;
+      margin: 0;
+    }
+  }
+}
+
+/* active panel */
+
+#document .active {
+  box-shadow: 0 0 5px 1px lighten($brand-primary, 3%);
+  transition: all .4s ease;
+}

@@ -2,7 +2,7 @@
 FactoryBot.define do
   factory :featured_search_value do
     factory :libraries_search_value do
-      value 'Libraries'
+      value { 'Libraries' }
     end
   end
 end

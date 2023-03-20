@@ -39,10 +39,10 @@ shared_examples 'authorization required' do |success_status|
 
     # rubocop:disable RSpec/ExampleLength
     it 'returns correct status code based on content type' do
-      if response.content_type == 'application/json'
-        expect(response.status).to be 403
+      if response.media_type == 'application/json'
+        expect(response.status).to eq(403)
       else
-        expect(response.status).to be 302
+        expect(response.status).to eq(302)
         expect(response).to redirect_to new_user_session_url
       end
     end
@@ -66,7 +66,7 @@ shared_examples 'authorization required' do |success_status|
     end
 
     it 'succeeds' do
-      expect(response.status).to be expected_status
+      expect(response.status).to eq(expected_status)
     end
   end
 end

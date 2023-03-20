@@ -12,15 +12,13 @@ RSpec.describe StatisticsMailer, type: :mailer do
       }
     end
     let(:solr_response) do
-      Blacklight::Solr::Response.new(
-        {
-          'response' => {
-            'docs' => [
-              { 'id' => 'actest:1', 'title_ssi' => 'First Test Document', 'object_state_ssi' => 'A',
-                'cul_doi_ssi' => 'http://dx.doi.org/10.7916/TESTDOC1', 'doi' => '', 'genre_ssim' => '' }
-            ]
-          }
-        }, {}
+      wrap_solr_response_data(
+        'response' => {
+          'docs' => [
+            { 'id' => 'actest:1', 'title_ssi' => 'First Test Document', 'object_state_ssi' => 'A',
+              'cul_doi_ssi' => 'http://dx.doi.org/10.7916/TESTDOC1', 'doi' => '', 'genre_ssim' => '' }
+          ]
+        }
       )
     end
     let(:usage_stats) do

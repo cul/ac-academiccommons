@@ -15,9 +15,7 @@ describe Admin::EmailAuthorReportsController, type: :controller do
         { qt: 'search', rows: 100_000, fl: 'author_uni_ssim', fq: [] }
       end
       let(:authors) do
-        Blacklight::Solr::Response.new(
-          { 'response' => { 'docs' => [{ 'author_uni_ssim' => 'abc123' }] } }, {}
-        )
+        wrap_solr_response_data('response' => { 'docs' => [{ 'author_uni_ssim' => 'abc123' }] })
       end
       let(:author_search) do
         {
@@ -27,18 +25,15 @@ describe Admin::EmailAuthorReportsController, type: :controller do
         }
       end
       let(:author_docs) do
-        Blacklight::Solr::Response.new(
-          {
-            'response' => {
-              'docs' => [
-                {
-                  'id' => '10.7916/ALICE', 'title_ssi' => 'First Test Document', 'object_state_ssi' => 'A',
-                  'cul_doi_ssi' => '10.7916/ALICE', 'fedora3_pid_ssi' => 'actest:1', 'publisher_doi_ssi' => '', 'genre_ssim' => ''
-                }
-              ]
-            }
-          },
-          {}
+        wrap_solr_response_data(
+          'response' => {
+            'docs' => [
+              {
+                'id' => '10.7916/ALICE', 'title_ssi' => 'First Test Document', 'object_state_ssi' => 'A',
+                'cul_doi_ssi' => '10.7916/ALICE', 'fedora3_pid_ssi' => 'actest:1', 'publisher_doi_ssi' => '', 'genre_ssim' => ''
+              }
+            ]
+          }
         )
       end
       let(:email) { ActionMailer::Base.deliveries.pop }

@@ -1,0 +1,179 @@
+/* search results */
+
+/* constraints container */
+
+.constraints-container {
+  background: $gray-lighter-custom;
+  border: 0;
+  border-radius: 3px;
+  line-height: 2.5;
+  margin-top: 15px;
+  padding: 10px 15px;
+
+  & .constraint-value,
+  & .remove {
+    background-color: $well-bg;
+    border-color: $gray-lighter;
+    font-size: $font-size-small;
+  }
+
+  & a.catalog_startOverLink,
+  & a.catalog_startOverLink:active {
+    font-size: $font-size-small;
+  }
+}
+
+/* facets header */
+
+.facets-header {
+  align-items: center;
+  border: $border;
+  border-radius: 3px;
+  margin-bottom: 5px;
+  padding: 10px;
+}
+
+/*  sort box */
+
+#sortAndPerPage {
+  border-bottom-style: dotted;
+  margin: 0;
+  padding: 0;
+}
+
+.page-links {
+  display: block;
+  font-size: $font-size-small;
+  width: 100%;
+}
+
+.page-links a {
+  font-weight: bold;
+}
+
+.search-widgets {
+  padding: 8px 0;
+}
+
+#sort-dropdown .dropdown-toggle,
+#per_page-dropdown .dropdown-toggle {
+  font-size: $font-size-small;
+}
+
+@include media-breakpoint-up(md) {
+
+  #sidebar {
+    margin-bottom: 20px;
+  }
+
+  .facets-header {
+    border-color: transparent;
+  }
+  
+  .page-links {
+    background: transparent;
+    border: 0;
+    display: inline-block;
+    padding: 17px 0 0 0;
+  }
+}
+
+/*  main-page content */
+
+#documents {
+  margin-bottom: 30px;
+
+  & .document {
+    border: 0;
+    border-bottom: $border;
+    border-style: dotted;
+    margin: 0;
+    padding: 15px 0;
+  }
+
+  & .document-counter {
+    display: none;
+  }
+
+  & .document .document-title-heading {
+    font-size: 21px;
+    font-weight: 600;
+    letter-spacing: .2px;
+    line-height: 1.3;
+    margin: 0 0 8px 0;
+  }
+
+  & .document-metadata dt {
+    display: none;
+  }
+
+  & .document-metadata dd {
+    font-size: $font-size-small;
+    margin: 0;
+  }
+
+  & dl {
+    margin: 0;
+  }
+
+  & dd.blacklight-author_ssim {
+    margin-bottom: 6px;
+    overflow: hidden;
+    padding: 0;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  & dd.blacklight-pub_date_isi,
+  & dd.blacklight-genre_ssim {
+    @include tag-label;
+    margin-bottom: 6px;
+    padding: 0;
+  }
+
+  /* this is to get pub_date and genre to display inline */
+  & dd.col-md-9 {
+    flex: 0 0 100%;
+    max-width: 100%;
+  }
+
+  & dd:nth-of-type(2),
+  & dd:nth-of-type(3)  {
+    flex: none;
+    width: auto;
+  }
+
+  & dd.blacklight-subject_ssim {
+    padding: 0;
+  }
+
+  & dd.blacklight-subject_ssim span {
+    color: $gray-light;
+    display: inline-block;
+    margin-bottom: 3px;
+    margin-right: 14px;
+  }
+}
+
+.pagination {
+  margin: 0 0 9px 0;
+}
+
+.pagination li a {
+  margin-bottom: 5px;
+}
+
+.noresults {
+
+  & h3,
+  & ul,
+  & li {
+    display: inline;
+    font-size: 18px;
+    font-weight: 300;
+    line-height: 1.6;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+}

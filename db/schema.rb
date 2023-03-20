@@ -2,15 +2,15 @@
 # of editing this file, please use the migrations feature of Active Record to
 # incrementally modify your database, and then regenerate this schema definition.
 #
-# Note that this schema.rb definition is the authoritative source for your
-# database schema. If you need to create the application database on another
-# system, you should be using db:schema:load, not running all the migrations
-# from scratch. The latter is a flawed and unsustainable approach (the more migrations
-# you'll amass, the slower it'll run and the greater likelihood for issues).
+# This file is the source Rails uses to define your schema when running `rails
+# db:schema:load`. When creating a new database, `rails db:schema:load` tends to
+# be faster and is potentially less error prone than running all of your
+# migrations from scratch. Old migrations may fail to apply correctly if those
+# migrations use external dependencies or application code.
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_03_22_170653) do
+ActiveRecord::Schema.define(version: 2022_12_08_202313) do
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
@@ -82,6 +82,18 @@ ActiveRecord::Schema.define(version: 2021_03_22_170653) do
     t.string "hyacinth_identifier"
     t.boolean "proxied"
     t.boolean "authenticated"
+    t.string "thesis"
+    t.string "thesis_embargo"
+    t.string "article_type"
+    t.boolean "current_student"
+    t.string "degree_program"
+    t.string "academic_advisor"
+    t.string "thesis_or_dissertation"
+    t.string "degree_earned"
+    t.string "embargo_date"
+    t.boolean "previously_published"
+    t.string "article_version"
+    t.text "keywords"
     t.index ["user_id"], name: "index_deposits_on_user_id"
   end
 

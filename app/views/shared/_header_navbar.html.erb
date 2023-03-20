@@ -9,26 +9,28 @@
 <header id="header-navbar" role="banner">
   <div class="<%= container_classes %>">
     <div class="row">
-      <div class="col-sm-8 logo">
+      <div class="col-md-8 logo">
         <%= link_to application_name, root_path, class: "navbar-brand" %>
       </div>
-      <div class="col-sm-4 search-bar">
-        <%= render_search_bar %>
+      <div class="col-md-4 search-bar">
+        <%= render Blacklight::SearchBarComponent.new(url: search_action_url,
+        advanced_search_url: search_action_url(action: 'advanced_search'),
+        params: search_state.params_for_search.except(:qt)) %>
       </div>
     </div>
   </div>
 </header>
 
 <div id="links-navbar">
-  <nav class="navbar navbar-default" role="navigation">
-    <div class="<%= container_classes %>">
-      <ul class="nav navbar-nav about-links">
-        <li><%= link_to t('blacklight.header_links.about'), about_path, 'aria-label': 'About Academic Commons' %></li>
-        <li><%= link_to t('blacklight.header_links.collections'), collections_path %></li>
-      </ul>
-      <ul class="nav navbar-nav navbar-right user-links">
-        <%= render :partial=>'/user_util_links' %>
-      </ul>
-    </div>
-  </nav>
+  <div class="<%= container_classes %>">
+      <nav role="navigation">
+        <ul class="about-links">
+          <li><%= link_to t('blacklight.header_links.about'), about_path, 'aria-label': 'About Academic Commons' %></li>
+          <li><%= link_to t('blacklight.header_links.collections'), collections_path %></li>
+        </ul>
+        <ul class="user-links">
+          <%= render :partial=>'/user_util_links' %>
+        </ul>
+      </nav>
+  </div>
 </div>

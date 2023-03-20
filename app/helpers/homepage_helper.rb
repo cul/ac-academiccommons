@@ -1,7 +1,7 @@
 module HomepageHelper
   # Generates url for type faceted search
   def type_search(type)
-    facet_params = search_state.reset.add_facet_params('genre_ssim', type)
+    facet_params = search_state.reset.filter('genre_ssim').add(type)
     search_action_path(facet_params)
   end
 
