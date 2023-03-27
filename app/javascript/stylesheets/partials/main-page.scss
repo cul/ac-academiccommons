@@ -184,9 +184,8 @@
 
 #main-page ul.link-list {
   color: $gray-light;
-  column-count: auto;
+  columns: 2 auto;
   column-gap: 50px;
-  column-width: 350px;
   margin: 25px 0 60px 0;
   max-width: none;
   padding: 0;
