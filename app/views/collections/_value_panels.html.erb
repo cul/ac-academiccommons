@@ -1,6 +1,6 @@
 <div class="row menu">
   <% @collections.each do |feature| %>
-    <div class="tile">
+    <div class="col-md-5 tile">
       <div class="logo">
         <%= link_to feature.url, target: "_blank", rel: "noopener noreferrer", style: "text-decoration:none;" do -%>
           <%= image_tag(image_url(feature.image_url), alt: "link to #{feature.label} site") %>
