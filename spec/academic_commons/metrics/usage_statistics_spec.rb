@@ -111,13 +111,14 @@ RSpec.describe AcademicCommons::Metrics::UsageStatistics do
   end
 
   describe '.new' do
+    let(:yesterday) { Date.current.in_time_zone - 1.day }
     context 'when requesting usage stats for author' do
       before do
         # Add records for a pid view and download
-        FactoryBot.create(:view_stat, identifier: item_identifier)
-        FactoryBot.create(:view_stat, identifier: item_identifier)
-        FactoryBot.create(:download_stat, identifier: open_asset_identifier)
-        FactoryBot.create(:streaming_stat, identifier: item_identifier)
+        FactoryBot.create(:view_stat, identifier: item_identifier, at_time: yesterday)
+        FactoryBot.create(:view_stat, identifier: item_identifier, at_time: yesterday)
+        FactoryBot.create(:download_stat, identifier: open_asset_identifier, at_time: yesterday)
+        FactoryBot.create(:streaming_stat, identifier: item_identifier, at_time: yesterday)
       end
 
       context 'when requesting stats for an author with embargoed material' do
@@ -138,8 +139,9 @@ RSpec.describe AcademicCommons::Metrics::UsageStatistics do
       end
 
       context 'when request lifetime stats' do
+        let(:decade_ago) { Date.current.in_time_zone - 10.years }
         before do
-          FactoryBot.create(:view_stat, at_time: Date.new(2001, 4, 12).in_time_zone)
+          FactoryBot.create(:view_stat, at_time: decade_ago)
         end
 
         subject(:usage_stats) do
