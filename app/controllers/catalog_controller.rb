@@ -17,11 +17,16 @@ class CatalogController < ApplicationController
     def [](key)
       fs = FeaturedSearch.where(slug: key).includes(:feature_category, :featured_search_values).first
       if fs
-        {
+        self[key] = {
           label: fs.label,
           fq: AcademicCommons::FeaturedSearches.to_fq(fs)
         }
       end
+    end
+
+    # this will otherwise drop default procs and return a base hash
+    def transform_values
+      LazyFeatureQueryFacet.new
     end
   end
 
