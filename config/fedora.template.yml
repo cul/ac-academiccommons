@@ -9,4 +9,4 @@ development:
 
 test:
   <<: *default
-  url: http://localhost:9090/fedora
+  url: http://localhost:9080/fedora

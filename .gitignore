@@ -19,6 +19,12 @@ config/s3_credentials.yml
 config/secrets.yml
 config/google_analytics.yml
 config/blacklight.yml
+# docker ignores
+docker/docker-compose.*.yml
+#pre-docker ignores, so they don't get committed if still in workspace
+config/solr.yml
+config/solr_wrapper.yml
+config/fedora.yml
 jetty
 *~
 *.cache

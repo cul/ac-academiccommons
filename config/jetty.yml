@@ -12,7 +12,7 @@ default:
     - "-Xss1024k"
 test:
   startup_wait: 120
-  jetty_port: 9090
+  jetty_port: 9080
   java_version: ">= 1.7"
   java_opts:
     - "-XX:MaxPermSize=128m"
