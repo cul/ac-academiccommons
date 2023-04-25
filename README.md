@@ -18,11 +18,7 @@ Current recommended version of Ruby is specified in `.ruby-version`.
 
 3. Create local config files from templates
    ```
-   cp config/database.template.yml config/database.yml
-   cp config/solr.template.yml config/solr.yml
-   cp config/fedora.template.yml config/fedora.yml
-   cp config/secrets.template.yml config/secrets.yml
-   cp config/blacklight.template.yml config/blacklight.yml
+   bundle exec rake config_files
    ```
 
 4. Install any needed gems using Bundler
@@ -38,17 +34,17 @@ Current recommended version of Ruby is specified in `.ruby-version`.
 
 6. Setup your local development DB.
    ```
-   rake db:migrate
+   bundle exec rake db:migrate
    ```
 
-7. Start your local fedora instance.
+7. Start your local fedora and solr instances. Docker must be running on your computer.
    ```
-   rake jetty:start
+   bundle exec rake ac:docker:start
    ```
 
-8. Start your local solr instance with a development core. (Leave this command running in the background)
+8. In a separate terminal window, start the webpack dev server for faster asset compilation.
    ```
-   solr_wrapper
+   ./bin/webpacker-dev-server
    ```
 
 9. Start your local Rails app
@@ -59,25 +55,24 @@ Current recommended version of Ruby is specified in `.ruby-version`.
 ## Populating your development instance with items
 If you need an object in AC to do further testing and development, add an item with the following instructions.
 
-1. Clean out Solr and Fedora (only necessary if previously loaded items)
+1. Stop Fedora and Solr
    ```
-   solr_wrapper clean
-   rake jetty:clean
-   ```
-
-2. Start Fedora
-   ```
-   rake jetty:start
+   bundle exec rake ac:docker:stop
    ```
 
-2. Start Solr _(Leave this command running in the background)_
+2. Clean out Solr and Fedora (only necessary if previously loaded items)
    ```
-   solr_wrapper
+   bundle exec rake ac:docker:delete_volumes
    ```
 
-3. Load the collection and one item into Fedora.
+3. Start Fedora and Solr
    ```
-   rake ac:populate_solr
+   bundle exec rake ac:docker:start
+   ```
+
+4. Load the collection and one item into Fedora.
+   ```
+   bundle exec rake ac:populate_solr
    ```
 
 ## Authentication/Authorization in development
@@ -95,13 +90,13 @@ If you would like to see pages that require authentication follow the steps belo
    For a user without administrative privileges, log in as `tu123`.
 
 ## Rubocop
-We use the `rubocul` to centralize our rubocop config and share it among repos. In order to regenerate `.rubocop_todo` please use the following command. Using the following command creates a rubocop_todo configuration that only excludes files from cops instead of enabling/disabling cops and changing configuration values.
+We use the `rubocul` gem to centralize our rubocop config and share it among repos. In order to regenerate `.rubocop_todo` please use the following command. Using the following command creates a rubocop_todo configuration that only excludes files from cops instead of enabling/disabling cops and changing configuration values.
 ```
 rubocop --auto-gen-config  --auto-gen-only-exclude --exclude-limit 10000
 ```
 
 ## Running tests
-1. In order to run tests that require javascript you will might need `chrome` installed (needs to be tested).
+1. In order to run tests that require javascript you might need `chrome` installed (needs to be tested).
 2. Run tests locally by running `rake ci`.
 3. Run tests and rubocop by running `rake` (this is the task used on each travis build).
 

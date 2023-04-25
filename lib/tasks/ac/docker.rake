@@ -25,7 +25,7 @@ namespace :ac do
 
     def running?
       status = `docker compose -f #{Rails.root.join(docker_compose_file_path)} ps`
-      status.split("n").count > 1
+      status.split('n').count > 1
     end
 
     task setup_config_files: :environment do
@@ -33,10 +33,11 @@ namespace :ac do
       docker_compose_dest_dir = Rails.root.join('docker')
       Dir.foreach(docker_compose_template_dir) do |entry|
         next unless entry.end_with?('.yml')
+
         src_path = File.join(docker_compose_template_dir, entry)
         dst_path = File.join(docker_compose_dest_dir, entry.gsub('.template', ''))
         if File.exist?(dst_path)
-          puts Rainbow("File already exists (skipping): #{dst_path}").blue.bright + "\n"
+          puts "#{Rainbow("File already exists (skipping): #{dst_path}").blue.bright}\n"
         else
           FileUtils.cp(src_path, dst_path)
           puts Rainbow("Created file at: #{dst_path}").green
@@ -65,7 +66,7 @@ namespace :ac do
         `docker compose -f #{Rails.root.join(docker_compose_file_path)} down`
         puts "\nStopped"
       else
-        puts "Already stopped."
+        puts 'Already stopped.'
       end
     end
 
@@ -84,13 +85,13 @@ namespace :ac do
         next
       end
 
-      puts Rainbow("This will delete ALL Solr and Fedora data for the selected Rails "\
+      puts Rainbow('This will delete ALL Solr and Fedora data for the selected Rails '\
         "environment (#{Rails.env}) and cannot be undone. Please confirm that you want to continue "\
         "by typing the name of the selected Rails environment (#{Rails.env}):").red.bright
       print '> '
       response = ENV['rails_env_confirmation'] || $stdin.gets.chomp
 
-      puts ""
+      puts ''
 
       if response != Rails.env
         puts "Aborting because \"#{Rails.env}\" was not entered."
