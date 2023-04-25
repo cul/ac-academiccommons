@@ -39,6 +39,14 @@ begin
       target_yml = YAML.load_file(target_yml_path) || YAML.safe_load(ERB.new(File.read(template_yml_path)).result(binding), aliases: true)
       File.open(target_yml_path, 'w') { |f| f.write target_yml.to_yaml }
     end
+    # docker yml templates
+    Dir.glob(Rails.root.join("docker/templates", "*.yml")).each do |template_yml_path|
+      target_yml_path = Rails.root.join('docker', File.basename(template_yml_path))
+      next if File.exist?(target_yml_path)
+      FileUtils.touch(target_yml_path) # Create if it doesn't exist
+      target_yml = YAML.load_file(target_yml_path) || YAML.load_file(template_yml_path)
+      File.open(target_yml_path, 'w') { |f| f.write target_yml.to_yaml }
+    end
   end
 
   desc 'Run all tests regardless of tags'
@@ -47,18 +55,17 @@ begin
     Rails.env = ENV['RAILS_ENV']
     rspec_system_exit_failure_exception = nil
 
-        begin
-          task_stack = ['docker_wrapper','ac:populate_solr','spec_all']
-          Rake::Task[task_stack.shift].invoke(task_stack)
-        rescue SystemExit => e
-          rspec_system_exit_failure_exception = e
-        end
+    begin
+      task_stack = ['docker_wrapper', 'ac:populate_solr', 'spec_all']
+      Rake::Task[task_stack.shift].invoke(task_stack)
+    rescue SystemExit => e
+      rspec_system_exit_failure_exception = e
+    end
 
-      raise rspec_system_exit_failure_exception unless rspec_system_exit_failure_exception.nil?
+    raise rspec_system_exit_failure_exception unless rspec_system_exit_failure_exception.nil?
   end
 
-
-    task :docker_wrapper, [:task_stack] => [:environment] do |task, args|
+  task :docker_wrapper, [:task_stack] => [:environment] do |_task, args|
     unless Rails.env.test?
       raise 'This task should only be run in the test environment (because it clears docker volumes)'
     end
@@ -84,7 +91,6 @@ begin
   end
 
   task default: [:rubocop, :ci]
-
 rescue LoadError => e
   # Be prepared to rescue so that this rake file can exist in environments where RSpec is unavailable (i.e. production environments).
   puts '[Warning] Exception creating ci/rubocop/rspec rake tasks. '\
