@@ -44,7 +44,7 @@ Current recommended version of Ruby is specified in `.ruby-version`.
 
 8. In a separate terminal window, start the webpack dev server for faster asset compilation.
    ```
-   ./bin/webpacker-dev-server
+   ./bin/webpack-dev-server
    ```
 
 9. Start your local Rails app
