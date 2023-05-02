@@ -22,9 +22,8 @@ import "jquery-ui/ui/widgets/sortable";
 import '@fortawesome/fontawesome-free/js/all.js'
 import 'datatables.net/js/jquery.dataTables.min';
 import 'datatables.net-bs/js/dataTables.bootstrap.min';
-import 'mediaelement/full'
-import 'mediaelement/build/mediaelementplayer.min.css';
 import 'bootstrap/dist/js/bootstrap';
+import videojs from "video.js";
 
 window.Bloodhound = require('corejs-typeahead');
 import ClipboardJS from 'clipboard/dist/clipboard.min';
@@ -60,6 +59,5 @@ import '../src/upload/add-creator';
 import '../src/upload/current-student';
 import '../src/upload/disable-form';
 import '../src/upload/author-reorder';
-import '../src/mediaelement'
 
 $(document).ready(Blacklight.onload);
