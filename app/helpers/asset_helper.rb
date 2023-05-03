@@ -12,26 +12,26 @@ module AssetHelper
 
   def video_player(url, poster_path, brand_link, caption_link)
 # for dev purposes, hardcode these two values:
-    caption_link = ""
-    url = ""
+    caption_link = "https://academiccommons.columbia.edu/doi/10.7916/3xat-cw21/captions"
+    url = "https://firehose.cul.columbia.edu:8443/digital-access-mediacache/_definst_/mp4:digital/access/derivativo/a6/bb/1c/a6bb1c511691d5cda9d68a485d6bc60c12f24a01189534390fd65e5eb13b8a76/access.mp4/playlist.m3u8?wowzaendtime=1683137365&wowzastarttime=1683126565&wowzahash=nt2I3s9Y0SW3VjoQPqqeh4twrwC0SN_QbghdjyCSplg="
     tag.div do
            %(
-            <div class="mediaelement-player">
+            
            <video 
             class="video-js" 
             controls
             responsive
+            fluid="true"
             fullwindow
             autoplay="false"
-            preload="auto"
-            poster="#{poster_path}"
-            style="position: absolute; top: 0; left: 0;"
+            preload="false"
+            style=""
             data-brand-link="#{brand_link}"
             data-setup='{}'
           >
           #{source_element(url, caption_link)}
           </video>
-          </div>
+          
           ).html_safe
     end
   end
@@ -39,7 +39,7 @@ module AssetHelper
   def audio_player(url, brand_link, caption_link)
     tag.div do
            %(
-            <div class="mediaelement-player">
+            
            <audio 
             class="video-js" 
             controls
@@ -53,7 +53,7 @@ module AssetHelper
         <source type="application/x-mpegURL" src="#{url}">
         #{track_tag}
           </audio>
-          </div>
+          
           ).html_safe
     end
   end
