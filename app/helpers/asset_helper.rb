@@ -18,7 +18,7 @@ module AssetHelper
            %(
             
            <video 
-            class="video-js" 
+            class="video-js vjs-big-play-centered" 
             controls
             responsive
             fluid="true"
