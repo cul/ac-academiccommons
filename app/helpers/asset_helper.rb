@@ -20,12 +20,9 @@ module AssetHelper
            <video 
             class="video-js vjs-big-play-centered" 
             controls
-            responsive
+            responsive="true"
             fluid="true"
-            fullwindow
-            autoplay="false"
-            preload="false"
-            style=""
+            preload="auto"
             data-brand-link="#{brand_link}"
             data-setup='{}'
           >
