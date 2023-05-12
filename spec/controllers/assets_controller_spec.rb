@@ -44,7 +44,7 @@ RSpec.describe AssetsController, type: :controller do
       let(:parent_doc) { SolrDocument.new(object_state_ssi: 'A') }
 
       it 'returns correct X-Accel-Redirect header' do
-        expect(response.headers['X-Accel-Redirect']).to eql('/repository_download/localhost:9090/fedora/objects/good:id/datastreams/content/content')
+        expect(response.headers['X-Accel-Redirect']).to eql('/repository_download/localhost:9080/fedora/objects/good:id/datastreams/content/content')
       end
     end
 
@@ -97,7 +97,7 @@ RSpec.describe AssetsController, type: :controller do
       let(:parent_doc) { SolrDocument.new(object_state_ssi: 'A') }
 
       it 'returns correct X-Accel-Redirect header' do
-        expect(response.headers['X-Accel-Redirect']).to eql('/repository_download/localhost:9090/fedora/objects/good:id/datastreams/captions/content?captions.vtt')
+        expect(response.headers['X-Accel-Redirect']).to eql('/repository_download/localhost:9080/fedora/objects/good:id/datastreams/captions/content?captions.vtt')
       end
     end
 

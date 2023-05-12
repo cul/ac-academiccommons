@@ -1,0 +1,22 @@
+version: '3.9'
+
+name: 'ac-development'
+
+volumes:
+  solr-cores:
+  fedora-data:
+services:
+  solr:
+    build: ./solr
+    restart: always
+    ports:
+      - '8983:8983'
+    volumes:
+      - solr-cores:/data
+  fedora:
+    build: ./fedora
+    restart: always
+    ports:
+      - '8080:8080'
+    volumes:
+      - fedora-data:/opt/fedora/data
