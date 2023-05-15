@@ -41,7 +41,7 @@ class Deposit < ApplicationRecord
   validate :one_creator_must_be_present, on: :create
   validate :cco_must_be_selected, if: proc { |a| a.rights == RIGHTS_OPTIONS['No Copyright'] }
   validates :title, :abstract, :year, :rights, :files, presence: true, on: :create
-  validates :previously_published, inclusion: { in: [true, false] }, on: :create
+  validates :previously_published, :current_student, inclusion: { in: [true, false] }, on: :create
   validates :rights,  inclusion: { in: RIGHTS_OPTIONS.values }, on: :create
   validates :license, inclusion: { in: LICENSE_OPTIONS },       on: :create, if: proc { |a| a.license.present? }
   validates :degree_program, :academic_advisor, :thesis_or_dissertation,

@@ -68,8 +68,8 @@ RSpec.describe 'Upload', type: :feature do
       expect(page).to have_field 'Notes'
     end
 
-    it 'renders student checkbox' do
-      expect(page).to have_unchecked_field('Check here if you are a current student at Columbia or one of its affiliate institutions.')
+    it 'renders student radio buttons' do
+      expect(page).to have_unchecked_field 'deposit[current_student]'
     end
 
     it 'contains creator field with user\'s information' do
@@ -89,9 +89,9 @@ RSpec.describe 'Upload', type: :feature do
       expect(page).to have_css 'input[type="file"]', visible: false
     end
 
-    context 'when user selects current student' do
+    context 'when user is a current student' do
       before do
-        check 'Check here if you are a current student at Columbia or one of its affiliate institutions.'
+        choose('deposit[current_student]', option: true)
       end
 
       it 'contains degree program input' do
@@ -99,7 +99,11 @@ RSpec.describe 'Upload', type: :feature do
       end
     end
 
-    context 'when user does not select current student' do
+    context 'when user is not a current student' do
+      before do
+        choose('deposit[current_student]', option: false)
+      end
+
       it 'does not contain academic advisor input' do
         expect(page).not_to have_css 'input[name="deposit[academic_advisor]"]', visible: true
       end
@@ -107,7 +111,7 @@ RSpec.describe 'Upload', type: :feature do
 
     context 'when student submits form with all required data' do
       before do
-        check 'Check here if you are a current student at Columbia or one of its affiliate institutions.'
+        choose('deposit[current_student]', option: true)
         fill_in 'Title*', with: 'Test Deposit'
         fill_in 'Abstract*', with: 'Blah Blah Blah'
         fill_in 'Year Created*', with: '2017'
@@ -140,7 +144,7 @@ RSpec.describe 'Upload', type: :feature do
 
     context 'when student submits form with missing required data' do
       before do
-        check 'Check here if you are a current student at Columbia or one of its affiliate institutions.'
+        choose('deposit[current_student]', option: true)
         fill_in 'Title*', with: 'Test Deposit'
         fill_in 'Abstract*', with: 'Blah Blah Blah'
         fill_in 'Year Created*', with: '2017'
