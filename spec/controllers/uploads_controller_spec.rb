@@ -18,7 +18,8 @@ RSpec.describe UploadsController, type: :controller do
                  rights: 'http://rightsstatements.org/vocab/InC/1.0/',
                  previously_published: true,
                  creators: [{ first_name: 'Jane', last_name: 'Doe', uni: 'abc123' }],
-                 files: [file]
+                 files: [file],
+                 current_student: false
                }
              }
       end

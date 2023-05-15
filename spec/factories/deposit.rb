@@ -14,6 +14,7 @@ FactoryBot.define do
     rights { 'http://rightsstatements.org/vocab/InC/1.0/' }
     license { 'https://creativecommons.org/licenses/by/4.0/' }
     previously_published { true }
+    current_student { false }
 
     after(:build) do |deposit|
       deposit.files.attach(
