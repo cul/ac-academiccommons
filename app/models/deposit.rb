@@ -28,7 +28,7 @@ class Deposit < ApplicationRecord
   }.freeze
 
   before_validation :clean_up_creators
-  before_save :convert_embargo_value_to_date_string, :finalize_notes_contents
+  before_save :finalize_notes_contents
 
   # validates_presence_of :agreement_version
   # validates_presence_of :name
@@ -188,13 +188,4 @@ def finalize_notes_contents
   Article Version: #{self.article_version}
   Keywords: #{self.keywords}
   TEXT
-end
-
-def convert_embargo_value_to_date_string
-  return self.embargo_date = '' unless embargo_date&.present?
-
-  embargo_date_int = Integer(self.embargo_date)
-  return self.embargo_date = '' unless embargo_date_int.positive?
-
-  self.embargo_date = embargo_date_int.year.from_now.strftime('%-Y-%-m-%-y')
 end
