@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_12_08_202313) do
+ActiveRecord::Schema.define(version: 2023_05_16_152425) do
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
@@ -87,7 +87,7 @@ ActiveRecord::Schema.define(version: 2022_12_08_202313) do
     t.string "article_type"
     t.boolean "current_student"
     t.string "degree_program"
-    t.string "academic_advisor"
+    t.string "thesis_advisor"
     t.string "thesis_or_dissertation"
     t.string "degree_earned"
     t.string "embargo_date"
