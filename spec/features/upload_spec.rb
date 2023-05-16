@@ -104,8 +104,8 @@ RSpec.describe 'Upload', type: :feature do
         choose('deposit[current_student]', option: false)
       end
 
-      it 'does not contain academic advisor input' do
-        expect(page).not_to have_css 'input[name="deposit[academic_advisor]"]', visible: true
+      it 'does not contain thesis advisor input' do
+        expect(page).not_to have_css 'input[name="deposit[thesis_advisor]"]', visible: true
       end
     end
 
@@ -115,7 +115,7 @@ RSpec.describe 'Upload', type: :feature do
         fill_in 'Title*', with: 'Test Deposit'
         fill_in 'Abstract*', with: 'Blah Blah Blah'
         fill_in 'Year Created*', with: '2017'
-        fill_in 'Academic Advisor*', with: 'Advisor Name'
+        fill_in 'Thesis Advisor*', with: 'Advisor Name'
         fill_in 'Degree Program*', with: 'Economics'
         choose 'deposit[thesis_or_dissertation]', option: 'dissertation'
         choose 'deposit[license]', option: 'https://creativecommons.org/publicdomain/zero/1.0/'
@@ -165,7 +165,7 @@ RSpec.describe 'Upload', type: :feature do
         save_page
         expect(page).to have_css(
           '.flash_messages > .alert-danger',
-          text: 'Files can\'t be blank, Previously published is not included in the list, Degree program can\'t be blank, Academic advisor can\'t be blank, and Thesis or dissertation can\'t be blank'
+          text: 'Files can\'t be blank, Previously published is not included in the list, Degree program can\'t be blank, Thesis advisor can\'t be blank, and Thesis or dissertation can\'t be blank'
         )
       end
     end
