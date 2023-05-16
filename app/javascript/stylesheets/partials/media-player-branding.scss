@@ -1,22 +1,19 @@
-.mejs__branding-button {
-  background: image_url('../images/logo-media-player-badge.svg') 0 12px no-repeat;
-  background-size: contain;
-  cursor: pointer;
-  margin-left: 15px;
-  width: 200px;
-
-  & span {
-    position: absolute !important;
-    height: 1px; width: 1px;
-    overflow: hidden;
-    clip: rect(1px, 1px, 1px, 1px);
-  }
+.vjs-control-bar {
+  padding-right: 5.5em;
 }
 
-@media screen and (max-width: 680px) {
-  .mejs__branding-button {
-    background: image_url('../images/logo-media-player-badge-small.svg') 0 8px no-repeat;
-    background-size: 60px;
-    width: 60px;
-  }
+.vjs-logo {
+  bottom: 0px;
+  display: block;
+  height: 3em;
+  padding: .86em;
+  position: absolute;
+  right: 0px;
+}
+
+.vjs-logo img {
+  height: 100%;
+  max-width: 100%;
+  vertical-align: top;
+  width: 100%;
 }

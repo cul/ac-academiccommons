@@ -13,9 +13,9 @@ module AssetHelper
   def video_player(url, _poster_path, brand_link, caption_link)
     # rubocop:disable Lint/ShadowedArgument
     # hardcoded url for testing
-    url = ''
+    url = 'https://firehose.cul.columbia.edu:8443/digital-access-mediacache/_definst_/mp4:digital/access/derivativo/a6/bb/1c/a6bb1c511691d5cda9d68a485d6bc60c12f24a01189534390fd65e5eb13b8a76/access.mp4/playlist.m3u8?wowzaendtime=1684258026&wowzastarttime=1684247226&wowzahash=ri5rugiT3Pw3AoX9yTXdX491JiQMKFmSKSvHqXOusfw='
     # rubocop:enable Lint/ShadowedArgument
-    logo_attr = "player-logo=\"#{asset_pack_path 'media/images/logo-media-player-badge.svg'}\""
+    logo_attr = "player-logo=\"#{asset_pack_path 'media/images/logo-media-player-badge-small.svg'}\""
     tag.div do
       # rubocop:disable Rails/OutputSafety
       %(
