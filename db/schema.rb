@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_05_16_152425) do
+ActiveRecord::Schema.define(version: 2023_05_18_134528) do
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
@@ -82,12 +82,9 @@ ActiveRecord::Schema.define(version: 2023_05_16_152425) do
     t.string "hyacinth_identifier"
     t.boolean "proxied"
     t.boolean "authenticated"
-    t.string "thesis"
-    t.string "thesis_embargo"
-    t.string "article_type"
     t.boolean "current_student"
     t.string "degree_program"
-    t.string "thesis_advisor"
+    t.string "academic_advisor"
     t.string "thesis_or_dissertation"
     t.string "degree_earned"
     t.string "embargo_date"
@@ -248,4 +245,9 @@ ActiveRecord::Schema.define(version: 2023_05_16_152425) do
     t.index ["uid"], name: "index_users_on_uid"
   end
 
+  add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "agreements", "users"
+  add_foreign_key "deposits", "users"
+  add_foreign_key "featured_search_values", "featured_searches"
+  add_foreign_key "featured_searches", "feature_categories"
 end

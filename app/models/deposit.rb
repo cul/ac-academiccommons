@@ -44,7 +44,7 @@ class Deposit < ApplicationRecord
   validates :previously_published, :current_student, inclusion: { in: [true, false] }, on: :create
   validates :rights,  inclusion: { in: RIGHTS_OPTIONS.values }, on: :create
   validates :license, inclusion: { in: LICENSE_OPTIONS },       on: :create, if: proc { |a| a.license.present? }
-  validates :degree_program, :thesis_advisor, :thesis_or_dissertation,
+  validates :degree_program, :academic_advisor, :thesis_or_dissertation,
             presence: true, on: :create, if: proc { |a| a.current_student == true }
   has_many_attached :files
 
@@ -180,7 +180,7 @@ def finalize_notes_contents
   #{self.notes}
 
   Degree Program: #{self.degree_program}
-  Thesis Advisor: #{self.thesis_advisor}
+  Academic Advisor: #{self.academic_advisor}
   Thesis or Dissertation: #{self.thesis_or_dissertation}
   Degree Earned: #{self.degree_earned}
   Embargo Year(s): #{self.embargo_date}

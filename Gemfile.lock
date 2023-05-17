@@ -7,6 +7,14 @@ GIT
       blacklight (>= 7.25.2, < 9)
 
 GIT
+  remote: https://github.com/ruby-grape/grape-swagger
+  revision: da351d0f99228f31329210d21b975a64500e73ab
+  ref: da351d0f99228f31329210d21b975a64500e73ab
+  specs:
+    grape-swagger (0.30.1)
+      grape (>= 0.16.2)
+
+GIT
   remote: https://github.com/samvera-deprecated/jettywrapper.git
   revision: 6b03c21726a83dcecf09d9b20683bfcd63f106d1
   branch: master
@@ -247,8 +255,6 @@ GEM
     grape-entity (0.10.1)
       activesupport (>= 3.0.0)
       multi_json (>= 1.3.2)
-    grape-swagger (0.31.0)
-      grape (>= 0.16.2)
     haml (5.2.2)
       temple (>= 0.8.0)
       tilt
@@ -651,7 +657,7 @@ DEPENDENCIES
   gaffe
   grape
   grape-entity
-  grape-swagger (= 0.31.0)
+  grape-swagger!
   http
   jbuilder
   jettywrapper (>= 1.4.0)!
