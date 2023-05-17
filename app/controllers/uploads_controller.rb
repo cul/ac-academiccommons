@@ -45,7 +45,7 @@ class UploadsController < ApplicationController
 
   def upload_params
     params.require(:deposit)
-          .permit(:title, :abstract, :year, :doi, :license, :rights, :notes, :degree_program, :thesis_advisor,
+          .permit(:title, :abstract, :year, :doi, :license, :rights, :notes, :degree_program, :academic_advisor, :current_student,
                   :thesis_or_dissertation, :degree_earned, :embargo_date, :previously_published, :article_version, :keywords,
                   :current_student, files: [], creators: %i[first_name last_name uni])
   end
