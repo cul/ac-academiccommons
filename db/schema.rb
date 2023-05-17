@@ -82,9 +82,6 @@ ActiveRecord::Schema.define(version: 2022_12_08_202313) do
     t.string "hyacinth_identifier"
     t.boolean "proxied"
     t.boolean "authenticated"
-    t.string "thesis"
-    t.string "thesis_embargo"
-    t.string "article_type"
     t.boolean "current_student"
     t.string "degree_program"
     t.string "academic_advisor"
@@ -248,4 +245,9 @@ ActiveRecord::Schema.define(version: 2022_12_08_202313) do
     t.index ["uid"], name: "index_users_on_uid"
   end
 
+  add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "agreements", "users"
+  add_foreign_key "deposits", "users"
+  add_foreign_key "featured_search_values", "featured_searches"
+  add_foreign_key "featured_searches", "feature_categories"
 end
