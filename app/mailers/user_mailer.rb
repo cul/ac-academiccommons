@@ -42,6 +42,6 @@ class UserMailer < ApplicationMailer
   def reminder_to_request_departmental_approval(name, email)
     @name = name
 
-    mail(to: email, subject: 'Request Department Approval')
+    mail(to: email, subject: 'Department approval may be needed')
   end
 end
