@@ -1,34 +1,49 @@
 module AssetHelper
   def player(document, brand_link)
     caption_link = captions_download_url(document['cul_doi_ssi']) if document.captions?
+    logo_attr = "player-logo=\"#{asset_pack_path 'media/images/logo-media-player-badge-small.svg'}\""
     if document.audio?
-      audio_player document.wowza_media_url(request), brand_link, caption_link
+      audio_player document.wowza_media_url(request), brand_link, caption_link, logo_attr
     elsif document.video?
-      video_player document.wowza_media_url(request), document.image_url(768), brand_link, caption_link
+      video_player document.wowza_media_url(request), document.image_url(768), brand_link, caption_link, logo_attr
     else
       tag.div 'Not a playable asset'
     end
   end
 
-  def video_player(url, poster_path, brand_link, caption_link)
-    tag.div class: 'mediaelement-player' do
-      tag.video style: 'position: absolute; top: 0; left: 0;', poster: poster_path, controls: 'controls', preload: 'none', data: { brand_link: brand_link } do
-        source_element(url, caption_link)
-      end
+  def video_player(url, _poster_path, brand_link, caption_link, logo_attr)
+    tag.div do
+      # rubocop:disable Rails/OutputSafety
+      %(
+           <video class="video-js vjs-big-play-centered" controls  responsive="true"  fluid="true"  preload="auto"
+            data-brand-link="#{brand_link}" data-setup='{}'  #{logo_attr} >
+            #{source_element(url, caption_link)}
+          </video>
+          ).html_safe
+      # rubocop:enable Rails/OutputSafety
     end
   end
 
-  def audio_player(url, brand_link, caption_link)
-    tag.div class: 'mediaelement-player' do
-      tag.audio width: 1024, controls: 'controls', preload: 'none', data: { brand_link: brand_link } do
-        source_element(url, caption_link)
-      end
+  def audio_player(url, brand_link, caption_link, logo_attr)
+    tag.div do
+      # rubocop:disable Rails/OutputSafety
+      %(
+           <audio  class="video-js vjs-big-play-centered" controls  responsive="true"  fluid="true"  preload="auto"
+            width="1024" data-brand-link="#{brand_link}" data-setup='{}' #{logo_attr} >
+            #{source_element(url, caption_link)}
+          </audio>
+          ).html_safe
+      # rubocop:enable Rails/OutputSafety
     end
   end
 
   def source_element(url, caption_link)
-    src = tag.source(type: 'application/x-mpegURL', src: url)
-    src.concat(tag.track(label: 'English', kind: 'subtitles', srclang: 'en', src: caption_link)) if caption_link
-    src
+    track_tag = caption_link ? "<track label=\"English\" kind=\"subtitles\" srclang=\"en\" src=\"#{caption_link}\">" : ''
+    # rubocop:disable Rails/OutputSafety
+    %(
+          <source type="application/x-mpegURL" src="#{url}">
+          #{track_tag}
+        ).html_safe
+    # rubocop:enable Rails/OutputSafety
   end
 end

@@ -2,11 +2,7 @@
   border-bottom: $border;
   overflow: hidden;
   padding: 10px;
-}
-
-.mejs__container,
-.mejs__container * {
-  max-width: 100%;
+  position: relative;
 }
 
 .embed-link {

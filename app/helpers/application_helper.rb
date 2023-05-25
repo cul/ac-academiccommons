@@ -33,9 +33,12 @@ module ApplicationHelper
       tag.div class: "modal-dialog modal-#{size}", role: 'document' do
         tag.div class: 'modal-content' do
           tag.div(class: 'modal-header') {
-            tag.button(type: 'button', class: 'close', data: { dismiss: 'modal' }, aria: { label: 'Close' }) {
-              tag.span sanitize('&times;'), aria: { hidden: true }
-            }.concat(tag.h3(title, class: 'modal-title'))
+            # rubocop:disable Rails/OutputSafety
+            %(<h3 class="modal-title">#{title}</h3>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">×</span>
+              </button>).html_safe
+            # rubocop:enable Rails/OutputSafety
           }.concat(tag.div(class: 'modal-body') { yield if block_given? })
         end
       end
