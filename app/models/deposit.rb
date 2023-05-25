@@ -28,7 +28,7 @@ class Deposit < ApplicationRecord
   }.freeze
 
   before_validation :clean_up_creators
-  before_save :convert_embargo_value_to_date_string, :finalize_notes_contents
+  before_save :finalize_notes_contents
 
   # validates_presence_of :agreement_version
   # validates_presence_of :name
@@ -41,7 +41,7 @@ class Deposit < ApplicationRecord
   validate :one_creator_must_be_present, on: :create
   validate :cco_must_be_selected, if: proc { |a| a.rights == RIGHTS_OPTIONS['No Copyright'] }
   validates :title, :abstract, :year, :rights, :files, presence: true, on: :create
-  validates :previously_published, inclusion: { in: [true, false] }, on: :create
+  validates :previously_published, :current_student, inclusion: { in: [true, false] }, on: :create
   validates :rights,  inclusion: { in: RIGHTS_OPTIONS.values }, on: :create
   validates :license, inclusion: { in: LICENSE_OPTIONS },       on: :create, if: proc { |a| a.license.present? }
   validates :degree_program, :academic_advisor, :thesis_or_dissertation,
@@ -180,21 +180,12 @@ def finalize_notes_contents
   #{self.notes}
 
   Degree Program: #{self.degree_program}
-  Advisor Name: #{self.academic_advisor}
+  Academic Advisor: #{self.academic_advisor}
   Thesis or Dissertation: #{self.thesis_or_dissertation}
   Degree Earned: #{self.degree_earned}
-  Embargo Date: #{self.embargo_date}
+  Embargo Year(s): #{self.embargo_date}
   Previously Published: #{self.previously_published}
   Article Version: #{self.article_version}
   Keywords: #{self.keywords}
   TEXT
-end
-
-def convert_embargo_value_to_date_string
-  return self.embargo_date = '' unless embargo_date&.present?
-
-  embargo_date_int = Integer(self.embargo_date)
-  return self.embargo_date = '' unless embargo_date_int.positive?
-
-  self.embargo_date = embargo_date_int.year.from_now.strftime('%-Y-%-m-%-y')
 end

@@ -72,10 +72,13 @@
   </div>
 
 
-  <div class="form-group checkbox">
-    <h3>Current student?</h3>
-    <%= form.check_box :current_student %>
-    <%= form.label :current_student, 'Check here if you are a current student at Columbia or one of its affiliate institutions.' %>
+  <div class="form-group">
+    <h3>Current student*</h3>
+    <p>Are you a current student at Columbia or one of its affiliate institutions?</p>
+      <%= form.radio_button(:current_student, true) %>
+      <%= form.label(:current_student, 'Yes') %></br>
+      <%= form.radio_button(:current_student, false) %>
+      <%= form.label(:current_student, 'No') %></br>
   </div>
 
 <div class="student-section" >
@@ -86,7 +89,8 @@
 
 
   <div class="form-group">
-    <%= form.label(:academic_advisor, 'Academic Advisor*', class: 'control-label') %>
+    <h3>Academic Advisor*</h3>
+    <p>(If you are uploading a thesis, please give us the name of your thesis advisor.)</p>
     <%= form.text_field(:academic_advisor) %>
   </div>
 
