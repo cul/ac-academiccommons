@@ -27,14 +27,14 @@ module ApplicationHelper
     content_for :page_title, "#{page_title} | #{application_name}"
   end
 
-  def modal(id, size, _title)
+  def modal(id, size, title)
     # Removed 'fade' class from test environment because the animation prevents forms from being filled in correctly.
     tag.div class: Rails.env.test? ? 'modal' : 'modal fade', id: id, tabindex: '-1', role: 'dialog' do
       tag.div class: "modal-dialog modal-#{size}", role: 'document' do
         tag.div class: 'modal-content' do
           tag.div(class: 'modal-header') {
             # rubocop:disable Rails/OutputSafety
-            %(<h3 class="modal-title">Embed Player</h3>
+            %(<h3 class="modal-title">#{title}</h3>
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">×</span>
               </button>).html_safe

@@ -23,7 +23,6 @@ import '@fortawesome/fontawesome-free/js/all.js'
 import 'datatables.net/js/jquery.dataTables.min';
 import 'datatables.net-bs/js/dataTables.bootstrap.min';
 import 'bootstrap/dist/js/bootstrap';
-import videojs from "video.js";
 
 window.Bloodhound = require('corejs-typeahead');
 import ClipboardJS from 'clipboard/dist/clipboard.min';
