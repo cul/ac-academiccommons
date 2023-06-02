@@ -17,11 +17,6 @@
           <i class="fas fa-list-ul" aria-hidden></i> <%= t('blacklight.dashboard_links.my_works') %>
         <% end %>
         </li>
-        <li class="<%= active_class(new_upload_path) %>">
-          <%= link_to uploads_path do %>
-          <i class="far fa-plus-square" aria-hidden></i> <%= t('blacklight.dashboard_links.add_new_work') %>
-        <% end %>
-        </li>
         <% if current_user.admin? %>
           <li class="<%= active_class(admin_path) %>">
             <%= link_to admin_path do %>

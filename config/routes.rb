@@ -61,7 +61,7 @@ Rails.application.routes.draw do
 
   resource :agreement
 
-  resources :uploads, only: [:index, :new, :create], path: 'upload'
+  resources :uploads, only: [:index, :new, :create], to: proc { [404, {}, ['']] }
 
   get '/detail/:slug', to: 'featured_searches#show', as: 'featured_search'
 
