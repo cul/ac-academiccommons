@@ -75,6 +75,24 @@ describe SolrDocumentsController, type: :controller do
           expect(subject).to be 200
         end
       end
+      context 'descriptive metadata does not validate' do
+        let(:mock_object) do
+          ContentAggregator.new
+        end
+        let(:params) { { id: 'good:id' } }
+        before do
+          allow(ActiveFedora::Base).to receive(:find).with('good:id').and_return(mock_object)
+          allow(mock_object).to receive(:pid).and_return('good:id')
+          allow(mock_object).to receive(:to_solr).and_raise(
+            AcademicCommons::Exceptions::DescriptiveMetadataValidationError,
+            'There was an error parsing the embargo release date field.'
+          )
+        end
+        it do
+          expect(subject).to be 400
+          expect(response.body['error_message']).not_to be_empty
+        end
+      end
     end
   end
 

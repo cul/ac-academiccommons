@@ -113,6 +113,20 @@ module AcademicCommons
 
       add_field.call 'related_url_ssi', mods.at_css('location > url')
 
+      # EMBARGO RELEASE DATE
+      if (free_to_read = mods.at_css('> extension > free_to_read'))
+        start_date = free_to_read.attribute('start_date').to_s
+        if start_date.present?
+          begin
+            formatted_date_string = Time.zone.local(*start_date.split('-')).utc.iso8601
+          rescue ArgumentError
+            raise AcademicCommons::Exceptions::DescriptiveMetadataValidationError, 'There was an error parsing the embargo release date field.'
+          end
+          add_field.call 'free_to_read_start_date_ssi',  start_date
+          add_field.call 'free_to_read_start_date_dtsi', formatted_date_string
+        end
+      end
+
       # TITLE
       # Note: We are intentionally including the non-sort portion in the title_sort field to
       # preserve existing app behavior.  This is what the AC app owners want.
@@ -303,15 +317,6 @@ module AcademicCommons
         add_field.call 'department_ssim', dep
         add_field.call 'department_q',    dep
         add_field.call 'suggest',         dep
-      end
-
-      # EMBARGO RELEASE DATE
-      if (free_to_read = mods.at_css('> extension > free_to_read'))
-        start_date = free_to_read.attribute('start_date').to_s
-        if start_date.present?
-          add_field.call 'free_to_read_start_date_ssi',  start_date
-          add_field.call 'free_to_read_start_date_dtsi', Time.zone.local(*start_date.split('-')).utc.iso8601
-        end
       end
 
       # DEGREE INFO

@@ -43,6 +43,8 @@ class SolrDocumentsController < ApplicationController
       location_url = aggregator ? solr_document_url(solr_doc['cul_doi_ssi']) : content_download_url(solr_doc['cul_doi_ssi'])
       response.headers['Location'] = location_url
       render status: :ok, plain: ''
+    rescue AcademicCommons::Exceptions::DescriptiveMetadataValidationError => e
+      render status: :bad_request, json: { error_message: e.message }
     rescue ActiveFedora::ObjectNotFoundError => e
       render status: :not_found, plain: ''
     end

@@ -37,10 +37,18 @@ Capybara.register_driver :headless_chrome do |app|
     }
   )
 
-  Capybara::Selenium::Driver.new(app, browser: :chrome, capabilities: capabilities)
+  #the following two lines and the hard-coded requred chrome driver version below are necessary
+  #until AC can run under ruby 3 and use selenium >= 4.9.1
+  #see https://github.com/titusfortner/webdrivers/issues/247#issuecomment-1696078121
+  service_args = %w[--disable-build-check]
+  service = Selenium::WebDriver::Service.chrome(args: service_args)
+  
+
+  Capybara::Selenium::Driver.new(app, browser: :chrome, capabilities: capabilities, service: service)
 end
 
 Capybara.javascript_driver = :headless_chrome
+Webdrivers::Chromedriver.required_version = '114.0.5735.90'
 
 Capybara.disable_animation = true
 

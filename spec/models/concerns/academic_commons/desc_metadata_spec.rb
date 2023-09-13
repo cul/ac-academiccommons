@@ -39,6 +39,15 @@ RSpec.describe AcademicCommons::DescMetadata do
           expect { indexable.index_descmetadata(start_solr_doc) }.to raise_error StandardError
         end
       end
+
+      context 'invalid data submitted' do
+        let(:start_solr_doc) { { 'doi_ssim' => '10.7916/TESTTEST' } }
+        let(:mods_fixture) { fixture_to_str('desc_metadata/error_mods.xml') }
+        it "raises an error" do
+          expect { indexable.index_descmetadata(start_solr_doc) }
+            .to raise_error AcademicCommons::Exceptions::DescriptiveMetadataValidationError
+        end
+      end
     end
   end
 
