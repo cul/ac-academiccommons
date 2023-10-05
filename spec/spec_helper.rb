@@ -24,7 +24,7 @@ require 'equivalent-xml/rspec_matchers'
 require 'webmock/rspec'
 WebMock.disable_net_connect!(
   allow_localhost: true,
-  allow: ['chromedriver.storage.googleapis.com', 'googlechromelabs.github.io']
+  allow: ['chromedriver.storage.googleapis.com', 'googlechromelabs.github.io', 'edgedl.me.gvt1.com']
 )
 
 # on-screen widgets will collapse at certain width breakpoints, so feature specs need to define window dimensions
