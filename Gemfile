@@ -72,10 +72,9 @@ group :development, :test do
   gem 'json_spec'
   gem 'rspec-its'
   gem 'rspec-rails'
-  gem 'selenium-webdriver'
   gem 'simplecov', require: false
   gem 'solr_wrapper', '~> 4.0'
-  gem 'webdrivers', '~> 5.2', require: false
+  gem 'webdrivers', '~> 5.3.0', require: false
   gem 'webmock'
 end
 

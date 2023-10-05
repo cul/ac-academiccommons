@@ -17,14 +17,14 @@
 #
 # See http://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
 
-require 'webdrivers/chromedriver'
+require 'webdrivers'
 require 'capybara/rspec'
 require 'equivalent-xml/rspec_matchers'
 
 require 'webmock/rspec'
 WebMock.disable_net_connect!(
   allow_localhost: true,
-  allow: 'chromedriver.storage.googleapis.com'
+  allow: ['chromedriver.storage.googleapis.com', 'googlechromelabs.github.io']
 )
 
 # on-screen widgets will collapse at certain width breakpoints, so feature specs need to define window dimensions
