@@ -48,7 +48,7 @@ class FeaturedSearch < ActiveRecord::Base
   def self.import_attributes(directory)
     properties_path = File.join(directory, PROPERTIES_FILE)
     raise "no FeaturedSearch export at #{properties_path}" unless File.exist?(properties_path)
-    properties = YAML.safe_load(File.read(properties_path))
+    properties = YAML.safe_load(File.read(properties_path), aliases: true)
     raise "no FeatureCategory properties at #{properties_path}" unless properties.dig('feature_category', 'field_name')
     properties
   end
