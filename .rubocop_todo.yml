@@ -1568,6 +1568,7 @@ Style/StringLiteralsInInterpolation:
 Style/SymbolProc:
   Exclude:
     - 'app/api/v1/entities/short_record.rb'
+    - 'app/api/v1/entities/full_record.rb'
     - 'app/models/statistic.rb'
 
 # Offense count: 1

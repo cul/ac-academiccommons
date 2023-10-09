@@ -26,8 +26,10 @@ gem 'grape-swagger', git: 'https://github.com/ruby-grape/grape-swagger', ref: 'd
 gem 'http'
 gem 'jbuilder'
 gem 'jquery-rails'
+gem 'mail', '~> 2.8'
 gem 'multipart-post', '~>2.0.0'
-gem 'mail', '~> 2.8.0'
+gem 'net-scp', '~> 4.0.0'
+gem 'net-ssh', '~> 7.2.0'
 gem 'nokogiri', '~> 1.15.2'
 gem 'okcomputer'
 gem 'premailer-rails'
@@ -75,7 +77,7 @@ group :development, :test do
   gem 'json_spec'
   gem 'rspec-its'
   gem 'rspec-rails'
-  gem 'selenium-webdriver', '~> 4.11.0'
+  gem 'selenium-webdriver', '~> 4.11'
   gem 'simplecov', '>= 0.22.0', require: false
   gem 'solr_wrapper', '~> 4.0'
   gem 'webdrivers', '~> 5.2', require: false

@@ -27,7 +27,6 @@ WebMock.disable_net_connect!(
   allow: 'chromedriver.storage.googleapis.com'
 )
 
-
 # on-screen widgets will collapse at certain width breakpoints, so feature specs need to define window dimensions
 Capybara.register_driver :chrome do |app|
   options = Selenium::WebDriver::Chrome::Options.new(
