@@ -5,21 +5,32 @@
 # Emails for local environments.
 # Emails are not actually sent in local environments, therefore the emails don't
 # have to be valid.
-local: &local
+
+development:
   mail_deliverer: ac@columbia.edu
   administrative_notifications: example@columbia.edu
   error_notifications: developers@library.columbia.edu
 
-development: *local
-test: *local
+test:
+  mail_deliverer: ac@columbia.edu
+  administrative_notifications: example@columbia.edu
+  error_notifications: developers@library.columbia.edu
+
 
 
 # Emails for deployed dev/test environments.
-deployed: &deployed
+academiccommons_dev:
   mail_deliverer: ac@columbia.edu
   administrative_notifications: ac@columbia.edu
   error_notifications: diag@library.columbia.edu
 
-academiccommons_dev: *deployed
-academiccommons_test: *deployed
-academiccommons_prod: *deployed
+academiccommons_test:
+  mail_deliverer: ac@columbia.edu
+  administrative_notifications: ac@columbia.edu
+  error_notifications: diag@library.columbia.edu
+
+academiccommons_prod:
+  mail_deliverer: ac@columbia.edu
+  administrative_notifications: ac@columbia.edu
+  error_notifications: diag@library.columbia.edu
+
