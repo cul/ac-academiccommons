@@ -162,7 +162,6 @@ RSpec.describe 'Upload', type: :feature do
       end
 
       it 'renders error messages' do
-        save_page
         expect(page).to have_css(
           '.flash_messages > .alert-danger',
           text: 'Files can\'t be blank, Previously published is not included in the list, Degree program can\'t be blank, Academic advisor can\'t be blank, and Thesis or dissertation can\'t be blank'

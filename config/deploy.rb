@@ -1,4 +1,4 @@
-lock '3.8.0'
+lock '3.17.0'
 
 set :instance, 'ac'
 set :application, 'academiccommons'
@@ -8,6 +8,7 @@ set :deploy_name, "#{fetch(:application)}_#{fetch(:stage)}"
 # Default value for :rails_env is fetch(:stage)
 set :rails_env, fetch(:deploy_name)
 # use the rvm wrapper
+set :rvm_custom_path, '~/.rvm-alma8'
 set :rvm_ruby_version, fetch(:deploy_name)
 
 set :repo_url,  "git@github.com:cul/ac-academiccommons.git"
@@ -15,7 +16,7 @@ set :repo_url,  "git@github.com:cul/ac-academiccommons.git"
 set :remote_user, "#{fetch(:instance)}serv"
 
 # Default deploy_to directory is /var/www/:application
-set :deploy_to,   "/opt/passenger/#{fetch(:instance)}/#{fetch(:deploy_name)}"
+set :deploy_to,   "/opt/passenger/#{fetch(:deploy_name)}"
 
 # Default value for :format is :airbrussh
 # set :format, :airbrussh
@@ -24,7 +25,7 @@ set :deploy_to,   "/opt/passenger/#{fetch(:instance)}/#{fetch(:deploy_name)}"
 set :log_level, :info
 
 # Default value for linked_dirs is []
-set :linked_dirs, fetch(:linked_dirs, []).push('log','tmp/pids', 'storage', 'public/feature-logos')
+set :linked_dirs, fetch(:linked_dirs, []).push('log','tmp/pids', 'storage', 'public/feature-logos', 'node_modules', 'public/packs')
 
 # Default value for keep_releases is 5
 set :keep_releases, 3
