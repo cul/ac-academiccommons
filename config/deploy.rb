@@ -81,7 +81,7 @@ namespace :deploy do
   task :generate_500_html do
     on roles(:web) do |host|
       public_500_html = File.join(release_path, "public", "500.html")
-      env = fetch(:stage) == :prod ? fetch(:application) : "#{fetch(:deploy_name).to_s.gsub('_', '-')}.cdrs"
+      env = fetch(:stage) == :prod ? fetch(:application) : "#{fetch(:deploy_name).to_s.gsub('_', '-')}.library"
       execute :curl, "https://#{env}.columbia.edu/500", "-sS", "-o", public_500_html
     end
   end

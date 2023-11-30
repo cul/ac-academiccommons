@@ -16,7 +16,7 @@ AcademicCommons::Application.configure do
   config.assets.raise_runtime_errors = true
 
   # Setting host so that url helpers can be used in mailer views.
-  config.action_mailer.default_url_options = { host: 'academiccommons-dev.cdrs.columbia.edu' }
+  config.action_mailer.default_url_options = { host: 'academiccommons-dev.library.columbia.edu' }
 
   # Use the lowest log level to ensure availability of diagnostic information
   # when problems arise.
@@ -26,6 +26,6 @@ AcademicCommons::Application.configure do
 
   # Application specific configuration.
   config.analytics_enabled = false
-  config.default_host = 'https://academiccommons-dev.cdrs.columbia.edu'
+  config.default_host = 'https://academiccommons-dev.library.columbia.edu'
   config.prod_environment = false
 end
