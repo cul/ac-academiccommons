@@ -21,7 +21,7 @@ describe FeaturedSearch, type: :model do
     let(:expected_properties) { featured_search.export_attributes }
     let(:expected_description) { featured_search.description }
     it "exports expected properties" do
-      actual = YAML.safe_load(File.read(properties_path))
+      actual = YAML.safe_load(File.read(properties_path), aliases: true)
       expect(actual).to eql(expected_properties)
     end
     it "exports expected description" do

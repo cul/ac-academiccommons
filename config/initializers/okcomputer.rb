@@ -1,10 +1,10 @@
 # Additional checks for OkComputer.
 
 # Require authentication to all checks but the default check
-creds = Rails.application.config_for(:secrets)['okcomputer']
+creds = Rails.application.config_for(:secrets)[:okcomputer]
 raise 'Missing OkComputer credentials' if creds.blank?
 
-OkComputer.require_authentication(creds['user'], creds['password'], except: %w(default))
+OkComputer.require_authentication(creds[:user], creds[:password], except: %w(default))
 
 # Checking Solr connection
 solr_urls = [:solr, :blacklight].map {|c| Rails.application.config_for(c)['url'] }.uniq

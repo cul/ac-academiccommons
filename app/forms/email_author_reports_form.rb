@@ -70,7 +70,7 @@ class EmailAuthorReportsForm < FormObject
           solr_params: { q: nil, fq: ["author_uni_ssim:\"#{author_id}\""] }
         }
 
-        usage_stats = AcademicCommons::Metrics::UsageStatistics.new(options)
+        usage_stats = AcademicCommons::Metrics::UsageStatistics.new(**options)
                                                                .calculate_lifetime
                                                                .calculate_period
         usage_stats.order_by(:period, order_works_by) unless order_works_by == 'Title'

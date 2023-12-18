@@ -4,9 +4,10 @@ source 'https://rubygems.org'
 
 gem 'rails', '6.0.4'
 
-gem 'active-fedora', '~> 8.2'
+gem 'active-fedora', '~> 8.7'
+gem 'active-triples', git: 'https://github.com/cul/ActiveTriples', branch: 'deprecation_update'
 gem 'addressable'
-gem 'blacklight', '~> 7.25'
+gem 'blacklight', '~> 7.29'
 gem 'blacklight_oai_provider'
 gem 'blacklight_range_limit',
     git: 'https://github.com/JackBlackLight/blacklight_range_limit.git', branch: 'use_blacklight_component'
@@ -14,18 +15,22 @@ gem 'bootsnap'
 gem 'cancancan'
 gem 'cul-ldap'
 gem 'cul_omniauth', '>= 0.7.0'
+gem 'deprecation', '>= 1.1.0'
 gem 'devise'
 gem 'fancybox2-rails' # Used in helper classes. TODO: Confirm that this is needed and used by the application.
 gem 'gaffe'
-gem 'grape'
-gem 'grape-entity'
+gem 'grape', '>= 1.8.0'
+gem 'grape-entity', '>= 1.0.0'
 # pinning swagger to commit that supports braces in array params; functionality is broken in next version - 0.31.0
 gem 'grape-swagger', git: 'https://github.com/ruby-grape/grape-swagger', ref: 'da351d0f99228f31329210d21b975a64500e73ab'
 gem 'http'
 gem 'jbuilder'
 gem 'jquery-rails'
+gem 'mail', '~> 2.8'
 gem 'multipart-post', '~>2.0.0'
-gem 'nokogiri', '~> 1.10.8'
+gem 'net-scp', '~> 4.0.0'
+gem 'net-ssh', '~> 7.2.0'
+gem 'nokogiri', '~> 1.15.2'
 gem 'okcomputer'
 gem 'premailer-rails'
 gem 'rainbow'
@@ -54,17 +59,16 @@ end
 group :development, :test do
   # Deploying by using Capistrano. Using rails, rvm and passenger cap gems as
   # required by our deployment environment.
-  gem 'capistrano', '3.8', require: false
+  gem 'capistrano', '3.17', require: false
   gem 'capistrano-cul', require: false
-  gem 'capistrano-passenger', '~> 0.1', require: false
-  gem 'capistrano-rails', '~> 1.1', require: false
-  gem 'capistrano-resque', '~> 0.2.2', require: false
-  gem 'capistrano-rvm', '~> 0.1', require: false
+  gem 'capistrano-passenger', '~> 0.2', require: false
+  gem 'capistrano-rails', '~> 1.4', require: false
+  gem 'capistrano-resque', '= 0.2.1', require: false
 
   gem 'rubocul', '~> 4.0', require: false
 
   gem 'byebug'
-  gem 'capybara', '~> 3.0'
+  gem 'capybara', '~> 3.39'
   gem 'database_cleaner'
   gem 'equivalent-xml'
   gem 'factory_bot_rails'
@@ -72,7 +76,8 @@ group :development, :test do
   gem 'json_spec'
   gem 'rspec-its'
   gem 'rspec-rails'
-  gem 'simplecov', require: false
+  gem 'selenium-webdriver', '~> 4.11'
+  gem 'simplecov', '>= 0.22.0', require: false
   gem 'solr_wrapper', '~> 4.0'
   gem 'webdrivers', '~> 5.3.0', require: false
   gem 'webmock'

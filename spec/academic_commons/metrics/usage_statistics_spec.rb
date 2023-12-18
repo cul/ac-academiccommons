@@ -124,7 +124,7 @@ RSpec.describe AcademicCommons::Metrics::UsageStatistics do
       context 'when requesting stats for an author with embargoed material' do
         subject(:usage_stats) do
           options = { solr_params: any_by_author_params }
-          described_class.new(options).calculate_lifetime
+          described_class.new(**options).calculate_lifetime
         end
 
         it 'removes embargoed material' do

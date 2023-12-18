@@ -7,7 +7,7 @@ namespace :ac do
     end
 
     def docker_compose_config
-      YAML.load_file(docker_compose_file_path)
+      YAML.load_file(docker_compose_file_path, aliases: true)
     end
 
     def wait_for_solr_cores_to_load

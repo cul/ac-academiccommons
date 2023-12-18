@@ -73,8 +73,7 @@ class UserController < ApplicationController
       end_date:    Date.current.prev_month.end_of_month,
       solr_params: { q: nil, fq: ["author_uni_ssim:\"#{current_user.uid}\""] }
     }
-
-    AcademicCommons::Metrics::UsageStatistics.new(options)
+    AcademicCommons::Metrics::UsageStatistics.new(**options)
                                              .calculate_lifetime
                                              .calculate_period
   end
