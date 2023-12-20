@@ -2,6 +2,7 @@ require 'rails_helper'
 
 RSpec.describe AcademicCommons::Metrics::UsageStatistics do
   let(:uni) { 'abc123' }
+  let(:degree_level) { 'Doctoral' }
   let(:item_identifier) { '10.7916/ALICE' }
   let(:item_fedora_pid) { 'actest:1' }
   let(:other_item_identifier) { '10.7916/TESTDOC5' }
@@ -102,12 +103,33 @@ RSpec.describe AcademicCommons::Metrics::UsageStatistics do
     )
   end
 
+  let(:item_by_degree_level_params) do
+    {
+      rows: 100_000, sort: 'title_sort asc', q: nil, page: 1,
+      fq: ["degree_level_name_ssim:\"#{degree_level}\"", 'has_model_ssim:"info:fedora/ldpd:ContentAggregator"'],
+      fl: 'title_ssi,id,cul_doi_ssi,fedora3_pid_ssi,publisher_doi_ssi,genre_ssim,record_creation_dtsi,object_state_ssi,free_to_read_start_date_ssi'
+    }
+  end
+  let(:item_by_degree_level_response) do
+    wrap_solr_response_data(
+      'response' => {
+        'docs' => [
+          { 'id' => item_identifier, 'title_ssi' => 'First Test Document', 'object_state_ssi' => 'A', 'record_creation_dtsi' => '2018-08-07T03:40:22Z',
+            'cul_doi_ssi' => item_identifier, 'fedora3_pid_ssi' => item_fedora_pid, 'publisher_doi_ssi' => '', 'genre_ssim' => '', 'degree_level_name_ssim' => 'Doctoral' },
+          { 'id' => other_item_identifier, 'title_ssi' => 'Second Test Document', 'object_state_ssi' => 'A', 'record_creation_dtsi' => '2018-08-07T03:40:22Z',
+            'cul_doi_ssi' => other_item_identifier, 'fedora3_pid_ssi' => other_item_fedora_pid, 'publisher_doi_ssi' => '', 'genre_ssim' => '', 'degree_level_name_ssim' => 'Doctoral' }
+        ]
+      }
+    )
+  end
+
   before do
     allow(Blacklight.default_index).to receive(:search).with(any_by_author_params).and_return(any_by_author_response)
     allow(Blacklight.default_index).to receive(:search).with(item_by_author_params).and_return(item_by_author_response)
     allow(Blacklight.default_index).to receive(:search).with(assets_for_item_params).and_return(assets_for_item_response)
     allow(Blacklight.default_index).to receive(:search).with(assets_for_other_item_params).and_return(assets_for_other_item_response)
     allow(Blacklight.default_index).to receive(:search).with(list_items_params).and_return(list_items_response)
+    allow(Blacklight.default_index).to receive(:search).with(item_by_degree_level_params).and_return(item_by_degree_level_response)
   end
 
   describe '.new' do
@@ -224,6 +246,19 @@ RSpec.describe AcademicCommons::Metrics::UsageStatistics do
           expect(usage_stats.total_for(Statistic::DOWNLOAD, :period)).to be 1
           expect(usage_stats.total_for(Statistic::VIEW, :lifetime)).to be 2
           expect(usage_stats.total_for(Statistic::DOWNLOAD, :lifetime)).to be 1
+        end
+      end
+
+      context 'when requesting stats for degree level' do
+        subject(:usage_stats) do
+          described_class.new(
+            solr_params: item_by_degree_level_params,
+            include_streaming: true
+          ).calculate_lifetime
+        end
+
+        it 'returns correct results' do
+          expect(subject.map(&:document).map(&:to_h)).to eq item_by_degree_level_response.documents.map(&:to_h)
         end
       end
     end

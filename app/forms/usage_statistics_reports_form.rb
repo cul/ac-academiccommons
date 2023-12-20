@@ -12,6 +12,7 @@ class UsageStatisticsReportsForm < FormObject
     'Resource Type'  => SolrDocument.field_semantics[:resource_type],
     'Organization'   => SolrDocument.field_semantics[:organization],
     'Department'     => SolrDocument.field_semantics[:department],
+    'Degree Level'   => SolrDocument.field_semantics[:degree_level],
     'Series'         => SolrDocument.field_semantics[:columbia_series],
     'Non CU Series'  => SolrDocument.field_semantics[:non_columbia_series],
     'CUL DOI'        => SolrDocument.field_semantics[:id]
