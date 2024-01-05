@@ -61,6 +61,21 @@
   "start_page_ssi": "1",
   "end_page_ssi": "69",
   "date_ssi": "June 2008",
+  "degree_discipline_ssim": [
+    "Disciplinary Studies"
+  ],
+  "degree_grantor_ssim": [
+    "The Grantonator"
+  ],
+  "degree_level_name_ssim": [
+    "Doctoral"
+  ],
+  "degree_level_ssim": [
+    "2"
+  ],
+  "degree_name_ssim": [
+    "Ph.D."
+  ],
   "book_journal_title_ssi": "Project Gutenberg",
   "book_journal_title_q": [
     "Project Gutenberg"

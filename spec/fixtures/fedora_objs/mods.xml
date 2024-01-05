@@ -27,10 +27,13 @@
         <mods:dateIssued encoding="w3cdtf">1865</mods:dateIssued>
     </mods:originInfo>
 
-    <mods:extension type="degree">
-        <mods:name type="text">Doctoral</mods:name>
-        <mods:grantor type="text">The Grantonator</mods:grantor>
-        <mods:discipline type="text">Disciplinary Studies</mods:discipline>
+    <mods:extension>
+        <mods:degree>
+            <mods:name type="text">Ph.D.</mods:name>
+            <mods:grantor type="text">The Grantonator</mods:grantor>
+            <mods:discipline type="text">Disciplinary Studies</mods:discipline>
+            <mods:level type="text">2</mods:level>
+        </mods:degree>
     </mods:extension>
 
     <mods:language>
