@@ -79,7 +79,6 @@ group :development, :test do
   gem 'selenium-webdriver', '~> 4.11'
   gem 'simplecov', '>= 0.22.0', require: false
   gem 'solr_wrapper', '~> 4.0'
-  gem 'webdrivers', '~> 5.3.0', require: false
   gem 'webmock'
 end
 
