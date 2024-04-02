@@ -45,6 +45,7 @@ gem 'unicode'
 gem 'voight_kampff'
 gem 'webpacker', '~> 5.4.0'
 gem 'whenever', require: false
+gem 'will_paginate'
 gem 'wowza-secure_token'
 
 # Database

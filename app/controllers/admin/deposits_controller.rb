@@ -3,7 +3,7 @@ module Admin
     load_and_authorize_resource
 
     def index
-      @deposits = Deposit.order(created_at: :desc)
+      @deposits = Deposit.paginate(page: params[:page], per_page: 30).order(created_at: :desc)
     end
 
     def show
