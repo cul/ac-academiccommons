@@ -3,6 +3,7 @@ require 'rails_helper'
 RSpec.describe AcademicCommons::Metrics::UsageStatistics do
   let(:uni) { 'abc123' }
   let(:degree_level) { 'Doctoral' }
+  let(:library_partner) { 'Columbia Journal of Law and the Arts' }
   let(:item_identifier) { '10.7916/ALICE' }
   let(:item_fedora_pid) { 'actest:1' }
   let(:other_item_identifier) { '10.7916/TESTDOC5' }

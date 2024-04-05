@@ -16,6 +16,7 @@ describe 'GET /api/v1/record/doi/:doi', type: :request do
         'degree_level' => 'Doctoral',
         'degree_name' => 'Ph.D.',
         'department' => ['Bucolic Literary Society.'],
+        'library_partner' => 'Columbia Journal of Law and the Arts',
         'embargo_end' => nil,
         'id' => '10.7916/ALICE',
         'language' => ['English'],
