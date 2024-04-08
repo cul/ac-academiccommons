@@ -43,6 +43,7 @@ class SolrDocument
     degree_level: 'degree_level_name_ssim',
     degree_grantor: 'degree_grantor_ssim',
     degree_discipline: 'degree_discipline_ssim',
+    library_partner: 'parent_journal_ssi',
     columbia_series: 'series_ssim', # Only columbia series.
     non_columbia_series: 'non_cu_series_ssim',
     thesis_advisor: 'thesis_advisor_ssim',
