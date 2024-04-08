@@ -68,30 +68,6 @@
 
     <mods:relatedItem type="host">
         <mods:titleInfo>
-            <mods:title>Columbia Journal of Law and the Arts</title>
-        </mods:titleInfo>
-
-        <mods:part>
-            <mods:detail type="volume">
-                <mods:number>44</mods:number>
-            </mods:detail>
-            <mods:detail type="issue">
-                <mods:number>4</mods:number>
-            </mods:detail>
-            <mods:extent unit="page">
-                <mods:start>581</mods:start>
-                <mods:end>605</mods:end>
-            </mods:extent>
-            <date>2021</date>
-        </mods:part>
-
-        <mods:identifier type="uri">https://journals.library.columbia.edu/index.php/lawandarts/article/view/8197</mods:identifier>
-        <mods:identifier type="doi">10.52214/jla.v44i4.8197</mods:identifier>
-        <mods:identifier type="issn">0123-4567</mods:identifier>
-    </mods:relatedItem>
-
-    <mods:relatedItem type="host">
-        <mods:titleInfo>
             <mods:title>Project Gutenberg</mods:title>
         </mods:titleInfo>
         <mods:part>
