@@ -29,6 +29,8 @@ module V1
                { 'type': ['Theses'], 'degree_level': ['Doctoral'] }
              elsif params[:key] == 'masters'
                { 'type': ['Theses'], 'degree_level': ['Master\'s'] }
+             elsif params[:key] == 'ncdp'
+               { 'department': ['National Center for Disaster Preparedness'] }
              else
                error! 'Feed key invalid', 400
              end
