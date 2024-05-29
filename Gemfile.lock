@@ -631,6 +631,7 @@ GEM
     websocket-extensions (0.1.5)
     whenever (1.0.0)
       chronic (>= 0.6.3)
+    will_paginate (4.0.0)
     wowza-secure_token (0.0.1)
     xml-simple (1.1.9)
       rexml
@@ -708,6 +709,7 @@ DEPENDENCIES
   webmock
   webpacker (~> 5.4.0)
   whenever
+  will_paginate
   wowza-secure_token
 
 BUNDLED WITH

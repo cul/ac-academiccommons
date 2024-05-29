@@ -3,6 +3,7 @@
   <%= link_to('Download CSV File', '/admin/agreements.csv') %>
 </p>
 
+<div class="pagination"> <%= will_paginate @posts %></div>
 <table class="table">
   <thead>
     <tr>
@@ -35,3 +36,4 @@
     <% end %>
   </tbody>
 </table>
+<div class="pagination"> <%= will_paginate @posts %></div>
