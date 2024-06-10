@@ -49,8 +49,8 @@ gem 'will_paginate'
 gem 'wowza-secure_token'
 
 # Database
-gem 'mysql2'
-gem 'sqlite3', '>= 1.3.5'
+gem 'mysql2', '>= 0.5.6'
+gem 'sqlite3', '~> 1.4'
 
 group :development do
   gem 'listen'
