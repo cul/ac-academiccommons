@@ -1,39 +1,43 @@
+# frozen_string_literal: true
+
 # Enable resque tasks and ensure that setup and work tasks have access to the environment
 require 'resque/tasks'
-task "resque:setup" => :environment
-task "resque:work" => :environment
+task 'resque:setup' => :environment
+task 'resque:work' => :environment
 
 MAX_WAIT_TIME_TO_KILL_WORKERS = 120
 PIDSFILE_PATH = 'tmp/pids'
 
 namespace :resque do
-
-  desc "Stop current workers and start new workers"
-  task :restart_workers => :environment do
+  desc 'Stop current workers and start new workers'
+  task restart_workers: :environment do
     Rake::Task['resque:stop_workers'].invoke
     Rake::Task['resque:start_workers'].invoke
   end
 
-  desc "Stop running workers"
-  task :stop_workers => :environment do
+  desc 'Stop running workers'
+  task stop_workers: :environment do
     stop_workers
   end
 
-  desc "Start workers"
-  task :start_workers => :environment do
+  desc 'Start workers'
+  task start_workers: :environment do
     start_workers(Rails.application.config_for(:resque))
   end
 
   def store_pids(pids)
     pids_to_store = pids
-    pids_to_store.each_with_index do | pid_to_store, index |
-      pid_storage_file = "#{PIDSFILE_PATH}/resque_work_#{index+1}.pid"
+    pids_to_store.each_with_index do |pid_to_store, index|
+      pid_storage_file = "#{PIDSFILE_PATH}/resque_work_#{index + 1}.pid"
       File.write(File.expand_path(pid_storage_file, Rails.root), "#{pid_to_store}\n")
     end
   end
 
   def read_pids
-    Dir.glob(File.join(PIDSFILE_PATH, 'resque_work*.pid')).select { |path| File.file?(path) && !File.zero?(path) }.map do |file_path|
+    pids_files = Dir.glob(File.join(PIDSFILE_PATH, 'resque_work*.pid')).select { |path|
+      File.file?(path) && !File.zero?(path)
+    }
+    pids_files.map do |file_path|
       File.open(file_path, &:gets).chomp!
     end
   end
@@ -42,7 +46,7 @@ namespace :resque do
     pids = read_pids
 
     if pids.empty?
-      puts "No known workers to kill."
+      puts 'No known workers to kill.'
     else
       # First tell workers to stop accepting new work by sending USR2 signal
       puts "\nTelling workers to finish current jobs, but not process any new jobs..."
@@ -50,16 +54,16 @@ namespace :resque do
       puts "$ #{syscmd}"
       `#{syscmd}`
       puts "\n"
-      puts "Waiting for workers to finish current jobs..."
-      start_time = Time.now
-      while (Time.now - start_time) < MAX_WAIT_TIME_TO_KILL_WORKERS do
+      puts 'Waiting for workers to finish current jobs...'
+      start_time = Time.zone.now
+      while (Time.zone.now - start_time) < MAX_WAIT_TIME_TO_KILL_WORKERS
         sleep 1
-        num_workers_working = Resque.workers.select { |w| w.working? }.length
+        num_workers_working = Resque.workers.count(&:working?)
         puts "#{num_workers_working} workers still working..."
         break if num_workers_working.zero?
       end
       puts "\n"
-      if Resque.workers.select(&:working?).length > 0
+      if Resque.workers.count(&:working?).positive?
         puts "Workers are still running, but wait time of #{MAX_WAIT_TIME_TO_KILL_WORKERS} has been exceeded. Sending QUIT signal anyway."
       else
         puts 'Workers are no longer processing any jobs. Safely sending QUIT signal...'
@@ -73,7 +77,7 @@ namespace :resque do
     end
 
     # Unregister old workers
-    Resque.workers.each {|w| w.unregister_worker}
+    Resque.workers.each(&:unregister_worker)
   end
 
   # Start a worker with proper env vars and output redirection
@@ -89,8 +93,8 @@ namespace :resque do
 
     ops = {
       pgroup: true,
-      err: [Rails.root.join('log', 'resque_stderr').to_s, "a"],
-      out: [Rails.root.join('log', 'resque_stdout').to_s, "a"]
+      err: [Rails.root.join('log', 'resque_stderr').to_s, 'a'],
+      out: [Rails.root.join('log', 'resque_stdout').to_s, 'a']
     }
 
     pids = []
@@ -100,13 +104,13 @@ namespace :resque do
         'RAILS_ENV' => Rails.env.to_s,
         'INTERVAL' => polling_interval.to_s # jobs tend to run for a while, so a 5-second checking interval is fine
       }
-      count.times {
+      count.times do
         # Using Kernel.spawn and Process.detach because regular system() call would
         # cause the processes to quit when capistrano finishes.
-        pid = spawn(env_vars, "rake resque:work", ops)
+        pid = spawn(env_vars, 'rake resque:work', ops)
         Process.detach(pid)
         pids << pid
-      }
+      end
     end
 
     store_pids(pids)
