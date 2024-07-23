@@ -6,7 +6,7 @@ task 'resque:setup' => :environment
 task 'resque:work' => :environment
 
 MAX_WAIT_TIME_TO_KILL_WORKERS = 120
-PIDSFILE_PATH = 'tmp/pids'
+PIDFILE_PATH = 'tmp/pids'
 
 namespace :resque do
   desc 'Stop current workers and start new workers'
@@ -28,17 +28,27 @@ namespace :resque do
   def store_pids(pids)
     pids_to_store = pids
     pids_to_store.each_with_index do |pid_to_store, index|
-      pid_storage_file = "#{PIDSFILE_PATH}/resque_work_#{index + 1}.pid"
+      pid_storage_file = "#{PIDFILE_PATH}/resque_work_#{index + 1}.pid"
       File.write(File.expand_path(pid_storage_file, Rails.root), "#{pid_to_store}\n")
     end
   end
 
-  def read_pids
-    pids_files = Dir.glob(File.join(PIDSFILE_PATH, 'resque_work*.pid')).select { |path|
+  def clear_pid_files
+    pid_files = Dir.glob(File.join(PIDFILE_PATH, 'resque_work*.pid')).select { |path|
       File.file?(path) && !File.zero?(path)
     }
-    pids_files.map do |file_path|
-      File.open(file_path, &:gets).chomp!
+    pid_files.each do |pidfile|
+      File.delete(pidfile)
+    end
+  end
+
+  def read_pids
+    pid_files = Dir.glob(File.join(PIDFILE_PATH, 'resque_work*.pid')).select { |path|
+      File.file?(path) && !File.zero?(path)
+    }
+
+    pid_files.map do |file_path|
+      File.open(file_path, &:gets).chomp
     end
   end
 
@@ -71,7 +81,7 @@ namespace :resque do
       syscmd = "kill -s QUIT #{pids.join(' ')}"
       puts "$ #{syscmd}"
       `#{syscmd}`
-      store_pids([])
+      clear_pid_files
       puts "\n"
       puts 'Workers have been shut down.'
     end
@@ -93,8 +103,8 @@ namespace :resque do
 
     ops = {
       pgroup: true,
-      err: [Rails.root.join('log', 'resque_stderr').to_s, 'a'],
-      out: [Rails.root.join('log', 'resque_stdout').to_s, 'a']
+      err: [Rails.root.join('log', 'resque.log').to_s, 'a'],
+      out: [Rails.root.join('log', 'resque.log').to_s, 'a']
     }
 
     pids = []
@@ -102,7 +112,7 @@ namespace :resque do
       env_vars = {
         'QUEUES' => queues.to_s,
         'RAILS_ENV' => Rails.env.to_s,
-        'INTERVAL' => polling_interval.to_s # jobs tend to run for a while, so a 5-second checking interval is fine
+        'INTERVAL' => polling_interval.to_s # jobs tend to run for a while, so a 5-second checking interval (the default) is fine
       }
       count.times do
         # Using Kernel.spawn and Process.detach because regular system() call would
