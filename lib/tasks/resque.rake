@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 # Enable resque tasks and ensure that setup and work tasks have access to the environment
+require 'open3'
 require 'resque/tasks'
 task 'resque:setup' => :environment
 task 'resque:work' => :environment
@@ -25,28 +26,19 @@ namespace :resque do
     start_workers(Rails.application.config_for(:resque))
   end
 
-  def store_pids(pids)
-    pids_to_store = pids
-    pids_to_store.each_with_index do |pid_to_store, index|
-      pid_storage_file = "#{PIDFILE_PATH}/resque_work_#{index + 1}.pid"
-      File.write(File.expand_path(pid_storage_file, Rails.root), "#{pid_to_store}\n")
-    end
+  def pid_files
+    Dir.glob(File.join(PIDFILE_PATH, 'resque_work*.pid')).select { |path|
+      File.file?(path) && !File.zero?(path)
+    }
   end
 
   def clear_pid_files
-    pid_files = Dir.glob(File.join(PIDFILE_PATH, 'resque_work*.pid')).select { |path|
-      File.file?(path) && !File.zero?(path)
-    }
     pid_files.each do |pidfile|
       File.delete(pidfile)
     end
   end
 
   def read_pids
-    pid_files = Dir.glob(File.join(PIDFILE_PATH, 'resque_work*.pid')).select { |path|
-      File.file?(path) && !File.zero?(path)
-    }
-
     pid_files.map do |file_path|
       File.open(file_path, &:gets).chomp
     end
@@ -99,30 +91,20 @@ namespace :resque do
       total_workers += count
       "  [ #{queues} ] => #{count} #{count == 1 ? 'worker' : 'workers'}"
     }.join("\n")
-    puts "Starting #{total_workers} #{total_workers == 1 ? 'worker' : 'workers'} with a polling interval of #{polling_interval} seconds:\n" + worker_info_string
+    interval = polling_interval || '5'
+    puts "Starting #{total_workers} #{total_workers == 1 ? 'worker' : 'workers'} with a polling interval of #{interval} seconds:\n" + worker_info_string
+    err = Rails.root.join('log', 'resque.log').to_s
+    out = Rails.root.join('log', 'resque.log').to_s
+    rails_env = ENV['RAILS_ENV']
 
-    ops = {
-      pgroup: true,
-      err: [Rails.root.join('log', 'resque.log').to_s, 'a'],
-      out: [Rails.root.join('log', 'resque.log').to_s, 'a']
-    }
-
-    pids = []
     worker_config.each do |queues, count|
-      env_vars = {
-        'QUEUES' => queues.to_s,
-        'RAILS_ENV' => Rails.env.to_s,
-        'INTERVAL' => polling_interval.to_s # jobs tend to run for a while, so a 5-second checking interval (the default) is fine
-      }
-      count.times do
-        # Using Kernel.spawn and Process.detach because regular system() call would
-        # cause the processes to quit when capistrano finishes.
-        pid = spawn(env_vars, 'rake resque:work', ops)
-        Process.detach(pid)
-        pids << pid
+      queues = queues.to_s
+      count.times do |index|
+        number = index + 1
+        pidfile = Rails.root.join('tmp/pids/', "resque_work_#{number}.pid").to_s
+        _stdout_str, _stderr_str, status = Open3.capture3("RAILS_ENV=#{rails_env}  QUEUE=\"#{queues}\"  PIDFILE=#{pidfile} BACKGROUND=yes VERBOSE=1 INTERVAL=#{interval} rake resque:work >> #{out} 2>> #{err}")
+        puts "Worker #{number} started, status: #{status}"
       end
     end
-
-    store_pids(pids)
   end
 end
