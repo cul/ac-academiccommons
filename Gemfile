@@ -34,7 +34,7 @@ gem 'nokogiri', '~> 1.15.2'
 gem 'okcomputer'
 gem 'premailer-rails'
 gem 'rainbow'
-gem 'resque', '~> 1.27'
+gem 'resque', '~> 2.0'
 gem 'rinku'
 gem 'rsolr-ext'
 gem 'rubyzip', require: 'zip'
@@ -49,8 +49,8 @@ gem 'will_paginate'
 gem 'wowza-secure_token'
 
 # Database
-gem 'mysql2'
-gem 'sqlite3', '>= 1.3.5'
+gem 'mysql2', '>= 0.5.6'
+gem 'sqlite3', '~> 1.4'
 
 group :development do
   gem 'listen'

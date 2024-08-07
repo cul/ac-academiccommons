@@ -1,4 +1,4 @@
-lock '3.17.0'
+lock '3.17.3'
 
 set :instance, 'ac'
 set :application, 'academiccommons'
