@@ -27,3 +27,8 @@ end
 every :weekday, at: '6pm' do
   rake 'sitemap:create', email_subject: 'Sitemap generation'
 end
+
+# Restart resque workers daily.
+every :day, at: '12am' do
+  rake 'resque:restart_workers', email_subject: 'Resque workers restart'
+end
