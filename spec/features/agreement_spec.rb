@@ -4,6 +4,7 @@ describe 'Agreement', type: :feature do
   include_context 'non-admin user for feature'
 
   before do
+    SiteOption.create!(name: 'deposits_enabled', value: true)
     visit agreement_path
   end
 

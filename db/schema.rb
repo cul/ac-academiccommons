@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_12_08_202313) do
+ActiveRecord::Schema.define(version: 2024_08_20_183333) do
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
@@ -177,6 +177,11 @@ ActiveRecord::Schema.define(version: 2022_12_08_202313) do
     t.datetime "updated_at"
     t.index ["session_id"], name: "index_sessions_on_session_id"
     t.index ["updated_at"], name: "index_sessions_on_updated_at"
+  end
+
+  create_table "site_options", force: :cascade do |t|
+    t.string "name"
+    t.boolean "value"
   end
 
   create_table "statistics", force: :cascade do |t|

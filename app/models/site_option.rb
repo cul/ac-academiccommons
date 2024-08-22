@@ -1,0 +1,3 @@
+class SiteOption < ApplicationRecord
+end
+  
