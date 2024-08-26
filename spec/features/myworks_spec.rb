@@ -62,4 +62,27 @@ describe 'myworks', type: :feature do
       expect(page).to have_link 'First Test Document', href: '/doi/10.7916/TESTDOC10'
     end
   end
+
+  
+  context 'when deposits are enabled' do
+    before do 
+      SiteOption.create!(name: 'deposits_enabled', value: true)
+      visit myworks_path
+    end
+    it 'links to the upload page' do
+      # this needs to look for a link by href
+      expect(page).to have_css('a[href="/upload"]')
+    end
+  end
+
+  context 'when deposits are disabled' do
+    before do 
+      SiteOption.create!(name: 'deposits_enabled', value: false)
+      visit myworks_path
+    end
+    it 'does not link to the upload page' do
+      expect(page).not_to have_css('a[href="/upload"]')
+    end
+  end
+
 end

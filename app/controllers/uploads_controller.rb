@@ -14,8 +14,7 @@ class UploadsController < ApplicationController
   # GET /upload/new
   # Show upload form, if user is logged in.
   def new
-    deposits_enabled = SiteOption.find_by(name: 'deposits_enabled')[:value]
-    if deposits_enabled
+    if deposits_enabled?
       @deposit ||= Deposit.new(
         creators: [
           { first_name: current_user.first_name || nil, last_name: current_user.last_name || nil, uni: current_user.uid }
