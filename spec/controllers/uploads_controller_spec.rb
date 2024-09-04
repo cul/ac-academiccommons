@@ -1,11 +1,10 @@
 require 'rails_helper'
 
-
 RSpec.describe UploadsController, type: :controller do
-    context 'when user logged in ' do
-      include_context 'non-admin user for controller'
+  context 'when user logged in ' do
+    include_context 'non-admin user for controller'
 
-      describe "deposits are enabled" do
+    describe 'deposits are enabled' do
       let(:deposit) { Deposit.first }
 
       let(:http_request) do
@@ -25,10 +24,9 @@ RSpec.describe UploadsController, type: :controller do
              }
       end
 
-      before do 
-        SiteOption.create!(name: 'deposits_enabled', value: true)
+      before do
+        SiteOption.create!(name: SiteOption::DEPOSITS_ENABLED, value: true)
       end
-
 
       it 'response is successful' do
         http_request
@@ -55,14 +53,15 @@ RSpec.describe UploadsController, type: :controller do
       end
     end
 
-      describe "when deposits are disabled" do
-        before do 
-          SiteOption.create!(name: 'deposits_enabled', value: false)
-          get :new 
-        end
-        it 'redirects to home page' do
-          expect(response).to redirect_to(root_path)
-        end
+    describe 'when deposits are disabled' do
+      before do
+        SiteOption.create!(name: SiteOption::DEPOSITS_ENABLED, value: false)
+        get :new
+      end
+
+      it 'redirects to home page' do
+        expect(response).to redirect_to(root_path)
       end
     end
   end
+end

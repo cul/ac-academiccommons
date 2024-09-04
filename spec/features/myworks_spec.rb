@@ -63,12 +63,12 @@ describe 'myworks', type: :feature do
     end
   end
 
-  
   context 'when deposits are enabled' do
-    before do 
-      SiteOption.create!(name: 'deposits_enabled', value: true)
+    before do
+      SiteOption.create!(name: SiteOption::DEPOSITS_ENABLED, value: true)
       visit myworks_path
     end
+
     it 'links to the upload page' do
       # this needs to look for a link by href
       expect(page).to have_css('a[href="/upload"]')
@@ -76,13 +76,13 @@ describe 'myworks', type: :feature do
   end
 
   context 'when deposits are disabled' do
-    before do 
-      SiteOption.create!(name: 'deposits_enabled', value: false)
+    before do
+      SiteOption.create!(name: SiteOption::DEPOSITS_ENABLED, value: false)
       visit myworks_path
     end
+
     it 'does not link to the upload page' do
       expect(page).not_to have_css('a[href="/upload"]')
     end
   end
-
 end
