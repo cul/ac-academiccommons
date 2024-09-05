@@ -1,6 +1,10 @@
+<div class="row align-items-center">
+<div class="col-8">
 <h2>Self-Deposits     <%= @posts  %>
  </h2>
+ </div>
  <%= render :partial=>'enable_deposits_form' %>
+ </div>
 <div class="pagination"> <%= will_paginate @deposits %></div>
 <table class="table">
   <thead>
