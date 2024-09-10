@@ -83,6 +83,11 @@ describe 'GET /api/v1/search', type: :request do
         'error' => 'search_type does not have a valid value'
       )
     end
+
+    it 'returns x-robots-tag none in headers' do
+      get '/api/v1/search?search_type=title'
+      expect(response.headers['X-Robots-Tag']).to eq('none')
+    end
   end
 
   context 'applies sort order' do

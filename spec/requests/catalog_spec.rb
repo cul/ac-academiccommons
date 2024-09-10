@@ -19,5 +19,17 @@ RSpec.describe 'catalog controller actions', type: :request do
       get '/search?per_page=Bad+Value&sort=Published+Latest'
       expect(response.status).to eq(400)
     end
+
+    it 'returns x-robots-tag none in headers' do
+      get '/search?per_page=20&sort=Published+Latest'
+      expect(response.headers['X-Robots-Tag']).to eq('none')
+    end
+  end
+
+  describe '/show' do
+    it 'does not return x-robots-tag none in headers' do
+      get '/doi/10.7916/ALICE'
+      expect(response.headers['X-Robots-Tag']).to be_nil
+    end
   end
 end

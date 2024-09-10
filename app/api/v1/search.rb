@@ -3,6 +3,10 @@ module V1
     content_type :json, 'application/json'
     default_format :json
 
+    before do
+      header['X-Robots-Tag'] = 'none'
+    end
+
     params do
       optional :search_type, coerce: Symbol, default: :keyword,     values: V1::Helpers::Solr::SEARCH_TYPES,
                              desc: 'type of search to be conducted, in most cases a keyword search should be sufficient'
