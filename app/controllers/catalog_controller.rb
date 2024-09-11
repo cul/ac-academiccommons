@@ -11,6 +11,7 @@ class CatalogController < ApplicationController
 
   # rubocop:disable Rails/LexicallyScopedActionFilter
   before_action :record_view_stats, only: :show
+  before_action :set_xrobots_tag_to_none, only: :index
   # rubocop:enable Rails/LexicallyScopedActionFilter
 
   class LazyFeatureQueryFacet < Hash
@@ -351,6 +352,10 @@ class CatalogController < ApplicationController
   end
 
   private
+
+  def set_xrobots_tag_to_none
+    response.headers['X-Robots-Tag'] = 'none'
+  end
 
   def record_view_stats
     record_stats(params['id'], Statistic::VIEW)
