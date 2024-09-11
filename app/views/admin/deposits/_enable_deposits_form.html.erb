@@ -1,5 +1,5 @@
 <div class="col-4 text-right">
-<%= form_with url: admin_site_options_path, method: :patch do |form| %>
+<%= form_with url: admin_site_options_path, method: :patch, local: true do |form| %>
     <% if deposits_enabled?  %>
       <% action_label = "Disable Deposits" %>
       <% enable = false %>
