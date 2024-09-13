@@ -10,4 +10,13 @@ class SiteOption < ApplicationRecord
   def self.deposits_enabled
     find_by(name: DEPOSITS_ENABLED)&.value
   end
+
+  def self.default_value_for_option(option_key)
+    unless OPTIONS.include?(option_key)
+      raise ArgumentError, "Invalid option key: #{option_key}. Must be one of: #{OPTIONS.join(', ')}"
+    end
+
+    # options will default to false so that admins must turn the option on
+    false
+  end
 end
