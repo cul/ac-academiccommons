@@ -76,6 +76,7 @@ Rails.application.routes.draw do
     get 'author_affiliation_report/create'
     resources :request_agreements,  only: [:new, :create]
     resource  :alert_message,       only: [:edit, :update]
+    resource  :site_options,       only: [:edit, :update]
     resources :deposits,            only: [:index, :show]
     resources :agreements,          only: :index
     resources :email_preferences

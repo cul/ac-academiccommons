@@ -8,6 +8,7 @@ class ApplicationController < ActionController::Base
 
   helper :all # include all helpers, all the time
   helper_method :fedora_config # share some methods w/ views via helpers
+  helper_method :deposits_enabled?
 
   rescue_from CanCan::AccessDenied do |exception|
     if current_user.nil?
@@ -19,6 +20,10 @@ class ApplicationController < ActionController::Base
     else
       raise exception
     end
+  end
+
+  def deposits_enabled?
+    SiteOption.deposits_enabled
   end
 
   def fedora_config

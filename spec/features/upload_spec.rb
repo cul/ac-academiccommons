@@ -23,6 +23,7 @@ RSpec.describe 'Upload', type: :feature do
     include_context 'non-admin user for feature'
 
     before do
+      SiteOption.create!(name: SiteOption::DEPOSITS_ENABLED, value: true)
       visit uploads_path
     end
 
@@ -39,6 +40,7 @@ RSpec.describe 'Upload', type: :feature do
     include_context 'non-admin user for feature'
 
     before do
+      SiteOption.create!(name: SiteOption::DEPOSITS_ENABLED, value: true)
       # Added signed agreement for logged in user, tried mocking :signed_latest_agreement? but it did not work
       Agreement.create(user: User.first, name: 'Test User', email: 'tu123@columbia.edu', agreement_version: Agreement::LATEST_AGREEMENT_VERSION)
       visit uploads_path

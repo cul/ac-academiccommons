@@ -14,11 +14,15 @@ class UploadsController < ApplicationController
   # GET /upload/new
   # Show upload form, if user is logged in.
   def new
-    @deposit ||= Deposit.new(
-      creators: [
-        { first_name: current_user.first_name || nil, last_name: current_user.last_name || nil, uni: current_user.uid }
-      ]
-    )
+    if deposits_enabled?
+      @deposit ||= Deposit.new(
+        creators: [
+          { first_name: current_user.first_name || nil, last_name: current_user.last_name || nil, uni: current_user.uid }
+        ]
+      )
+    else
+      redirect_to root_path
+    end
   end
 
   # POST /upload

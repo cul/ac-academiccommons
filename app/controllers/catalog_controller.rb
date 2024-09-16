@@ -32,6 +32,9 @@ class CatalogController < ApplicationController
   end
 
   configure_blacklight do |config|
+    allowed_params = [:deposits_enabled]
+    config.search_state_fields.concat(allowed_params)
+
     # Delete default blacklight components we aren't using
     config.index.document_actions.delete(:bookmark)
 

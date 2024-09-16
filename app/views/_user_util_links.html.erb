@@ -32,8 +32,11 @@
 <% end %>
 
 <li>
-  <%= link_to uploads_path, class: 'share-button' do %>
+
+<% if deposits_enabled? %>
+<%= link_to uploads_path, class: 'share-button' do %>
     <%= t('blacklight.header_links.upload') %>
     <span><%= t('blacklight.header_links.upload_full_text') %></span>
   <% end %>
 </li>
+<% end %>
