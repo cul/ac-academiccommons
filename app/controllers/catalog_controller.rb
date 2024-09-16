@@ -32,7 +32,8 @@ class CatalogController < ApplicationController
   end
 
   configure_blacklight do |config|
-    allowed_params = [:deposits_enabled]
+    allowed_params = [:id, :commit, :usage_statistics_reports_form, :verb,
+                      :metadataPrefix, :_method, :deposit, :category_id, :agreement, :deposits_enabled]
     config.search_state_fields.concat(allowed_params)
 
     # Delete default blacklight components we aren't using
