@@ -140,7 +140,7 @@ RSpec.describe 'Upload', type: :feature do
       it 'sends student reminder email' do
         email = ActionMailer::Base.deliveries.pop
         expect(email.subject).to eql 'Department approval may be needed'
-        expect(email.to).to include 'tu123@columbia.edu'
+        expect(email.to).to include User.first.email
       end
     end
 

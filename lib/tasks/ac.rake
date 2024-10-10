@@ -44,4 +44,38 @@ namespace :ac do
       puts Rainbow('Incorrect arguments. Pass output=/path/to/file').red
     end
   end
+
+  task delete_stale_pending_works: :environment do
+    log = Rails.logger
+    users = User.all
+    users.each do |current_user|
+      deposits = current_user.deposits.where('created_at < ?', 6.months.ago)
+      identifiers = deposits.map(&:hyacinth_identifier).compact
+      if identifiers.present?
+        results = AcademicCommons.search do |params|
+          identifiers = identifiers.map { |i| "\"#{i}\"" }.join(' OR ')
+                                   .prepend('(').concat(')')
+          params.filter('fedora3_pid_ssi', identifiers)
+          params.aggregators_only
+          params.field_list('fedora3_pid_ssi')
+        end
+
+        hyacinth_ids_in_ac = results.documents.map { |d| d[:fedora3_pid_ssi] }
+      else
+        hyacinth_ids_in_ac = []
+      end
+
+      pending_works = deposits.to_a.keep_if do |deposit|
+        hyacinth_id = deposit.hyacinth_identifier
+        hyacinth_id.blank? || !hyacinth_ids_in_ac.include?(hyacinth_id)
+      end
+
+      log.info "===Deleting #{pending_works.count} stale pending work(s)===" unless pending_works.empty?
+
+      pending_works.each do |pending_work|
+        log.info pending_work.inspect
+        pending_work.destroy
+      end
+    end
+  end
 end

@@ -102,8 +102,7 @@ namespace :resque do
       count.times do |index|
         number = index + 1
         pidfile = Rails.root.join('tmp/pids/', "resque_work_#{number}.pid").to_s
-        _stdout_str, _stderr_str, status = Open3.capture3("RAILS_ENV=#{rails_env}  QUEUE=\"#{queues}\"  PIDFILE=#{pidfile} BACKGROUND=yes VERBOSE=1 INTERVAL=#{interval} rake resque:work >> #{out} 2>> #{err}")
-        puts "Worker #{number} started, status: #{status}"
+        Open3.capture3("RAILS_ENV=#{rails_env}  QUEUE=\"#{queues}\"  PIDFILE=#{pidfile} BACKGROUND=yes VERBOSE=1 INTERVAL=#{interval} rake resque:work >> #{out} 2>> #{err}")
       end
     end
   end

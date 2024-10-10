@@ -32,3 +32,8 @@ end
 every :day, at: '12am' do
   rake 'resque:restart_workers', email_subject: 'Resque workers restart'
 end
+
+# Delete stale pending works once a month
+every :month do
+  rake 'ac:delete_stale_pending_works', email_subject: 'Delete stale pending works'
+end

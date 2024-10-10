@@ -15,12 +15,18 @@ FactoryBot.define do
     license { 'https://creativecommons.org/licenses/by/4.0/' }
     previously_published { true }
     current_student { false }
+    created_at { Time.zone.now }
+    hyacinth_identifier {}
 
     after(:build) do |deposit|
       deposit.files.attach(
         io: File.open(Rails.root.join('spec', 'fixtures', 'test_file.txt')),
         filename: 'test_file.txt'
       )
+    end
+
+    trait :with_user do
+      association :user, factory: :user
     end
   end
 end
