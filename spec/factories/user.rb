@@ -3,7 +3,7 @@ FactoryBot.define do
     uid { 'tu123' }
     first_name { 'Test' }
     last_name { 'User' }
-    email { 'tu123@columbia.edu' }
+    sequence(:email) { |n| "tu123#{n}@columbia.edu" }
   end
 
   factory :admin, class: User do
