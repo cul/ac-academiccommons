@@ -9,6 +9,7 @@
       <li><%= link_to 'FAQ', '#faq', class:'scroll' %></li>
       <li><%= link_to 'Collection Policy', '#collection-policy', class:'scroll' %></li>
       <li><%= link_to 'Terms of Use', '#terms-of-use', class:'scroll' %></li>
+      <li><%= link_to 'AI training', '#llm-training', class:'scroll' %></li>
       <li><%= link_to 'Copyright', '#copyright', class:'scroll' %></li>
       <li><%= link_to 'Accessibility', '#accessibility-policy', class:'scroll' %></li>
       <li><%= link_to 'Data Protection', '#data-protection', class:'scroll' %></li>
@@ -17,57 +18,51 @@
 <% end %>
 
 <h2 id="faq">FAQ</h2>
-
 <p>For questions related to who may upload works to Academic Commons, what works are eligible for inclusion, and details about the upload process, please see our <%= link_to t('blacklight.header_links.faq'), faq_path %>.</p>
 
 <h2 id="collection-policy">Collection Policy</h2>
-
 <p>Academic Commons accepts uploads of research and scholarship from Columbia University community members. In addition, repository staff members actively solicit content from Columbia schools, departments, and affiliates, and are the first point of contact for information about adding new collections to the repository (via <a href="mailto:ac@columbia.edu">ac@columbia.edu</a>). Decisions about which works are included in Academic Commons are made by the Columbia Libraries and approved by the originating school, department, or affiliate as necessary, (for example, departmental approval is needed for student work).</p>
-
 <p>Academic Commons does not accept materials that are more appropriately stored in other Columbia Libraries collections (such as the <a href="https://library.columbia.edu/libraries/ccoh.html">Oral History Archives</a>) or otherwise already held digitally by the Columbia Libraries through other programs and on other platforms (such as the <a href="https://library.columbia.edu/collections/digital-collections.html">Digital Collections & Online Exhibitions</a>). </p>
-
 <p>If you are not certain if Academic Commons is the best place for your collection, please email us at <a href="mailto:ac@columbia.edu">ac@columbia.edu</a>, and we will do our best to assist you and refer you as appropriate.</p>
-
 <p>Academic Commons is a full-text repository, meaning that repository records describe materials that are stored in the repository. Academic Commons does not include metadata records describing materials that are stored elsewhere.</p>
-
 <p>Works in the repository are freely available to anyone online; Academic Commons does not offer restricted-access options such as campus-only access. However, some files–particularly theses and dissertations–may be temporarily under embargo, meaning access to the file itself is disabled for a limited period of time.</p>
-
 <p>Works may be deaccessioned from Academic Commons based on consultation with the originating school, department, or affiliate.</p>
 
 <h2 id="terms-of-use">Terms of Use</h2>
-
-<p>By using <%= link_to 'Academic Commons', root_path %> or any of its
-  content, you agree to accept and be bound by the following Terms of Use.</p>
+<p>By using <%= link_to 'Academic Commons', root_path %> or any of its content, you agree to accept and be bound by the following Terms of Use.</p>
 <p>Academic Commons is a freely accessible digital collection of research done at Columbia University or one of its affiliate institutions (Barnard College, Teachers College, Union Theological Seminary, Jewish Theological Seminary). The Columbia University Libraries presents Academic Commons in support of <a href="https://www.columbia.edu/content/about-columbia">Columbia’s mission</a> “to advance knowledge and learning at the highest level and to convey the products of its efforts to the world.”</p>
 <p>You may download and use works in Academic Commons in any manner consistent with fair use, as per the license terms and conditions chosen by the copyright owner and designated as such in the materials deposited in Academic Commons by the copyright owner, or other provision of copyright law. Users are responsible for determining whether a work is protected by copyright, the identity of the copyright holder, and the means for appropriately using the work.</p>
 
-<h2 id="copyright">Copyright</h2>
+<h2 id="llm-training">Large Language Model (and other AI) training</h2>
+<p>Academic Commons staff do not have control over what people do with the content available through the repository. What is and is not legally permitted under copyright law when it comes to <a href="https://en.wikipedia.org/wiki/Generative_artificial_intelligence">generative AI</a> is actively being determined by the courts, and there is a lot of legal uncertainty at this point in time (late 2024). Authors Alliance provides some <a href="https://www.authorsalliance.org/resources/generative-ai/">excellent resources</a> for authors and others who would like to dig deeper into this topic.</p>
+<p>Aggressive, large-scale crawling of Academic Commons is actively discouraged through both auto-bans of IP addresses and ranges, and the configuration of the site’s <a href="https://en.wikipedia.org/wiki/Robots.txt">robots.txt</a> file in order to block bots from commercial companies that are expressly used for large-language-model (LLM) training or retrieval-augmented generation (RAG) systems, should those companies make excessive requests of the website. </p>
+<ul>
+  <li>This solution is dependent on commercial companies being transparent about the <a href="https://en.wikipedia.org/wiki/User_agent">user agent(s)</a> employed to conduct automated crawls for the purposes of AI training/augmentation</li>
+  <li>Blocking crawlers related to AI training/augmentation is a moving target, as new companies and products are born every day</li>
+  <li>Research projects, even when conducted through a private company, may not be transparently identified, and may still result in commercial products, as was the case when ChatGPT was ostensibly <a href="https://openai.com/index/chatgpt/">released as a research project</a> in 2022</li>
+</ul>
+<p>If you notice unusually-high usage traffic on your materials, please alert us right away at <a href="mailto:ac@columbia.edu">ac@columbia.edu</a> so that we can investigate further and take appropriate action.</p>
 
+<h2 id="copyright">Copyright</h2>
 <p>Works in Academic Commons are protected by copyright, with all rights reserved, unless otherwise indicated. The copyright for any work included in Academic Commons is retained by the copyright owner. Academic Commons does not own copyrights.</p>
 <p>Works are made available in Academic Commons at the direction of contributors (an author/creator or originating department, center, program, or school at Columbia or its affiliates) according to their understanding of their rights in that material. Works are added to Academic Commons when contributors affirm that they own the rights or have authority to contribute the works. Columbia University makes no representation or warranty about the appropriateness of the contribution or whether the contributor continues to own rights in the works.</p>
 <p>Users of Academic Commons are responsible for determining whether a work is protected by copyright, the identity of the copyright owner, and the means for appropriately using the work.</p>
 
 <h3>Determining Appropriate Use of Works in Academic Commons</h3>
-
 <p>The information below may help you address copyright questions about the appropriate use of works found in the Academic Commons collections.</p> 
-
 <p>Please note that this guidance is not legal advice, nor does it address other relevant legal issues. By providing it, we do not intend to set restrictions, but instead to offer helpful insights about copyright and about contacting the proper party for permission, as needed.</p>
 
 <h3>Fair Use</h3>
-
 <p>Fair Use offers an extraordinarily important opportunity for educators, researchers, and others to make reasonable and limited uses of copyrighted materials. It is your responsibility to determine if your planned use of works found in Academic Commons is consistent with Fair Use. To learn more, see the <a href="https://copyright.columbia.edu/basics/fair-use.html">Fair Use section</a> of the <a href="https://copyright.columbia.edu/">Columbia University Copyright Advisory Services</a> website.</p>
 
 <h3>Licensed Uses</h3>
-
 <p>If a work in Academic Commons includes a license or other statement with information about how the work can be used (e.g. <a href="https://creativecommons.org/licenses/">Creative Commons</a>), users may use the work in ways consistent with the license. This information may appear in the metadata record for the work or in the work itself. Be sure to look for specific conditions and any suggestions for citation or attribution. Users desiring to utilize the work beyond the terms of the license should contact the copyright owner.</p>
 
 <h3>Finding the Copyright Owner</h3>
-
 <p>Authors/creators of many works in Academic Commons own the copyright to the work unless they have transferred rights to another party. Users seeking to locate the copyright owner of a work in Academic Commons could begin by contacting the author/creator of the work.</p>
 <p>Columbia departments or schools may have contact information for authors/creators if this information is not readily discoverable online.</p>
 
 <h3>Columbia as Copyright Holder</h3>
-
 <p class="list_title">Columbia University does not own a copyright interest solely because the work is available in Academic Commons.</p>
 <ul>
   <li>Users do not need to contact Columbia University for permission solely because the work is available in Academic Commons. When Columbia University is not the rights owner, it will neither grant nor deny copyright permission regarding such materials.</li>
@@ -75,7 +70,6 @@
 </ul>
 
 <h3>Special Cases</h3>
-
 <h4>Data and Datasets</h4>
 <p>In general, facts and collections of facts do not have copyright protection under U.S. copyright law. However, some data and data collections may have sufficient originality to be copyrightable. Users of data found in Academic Commons are responsible for determining any legal protection associated with the materials and reviewing any statements from the contributor about appropriate uses.</p>
 
@@ -83,20 +77,16 @@
 <p>Academic Commons includes videos, many of guest speakers at Columbia University events. For many such videos, rights in the visual images are owned by Columbia University, while the words and other content are the work of the speaker and rights may be retained by the speaker. For further information, users may need to contact the speaker, and the office at Columbia that created the video.</p>
 
 <h4>Submitting a Copyright Infringement Notice</h4>
-
 <p>If you believe that the inclusion of a work in Academic Commons is in violation of your copyright, you may submit a notice of copyright infringement to Columbia University. See the <a href="https://www.columbia.edu/content/copyright">Columbia University copyright website</a>.</p>
 
 <h4>More Information</h4>
 <p>For general information about copyright, fair use, and permissions, please visit the <a href="https://copyright.columbia.edu/">Columbia University Copyright Advisory Services website</a>.</p>
 
 <h2 id="accessibility-policy">Accessibility</h2>
-
 <p>Columbia University Libraries is committed to ensuring that the services offered by the Libraries are accessible to all patrons. We work with patrons on an individual basis to assess their unique accommodation needs. For all questions about accessibility specifically for Columbia University Libraries, please consult our <a href="https://library.columbia.edu/using-libraries/disability.html">Columbia University Libraries Disability Services Liaison</a>.</p>	
-
 <p>For questions about how to make sure your work in Academic Commons is accessible, please contact <a href="mailto:ac@columbia.edu">ac@columbia.edu</a>. </p>
 
 <h2 id="data-protection">Data Protection</h2>
-
 <p>Academic Commons complies with the Columbia University Libraries <a href="http://library.columbia.edu/about/policies/confidentiality.html" target="_blank" rel="noopener">Confidentiality of Library Records Policy</a>. We will not share any information about your use of Academic Commons except as required by the Confidentiality policy, though we may securely  save the information described below for an indefinite period.</p>
 
 <h3>Users</h3>
@@ -118,25 +108,25 @@
 <h2 id="name-change">Academic Commons Author Name Change Policy</h2>
 Upon your request, we will change how your name displays in Academic Commons metadata.
 <ul>
-<li>We do not require a justification or reason for the name change.</li>
-<li>How your name displays in the repository does not need to reflect your current or past legal name.</li>
-<li>We will not mention the name change in either the work itself or in repository metadata unless you request that we do so.</li>
-<li>If you would like your name to be changed on your deposited materials, such as a PDF, and not just in the metadata, you will need to provide us with the replacement document.</li>
+  <li>We do not require a justification or reason for the name change.</li>
+  <li>How your name displays in the repository does not need to reflect your current or past legal name.</li>
+  <li>We will not mention the name change in either the work itself or in repository metadata unless you request that we do so.</li>
+  <li>If you would like your name to be changed on your deposited materials, such as a PDF, and not just in the metadata, you will need to provide us with the replacement document.</li>
 </ul>
 
 Caveats and exceptions:
 <ul>
-<li>Please note that this name-change process is for Academic Commons only. Contact the appropriate Office of the Registrar to learn more about changing your name in your institutional identity record.</li>
-<li>If you would like to change your name on a work that has been published elsewhere, such as a journal article, note that you will also have to coordinate with the publisher to have your name changed on their PDF and website.</li>
-<li>If you would like to change your name on a thesis or dissertation, Libraries staff will have to coordinate with the degree grantor in order to confirm the change, as is the case with any change request for a thesis or dissertation that has been approved as a part of the degree-granting process.</li>
+  <li>Please note that this name-change process is for Academic Commons only. Contact the appropriate Office of the Registrar to learn more about changing your name in your institutional identity record.</li>
+  <li>If you would like to change your name on a work that has been published elsewhere, such as a journal article, note that you will also have to coordinate with the publisher to have your name changed on their PDF and website.</li>
+  <li>If you would like to change your name on a thesis or dissertation, Libraries staff will have to coordinate with the degree grantor in order to confirm the change, as is the case with any change request for a thesis or dissertation that has been approved as a part of the degree-granting process.</li>
 </ul>
 
 To change how your name displays in Academic Commons metadata:
 <ol>
-<li>Email us at <a href="mailto:ac@columbia.edu">ac@columbia.edu</a> to request that your name be changed.</li>
-<li>If you have an active Columbia UNI, please email us using your UNI@columbia.edu email address so we can verify that you are the person requesting that your name be changed.</li>
-<li>List all your works in Academic Commons for which you are requesting the name change along with a link to each work.</li>
-<li>Provide the new name you would like us to use.</li>
+  <li>Email us at <a href="mailto:ac@columbia.edu">ac@columbia.edu</a> to request that your name be changed.</li>
+  <li>If you have an active Columbia UNI, please email us using your UNI@columbia.edu email address so we can verify that you are the person requesting that your name be changed.</li>
+  <li>List all your works in Academic Commons for which you are requesting the name change along with a link to each work.</li>
+  <li>Provide the new name you would like us to use.</li>
 </ol>
 
-For more about the issues related to name changes in academic publishing, see <a href="https://publicationethics.org/news/update-cope-guidance-regarding-author-name-changes">this guidance for publishers from the Committee on Publication Ethics on author name changes</a>.
+<p>For more about the issues related to name changes in academic publishing, see <a href="https://publicationethics.org/news/update-cope-guidance-regarding-author-name-changes">this guidance for publishers from the Committee on Publication Ethics on author name changes</a>.</p>
