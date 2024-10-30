@@ -9,6 +9,7 @@
       <li><%= link_to 'API', '#api', class:'scroll' %></li>
       <li><%= link_to 'OAI-PMH', '#oai', class:'scroll' %></li>
       <li><%= link_to 'SWORD', '#sword', class:'scroll' %></li>
+      <li><%= link_to 'Web Crawlers', '#crawlers', class:'scroll' %></li>
       <li><%= link_to 'Sitemap', '#sitemap', class:'scroll' %></li>
       <li><%= link_to 'Metadata License', '#metadata_license', class:'scroll' %></li>
   </ul>
@@ -55,6 +56,10 @@ The base URL is: <%= link_to oai_catalog_url, oai_catalog_url %></p>
 </ul>
 
 <p>If you would like to learn more about how to deposit content via SWORD or start the process of requesting credentials, contact us at <a href="mailto:ac@columbia.edu">ac@columbia.edu</a>.</p> 
+
+<h2 id="crawlers">Web Crawlers</h2>
+<p>Aggressive automated crawling of Academic Commons is not permitted, and IP addresses and ranges that exceed a reasonable rate of requests will be blocked. Entities that indiscriminately consume our computational resources create access issues for everyone else, and this behavior is not something that we will accommodate. If you would like to learn more about our rate limits, please email <a href="mailto:ac@columbia.edu">ac@columbia.edu</a>.</p>
+<p>Crawling, downloading, or otherwise accessing and/or storing content from Academic Commons for the purposes of training commercial Large Language Models (LLMs) or supplementing commercial Retrieval-Augmented Generation (RAG) systems is not permitted. The use of bibliographic metadata (without abstract text, for which we do not hold the copyright) may be used for this purpose unless a user-agent has been expressly disallowed through our site’s robots.txt.</p>
 
 <h2 id="sitemap">Sitemap</h2>
 <p>The sitemap for Academic Commons is regenerated every weekday. <%= link_to nil, "#{root_url}sitemap.xml.gz" %></p>
