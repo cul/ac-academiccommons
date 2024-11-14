@@ -19,18 +19,15 @@
 <p>The Academic Commons RESTful API can be used to query/search for records. We support JSON responses. Documentation and a GUI can be found at:<br>
 <%= link_to nil, "http://petstore.swagger.io/?url=#{root_url}api/v1/swagger_doc" %></p>
 <p>Note that data feeds (data_feed) provide bulk, unpaginated access to a previously-defined subset of records from the API. Data feeds are not API alternatives unless the requestor is a Columbia entity that regularly crawls all of the responses to a consistent query. For example, a specific department name or genre type. To access the data_feed functionality of the API, please contact us at <a href="mailto:ac@columbia.edu">ac@columbia.edu</a>. </p>
+<p>The API supports GET requests; users interested in making POST requests should consider using the SWORD protocol detailed below.</p>
 <p>To see an example of an AC API integration, visit <a href="https://people.climate.columbia.edu/users/profile/ruth-s-defries">Dr. Ruth S. DeFries's profile</a> in the <a href="https://www.earth.columbia.edu/users">Earth Institute Directory</a>.</p>
+<p>For questions about how to integrate an API feed into your Columbia Site, please contact <a href="mailto:ac@columbia.edu">ac@columbia.edu</a>.</p>
 
 <h2 id="oai">OAI-PMH</h2>
 <p>Academic Commons supports the <a href="https://www.openarchives.org/OAI/openarchivesprotocol.html">Open Archives Initiative Protocol for Metadata Harvesting (OAI-PMH)</a>, version 2.0.
 The base URL is: <%= link_to oai_catalog_url, oai_catalog_url %></p>
 
-<p>The API supports GET requests; users interested in making POST requests should consider using the SWORD protocol detailed below.</p>
-
-<p>For questions about how to integrate an API feed into your Columbia Site, please contact <a href="mailto:ac@columbia.edu">ac@columbia.edu</a>.</p>
-
 <h2 id="sword">SWORD</h2>
-
 <p>Academic Commons can receive materials via <a href="http://swordapp.org/">SWORD deposit</a>. SWORD is a protocol that automates the deposit process. SWORD is best used for recurring deposits, such as regular deposits of theses or working papers from Columbia departments and regular deposits of articles from Columbia-affiliated journals. Additionally, while the Academic Commons API does not include POST functionality, SWORD can be used in a similar manner to make deposits to Academic Commons in a more programmatic way.</p>
 
 <p>To use SWORD you must have:</p>
