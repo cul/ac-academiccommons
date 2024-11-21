@@ -7,11 +7,12 @@
 <% content_for :sidebar do %>
   <ul class="anchor-links" id="sidebar">
       <li><%= link_to 'Policies', '#policies', class:'scroll' %></li>
-      <li><%= link_to 'Participation', '#participation', class:'scroll' %></li>
+      <li><%= link_to 'Managemanet of Academic Commons', '#manage', class:'scroll' %></li>
+      <li><%= link_to 'Participation in Academic Commons', '#participation', class:'scroll' %></li>
       <li><%= link_to 'Featured Partners', '#featured-partners', class:'scroll' %></li>
       <li><%= link_to 'Data Storage', '#data-storage', class:'scroll' %></li>
       <li><%= link_to 'Uploading & Submitting', '#uploading', class:'scroll' %></li>
-      <li><%= link_to 'Manage', '#manage', class:'scroll' %></li>
+      <li><%= link_to 'Citing Works', '#citing', class:'scroll' %></li>
       <li><%= link_to 'Theses & Dissertations', '#theses', class:'scroll' %></li>
   </ul>
 <% end %>
@@ -19,9 +20,51 @@
 <h2 id="policies">Policies</h2>
 <p>For information related to collection, terms of use, copyright, and data protection policies, please see our <%= link_to t('blacklight.header_links.policies'), policies_path %>.</p>
 
-<h2 id="participation">Participation</h2>
+<h2 id="manage">Manage</h2>
+<h3>Who manages Academic Commons?</h3>
+<p>Academic Commons is a program of the <a href="https://library.columbia.edu/services/digital-scholarship.html">Digital Scholarship</a> unit in the Research and Learning Division of the <a href="https://library.columbia.edu/">Columbia University Libraries</a>. Digital Scholarship staff run the repository program in collaboration with colleagues from across the libraries. Key staff are listed on our <%= link_to t('blacklight.header_links.credits'), credits_path %> page.</p>
 
-<h3>Who can participate?</h3>
+<h3>How do I contact repository staff?</h3>
+<p>The best way to contact us is to email <a href="mailto:ac@columbia.edu">ac@columbia.edu</a>. We will do our best to respond within 48 hours.</p>
+
+<h3>When can I expect to see my work in Academic Commons?</h3>
+<p>Please allow approximately one week for cataloging. Email at <a href="mailto:ac@columbia.edu">ac@columbia.edu</a> if you have any questions or need to request faster processing. If you have a Columbia UNI you will receive an automatic email notification when your work is available in the repository.</p>
+
+<h3>How does AC assign DOIs?</h3>
+<p>Each work in Academic Commons is assigned a DIgital Object Identifier (DOI), which is a type of persistent URL. A sample DOI is: 10.7916/D8ZS2W8R. DOIs expressed as URLs look like this: <a href="https://doi.org/10.7916/D8ZS2W8R">https://doi.org/10.7916/D8ZS2W8R</a>. Use the DOI when citing or referring to a work in Academic Commons. Learn more about DOIs at <a href="http://www.doi.org/">doi.org</a>.</p>
+
+<p>If you need a DOI for a work, such as a data set, and are under a short timeline, please contact <a href="mailto:ac@columbia.edu">ac@columbia.edu</a> and staff will assist you with your request.</p>
+
+<h3>How can I find out usage statistics for my work in AC?</h3>
+<p>Authors with an active Columbia UNI can log in to Academic Commons and see current- month and lifetime views and downloads for each work on the My Works page. Authors with a UNI will also receive a monthly email showing the number of views and downloads for each of their works in Academic Commons. Contact us at <a href="mailto:ac@columbia.edu">ac@columbia.edu</a> if you are not receiving our monthly emails.</p>
+
+<h3>What does the cataloging process involve?</h3>
+<p>When you upload a work, the file(s) and descriptive information you provide are placed in a queue for review by Libraries staff. As part of our review, we add descriptive metadata to make your work more discoverable. Records from Academic Commons are indexed in a variety of places, including <a href="https://clio.columbia.edu/">CLIO</a>, the Columbia University Libraries Catalog, and Google Scholar. Changes made in Academic Commons take some time to be reflected in other platforms, depending on their indexing schedule.</p>
+
+<h3>How do you choose subjects for my work?</h3>
+<p>We assign subjects using a controlled vocabulary called <a href="https://fast.oclc.org/searchfast/">Faceted Application of Subject Terminology (FAST)</a>. FAST subject terms are based on the Library of Congress' subject headings, providing a widely-recognized set of uniform subjects that connect your work with other scholarly resources.</p>
+<p>We do our best to choose appropriate subjects for your work but we welcome your guidance. You can provide suggested subjects in the Notes field of the upload form or email us any time at <a href="mailto:ac@columbia.edu">ac@columbia.edu</a> to provide feedback on the subjects we have assigned. Please note that the constraints imposed by the FAST vocabulary mean that suggested subjects may not show up verbatim in Academic Commons. If we can’t use the exact term you would like, we will refer to your suggestions to help us find the best match in the vocabulary. You can also search the <a href="https://fast.oclc.org/searchfast/">FAST vocabulary</a> and tell us which terms you would like us to use. We are always happy to receive this kind of feedback because it helps ensure that your research is described in a way that will make it the most discoverable for your colleagues and community.</p>
+
+<h3>How can I report harmful language in Academic Commons resource descriptions [metadata]?</h3>
+<p>We are committed to using respectful, accurate, and inclusive terminology in Academic Commons metadata, in alignment with Columbia University Libraries’ <a href="https://library.columbia.edu/about/policies.html">Statement on Inclusive Editing of Harmful Language in Library and Archival Collections</a>. This is an ongoing process. If you find harmful language on this website [in our metadata, in our resource descriptions], please email <a href="mailto:ac@columbia.edu">ac@columbia.edu</a>.</p>
+
+<h3>Can I change my work after it has been uploaded to AC?</h3>
+<p>Because people may be linking to or citing your work, we do not change or replace files that have already been made available in Academic Commons. However we can archive a new version of a work and create a link to its predecessors.</p>
+
+<h3>Can I remove my work from AC?</h3>
+<p>We strongly discourage the withdrawal of works from Academic Commons. However, you can request that public access to your work in Academic Commons be disabled. Though the work will no longer be publicly accessible, metadata about the work will remain available.</p>
+
+<h3>Can Academic Commons provide campus-only access to my work?</h3>
+<p>No. All content in Academic Commons is freely accessible to anyone online. Works that cannot be shared openly online should not be uploaded to Academic Commons. However, works can be embargoed (i.e., files are not available for download, though descriptive information is available) for a limited time. Theses and dissertations are the materials most frequently embargoed.</p>
+
+<h3>How does Academic Commons provide long-term digital access?</h3>
+<p>Academic Commons is part of the Columbia University Libraries long-term digital storage system, which ensures that files are replicated and stored in at least two distinct locations. We adhere to <a href="https://www.go-fair.org/fair-principles/">FAIR data principles</a> and use unique, persistent identifiers and rich metadata to enhance the accessibility of each work.</p>
+
+<h3>How can I include Academic Commons in grant applications?</h3>
+<p>Please contact us at <a href="mailto:ac@columbia.edu">ac@columbia.edu</a> if you would like to include Academic Commons in your grant application. You can use the information on our <%= link_to t('blacklight.header_links.about'), about_path %> page to describe the repository in your application. </p>
+
+<h2 id="participation">Participation</h2>
+<h3>Who can add content to Academic Commons?</h3>
 <p>We accept research and scholarship from affiliates of Columbia University, Barnard College, Jewish Theological Seminary, Teachers College, and Union Theological Seminary. Specifically, eligible groups are:</p>
 <ul>
   <li>Current faculty and staff</li>
@@ -32,9 +75,8 @@
 </ul>
 
 <h3>What types of work can I upload?</h3>
-<p>We accept research and scholarship produced at Columbia University and its affiliate institutions, including the following types of work:</p><p>
-
-</p><ul>
+<p>We accept research and scholarship produced at Columbia University and its affiliate institutions, including the following types of work:</p>
+<ul>
   <li>Journal articles</li>
   <li>Books and book chapters</li>
   <li>Working and technical papers</li>
@@ -60,7 +102,6 @@
 <p>Most doctoral degree programs on campus deposit student dissertations to Academic Commons. Upload to ProQuest may also be required by some programs.</p>
 
 <table class="table small">
-
   <tbody><tr>
     <th>School/Institution</th>
     <th>Degree</th>
@@ -119,7 +160,6 @@
 
 <h3>How can I request an embargo, or an embargo extension, on my thesis or dissertation?</h3>
 <p>If you wish to make changes to the length of the embargo on your thesis or dissertation in Academic Commons, contact the degree-program administrator with your request. If the request is approved, the program administrator will contact Academic Commons staff. If you are not sure to whom you should direct your request, contact Academic Commons at <a href="mailto:ac@columbia.edu">ac@columbia.edu</a>.</p>
-
 <ul>
     <li>Graduates of doctoral programs administered by the Columbia Graduate School of Arts and Sciences should submit their request to the Dissertation Office at <a href="mailto:gsas-dissertations@columbia.edu">gsas-dissertations@columbia.edu</a>.</li>
     <li>If you also uploaded a thesis or dissertation to ProQuest you must contact ProQuest directly to request changes to the availability of your work in the ProQuest Dissertation and Theses databases. Contact ProQuest at <a href="mailto:disspub@proquest.com">disspub@proquest.com</a>.</li>
@@ -154,11 +194,8 @@
 
 <h3>What is Dryad and why should I use it?</h3>
 <p><a href="https://datadryad.org/stash">Dryad</a> is a digital repository dedicated to research data. Columbia affiliates can deposit data in Dryad, and <a href="https://datadryad.org/stash/submission_process#curation">Dryad curators</a> help ensure that your data is well-described and in the best format for sharing. Dryad assigns a <a href="https://www.doi.org/factsheets/DOIKeyFacts.html">DOI</a> to your data and provides long-term storage. For upload size limits and procedures, see the Dryad <a href="https://datadryad.org/stash/submission_process#upload-methods">upload method documentation</a>.</p>
-
 <p>Upload data to Dryad by first <a href="https://datadryad.org/stash/sessions/choose_login">signing in</a> with an <a href="https://orcid.org/">ORCID ID</a>, then by following instructions on their upload form. Here is <a href="https://datadryad.org/docs/QuickstartGuideToDataSharing.pdf">a guide (PDF)</a> to get you started.</p>
-
 <p>Though we encourage you to use Dryad to share your research data, especially if you have large files, you can also upload research data to Academic Commons. Like Dryad, Academic Commons assigns a DOI to your data and offers long-term storage. <%= link_to t('blacklight.header_links.login'), new_user_session_path %> to Academic Commons using your Columbia UNI and password and follow the instructions on the upload form. Email us at <a href="mailto:ac@columbia.edu">ac@columbia.edu</a> if you have data files over 100MB in size.</p>
-
 <p>Libraries staff are currently working to connect Academic Commons to Dryad so that research data uploaded to Dryad by Columbia researchers will also be discoverable in Academic Commons.</p>
 
 <h3>How can I use Academic Commons and Dryad as part of a practice of ethical data sharing?</h3>
@@ -168,13 +205,11 @@
 <p>Yes. There are numerous data platforms that may be appropriate repositories for your data. Disciplinary repositories, when available, often have the best tools for describing your data. A few repositories that you may wish to explore are <a href="https://www.icpsr.umich.edu/web/pages/">ICPSR</a> (social and behavioral research), <a href="https://ropercenter.cornell.edu/">Roper</a> (public opinion data) and <a href="https://data.qdr.syr.edu/">QDR</a> (qualitative data in the social sciences). <a href="https://datadryad.org/stash">Dryad</a> (see the two FAQs above this one) is a general data repository. Columbia University IT also provides the <a href="https://dataplatform.cuit.columbia.edu/">Columbia Data Platform</a> for storing and working with data, and the Office of the Executive Vice President for Research (EVPR) provides a page listing <a href="https://research.columbia.edu/content/research-data-storage">places where Columbia researchers can share their data</a>.</p>
 
 <h2 id="uploading">Guidelines for uploading and submitting work to AC</h2>
-
 <h3>Is there a fee for uploading research to Academic Commons?</h3>
 <p>Members of the Columbia University community can upload their work to Academic Commons at no cost.</p>
 
 <h3>What is the Academic Commons participation agreement?</h3>
 <p>Before you can upload work to Academic Commons, you must sign an agreement that grants Columbia University a non-exclusive license to distribute your work in the repository. By signing the agreement, you affirm that you hold sufficient rights to grant this license to Columbia.</p>
-
 <ul>
     <li>Read our <%= link_to 'copyright information', policies_path(anchor: 'copyright') %> to learn more.</li>
     <li>Read about managing your copyrights on the <a href="https://copyright.columbia.edu/">Copyright Advisory Services website</a>.</li>
@@ -185,11 +220,9 @@
 <h3>How do I upload my work?</h3>
 
 <h4>If you have a Columbia UNI</h4>
-
 <p><%= link_to t('blacklight.header_links.login'), new_user_session_path %> to Academic Commons with your Columbia UNI and password, then navigate to the Add New Work tab and follow the instructions.</p>
 
 <h4>If you do not have a Columbia UNI</h4>
-
 <p>Email us at <a href="mailto:ac@columbia.edu">ac@columbia.edu</a>. Tell us about your work and how it meets our guidelines for participation.</p>
 
 <h3>Making deposits on behalf of someone else</h3>
@@ -210,9 +243,7 @@
 
 <h3>Can I put my previously published work into Academic Commons? Why should I?</h3>
 <p>The publication agreements you have signed determine how you can add previously published work to Academic Commons. Check the language in your publication agreements as well as journal and/or publisher policies. The <a href="https://v2.sherpa.ac.uk/romeo/">Sherpa/Romeo</a> database has information about the “author self-archiving” policies of a large number of journals and publishers.</p>
-
 <p>Uploading a version of your previously published works to Academic Commons allows you to create an open version that may not be accessible to colleagues and students at other institutions or to policy makers and practitioners. You are also building an archive of your work to which you can refer others.</p>
-
 <p>If you have questions about uploading your previously published work, contact us at <a href="mailto:ac@columbia.edu">ac@columbia.edu</a>. For more information on copyright and your work, visit the <a href="https://copyright.columbia.edu/">Columbia Libraries Copyright Advisory Services website</a>.</p>
 
 <h3>Is there a limit to the number of works I can upload?</h3>
@@ -239,51 +270,7 @@
 <h4>Text</h4>
 <p>For accessibility purposes, if you have multiple galleys for a text-based upload (such as both a PDF and EPUB for a journal article or book chapter) please include all of these files in your upload. Documents such as EPUBS are often more accessible to screen readers than .pdfs, which mimic more traditional printed documents. You can read more about .epub accessibility <a href="https://www.w3.org/TR/epub-a11y-tech-11/">here</a>. <a href="https://accessibility.columbia.edu/content/making-documents-accessible">Here is some additional guidance</a> about making documents more accessible.</p>
 
-<h2 id="manage">Manage</h2>
-
-<h3>Who manages Academic Commons?</h3>
-<p>Academic Commons is a program of the <a href="https://library.columbia.edu/services/digital-scholarship.html">Digital Scholarship</a> unit in the Research and Learning Division of the <a href="https://library.columbia.edu/">Columbia University Libraries</a>. Digital Scholarship staff run the repository program in collaboration with colleagues from across the libraries. Key staff are listed on our <%= link_to t('blacklight.header_links.credits'), credits_path %> page.</p>
-
-<h3>How do I contact repository staff?</h3>
-<p>The best way to contact us is to email <a href="mailto:ac@columbia.edu">ac@columbia.edu</a>. We will do our best to respond within 48 hours.</p>
-
-<h3>When can I expect to see my work in Academic Commons?</h3>
-<p>Please allow approximately one week for cataloging. Email at <a href="mailto:ac@columbia.edu">ac@columbia.edu</a> if you have any questions or need to request faster processing. If you have a Columbia UNI you will receive an automatic email notification when your work is available in the repository.</p>
-
-<h3>How does AC assign DOIs?</h3>
-<p>Each work in Academic Commons is assigned a DIgital Object Identifier (DOI), which is a type of persistent URL. A sample DOI is: 10.7916/D8ZS2W8R. DOIs expressed as URLs look like this: <a href="https://doi.org/10.7916/D8ZS2W8R">https://doi.org/10.7916/D8ZS2W8R</a>. Use the DOI when citing or referring to a work in Academic Commons. Learn more about DOIs at <a href="http://www.doi.org/">doi.org</a>.</p>
-
-<p>If you need a DOI for a work, such as a data set, and are under a short timeline, please contact <a href="mailto:ac@columbia.edu">ac@columbia.edu</a> and staff will assist you with your request.</p>
-
-<h3>How can I find out usage statistics for my work in AC?</h3>
-<p>Authors with an active Columbia UNI can log in to Academic Commons and see current- month and lifetime views and downloads for each work on the My Works page. Authors with a UNI will also receive a monthly email showing the number of views and downloads for each of their works in Academic Commons. Contact us at <a href="mailto:ac@columbia.edu">ac@columbia.edu</a> if you are not receiving our monthly emails.</p>
-
-<h3>What does the cataloging process involve?</h3>
-<p>When you upload a work, the file(s) and descriptive information you provide are placed in a queue for review by Libraries staff. As part of our review, we add descriptive metadata to make your work more discoverable. Records from Academic Commons are indexed in a variety of places, including <a href="https://clio.columbia.edu/">CLIO</a>, the Columbia University Libraries Catalog, and Google Scholar. Changes made in Academic Commons take some time to be reflected in other platforms, depending on their indexing schedule.</p>
-
-<h3>How do you choose subjects for my work?</h3>
-<p>We assign subjects using a controlled vocabulary called <a href="https://fast.oclc.org/searchfast/">Faceted Application of Subject Terminology (FAST)</a>. FAST subject terms are based on the Library of Congress' subject headings, providing a widely-recognized set of uniform subjects that connect your work with other scholarly resources.</p>
-<p>We do our best to choose appropriate subjects for your work but we welcome your guidance. You can provide suggested subjects in the Notes field of the upload form or email us any time at <a href="mailto:ac@columbia.edu">ac@columbia.edu</a> to provide feedback on the subjects we have assigned. Please note that the constraints imposed by the FAST vocabulary mean that suggested subjects may not show up verbatim in Academic Commons. If we can’t use the exact term you would like, we will refer to your suggestions to help us find the best match in the vocabulary. You can also search the <a href="https://fast.oclc.org/searchfast/">FAST vocabulary</a> and tell us which terms you would like us to use. We are always happy to receive this kind of feedback because it helps ensure that your research is described in a way that will make it the most discoverable for your colleagues and community.</p>
-
-<h3>How can I report harmful language in Academic Commons resource descriptions [metadata]?</h3>
-<p>We are committed to using respectful, accurate, and inclusive terminology in Academic Commons metadata, in alignment with Columbia University Libraries’ <a href="https://library.columbia.edu/about/policies.html">Statement on Inclusive Editing of Harmful Language in Library and Archival Collections</a>. This is an ongoing process. If you find harmful language on this website [in our metadata, in our resource descriptions], please email <a href="mailto:ac@columbia.edu">ac@columbia.edu</a>.</p>
-
-<h3>Can I change my work after it has been uploaded to AC?</h3>
-<p>Because people may be linking to or citing your work, we do not change or replace files that have already been made available in Academic Commons. However we can archive a new version of a work and create a link to its predecessors.</p>
-
-<h3>Can I remove my work from AC?</h3>
-<p>We strongly discourage the withdrawal of works from Academic Commons. However, you can request that public access to your work in Academic Commons be disabled. Though the work will no longer be publicly accessible, metadata about the work will remain available.</p>
-
-<h3>Can Academic Commons provide campus-only access to my work?</h3>
-<p>No. All content in Academic Commons is freely accessible to anyone online. Works that cannot be shared openly online should not be uploaded to Academic Commons. However, works can be embargoed (i.e., files are not available for download, though descriptive information is available) for a limited time. Theses and dissertations are the materials most frequently embargoed.</p>
-
-<h3>How does Academic Commons provide long-term digital access?</h3>
-<p>Academic Commons is part of the Columbia University Libraries long-term digital storage system, which ensures that files are replicated and stored in at least two distinct locations. We adhere to <a href="https://www.go-fair.org/fair-principles/">FAIR data principles</a> and use unique, persistent identifiers and rich metadata to enhance the accessibility of each work.</p>
-
-<h3>How can I include Academic Commons in grant applications?</h3>
-<p>Please contact us at <a href="mailto:ac@columbia.edu">ac@columbia.edu</a> if you would like to include Academic Commons in your grant application. You can use the information on our <%= link_to t('blacklight.header_links.about'), about_path %> page to describe the repository in your application. </p>
-
-<h2>Reporting</h2>
+<h2 id="citing">Citing Work</h2>
 <h3>How do I cite works in Academic Commons?</h3>
 <p>We recommend using the DOI in the Academic Commons metadata record when citing a work or directing someone to it. The DOI is available under the "Download" button at the top of each record. The DOI is a persistent link which will take users to information about a work even if the repository URL changes or the files are removed.</p>
 <p>Cite works in Academic Commons using your preferred citation style and following the general format:</p>
@@ -316,9 +303,10 @@
 <h4>What types of situations might violate my copyright?</h4>
 <p>Although each case is different, here are three example scenarios that may violate your ownership and copyright:</p>
 <ol type="1">
-<li>Someone has published your entire dissertation as a book without your permission</li>
-<li>Someone has published your entire dissertation as a book - changing the author name and/or the title - without your permission</li>
-<li>Someone has taken paragraphs, chapters, or content from your dissertation, beyond what you consider to be Fair Use, and integrated it into another work without your permission</li></ol>
+  <li>Someone has published your entire dissertation as a book without your permission</li>
+  <li>Someone has published your entire dissertation as a book - changing the author name and/or the title - without your permission</li>
+  <li>Someone has taken paragraphs, chapters, or content from your dissertation, beyond what you consider to be Fair Use, and integrated it into another work without your permission</li>
+</ol>
 
 <h4>What you should do first</h4>
 <p>In the case where you believe another academic has plagiarized your work (example 3, above), the <a href="https://ombuds.columbia.edu/">Columbia Ombuds Office</a> is a good first point of contact for support and mediation.</p>
@@ -328,9 +316,9 @@
 <h4>Reporting & requesting removal</h4>
 <p>As the copyright owner, you will need to contact businesses selling an unauthorized version of your dissertation. Below are some links for reporting copyright infringement.</p>
 <ul>
-<li><a href="https://www.amazon.com/report/infringement/signin">Amazon: Report Infringement</a></li> 
-<li><a href="https://support.google.com/legal/answer/3110420">Google: Report Content for Legal Reasons</a></li>
-<li><a href="https://support.www.abebooks.com/en_US/contact?topicId=GUT6MR3YR84A66SR&subtopicId=GKYW35EDV8RDAYTH&groupId=GFG897ZPSJJ4AQYW">AbeBooks: Report a suspicious listing</a></li>
+  <li><a href="https://www.amazon.com/report/infringement/signin">Amazon: Report Infringement</a></li> 
+  <li><a href="https://support.google.com/legal/answer/3110420">Google: Report Content for Legal Reasons</a></li>
+  <li><a href="https://support.www.abebooks.com/en_US/contact?topicId=GUT6MR3YR84A66SR&subtopicId=GKYW35EDV8RDAYTH&groupId=GFG897ZPSJJ4AQYW">AbeBooks: Report a suspicious listing</a></li>
 </ul>
 
 <h4>Your dissertation in Academic Commons</h4>
@@ -345,13 +333,18 @@
 <p>As the author of your dissertation, you hold the copyright whether or not you register with the <a href="https://www.copyright.gov/">U.S. Copyright Office</a>. Registering is not necessary for you to be able to assert ownership in your work. Note that the Copyright Claims Board is available for small claims up to $30,000 without copyright registration. You are also able to sue for non-monetary damages without registration.</p>
 <p>However, registration of your copyright may help if you choose to pursue legal action for monetary damages against an unauthorized publisher.</p>
 <p>There are two registration options, depending on where you are in the dissertation deposit process:</p>
+
 <ul>
-<li>Register when you deposit your dissertation via the ProQuest Deposit Gateway. ProQuest offers copyright registration and charges a fee for the service.</li>
-<li>Register directly with the U.S. Copyright Office. Use this option if you have already deposited your dissertation or if you would rather handle the registration process yourself. Go to <a href="https://www.copyright.gov/registration/">https://www.copyright.gov/registration/</a> to learn about the process and fees.</li>
+  <li>Register when you deposit your dissertation via the ProQuest Deposit Gateway. ProQuest offers copyright registration and charges a fee for the service.</li>
+  <li>Register directly with the U.S. Copyright Office. Use this option if you have already deposited your dissertation or if you would rather handle the registration process yourself. Go to <a href="https://www.copyright.gov/registration/">https://www.copyright.gov/registration/</a> to learn about the process and fees.</li>
 </ul>
 
 <h4>Additional resources</h4>
+
 <ul>
-<li><a href="https://www.gsas.columbia.edu/content/dissertation">Graduate School of Arts and Sciences Dissertation Office</a></li>
-<li><a href="https://copyright.columbia.edu/index.html">Columbia Libraries Copyright Advisory Services</a></li>
+  <li><a href="https://www.gsas.columbia.edu/content/dissertation">Graduate School of Arts and Sciences Dissertation Office</a></li>
+  <li><a href="https://copyright.columbia.edu/index.html">Columbia Libraries Copyright Advisory Services</a></li>
 </ul>
+
+<h4>Will my dissertation be used to train AI?</h4>
+<p>Please see our <%= link_to t('blacklight.header_links.policies'), policies_path %> for information about how we manage automated (web crawler) access to Academic Commons.</p>
