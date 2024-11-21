@@ -27,6 +27,7 @@ RSpec.describe AssetsController, type: :controller do
     let(:parent_doc)    { SolrDocument.new(object_state_ssi: 'A') }
     let(:mock_resource) { double(docs: [resource_doc]) }
     let(:mock_parent)   { double(docs: [parent_doc]) }
+    let(:mock_http_client_with_basic_auth) { double(HTTP::Client) }
     let(:mock_head_response) { double('headers', code: 200) }
     let(:resource_params) { { qt: 'search', fq: ['id:"10.7616/TESTTEST"', 'has_model_ssim:("info:fedora/ldpd:GenericResource" OR "info:fedora/ldpd:Resource")'], rows: 1 } }
     let(:parent_params)   { { qt: 'search', fq: ['fedora3_pid_ssi:(parent\:id)'], rows: 100_000 } }
@@ -34,7 +35,8 @@ RSpec.describe AssetsController, type: :controller do
     before do
       allow(Blacklight.default_index).to receive(:search).with(resource_params).and_return(mock_resource)
       allow(Blacklight.default_index).to receive(:search).with(parent_params).and_return(mock_parent)
-      allow(HTTP).to receive(:head).and_return(mock_head_response)
+      allow(HTTP).to receive(:basic_auth).and_return(mock_http_client_with_basic_auth)
+      allow(mock_http_client_with_basic_auth).to receive(:head).and_return(mock_head_response)
 
       get :download, params: { id: '10.7616/TESTTEST' }
     end
