@@ -42,7 +42,7 @@ doc/plugins
 doc/*.dot
 coverage/*
 /public/assets
-/public/sitemap*.xml.gz
+/public/sitemaps/sitemap*.xml.gz
 /.settings
 /.env*
 .byebug_history

@@ -1,10 +1,12 @@
 require 'rails_helper'
 
 describe 'rake sitemap:create', type: :task do
-  let(:path) { Rails.root.join('public', 'sitemap.xml.gz') }
+  let(:path) { Rails.root.join('public', 'sitemaps', 'sitemap.xml.gz') }
   let(:expected_xml) { fixture_to_xml('sitemap', 'urlset.xml') }
 
   before { task.execute }
+
+  after {  File.delete(path) if File.exist?(path) }
 
   it 'generates sitemap with out errors' do
     expect(File.exist?(path)).to be true
