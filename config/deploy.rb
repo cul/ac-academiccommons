@@ -37,6 +37,8 @@ set :linked_files, fetch(:linked_files, []).push(
   'config/blacklight.yml',
   'config/fedora.yml',
   'config/secrets.yml',
+  'config/custom_bots.json',
+  'crawler-user-agents.json',
   'public/robots.txt'
 )
 
