@@ -40,5 +40,5 @@ end
 
 # generate fresh bot user agent list once a month
 every :month do
-  rake 'ac:bots::generate_list', email_subject: 'Generates bots json at config/crawler-user-agents.json'
+  rake 'ac:bots:generate_list', email_subject: 'Generates bots json at config/crawler-user-agents.json'
 end
