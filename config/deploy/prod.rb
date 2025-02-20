@@ -2,8 +2,7 @@
 role :resque_worker, "ac-rails-#{fetch(:stage)}1.cul.columbia.edu"
 role :resque_scheduler, "ac-rails-#{fetch(:stage)}1.cul.columbia.edu"
 
-set :workers,
-    YAML.load_file(File.expand_path('../resque.yml', __dir__), aliases: true)[fetch(:stage).to_s]['workers']
+set :workers, { '*' => 6 }
 
 # We default to storing PID files in a tmp/pids folder in your shared path.
 # set :resque_pid_path, -> { File.join(shared_path, 'tmp', 'pids') }

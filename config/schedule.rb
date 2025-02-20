@@ -37,3 +37,8 @@ end
 every :month do
   rake 'ac:delete_stale_pending_works', email_subject: 'Delete stale pending works'
 end
+
+# generate fresh bot user agent list once a month
+every :month do
+  rake 'ac:bots:generate_list', email_subject: 'Generates bots json at config/crawler-user-agents.json'
+end
