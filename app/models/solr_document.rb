@@ -162,6 +162,11 @@ class SolrDocument
     "#{Rails.application.secrets.iiif[:urls].sample}/#{fetch(:fedora3_pid_ssi)}/full/!#{size},#{size}/0/native.jpg"
   end
 
+  def file_uri_ds_location_to_file_path(file_uri_ds_location)
+    return nil if file_uri_ds_location.nil?
+    Addressable::URI.unencode(file_uri_ds_location).gsub(%r{^file:/+}, '/')
+  end
+
   def wowza_media_url(request)
     raise ArgumentError, 'Request object invalid' unless request.is_a?(ActionDispatch::Request)
     return unless playable?
@@ -170,7 +175,7 @@ class SolrDocument
     wowza_config = Rails.application.secrets[:wowza]
     raise 'Missing wowza config' unless wowza_config
 
-    access_copy_location = fetch('access_copy_location_ssi', nil)&.gsub(/^file:/, '')
+    access_copy_location = file_uri_ds_location_to_file_path(fetch('access_copy_location_ssi', nil))
 
     return unless access_copy_location
 
