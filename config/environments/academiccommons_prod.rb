@@ -39,9 +39,14 @@ AcademicCommons::Application.configure do
   # Specifies the header that your server uses for sending files
   config.action_dispatch.x_sendfile_header = 'X-Accel-Redirect'
 
-  # Set the CUL load balancer IP as our trusted proxy so that the X-Forwarded-For value set
-  # by the load balancer is whitelisted for use by the request.remote_ip IP-determining mechanism.
-  config.action_dispatch.trusted_proxies = [IPAddr.new('128.59.241.217')]
+  config.action_dispatch.trusted_proxies = [
+    # Add the CUL load balancer IP as a trusted proxy so that the X-Forwarded-For value set
+    # by the load balancer is whitelisted for use by the request.remote_ip IP-determining mechanism.
+    IPAddr.new('128.59.241.217'),
+    # Add 127.0.0.1 as a trusted proxy so that the X-Forwarded-For value set by Anubis (or any other internal proxy)
+    # is whitelisted for use by the request.remote_ip IP-determining mechanism.
+    IPAddr.new('127.0.0.1')
+  ]
 
   # Reducing logging in production.
   config.log_level = :warn
