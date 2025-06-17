@@ -125,6 +125,8 @@ RSpec.describe 'Upload', type: :feature do
         attach_file nil, fixture('test_file.txt'), class: 'dz-hidden-input', visible: false
         sleep(3) # Adding sleep so file properly attaches
         click_button 'Submit'
+        # do a find to make sure page loaded and action completed
+        find('h3', text: 'Thank you for uploading your work to Academic Commons.')
       end
 
       it 'renders submission confirmation' do
