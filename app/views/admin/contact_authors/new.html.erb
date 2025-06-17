@@ -1,0 +1,46 @@
+<h2>Send an Email to Authors</h2>
+
+<%= form_with model: @contact_authors_form, url: admin_contact_authors_path, class: 'form-horizontal admin-form', local: true do |f| %>
+
+<%# RADIO BUTTONS : contact all or list of UNIs %>
+<fieldset class="form-group">
+  <div class="row">
+    <%= f.label :send_to, 'For', class: 'control-label col-form-label col-sm-2 pt-0' %>
+    <div class="col-sm-10">
+      <div class="form-check">
+        <%= f.radio_button(:send_to, 'all', class: 'form-check-input') %>
+        <%= f.label(:all_authors, 'All authors', class: 'form-check-label') %>
+      </div>
+      <div class="form-check">
+        <%= f.radio_button(:send_to, 'specific', class: 'form-check-input') %>
+        <%= f.label(:specific_authors, 'Specific authors', class: 'form-check-label') %>
+        <div class="disabled-input">
+          <%= f.label(:unis, 'UNIs', class: 'control-label visually-hidden') %>
+          <%= f.text_field(:unis, disabled: false, placeholder: 'UNIs in a comma-separated list...', class: 'col-sm-5 form-control')  %> 
+          <%# TODO : enable field based on form state %>
+        </div>
+      </div>
+    </div>
+  </div>
+</fieldset>
+
+<%# TEXT INPUT : subject %>
+<div class="form-row">
+  <div class="form-group col-md-6">
+    <%= f.label :subject, 'Subject', class: 'control-label' %>
+    <%= f.text_area :subject, class: 'form-control' %>
+  </div>
+</div>
+
+<%# TEXT INPUT : body%>
+<div class="form-row">
+  <div class="form-group col-md-6">
+    <%= f.label :body, 'Email Body', class: 'control-label' %>
+    <%= f.text_area :body, class: 'form-control' %>
+  </div>
+</div>
+
+<div class="form-group">
+  <%= f.submit 'Send Email', data: { confirm: 'Send email?'}, class: 'btn btn-primary' %>
+</div>
+<% end %>

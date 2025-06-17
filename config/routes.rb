@@ -85,6 +85,7 @@ Rails.application.routes.draw do
       post 'email', on: :collection
     end
     resources :featured_searches, except: :show
+    resource :contact_authors, only: [:new, :create]
   end
 
   # Resque web interface, only administrators have access
