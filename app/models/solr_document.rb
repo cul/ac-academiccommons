@@ -159,7 +159,7 @@ class SolrDocument
 
   def image_url(size = 256)
     return nil unless asset?
-    "#{Rails.application.secrets.iiif[:urls].sample}/#{fetch(:fedora3_pid_ssi)}/full/!#{size},#{size}/0/native.jpg"
+    "#{Rails.application.secrets.iiif[:urls].sample}/#{fetch(:fedora3_pid_ssi)}/full/!#{size},#{size}/0/default.jpg"
   end
 
   def file_uri_ds_location_to_file_path(file_uri_ds_location)
