@@ -1,12 +1,14 @@
-<div>Dear author,</div>  <%# <--- name of author recipient  TODO: can't use this when sending to multiple emails at once %>
+<div>Dear Academic Commons Author,</div>
 
 <p>
     An administrator for Academic Commons has sent you a message. Please view it below:
 </p>
 
-<p> <%= @body %> </p> <%# <---  message submitted with form here %>
-
-<%#  todo : can people reply to these emails? %>
+<div style="margin: 15px; padding: 4em 3em; border: 2px solid aliceblue; width: fit-content">
+  <p >
+    <%= simple_format(@body, sanitize: true) %>
+  </p>
+</div>
 
 <div>
   Sincerely,
