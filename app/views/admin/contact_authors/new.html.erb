@@ -16,7 +16,7 @@
         <%= f.label(:specific_authors, 'Specific authors', class: 'form-check-label') %>
         <div class="disabled-input">
           <%= f.label(:unis, 'UNIs', class: 'control-label visually-hidden') %>
-          <%= f.text_field(:unis, disabled: false, placeholder: 'UNIs in a comma-separated list...', class: 'col-sm-5 form-control')  %> 
+          <%= f.text_field(:unis, disabled: false, placeholder: 'UNIs in a comma-separated list...', class: 'col-12 form-control w-75')  %> 
           <%# TODO : enable field based on form state %>
         </div>
       </div>
@@ -26,15 +26,15 @@
 
 <%# TEXT INPUT : subject %>
 <div class="form-row">
-  <div class="form-group col-md-6">
-    <%= f.label :subject, 'Subject', class: 'control-label' %>
-    <%= f.text_area :subject, class: 'form-control' %>
+  <div class="form-group col-md-10" >
+    <%= f.label :subject, 'Subject', class: 'control-label'%>
+    <%= f.text_field :subject, class: 'form-control' %>
   </div>
 </div>
 
 <%# TEXT INPUT : body%>
 <div class="form-row">
-  <div class="form-group col-md-6">
+  <div class="form-group col-md-10">
     <%= f.label :body, 'Email Body', class: 'control-label' %>
     <%= f.text_area :body, class: 'form-control' %>
   </div>
