@@ -45,13 +45,14 @@ class UserMailer < ApplicationMailer
     mail(to: email, subject: 'Department approval may be needed')
   end
 
-  def contact_authors(recipients, body, subject = 'Message from Academic Commons Admin')
+  # Email to authors from AC administrators
+  # Called when the admin 'Contact Authors' form is submitted
+  def contact_authors(recipients, body, subject)
     Rails.logger.debug 'UserMailer#notify_users: entry'
     @body = body
-    # TODO : how to have a unique @name for each email? - may be impossible
+    @subject = subject
 
-    # use with #deliver_now for the present moment... will make these async resque jobs later...
     mail(to: recipients, subject: subject)
-    # this will render app/views/admin/email_author_message/new.html.erb
+    # this will render app/views/user_mailer/contact_authors.html.erb
   end
 end
