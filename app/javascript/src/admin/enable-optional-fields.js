@@ -24,7 +24,21 @@ $(document).ready(function(){
     });
   };
 
+  if ($('body').is('.blacklight-contact_authors')) {
 
+    // When sending to specific authors, enable unis field
+    $('[name="contact_authors_form[send_to]"]').change(function(){
+      console.log( ' the value of the field is this value right here: ' + this.value)
+      var unisField = $('name="contact_authors_form[unis]"')
+      if (this.value == 'specific'){
+        unisField.prop('disabled', false)
+      } else {
+        unisField.prop('disabled', true)
+      }
+    });
+
+  };
+  
   if ($('body').is('.blacklight-usage_statistics_reports')) {
 
     // When filtering stats by date, enable start and end date fields.
