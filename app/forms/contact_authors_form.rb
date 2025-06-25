@@ -8,8 +8,6 @@ class ContactAuthorsForm < FormObject
   validate :valid_unis_format?
 
   def valid_unis_format?
-    Rails.logger.debug 'valid_unis_format? entry'
-    # p errors
     unis.split(',').each do |uni|
        if uni.empty? || uni.strip =~ /\s/
          errors.add(:unis, 'list must be properly formatted')
@@ -19,7 +17,6 @@ class ContactAuthorsForm < FormObject
   end
 
   def send_emails
-    Rails.logger.debug('EmailAuthorMessageForm#send_emails: Entry')
     return false unless valid? # Call all validations
 
     Rails.logger.debug 'EmailAuthorMessageForm#send_emails: sending email...'
