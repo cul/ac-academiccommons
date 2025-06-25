@@ -52,7 +52,8 @@ class UserMailer < ApplicationMailer
     @body = body
     @subject = subject
 
-    mail(to: recipients, subject: subject)
+    # For now, send to multiple users via BCC field.
+    mail(bcc: recipients, subject: subject)
     # this will render app/views/user_mailer/contact_authors.html.erb
   end
 end

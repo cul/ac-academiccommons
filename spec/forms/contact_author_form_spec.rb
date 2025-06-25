@@ -72,8 +72,8 @@ describe ContactAuthorsForm, type: :model, focus: true do
       end
 
       it 'sends to correct author' do
-        expect(email.to).to include 'abc123@columbia.edu'
-        expect(email.to).to include 'def456@columbia.edu'
+        expect(email.bcc).to include 'abc123@columbia.edu'
+        expect(email.bcc).to include 'def456@columbia.edu'
       end
 
       it 'sends with expected subject' do
