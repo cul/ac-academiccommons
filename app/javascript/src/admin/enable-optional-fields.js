@@ -26,11 +26,10 @@ $(document).ready(function(){
 
   if ($('body').is('.blacklight-contact_authors')) {
 
-    // When sending to specific authors, enable unis field
+    // When sending to contacting specific authors, enable unis field
     $('[name="contact_authors_form[send_to]"]').change(function(){
-      console.log( ' the value of the field is this value right here: ' + this.value)
-      var unisField = $('name="contact_authors_form[unis]"')
-      if (this.value == 'specific'){
+      var unisField = $('[name="contact_authors_form[unis]"]')
+      if (this.value == 'specific_authors'){
         unisField.prop('disabled', false)
       } else {
         unisField.prop('disabled', true)

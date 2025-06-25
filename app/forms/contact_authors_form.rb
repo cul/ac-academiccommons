@@ -9,8 +9,9 @@ class ContactAuthorsForm < FormObject
 
   def valid_unis_format?
     Rails.logger.debug 'valid_unis_format? entry'
+    # p errors
     unis.split(',').each do |uni|
-       if uni.empty?
+       if uni.empty? || uni.strip =~ /\s/
          errors.add(:unis, 'list must be properly formatted')
          break
        end
@@ -36,10 +37,12 @@ class ContactAuthorsForm < FormObject
   def recipients
     Rails.logger.debug "ContactAuthorsForm#recipients: Sending emails to #{send_to}"
 
-    ids = send_to == 'specific' ? unis.split(',') : AcademicCommons.all_author_unis
+    if send_to == 'specific_authors'
+      ids = unis.split(',').map! { |uni| uni.strip }
+    else
+      ids = AcademicCommons.all_author_unis
+    end
 
-    EmailPreference.preferred_emails(ids).values # TODO: Return this
-
-    EmailPreference.preferred_emails(['bg2918']).values # TODO : For now, only ever send email to myself
+    EmailPreference.preferred_emails(ids).values
   end
 end

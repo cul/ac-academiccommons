@@ -14,10 +14,10 @@
       <div class="form-check">
         <%= f.radio_button(:send_to, 'specific_authors', class: 'form-check-input') %>
         <%= f.label(:specific_authors, 'Specific authors', class: 'form-check-label') %>
-        <div class="disabled-input">
-          <%= f.label(:unis, 'UNIs', class: 'control-label visually-hidden') %>
-          <%= f.text_field(:unis, placeholder: 'UNIs in a comma-separated list...', class: 'col-12 form-control w-75')  %> 
-        </div>
+      </div>
+      <div class="disabled-input">
+        <%= f.label(:unis, 'UNIs', class: 'control-label visually-hidden') %>
+        <%= f.text_field(:unis, disabled: true, placeholder: 'UNIs in a comma-separated list...', class: 'col-12 form-control w-75')  %> 
       </div>
     </div>
   </div>
