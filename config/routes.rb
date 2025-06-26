@@ -77,7 +77,8 @@ Rails.application.routes.draw do
     resources :request_agreements,  only: [:new, :create]
     resource  :alert_message,       only: [:edit, :update]
     resource  :site_options,       only: [:edit, :update]
-    resources :deposits,            only: [:index, :show]
+    resources :deposits,            only: :index
+    resources :toggle_downloads,    only: [:index, :show]
     resources :agreements,          only: :index
     resources :email_preferences
     resources :email_author_reports,     only: [:new, :create]

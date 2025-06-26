@@ -22,6 +22,10 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  def downloads_enabled?
+    SiteOption.downloads_enabled
+  end
+
   def deposits_enabled?
     SiteOption.deposits_enabled
   end
