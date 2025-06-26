@@ -29,8 +29,10 @@ every :weekday, at: '6pm' do
 end
 
 # Restart resque workers daily.
-every :day, at: '12am' do
-  rake 'resque:restart_workers', email_subject: 'Resque workers restart'
+unless Rails.env.academiccommons_dev?
+  every :day, at: '12am' do
+    rake 'resque:restart_workers', email_subject: 'Resque workers restart'
+  end
 end
 
 # Delete stale pending works once a month
