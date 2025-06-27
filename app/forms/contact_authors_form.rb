@@ -1,5 +1,7 @@
+# frozen_string_literal: true
+
 class ContactAuthorsForm < FormObject
-  SUBJECT = 'Message from Academic Commons Admin'.freeze
+  SUBJECT = 'Message from Academic Commons Admin'
 
   attr_accessor :send_to, :unis, :subject, :body
 
@@ -9,10 +11,10 @@ class ContactAuthorsForm < FormObject
 
   def valid_unis_format?
     unis.split(',').each do |uni|
-       if uni.empty? || uni.strip =~ /\s/
-         errors.add(:unis, 'list must be properly formatted')
-         break
-       end
+      if uni.empty? || uni.strip =~ /\s/
+        errors.add(:unis, 'list must be properly formatted')
+        break
+      end
     end
   end
 
@@ -34,11 +36,11 @@ class ContactAuthorsForm < FormObject
   def recipients
     Rails.logger.debug "ContactAuthorsForm#recipients: Sending emails to #{send_to}"
 
-    if send_to == 'specific_authors'
-      ids = unis.split(',').map! { |uni| uni.strip }
-    else
-      ids = AcademicCommons.all_author_unis
-    end
+    ids = if send_to == 'specific_authors'
+            unis.split(',').map!(&:strip)
+          else
+            AcademicCommons.all_author_unis
+          end
 
     EmailPreference.preferred_emails(ids).values
   end

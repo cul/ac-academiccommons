@@ -1,9 +1,11 @@
+# frozen_string_literal: true
+
 module Admin
   class ContactAuthorsController < AdminController
     authorize_resource class: ContactAuthorsForm
 
     def new
-      @contact_authors_form ||= ContactAuthorsForm.new
+      @contact_authors_form ||= ContactAuthorsForm.new # rubocop:disable Naming/MemoizedInstanceVariableName
     end
 
     def create

@@ -1,7 +1,8 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
-describe Admin::ContactAuthorsController, type: :controller, integration: true do # rubocop:disable RSpec/Focus
-  
+describe Admin::ContactAuthorsController, type: :controller, integration: true do
   let(:params) do
     {
       contact_authors_form: {
@@ -20,7 +21,7 @@ describe Admin::ContactAuthorsController, type: :controller, integration: true d
   end
 
   describe 'POST create' do
-    context 'html' do
+    context 'when html' do
       it_behaves_like 'authorization required', 302 do
         let(:http_request) { post :create, params: params }
       end
