@@ -53,18 +53,35 @@ describe 'Item Page', type: :feature, focus: true do # rubocop:disable RSpec/Foc
     expect(page).to have_css 'img[src*="in-copyright"][alt="In Copyright"]'
   end
 
+  context 'when downloads disabled' do
+    before do
+      allow_any_instance_of(ApplicationController).to receive(:downloads_enabled?).and_return(false) # rubocop:disable RSpec/AnyInstance
+      visit solr_document_path('10.7916/ALICE')
+    end
+
+    it 'does not link to asset downloads' do
+      expect(page).not_to have_xpath '//a[@href=\'/doi/10.7916/TESTDOC2/download\']'
+      expect(page).not_to have_xpath '//a[@href=\'/doi/10.7916/TESTDOC3/download\']'
+      expect(page).not_to have_xpath '//a[@href=\'/doi/10.7916/TESTDOC4/download\']'
+    end
+
+    it 'does not have button to watch video for video asset' do
+      expect(page).not_to have_xpath('//span[@class="icon play"]/a[@href="#play-collapse-10-7916-TESTDOC3"]')
+    end
+  end
+
   it 'links to asset downloads' do # TODO: fix
     expect(page).to have_xpath '//a[@href=\'/doi/10.7916/TESTDOC2/download\']'
     expect(page).to have_xpath '//a[@href=\'/doi/10.7916/TESTDOC3/download\']'
     expect(page).to have_xpath '//a[@href=\'/doi/10.7916/TESTDOC4/download\']'
   end
 
-  it 'has correct itemtype' do
-    expect(page).to have_xpath('//div[@itemtype="http://schema.org/ScholarlyArticle"]', visible: false)
+  it 'has button to watch video for video asset' do
+    expect(page).to have_xpath('//span[@class="icon play"]/a[@href="#play-collapse-10-7916-TESTDOC3"]')
   end
 
-  it 'has button to watch video for video asset' do # TODO: fix
-    expect(page).to have_xpath('//span[@class="icon play"]/a[@href="#play-collapse-10-7916-TESTDOC3"]')
+  it 'has correct itemtype' do
+    expect(page).to have_xpath('//div[@itemtype="http://schema.org/ScholarlyArticle"]', visible: false)
   end
 
   it 'links to related item' do
