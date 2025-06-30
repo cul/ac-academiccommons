@@ -1,7 +1,11 @@
+# frozen_string_literal: true
+
 class CatalogController < ApplicationController
   include Blacklight::Catalog
   include BlacklightOaiProvider::Controller
   include BlacklightRangeLimit::ControllerOverride
+
+  DOWNLOADS_DISABLED_MESSAGE = 'Downloading has been temporarily disabled for Academic Commons. Contact an administrator for more information.'
 
   rescue_from Blacklight::Exceptions::InvalidRequest do
     render plain: 'Invalid request.', status: :bad_request
