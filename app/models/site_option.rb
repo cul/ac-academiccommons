@@ -4,6 +4,7 @@ class SiteOption < ApplicationRecord
   DEPOSITS_ENABLED = 'deposits_enabled'
   DOWNLOADS_ENABLED = 'downloads_enabled'
   OPTIONS = [DEPOSITS_ENABLED, DOWNLOADS_ENABLED].freeze
+  DOWNLOADS_ENABLED_MESSAGE = 'Downloading has been temporarily disabled for Academic Commons. Contact an administrator for more information.' # rubocop:disable Layout/LineLength
 
   validates :name, presence: { inclusion: { in: OPTIONS } }
   validates :value, inclusion: { in: [true, false] }
