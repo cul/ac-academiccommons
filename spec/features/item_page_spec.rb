@@ -70,7 +70,7 @@ describe 'Item Page', type: :feature, focus: true do # rubocop:disable RSpec/Foc
     end
   end
 
-  it 'links to asset downloads' do # TODO: fix
+  it 'links to asset downloads' do
     expect(page).to have_xpath '//a[@href=\'/doi/10.7916/TESTDOC2/download\']'
     expect(page).to have_xpath '//a[@href=\'/doi/10.7916/TESTDOC3/download\']'
     expect(page).to have_xpath '//a[@href=\'/doi/10.7916/TESTDOC4/download\']'
