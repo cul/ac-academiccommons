@@ -13,7 +13,7 @@ def wait_for_email(timeout: Capybara.default_max_wait_time)
   end
 end
 
-describe 'Usage Statistics Form', type: :feature, js: true, focus: true do # rubocop:disable RSpec/Focus
+describe 'Usage Statistics Form', type: :feature, js: true do
   context 'when submitting form with all necessary parameters' do
     include_context 'admin user for feature'
 
@@ -77,22 +77,14 @@ describe 'Usage Statistics Form', type: :feature, js: true, focus: true do # rub
         end
 
         it 'email contains attachment' do # TODO: fix me
-          puts "======================> in test: email contains attachment. deliveries : #{ActionMailer::Base.deliveries}. sleeping..."
           expect(email.attachments[0].filename).to eq 'academic_commons_statistics.csv'
-          puts '======================> exiting test: email contains attachment'
         end
 
         it 'sends email' do # TODO: fix me
-          puts "======================> in test: sends email. deliveries #{ActionMailer::Base.deliveries}"
-          # puts "======================> email.to #{email&.to}"
-          # puts "======================> email.subject #{email&.subject}"
-          # puts "======================> email.html_part.body #{email&.html_part&.body}"
-          # puts "======================> email.to #{email&.to}"
           expect(email.to).to include 'example@example.com'
           expect(email.subject).to eql 'Testing Usage Statistics'
           expect(email.html_part.body).to include 'Below are the Academic Commons statistics that you requested'
           expect(email.html_part.body).to include 'Alice\'s Adventures in Wonderland'
-          puts '======================> exiting test: sends email'
         end
       end
     end
