@@ -6,6 +6,7 @@ RSpec.describe 'SiteOptions', type: :request do
   describe 'PATCH /site_options' do
     include_context 'admin user for feature'
     before do
+      allow_any_instance_of(ApplicationController).to receive(:deposits_enabled?).and_return(true) # rubocop:disable RSpec/AnyInstance
       stub_const('SiteOption::OPTIONS', ['test_option'])
     end
 

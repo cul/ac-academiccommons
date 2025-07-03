@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe 'Item Page', type: :feature, focus: true do # rubocop:disable RSpec/Focus
+describe 'Item Page', type: :feature do
   before do
     allow_any_instance_of(ApplicationController).to receive(:downloads_enabled?).and_return(true) # rubocop:disable RSpec/AnyInstance
     visit solr_document_path('10.7916/ALICE')
