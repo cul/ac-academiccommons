@@ -26,8 +26,8 @@ describe 'Search Results Page', type: :feature do
 
   it 'has robots meta tags' do
     visit search_catalog_path(q: 'alice')
-    expect(page).to have_xpath("//meta[@name='robots' and @content='noindex']", visible: false)
-    expect(page).to have_xpath("//meta[@name='robots' and @content='noindex']", visible: false)
+    expect(page).to have_xpath("//meta[@name='robots' and @content='noindex']", visible: false) # rubocop:disable RSpec/Capybara/VisibilityMatcher
+    expect(page).to have_xpath("//meta[@name='robots' and @content='noindex']", visible: false) # rubocop:disable RSpec/Capybara/VisibilityMatcher
   end
 
   context 'when admin logged in' do

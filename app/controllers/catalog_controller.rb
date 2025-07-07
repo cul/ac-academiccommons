@@ -12,11 +12,10 @@ class CatalogController < ApplicationController
   # rubocop:disable Rails/LexicallyScopedActionFilter
   before_action :record_view_stats, only: :show
   before_action :set_xrobots_tag_to_none, only: :index
-  # rubocop:enable Rails/LexicallyScopedActionFilter
 
-  # TODO: here
-  before_action :meta_nofollow!, only: [:index, :serach, :opensearch, :facet] # many from searchable and range_searchable concerns
-  before_action :meta_noindex!, only: [:index, :serach, :opensearch, :facet] # many from searchable and range_searchable concerns
+  # many of these actions are from the searchable and range_searchable concerns
+  before_action :meta_nofollow!, only: [:index, :serach, :opensearch, :facet]
+  before_action :meta_noindex!, only: [:index, :serach, :opensearch, :facet]
   # allow on:
   #           :advanced_search (just a search form)
   #           :opensearch (returns json)
@@ -27,6 +26,8 @@ class CatalogController < ApplicationController
   #           :suggest_index,
   #           :range_limit
   #           :range_limit_panel
+  # rubocop:enable Rails/LexicallyScopedActionFilter
+
   class LazyFeatureQueryFacet < Hash
     def [](key)
       fs = FeaturedSearch.where(slug: key).includes(:feature_category, :featured_search_values).first
