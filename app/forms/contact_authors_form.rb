@@ -19,9 +19,7 @@ class ContactAuthorsForm < FormObject
   end
 
   def send_emails
-    return false unless valid? # Call all validations
-
-    Rails.logger.debug 'EmailAuthorMessageForm#send_emails: sending email...'
+    return false unless valid?
 
     begin
       UserMailer.contact_authors(recipients, body, subject).deliver_now
@@ -34,8 +32,6 @@ class ContactAuthorsForm < FormObject
   end
 
   def recipients
-    Rails.logger.debug "ContactAuthorsForm#recipients: Sending emails to #{send_to}"
-
     ids = if send_to == 'specific_authors'
             unis.split(',').map!(&:strip)
           else
