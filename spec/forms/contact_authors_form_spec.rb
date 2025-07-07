@@ -101,6 +101,11 @@ describe ContactAuthorsForm, type: :model do
       allow(EmailPreference).to receive_message_chain(:preferred_emails, :values).and_return(test_preferred_emails) # rubocop:disable RSpec/MessageChain
     end
 
+    it 'does not validate unis field' do
+      expect_any_instance_of(described_class).not_to receive(:valid_unis_format?) # rubocop:disable RSpec/AnyInstance
+      described_class.new(params)
+    end
+
     describe '#send_emails' do
       before do
         described_class.new(params).send_emails

@@ -7,7 +7,7 @@ class ContactAuthorsForm < FormObject
 
   validates :send_to, :subject, :body, presence: true
   validates :unis, presence: true, if: proc { |m| m.send_to == 'specific_authors' }
-  validate :valid_unis_format?
+  validate :valid_unis_format?, if: proc { |m| m.send_to == 'specific_authors' }
 
   def valid_unis_format?
     unis.split(',').each do |uni|
