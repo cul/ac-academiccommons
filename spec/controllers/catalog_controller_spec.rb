@@ -19,4 +19,12 @@ describe CatalogController, type: :controller do
       end
     end
   end
+
+  describe '#index' do
+    it 'has robots meta tags' do # rubocop:disable RSpec/MultipleExpectations
+      get :index
+      expect(controller.instance_variable_get(:@meta_nofollow)).to be true
+      expect(controller.instance_variable_get(:@meta_noindex)).to be true
+    end
+  end
 end

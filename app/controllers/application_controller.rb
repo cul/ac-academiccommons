@@ -38,6 +38,16 @@ class ApplicationController < ActionController::Base
     new_user_session_path
   end
 
+  attr_reader :meta_nofollow, :meta_noindex
+
+  def meta_nofollow!
+    @meta_nofollow = true
+  end
+
+  def meta_noindex!
+    @meta_noindex = true
+  end
+
   private
 
   # Redirect to last page a user visited before log in.
