@@ -1,0 +1,17 @@
+<h2>Enable or Disable Asset Downloads</h2>
+<h2>Downloading is currently
+  <% if @enabled %>
+      <span style="color: green;">Enabled</span>
+  <% else %>
+      <span style="color: red;">Disabled</span>
+  <% end %>
+</h2>
+<p>
+  In some situations, administrators may wish to disable downloads from the 
+  Academic Commons site temporarily. You can enable and disable downloading with
+  this button. When downloads are disabled, 'download' buttons will be
+  replaced with a message explaining that an admin has disabled this feature. 
+</p>
+<div>
+<%= render :partial=>'toggle_downloads_form' %>
+</div>

@@ -13,8 +13,8 @@ module Admin
                                       value: SiteOption.default_value_for_option(option_key))
         end
         option.update(value: params[option_key])
-        redirect_back fallback_location: { controller: '/admin', action: 'index' }
       end
+      redirect_back fallback_location: { controller: '/admin', action: 'index' }
     end
   end
 end

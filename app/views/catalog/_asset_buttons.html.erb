@@ -4,6 +4,8 @@
   <p><em><%= @document.access_restriction %></em></p>
 <% elsif @document.embargoed? %>
   <p><em><%= t('blacklight.search.show.assets.embargoed', date: @document[:free_to_read_start_date_ssi]) %></em></p>
+<% elsif not downloads_enabled? %>
+  <p class="bg-secondary text-white"><%= SiteOption::DOWNLOADS_ENABLED_MESSAGE %></p>
 <% elsif assets.count == 1 %>
   <% if assets.first.playable? %>
 

@@ -8,6 +8,8 @@
       <p><em><%= document.access_restriction %></em></p>
     <% elsif document.embargoed? %>
       <p><em><%= t('blacklight.search.show.assets.embargoed', date: document[:free_to_read_start_date_ssi]) %></em></p>
+    <% elsif not downloads_enabled? %>
+      <p><em><%= SiteOption::DOWNLOADS_ENABLED_MESSAGE %></em></p>
     <% elsif asset_docs.present? %>
       <% asset_docs.each do |asset| %>
         <ul class="list-group">
