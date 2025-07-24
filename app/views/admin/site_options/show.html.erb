@@ -1,0 +1,42 @@
+<h2>Configure Site-wide Options</h2>
+
+<div class="container">
+  <p class="my-2">
+    Administrators can set an alert message that will appear as a banner at the top of all pages on the Academic Commons site.
+  </p>
+  <%= render :partial=>'edit_alert_message' %>
+</div>
+
+<hr class="mb-5">
+
+<div class="container">
+  <h3>Enable or Disable Asset Downloads ( Currently <% if @downloads_enabled %>
+          <strong class="text-success">Enabled</strong>
+        <% else %>
+          <span class="font-weight-bold text-danger">Disabled</span>
+        <% end %>)
+  </h3>
+  <p>
+    In some situations, administrators may wish to disable downloads from the 
+    Academic Commons site temporarily. When downloads are disabled, 'download' buttons will be
+    replaced with a message explaining that an admin has disabled this feature. 
+  </p>
+      <%= render :partial=>'toggle_downloads_form' %>
+</div>
+
+<hr class="mb-5">
+
+<div class="container">
+  <h3>Enable or Disable Self Deposits (Currently<% if @deposits_enabled %>
+          <strong class="text-success">Enabled</strong>
+        <% else %>
+          <span class="font-weight-bold text-danger">Disabled</span>
+        <% end %>)
+  </h3>
+  <p>
+    In some situations, administrators may wish to disable users from depositing 
+    new materials to the Academic Commons site temporarily. When self-deposits are 
+    disabled, all buttons and pages related to uploading will be hidden.
+  </p>
+  <%= render :partial=>'enable_deposits_form' %>
+</div>

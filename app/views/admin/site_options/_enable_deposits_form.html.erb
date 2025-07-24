@@ -1,0 +1,11 @@
+<%= form_with url: admin_site_options_path, method: :patch, local: true do |form| %>
+  <% if @deposits_enabled  %>
+    <% action_label = "Disable Deposits" %>
+    <% enable = false %>
+  <% else %>
+    <% action_label = "Enable Deposits" %>
+    <% enable = true %>
+  <% end %>
+  <%= form.hidden_field SiteOption::DEPOSITS_ENABLED, value: enable %>
+  <%= form.submit action_label, class: "btn btn-primary" %>
+<% end %>

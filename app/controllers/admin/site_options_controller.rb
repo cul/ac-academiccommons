@@ -4,6 +4,16 @@ module Admin
   class SiteOptionsController < AdminController
     load_and_authorize_resource class: SiteOption
 
+    def index
+      @downloads_enabled = downloads_enabled?
+      @deposits_enabled = deposits_enabled?
+    end
+
+    def show
+      @downloads_enabled = downloads_enabled?
+      @deposits_enabled = deposits_enabled?
+    end
+
     def update
       option_keys = params.keys.select { |key| SiteOption::OPTIONS.include?(key) }
       option_keys.each do |option_key|
