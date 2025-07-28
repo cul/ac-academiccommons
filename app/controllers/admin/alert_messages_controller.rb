@@ -20,7 +20,9 @@ module Admin
         flash[:error] = 'There was an error updating the alert message.'
       end
 
-      render :edit
+      puts '------------------------------------------------------------------------------------------'
+      puts 'in alert message edit controller action'
+      render 'admin/site_options/show'
     end
 
     private

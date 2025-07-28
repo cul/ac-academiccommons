@@ -5,8 +5,9 @@ module Admin
     load_and_authorize_resource class: SiteOption
 
     def index
-      @downloads_enabled = downloads_enabled?
-      @deposits_enabled = deposits_enabled?
+      puts '------------------------------------------------------------------------------------------'
+      puts 'in site options controller - index action'
+      @site_options = SiteOptions.all
     end
 
     def show
