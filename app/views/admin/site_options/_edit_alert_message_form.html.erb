@@ -1,0 +1,7 @@
+<%= form_with model: @alert_message, method: :patch,
+              url: admin_alert_message_path, local: true do |f| %>
+  <div>
+    <%= f.text_area :data %>
+  </div>
+  <%= f.submit 'Submit', class: 'btn btn-primary' %>
+<% end %>

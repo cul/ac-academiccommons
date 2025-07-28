@@ -1,10 +1,12 @@
-<h2>Configure Site-wide Options</h2>
+<h2>Configure Site-wide Options</h3>
 
 <div class="container">
+  <h3>Edit alert message</h3>
   <p class="my-2">
     Administrators can set an alert message that will appear as a banner at the top of all pages on the Academic Commons site.
   </p>
-  <%= render :partial=>'edit_alert_message' %>
+  <%# <%= render :partial=>'edit_alert_message_form' %>
+  <%= render 'admin/alert_messages/edit_alert_message_form' %>
 </div>
 
 <hr class="mb-5">

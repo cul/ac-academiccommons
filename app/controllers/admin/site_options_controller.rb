@@ -12,6 +12,8 @@ module Admin
     def show
       @downloads_enabled = downloads_enabled?
       @deposits_enabled = deposits_enabled?
+      @alert_message ||= ContentBlock.find_by(title: ContentBlock::ALERT_MESSAGE)
+      @alert_message ||= ContentBlock.new
     end
 
     def update
