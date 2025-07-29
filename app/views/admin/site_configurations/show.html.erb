@@ -1,27 +1,28 @@
 <h2>Configure Site-wide Options</h3>
 
 <div class="container">
-  <h3>Enable and Set Alert Message (Currently <% if SiteConfiguration.alert_message_enabled %>
-    <span class="text-success">Enabled</span>
+  <h3>Enable and Set Alert Message (Currently <% if !SiteConfiguration.alert_message.blank? %>
+    <span class="text-success">Enabled</span>)
     <% else %>
-    <span class="font-weight-bold text-danger">Disabled</span>
+    <span class="font-weight-bold text-danger">Disabled</span>)
     <% end %>
-  )</h3>
+  </h3>
   <p class="my-2">
-    Administrators can set an alert message that will appear as a banner at the top of all pages on the Academic Commons site.
+    Administrators can set an alert message that will appear as a banner at the
+    top of all pages on the Academic Commons site. If there is no alert message
+    set, nothing will be displayed.
   </p>
   <%= render :partial=>'alert_message_form' %>
-  <%# <%= render 'admin/alert_messages/edit_alert_message_form' %>
 </div>
 
 <hr class="mb-5">
 
 <div class="container">
   <h3>Enable or Disable Asset Downloads (Currently <% if SiteConfiguration.downloads_enabled %>
-          <strong class="text-success">Enabled</strong>
+          <strong class="text-success">Enabled</strong>)
         <% else %>
-          <span class="font-weight-bold text-danger">Disabled</span>
-        <% end %>)
+          <span class="font-weight-bold text-danger">Disabled</span>)
+        <% end %>
   </h3>
   <p>
     In some situations, administrators may wish to disable downloads from the 
@@ -35,10 +36,10 @@
 
 <div class="container">
   <h3>Enable or Disable Self Deposits (Currently<% if SiteConfiguration.deposits_enabled %>
-          <strong class="text-success">Enabled</strong>
+          <strong class="text-success">Enabled</strong>)
         <% else %>
-          <span class="font-weight-bold text-danger">Disabled</span>
-        <% end %>)
+          <span class="font-weight-bold text-danger">Disabled</span>)
+        <% end %>
   </h3>
   <p>
     In some situations, administrators may wish to disable users from depositing 

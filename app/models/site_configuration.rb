@@ -8,8 +8,6 @@ class SiteConfiguration < ApplicationRecord
 
   DOWNLOADS_ENABLED_DEF = true
   DEPOSITS_ENABLED_DEF = true
-  ALERT_MESSAGE_ENABLED_DEF = true
-  ALERT_MESSAGE_DEF = 'default alert_message'
   DOWNLOADS_ENABLED_MESSAGE_DEF = 'Downloading has been temporarily disabled for Academic Commons. Contact an administrator for more information.' # rubocop:disable Layout/LineLength
 
   # DEPOSITS_ENABLED = 'deposits_enabled'
@@ -22,7 +20,6 @@ class SiteConfiguration < ApplicationRecord
       site_config.downloads_enabled = DOWNLOADS_ENABLED_DEF
       site_config.downloads_message = DOWNLOADS_ENABLED_MESSAGE_DEF
       site_config.deposits_enabled = DEPOSITS_ENABLED_DEF
-      site_config.alert_message_enabled = ALERT_MESSAGE_ENABLED_DEF
       site_config.alert_message = ''
       site_config.singleton_gaurd = 0
     end
@@ -32,23 +29,15 @@ class SiteConfiguration < ApplicationRecord
     instance.downloads_enabled
   end
 
-  def self.downloads_enabled_message
-    instance.downloads_enabled_message
+  def self.downloads_message
+    instance.downloads_message
   end
 
   def self.deposits_enabled
     instance.deposits_enabled
   end
 
-  def self.alert_message_enabled
-    instance.alert_message_enabled
-  end
-
   def self.alert_message
-    puts '------------------------------------------------------------------------------------------------------------'
-    puts 'in site config model - alert_message'
-    return 'PLACEHOLDER ALERt MESSAGE' if instance.alert_message == ''
-
     instance.alert_message
   end
 end
