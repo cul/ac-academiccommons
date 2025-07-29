@@ -1,0 +1,17 @@
+<%= form_with url: admin_site_configuration_path, method: :patch, local: true do |form| %>
+  <% if SiteConfiguration.downloads_enabled  %>
+    <% action_label = "Disable Downloads" %>
+    <% enable = false %>
+  <% else %>
+    <% action_label = "Enable Downloads" %>
+    <% enable = true %>
+  <% end %>
+  <%# toggle 
+  <div class="custom-control custom-switch">
+    <%= form.check_box :downloads_enabled, class: "custom-control-input", id: "customSwitch1"   
+  <label class="custom-control-label" for="customSwitch1">Enable: </label>
+  <%# ^^^toggle %>
+
+  <%= form.hidden_field :downloads_enabled, value: enable %>
+  <%= form.submit action_label, class: "btn btn-primary" %>
+<% end %>

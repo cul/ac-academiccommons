@@ -1,0 +1,15 @@
+<%= form_with url: admin_site_configuration_path, method: :patch, local: true do |f| %>
+  <% if SiteConfiguration.alert_message_enabled %>
+    <% action_label = "Disable Alert Message" %>
+    <% enable = false %>
+  <% else %>
+    <% action_label = "Enable Alert Message" %>
+    <% enable = true %>
+  <% end %>
+  <%= f.submit action_label, class: "btn btn-primary" %>
+  <%= f.hidden_field :alert_message_enabled, value: enable %>
+  <div>
+    <%= f.text_area :alert_message, value: SiteConfiguration.alert_message%>
+  </div>
+  <%= f.submit 'Submit', class: 'btn btn-primary' %>
+<% end %>

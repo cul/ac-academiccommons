@@ -7,7 +7,19 @@ module Admin
     def index
       puts '------------------------------------------------------------------------------------------'
       puts 'in site options controller - index action'
-      @site_options = SiteOptions.all
+      @site_options = SiteOption.all
+      @downloads_enabled = downloads_enabled?
+      @deposits_enabled = deposits_enabled?
+      @alert_message ||= ContentBlock.find_by(title: ContentBlock::ALERT_MESSAGE)
+      @alert_message ||= ContentBlock.new
+    end
+
+    def edit
+      puts 'edit'
+    end
+
+    def update
+      puts 'update'
     end
 
     def show
