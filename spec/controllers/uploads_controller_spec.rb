@@ -5,6 +5,7 @@ RSpec.describe UploadsController, type: :controller do
     include_context 'non-admin user for controller'
 
     describe 'deposits are enabled' do
+      # deposits are enabled by default in SiteConfiguration
       let(:deposit) { Deposit.first }
 
       let(:http_request) do
@@ -22,10 +23,6 @@ RSpec.describe UploadsController, type: :controller do
                  current_student: false
                }
              }
-      end
-
-      before do
-        SiteOption.create!(name: SiteOption::DEPOSITS_ENABLED, value: true)
       end
 
       it 'response is successful' do
@@ -55,7 +52,7 @@ RSpec.describe UploadsController, type: :controller do
 
     describe 'when deposits are disabled' do
       before do
-        SiteOption.create!(name: SiteOption::DEPOSITS_ENABLED, value: false)
+        SiteConfiguration.instance.update!(deposits_enabled: false)
         get :new
       end
 
