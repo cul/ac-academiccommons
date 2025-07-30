@@ -31,6 +31,8 @@ class SiteConfiguration < ApplicationRecord
   end
 
   def self.downloads_message
+    return DOWNLOADS_ENABLED_MESSAGE_DEF if instance.downloads_message == ''
+
     instance.downloads_message
   end
 

@@ -1,6 +1,6 @@
-<%= form_with url: admin_site_configuration_path, method: :patch, local: true do |f| %>
+<%= form_with url: admin_site_configuration_path, method: :patch, local: true do |form| %>
   <div>
-    <%= f.text_area :alert_message, value: SiteConfiguration.alert_message %>
+    <%= form.text_area :alert_message, value: SiteConfiguration.alert_message %>
   </div>
-  <%= f.submit 'Submit', class: 'btn btn-primary' %>
+  <%= form.submit 'Submit', class: 'btn btn-primary' %>
 <% end %>

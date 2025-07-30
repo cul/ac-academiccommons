@@ -17,7 +17,7 @@ module Admin
     private
 
     def site_configuration_params
-      params.permit(:deposits_enabled, :downloads_enabled, :alert_message)
+      params.permit(:alert_message, :deposits_enabled, :downloads_enabled, :downloads_message)
     end
   end
 end

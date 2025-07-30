@@ -6,12 +6,13 @@
     <% action_label = "Enable Downloads" %>
     <% enable = true %>
   <% end %>
-  <%# toggle 
-  <div class="custom-control custom-switch">
-    <%= form.check_box :downloads_enabled, class: "custom-control-input", id: "customSwitch1"   
-  <label class="custom-control-label" for="customSwitch1">Enable: </label>
-  <%# ^^^toggle %>
+  <div>
+    <%= form.text_area :downloads_message, value: SiteConfiguration.downloads_message %>
+  </div>
+  <div class="d-flex justify-content-between">
+    <%= form.hidden_field :downloads_enabled, value: enable %>
+    <%= form.submit action_label, class: "btn btn-primary" %>
 
-  <%= form.hidden_field :downloads_enabled, value: enable %>
-  <%= form.submit action_label, class: "btn btn-primary" %>
+    <%= form.submit 'Save Message', class: 'btn btn-primary' %>
+  </div>
 <% end %>
