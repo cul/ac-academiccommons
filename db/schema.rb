@@ -177,7 +177,7 @@ ActiveRecord::Schema.define(version: 2025_07_31_141949) do
     t.string "alert_message"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.integer "singleton_guard"
+    t.integer "singleton_guard", null: false
     t.index "\"singelton_guard\"", name: "index_site_configurations_on_singelton_guard", unique: true
   end
 
