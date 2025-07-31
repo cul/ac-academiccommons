@@ -12,10 +12,14 @@ class SiteConfiguration < ApplicationRecord
   # The singleton_guard column is a unique column that must be set to 0
   # This ensures that only one record of type SiteConfiguration is ever created
   # (via https://stackoverflow.com/questions/399447/how-to-implement-a-singleton-model)
-  validates :singleton_guard, inclusion: { in: [SINGLETON_GUARD_VALUE] }
+  validates :singleton_guard, inclusion: { in: [SINGLETON_GUARD_VALUE] }, presence: true
+  # validates :downloads_enabled, presence: true
+  # validates :deposits_enabled, presence: true
 
   # If there is no site configuration record in the database, we create one with
   # the default values in the block passed to firt_or_create
+  # add default values and non-nil to _enabled fields
+  # todo : look into caching this in "The Rails Cache"
   def self.instance
     where(singleton_guard: 0).first_or_create! do |site_config|
       site_config.downloads_enabled = true

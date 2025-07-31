@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2025_07_30_142813) do
+ActiveRecord::Schema.define(version: 2025_07_31_141949) do
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
@@ -171,9 +171,9 @@ ActiveRecord::Schema.define(version: 2025_07_30_142813) do
   end
 
   create_table "site_configurations", force: :cascade do |t|
-    t.boolean "downloads_enabled"
+    t.boolean "downloads_enabled", default: true, null: false
     t.string "downloads_message"
-    t.boolean "deposits_enabled"
+    t.boolean "deposits_enabled", default: true, null: false
     t.string "alert_message"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
