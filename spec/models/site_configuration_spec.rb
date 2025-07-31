@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe SiteConfiguration, type: :model, focus: true do # rubocop:disable RSpec/Focus
+RSpec.describe SiteConfiguration, type: :model do
   let(:test_site_configuration) { FactoryBot.build(:site_configuration) }
 
   describe 'should be valid' do
@@ -23,6 +23,11 @@ RSpec.describe SiteConfiguration, type: :model, focus: true do # rubocop:disable
       expect(test_site_configuration).not_to be_valid
     end
 
+    it 'when singleton_guard is not 0' do
+      test_site_configuration.singleton_guard = 1
+      expect(test_site_configuration).not_to be_valid
+    end
+
     it 'when downloads_enabled is nil' do
       test_site_configuration.downloads_enabled = nil
       expect(test_site_configuration).not_to be_valid
@@ -33,18 +38,4 @@ RSpec.describe SiteConfiguration, type: :model, focus: true do # rubocop:disable
       expect(test_site_configuration).not_to be_valid
     end
   end
-
-  # describe '#instance' do
-  #   it 'creates the instance if it does not exist' do
-  #   end
-
-  #   it 'returns the same instance if already exists' do
-  #   end
-  # end
-
-  # describe 'database' do
-  #   it 'does not allow for multiple records' do
-  #     expect { described_class.create(singleton_guard: 0) }.to_raise StandardError
-  #   end
-  # end
 end

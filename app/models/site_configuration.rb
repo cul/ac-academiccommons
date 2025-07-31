@@ -13,8 +13,8 @@ class SiteConfiguration < ApplicationRecord
   # This ensures that only one record of type SiteConfiguration is ever created
   # (via https://stackoverflow.com/questions/399447/how-to-implement-a-singleton-model)
   validates :singleton_guard, inclusion: { in: [SINGLETON_GUARD_VALUE] }, presence: true
-  # validates :downloads_enabled, presence: true
-  # validates :deposits_enabled, presence: true
+  validates :downloads_enabled, inclusion: { in: [true, false] }
+  validates :deposits_enabled, inclusion: { in: [true, false] }
 
   # If there is no site configuration record in the database, we create one with
   # the default values in the block passed to firt_or_create
