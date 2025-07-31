@@ -7,6 +7,8 @@ describe Admin::SiteConfigurationsController, type: :controller do
     include_examples 'authorization required' do
       let(:http_request) { get :edit }
     end
+
+    describe ''
   end
 
   describe 'PATCH update' do
