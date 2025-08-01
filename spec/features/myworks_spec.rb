@@ -65,7 +65,7 @@ describe 'myworks', type: :feature do
 
   context 'when deposits are enabled' do
     before do
-      SiteOption.create!(name: SiteOption::DEPOSITS_ENABLED, value: true)
+      # deposits are enabled by default in SiteConfiguration
       visit myworks_path
     end
 
@@ -77,7 +77,7 @@ describe 'myworks', type: :feature do
 
   context 'when deposits are disabled' do
     before do
-      SiteOption.create!(name: SiteOption::DEPOSITS_ENABLED, value: false)
+      SiteConfiguration.instance.update!(deposits_enabled: false)
       visit myworks_path
     end
 

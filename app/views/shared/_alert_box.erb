@@ -1,8 +1,8 @@
 <% cache('alert_message', expires_in: 1.day, race_condition_ttl: 2, skip_digest: true) do %>
-  <% if (alert_msg = ContentBlock.find_by_title(ContentBlock::ALERT_MESSAGE)) && !alert_msg.data.blank? %>
+  <% if !SiteConfiguration.alert_message.blank? %>
     <div class="alert-box">
       <div class="container">
-        <i class="fas fa-info-circle" aria-hidden></i> <%= alert_msg.data.to_s.html_safe %>
+        <i class="fas fa-info-circle" aria-hidden></i> <%= SiteConfiguration.alert_message.html_safe %>
       </div>
     </div>
   <% end %>

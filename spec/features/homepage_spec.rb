@@ -39,9 +39,7 @@ describe 'Homepage', type: :feature do
 
   describe 'when rendering the home page with site options' do
     context 'when deposits are enabled' do
-      before do
-        SiteOption.create!(name: SiteOption::DEPOSITS_ENABLED, value: true)
-      end
+      # Deposits are enabled by default by SiteConfiguration model
 
       include_context 'when visiting the home page'
       it 'links to the upload page' do
@@ -51,7 +49,7 @@ describe 'Homepage', type: :feature do
 
     context 'when deposits are disabled' do
       before do
-        SiteOption.create!(name: SiteOption::DEPOSITS_ENABLED, value: false)
+        SiteConfiguration.instance.update(deposits_enabled: false)
       end
 
       include_context 'when visiting the home page'

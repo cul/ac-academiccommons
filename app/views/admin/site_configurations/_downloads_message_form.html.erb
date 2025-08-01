@@ -1,0 +1,6 @@
+<div class="mt-3">
+  <%= form_with url: admin_site_configuration_path, method: :patch, local: true do |form| %>
+    <%= form.text_area :downloads_message, value: SiteConfiguration.downloads_message %>
+    <%= form.submit 'Save Message', class: 'btn btn-primary' %>
+  <% end %>
+</div>

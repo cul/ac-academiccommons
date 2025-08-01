@@ -1,10 +1,13 @@
 <div class="row align-items-center">
 <div class="col-8">
-<h2>Self-Deposits     <%= @posts  %>
- </h2>
- </div>
- <%= render :partial=>'enable_deposits_form' %>
- </div>
+<h2>Self-Deposits</h2>
+
+<% unless deposits_enabled? %>
+  <em class="text-italics">
+    Deposits are currently disabled. To enable deposits, navigate to "Configure Site Options" from the admin menu.
+  </em>
+<% end %>
+
 <div class="pagination"> <%= will_paginate @deposits %></div>
 <table class="table">
   <thead>
