@@ -4,7 +4,7 @@ describe 'Agreement', type: :feature do
   include_context 'non-admin user for feature'
 
   before do
-    SiteOption.create!(name: SiteOption::DEPOSITS_ENABLED, value: true)
+    # Deposits are enabled by default by SiteConfiguration model
     visit agreement_path
   end
 

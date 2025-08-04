@@ -1,6 +1,8 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
-describe Admin::AlertMessagesController, type: :controller do
+describe Admin::SiteConfigurationsController, type: :controller do
   describe 'GET edit' do
     include_examples 'authorization required' do
       let(:http_request) { get :edit }
@@ -9,7 +11,7 @@ describe Admin::AlertMessagesController, type: :controller do
 
   describe 'PATCH update' do
     include_examples 'authorization required' do
-      let(:http_request) { patch :update, params: { content_block: { data: 'foobar' } } }
+      let(:http_request) { patch :update, params: { deposits_enabled: false } }
     end
   end
 end

@@ -24,11 +24,11 @@ class ApplicationController < ActionController::Base
   end
 
   def downloads_enabled?
-    SiteOption.downloads_enabled
+    SiteConfiguration.downloads_enabled
   end
 
   def deposits_enabled?
-    SiteOption.deposits_enabled
+    SiteConfiguration.deposits_enabled
   end
 
   def fedora_config

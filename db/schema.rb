@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2024_08_20_183333) do
+ActiveRecord::Schema.define(version: 2025_07_31_141949) do
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
@@ -51,15 +51,6 @@ ActiveRecord::Schema.define(version: 2024_08_20_183333) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string "user_type"
-  end
-
-  create_table "content_blocks", force: :cascade do |t|
-    t.string "title", null: false
-    t.integer "user_id", null: false
-    t.text "data"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.index ["title"], name: "index_content_blocks_on_title"
   end
 
   create_table "deposits", force: :cascade do |t|
@@ -179,9 +170,15 @@ ActiveRecord::Schema.define(version: 2024_08_20_183333) do
     t.index ["updated_at"], name: "index_sessions_on_updated_at"
   end
 
-  create_table "site_options", force: :cascade do |t|
-    t.string "name"
-    t.boolean "value"
+  create_table "site_configurations", force: :cascade do |t|
+    t.boolean "downloads_enabled", default: true, null: false
+    t.string "downloads_message"
+    t.boolean "deposits_enabled", default: true, null: false
+    t.string "alert_message"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.integer "singleton_guard", null: false
+    t.index ["singleton_guard"], name: "index_site_configurations_on_singleton_guard", unique: true
   end
 
   create_table "statistics", force: :cascade do |t|
