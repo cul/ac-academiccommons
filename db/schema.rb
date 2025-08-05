@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2025_07_31_141949) do
+ActiveRecord::Schema.define(version: 2025_07_31_213653) do
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
@@ -175,9 +175,9 @@ ActiveRecord::Schema.define(version: 2025_07_31_141949) do
     t.string "downloads_message"
     t.boolean "deposits_enabled", default: true, null: false
     t.string "alert_message"
+    t.integer "singleton_guard", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.integer "singleton_guard", null: false
     t.index ["singleton_guard"], name: "index_site_configurations_on_singleton_guard", unique: true
   end
 

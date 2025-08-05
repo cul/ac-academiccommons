@@ -2,7 +2,7 @@
 
 source 'https://rubygems.org'
 
-gem 'rails', '6.0.4'
+gem 'rails', '~> 6.0.6'
 
 gem 'active-fedora', '~> 8.7'
 gem 'active-triples', git: 'https://github.com/cul/ActiveTriples', branch: 'deprecation_update'
@@ -13,10 +13,11 @@ gem 'blacklight_range_limit',
     git: 'https://github.com/JackBlackLight/blacklight_range_limit.git', branch: 'use_blacklight_component'
 gem 'bootsnap'
 gem 'cancancan'
+gem 'concurrent-ruby', '1.3.4' # TODO: this is temporary for updating to rails 6.0.6
 gem 'cul-ldap'
 gem 'cul_omniauth', '>= 0.7.0'
 gem 'deprecation', '>= 1.1.0'
-gem 'devise'
+gem 'devise' # consider pinning
 gem 'fancybox2-rails' # Used in helper classes. TODO: Confirm that this is needed and used by the application.
 gem 'gaffe'
 gem 'grape', '>= 1.8.0'
