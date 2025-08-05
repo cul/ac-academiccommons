@@ -2,7 +2,7 @@
 
 source 'https://rubygems.org'
 
-gem 'rails', '~> 6.0.6'
+gem 'rails', '~> 6.0.6.1'
 
 gem 'active-fedora', '~> 8.7'
 gem 'active-triples', git: 'https://github.com/cul/ActiveTriples', branch: 'deprecation_update'
