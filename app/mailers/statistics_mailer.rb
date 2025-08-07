@@ -1,5 +1,5 @@
 class StatisticsMailer < ApplicationMailer
-  default from: "Academic Commons <#{Rails.application.config_for(:emails)['mail_deliverer']}>"
+  default from: "Academic Commons <#{Rails.application.config_for(:emails)[:mail_deliverer]}>"
 
   def author_monthly(to_address, author_id, usage_stats, optional_note)
     @author_id = author_id
