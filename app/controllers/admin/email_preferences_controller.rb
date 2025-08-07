@@ -33,7 +33,7 @@ module Admin
       @email_preference = EmailPreference.find(params[:id])
 
       respond_to do |f|
-        if @email_preference.update_attributes(email_preference_params)
+        if @email_preference.update(email_preference_params)
           f.html do
             flash[:success] = 'Successfully updated email preference.'
             render :show
