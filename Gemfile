@@ -24,8 +24,6 @@ gem 'fancybox2-rails' # Used in helper classes. TODO: Confirm that this is neede
 gem 'gaffe'
 gem 'grape', '>= 1.8.0'
 gem 'grape-entity', '>= 1.0.0'
-# pinning swagger to commit that supports braces in array params; functionality is broken in next version - 0.31.0
-# gem 'grape-swagger', git: 'https://github.com/ruby-grape/grape-swagger', ref: 'da351d0f99228f31329210d21b975a64500e73ab'
 gem 'grape-swagger', '~>0.32.0'
 gem 'mustermann', '~> 2.0'
 
