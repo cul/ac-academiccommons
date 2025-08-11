@@ -19,14 +19,6 @@ GIT
       rdf-vocab (~> 0.8)
 
 GIT
-  remote: https://github.com/ruby-grape/grape-swagger
-  revision: da351d0f99228f31329210d21b975a64500e73ab
-  ref: da351d0f99228f31329210d21b975a64500e73ab
-  specs:
-    grape-swagger (0.30.1)
-      grape (>= 0.16.2)
-
-GIT
   remote: https://github.com/samvera-deprecated/jettywrapper.git
   revision: 6b03c21726a83dcecf09d9b20683bfcd63f106d1
   branch: master
@@ -108,14 +100,15 @@ GEM
       minitest (>= 5.1)
       tzinfo (~> 2.0)
       zeitwerk (~> 2.3)
-    addressable (2.8.0)
-      public_suffix (>= 2.0.2, < 5.0)
+    addressable (2.8.7)
+      public_suffix (>= 2.0.2, < 7.0)
     airbrussh (1.5.3)
       sshkit (>= 1.6.1, != 1.7.0)
     ast (2.4.2)
     base64 (0.3.0)
     bcrypt (3.1.18)
     bcrypt_pbkdf (1.1.0)
+    bigdecimal (3.2.2)
     blacklight (7.29.0)
       deprecation
       globalid
@@ -174,7 +167,7 @@ GEM
     crack (0.4.5)
       rexml
     crass (1.0.6)
-    css_parser (1.11.0)
+    css_parser (1.21.1)
       addressable
     cul-ldap (0.0.1)
       net-ldap (~> 0.16)
@@ -205,15 +198,18 @@ GEM
     docile (1.4.0)
     domain_name (0.5.20190701)
       unf (>= 0.0.5, < 1.0.0)
-    dry-core (1.0.1)
+    dry-core (1.1.0)
       concurrent-ruby (~> 1.0)
+      logger
       zeitwerk (~> 2.6)
-    dry-inflector (1.0.0)
-    dry-logic (1.5.0)
+    dry-inflector (1.2.0)
+    dry-logic (1.6.0)
+      bigdecimal
       concurrent-ruby (~> 1.0)
-      dry-core (~> 1.0, < 2)
+      dry-core (~> 1.1)
       zeitwerk (~> 2.6)
-    dry-types (1.7.1)
+    dry-types (1.8.3)
+      bigdecimal (~> 3.0)
       concurrent-ruby (~> 1.0)
       dry-core (~> 1.0)
       dry-inflector (~> 1.0)
@@ -250,16 +246,17 @@ GEM
       rails (>= 4.0.0)
     globalid (1.2.1)
       activesupport (>= 6.1)
-    grape (1.8.0)
-      activesupport (>= 5)
-      builder
+    grape (2.4.0)
+      activesupport (>= 6.1)
       dry-types (>= 1.1)
-      mustermann-grape (~> 1.0.0)
-      rack (>= 1.3.0)
-      rack-accept
+      mustermann-grape (~> 1.1.0)
+      rack (>= 2)
+      zeitwerk
     grape-entity (1.0.0)
       activesupport (>= 3.0.0)
       multi_json (>= 1.3.2)
+    grape-swagger (0.32.1)
+      grape (>= 0.16.2)
     haml (5.2.2)
       temple (>= 0.8.0)
       tilt
@@ -332,9 +329,9 @@ GEM
     msgpack (1.5.1)
     multi_json (1.15.0)
     multipart-post (2.0.0)
-    mustermann (1.1.1)
+    mustermann (2.0.2)
       ruby2_keywords (~> 0.0.1)
-    mustermann-grape (1.0.2)
+    mustermann-grape (1.1.0)
       mustermann (>= 1.0.0)
     mysql2 (0.5.6)
     net-imap (0.5.9)
@@ -356,8 +353,6 @@ GEM
     nio4r (2.7.4)
     nokogiri (1.15.7)
       mini_portile2 (~> 2.8.2)
-      racc (~> 1.4)
-    nokogiri (1.15.7-x86_64-darwin)
       racc (~> 1.4)
     nom-xml (1.2.0)
       i18n
@@ -391,15 +386,13 @@ GEM
     premailer-rails (1.11.1)
       actionmailer (>= 3)
       premailer (~> 1.7, >= 1.7.9)
-    public_suffix (4.0.7)
+    public_suffix (6.0.2)
     puma (5.6.4)
       nio4r (~> 2.0)
     raabro (1.4.0)
     racc (1.8.1)
     rack (2.2.17)
-    rack-accept (0.4.5)
-      rack (>= 0.4)
-    rack-protection (2.2.1)
+    rack-protection (2.2.4)
       rack
     rack-proxy (0.7.2)
       rack
@@ -464,8 +457,8 @@ GEM
     responders (3.0.1)
       actionpack (>= 5.0)
       railties (>= 5.0)
-    resque (2.6.0)
-      mono_logger (~> 1.0)
+    resque (2.7.0)
+      mono_logger (~> 1)
       multi_json (~> 1.0)
       redis-namespace (~> 1.6)
       sinatra (>= 0.9.2)
@@ -566,10 +559,10 @@ GEM
       simplecov_json_formatter (~> 0.1)
     simplecov-html (0.12.3)
     simplecov_json_formatter (0.1.4)
-    sinatra (2.2.1)
-      mustermann (~> 1.0)
+    sinatra (2.2.4)
+      mustermann (~> 2.0)
       rack (~> 2.2)
-      rack-protection (= 2.2.1)
+      rack-protection (= 2.2.4)
       tilt (~> 2.0)
     sitemap_generator (6.2.1)
       builder (~> 3.0)
@@ -625,8 +618,8 @@ GEM
       activesupport (>= 5.0.0, < 8.0)
       concurrent-ruby (~> 1.0)
       method_source (~> 1.0)
-    voight_kampff (1.1.4)
-      rack (>= 1.4, < 3.0)
+    voight_kampff (2.0.0)
+      rack (>= 1.4)
     warden (1.2.9)
       rack (>= 2.0.9)
     webmock (3.14.0)
@@ -651,7 +644,7 @@ GEM
       rexml
     xpath (3.2.0)
       nokogiri (~> 1.8)
-    zeitwerk (2.6.18)
+    zeitwerk (2.7.3)
 
 PLATFORMS
   ruby
@@ -686,7 +679,7 @@ DEPENDENCIES
   gaffe
   grape (>= 1.8.0)
   grape-entity (>= 1.0.0)
-  grape-swagger!
+  grape-swagger (~> 0.32.0)
   http
   jbuilder
   jettywrapper (>= 1.4.0)!
@@ -695,6 +688,7 @@ DEPENDENCIES
   listen
   mail (~> 2.8)
   multipart-post (~> 2.0.0)
+  mustermann (~> 2.0)
   mysql2 (>= 0.5.6)
   net-scp (~> 4.0.0)
   net-ssh (~> 7.2.0)
@@ -704,7 +698,7 @@ DEPENDENCIES
   puma (~> 5.2)
   rails (~> 6.1.7.10)
   rainbow
-  resque (~> 2.0)
+  resque (~> 2.7.0)
   rinku
   rsolr-ext
   rspec-its
@@ -720,12 +714,15 @@ DEPENDENCIES
   turbolinks
   uglifier
   unicode
-  voight_kampff
+  voight_kampff (~> 2.0)
   webmock
   webpacker (~> 5.4.0)
   whenever
   will_paginate
   wowza-secure_token
+
+RUBY VERSION
+   ruby 3.3.8p144
 
 BUNDLED WITH
    2.3.13
