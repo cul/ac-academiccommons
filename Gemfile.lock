@@ -109,7 +109,7 @@ GEM
     bcrypt (3.1.18)
     bcrypt_pbkdf (1.1.0)
     bigdecimal (3.2.2)
-    blacklight (7.29.0)
+    blacklight (7.41.0)
       deprecation
       globalid
       hashdiff
@@ -117,8 +117,9 @@ GEM
       jbuilder (~> 2.7)
       kaminari (>= 0.15)
       ostruct (>= 0.3.2)
-      rails (>= 5.1, < 7.1)
-      view_component (~> 2.43)
+      rails (>= 6.1, < 8.1)
+      view_component (>= 2.74, < 4)
+      zeitwerk
     blacklight_oai_provider (7.0.2)
       blacklight (~> 7.0)
       oai (~> 1.2)
@@ -614,9 +615,9 @@ GEM
     unf_ext (0.0.8.2)
     unicode (0.4.4.5)
     unicode-display_width (2.3.0)
-    view_component (2.71.0)
-      activesupport (>= 5.0.0, < 8.0)
-      concurrent-ruby (~> 1.0)
+    view_component (3.23.2)
+      activesupport (>= 5.2.0, < 8.1)
+      concurrent-ruby (~> 1)
       method_source (~> 1.0)
     voight_kampff (2.0.0)
       rack (>= 1.4)
@@ -655,7 +656,7 @@ DEPENDENCIES
   active-fedora (~> 8.7)
   active-triples!
   addressable
-  blacklight (~> 7.29)
+  blacklight (~> 7.41.0)
   blacklight_oai_provider
   blacklight_range_limit!
   bootsnap

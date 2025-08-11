@@ -9,7 +9,7 @@ gem 'rails', '~> 6.1.7.10'
 gem 'active-fedora', '~> 8.7'
 gem 'active-triples', git: 'https://github.com/cul/ActiveTriples', branch: 'deprecation_update'
 gem 'addressable'
-gem 'blacklight', '~> 7.29'
+gem 'blacklight', '~> 7.41.0'
 gem 'blacklight_oai_provider'
 gem 'blacklight_range_limit',
     git: 'https://github.com/JackBlackLight/blacklight_range_limit.git', branch: 'use_blacklight_component'
