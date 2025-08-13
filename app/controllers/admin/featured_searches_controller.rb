@@ -24,7 +24,6 @@ module Admin
 
     def update
       @featured_search = FeaturedSearch.find(params[:id])
-      # TODO: error?
       @featured_search.update(featured_search_params)
       if @featured_search.save
         flash[:success] = "Updated!"
