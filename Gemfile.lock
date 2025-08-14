@@ -351,7 +351,7 @@ GEM
       net-ssh (>= 5.0.0, < 8.0.0)
     net-smtp (0.5.1)
       net-protocol
-    net-ssh (7.2.0)
+    net-ssh (7.2.3)
     netrc (0.11.0)
     nio4r (2.7.4)
     nokogiri (1.16.8)
@@ -698,7 +698,7 @@ DEPENDENCIES
   mustermann (~> 2.0)
   mysql2 (>= 0.5.6)
   net-scp (~> 4.0.0)
-  net-ssh (~> 7.2.0)
+  net-ssh (= 7.2.3)
   nokogiri (~> 1.16.2)
   okcomputer
   premailer (~> 1.27.0)
