@@ -354,8 +354,10 @@ GEM
     net-ssh (7.2.0)
     netrc (0.11.0)
     nio4r (2.7.4)
-    nokogiri (1.15.7)
+    nokogiri (1.16.8)
       mini_portile2 (~> 2.8.2)
+      racc (~> 1.4)
+    nokogiri (1.16.8-x86_64-darwin)
       racc (~> 1.4)
     nom-xml (1.2.0)
       i18n
@@ -382,9 +384,9 @@ GEM
     parallel (1.22.1)
     parser (3.1.2.1)
       ast (~> 2.4.1)
-    premailer (1.15.0)
+    premailer (1.27.0)
       addressable
-      css_parser (>= 1.6.0)
+      css_parser (>= 1.19.0)
       htmlentities (>= 4.0.0)
     premailer-rails (1.11.1)
       actionmailer (>= 3)
@@ -697,8 +699,9 @@ DEPENDENCIES
   mysql2 (>= 0.5.6)
   net-scp (~> 4.0.0)
   net-ssh (~> 7.2.0)
-  nokogiri (~> 1.15.2)
+  nokogiri (~> 1.16.2)
   okcomputer
+  premailer (~> 1.27.0)
   premailer-rails
   puma (~> 5.2)
   rails (~> 6.1.7.10)
