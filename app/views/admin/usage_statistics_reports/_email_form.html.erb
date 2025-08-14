@@ -3,6 +3,7 @@
 <%= form_with url: { action: :email, params: params.to_unsafe_h.slice(:usage_statistics_reports_form) },
               format: :json,
               scope: :email,
+              local: false,
               class: 'form-horizontal admin-form',
               id: 'email-usage-statistics' do |f| %>
   <div class="form-group">

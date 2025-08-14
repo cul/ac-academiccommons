@@ -53,6 +53,8 @@ begin
   task ci: [:config_files] do
     ENV['RAILS_ENV'] = 'test'
     Rails.env = ENV['RAILS_ENV']
+    # TODO: do this in a better way
+    `RAILS_ENV=test bundle exec rake db:environment:set db:drop db:create db:migrate`
     rspec_system_exit_failure_exception = nil
 
     begin

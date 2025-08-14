@@ -74,7 +74,7 @@ class AssetsController < ApplicationController
   end
 
   def ds_content_url(dsid)
-    Rails.application.config_for(:fedora)['url'] + '/objects/' + @asset.fetch(:fedora3_pid_ssi, nil) + '/datastreams/' + dsid + '/content'
+    Rails.application.config_for(:fedora)[:url] + '/objects/' + @asset.fetch(:fedora3_pid_ssi, nil) + '/datastreams/' + dsid + '/content'
   end
 
   # Downloading of files is handed off to nginx to improve performance.

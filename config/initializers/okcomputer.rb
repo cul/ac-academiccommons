@@ -7,7 +7,7 @@ raise 'Missing OkComputer credentials' if creds.blank?
 OkComputer.require_authentication(creds[:user], creds[:password], except: %w(default))
 
 # Checking Solr connection
-solr_urls = [:solr, :blacklight].map {|c| Rails.application.config_for(c)['url'] }.uniq
+solr_urls = [:solr, :blacklight].map {|c| Rails.application.config_for(c)[:url] }.uniq
 solr_urls.each_with_index do |url, i|
   OkComputer::Registry.register("solr#{i}", OkComputer::SolrCheck.new(url))
 end
