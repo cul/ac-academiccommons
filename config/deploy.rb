@@ -1,4 +1,4 @@
-lock '~> 3.17.3'
+lock '~> 3.19.0'
 
 set :instance, 'ac'
 set :application, 'academiccommons'
