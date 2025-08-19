@@ -3,6 +3,8 @@ class UploadsController < ApplicationController
 
   layout 'dashboard'
 
+  include SiteConfigurationHelper
+
   # GET /upload
   # Show upload landing page page if user is not logged in. If user is logged
   # in redirect to /upload/new

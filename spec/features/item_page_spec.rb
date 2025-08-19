@@ -2,7 +2,7 @@ require 'rails_helper'
 
 describe 'Item Page', type: :feature do
   before do
-    allow_any_instance_of(ApplicationController).to receive(:downloads_enabled?).and_return(true) # rubocop:disable RSpec/AnyInstance
+    allow_any_instance_of(SiteConfigurationHelper).to receive(:downloads_enabled?).and_return(true) # rubocop:disable RSpec/AnyInstance
     visit solr_document_path('10.7916/ALICE')
   end
 
@@ -55,7 +55,7 @@ describe 'Item Page', type: :feature do
 
   context 'when downloads disabled' do
     before do
-      allow_any_instance_of(ApplicationController).to receive(:downloads_enabled?).and_return(false) # rubocop:disable RSpec/AnyInstance
+      allow_any_instance_of(SiteConfigurationHelper).to receive(:downloads_enabled?).and_return(false) # rubocop:disable RSpec/AnyInstance
       visit solr_document_path('10.7916/ALICE')
     end
 
