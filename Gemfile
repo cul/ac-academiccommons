@@ -43,6 +43,7 @@ gem 'premailer', '~> 1.27.0'
 gem 'premailer-rails'
 gem 'rainbow'
 gem 'resque', '~> 2.7.0'
+gem 'resque-web', require: 'resque_web'
 gem 'rinku'
 gem 'rsolr-ext'
 gem 'rubyzip', require: 'zip'
@@ -92,3 +93,5 @@ end
 
 # Use Puma for local development
 gem 'puma', '~> 5.2'
+
+gem 'sprockets-rails', '~> 3.5'

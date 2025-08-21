@@ -4,6 +4,8 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
   skip_before_action :verify_authenticity_token
 
   def developer
+    puts '************************************************************************************************************************************************'
+    puts 'inside users/omniauth_callbacks#developer'
     current_user ||= User.find_or_create_by(
       uid: request.env['omniauth.auth'][:uid], provider: :developer
     )
