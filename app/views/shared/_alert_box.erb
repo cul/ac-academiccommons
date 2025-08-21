@@ -1,9 +1,7 @@
-<% cache('alert_message', expires_in: 1.day, race_condition_ttl: 2, skip_digest: true) do %>
-  <% if !SiteConfiguration.alert_message.blank? %>
-    <div class="alert-box">
-      <div class="container">
-        <i class="fas fa-info-circle" aria-hidden></i> <%= SiteConfiguration.alert_message.html_safe %>
-      </div>
+<% if alert_message? %>
+  <div class="alert-box">
+    <div class="container">
+      <i class="fas fa-info-circle" aria-hidden></i> <%= SiteConfiguration.alert_message.html_safe %>
     </div>
-  <% end %>
+  </div>
 <% end %>
