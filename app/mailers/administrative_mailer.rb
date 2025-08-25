@@ -1,7 +1,7 @@
 class AdministrativeMailer < ApplicationMailer
   # This mailer contains emails that go to the Academic Commons
   # administrative staff.
-  default to: Rails.application.config_for(:emails)['administrative_notifications']
+  default to: Rails.application.config_for(:emails)[:administrative_notifications]
 
   # Notification is sent to AC staff when a new agreement is signed.
   def new_agreement(name, email, agreement_version)

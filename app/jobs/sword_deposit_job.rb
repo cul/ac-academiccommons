@@ -6,15 +6,16 @@ class SwordDepositJob < ApplicationJob
     return unless Rails.application.config.sending_deposits_to_sword
 
     # Check that we have all the credentials necessary: url, user, password
-    credentials =  Rails.application.config_for(:secrets)['sword']
-    raise 'Missing SWORD credentials' unless ['url', 'user', 'password'].all? { |k| credentials[k].present? }
+    credentials = Rails.application.config_for(:secrets)[:sword]
+
+    raise "Missing SWORD credentials: #{errs}" unless [:url, :user, :password].all? { |k| credentials[k].present? }
 
     # Send request to SWORD
     begin
       response = HTTP.timeout(write: 60, connect: 60, read: 90)
-                     .basic_auth(user: credentials['user'], pass: credentials['password'])
+                     .basic_auth(user: credentials[:user], pass: credentials[:password])
                      .headers(content_type: 'application/zip')
-                     .post(credentials['url'], body: deposit.sword_zip)
+                     .post(credentials[:url], body: deposit.sword_zip)
     rescue StandardError => e
       message = "There was an error deliving a SWORD deposit for deposit record id: #{deposit.id}. Please check logs."
       ErrorMailer.sword_deposit_error(message).deliver

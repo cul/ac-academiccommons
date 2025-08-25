@@ -1,7 +1,7 @@
 class UserMailer < ApplicationMailer
   # This mailer contains emails that go to Academic Commons users.
   helper :catalog # Needed to correctly render persistent url.
-  default from: Rails.application.config_for(:emails)['mail_deliverer']
+  default from: Rails.application.config_for(:emails)[:mail_deliverer]
 
   def new_item_available(solr_doc, uni, email, name = nil)
     @uni = uni
@@ -15,7 +15,7 @@ class UserMailer < ApplicationMailer
                 'Your work is now available in Academic Commons'
               end
 
-    bcc = Rails.application.config_for(:emails)['administrative_notifications']
+    bcc = Rails.application.config_for(:emails)[:administrative_notifications]
 
     if Rails.application.config.prod_environment
       mail(to: @email, bcc: bcc, subject: subject)
