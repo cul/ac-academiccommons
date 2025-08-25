@@ -6,7 +6,6 @@ RSpec.describe SiteConfiguration, type: :model do
   let(:test_site_configuration) { FactoryBot.build(:site_configuration) }
 
   describe 'should be valid' do
-    # TODO: fix mocks?
     it 'with singleton_guard, downloads_enabled, and deposits_enabled present' do
       expect(test_site_configuration).to be_valid
     end

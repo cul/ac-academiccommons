@@ -9,7 +9,6 @@ gem 'rails', '~> 6.1.7.10'
 gem 'active-fedora', '~> 8.7'
 gem 'active-triples', git: 'https://github.com/cul/ActiveTriples', branch: 'deprecation_update'
 gem 'addressable'
-gem 'bcrypt_pbkdf', require: false
 gem 'blacklight', '~> 7.41.0'
 gem 'blacklight_oai_provider'
 gem 'blacklight_range_limit',
@@ -21,7 +20,6 @@ gem 'cul-ldap'
 gem 'cul_omniauth', '>= 0.7.0'
 gem 'deprecation', '>= 1.1.0'
 gem 'devise' # consider pinning
-gem 'ed25519', require: false
 gem 'fancybox2-rails' # Used in helper classes. TODO: Confirm that this is needed and used by the application.
 gem 'gaffe'
 gem 'grape', '~> 1.8.0'
@@ -29,7 +27,6 @@ gem 'grape-entity', '~> 1.0.0'
 gem 'grape-swagger', '~> 2.0.0'
 gem 'mustermann', '~> 2.0'
 
-# gem 'mustermann-grape', '~> 1.1'
 gem 'http'
 gem 'jbuilder'
 gem 'jquery-rails'

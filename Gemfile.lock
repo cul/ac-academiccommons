@@ -662,7 +662,6 @@ DEPENDENCIES
   active-fedora (~> 8.7)
   active-triples!
   addressable
-  bcrypt_pbkdf
   blacklight (~> 7.41.0)
   blacklight_oai_provider
   blacklight_range_limit!
@@ -681,7 +680,6 @@ DEPENDENCIES
   database_cleaner
   deprecation (>= 1.1.0)
   devise
-  ed25519
   equivalent-xml
   factory_bot_rails
   fancybox2-rails
