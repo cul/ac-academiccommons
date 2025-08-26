@@ -819,6 +819,7 @@ DEPENDENCIES
   rspec-rails
   rubocul (~> 4.0)
   rubyzip
+  sassc-rails
   selenium-webdriver (~> 4.11)
   simplecov (>= 0.22.0)
   sitemap_generator
