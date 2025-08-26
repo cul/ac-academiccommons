@@ -65,31 +65,31 @@ group :development do
   gem 'spring'
 end
 
-# group :development, :test do
-# Deploying by using Capistrano. Using rails, rvm and passenger cap gems as
-# required by our deployment environment.
-gem 'capistrano', '~> 3.19.0', require: false
-gem 'capistrano-cul', require: false
-gem 'capistrano-passenger', '~> 0.2', require: false
-gem 'capistrano-rails', '~> 1.4', require: false
-gem 'capistrano-resque', '= 0.2.1', require: false
+group :development, :test do
+  # Deploying by using Capistrano. Using rails, rvm and passenger cap gems as
+  # required by our deployment environment.
+  gem 'capistrano', '~> 3.19.0', require: false
+  gem 'capistrano-cul', require: false
+  gem 'capistrano-passenger', '~> 0.2', require: false
+  gem 'capistrano-rails', '~> 1.4', require: false
+  gem 'capistrano-resque', '= 0.2.1', require: false
 
-gem 'rubocul', '~> 4.0', require: false
+  gem 'rubocul', '~> 4.0', require: false
 
-gem 'byebug'
-gem 'capybara', '~> 3.39'
-gem 'database_cleaner'
-gem 'equivalent-xml'
-gem 'factory_bot_rails'
-gem 'jettywrapper', '>=1.4.0', git: 'https://github.com/samvera-deprecated/jettywrapper.git', branch: 'master'
-gem 'json_spec'
-gem 'rspec-its'
-gem 'rspec-rails'
-gem 'selenium-webdriver', '~> 4.11'
-gem 'simplecov', '>= 0.22.0', require: false
-gem 'solr_wrapper', '~> 4.0'
-gem 'webmock'
-# end
+  gem 'byebug'
+  gem 'capybara', '~> 3.39'
+  gem 'database_cleaner'
+  gem 'equivalent-xml'
+  gem 'factory_bot_rails'
+  gem 'jettywrapper', '>=1.4.0', git: 'https://github.com/samvera-deprecated/jettywrapper.git', branch: 'master'
+  gem 'json_spec'
+  gem 'rspec-its'
+  gem 'rspec-rails'
+  gem 'selenium-webdriver', '~> 4.11'
+  gem 'simplecov', '>= 0.22.0', require: false
+  gem 'solr_wrapper', '~> 4.0'
+  gem 'webmock'
+end
 
 # Use Puma for local development
 gem 'puma', '~> 5.2'
