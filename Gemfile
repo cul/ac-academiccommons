@@ -27,6 +27,8 @@ gem 'grape-entity', '~> 1.0.0'
 gem 'grape-swagger', '~> 2.0.0'
 gem 'mustermann', '~> 2.0'
 gem 'om', '3.1.1'
+gem 'omniauth', '1.9.1'
+gem 'omniauth-cas', '2.0.0'
 
 gem 'http'
 gem 'jbuilder'
