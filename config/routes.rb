@@ -1,4 +1,4 @@
-require 'resque_web'
+require 'resque/server'
 
 Rails.application.routes.draw do
   concern :range_searchable, BlacklightRangeLimit::Routes::RangeSearchable.new
@@ -97,6 +97,7 @@ Rails.application.routes.draw do
   end
   constraints resque_web_constraint do
     mount ResqueWeb::Engine => 'admin/resque'
+    mount Resque::Server.new, at: '/admin/resque'
   end
 
   get '/logs/all_author_monthly_reports_history', to: 'logs#all_author_monthly_reports_history'

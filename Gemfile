@@ -43,7 +43,6 @@ gem 'premailer', '~> 1.27.0'
 gem 'premailer-rails'
 gem 'rainbow'
 gem 'resque', '~> 2.7.0'
-gem 'resque-web', require: false
 gem 'rinku'
 gem 'rsolr-ext'
 gem 'rubyzip', require: 'zip'
