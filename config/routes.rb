@@ -96,7 +96,6 @@ Rails.application.routes.draw do
     current_user.present? && current_user.respond_to?(:admin?) && current_user.admin?
   end
   constraints resque_web_constraint do
-    mount ResqueWeb::Engine => 'admin/resque'
     mount Resque::Server.new, at: '/admin/resque'
   end
 
