@@ -24,7 +24,7 @@ module Admin
 
     def update
       @featured_search = FeaturedSearch.find(params[:id])
-      @featured_search.update_attributes(featured_search_params)
+      @featured_search.update(featured_search_params)
       if @featured_search.save
         flash[:success] = "Updated!"
         redirect_to action: :edit

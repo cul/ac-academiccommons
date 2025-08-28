@@ -53,10 +53,12 @@ begin
   task ci: [:config_files] do
     ENV['RAILS_ENV'] = 'test'
     Rails.env = ENV['RAILS_ENV']
+    # TODO: do this in a better way
+    # `RAILS_ENV=test bundle exec rake db:environment:set db:drop db:create db:migrate`
     rspec_system_exit_failure_exception = nil
 
     begin
-      task_stack = ['docker_wrapper', 'ac:populate_solr', 'spec_all']
+      task_stack = ['docker_wrapper', 'db:migrate:reset', 'ac:populate_solr', 'spec_all']
       Rake::Task[task_stack.shift].invoke(task_stack)
     rescue SystemExit => e
       rspec_system_exit_failure_exception = e

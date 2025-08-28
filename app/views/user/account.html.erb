@@ -15,7 +15,7 @@
   You can change your Academic Commons email preferences below.
 </p>
 
-<%= form_with model: @email_preference, url: admin_email_preference_path(@email_preference, format: :json), method: :patch, class: 'form-horizontal ajax-flash-messages' do |f| %>
+<%= form_with model: @email_preference, url: admin_email_preference_path(@email_preference, format: :json), method: :patch, class: 'form-horizontal ajax-flash-messages', local: false do |f| %>
 
   <div class="form-group">
     <%= f.label :email, 'Preferred Email', class: 'control-label' %>
