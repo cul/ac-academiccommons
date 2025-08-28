@@ -3,8 +3,6 @@ rails_env = ENV['RAILS_ENV'] || 'development'
 config_file = rails_root + '/config/resque.yml'
 
 if rails_env == 'academiccommons_prod' || rails_env == 'academiccommons_test'
-  puts '------------------------------------------------------------------------------------------------------------------------------'
   resque_config = YAML::load(ERB.new(IO.read(config_file)).result, aliases: true)
-  Resque.redis = resque_config[rails_env]
-  puts '=================================================-----------------------------------------------------------------------------'
+  Resque.redis = resque_config[rails_env]['url']
 end
