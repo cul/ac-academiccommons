@@ -58,8 +58,7 @@ begin
     rspec_system_exit_failure_exception = nil
 
     begin
-      puts '-1-------------------------------------------------------------------------------'
-      task_stack = ['docker_wrapper', 'ac:populate_solr', 'spec_all']
+      task_stack = ['docker_wrapper', 'db:migrate:reset', 'ac:populate_solr', 'spec_all']
       Rake::Task[task_stack.shift].invoke(task_stack)
     rescue SystemExit => e
       rspec_system_exit_failure_exception = e
@@ -69,13 +68,11 @@ begin
   end
 
   task :docker_wrapper, [:task_stack] => [:environment] do |_task, args|
-    puts '0--------------------------------------------------------------------------------'
     unless Rails.env.test?
       raise 'This task should only be run in the test environment (because it clears docker volumes)'
     end
 
     task_stack = args[:task_stack]
-    puts '1--------------------------------------------------------------------------------'
 
     # stop docker if it's currently running (so we can delete any old volumes)
     Rake::Task['ac:docker:stop'].invoke
