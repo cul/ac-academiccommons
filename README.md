@@ -26,31 +26,36 @@ Current recommended version of Ruby is specified in `.ruby-version`.
    bundle install
    ```
 
-5. Install required Javascript libraries using Yarn
+5. Ensure you are using the correct version of node (*v16.16.0*). If using nvm for version management, run:
+    ```
+    nvm use
+    ```
+
+6. Install required Javascript libraries using Yarn
     ```
     brew install yarn
     yarn
     ```
 
-6. Setup your local development DB.
+7. Setup your local development DB.
    ```
    bundle exec rake db:migrate
    ```
 
-7. Start your local fedora and solr instances. Docker must be running on your computer.
+8. Start your local fedora and solr instances. Docker must be running on your computer.
    ```
    bundle exec rake ac:docker:start
    ```
 
-8. In a separate terminal window, start the webpack dev server for faster asset compilation.
+9. In a separate terminal window, start the webpack dev server for faster asset compilation.
    ```
    ./bin/webpack-dev-server
    ```
 
-9. Start your local Rails app
-   ```
-   rails server
-   ```
+10. Start your local Rails app
+    ```
+    rails server
+    ```
 
 ## Populating your development instance with items
 If you need an object in AC to do further testing and development, add an item with the following instructions.
