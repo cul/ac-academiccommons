@@ -47,6 +47,7 @@ gem 'resque-web', require: false
 gem 'rinku'
 gem 'rsolr-ext'
 gem 'rubyzip', require: 'zip'
+gem 'sassc-rails'
 gem 'sitemap_generator'
 gem 'sprockets-rails', '~> 3.5'
 gem 'turbolinks'
