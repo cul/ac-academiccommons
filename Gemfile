@@ -4,7 +4,7 @@ ruby File.read('.ruby-version').strip
 
 source 'https://rubygems.org'
 
-gem 'rails', '~> 6.1.7.10'
+gem 'rails', '7.0.8.7'
 
 gem 'active-fedora', '~> 8.7'
 gem 'active-triples', git: 'https://github.com/cul/ActiveTriples', branch: 'deprecation_update'
@@ -17,7 +17,7 @@ gem 'bootsnap'
 gem 'cancancan'
 gem 'concurrent-ruby', '1.3.4' # TODO: this is temporary for updating to rails 6.0.6
 gem 'cul-ldap'
-gem 'cul_omniauth', '>= 0.7.0'
+gem 'cul_omniauth', '~> 0.8.0'
 gem 'deprecation', '>= 1.1.0'
 gem 'devise' # consider pinning
 gem 'fancybox2-rails' # Used in helper classes. TODO: Confirm that this is needed and used by the application.
@@ -26,6 +26,7 @@ gem 'grape', '~> 1.8.0'
 gem 'grape-entity', '~> 1.0.0'
 gem 'grape-swagger', '~> 2.0.0'
 gem 'mustermann', '~> 2.0'
+gem 'om', '3.1.1'
 
 gem 'http'
 gem 'jbuilder'
