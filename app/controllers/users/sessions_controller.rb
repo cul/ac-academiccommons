@@ -9,10 +9,7 @@ class Users::SessionsController < Devise::SessionsController
 
   # GET /resource/sign_in
   def new
-    preface = "--=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-==-=-=-=-=-=-=-=-=-=-=-=-=\n"
-    puts "#{preface} RAILS ENV IS DEV? -> #{Rails.env.development?}"
     if Rails.env.development?
-      puts "#{preface} redirect to user_developer_omniauth_authorize_path (users/omniauth_callbacks#passthru)"
       redirect_to user_developer_omniauth_authorize_path
     else
       redirect_to user_saml_omniauth_authorize_path
