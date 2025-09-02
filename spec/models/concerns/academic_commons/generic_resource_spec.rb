@@ -31,11 +31,27 @@ RSpec.describe AcademicCommons::GenericResource do
     before do
       indexable.solr_doc = start_solr_doc
     end
+
     it "return the expected hash" do
-      expect(indexable.to_solr).to include('id' => obj_doi)
+      expect(indexable.to_solr).to include(id: obj_doi)
     end
+
+    it 'has one :id field' do
+      expect(indexable.to_solr.key?(:id)).to be(true)
+    end
+
+    it "has no 'id' field" do
+      expect(indexable.to_solr.key?('id')).to be(false)
+    end
+
+    it 'has an :id field with the doi as value' do
+      # Sort of a repeat of 'return the expected hash'
+      expect(indexable.to_solr[:id]).to eq(obj_doi)
+    end
+
     context 'no DOI is available' do
       let(:start_solr_doc) { { 'doi_ssim' => '' } }
+
       it "raises an error" do
         expect { indexable.to_solr }.to raise_error StandardError
       end
