@@ -1,6 +1,6 @@
 module FixtureHelpers
   def fixture(*path)
-    File.join(fixture_path, *path)
+    File.join(fixture_paths, *path)
   end
 
   def fixture_to_str(*path)

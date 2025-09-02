@@ -42,12 +42,13 @@ RSpec.configure do |config|
   config.include Devise::Test::ControllerHelpers, type: :controller
   config.include Devise::Test::ControllerHelpers, type: :view
   config.include ActiveJob::TestHelper,           type: :job
-  config.include JsonSpec::Helpers
+  # TODO : we removed the json_spec gem
+  # config.include JsonSpec::Helpers
   config.include FixtureHelpers
   config.include Warden::Test::Helpers
   config.include ActiveSupport::Testing::TimeHelpers
 
-  config.fixture_path = File.join(::Rails.root, 'spec', 'fixtures')
+  config.fixture_paths = File.join(::Rails.root, 'spec', 'fixtures')
 
   # If you're not using ActiveRecord, or you'd prefer not to run each of your
   # examples within a transaction, remove the following line or assign false
