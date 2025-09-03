@@ -245,7 +245,7 @@ GEM
     erubi (1.13.1)
     et-orbi (1.2.7)
       tzinfo
-    execjs (2.8.1)
+    execjs (2.10.0)
     factory_bot (6.5.5)
       activesupport (>= 6.1.0)
     factory_bot_rails (6.4.4)
@@ -663,7 +663,7 @@ GEM
     tzinfo (2.0.6)
       concurrent-ruby (~> 1.0)
     uber (0.0.15)
-    uglifier (4.2.0)
+    uglifier (4.1.0)
       execjs (>= 0.3.0, < 3)
     unf (0.1.4)
       unf_ext
@@ -773,7 +773,7 @@ DEPENDENCIES
   sprockets-rails (~> 3.5)
   sqlite3 (~> 1.4)
   turbolinks
-  uglifier
+  uglifier (= 4.1.0)
   unicode
   voight_kampff (~> 2.0)
   webmock
