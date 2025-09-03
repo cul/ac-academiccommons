@@ -8,8 +8,8 @@ require 'active_support/core_ext/integer/time'
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
 
-  # Caching classes on test in order to mimic a production environment.
-  config.cache_classes = true
+  # While tests run files are not watched, reloading is not necessary.
+  config.enable_reloading = false
 
   # Eager loading con boot to mimic production environment.
   # Test might slow down a bit, but we need to mimic production as best as we can.
@@ -26,6 +26,9 @@ Rails.application.configure do
   #config.action_view.debug_rjs             = true
   config.action_controller.perform_caching = false
   config.cache_store = :null_store
+
+  # Disable request forgery protection in test environment.
+  config.action_controller.allow_forgery_protection = false
 
   # Tell Action Mailer not to deliver emails to the real world.
   # The :test delivery method accumulates sent emails in the
@@ -66,4 +69,7 @@ Rails.application.configure do
 
   # Annotate rendered view with file names.
   # config.action_view.annotate_rendered_view_with_filenames = true
+
+  # Raise error when a before_action's only/except options reference missing actions
+  config.action_controller.raise_on_missing_callback_actions = true
 end
