@@ -50,6 +50,9 @@ gem 'sassc-rails'
 gem 'sitemap_generator'
 gem 'sprockets-rails', '~> 3.5'
 gem 'turbolinks'
+# We had to pin uglifier gem below 4.2 in order for assets to compile properly in a deployed environment.
+# See the following discussions: https://github.com/lautis/uglifier/issues/173 & https://github.com/lautis/uglifier/issues/185
+# See config.assets.js_compressor in configuration problems
 gem 'uglifier', '4.1.0'
 gem 'unicode'
 gem 'voight_kampff', '~>2.0', require: 'voight_kampff/rails'
