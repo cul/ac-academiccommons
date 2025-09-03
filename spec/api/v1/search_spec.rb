@@ -159,10 +159,10 @@ describe 'GET /api/v1/search', type: :request do
       }.to_json
     end
 
-    # TODO : no longer using the json_spec gem which provides the be_json_eql matcher
-    # it 'returns correct json response' do
-    #   expect(response.body).to be_json_eql expected_response
-    # end
+    it 'returns correct json response' do
+      # Compare the hashes created by JSON.parse
+      expect(JSON.parse(response.body)).to eql(JSON.parse(expected_response))
+    end
   end
 
   context 'applies per_page' do

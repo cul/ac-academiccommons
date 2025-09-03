@@ -42,8 +42,6 @@ RSpec.configure do |config|
   config.include Devise::Test::ControllerHelpers, type: :controller
   config.include Devise::Test::ControllerHelpers, type: :view
   config.include ActiveJob::TestHelper,           type: :job
-  # TODO : we removed the json_spec gem
-  # config.include JsonSpec::Helpers
   config.include FixtureHelpers
   config.include Warden::Test::Helpers
   config.include ActiveSupport::Testing::TimeHelpers
