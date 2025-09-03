@@ -12,6 +12,7 @@ set :environment, Rails.env
 # https://wiki.library.columbia.edu/display/USGSERVICES/Cron+Management
 # Errors will be emailed out to email specified in secrets.yml.
 set :email_subject, 'Cron'
+# TODO : secrets to credentials
 set :error_recipient, Rails.application.secrets[:cron_errors]
 set :job_template, "/usr/local/bin/mailifrc -s 'Error - :email_subject' :error_recipient -- /bin/bash -l -c ':job'"
 

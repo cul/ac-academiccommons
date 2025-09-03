@@ -159,6 +159,7 @@ class SolrDocument
 
   def image_url(size = 256)
     return nil unless asset?
+      # TODO : secrets to credentials
     "#{Rails.application.secrets.iiif[:urls].sample}/#{fetch(:fedora3_pid_ssi)}/full/!#{size},#{size}/0/default.jpg"
   end
 
@@ -172,6 +173,7 @@ class SolrDocument
     return unless playable?
     # Check that it is free to read
 
+      # TODO : secrets to credentials
     wowza_config = Rails.application.secrets[:wowza]
     raise 'Missing wowza config' unless wowza_config
 

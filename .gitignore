@@ -59,3 +59,5 @@ coverage/*
 yarn-debug.log*
 .yarn-integrity
 .bash_profile
+
+/config/credentials/academiccommons_dev.key

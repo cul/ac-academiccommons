@@ -3,6 +3,7 @@ require 'rails_helper'
 describe SolrDocumentsController, type: :controller do
   shared_context 'good api key' do
     let(:api_key) do
+      # TODO : secrets to credentials
       key = Rails.application.secrets.index_api_key
       ActionController::HttpAuthentication::Token.encode_credentials(key)
     end
@@ -16,13 +17,16 @@ describe SolrDocumentsController, type: :controller do
 
   shared_context 'mock api key' do
     before do
+      # TODO : secrets to credentials
       @original_creds = Rails.application.secrets.index_api_key
+      # TODO : secrets to credentials
       Rails.application.secrets.index_api_key = 'goodtoken'
       request.env['HTTP_AUTHORIZATION'] = api_key
       allow(ActiveFedora::Base).to receive(:find).with('baad:id').and_raise(ActiveFedora::ObjectNotFoundError)
     end
 
     after do
+      # TODO : secrets to credentials
       Rails.application.secrets.index_api_key = @original_creds
     end
 
