@@ -5,8 +5,7 @@ describe SolrDocumentsController, type: :controller, integration: true do
   let(:encoded_api_key) { ActionController::HttpAuthentication::Token.encode_credentials(api_key) }
 
   before do
-      # TODO : secrets to credentials
-    allow(Rails.application.secrets).to receive(:index_api_key).and_return(api_key)
+    allow(Rails.application.credentials).to receive(:index_api_key).and_return(api_key)
     request.env['HTTP_AUTHORIZATION'] = encoded_api_key
     allow(controller).to receive(:notify_authors_of_new_item)
   end

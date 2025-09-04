@@ -107,6 +107,19 @@ rubocop --auto-gen-config  --auto-gen-only-exclude --exclude-limit 10000
    ```
    This will create a tag based on the version number (listed in `VERSION`).
 
+## Editing secrets and credentials
+Academic Commons uses Rails credentials to encrypt and load sensative information. During local development, an unencrypted
+local yaml file is used in place of encrypted credentials (with dummy values, created with the `config_files` Rake task).
+
+To edit the values during development, simply edit the `config/local_credentials.yml` file.
+
+To edit the values in deployed environments, you must SSH to the host and edit the actual credentials file using the
+provided Rails task:
+```
+bin/rails EDITOR=vim credentials --environment academiccommons_{dev|test|prod}
+```
+The master keys for deployed environments are only stored on the respective servers.
+
 ## API v1
 Documentation for the Academic Commons API can be found at `/api/v1/swagger_doc`. To view documentation in a swagger GUI, the following url has to be created:
 ```

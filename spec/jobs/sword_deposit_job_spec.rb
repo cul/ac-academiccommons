@@ -4,8 +4,7 @@ RSpec.describe SwordDepositJob, type: :job do
   subject(:job) { described_class.perform_later(deposit) }
 
   let(:deposit) { FactoryBot.create(:deposit) }
-  # TODO : secrets to credentials
-  let(:credentials) { Rails.application.secrets.sword }
+  let(:credentials) { Rails.application.credentials.sword }
 
   # Freezing time because the generated METS file contains a timestamp.
   before { freeze_time }
