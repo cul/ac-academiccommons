@@ -1,0 +1,10 @@
+<meta name="hello i am meta tags partial" content="hello"/>
+<% Rails.logger.fatal("in shared view : #{controller.meta_nofollow}") %>
+
+<% if controller.meta_nofollow %>
+    <meta name="robots" content="nofollow" />
+<% else %>
+<% end %>
+<% if controller.meta_noindex %>
+    <meta name="robots" content="noindex" />
+<% end %>
