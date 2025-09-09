@@ -21,33 +21,38 @@ Current recommended version of Ruby is specified in `.ruby-version`.
    bundle exec rake config_files
    ```
 
-4. Install any needed gems using Bundler
+4. Create encrypted credentials files for development and test environments
+   ```
+   bundle exec rake ac:templated_credentials:add_all
+   ```
+
+5. Install any needed gems using Bundler
    ```
    bundle install
    ```
 
-5. Install required Javascript libraries using Yarn
+6. Install required Javascript libraries using Yarn
     ```
     brew install yarn
     yarn
     ```
 
-6. Setup your local development DB.
+7. Setup your local development DB.
    ```
    bundle exec rake db:migrate
    ```
 
-7. Start your local fedora and solr instances. Docker must be running on your computer.
+8. Start your local fedora and solr instances. Docker must be running on your computer.
    ```
    bundle exec rake ac:docker:start
    ```
 
-8. In a separate terminal window, start the webpack dev server for faster asset compilation.
+9. In a separate terminal window, start the webpack dev server for faster asset compilation.
    ```
    ./bin/webpack-dev-server
    ```
 
-9. Start your local Rails app
+10. Start your local Rails app
    ```
    rails server
    ```
