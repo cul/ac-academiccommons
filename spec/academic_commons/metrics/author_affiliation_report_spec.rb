@@ -48,12 +48,11 @@ RSpec.describe AcademicCommons::Metrics::AuthorAffiliationReport do
     FactoryBot.create(:view_stat, identifier: '10.7916/ALICE')
     FactoryBot.create(:download_stat, identifier: '10.7916/PRIDE')
 
-    allow(Blacklight.default_index).to receive(:search).with(fq: ['id:"10.7916/ALICE"'], qt: 'search', rows: 100_000).and_return(solr_doc_alice)
-    allow(Blacklight.default_index).to receive(:search).with(fq: ['id:"10.7916/PRIDE"'], qt: 'search', rows: 100_000).and_return(solr_doc_pride)
-    allow(Blacklight.default_index).to receive(:search).with(
+    allow(Blacklight.default_index).to receive(:search).with({ fq: ['id:"10.7916/ALICE"'], qt: 'search', rows: 100_000 }).and_return(solr_doc_alice)
+    allow(Blacklight.default_index).to receive(:search).with({ fq: ['id:"10.7916/PRIDE"'], qt: 'search', rows: 100_000 }).and_return(solr_doc_pride)
+    allow(Blacklight.default_index).to receive(:search).with({
       rows: 100_000, page: 1, q: nil, sort: 'title_sort asc', fq: ['has_model_ssim:"info:fedora/ldpd:ContentAggregator"'],
-      fl: 'title_ssi,id,cul_doi_ssi,fedora3_pid_ssi,publisher_doi_ssi,genre_ssim,record_creation_dtsi,object_state_ssi,free_to_read_start_date_ssi'
-    ).and_return(solr_response)
+      fl: 'title_ssi,id,cul_doi_ssi,fedora3_pid_ssi,publisher_doi_ssi,genre_ssim,record_creation_dtsi,object_state_ssi,free_to_read_start_date_ssi' }).and_return(solr_response)
 
     ldap = instance_double('Cul::LDAP')
     allow(Cul::LDAP).to receive(:new).and_return(ldap)
