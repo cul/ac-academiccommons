@@ -66,3 +66,10 @@ yarn-debug.log*
 /config/credentials/academiccommons_dev.key
 /config/credentials/academiccommons_test.key
 /config/credentials/academiccommons_prod.key
+
+/config/credentials/development.yml.enc
+/config/credentials/development.key
+/config/credentials/test.yml.enc
+/config/credentials/test.key
+/config/credentials.yml.enc
+/config/master.key

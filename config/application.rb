@@ -83,26 +83,5 @@ module AcademicCommons
     config.active_job.queue_adapter = :async
 
     config.active_storage.service = :local
-
-    # Override logic for using local_credentials.yml for application secrets
-    # instead of encrypted Rails credentials during local development
-    # In deployed environments, the encrypted credentials files in the
-    # config/credentials directory are used
-    # source: https://medium.com/@pravinhmhatre/local-credentials-management-in-rails-without-decrypting-credentials-yml-enc-e5f4eea16f82
-    if Rails.env.development? || Rails.env.test?
-      local_creds_path = Rails.root.join('config', 'local_credentials.yml')
-      if File.exist? local_creds_path
-        require 'active_support/core_ext/hash/deep_merge'
-        local_creds = YAML.load_file(local_creds_path).deep_symbolize_keys
-        env_local_creds = local_creds[Rails.env.to_sym] || {}
-        # config method returns a hash representing credentials -- this is likely an empty {}
-        existing_creds = Rails.application.credentials.config.deep_symbolize_keys
-        merged_creds = existing_creds.deep_merge(env_local_creds)
-        # Trick to allow deeply nested dot-notation access (if needed)
-        # source: https://stackoverflow.com/a/43006535
-        openstruct = JSON.parse(merged_creds.to_json, object_class: OpenStruct)
-        Rails.application.instance_variable_set(:@credentials, openstruct)
-      end
-    end
   end
 end
