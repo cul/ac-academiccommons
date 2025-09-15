@@ -1,5 +1,8 @@
 # frozen_string_literal: true
 
+require 'rails/generators/rails/credentials/credentials_generator'
+require 'rails/generators/rails/encryption_key_file/encryption_key_file_generator'
+
 namespace :ac do
   namespace :templated_credentials do
     desc 'create encrypted credentials from template file for a specified environment'
@@ -55,7 +58,6 @@ namespace :ac do
     def create_a_new_credentials_file(credentials_path, key_path)
       return if File.exist? Rails.root.join credentials_path
 
-      require 'rails/generators/rails/credentials/credentials_generator'
       Rails::Generators::CredentialsGenerator.new(
         [credentials_path, key_path],
         skip_secret_key_base: true,
@@ -68,7 +70,6 @@ namespace :ac do
     def create_a_new_encryption_key_file(key_path)
       return if File.exist? Rails.root.join(key_path)
 
-      require 'rails/generators/rails/encryption_key_file/encryption_key_file_generator'
       Rails::Generators::EncryptionKeyFileGenerator.new.add_key_file(key_path)
       puts "Created encryption key file: #{Rainbow(key_path).green}"
     end
@@ -82,7 +83,7 @@ namespace :ac do
         return
       end
       puts "Ignoring #{Rainbow(file_path).green} so it won't end up in Git history."
-      File.write('.gitignore', "/#{file_path}\n", mode: 'a')
+      File.write('.gitignore', "\n/#{file_path}\n", mode: 'a')
     end
   end
 end
