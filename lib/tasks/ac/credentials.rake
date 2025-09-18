@@ -6,7 +6,7 @@ require 'rails/generators/rails/encryption_key_file/encryption_key_file_generato
 namespace :ac do
   namespace :templated_credentials do
     desc 'create encrypted credentials from template file for a specified environment'
-    task :add, [:env_name] => :environment do |_task, args|
+    task :add, [:env_name] do |_task, args|
       if args.env_name.nil?
         puts 'Creating credentials from template (not environment specific):'
         credentials_path = 'config/credentials.yml.enc'
