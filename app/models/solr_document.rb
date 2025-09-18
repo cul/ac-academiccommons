@@ -159,7 +159,7 @@ class SolrDocument
 
   def image_url(size = 256)
     return nil unless asset?
-    "#{Rails.application.secrets.iiif[:urls].sample}/#{fetch(:fedora3_pid_ssi)}/full/!#{size},#{size}/0/default.jpg"
+    "#{Rails.application.credentials.iiif.urls.sample}/#{fetch(:fedora3_pid_ssi)}/full/!#{size},#{size}/0/default.jpg"
   end
 
   def file_uri_ds_location_to_file_path(file_uri_ds_location)
@@ -172,7 +172,7 @@ class SolrDocument
     return unless playable?
     # Check that it is free to read
 
-    wowza_config = Rails.application.secrets[:wowza]
+    wowza_config = Rails.application.credentials.wowza
     raise 'Missing wowza config' unless wowza_config
 
     access_copy_location = file_uri_ds_location_to_file_path(fetch('access_copy_location_ssi', nil))

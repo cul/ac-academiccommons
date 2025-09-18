@@ -6,7 +6,8 @@ class SwordDepositJob < ApplicationJob
     return unless Rails.application.config.sending_deposits_to_sword
 
     # Check that we have all the credentials necessary: url, user, password
-    credentials = Rails.application.config_for(:secrets)[:sword]
+    credentials = Rails.application.credentials.sword
+    # credentials = Rails.application.config_for(:secrets)[:sword]
 
     raise "Missing SWORD credentials: #{errs}" unless [:url, :user, :password].all? { |k| credentials[k].present? }
 
