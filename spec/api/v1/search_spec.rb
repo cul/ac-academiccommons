@@ -160,7 +160,8 @@ describe 'GET /api/v1/search', type: :request do
     end
 
     it 'returns correct json response' do
-      expect(response.body).to be_json_eql expected_response
+      # Compare the hashes created by JSON.parse
+      expect(JSON.parse(response.body)).to eql(JSON.parse(expected_response))
     end
   end
 

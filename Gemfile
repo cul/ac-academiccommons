@@ -4,7 +4,7 @@ ruby File.read('.ruby-version').strip
 
 source 'https://rubygems.org'
 
-gem 'rails', '7.0.8.7'
+gem 'rails', '7.1.5.2'
 
 gem 'active-fedora', '~> 8.7'
 gem 'active-triples', git: 'https://github.com/cul/ActiveTriples', branch: 'deprecation_update'
@@ -15,7 +15,7 @@ gem 'blacklight_range_limit',
     git: 'https://github.com/JackBlackLight/blacklight_range_limit.git', branch: 'use_blacklight_component'
 gem 'bootsnap'
 gem 'cancancan'
-gem 'concurrent-ruby', '1.3.4' # TODO: this is temporary for updating to rails 6.0.6
+# gem 'concurrent-ruby', '1.3.4' # TODO: this is temporary for updating to rails 6.0.6
 gem 'cul-ldap'
 gem 'cul_omniauth', '~> 0.8.0'
 gem 'deprecation', '>= 1.1.0'
@@ -50,7 +50,10 @@ gem 'sassc-rails'
 gem 'sitemap_generator'
 gem 'sprockets-rails', '~> 3.5'
 gem 'turbolinks'
-gem 'uglifier'
+# We had to pin uglifier gem below 4.2 in order for assets to compile properly in a deployed environment.
+# See the following discussions: https://github.com/lautis/uglifier/issues/173 & https://github.com/lautis/uglifier/issues/185
+# See config.assets.js_compressor in configuration problems
+gem 'uglifier', '4.1.0'
 gem 'unicode'
 gem 'voight_kampff', '~>2.0', require: 'voight_kampff/rails'
 gem 'webpacker', '~> 5.4.0'
@@ -79,13 +82,13 @@ group :development, :test do
 
   gem 'byebug'
   gem 'capybara', '~> 3.39'
-  gem 'database_cleaner'
+  gem 'database_cleaner', '~> 2.1.0'
   gem 'equivalent-xml'
-  gem 'factory_bot_rails'
+  gem 'factory_bot_rails', '~> 6.4.0'
   gem 'jettywrapper', '>=1.4.0', git: 'https://github.com/samvera-deprecated/jettywrapper.git', branch: 'master'
-  gem 'json_spec'
-  gem 'rspec-its'
-  gem 'rspec-rails'
+  # gem 'json_spec'
+  gem 'rspec-its', '~> 2.0.0'
+  gem 'rspec-rails', '~> 7.1.0'
   gem 'selenium-webdriver', '~> 4.11'
   gem 'simplecov', '>= 0.22.0', require: false
   gem 'solr_wrapper', '~> 4.0'
