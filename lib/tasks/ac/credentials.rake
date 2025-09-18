@@ -3,10 +3,11 @@
 require 'rails/generators/rails/credentials/credentials_generator'
 require 'rails/generators/rails/encryption_key_file/encryption_key_file_generator'
 
+# rubocop:disable Rails/RakeEnvironment
 namespace :ac do
   namespace :templated_credentials do
     desc 'create encrypted credentials from template file for a specified environment'
-    task :add, [:env_name] do |_task, args|
+    task :add, [:env_name] do |_task, args| 
       if args.env_name.nil?
         puts 'Creating credentials from template (not environment specific):'
         credentials_path = 'config/credentials.yml.enc'
@@ -39,7 +40,7 @@ namespace :ac do
     end
 
     desc 'Create credentials for local development and test environments from template files'
-    task add_all: :environment do
+    task :add_all do
       Rake::Task['ac:templated_credentials:add'].invoke('development')
       Rake::Task['ac:templated_credentials:add'].reenable
       Rake::Task['ac:templated_credentials:add'].invoke('test')
@@ -47,7 +48,7 @@ namespace :ac do
     end
 
     desc 'Create credentials from template file (not environment specific)'
-    task add_credentials: :environment do
+    task :add_credentials do
       # Simply call :add task without arguments
       Rake::Task['ac:templated_credentials:add'].invoke
       puts Rainbow('Created credentials.').cyan
@@ -87,3 +88,4 @@ namespace :ac do
     end
   end
 end
+# rubocop:enable Rails/RakeEnvironment
