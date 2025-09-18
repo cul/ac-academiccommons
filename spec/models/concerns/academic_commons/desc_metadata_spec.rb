@@ -1,15 +1,6 @@
 require 'rails_helper'
 RSpec.describe AcademicCommons::DescMetadata do
-  # Replace the 'id' key with an ':id' key
-  def fixture_to_json_symbol_id(file)
-    json = fixture_to_json(file)
-    doi = json['id']
-    json[:id] = doi
-    json.delete('id')
-    json
-  end
-
-  let(:expected_json) { fixture_to_json_symbol_id('desc_metadata/to_solr.json') }
+  let(:expected_json) { fixture_to_json('desc_metadata/to_solr.json') }
   let(:start_solr_doc) { { 'doi_ssim' => '10.7916/TESTTEST' } }
 
   # rubocop:disable RSpec/DescribedClass
@@ -43,18 +34,6 @@ RSpec.describe AcademicCommons::DescMetadata do
     describe '#index_descMetadata' do
       it  { is_expected.to eql(expected_json) }
 
-      it 'has one :id field' do
-        expect(subject.key?(:id)).to be(true)
-      end
-
-      it "has no 'id' field" do
-        expect(subject.key?('id')).to be(false)
-      end
-
-      it 'has an :id field with the doi as value' do
-        expect(subject[:id]).to eq(start_solr_doc['doi_ssim'])
-      end
-
       context 'no DOI is available' do
         let(:start_solr_doc) { { 'doi_ssim' => '' } }
         it "raises an error" do
@@ -73,70 +52,70 @@ RSpec.describe AcademicCommons::DescMetadata do
 
     context 'correctly indexes the title' do
       let(:mods_fixture) { fixture_to_str('desc_metadata/non_sort_title.xml') }
-      let(:expected_json) { fixture_to_json_symbol_id('desc_metadata/non_sort_title.json') }
+      let(:expected_json) { fixture_to_json('desc_metadata/non_sort_title.json') }
 
       include_examples 'indexing mods'
     end
 
     context 'contains title cased genre value' do
       let(:mods_fixture) { fixture_to_str('desc_metadata/genre_title_case.xml') }
-      let(:expected_json) { fixture_to_json_symbol_id('desc_metadata/genre_title_case.json') }
+      let(:expected_json) { fixture_to_json('desc_metadata/genre_title_case.json') }
 
       include_examples 'indexing mods'
     end
 
     context 'contains mapped genre value' do
       let(:mods_fixture) { fixture_to_str('desc_metadata/genre_mapping.xml') }
-      let(:expected_json) { fixture_to_json_symbol_id('desc_metadata/genre_mapping.json') }
+      let(:expected_json) { fixture_to_json('desc_metadata/genre_mapping.json') }
 
       include_examples 'indexing mods'
     end
 
     context 'contains degree information' do
       let(:mods_fixture) { fixture_to_str('desc_metadata/etd_mods.xml') }
-      let(:expected_json) { fixture_to_json_symbol_id('desc_metadata/etd_to_solr.json') }
+      let(:expected_json) { fixture_to_json('desc_metadata/etd_to_solr.json') }
 
       include_examples 'indexing mods'
     end
 
     context 'contains multiple parent publication authors' do
       let(:mods_fixture) { fixture_to_str('desc_metadata/parent_publication_names.xml') }
-      let(:expected_json) { fixture_to_json_symbol_id('desc_metadata/parent_publication_names.json') }
+      let(:expected_json) { fixture_to_json('desc_metadata/parent_publication_names.json') }
 
       include_examples 'indexing mods'
     end
 
     context 'contains related items' do
       let(:mods_fixture) { fixture_to_str('desc_metadata/related_items.xml') }
-      let(:expected_json) { fixture_to_json_symbol_id('desc_metadata/related_items.json') }
+      let(:expected_json) { fixture_to_json('desc_metadata/related_items.json') }
 
       include_examples 'indexing mods'
     end
 
     context 'contains subject titles and subject names' do
       let(:mods_fixture) { fixture_to_str('desc_metadata/subject_names_and_titles.xml') }
-      let(:expected_json) { fixture_to_json_symbol_id('desc_metadata/subject_names_and_titles.json') }
+      let(:expected_json) { fixture_to_json('desc_metadata/subject_names_and_titles.json') }
 
       include_examples 'indexing mods'
     end
 
     context 'contains access restriction' do
       let(:mods_fixture) { fixture_to_str('desc_metadata/access_restriction.xml') }
-      let(:expected_json) { fixture_to_json_symbol_id('desc_metadata/access_restriction.json') }
+      let(:expected_json) { fixture_to_json('desc_metadata/access_restriction.json') }
 
       include_examples 'indexing mods'
     end
 
     context 'contains multiple series' do
       let(:mods_fixture) { fixture_to_str('desc_metadata/multiple_series.xml') }
-      let(:expected_json) { fixture_to_json_symbol_id('desc_metadata/multiple_series.json') }
+      let(:expected_json) { fixture_to_json('desc_metadata/multiple_series.json') }
 
       include_examples 'indexing mods'
     end
 
     context 'contains multiple languages' do
       let(:mods_fixture) { fixture_to_str('desc_metadata/languages.xml') }
-      let(:expected_json) { fixture_to_json_symbol_id('desc_metadata/languages.json') }
+      let(:expected_json) { fixture_to_json('desc_metadata/languages.json') }
 
       include_examples 'indexing mods'
     end
