@@ -106,7 +106,8 @@ module AcademicCommons
       doi.gsub!('doi:', '')
       add_field.call 'cul_doi_ssi', doi
       # Fedora returns an hash with :id=>pid -- we overwrite this value with the DOI before sending to Solr for indexing
-      add_field.call :id, doi
+      # add_field.call :id, doi
+      add_field.call 'id', doi
 
       # Adding fedora3 pid to document. Used for relating objects to each other.
       add_field.call('fedora3_uri_ssi', "info:fedora/#{pid}")
