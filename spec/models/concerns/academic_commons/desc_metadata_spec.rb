@@ -33,6 +33,7 @@ RSpec.describe AcademicCommons::DescMetadata do
 
     describe '#index_descMetadata' do
       it  { is_expected.to eql(expected_json) }
+
       context 'no DOI is available' do
         let(:start_solr_doc) { { 'doi_ssim' => '' } }
         it "raises an error" do

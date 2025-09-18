@@ -1,5 +1,8 @@
 # Additional checks for OkComputer.
 
+# Include custom check
+require Rails.root.join('lib/ok_computer/fedora_check.rb')
+
 # Require authentication to all checks but the default check
 creds = Rails.application.config_for(:secrets)[:okcomputer]
 raise 'Missing OkComputer credentials' if creds.blank?
