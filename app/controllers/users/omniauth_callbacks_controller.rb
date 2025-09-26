@@ -12,6 +12,11 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
     "#{request.base_url}/users/auth/cas/callback"
   end
 
+  # GET /users/auth/cas (go here to be redirected to the CAS login form)
+  def passthru
+    redirect_to Omniauth::Cul::Cas3.passthru_redirect_url(app_cas_callback_endpoint), allow_other_host: true
+  end
+
   def developer
     current_user ||= User.find_or_create_by(
       uid: request.env['omniauth.auth'][:uid], provider: :developer
