@@ -14,7 +14,7 @@ class Users::SessionsController < Devise::SessionsController
     if Rails.env.development?
       redirect_to user_developer_omniauth_authorize_path
     else
-      redirect_to user_saml_omniauth_authorize_path
+      redirect_to user_cas_omniauth_authorize_path
     end
   end
 end
