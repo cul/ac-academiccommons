@@ -1,10 +1,12 @@
+# frozen_string_literal: true
+
 class Users::SessionsController < Devise::SessionsController
   def new_session_path(scope)
     new_user_session_path # this accomodates Users namespace of the controller
   end
 
   def omniauth_provider_key
-    Rails.env.development? ? 'developer' : 'saml'
+    Rails.env.development? ? 'developer' : 'saml' # TODO: use cas?
   end
 
   # GET /resource/sign_in

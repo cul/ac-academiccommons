@@ -1,7 +1,6 @@
 class User < ApplicationRecord
   # Connects this user object to Blacklights Bookmarks and Folders.
   include Blacklight::User
-  include Cul::Omniauth::Users
 
   # User information is updated before every save and before validation when an
   # object is created. We have to explicitly make the two calls because on
@@ -10,6 +9,10 @@ class User < ApplicationRecord
   # information is updated at user log in and log out.
   before_validation :set_personal_info_via_ldap, on: :create
   before_save       :set_personal_info_via_ldap
+
+  # Configure devise for our User model
+  devise :database_authenticatable, :rememberable, :trackable, :validatable,
+         :omniauthable, omniauth_providers: [:developer, :cas]
 
   ADMIN = 'admin'.freeze
   ROLES = [ADMIN].freeze
@@ -33,15 +36,6 @@ class User < ApplicationRecord
   # first name or last name can be retrieved.
   def full_name
     first_name.present? && last_name.present? ? "#{first_name} #{last_name}" : uid
-  end
-
-  # Password methods required by Devise.
-  def password
-    Devise.friendly_token[0,20]
-  end
-
-  def password=(*val)
-    # NOOP
   end
 
   def set_personal_info_via_ldap

@@ -1,7 +1,6 @@
 # Use this hook to configure devise mailer, warden hooks and so forth.
 # Many of these configuration options can be set straight in your model.
 Devise.setup do |config|
-  AcademicCommons::Application.configure_devise_omniauth(config)
   # The secret key used by Devise. Devise uses this key to generate
   # random tokens. Changing this key will render invalid all existing
   # confirmation, reset password and unlock tokens in the database.
@@ -249,6 +248,24 @@ Devise.setup do |config|
   # Add a new OmniAuth provider. Check the wiki for more information on setting
   # up on your models and hooks.
   # config.omniauth :github, 'APP_ID', 'APP_SECRET', scope: 'user,public_repo'
+  # config.omniauth :developer, { fields: [:uid], uid_field: :uid } # TODO : These options...
+
+  if Rails.env.development?
+    puts 'CONFIGURING OMNIAUTH FOR DEVELOPMENT ENVIRONMENT (uses dev provider strategy)'
+    config.omniauth :developer, fields: [:uid], uid_field: :uid, callback_method: :get
+  else
+    puts 'CONFIGURING OMNIAUTH FOR NON-DEV ENVIRONMENT (Uses CU CAS provider strategy)'
+    # non-development config from old cas.yml file:
+    # config.omniauth :saml, {
+    #   host: 'cas.columbia.edu',
+    #   login_url: '/cas/login',
+    #   logout_url: '/cas/logout',
+    #   service_validate_url: '/cas/samlValidate',
+    #   disable_ssl_verification: true
+    # }
+    # or, according to the new gem's readme, do:
+    config.omniauth :cas, strategy_class: Omniauth::Cul::Strategies::Cas3Strategy
+  end
 
   # ==> Warden configuration
   # If you want to use other strategies, that are not supported by Devise, or
