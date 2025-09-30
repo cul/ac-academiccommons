@@ -11,6 +11,7 @@ Rails.application.routes.draw do
 
   root to: "catalog#home"
 
+  get '/all_users', to: 'user#all'
   # Static Pages
   get '/about',      to: 'info#about',      as: 'about'
   get '/policies',   to: 'info#policies',   as: 'policies'

@@ -1,0 +1,9 @@
+<div>
+    <p>All users:</p>
+    <% @users.each do |user| %>
+        <p>User # <%= user.id %></p>
+        <p><%= user.first_name %>
+        <p><%= user.email %>
+        <p>Provider: <%= user.provider %>
+    <% end%>
+</div>

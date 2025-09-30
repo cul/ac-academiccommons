@@ -3,6 +3,10 @@ class UserController < ApplicationController
 
   layout 'dashboard'
 
+  def all
+    @users = User.all
+  end
+
   def account
     @email_preference = current_user.email_preference
   end
