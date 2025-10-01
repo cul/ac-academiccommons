@@ -15,6 +15,7 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
   end
 
   def passthru
+    session['user_return_to'] = request.params['origin'] || request.referer || root_url
     redirect_to Omniauth::Cul::Cas3.passthru_redirect_url(app_cas_callback_endpoint), allow_other_host: true
   end
 

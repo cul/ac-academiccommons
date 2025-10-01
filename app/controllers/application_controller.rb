@@ -11,7 +11,7 @@ class ApplicationController < ActionController::Base
 
   # TODO : deal with redirect's here--we probably just want to post to auth endpoint
   rescue_from CanCan::AccessDenied do |exception|
-    puts "rescuing from access denied exception!!! #{exception}"
+    Rails.logger.debug "!! rescuing from access denied exception!!! #{exception}"
     if current_user.nil?
       respond_to do |format|
         format.json { render json: { 'error' => 'forbidden' }, status: :forbidden }
@@ -43,6 +43,9 @@ class ApplicationController < ActionController::Base
     Rails.logger.debug "returns request.env['omniauth.origin'] : #{request.env['omniauth.origin']}"
     Rails.logger.debug "|| stored location for rescoure : #{stored_location_for(resource)}"
     Rails.logger.debug "|| root path : #{root_path}"
+    Rails.logger.debug 'session perhaps??:`'
+    Rails.logger.debug session.inspect.to_s
+    Rails.logger.debug session['user_return_to']
     request.env['omniauth.origin'] || stored_location_for(resource) || root_path
   end
 end
