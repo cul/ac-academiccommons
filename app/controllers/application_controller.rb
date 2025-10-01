@@ -39,6 +39,10 @@ class ApplicationController < ActionController::Base
 
   # Redirect to last page a user visited before log in.
   def after_sign_in_path_for(resource)
+    Rails.logger.debug "in after_sign_in_path_for(#{resource})"
+    Rails.logger.debug "returns request.env['omniauth.origin'] : #{request.env['omniauth.origin']}"
+    Rails.logger.debug "|| stored location for rescoure : #{stored_location_for(resource)}"
+    Rails.logger.debug "|| root path : #{root_path}"
     request.env['omniauth.origin'] || stored_location_for(resource) || root_path
   end
 end

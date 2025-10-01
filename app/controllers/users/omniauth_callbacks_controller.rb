@@ -30,6 +30,10 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
     user_id, affils = Omniauth::Cul::Cas3.validation_callback(request.params['ticket'], app_cas_callback_endpoint)
     Rails.logger.debug 'inside cas callback method'
     Rails.logger.debug "user_id: #{user_id} and affils: #{affils}"
+    Rails.logger.debug 'request env omniauth.auth is :'
+    Rails.logger.debug request.env[OMNIAUTH_REQUEST_KEY].inspect
+    Rails.logger.debug 'request.env[omniauth_origin]:'
+    Rails.logger.debug request.env[omniauth_origin].inspect
 
     user = User.find_by(uid: user_id) || User.create!(
             uid: user_id,
