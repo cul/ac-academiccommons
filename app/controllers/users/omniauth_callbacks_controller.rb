@@ -28,7 +28,18 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
 
   def cas
     user_id, affils = Omniauth::Cul::Cas3.validation_callback(request.params['ticket'], app_cas_callback_endpoint)
+    Rails.logger.debug 'inside cas callback method'
+    Rails.logger.debug "user_id: #{user_id} and affils: #{affils}"
 
+    user = User.find_by(uid: user_id) || User.create!(
+            uid: user_id,
+            email: "#{user_id}@columbia.edu",
+            password: Devise.friendly_token[0, 20]
+          )
+    puts '-=---=-=-=-=-=-=-=-= -=- =-= -= -= -= -==- -= we found or created user:'
+    p user
+    sign_in_and_redirect user, event: :authentication
+    ##########
     # TODO : in cul_omniauth, this just called a find_user method---replicate that code here?
 
     # oa_data = request.env.fetch(OMNIAUTH_REQUEST_KEY)
