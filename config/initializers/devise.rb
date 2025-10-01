@@ -251,19 +251,8 @@ Devise.setup do |config|
   # config.omniauth :developer, { fields: [:uid], uid_field: :uid } # TODO : These options...
 
   if Rails.env.development?
-    puts 'CONFIGURING OMNIAUTH FOR DEVELOPMENT ENVIRONMENT (uses dev provider strategy)'
-    config.omniauth :developer, fields: [:uid], uid_field: :uid, callback_method: :get
+    config.omniauth :developer, fields: [:uid], uid_field: :uid, callback_method: :post
   else
-    puts 'CONFIGURING OMNIAUTH FOR NON-DEV ENVIRONMENT (Uses CU CAS provider strategy)'
-    # non-development config from old cas.yml file:
-    # config.omniauth :saml, {
-    #   host: 'cas.columbia.edu',
-    #   login_url: '/cas/login',
-    #   logout_url: '/cas/logout',
-    #   service_validate_url: '/cas/samlValidate',
-    #   disable_ssl_verification: true
-    # }
-    # or, according to the new gem's readme, do:
     config.omniauth :cas, strategy_class: Omniauth::Cul::Strategies::Cas3Strategy
   end
 

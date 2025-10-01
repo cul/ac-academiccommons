@@ -1,0 +1,8 @@
+<% is_button = local_assigns.fetch(:is_button, false) %>
+<% classes = is_button ? 'btn btn-primary' : ''%>
+
+<% if Rails.env.development? %>
+    <%= link_to "#{t('blacklight.header_links.login')} (developer)", user_developer_omniauth_authorize_path, method: :post, class: classes %>
+<% else %>
+    <%= link_to t('blacklight.header_links.login'), user_cas_omniauth_authorize_path, method: :post, class: classes %>
+<% end %>

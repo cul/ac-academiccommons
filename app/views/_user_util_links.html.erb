@@ -25,9 +25,7 @@
       </ul>
     </li>
   <% else %>
-    <li>
-      <%= link_to t('blacklight.header_links.login'), new_user_session_path %>
-    </li>
+    <li><%= render :partial=>'shared/log_in_link' %></li>
   <% end %>
 <% end %>
 

@@ -4,6 +4,13 @@ Rails.application.routes.draw do
   concern :range_searchable, BlacklightRangeLimit::Routes::RangeSearchable.new
   devise_for :users, controllers: { sessions: 'users/sessions', omniauth_callbacks: 'users/omniauth_callbacks' }
 
+  # Because we are ONLY using omniauth (in particular, no :database_authenticable), we need to a signout route manually.
+  # We don't need a sign_in path because we don't use a sing in/new session form (instead clicking "sign in " sends a
+  # POST req to the CAS login page--or if development, we POST to devise and omniauth's "developer" provider code).
+  devise_scope :user do
+      delete 'sign_out', to: 'users/sessions#destroy', as: :destroy_user_session
+  end
+
   root to: "catalog#home"
 
   # Static Pages

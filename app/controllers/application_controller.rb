@@ -9,7 +9,9 @@ class ApplicationController < ActionController::Base
   helper :all # include all helpers, all the time
   helper_method :fedora_config # share some methods w/ views via helpers
 
+  # TODO : deal with redirect's here--we probably just want to post to auth endpoint
   rescue_from CanCan::AccessDenied do |exception|
+    puts "rescuing from access denied exception!!! #{exception}"
     if current_user.nil?
       respond_to do |format|
         format.json { render json: { 'error' => 'forbidden' }, status: :forbidden }
@@ -37,7 +39,6 @@ class ApplicationController < ActionController::Base
 
   # Redirect to last page a user visited before log in.
   def after_sign_in_path_for(resource)
-    puts "INSIDE after sign in path for #{resource}"
     request.env['omniauth.origin'] || stored_location_for(resource) || root_path
   end
 end
