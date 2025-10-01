@@ -11,7 +11,6 @@ class ApplicationController < ActionController::Base
 
   # TODO : deal with redirect's here--we probably just want to post to auth endpoint
   rescue_from CanCan::AccessDenied do |exception|
-    puts "rescuing from access denied exception!!! #{exception}"
     if current_user.nil?
       respond_to do |format|
         format.json { render json: { 'error' => 'forbidden' }, status: :forbidden }
@@ -39,6 +38,6 @@ class ApplicationController < ActionController::Base
 
   # Redirect to last page a user visited before log in.
   def after_sign_in_path_for(resource)
-    request.env['omniauth.origin'] || stored_location_for(resource) || root_path
+    session['omniauth.origin'] || request.env['omniauth.origin'] || stored_location_for(resource) || root_path
   end
 end
