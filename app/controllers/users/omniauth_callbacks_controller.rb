@@ -34,7 +34,7 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
     Rails.logger.debug 'request env omniauth.auth is :'
     Rails.logger.debug request.env[OMNIAUTH_REQUEST_KEY].inspect
     Rails.logger.debug 'request.env[omniauth_origin]:'
-    Rails.logger.debug request.env[omniauth_origin].inspect
+    Rails.logger.debug request.env['omniauth.origin'].inspect
 
     user = User.find_by(uid: user_id) || User.create!(
             uid: user_id,
