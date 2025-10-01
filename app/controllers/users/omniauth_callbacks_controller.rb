@@ -15,7 +15,7 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
   end
 
   def passthru
-    session['user_return_to'] = request.params['origin'] || request.referer || root_url
+    store_omniauth_origin
     redirect_to Omniauth::Cul::Cas3.passthru_redirect_url(app_cas_callback_endpoint), allow_other_host: true
   end
 
@@ -43,5 +43,11 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
           )
     # TODO : almost working; needs to redirect back to last visited page, not root URL
     sign_in_and_redirect user, event: :authentication
+  end
+
+  def store_omniauth_origin
+    origin = request.params['origin'] || request.referer || root_path
+    session['omniauth.origin'] = origin
+    Rails.logger.debug "Stored origin URL: #{origin}"
   end
 end
