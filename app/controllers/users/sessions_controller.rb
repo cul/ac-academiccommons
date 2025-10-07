@@ -6,7 +6,7 @@ class Users::SessionsController < Devise::SessionsController
   # not possible with redirect_to)
   # https://stackoverflow.com/questions/985596/redirect-to-using-post-in-rails
   def new
-    puts 'heyhyyy'
+    render 'user/sessions/new'
   end
 
   # This is needed if not using database authenticable (see https://github.com/heartcombo/devise/wiki/OmniAuth:-Overview#using-omniauth-without-other-authentications)
