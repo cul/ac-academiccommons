@@ -8,7 +8,8 @@ Rails.application.routes.draw do
   # We don't need a sign_in path because we don't use a sing in/new session form (instead clicking "sign in " sends a
   # POST req to the CAS login page--or if development, we POST to devise and omniauth's "developer" provider code).
   devise_scope :user do
-      delete 'sign_out', to: 'users/sessions#destroy', as: :destroy_user_session
+    delete 'sign_out', to: 'users/sessions#destroy', as: :destroy_user_session
+    get 'sign_in', to: 'users/sessions#new', as: :new_user_session # for redirecting on cancancan access denied error
   end
 
   root to: "catalog#home"

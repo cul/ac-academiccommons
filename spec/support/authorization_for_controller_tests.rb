@@ -30,6 +30,7 @@ end
 #   include_examples 'authorization required' do
 #     let(:http_request) { get :index }
 #   end
+# TODO : update for new authorization stuff !!!!
 shared_examples 'authorization required' do |success_status|
   context 'without being logged in' do
     before do

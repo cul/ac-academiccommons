@@ -1,0 +1,10 @@
+<%= form_with url: user_cas_omniauth_authorize_path, method: :post, data: { trubo: false } do |f| %>
+    <p>Redirecting you to be authenticated...</p>
+    <%= f.submit 'Sign In', style: 'display: none;' %>
+<% end %>
+
+<script>
+    document.addEventListener('DOMContentLodaded', () => {
+        document.querySelector('form').submit();
+    });
+</script>

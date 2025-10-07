@@ -28,16 +28,18 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
   end
 
   def cas
-      user_id, _affils = Omniauth::Cul::Cas3.validation_callback(request.params['ticket'], app_cas_callback_endpoint)
-      Rails.logger.debug 'inside cas callback method'
+    puts 'INSIDE CAS CALLBACK!'
+    puts request.inspect
+    # TODO : mock this method to return the userid and affils !!
+    user_id, _affils = Omniauth::Cul::Cas3.validation_callback(request.params['ticket'], app_cas_callback_endpoint)
+    Rails.logger.debug 'inside cas callback method'
 
-      user = User.find_by(uid: user_id) || User.create!(
-              uid: user_id,
-              email: "#{user_id}@columbia.edu",
-              password: Devise.friendly_token[0, 20]
-            )
-      # TODO : almost working; needs to redirect back to last visited page, not root URL
-      sign_in_and_redirect user, event: :authentication
+    user = User.find_by(uid: user_id) || User.create!(
+            uid: user_id,
+            email: "#{user_id}@columbia.edu"
+            # password: Devise.friendly_token[0, 20]
+          )
+    sign_in_and_redirect user, event: :authentication
   end
 
   private
