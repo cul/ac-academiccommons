@@ -48,12 +48,14 @@ class UserMailer < ApplicationMailer
   # Email to authors from AC administrators
   # Called when the admin 'Contact Authors' form is submitted
   def contact_authors(recipients, body, subject)
-    Rails.logger.debug 'UserMailer#notify_users: entry'
+    Rails.logger.debug 'UserMailer#contact_authors: entry'
+    Rails.logger.debug "recipients: #{recipients}"
     @body = body
     @subject = subject
 
     # For now, send to multiple users via BCC field.
-    mail(bcc: recipients, subject: subject)
+    Rails.logger.debug 'NOT SENDING MAIL!...'
+    # mail(bcc: recipients, subject: subject)
     # this will render app/views/user_mailer/contact_authors.html.erb
   end
 end

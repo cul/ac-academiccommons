@@ -10,6 +10,7 @@ class EmailPreference < ApplicationRecord
   #
   # @param [String] array of unis
   def self.preferred_emails(unis)
+    Rails.logger.debug 'inisde EmailPreferences#preferred_emails'
     map = {}
     unis = unis.compact.uniq - EmailPreference.where(unsubscribe: true).map(&:uni)
 
