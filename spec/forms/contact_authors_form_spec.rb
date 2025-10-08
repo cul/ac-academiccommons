@@ -7,6 +7,8 @@ describe ContactAuthorsForm, type: :model do
 
   let(:test_ids) { 'abc123, def456' }
   let(:test_preferred_emails) { ['abc123@columbia.edu', 'def456@columbia.edu'] }
+  let(:thousand_ids) { Array.new(1000, 'abc123') }
+  let(:thousand_preferred_emails) { Array.new(1000, 'abc123@columbia.edu') }
 
   describe '#valid_unis_format?' do
     let(:params) do
@@ -99,6 +101,23 @@ describe ContactAuthorsForm, type: :model do
     before do
       allow(AcademicCommons).to receive(:all_author_unis).and_return(test_ids)
       allow(EmailPreference).to receive_message_chain(:preferred_emails, :values).and_return(test_preferred_emails) # rubocop:disable RSpec/MessageChain
+    end
+
+    context 'when sending to 1000 recipients' do
+      before do
+        allow(AcademicCommons).to receive(:all_author_unis).and_return(thousand_ids)
+        allow(EmailPreference).to receive_message_chain(:preferred_emails, # rubocop:disable RSpec/MessageChain
+                                                        :values).and_return(thousand_preferred_emails)
+        described_class.new(params).send_emails
+      end
+
+      it 'sends in batches of 100 with bcc' do
+        expect(ActionMailer::Base.deliveries.pop.bcc_addresses.length).to eq(100)
+      end
+
+      it 'sends 10 batches' do
+        expect(ActionMailer::Base.deliveries.length).to eq(10)
+      end
     end
 
     it 'does not validate unis field' do
