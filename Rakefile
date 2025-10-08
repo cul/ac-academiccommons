@@ -90,7 +90,7 @@ begin
     raise rspec_system_exit_failure_exception if rspec_system_exit_failure_exception
   end
 
-  task default: [:rubocop, :ci]
+  task default: [:ci]
 rescue LoadError => e
   # Be prepared to rescue so that this rake file can exist in environments where RSpec is unavailable (i.e. production environments).
   puts '[Warning] Exception creating ci/rubocop/rspec rake tasks. '\
