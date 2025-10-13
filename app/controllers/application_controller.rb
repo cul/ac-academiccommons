@@ -38,6 +38,8 @@ class ApplicationController < ActionController::Base
 
   # Redirect to last page a user visited before log in.
   def after_sign_in_path_for(resource)
-    session['omniauth.origin'] || request.env['omniauth.origin'] || stored_location_for(resource) || root_path
+    # because of our post form redirection, the 'omniauth.origin' value gets rewritten
+    # by devise to '/sign_in' -- so we use a custom key set by the session controller:
+    session['after_sign_in_path'] || root_path
   end
 end
