@@ -33,6 +33,7 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
             uid: user_id,
             email: "#{user_id}@columbia.edu"
           )
+    puts 'signing in  en da redirecting !'
     sign_in_and_redirect user, event: :authentication
   end
 end
