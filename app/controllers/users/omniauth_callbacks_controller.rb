@@ -30,9 +30,9 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
     user_id, _affils = Omniauth::Cul::Cas3.validation_callback(request.params['ticket'], app_cas_callback_endpoint)
 
     user = User.find_by(uid: user_id) || User.create!(
-            uid: user_id,
-            email: "#{user_id}@columbia.edu"
-          )
+      uid: user_id,
+      email: "#{user_id}@columbia.edu"
+    )
     sign_in_and_redirect user, event: :authentication
   end
 end

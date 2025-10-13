@@ -24,7 +24,7 @@ RSpec.describe Users::OmniauthCallbacksController, type: :controller do
   # GET :cas
   describe '#cas' do
     before :each do
-       get :cas
+      get :cas
     end
 
     it 'creates new user' do
