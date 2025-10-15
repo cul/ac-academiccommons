@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 # OmniAuth 2+ requires explicit configuration for CSRF protection
-OmniAuth.config.allowed_request_methods = [:post] if Rails.env.development?
+# OmniAuth.config.allowed_request_methods = [:post]
 
 # For development, we can be more permissive with CSRF
 # if Rails.env.development?
@@ -12,3 +12,5 @@ OmniAuth.config.allowed_request_methods = [:post] if Rails.env.development?
 # OmniAuth.config.on_failure = proc do |env|
 #   OmniAuth::FailureEndpoint.new(env).redirect_to_failure
 # end
+
+# TODO: move to devise.rb initializer file

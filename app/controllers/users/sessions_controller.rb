@@ -15,9 +15,10 @@ class Users::SessionsController < Devise::SessionsController
     new_user_session_path # this accomodates Users namespace of the controller
   end
 
-  def omniauth_provider_key
-    Rails.env.development? ? 'developer' : 'saml' # TODO: use cas?
-  end
+  # TODO : What exactly is this for?
+  # def omniauth_provider_key
+  #   Rails.env.development? ? 'developer' : 'saml' # TODO: use cas?
+  # end
 
   private
 
