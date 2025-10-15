@@ -44,6 +44,7 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
   def enforce_post_request
     unless request.post?
       puts "REJECTED #{request.method} req to #{request.path} - POST REQUIRED!"
+      Rails.logger.warn "REJECTED #{request.method} req to #{request.path} - POST REQUIRED!"
       render plain: 'method not allowed. POST required', status: :method_not_allowed
     end
   end
