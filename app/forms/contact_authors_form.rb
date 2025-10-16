@@ -24,7 +24,7 @@ class ContactAuthorsForm < FormObject
     begin
       # Send in batches of 100
       recipients.each_slice(100) do |recipient_batch|
-        UserMailer.contact_authors(recipient_batch, body, subject).deliver_now
+        UserMailer.contact_authors(recipient_batch, body, subject).deliver_later
       end
     rescue StandardError
       errors.add(:base, 'There was an error sending the email')
