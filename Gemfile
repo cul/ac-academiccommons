@@ -97,3 +97,5 @@ end
 
 # Use Puma for local development
 gem 'puma', '~> 5.2'
+
+gem 'csv', '~> 3.3'
