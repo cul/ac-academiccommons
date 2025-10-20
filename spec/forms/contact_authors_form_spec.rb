@@ -3,12 +3,18 @@
 require 'rails_helper'
 
 describe ContactAuthorsForm, type: :model do
+  include ActiveJob::TestHelper
+
   subject(:email) { ActionMailer::Base.deliveries.pop }
 
   let(:test_ids) { 'abc123, def456' }
   let(:test_preferred_emails) { ['abc123@columbia.edu', 'def456@columbia.edu'] }
   let(:thousand_ids) { Array.new(1000, 'abc123') }
   let(:thousand_preferred_emails) { Array.new(1000, 'abc123@columbia.edu') }
+
+  before do
+    ActionMailer::Base.deliveries.clear
+  end
 
   describe '#valid_unis_format?' do
     let(:params) do
@@ -108,7 +114,9 @@ describe ContactAuthorsForm, type: :model do
         allow(AcademicCommons).to receive(:all_author_unis).and_return(thousand_ids)
         allow(EmailPreference).to receive_message_chain(:preferred_emails, # rubocop:disable RSpec/MessageChain
                                                         :values).and_return(thousand_preferred_emails)
-        described_class.new(params).send_emails
+        perform_enqueued_jobs do
+          described_class.new(params).send_emails
+        end
       end
 
       it 'sends in batches of 100 with bcc' do
@@ -127,7 +135,9 @@ describe ContactAuthorsForm, type: :model do
 
     describe '#send_emails' do
       before do
-        described_class.new(params).send_emails
+        perform_enqueued_jobs do
+          described_class.new(params).send_emails
+        end
       end
 
       it 'sends to correct author' do # rubocop:disable RSpec/MultipleExpectations
