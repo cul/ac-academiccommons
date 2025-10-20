@@ -190,6 +190,7 @@ GEM
     crass (1.0.6)
     css_parser (1.21.1)
       addressable
+    csv (3.3.5)
     cul-ldap (0.0.1)
       net-ldap (~> 0.16)
     cul_omniauth (0.8.0)
@@ -724,6 +725,7 @@ DEPENDENCIES
   capistrano-rails (~> 1.4)
   capistrano-resque (= 0.2.1)
   capybara (~> 3.39)
+  csv (~> 3.3)
   cul-ldap
   cul_omniauth (~> 0.8.0)
   database_cleaner (~> 2.1.0)
