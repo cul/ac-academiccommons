@@ -99,3 +99,5 @@ end
 gem 'puma', '~> 5.2'
 
 gem 'csv', '~> 3.3'
+
+gem 'fast-mcp', '~> 1.6'
