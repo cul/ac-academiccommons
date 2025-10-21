@@ -1,12 +1,13 @@
 # frozen_string_literal: true
 
 class Users::SessionsController < Devise::SessionsController
+  before_action :set_return_to, only: :new
+
   # This allows us to use 'redirect_to new_user_session_path' to render a form
   # that sends a POST req to our omniauth endpoint (this is the secure way and
   # POST is not possible with redirect_to)
   # inspiration: https://stackoverflow.com/questions/985596/redirect-to-using-post-in-rails
   def new
-    store_omniauth_origin # for sign_in_and_redirect redirection
     render 'users/sessions/new'
   end
 
@@ -15,15 +16,16 @@ class Users::SessionsController < Devise::SessionsController
     new_user_session_path # this accomodates Users namespace of the controller
   end
 
-  # TODO : What exactly is this for?
-  # def omniauth_provider_key
-  #   Rails.env.development? ? 'developer' : 'saml' # TODO: use cas?
-  # end
-
   private
 
-  def store_omniauth_origin
-    origin = request.params['origin'] || request.referer || root_path
-    session['after_sign_in_path'] = origin
+  def set_return_to
+    session[:return_to] =
+      if request.referer
+        URI.parse(request.referer).path
+      else
+        root_path
+      end
+  rescue URI::InvalidURIError
+      session[:return_to] = root_path
   end
 end

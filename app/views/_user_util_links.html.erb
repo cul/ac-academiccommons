@@ -21,7 +21,7 @@
         <% if current_user.admin? %>
         <li><%= link_to 'Admin', admin_path %></li>
         <% end %>
-        <li><%= link_to t('blacklight.header_links.logout'), destroy_user_session_path, method: :delete %></li>
+        <li><%= link_to t('blacklight.header_links.logout'), destroy_user_session_path(return_to: request.path), method: :delete %></li>
       </ul>
     </li>
   <% else %>

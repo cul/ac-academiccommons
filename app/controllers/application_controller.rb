@@ -35,10 +35,12 @@ class ApplicationController < ActionController::Base
 
   private
 
-  # Redirect to last page a user visited before log in.
+  # Redirect to last page a user visited before log in and log out.
   def after_sign_in_path_for(resource)
-    # Because of our post form redirection, the 'omniauth.origin' value gets rewritten
-    # by devise to '/sign_in' -- so we use a custom key set by the session controller:
-    session['after_sign_in_path'] || root_path
+    session[:return_to] || root_path
+  end
+
+  def after_sign_out_path_for(resource_or_scope)
+    params[:return_to] || root_path
   end
 end

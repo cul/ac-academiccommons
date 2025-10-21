@@ -3,8 +3,7 @@
 RSpec.describe 'session routes', type: :request do
   describe '/sign_in' do
     before do
-      # request.env['devise.mapping'] = Devise.mappings[:user]
-      get '/sign_in', params: { 'origin' => '/previous_page' }
+      get '/sign_in', headers: { 'HTTP_REFERER' => 'http://localhost:3000/previous_page' }
     end
 
     it 'returns a 200 status code' do
@@ -12,7 +11,7 @@ RSpec.describe 'session routes', type: :request do
     end
 
     it 'saves the previous page in the session hash' do
-      expect(session['after_sign_in_path']).to eq('/previous_page')
+      expect(session['return_to']).to eq('/previous_page')
     end
 
     it 'renders the sign in redirect form' do

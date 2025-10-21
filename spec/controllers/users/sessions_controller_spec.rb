@@ -15,7 +15,7 @@ RSpec.describe Users::SessionsController, type: :controller do
     end
 
     it 'saves the previous route in the session hash' do
-      expect(session['after_sign_in_path']).to eq('/')
+      expect(session['return_to']).to eq('/')
     end
   end
 end

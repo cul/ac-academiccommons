@@ -251,7 +251,7 @@ Devise.setup do |config|
   # config.omniauth :developer, { fields: [:uid], uid_field: :uid } # TODO : These options...
 
   if Rails.env.development?
-    config.omniauth :developer, fields: [:uid], uid_field: :uid, callback_method: :post
+    config.omniauth :developer, fields: [:uid], uid_field: :uid
   else
     config.omniauth :cas, strategy_class: Omniauth::Cul::Strategies::Cas3Strategy
   end
