@@ -24,8 +24,8 @@ Rails.application.routes.draw do
     get 'sign_in', to: 'users/sessions#new', as: :new_user_session
     # Create the routes for omniauth auth and callback routes (unless doing local development) (see comment above)
     unless Rails.env.development?
-      post 'auth/cas', to: 'users/omniauth_callbacks#passthru', as: :user_cas_omniauth_authorize
-      get 'auth/cas/callback', to: 'users/omniauth_callbacks#cas', as: :user_cas_omniauth_callback
+      post 'users/auth/cas', to: 'users/omniauth_callbacks#passthru', as: :user_cas_omniauth_authorize
+      get 'users/auth/cas/callback', to: 'users/omniauth_callbacks#cas', as: :user_cas_omniauth_callback
     end
   end
 
