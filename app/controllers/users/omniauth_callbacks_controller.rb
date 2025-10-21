@@ -14,7 +14,7 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
     "#{request.base_url}/users/auth/cas/callback"
   end
 
-  # In local development, use devise's controller. In deployed env, use CAS server
+  # In local development, use devise's controller action. In deployed env, use CAS server
   def passthru
     if Rails.env.development?
       super

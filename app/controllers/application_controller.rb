@@ -35,9 +35,8 @@ class ApplicationController < ActionController::Base
 
   private
 
-  # Redirect to last page a user visited before log in and log out.
+  # Redirect to last page a user visited before log in.
   def after_sign_in_path_for(resource)
-    Rails.logger.warn "session return to is #{session[:return_to]}!"
     session[:return_to] || root_path
   end
 end
