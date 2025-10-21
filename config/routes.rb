@@ -14,8 +14,8 @@ Rails.application.routes.draw do
   # requests should not be allowed, even if we have not gotten it to work), but this is a secure workaround for now.
   skip_omniauth_callbacks = Rails.env.development? ? [] : [:omniauth_callbacks]
   devise_for :users,
-              controllers: { sessions: 'users/sessions', omniauth_callbacks: 'users/omniauth_callbacks' },
-              skip: skip_omniauth_callbacks
+             controllers: { sessions: 'users/sessions', omniauth_callbacks: 'users/omniauth_callbacks' },
+             skip: skip_omniauth_callbacks
 
   devise_scope :user do
     # Create the sign in and sign out routes (simply redirects to our auth endpoint), needed for redirecting on

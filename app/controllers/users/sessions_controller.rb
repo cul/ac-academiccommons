@@ -26,6 +26,6 @@ class Users::SessionsController < Devise::SessionsController
         root_path
       end
   rescue URI::InvalidURIError
-      session[:return_to] = root_path
+    session[:return_to] = root_path
   end
 end
