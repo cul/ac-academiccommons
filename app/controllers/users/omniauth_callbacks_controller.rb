@@ -3,8 +3,6 @@
 require 'omniauth/cul'
 
 class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
-  OMNIAUTH_REQUEST_KEY = 'omniauth.auth'
-
   # Adding the line below so that if the auth endpoint POSTs to our cas endpoint, it won't
   # be rejected by authenticity token verification.
   # See https://github.com/omniauth/omniauth/wiki/FAQ#rails-session-is-clobbered-after-callback-on-developer-strategy
@@ -14,9 +12,13 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
     "#{request.base_url}/users/auth/cas/callback"
   end
 
+  # In local development, use devise's controller action. In deployed env, use CAS server
   def passthru
-    store_omniauth_origin
-    redirect_to Omniauth::Cul::Cas3.passthru_redirect_url(app_cas_callback_endpoint), allow_other_host: true
+    if Rails.env.development?
+      super
+    else
+      redirect_to Omniauth::Cul::Cas3.passthru_redirect_url(app_cas_callback_endpoint), allow_other_host: true
+    end
   end
 
   def developer
@@ -28,22 +30,12 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
   end
 
   def cas
-      user_id, _affils = Omniauth::Cul::Cas3.validation_callback(request.params['ticket'], app_cas_callback_endpoint)
-      Rails.logger.debug 'inside cas callback method'
+    user_id, _affils = Omniauth::Cul::Cas3.validation_callback(request.params['ticket'], app_cas_callback_endpoint)
 
-      user = User.find_by(uid: user_id) || User.create!(
-              uid: user_id,
-              email: "#{user_id}@columbia.edu",
-              password: Devise.friendly_token[0, 20]
-            )
-      # TODO : almost working; needs to redirect back to last visited page, not root URL
-      sign_in_and_redirect user, event: :authentication
-  end
-
-  private
-
-  def store_omniauth_origin
-    origin = request.params['origin'] || request.referer || root_path
-    session['omniauth.origin'] = origin
+    user = User.find_by(uid: user_id) || User.create!(
+      uid: user_id,
+      email: "#{user_id}@columbia.edu"
+    )
+    sign_in_and_redirect user, event: :authentication
   end
 end

@@ -1,8 +1,0 @@
-<%= form_with url: (Rails.env.development? ? user_developer_omniauth_authorize_path : user_cas_omniauth_authorize_path), method: :post, data: { turbo: false }, id: 'signInForm' do |f| %>
-    <p>Redirecting you to be authenticated...</p>
-    <%= f.submit 'Sign In', style: 'display: none;', id: 'signInRedirect' %>
-<% end %>
-
-<script>
-    document.querySelector('form#signInForm').submit()
-</script>
