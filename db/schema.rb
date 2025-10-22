@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_09_26_191135) do
+ActiveRecord::Schema[7.1].define(version: 2025_10_20_193031) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -48,6 +48,14 @@ ActiveRecord::Schema[7.1].define(version: 2025_09_26_191135) do
     t.datetime "updated_at", precision: nil
     t.integer "user_id"
     t.index ["user_id"], name: "index_agreements_on_user_id"
+  end
+
+  create_table "api_clients", force: :cascade do |t|
+    t.string "name"
+    t.string "contact_email"
+    t.text "description"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "bookmarks", force: :cascade do |t|
@@ -219,6 +227,12 @@ ActiveRecord::Schema[7.1].define(version: 2025_09_26_191135) do
     t.string "scope", null: false
     t.string "contact_email"
     t.text "description"
+    t.bigint "authorizable_id", null: false
+    t.string "authorizable_type"
+    t.datetime "disabled"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.index ["authorizable_type", "authorizable_id"], name: "index_tokens_on_authorizable_type_and_authorizable_id", unique: true
     t.index ["scope", "token"], name: "index_tokens_on_scope_and_token"
     t.index ["scope"], name: "index_tokens_on_scope"
     t.index ["token"], name: "index_tokens_on_token", unique: true
