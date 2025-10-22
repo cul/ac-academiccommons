@@ -39,4 +39,18 @@ describe 'My Account', type: :feature do
       expect(page).to have_content 'Successfully updated email preference.'
     end
   end
+
+  context 'generating a token' do
+    before do
+      click_button 'Generate Token'
+    end
+
+    it 'renders flash message' do
+      expect(page).to have_content 'Successfully created API token.'
+    end
+
+    it 'shows the new token' do
+      expect(page).to have_css('label', text: 'Personal API Token')
+    end
+  end
 end
