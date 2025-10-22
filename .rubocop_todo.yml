@@ -403,6 +403,7 @@ Metrics/AbcSize:
     - 'app/models/statistic.rb'
     - 'app/models/user.rb'
     - 'app/presenters/usage_statistics_presenter.rb'
+    - 'config/initializers/fast_mcp.rb'
     - 'lib/academic_commons/featured_searches.rb'
     - 'lib/academic_commons/indexer.rb'
     - 'lib/academic_commons/metrics/author_affiliation_report.rb'
@@ -444,6 +445,7 @@ Metrics/CyclomaticComplexity:
     - 'app/models/deposit.rb'
     - 'app/models/statistic.rb'
     - 'app/models/user.rb'
+    - 'config/initializers/fast_mcp.rb'
     - 'lib/academic_commons/metrics/author_affiliation_report.rb'
     - 'lib/tasks/resque.rake'
 
@@ -479,6 +481,8 @@ Metrics/MethodLength:
     - 'app/models/uploaded_file.rb'
     - 'app/models/user.rb'
     - 'app/presenters/usage_statistics_presenter.rb'
+    - 'app/tools/application_tool.rb'
+    - 'config/initializers/fast_mcp.rb'
     - 'config/initializers/patch_failure_app.rb'
     - 'lib/academic_commons/indexer.rb'
     - 'lib/academic_commons/metrics/author_affiliation_report.rb'
@@ -486,6 +490,10 @@ Metrics/MethodLength:
     - 'lib/academic_commons/metrics/usage_statistics.rb'
     - 'lib/tasks/resque.rake'
 
+Metrics/ParameterLists:
+  Exclude:
+    - 'app/tools/application_tool.rb'
+    - 'app/tools/records_tool.rb'
 # Offense count: 10
 # Configuration parameters: AllowedMethods, AllowedPatterns, IgnoredMethods, Max.
 Metrics/PerceivedComplexity:
@@ -498,6 +506,7 @@ Metrics/PerceivedComplexity:
     - 'app/models/deposit.rb'
     - 'app/models/statistic.rb'
     - 'app/models/user.rb'
+    - 'config/initializers/fast_mcp.rb'
     - 'lib/academic_commons/metrics/author_affiliation_report.rb'
     - 'lib/tasks/resque.rake'
 
@@ -529,6 +538,8 @@ Naming/MethodParameterName:
   Exclude:
     - 'app/models/notification.rb'
     - 'app/models/statistic.rb'
+    - 'app/tools/application_tool.rb'
+    - 'app/tools/records_tool.rb'
     - 'lib/academic_commons/metrics/usage_statistics.rb'
     - 'lib/academic_commons/search_parameters.rb'
     - 'lib/ok_computer/fedora_object_check.rb'
