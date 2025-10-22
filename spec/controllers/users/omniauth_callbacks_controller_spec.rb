@@ -1,8 +1,10 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe Users::OmniauthCallbacksController, type: :controller do
   let(:uid) { 'abc123' }
-  let(:saml_hash) do
+  let(:auth_hash) do
     OmniAuth::AuthHash.new({ 'uid' => uid, 'extra' => {} })
   end
 
@@ -12,16 +14,17 @@ RSpec.describe Users::OmniauthCallbacksController, type: :controller do
 
   before :each do
     OmniAuth.config.test_mode = true
-    OmniAuth.config.mock_auth[:saml] = saml_hash
-    @request.env['devise.mapping'] = Devise.mappings[:user]
-    @request.env['omniauth.auth'] = OmniAuth.config.mock_auth[:saml]
+    OmniAuth.config.mock_auth[:cas] = auth_hash
+    request.env['devise.mapping'] = Devise.mappings[:user]
+    request.env['omniauth.auth'] = OmniAuth.config.mock_auth[:saml]
+    allow(Omniauth::Cul::Cas3).to receive(:validation_callback).and_return([uid, nil])
     allow_any_instance_of(Cul::LDAP).to receive(:find_by_uni).with(uid).and_return(cul_ldap_entry)
   end
 
-  # GET :saml
-  describe '#saml' do
+  # GET :cas
+  describe '#cas' do
     before :each do
-      get :saml
+      get :cas
     end
 
     it 'creates new user' do

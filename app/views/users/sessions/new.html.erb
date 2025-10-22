@@ -1,0 +1,15 @@
+<%# This view is for overriding the devise new session view. Instead of 
+    rendering a true login form, it just redirects the user via a POST request
+    to the appropriate omniauth /auth endpoint. 
+    Our Sessions Controller is scoped to users (not user), hence the directory
+    structure. %>
+
+<%= form_with url: (Rails.env.development? ? user_developer_omniauth_authorize_path : user_cas_omniauth_authorize_path),
+              method: :post, data: { turbo: false }, id: 'signInForm' do |f| %>
+    <p>Redirecting you to be authenticated...</p>
+    <%= f.submit 'Sign In', style: 'display: none;', id: 'signInRedirect' %>
+<% end %>
+
+<script>
+    document.querySelector('form#signInForm').submit()
+</script>
