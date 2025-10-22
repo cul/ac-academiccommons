@@ -31,8 +31,21 @@
   </div>
 
   <br>
-  
+
   <div class="form-group">
     <%= f.submit 'Save', class: 'btn btn-primary', data: { disable_with: 'Saving...' } %>
   </div>
+<% end %>
+<h3>API Token</h3>
+<%= form_with model: @user_api_token, url: user_token_path(current_user), method: :post, class: 'form-horizontal ajax-flash-messages', local: true do |f| %>
+  <% if @user_api_token.new_record? %>
+    <div class="form-group">
+      <%= f.submit 'Generate Token', class: 'btn btn-primary', data: { disable_with: 'Generating...' } %>
+    </div>
+  <% else %>
+    <div class="form-group">
+      <%= f.label :token, 'Personal API Token', class: 'control-label' %>
+      <%= f.text_field :token, class: 'form-control', disabled: true %>
+    </div>
+  <% end %>
 <% end %>
