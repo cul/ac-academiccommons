@@ -1,6 +1,18 @@
 require 'rails_helper'
 
 describe 'GET /api/v1/data_feed/:key', type: :request do
+  let(:invalid_token_value) { "invalid_#{token.token}" }
+  let(:token) { FactoryBot.create(:token, token: 'foobar') }
+
+  let(:empty_solr_response) do
+    wrap_solr_response_data(
+      'response' => {
+        'numFound' => 0,
+        'docs' => []
+      }
+    )
+  end
+
   context 'when no token is provided' do
     it 'returns 401' do
       get '/api/v1/data_feed/masters'
@@ -9,11 +21,7 @@ describe 'GET /api/v1/data_feed/:key', type: :request do
   end
 
   context 'when provides invalid token' do
-    let(:headers) { { 'HTTP_AUTHORIZATION' => 'Token token=invalid_token' } }
-
-    before do
-      Token.create(scope: Token::DATAFEED, token: 'foobar')
-    end
+    let(:headers) { { 'HTTP_AUTHORIZATION' => "Token token=invalid#{invalid_token_value}" } }
 
     it 'returns 401' do
       get '/api/v1/data_feed/masters', headers: headers
@@ -22,14 +30,11 @@ describe 'GET /api/v1/data_feed/:key', type: :request do
   end
 
   context 'when provides valid token' do
-    let(:headers) { { 'HTTP_AUTHORIZATION' => 'Token token=foobar' } }
-
-    before do
-      Token.create(scope: Token::DATAFEED, token: 'foobar')
-    end
+    let(:headers) { { 'HTTP_AUTHORIZATION' => "Token token=#{token.token}" } }
 
     context 'when known key is given' do
       it 'returns 200' do
+        allow(Blacklight.default_index).to receive(:search).and_return(empty_solr_response)
         get '/api/v1/data_feed/masters', headers: headers
         expect(response.status).to be 200
       end
@@ -43,6 +48,10 @@ describe 'GET /api/v1/data_feed/:key', type: :request do
     end
 
     context 'if no record match feed' do
+      before do
+        allow(Blacklight.default_index).to receive(:search).and_return(empty_solr_response)
+      end
+
       it 'returns feed with no records' do
         get '/api/v1/data_feed/masters', headers: headers
         expect(JSON.parse(response.body)).to match(
@@ -141,7 +150,7 @@ describe 'GET /api/v1/data_feed/:key', type: :request do
       end
 
       it 'returns matching records' do
-        allow(Blacklight.default_index).to receive(:search).with(parameters).and_return(solr_response)
+        allow(Blacklight.default_index).to receive(:search).with(hash_including(parameters)).and_return(solr_response)
 
         get '/api/v1/data_feed/masters', headers: headers
 

@@ -50,6 +50,14 @@ ActiveRecord::Schema[8.0].define(version: 2025_09_26_191135) do
     t.index ["user_id"], name: "index_agreements_on_user_id"
   end
 
+  create_table "api_clients", force: :cascade do |t|
+    t.string "name"
+    t.string "contact_email"
+    t.text "description"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "bookmarks", force: :cascade do |t|
     t.integer "user_id", null: false
     t.string "document_id"
@@ -219,6 +227,12 @@ ActiveRecord::Schema[8.0].define(version: 2025_09_26_191135) do
     t.string "scope", null: false
     t.string "contact_email"
     t.text "description"
+    t.bigint "authorizable_id", null: false
+    t.string "authorizable_type"
+    t.datetime "disabled"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.index ["authorizable_type", "authorizable_id"], name: "index_tokens_on_authorizable_type_and_authorizable_id", unique: true
     t.index ["scope", "token"], name: "index_tokens_on_scope_and_token"
     t.index ["scope"], name: "index_tokens_on_scope"
     t.index ["token"], name: "index_tokens_on_token", unique: true
