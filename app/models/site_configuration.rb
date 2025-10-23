@@ -17,8 +17,7 @@ class SiteConfiguration < ApplicationRecord
   validates :deposits_enabled, inclusion: { in: [true, false] }
 
   # If there is no site configuration record in the database, we create one with
-  # the default values in the block passed to firt_or_create
-  # add default values and non-nil to _enabled fields
+  # the default values in the block passed to first_or_create
   # todo : look into caching this in "The Rails Cache"
   def self.instance
     where(singleton_guard: 0).first_or_create! do |site_config|
