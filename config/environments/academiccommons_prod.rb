@@ -78,6 +78,7 @@ AcademicCommons::Application.configure do
   # Application specific configuration.
   config.analytics_enabled = true
   config.default_host = 'https://academiccommons.columbia.edu'
+  config.hosts << 'academiccommons.columbia.edu'
   config.prod_environment = true
   config.sending_deposits_to_sword = true
 end

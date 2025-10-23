@@ -33,5 +33,6 @@ AcademicCommons::Application.configure do
   # Application specific configuration.
   config.analytics_enabled = false
   config.default_host = 'https://academiccommons-dev.library.columbia.edu'
+  config.hosts << 'academiccommons-dev.library.columbia.edu'
   config.prod_environment = false
 end
