@@ -22,7 +22,10 @@ class ContactAuthorsForm < FormObject
     return false unless valid?
 
     begin
-      UserMailer.contact_authors(recipients, body, subject).deliver_now
+      # Send in batches of 100
+      recipients.each_slice(100) do |recipient_batch|
+        UserMailer.contact_authors(recipient_batch, body, subject).deliver_later
+      end
     rescue StandardError
       errors.add(:base, 'There was an error sending the email')
       return false
