@@ -27,6 +27,7 @@ AcademicCommons::Application.configure do
   # Application specific configuration.
   config.analytics_enabled = false
   config.default_host = 'https://academiccommons-test.library.columbia.edu'
+  config.hosts << 'academiccommons-test.library.columbia.edu'
   config.prod_environment = false
   config.sending_deposits_to_sword = true
 end
