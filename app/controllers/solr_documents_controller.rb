@@ -8,7 +8,7 @@ class SolrDocumentsController < ApplicationController
   def authenticate
     status = :unauthorized
     authenticate_with_http_token do |token, options|
-      (Rails.application.secrets.index_api_key || '').tap do |valid_api_key|
+      (Rails.application.credentials.index_api_key || '').tap do |valid_api_key|
         status = (valid_api_key == token) ? :ok : :forbidden
       end
     end

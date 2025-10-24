@@ -39,6 +39,8 @@ jobs:
       - run: yarn install --frozen-lockfile
       - name: Create config files from config/template files
         run: for c in config/*.template.yml; do cp $c ${c/template.}; done
+      - name: Create test credentials
+        run: bundle exec rake "ac:templated_credentials:add[test]"
       - name: Load DB Schema
         run: bundle exec rake db:schema:load
       - name: Prepare DB

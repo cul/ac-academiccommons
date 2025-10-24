@@ -21,33 +21,38 @@ Current recommended version of Ruby is specified in `.ruby-version`.
    bundle exec rake config_files
    ```
 
-4. Install any needed gems using Bundler
+4. Create encrypted credentials files for development and test environments
+   ```
+   bundle exec rake ac:templated_credentials:add_all
+   ```
+
+5. Install any needed gems using Bundler
    ```
    bundle install
    ```
 
-5. Install required Javascript libraries using Yarn
+6. Install required Javascript libraries using Yarn
     ```
     brew install yarn
     yarn
     ```
 
-6. Setup your local development DB.
+7. Setup your local development DB.
    ```
    bundle exec rake db:migrate
    ```
 
-7. Start your local fedora and solr instances. Docker must be running on your computer.
+8. Start your local fedora and solr instances. Docker must be running on your computer.
    ```
    bundle exec rake ac:docker:start
    ```
 
-8. In a separate terminal window, start the webpack dev server for faster asset compilation.
+9. In a separate terminal window, start the webpack dev server for faster asset compilation.
    ```
    ./bin/webpack-dev-server
    ```
 
-9. Start your local Rails app
+10. Start your local Rails app
    ```
    rails server
    ```
@@ -106,6 +111,19 @@ rubocop --auto-gen-config  --auto-gen-only-exclude --exclude-limit 10000
    cap test cul:auto_tag
    ```
    This will create a tag based on the version number (listed in `VERSION`).
+
+## Editing secrets and credentials
+Academic Commons uses Rails credentials to encrypt and load sensative information. During local development, an unencrypted
+local yaml file is used in place of encrypted credentials (with dummy values, created with the `config_files` Rake task).
+
+To edit the values during development, simply edit the `config/local_credentials.yml` file.
+
+To edit the values in deployed environments, you must SSH to the host and edit the actual credentials file using the
+provided Rails task:
+```
+bin/rails EDITOR=vim credentials --environment academiccommons_{dev|test|prod}
+```
+The master keys for deployed environments are only stored on the respective servers.
 
 ## API v1
 Documentation for the Academic Commons API can be found at `/api/v1/swagger_doc`. To view documentation in a swagger GUI, the following url has to be created:
