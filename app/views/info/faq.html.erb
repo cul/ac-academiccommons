@@ -195,7 +195,7 @@
 <h3>What is Dryad and why should I use it?</h3>
 <p><a href="https://datadryad.org/stash">Dryad</a> is a digital repository dedicated to research data. Columbia affiliates can deposit data in Dryad, and <a href="https://datadryad.org/stash/submission_process#curation">Dryad curators</a> help ensure that your data is well-described and in the best format for sharing. Dryad assigns a <a href="https://www.doi.org/factsheets/DOIKeyFacts.html">DOI</a> to your data and provides long-term storage. For upload size limits and procedures, see the Dryad <a href="https://datadryad.org/stash/submission_process#upload-methods">upload method documentation</a>.</p>
 <p>Upload data to Dryad by first <a href="https://datadryad.org/stash/sessions/choose_login">signing in</a> with an <a href="https://orcid.org/">ORCID ID</a>, then by following instructions on their upload form. Here is <a href="https://datadryad.org/docs/QuickstartGuideToDataSharing.pdf">a guide (PDF)</a> to get you started.</p>
-<p>Though we encourage you to use Dryad to share your research data, especially if you have large files, you can also upload research data to Academic Commons. Like Dryad, Academic Commons assigns a DOI to your data and offers long-term storage. <%= link_to t('blacklight.header_links.login'), new_user_session_path %> to Academic Commons using your Columbia UNI and password and follow the instructions on the upload form. Email us at <a href="mailto:ac@columbia.edu">ac@columbia.edu</a> if you have data files over 100MB in size.</p>
+<p>Though we encourage you to use Dryad to share your research data, especially if you have large files, you can also upload research data to Academic Commons. Like Dryad, Academic Commons assigns a DOI to your data and offers long-term storage. <%= render :partial=>'shared/log_in_link' %> to Academic Commons using your Columbia UNI and password and follow the instructions on the upload form. Email us at <a href="mailto:ac@columbia.edu">ac@columbia.edu</a> if you have data files over 100MB in size.</p>
 <p>Libraries staff are currently working to connect Academic Commons to Dryad so that research data uploaded to Dryad by Columbia researchers will also be discoverable in Academic Commons.</p>
 
 <h3>How can I use Academic Commons and Dryad as part of a practice of ethical data sharing?</h3>
@@ -215,12 +215,12 @@
     <li>Read about managing your copyrights on the <a href="https://copyright.columbia.edu/">Copyright Advisory Services website</a>.</li>
 </ul>
 
-<p>To sign, <%= link_to t('blacklight.header_links.login'), new_user_session_path %> to Academic Commons and select My Account from the dropdown menu under your name, then follow the instructions at the top of the page. You only need to sign the agreement once, but your consent will apply to any material you upload.</p>
+<p>To sign, <%= render :partial=>'shared/log_in_link' %> to Academic Commons and select My Account from the dropdown menu under your name, then follow the instructions at the top of the page. You only need to sign the agreement once, but your consent will apply to any material you upload.</p>
 
 <h3>How do I upload my work?</h3>
 
 <h4>If you have a Columbia UNI</h4>
-<p><%= link_to t('blacklight.header_links.login'), new_user_session_path %> to Academic Commons with your Columbia UNI and password, then navigate to the Add New Work tab and follow the instructions.</p>
+<p><%= render :partial=>'shared/log_in_link' %> to Academic Commons with your Columbia UNI and password, then navigate to the Add New Work tab and follow the instructions.</p>
 
 <h4>If you do not have a Columbia UNI</h4>
 <p>Email us at <a href="mailto:ac@columbia.edu">ac@columbia.edu</a>. Tell us about your work and how it meets our guidelines for participation.</p>

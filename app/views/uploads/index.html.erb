@@ -8,7 +8,7 @@
   <div class="col-md-5 tile log-in">
     <h2>Have a Columbia UNI?</h2>
     <p>Log in with your Columbia UNI and password</p>
-    <p><%= link_to t('blacklight.header_links.login'), new_user_session_path, class: 'btn btn-primary' %></p>
+    <p><%= render partial: 'shared/log_in_link', locals:  { is_button: 'true'} %></p>
   </div>
   <div class="col-md-5 tile no-log-in">
     <h2>No Columbia UNI?</h2>
