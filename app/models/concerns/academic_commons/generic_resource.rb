@@ -15,7 +15,7 @@ module AcademicCommons::GenericResource
       raise StandardError, 'missing doi from fedora object' if doi.blank?
       doc['cul_doi_ssi'] = doi.sub('doi:', '')
 
-      # Fedora returns an hash with :id=>pid -- we overwrite this value with the DOI before sending to Solr for indexing
+      # Fedora returns a hash with :id=>pid -- we overwrite this value with the DOI before sending to Solr for indexing
       doc[:id] = doc['cul_doi_ssi']
 
       add_downloadable_content_solr_fields(doc)

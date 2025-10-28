@@ -1,6 +1,7 @@
 module Hyacinth
   def self.base_url
-    url = Rails.application.config_for(:secrets).hyacinth.dig(:url)
+    #     url = Rails.application.config_for(:secrets).hyacinth.dig(:url)
+    url = Rails.application.credentials.hyacinth.url
     url.blank? ? raise(ArgumentError, 'Hyacinth URL not provided in config.') : url.to_s
   end
 

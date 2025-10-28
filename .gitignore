@@ -21,6 +21,7 @@ config/s3_credentials.yml
 config/secrets.yml
 config/google_analytics.yml
 config/blacklight.yml
+config/local_credentials.yml
 # docker ignores
 docker/docker-compose.*.yml
 #pre-docker ignores, so they don't get committed if still in workspace
@@ -59,3 +60,16 @@ coverage/*
 yarn-debug.log*
 .yarn-integrity
 .bash_profile
+
+# Ignore any key files you have locally
+/config/credentials/*.key
+/config/credentials/academiccommons_dev.key
+/config/credentials/academiccommons_test.key
+/config/credentials/academiccommons_prod.key
+
+/config/credentials/development.yml.enc
+/config/credentials/development.key
+/config/credentials/test.yml.enc
+/config/credentials/test.key
+/config/credentials.yml.enc
+/config/master.key
