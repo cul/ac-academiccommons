@@ -39,7 +39,7 @@ set :linked_files, fetch(:linked_files, []).push(
   'config/secrets.yml',
   'config/custom_bots.json',
   'config/crawler-user-agents.json',
-  'config/credentials/academiccommons_dev.key',
+  "config/credentials/#{fetch(:deploy_name)}.key",
   'public/robots.txt'
 )
 
