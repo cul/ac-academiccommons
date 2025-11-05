@@ -112,18 +112,25 @@ rubocop --auto-gen-config  --auto-gen-only-exclude --exclude-limit 10000
    ```
    This will create a tag based on the version number (listed in `VERSION`).
 
-## Editing secrets and credentials
-Academic Commons uses Rails credentials to encrypt and load sensative information. During local development, an unencrypted
-local yaml file is used in place of encrypted credentials (with dummy values, created with the `config_files` Rake task).
-
-To edit the values during development, simply edit the `config/local_credentials.yml` file.
-
-To edit the values in deployed environments, you must SSH to the host and edit the actual credentials file using the
-provided Rails task:
+## Editing encrypted credentials
+### In development
+Academic Commons uses Rails credentials to encrypt and load sensative information. During local development, an encrypted `development.enc.yml` file is used
+with dummy values loaded from the local template file: `config/development_credentials_template.yml`. The encrypted credentials are created from the template using the following rake task:
 ```
-bin/rails EDITOR=vim credentials --environment academiccommons_{dev|test|prod}
+   bundle exec rake ac:templated_credentials:add_all
 ```
-The master keys for deployed environments are only stored on the respective servers.
+
+To edit the values during development, simply edit the `config/local_credentials.yml` file and re-run the rake task.
+
+### In deployed environments
+To edit these values in deployed environments, you must SSH into the host and edit the credentials file there using the provided Rails task:
+```
+EDITOR=vim bin/rails credentials --environment=academiccommons_{dev|test|prod}
+```
+
+The master keys for deployed environments are only stored on the respective servers in the deployment's shared directory.
+
+Make sure when you are editing the credentials that you include the environment flag and set it properly! You can also set a different editor than vim if you would like.
 
 ## API v1
 Documentation for the Academic Commons API can be found at `/api/v1/swagger_doc`. To view documentation in a swagger GUI, the following url has to be created:
