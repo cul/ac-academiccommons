@@ -100,6 +100,13 @@ We use the `rubocul` gem to centralize our rubocop config and share it among rep
 rubocop --auto-gen-config  --auto-gen-only-exclude --exclude-limit 10000
 ```
 
+To run the cops, you can use the executable:
+```
+bin/rubocop
+```
+
+The cops also run in the default rake task, `bundle exec rake`.
+
 ## Running tests
 1. In order to run tests that require javascript you might need `chrome` installed (needs to be tested).
 2. Run tests locally by running `rake ci`.
