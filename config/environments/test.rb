@@ -69,7 +69,6 @@ Rails.application.configure do
   # ActiveJob test environment
   config.active_job.queue_adapter = :test
 
-
   config.default_host = 'http://localhost:3000'
 
   # Raises error for missing translations.
