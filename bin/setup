@@ -4,9 +4,11 @@ include FileUtils
 
 # path to your application root.
 APP_ROOT = File.expand_path('..', __dir__)
+APP_NAME = "academic-commons"
 
+# TODO: app:update added exception: true -- why?
 def system!(*args)
-  system(*args) || abort("\n== Command #{args} failed ==")
+  system(*args, exception: true) || abort("\n== Command #{args} failed ==")
 end
 
 chdir APP_ROOT do
