@@ -1,0 +1,11 @@
+#!/usr/bin/env ruby
+require "rubygems"
+require "bundler/setup"
+
+# explicit rubocop config increases performance slightly while avoiding config confusion.
+ARGV.unshift("--config", File.expand_path("../.rubocop.yml", __dir__))
+
+load Gem.bin_path("rubocop", "rubocop")
+
+# NB: This file allows us to run `bin/rubocop` to run our cops. Previously,
+# we had to run `bundle exec rake` (see Rakefile).
