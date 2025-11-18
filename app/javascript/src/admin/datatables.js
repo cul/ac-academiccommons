@@ -1,5 +1,3 @@
-// Error: $.('.datatables').DataTable - DataTable is not a function
-
 
 $(document).ready(function(){
   // No ordering applied by DataTables during initialisation
