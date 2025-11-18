@@ -1,7 +1,9 @@
 require 'resque/server'
 
 Rails.application.routes.draw do
-  concern :range_searchable, BlacklightRangeLimit::Routes::RangeSearchable.new
+  # temporarily removing range slider
+  # concern :range_searchable, BlacklightRangeLimit::Routes::RangeSearchable.new
+
   # When we are doing local development, we use omniauth's built-in developer strategy with devise's built-in omniauth
   # engine. By not skipping :omniauth_callbacks in development, devise creates the routes /users/auth/developer and
   # /users/auth/developer/callback and configures them to use devise's omniauth_callbacks_controller actions.
@@ -50,7 +52,7 @@ Rails.application.routes.draw do
 
   resource :catalog, only: [:index], as: 'catalog', path: 'search', controller: 'catalog', constraints: { id: /.*/ } do
     concerns :searchable
-    concerns :range_searchable
+    # concerns :range_searchable
   end
 
   # OAI endpoint

@@ -1,6 +1,6 @@
 class SearchBuilder < Blacklight::SearchBuilder
   include Blacklight::Solr::SearchBuilderBehavior
-  include BlacklightRangeLimit::RangeLimitBuilder
+  # include BlacklightRangeLimit::RangeLimitBuilder
 
   # add to the beginning of the processing chain
   default_processor_chain.unshift(:validate_sort)

@@ -11,8 +11,9 @@ gem 'active-triples', git: 'https://github.com/cul/ActiveTriples', branch: 'depr
 gem 'addressable'
 gem 'blacklight', '~> 7.41.0'
 gem 'blacklight_oai_provider'
-gem 'blacklight_range_limit',
-    git: 'https://github.com/JackBlackLight/blacklight_range_limit.git', branch: 'use_blacklight_component'
+# will wait for vite migration to use rangelimit (ACHYDRA-1022)
+# gem 'blacklight_range_limit',
+#     git: 'https://github.com/JackBlackLight/blacklight_range_limit.git', branch: 'use_blacklight_component'
 gem 'bootsnap'
 gem 'cancancan'
 # gem 'concurrent-ruby', '1.3.4' # TODO: this is temporary for updating to rails 6.0.6
@@ -55,8 +56,9 @@ gem 'turbolinks'
 # See config.assets.js_compressor in configuration problems
 gem 'uglifier', '4.1.0'
 gem 'unicode'
+gem 'vite_rails'
 gem 'voight_kampff', '~>2.0', require: 'voight_kampff/rails'
-gem 'webpacker', '~> 5.4.0'
+# gem 'webpacker', '~> 5.4.0'
 gem 'whenever', require: false
 gem 'will_paginate'
 gem 'wowza-secure_token'

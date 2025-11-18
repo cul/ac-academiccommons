@@ -15,8 +15,8 @@ $(document).ready(function(){
   $("[data-creator-list-id]").click(function(e) {
     e.preventDefault()
 
-    creatorListId = $(this).data("creator-list-id")
-    textColor = $(this).data("text-color")
+    let creatorListId = $(this).data("creator-list-id")
+    // let textColor = $(this).data("text-color")
     addCreatorField(creatorListId)
   });
 })

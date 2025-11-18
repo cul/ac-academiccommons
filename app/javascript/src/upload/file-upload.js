@@ -1,6 +1,8 @@
+import Dropzone from 'dropzone';
+import * as ActiveStorage from '@rails/activestorage'; // maybe
+
 // Overriding default file upload action provided by dropzone. Instead loading
 // file via active storage and saving a signed id in a hidden element.
-
 $(document).ready(function() {
   Dropzone.autoDiscover = false;
 
