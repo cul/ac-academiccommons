@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
-require 'rails/generators/rails/credentials/credentials_generator'
-require 'rails/generators/rails/encryption_key_file/encryption_key_file_generator'
+require 'rails/generators'
 
 # rubocop:disable Rails/RakeEnvironment
 namespace :ac do
