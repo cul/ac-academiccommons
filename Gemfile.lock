@@ -1,12 +1,4 @@
 GIT
-  remote: https://github.com/JackBlackLight/blacklight_range_limit.git
-  revision: d2a3c9402fa00bcfe28873437e27540a2a409fa3
-  branch: use_blacklight_component
-  specs:
-    blacklight_range_limit (8.2.4)
-      blacklight (>= 7.25.2, < 9)
-
-GIT
   remote: https://github.com/cul/ActiveTriples
   revision: 252fd1b72ac1b5c5a54869554c088d637f5f9e94
   branch: deprecation_update
@@ -208,6 +200,7 @@ GEM
     domain_name (0.5.20190701)
       unf (>= 0.0.5, < 1.0.0)
     drb (2.2.3)
+    dry-cli (1.3.0)
     dry-core (1.1.0)
       concurrent-ruby (~> 1.0)
       logger
@@ -596,7 +589,6 @@ GEM
       rexml (~> 3.2, >= 3.2.5)
       rubyzip (>= 1.2.2, < 3.0)
       websocket (~> 1.0)
-    semantic_range (3.0.0)
     simplecov (0.22.0)
       docile (~> 1.1)
       simplecov-html (~> 0.11)
@@ -664,6 +656,15 @@ GEM
       activesupport (>= 5.2.0, < 8.1)
       concurrent-ruby (~> 1)
       method_source (~> 1.0)
+    vite_rails (3.0.19)
+      railties (>= 5.1, < 9)
+      vite_ruby (~> 3.0, >= 3.2.2)
+    vite_ruby (3.9.2)
+      dry-cli (>= 0.7, < 2)
+      logger (~> 1.6)
+      mutex_m
+      rack-proxy (~> 0.6, >= 0.6.1)
+      zeitwerk (~> 2.2)
     voight_kampff (2.0.0)
       rack (>= 1.4)
     warden (1.2.9)
@@ -672,11 +673,6 @@ GEM
       addressable (>= 2.8.0)
       crack (>= 0.3.2)
       hashdiff (>= 0.4.0, < 2.0.0)
-    webpacker (5.4.3)
-      activesupport (>= 5.2)
-      rack-proxy (>= 0.6.1)
-      railties (>= 5.2)
-      semantic_range (>= 2.3.0)
     webrick (1.9.1)
     websocket (1.2.10)
     websocket-driver (0.8.0)
@@ -704,7 +700,6 @@ DEPENDENCIES
   addressable
   blacklight (~> 7.41.0)
   blacklight_oai_provider
-  blacklight_range_limit!
   bootsnap
   byebug
   cancancan
@@ -766,9 +761,9 @@ DEPENDENCIES
   turbolinks
   uglifier (= 4.1.0)
   unicode
+  vite_rails
   voight_kampff (~> 2.0)
   webmock
-  webpacker (~> 5.4.0)
   whenever
   will_paginate
   wowza-secure_token

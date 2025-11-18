@@ -69,7 +69,7 @@ module UseAndReproductionHelper
   end
 
   def cc_img_tag(logo)
-    tag(:img, alt: "cc #{logo}", src: asset_pack_path("media/images/creative_commons/#{logo}.svg"))
+    tag(:img, alt: "cc #{logo}", src: vite_asset_path("images/creative_commons/#{logo}.svg"))
   end
 
   def cc0_designation
@@ -88,7 +88,7 @@ module UseAndReproductionHelper
 
   def in_copyright
     image = content_tag(:a, class: 'in-copyright', target: '_blank', href: IN_COPYRIGHT) do
-      tag(:img, height: '40', alt: 'In Copyright', src: asset_pack_path("media/images/in-copyright.svg"))
+      tag(:img, height: '40', alt: 'In Copyright', src: vite_asset_path("images/in-copyright.svg"))
     end
 
     text = content_tag(:a, 'All Rights Reserved', target: '_blank', href: IN_COPYRIGHT)

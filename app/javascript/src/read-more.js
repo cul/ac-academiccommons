@@ -1,3 +1,6 @@
+import * as Readmore from 'readmore-js';
+
+// For now, keep this as is and test whether there is a render delay when deployed to dev
 $(document).ready(function(){
   new Readmore.default('#document .blacklight-author_ssim', {
   collapsedHeight: 25,

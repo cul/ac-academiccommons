@@ -3,7 +3,8 @@
 class CatalogController < ApplicationController
   include Blacklight::Catalog
   include BlacklightOaiProvider::Controller
-  include BlacklightRangeLimit::ControllerOverride
+  # Temporarily remove range limit slider -- ACHYDRA 1022
+  # include BlacklightRangeLimit::ControllerOverride
 
   rescue_from Blacklight::Exceptions::InvalidRequest do
     render plain: 'Invalid request.', status: :bad_request
@@ -355,6 +356,24 @@ class CatalogController < ApplicationController
 
   def home
     render 'home'
+  end
+
+  # TODO : temporary to test readmore
+  def show
+    Rails.logger.debug 'my show action!'
+    super
+    Rails.logger.debug "@document[author_ssim]= #{@document['author_ssim']}"
+    @document['author_ssim'].push('bradley goldsmith')
+    @document['author_ssim'].push('bradley goldsmith')
+    @document['author_ssim'].push('bradley goldsmith')
+    @document['author_ssim'].push('bradley goldsmith')
+    @document['author_ssim'].push('bradley goldsmith')
+    @document['author_ssim'].push('bradley goldsmith')
+    @document['author_ssim'].push('bradley goldsmith')
+    @document['author_ssim'].push('bradley goldsmith')
+    @document['author_ssim'].push('bradley goldsmith')
+    @document['author_ssim'].push('bradley goldsmith')
+    @document['author_ssim'].push('bradley goldsmith')
   end
 
   private

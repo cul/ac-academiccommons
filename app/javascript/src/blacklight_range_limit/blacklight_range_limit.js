@@ -2,9 +2,14 @@
 // this one file, but get all our files -- and local app
 // require does not need to change if we change file list.
 //
-// Note JQuery is required to be loaded for flot and blacklight_range_limit
+// Note: JQuery is required to be loaded for flot and blacklight_range_limit
 // JS to work, expect host app to load it.
 
+
+// Note: this file is not currently being included in the Vite bundle, as we are
+// not using the range limit slider ATM.
+// We will add it later in application.js:
+// import '../src/blacklight_range_limit/blacklight_range_limit';
 
 import 'flot/source/jquery.canvaswrapper.js'
 import 'flot/source/jquery.colorhelpers.js'

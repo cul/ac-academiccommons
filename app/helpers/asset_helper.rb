@@ -1,7 +1,7 @@
 module AssetHelper
   def player(document, brand_link)
     caption_link = captions_download_url(document['cul_doi_ssi']) if document.captions?
-    logo_attr = "player-logo=\"#{asset_pack_path 'media/images/logo-media-player-badge-small.svg'}\""
+    logo_attr = "player-logo=\"#{vite_asset_path 'images/logo-media-player-badge-small.svg'}\""
     if document.audio?
       audio_player document.wowza_media_url(request), brand_link, caption_link, logo_attr
     elsif document.video?

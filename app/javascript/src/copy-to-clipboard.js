@@ -1,3 +1,5 @@
+import ClipboardJS from "clipboard";
+
 $(document).ready(function(){
 
   $('button.copy-to-clipboard').tooltip({
