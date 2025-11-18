@@ -358,6 +358,24 @@ class CatalogController < ApplicationController
     render 'home'
   end
 
+  # TODO : temporary to test readmore
+  def show
+    Rails.logger.debug 'my show action!'
+    super
+    Rails.logger.debug "@document[author_ssim]= #{@document['author_ssim']}"
+    @document['author_ssim'].push('bradley goldsmith')
+    @document['author_ssim'].push('bradley goldsmith')
+    @document['author_ssim'].push('bradley goldsmith')
+    @document['author_ssim'].push('bradley goldsmith')
+    @document['author_ssim'].push('bradley goldsmith')
+    @document['author_ssim'].push('bradley goldsmith')
+    @document['author_ssim'].push('bradley goldsmith')
+    @document['author_ssim'].push('bradley goldsmith')
+    @document['author_ssim'].push('bradley goldsmith')
+    @document['author_ssim'].push('bradley goldsmith')
+    @document['author_ssim'].push('bradley goldsmith')
+  end
+
   private
 
   def set_xrobots_tag_to_none
