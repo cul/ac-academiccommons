@@ -4,7 +4,7 @@ ruby File.read('.ruby-version').strip
 
 source 'https://rubygems.org'
 
-gem 'rails', '7.1.5.2'
+gem 'rails', '7.2.2.2'
 
 gem 'active-fedora', '~> 8.7'
 gem 'active-triples', git: 'https://github.com/cul/ActiveTriples', branch: 'deprecation_update'
@@ -99,3 +99,5 @@ end
 
 # Use Puma for local development
 gem 'puma', '~> 5.2'
+
+gem 'csv', '~> 3.3'
