@@ -56,6 +56,7 @@ gem 'uglifier', '4.1.0'
 gem 'unicode'
 gem 'vite_rails'
 gem 'voight_kampff', '~>2.0', require: 'voight_kampff/rails'
+# gem 'webpacker', '~> 5.4.0'
 gem 'whenever', require: false
 gem 'will_paginate'
 gem 'wowza-secure_token'
