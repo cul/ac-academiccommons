@@ -11,11 +11,9 @@ namespace :ac do
     end
 
     def wait_for_solr_cores_to_load
-      puts 'check2'
       expected_port = docker_compose_config['services']['solr']['ports'][0].split(':')[0]
       Timeout.timeout(30, Timeout::Error, 'Timed out during solr startup check.') do
         loop do
-          puts 'looping...'
           sleep 0.25
           status_code = Net::HTTP.get_response(URI("http://localhost:#{expected_port}/solr/development/update?wt=json")).code
           break if status_code != '503'
@@ -27,7 +25,6 @@ namespace :ac do
 
     def running?
       status = `docker compose -f #{Rails.root.join(docker_compose_file_path)} ps`
-      puts "executing cmd: docker compose -f #{Rails.root.join(docker_compose_file_path)} ps"
       status.split('n').count > 1
     end
 
@@ -53,7 +50,6 @@ namespace :ac do
       if running?
         puts "\nAlready running."
       else
-        puts 'check1'
         # NOTE: This command rebuilds the container images before each run, to ensure they're
         # always up to date. In most cases, the overhead is minimal if the Dockerfile for an image
         # hasn't changed since the last build.
