@@ -4,7 +4,8 @@
       <div class="logo">
         <%= link_to feature.url, target: "_blank", rel: "noopener noreferrer", style: "text-decoration:none;" do -%>
         <%#  TODO fix image tag %>
-          <%= image_tag(image_url(feature.image_url), alt: "link to #{feature.label} site") %>
+          <%# <%= image_tag(image_url(feature.image_url), alt: "link to #{feature.label} site") %> 
+             <%= image_tag(image_url(feature.image_url), alt: "link to #{feature.label} site -- feature.image_url: #{feature.image_url} -- image_url(that): #{image_url(feature.image_url)}") %>
         <%- end %>
       </div>
       <h3><%= feature.label %></h3>
