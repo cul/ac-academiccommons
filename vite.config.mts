@@ -10,10 +10,10 @@ export default defineConfig({
   //   }
   // },
   plugins: [
-    inject({
-      $: 'jquery',
-      jQuery: 'jquery',
-    }),
+    // inject({
+    //   $: 'jquery',
+    //   jQuery: 'jquery',
+    // }),
     RubyPlugin(),
   ],
 })
