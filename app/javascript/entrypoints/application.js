@@ -43,9 +43,10 @@ import 'bootstrap';
 // n.b.--we should consider migrating to turbo instead of UJS" https://guides.rubyonrails.org/v7.2/working_with_javascript_in_rails.html#replacements-for-rails-ujs-functionality
 // See ACHYDRA-1032
 // Also, momento mori: https://github.com/rails/rails/pull/50535
-import '@rails/ujs';
-// No need to call start in this version: https://github.com/rails/rails/issues/49499#issuecomment-1749092948
-// Railsujs.start();
+import Rails from '@rails/ujs';
+// Allegedly, there is no need to call start with this config/bundler: https://github.com/rails/rails/issues/49499#issuecomment-1749092948
+// ... and nevertheless, we must do it for UJS to work!
+Rails.start();
 
 // We need to explicitly start Turbolinks if we import it 
 // https://github.com/turbolinks/turbolinks?tab=readme-ov-file#installation-using-npm
