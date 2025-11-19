@@ -8,7 +8,7 @@
         <div class="logo">
           <% begin %>
             <%= link_to feature.url, target: "_blank", rel: "noopener noreferrer" do -%>
-             <%= image_tag(image_url(feature.image_url), alt: "link to #{feature.label} site") %>
+             <%= image_tag(image_url(feature.image_url), alt: "link to #{feature.label} site -- feature.image_url: #{feature.image_url} -- image_url(that): #{image_url(feature.image_url)}") %>
           <% rescue => e%>
             <%# temporary suppression of failing featured search category images - ACHYDRA-936 %>
           <% end %>

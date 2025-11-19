@@ -3,6 +3,7 @@
     <div class="col-md-5 tile">
       <div class="logo">
         <%= link_to feature.url, target: "_blank", rel: "noopener noreferrer", style: "text-decoration:none;" do -%>
+        <%#  TODO fix image tag %>
           <%= image_tag(image_url(feature.image_url), alt: "link to #{feature.label} site") %>
         <%- end %>
       </div>

@@ -358,7 +358,7 @@ class CatalogController < ApplicationController
     render 'home'
   end
 
-  # TODO : temporary to test readmore
+  # TODO : temporary to test readmore in the authors list when viewing an item
   def show
     Rails.logger.debug 'my show action!'
     super
