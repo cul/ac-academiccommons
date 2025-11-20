@@ -1,4 +1,4 @@
-$(document).ready(function(){
+const ready = function(){
   $("[data-duplicate-fields-template]").click(function(e) {
     e.preventDefault();
 
@@ -9,4 +9,6 @@ $(document).ready(function(){
                                  .find("option:selected").removeAttr("selected").end()
                                  .insertAfter( $("." + fieldsTemplateClass).last() );
   });
-})
+};
+
+document.addEventListener('turbolinks:load', ready);

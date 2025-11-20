@@ -1,4 +1,6 @@
-$(document).ready(function(){
+const ready = ()=>{
+  console.log('usage-statistics JS loaded!')
+
   $("#email-usage-statistics").on("ajax:success", function(event){
     $("#usage-statistics-email-flash-message").empty()
                                               .append("<div class=\"alert alert-success\">Email was sent successfully.</div>");
@@ -13,4 +15,6 @@ $(document).ready(function(){
     $("#usage-statistics-email-flash-message").empty();
     $("#email-usage-statistics").trigger('reset');
   });
-});
+};
+
+document.addEventListener('turbolinks:load', ready);

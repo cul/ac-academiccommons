@@ -74,6 +74,7 @@ import '../src/upload/current-student';
 import '../src/upload/disable-form';
 import '../src/upload/author-reorder';
 import { videoReady } from "../src/videojs.js";
+
 $(document).ready(videoReady);
 
 $(document).ready(Blacklight.onload);

@@ -1,4 +1,4 @@
-$(document).ready(function () {
+const ready = function () {
   // onChange only fires when radio button is selected
   $("form#upload input#deposit_current_student_true")
     .change(function () {
@@ -19,4 +19,6 @@ $(document).ready(function () {
     document.getElementsByClassName("student-section")[0].style.display =
       "block";
   }
-});
+};
+
+document.addEventListener('turbolinks:load', ready);

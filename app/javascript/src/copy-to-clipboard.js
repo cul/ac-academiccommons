@@ -1,6 +1,7 @@
 import ClipboardJS from "clipboard";
 
-$(document).ready(function(){
+const ready = function(){
+  console.log('copy-to-clipboard JS loaded!')
 
   $('button.copy-to-clipboard').tooltip({
     trigger: 'click',
@@ -30,4 +31,6 @@ $(document).ready(function(){
     setTooltip(e.trigger, 'Failed!');
     hideTooltip(e.trigger);
   });
-});
+};
+
+document.addEventListener('turbolinks:load', ready)
