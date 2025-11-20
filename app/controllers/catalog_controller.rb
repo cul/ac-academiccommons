@@ -359,22 +359,22 @@ class CatalogController < ApplicationController
   end
 
   # TODO : temporary to test readmore in the authors list when viewing an item
-  def show
-    Rails.logger.debug 'my show action!'
-    super
-    Rails.logger.debug "@document[author_ssim]= #{@document['author_ssim']}"
-    @document['author_ssim'].push('bradley goldsmith')
-    @document['author_ssim'].push('bradley goldsmith')
-    @document['author_ssim'].push('bradley goldsmith')
-    @document['author_ssim'].push('bradley goldsmith')
-    @document['author_ssim'].push('bradley goldsmith')
-    @document['author_ssim'].push('bradley goldsmith')
-    @document['author_ssim'].push('bradley goldsmith')
-    @document['author_ssim'].push('bradley goldsmith')
-    @document['author_ssim'].push('bradley goldsmith')
-    @document['author_ssim'].push('bradley goldsmith')
-    @document['author_ssim'].push('bradley goldsmith')
-  end
+  # def show
+  #   Rails.logger.debug 'my show action!'
+  #   super
+  #   Rails.logger.debug "@document[author_ssim]= #{@document['author_ssim']}"
+  #   @document['author_ssim'].push('bradley goldsmith')
+  #   @document['author_ssim'].push('bradley goldsmith')
+  #   @document['author_ssim'].push('bradley goldsmith')
+  #   @document['author_ssim'].push('bradley goldsmith')
+  #   @document['author_ssim'].push('bradley goldsmith')
+  #   @document['author_ssim'].push('bradley goldsmith')
+  #   @document['author_ssim'].push('bradley goldsmith')
+  #   @document['author_ssim'].push('bradley goldsmith')
+  #   @document['author_ssim'].push('bradley goldsmith')
+  #   @document['author_ssim'].push('bradley goldsmith')
+  #   @document['author_ssim'].push('bradley goldsmith')
+  # end
 
   private
 
