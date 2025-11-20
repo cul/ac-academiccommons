@@ -79,8 +79,15 @@ Rails.application.configure do
 
   # Send mail to a file in dev environment
   config.action_mailer.delivery_method = :file
+
+  # TODO : need these set? (I dont think so- premailer is only being used to inline the css, not resolve URLs)
   # Setting host so that url helpers can be used in mailer views.
-  config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
+  # config.action_mailer.default_url_options = { host: 'localhost', port: 3036 }
+  # Premailer::Rails.config.merge!(
+  #   base_url: 'http://localhost:3036',
+  #   strategies: [:network],
+  #   verbose: true
+  # )
 
   # Raises error for missing translations.
   # config.i18n.raise_on_missing_translations = true
