@@ -15,6 +15,9 @@ AcademicCommons::Application.configure do
     IPAddr.new('127.0.0.1')
   ]
 
+  # Setting host so that url helpers can be used in mailer views.
+  config.action_mailer.default_url_options = { host: 'academiccommons-dev.library.columbia.edu' }
+
   # Use the lowest log level to ensure availability of diagnostic information
   # when problems arise.
   config.log_level = :debug

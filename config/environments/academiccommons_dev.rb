@@ -27,6 +27,9 @@ AcademicCommons::Application.configure do
 
   config.active_job.queue_adapter = :async
 
+  # Setting host so that url helpers can be used in mailer views.
+  config.action_mailer.default_url_options = { host: 'academiccommons-dev.library.columbia.edu' }
+
   # Application specific configuration.
   config.analytics_enabled = false
   config.default_host = 'https://academiccommons-dev.library.columbia.edu'
