@@ -73,9 +73,6 @@ AcademicCommons::Application.configure do
   # Log deprecation notices.
   config.active_support.deprecation = :log
 
-  # Setting host so that url helpers can be used in mailer views.
-  config.action_mailer.default_url_options = { host: 'academiccommons.columbia.edu' }
-
   # Application specific configuration.
   config.analytics_enabled = true
   config.default_host = 'https://academiccommons.columbia.edu'
