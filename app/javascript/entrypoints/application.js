@@ -78,9 +78,3 @@ import { videoReady } from "../src/videojs.js";
 $(document).ready(videoReady);
 
 $(document).ready(Blacklight.onload);
-
-if ($.fn.DataTables) {
-    console.log("datatables available")
-} else {
-    console.log("DATATABLES NOT AVBAILABLEBLBELLBEB")
-}

@@ -1,5 +1,4 @@
 const ready = function(){
-  console.log('author-reorder JS loaded!')
   $( "#creator-list" ).sortable();
 };
 

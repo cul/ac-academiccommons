@@ -1,8 +1,6 @@
 import ClipboardJS from "clipboard";
 
 const ready = function(){
-  console.log('copy-to-clipboard JS loaded!')
-
   $('button.copy-to-clipboard').tooltip({
     trigger: 'click',
     placement: 'top'

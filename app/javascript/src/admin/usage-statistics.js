@@ -1,6 +1,4 @@
 const ready = ()=>{
-  console.log('usage-statistics JS loaded!')
-
   $("#email-usage-statistics").on("ajax:success", function(event){
     $("#usage-statistics-email-flash-message").empty()
                                               .append("<div class=\"alert alert-success\">Email was sent successfully.</div>");
