@@ -24,6 +24,13 @@ namespace :ac do
 
     desc 'Reindex by pid (item or asset)'
     task by_pid: :environment do
+      if ENV['use_fedora_config_file'].present?
+        # This allows us to override the fedora config file in case we want to use a different Fedora instance
+        config_file_path = ENV['use_fedora_config_file']
+        puts "Since use_fedora_config_file is present, overriding fedora.yml with file: #{config_file_path}"
+        ActiveFedora.init({ fedora_config_path: config_file_path })
+      end
+
       if ENV['pidlist'].present? || ENV['pids'].present?
         pids = open(ENV['pidlist']).map(&:strip!) if ENV['pidlist'].present?
         pids = ENV['pids'].split(',')             if ENV['pids'].present?

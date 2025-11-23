@@ -82,5 +82,7 @@ module AcademicCommons
     config.active_job.queue_adapter = :async
 
     config.active_storage.service = :local
+
+    config.embedding_service = config_for(:embedding_service)
   end
 end

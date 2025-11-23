@@ -1,7 +1,7 @@
 namespace :ac do
   desc "Adds item and collection to the repository."
   task :populate_solr => :environment do
-    Rake::Task["load:fixtures"].invoke
+    Rake::Task["load:fixtures"].invoke unless ActiveFedora::Base.exists?('actest:1')
 
     item = ActiveFedora::Base.find('actest:1')
     tries = 0

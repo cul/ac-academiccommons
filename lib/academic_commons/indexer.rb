@@ -56,8 +56,8 @@ module AcademicCommons
           end
           success.append(pid)
         rescue Exception => e
-          log_error e.message
-          log_error e.backtrace.join("\n ")
+          puts e.message
+          puts e.backtrace.join("\n ")
           error.append(pid)
           next
         end
