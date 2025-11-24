@@ -57,7 +57,7 @@ import '../src/admin/usage-statistics';
 import '../src/copy-to-clipboard';
 import '../src/duplicate-input-fields';
 import '../src/flash-messages-for-ajax-requests';
-import '../src/read-more'; // TODO : this was hard to test and so I haven't yet :3
+import '../src/read-more';
 import '../src/skip-link-focus-fix';
 import '../src/upload/file-upload';
 import '../src/upload/add-creator';
