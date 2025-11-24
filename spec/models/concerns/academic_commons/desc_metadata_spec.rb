@@ -194,5 +194,19 @@ RSpec.describe AcademicCommons::DescMetadata do
 
       include_examples 'indexing mods'
     end
+
+    context 'when embedding_service[:enabled] config option equals false' do
+      let(:mods_fixture) { fixture_to_str('desc_metadata/non_sort_title.xml') }
+      let(:expected_json) do
+        # NOTE: We are not merging searchable_text_vector768i_key_value_pair into the expected json for this test
+        fixture_to_json_symbol_id('desc_metadata/non_sort_title.json')
+      end
+
+      before do
+        allow(Rails.application.config.embedding_service).to receive(:[]).with(:enabled).and_return(false)
+      end
+
+      include_examples 'indexing mods'
+    end
   end
 end

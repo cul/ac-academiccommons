@@ -339,11 +339,13 @@ module AcademicCommons
         add_field.call 'use_and_reproduction_uri_ssim',   r.attribute('href')
       end
 
-      solr_doc['searchable_text_vector768i'] = EmbeddingService::Endpoint.generate_vector_embedding(
-        Rails.application.config.embedding_service[:base_url],
-        EmbeddingService::Endpoint::MODEL_MAPPING['bge_base_en_15_768'],
-        semantic_search_source_text(solr_doc)
-      )
+      if Rails.application.config.embedding_service[:enabled]
+        solr_doc['searchable_text_vector768i'] = EmbeddingService::Endpoint.generate_vector_embedding(
+          Rails.application.config.embedding_service[:base_url],
+          EmbeddingService::Endpoint::MODEL_MAPPING['bge_base_en_15_768'],
+          semantic_search_source_text(solr_doc)
+        )
+      end
 
       solr_doc
     end
