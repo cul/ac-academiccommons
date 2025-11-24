@@ -55,6 +55,14 @@ Rails.application.configure do
   # Don't care if the mailer can't send.
   config.action_mailer.raise_delivery_errors = false
 
+  # Send mail to a file in dev environment
+  config.action_mailer.delivery_method = :file
+
+  # Unlike controllers, the mailer instance doesn't have any context about the
+  # incoming request so you'll need to provide the :host parameter yourself.
+  # Setting host so that url helpers can be used in mailer views.
+  config.action_mailer.default_url_options = { host: 'academiccommons-dev.library.columbia.edu' }
+
   # Print deprecation notices to the Rails logger.
   config.active_support.deprecation = :log
 
@@ -76,11 +84,6 @@ Rails.application.configure do
 
   # Highlight code that enqueued background job in logs.
   config.active_job.verbose_enqueue_logs = true
-
-  # Send mail to a file in dev environment
-  config.action_mailer.delivery_method = :file
-  # Setting host so that url helpers can be used in mailer views.
-  config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
 
   # Raises error for missing translations.
   # config.i18n.raise_on_missing_translations = true

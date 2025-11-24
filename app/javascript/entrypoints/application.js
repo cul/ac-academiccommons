@@ -15,9 +15,9 @@
 
 // Issues with vite: https://github.com/jquery/jquery-ui/issues/2123#event-13186348290
 // We will initialized jquery for the browser in this file (import and set the window. variables):
-import './jquery.js'
+import './jquery.js';
 
-import 'datatables.net'
+import 'datatables.net';
 import 'datatables.net-bs4'
 
 // we just need sortable, but let's bring in the whole jquery-ui
@@ -30,11 +30,11 @@ import 'blacklight-frontend/app/assets/javascripts/blacklight/blacklight';
 // We are waiting until the vite migration is complete to add the range limit slider back --- ACHYDRA 1022
 // import '../src/blacklight_range_limit/blacklight_range_limit';
 
-import '@fortawesome/fontawesome-free/js/all.js'
+import '@fortawesome/fontawesome-free/js/all.js';
 
 // Bootstrap and dependencies
-import Popper from 'popper.js'
-window.Popper = Popper
+import Popper from 'popper.js';
+window.Popper = Popper;
 import 'bootstrap';
 
 // NOTE : are we using Bloodhound? ask Jack
@@ -55,7 +55,7 @@ import Turbolinks from 'turbolinks';
 Turbolinks.start();
 
 import * as ActiveStorage from '@rails/activestorage';
-ActiveStorage.start()
+ActiveStorage.start();
 // No longer needed:
 // window.ActiveStorage = ActiveStorage;
 
@@ -66,7 +66,7 @@ import '../src/admin/usage-statistics';
 import '../src/copy-to-clipboard';
 import '../src/duplicate-input-fields';
 import '../src/flash-messages-for-ajax-requests';
-import '../src/read-more'; // TODO : this was hard to test and so I haven't yet :3
+import '../src/read-more';
 import '../src/skip-link-focus-fix';
 import '../src/upload/file-upload';
 import '../src/upload/add-creator';
@@ -74,12 +74,7 @@ import '../src/upload/current-student';
 import '../src/upload/disable-form';
 import '../src/upload/author-reorder';
 import { videoReady } from "../src/videojs.js";
+
 $(document).ready(videoReady);
 
 $(document).ready(Blacklight.onload);
-
-if ($.fn.DataTables) {
-    console.log("datatables available")
-} else {
-    console.log("DATATABLES NOT AVBAILABLEBLBELLBEB")
-}

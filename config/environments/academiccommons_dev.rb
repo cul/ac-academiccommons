@@ -15,9 +15,6 @@ AcademicCommons::Application.configure do
   # Raises helpful error messages.
   config.assets.raise_runtime_errors = true
 
-  # Setting host so that url helpers can be used in mailer views.
-  config.action_mailer.default_url_options = { host: 'academiccommons-dev.library.columbia.edu' }
-
   config.action_dispatch.trusted_proxies = [
     # Add 127.0.0.1 as a trusted proxy so that the X-Forwarded-For value set by Anubis (or any other internal proxy)
     # is whitelisted for use by the request.remote_ip IP-determining mechanism.
@@ -29,6 +26,9 @@ AcademicCommons::Application.configure do
   config.log_level = :debug
 
   config.active_job.queue_adapter = :async
+
+  # Setting host so that url helpers can be used in mailer views.
+  config.action_mailer.default_url_options = { host: 'academiccommons-dev.library.columbia.edu' }
 
   # Application specific configuration.
   config.analytics_enabled = false
