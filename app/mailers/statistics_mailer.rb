@@ -15,7 +15,6 @@ class StatisticsMailer < ApplicationMailer
     logger.debug("Report sent for: #{author_id} to: #{to_address}")
   end
 
-  # rubocop:disable Metrics/ParameterLists
   def usage_statistics(to, subject, body, csv, usage_stats, stats_display)
     @body = body
     @usage_stats = usage_stats
@@ -25,5 +24,4 @@ class StatisticsMailer < ApplicationMailer
 
     mail(to: to, subject: subject)
   end
-  # rubocop:enable Metrics/ParameterLists
 end

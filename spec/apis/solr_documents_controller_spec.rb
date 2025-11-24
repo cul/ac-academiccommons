@@ -3,8 +3,12 @@ require 'rails_helper'
 describe SolrDocumentsController, type: :controller, integration: true do
   let(:api_key) { 'goodtoken' }
   let(:encoded_api_key) { ActionController::HttpAuthentication::Token.encode_credentials(api_key) }
+  let(:mock_vector_embedding_value) do
+    fixture_to_json('desc_metadata/mock_vector_embedding_value_string-research.json')
+  end
 
   before do
+    allow(EmbeddingService::Endpoint).to receive(:generate_vector_embedding).and_return(mock_vector_embedding_value)
     allow(Rails.application.credentials).to receive(:index_api_key).and_return(api_key)
     request.env['HTTP_AUTHORIZATION'] = encoded_api_key
     allow(controller).to receive(:notify_authors_of_new_item)
@@ -25,7 +29,10 @@ describe SolrDocumentsController, type: :controller, integration: true do
       get :show, params: { id: 'actest:1', format: 'json' }
       expect(response.status).to be 404
       put :update, params: { id: 'actest:1' }
-      sleep(20) # It may take the solr document up to 15 sec to show up
+      # Normally we'd have to wait a while for the solr document to be auto-commited,
+      # but for this test we'll force an immediate commit so we don't need to wait.
+      controller.rsolr.commit
+
       expect(response.status).to be 200
       expect(response.headers['Location']).to eql('http://test.host/doi/10.7916/ALICE')
       get :show, params: { id: 'actest:1', format: 'json' }

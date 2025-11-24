@@ -1,6 +1,14 @@
 require 'rails_helper'
 
 describe 'Usage Statistics Form', type: :feature, js: true do
+  let(:mock_vector_embedding_value) do
+    fixture_to_json('desc_metadata/mock_vector_embedding_value_string-research.json')
+  end
+
+  before do
+    allow(EmbeddingService::Endpoint).to receive(:generate_vector_embedding).and_return(mock_vector_embedding_value)
+  end
+
   context 'when submitting form with all necessary parameters' do
     include_context 'admin user for feature'
 
