@@ -1,4 +1,17 @@
 namespace :ac do
+  def with_temporarily_disabled_embedding_service
+    # Store original embedding service enabled setting
+    embedding_service_enabled = Rails.application.config.embedding_service[:enabled]
+
+    # Disable embedding service
+    Rails.application.config.embedding_service[:enabled] = false
+
+    yield
+
+    # Restore original embedding service enabled setting
+    Rails.application.config.embedding_service[:enabled] = embedding_service_enabled
+  end
+
   desc "Adds item and collection to the repository."
   task :populate_solr => :environment do
     Rake::Task["load:fixtures"].invoke unless ActiveFedora::Base.exists?('actest:1')
@@ -13,9 +26,17 @@ namespace :ac do
     end
     raise "Never found item members, check Solr" if (tries > 50)
 
-    index = AcademicCommons::Indexer.new
-    index.items('actest:1', only_in_solr: false)
-    index.close
+    if ENV['skip_vector_embeddings_during_populate_solr'] == 'true'
+      with_temporarily_disabled_embedding_service do
+        index = AcademicCommons::Indexer.new
+        index.items('actest:1', only_in_solr: false)
+        index.close
+      end
+    else
+      index = AcademicCommons::Indexer.new
+      index.items('actest:1', only_in_solr: false)
+      index.close
+    end
   end
 
   desc "Returns list of author emails. Removes authors that have opted out and uses preferred email if one is present."
