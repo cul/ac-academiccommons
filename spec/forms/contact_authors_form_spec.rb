@@ -24,7 +24,7 @@ describe ContactAuthorsForm, type: :model do
     end
 
     context 'with well formated unis' do
-      it 'returns without adding errors' do # rubocop:disable RSpec/MultipleExpectations
+      it 'returns without adding errors' do
         form = described_class.new(params)
         expect(form).to be_valid
         expect(form.errors[:unis]).to be_empty
@@ -32,7 +32,7 @@ describe ContactAuthorsForm, type: :model do
     end
 
     context 'with bad-formatted unis field' do
-      it 'returns false if a empty item in unis list' do # rubocop:disable RSpec/ExampleLength,RSpec/MultipleExpectations
+      it 'returns false if a empty item in unis list' do
         test_params = {
           send_to: 'specific_authors', unis: 'abc123,,, def456', subject: 'test subject', body: 'test body'
         }
@@ -41,7 +41,7 @@ describe ContactAuthorsForm, type: :model do
         expect(form.errors[:unis]).to include('list must be properly formatted')
       end
 
-      it 'returns false if whitespace in uni' do # rubocop:disable RSpec/ExampleLength,RSpec/MultipleExpectations
+      it 'returns false if whitespace in uni' do
         test_params = {
           send_to: 'specific_authors', unis: 'abc123 def456', subject: 'test subject', body: 'test body'
         }
@@ -60,13 +60,13 @@ describe ContactAuthorsForm, type: :model do
     end
 
     describe '#valid_unis_format?' do
-      it 'returns without adding errors with well formated unis' do # rubocop:disable RSpec/MultipleExpectations
+      it 'returns without adding errors with well formated unis' do
         form = described_class.new(params)
         expect(form).to be_valid
         expect(form.errors[:unis]).to be_empty
       end
 
-      it 'returns false if a empty item in unis list' do # rubocop:disable RSpec/ExampleLength,RSpec/MultipleExpectations
+      it 'returns false if a empty item in unis list' do
         test_params = {
           send_to: 'specific_authors', unis: 'abc123,,, def456', subject: 'test subject', body: 'test body'
         }
@@ -75,7 +75,7 @@ describe ContactAuthorsForm, type: :model do
         expect(form.errors[:unis]).to include('list must be properly formatted')
       end
 
-      it 'returns false if whitespace in uni' do # rubocop:disable RSpec/ExampleLength,RSpec/MultipleExpectations
+      it 'returns false if whitespace in uni' do
         test_params = {
           send_to: 'specific_authors', unis: 'abc123 def456', subject: 'test subject', body: 'test body'
         }
@@ -92,7 +92,7 @@ describe ContactAuthorsForm, type: :model do
 
       it 'does not retrieve all author unis' do
         allow(AcademicCommons).to receive(:all_author_unis)
-        expect(AcademicCommons).not_to have_received(:all_author_unis) # rubocop:disable RSpec/MessageSpies
+        expect(AcademicCommons).not_to have_received(:all_author_unis)
       end
     end
   end
@@ -140,7 +140,7 @@ describe ContactAuthorsForm, type: :model do
         end
       end
 
-      it 'sends to correct author' do # rubocop:disable RSpec/MultipleExpectations
+      it 'sends to correct author' do
         expect(email.bcc).to include 'abc123@columbia.edu'
         expect(email.bcc).to include 'def456@columbia.edu'
       end
@@ -168,7 +168,7 @@ describe ContactAuthorsForm, type: :model do
       end
 
       it 'retrieves all author unis from academic commons' do
-        expect(AcademicCommons).to have_received(:all_author_unis) # rubocop:disable RSpec/MessageSpies
+        expect(AcademicCommons).to have_received(:all_author_unis)
       end
     end
   end
