@@ -16,7 +16,6 @@ gem 'blacklight_oai_provider'
 #     git: 'https://github.com/JackBlackLight/blacklight_range_limit.git', branch: 'use_blacklight_component'
 gem 'bootsnap'
 gem 'cancancan'
-# gem 'concurrent-ruby', '1.3.4' # TODO: this is temporary for updating to rails 6.0.6
 gem 'cul-ldap'
 gem 'deprecation', '>= 1.1.0'
 gem 'devise' # consider pinning
