@@ -1,4 +1,4 @@
-$(document).ready(function(){
+const ready = function(){
   $(".ajax-flash-messages").on("ajax:success", function(event){
     var data = event.detail[0]['message'];
     $("#main-flashes > .flash_messages").empty()
@@ -11,4 +11,6 @@ $(document).ready(function(){
                                         .append("<div class=\"alert alert-danger\">" + data + "<a class=\"close\" data-dismiss=\"alert\" href=\"#\">×</a></div>");
     $(window).scrollTop(0);
   });
-});
+};
+
+document.addEventListener('turbolinks:load', ready);

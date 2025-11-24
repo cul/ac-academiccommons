@@ -35,19 +35,18 @@ Rails.application.configure do
   # Store uploaded files on the local file system in a temporary directory.
   config.active_storage.service = :test
 
+  # Expands the lines which load the assets
+  config.assets.debug = true
+
   # Disable caching for Action Mailer templates even if Action Controller
   # caching is enabled.
   config.action_mailer.perform_caching = false
-  # Expands the lines which load the assets
-  config.assets.debug = true
 
   # Tell Action Mailer not to deliver emails to the real world.
   # The :test delivery method accumulates sent emails in the
   # ActionMailer::Base.deliveries array.
   config.action_mailer.delivery_method = :test
 
-  # Unlike controllers, the mailer instance doesn't have any context about the
-  # incoming request so you'll need to provide the :host parameter yourself.
   # Setting host so that url helpers can be used in mailer views.
   config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
 

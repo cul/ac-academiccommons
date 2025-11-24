@@ -1,5 +1,19 @@
-<%# TODO: replace with vite_stylesheet_tag and use proper args! %>
-<%= stylesheet_pack_tag 'email', media: 'all' %>
+<%# We need to include styles within the email template. premailer-rails will make them inline %>
+
+<style>
+    .stats-table td, .stats-table th {
+    padding: 0px 10px 0px;
+    text-align: left;
+    }
+
+    ul.two-col {
+    padding: 0;
+    }
+
+    ul.two-col li {
+    list-style: none;
+}
+</style>
 
 <%= simple_format @body %>
 

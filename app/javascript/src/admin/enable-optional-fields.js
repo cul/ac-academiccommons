@@ -1,6 +1,6 @@
 // Enabling optional fields for Email Author Reports form and Usage Statistics Report
 
-$(document).ready(function(){
+const ready = function(){
   if ($('body').is('.blacklight-email_author_reports')) {
 
     // When sending report to single author, enable uni field.
@@ -63,4 +63,6 @@ $(document).ready(function(){
       field.prop("disabled", disabled);
     });
   };
-});
+};
+
+document.addEventListener('turbolinks:load', ready);
