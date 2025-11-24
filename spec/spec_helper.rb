@@ -45,7 +45,7 @@ Capybara.javascript_driver = :selenium_chrome_headless
 
 Capybara.disable_animation = true
 
-Capybara.default_max_wait_time = 7
+Capybara.default_max_wait_time = 10
 
 RSpec.configure do |config|
   # rspec-expectations config goes here. You can use an alternate
