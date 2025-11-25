@@ -757,7 +757,6 @@ DEPENDENCIES
   sitemap_generator
   solr_wrapper (~> 4.0)
   spring
-  sprockets-rails (~> 3.5)
   sqlite3 (~> 1.4)
   turbolinks
   uglifier (= 4.1.0)
