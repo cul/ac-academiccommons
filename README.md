@@ -47,9 +47,9 @@ Current recommended version of Ruby is specified in `.ruby-version`.
    bundle exec rake ac:docker:start
    ```
 
-9. In a separate terminal window, start the webpack dev server for faster asset compilation.
+9. In a separate terminal window, start the vite dev server for faster asset compilation.
    ```
-   ./bin/webpack-dev-server
+   bin/vite dev
    ```
 
 10. Start your local Rails app
