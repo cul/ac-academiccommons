@@ -146,7 +146,7 @@
          general_search_text
        </str>
        <str name="pf">
-         genera_search_text^100
+         general_search_text^100
        </str>
        <str name="author_qf">
          author_q
