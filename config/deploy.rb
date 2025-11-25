@@ -49,9 +49,9 @@ set :log_level, :info
 # NVM Setup, for selecting the correct node version
 # NOTE: This NVM configuration MUST be configured before the RVM setup steps because:
 # This works:
-# nvm exec 16 ~/.rvm-alma8/bin/rvm example_app_dev do node --version
+# nvm exec 20 ~/.rvm-alma8/bin/rvm example_app_dev do node --version
 # But this does not work:
-# ~/.rvm-alma8/bin/rvm example_app_dev do nvm exec 16 node --version
+# ~/.rvm-alma8/bin/rvm example_app_dev do nvm exec 20 node --version
 set :nvm_node_version, fetch(:deploy_name) # This NVM alias must exist on the server
 [:rake, :node, :npm, :yarn].each do |command_to_prefix|
   SSHKit.config.command_map.prefix[command_to_prefix].push("nvm exec #{fetch(:nvm_node_version)}")
