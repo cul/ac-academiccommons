@@ -17,6 +17,7 @@ begin
   end
 
   RSpec::Core::RakeTask.new(:spec_all) do |t|
+    # t.rspec_opts = '--backtrace' # uncomment to print full backtrace on errors
   end
 
   require 'rubocop/rake_task'

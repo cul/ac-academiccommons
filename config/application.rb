@@ -8,29 +8,28 @@ Bundler.require(*Rails.groups)
 
 module AcademicCommons
   class Application < Rails::Application
-    # Initialize configuration defaults for originally generated Rails version.
-    config.load_defaults 7.2
-
-    # Please, add to the `ignore` list any other `lib` subdirectories that do
-    # not contain `.rb` files, or that should not be reloaded or eager loaded.
-    # Common ones are `templates`, `generators`, or `middleware`, for example.
-    config.autoload_lib(ignore: %w(assets tasks))
-
     # Configuration for the application, engines, and railties goes here.
     #
     # These settings can be overridden in specific environments using the files
     # in config/environments, which are processed later.
     #
-    # config.time_zone = "Central Time (US & Canada)"
-    # config.eager_load_paths << Rails.root.join("extras")
     # Application configuration should go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded.
+    #
+
+    # Initialize configuration defaults for originally generated Rails version.
+    config.load_defaults 8.0
+
+    # Please, add to the `ignore` list any other `lib` subdirectories that do
+    # not contain `.rb` files, or that should not be reloaded or eager loaded.
+    # Common ones are `templates`, `generators`, or `middleware`, for example.
+    config.autoload_lib(ignore: %w[assets tasks])
 
     # Custom directories with classes and modules you want to be eager loaded.
-    # After Rails 5, using autoload_paths is discouraged.
-    config.paths.add File.join('app', 'api'), glob: File.join('**', '*.rb')
-    config.eager_load_paths += Dir[Rails.root.join('app', 'api')]
-    config.autoload_lib(ignore: %w(tasks))
+    # After Rails 5, using autoload_paths is discouraged (Zeitwerk loads most things by name)
+    # config.paths.add File.join('app', 'api'), glob: File.join('**', '*.rb')
+    # config.eager_load_paths << Rails.root.join('app', 'api')
+    # TODO : fix the above for rails 8!!! ci task not working....
 
     # Only load the plugins named here, in the order given (default is alphabetical).
     # :all can be used as a placeholder for all plugins not explicitly named.

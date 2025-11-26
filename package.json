@@ -8,7 +8,7 @@
   "dependencies": {
     "@fortawesome/fontawesome-free": "^5.2.0",
     "@popperjs/core": "^2.11.6",
-    "@rails/activestorage": "^6.1.4-1",
+    "@rails/activestorage": "^8.0.4",
     "@rails/ujs": "^7.1.0",
     "@ungap/url-search-params": "^0.2.2",
     "blacklight-frontend": "^7.33.1",
