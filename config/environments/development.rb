@@ -1,4 +1,4 @@
-require "active_support/core_ext/integer/time"
+require 'active_support/core_ext/integer/time'
 
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
@@ -31,11 +31,7 @@ Rails.application.configure do
 
   # Enable/disable Action controller caching. By default Action Controller caching is disabled.
   # Run rails dev:cache to toggle Action Controller caching.
-<<<<<<< HEAD
   if Rails.root.join('tmp/caching-dev.txt').exist?
-=======
-  if Rails.root.join("tmp/caching-dev.txt").exist?
->>>>>>> 97f47898 (update to rails 8.0)
     config.action_controller.perform_caching = true
     config.action_controller.enable_fragment_cache_logging = true
     config.cache_store = :memory_store
