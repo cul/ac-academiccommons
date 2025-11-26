@@ -36,4 +36,7 @@ chdir APP_ROOT do
 
   puts "\n== Restarting application server =="
   system! 'bin/rails restart'
+    STDOUT.flush # flush the output before exec(2) so that it displays
+    exec "bin/dev"
+  end
 end

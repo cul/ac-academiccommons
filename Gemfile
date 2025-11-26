@@ -4,7 +4,7 @@ ruby File.read('.ruby-version').strip
 
 source 'https://rubygems.org'
 
-gem 'rails', '7.2.2.2'
+gem 'rails', '8.0.4'
 
 gem 'active-fedora', '~> 8.7'
 gem 'active-triples', git: 'https://github.com/cul/ActiveTriples', branch: 'deprecation_update'
@@ -31,7 +31,7 @@ gem 'omniauth-cul'
 gem 'omniauth-rails_csrf_protection', '~> 1.0'
 
 gem 'http'
-gem 'jbuilder'
+gem 'jbuilder', '~> 2.13.0'
 gem 'jquery-rails'
 gem 'mail', '~> 2.8'
 gem 'multipart-post', '~>2.0.0'
@@ -62,7 +62,7 @@ gem 'will_paginate'
 gem 'wowza-secure_token'
 # Database
 gem 'mysql2', '>= 0.5.6'
-gem 'sqlite3', '~> 1.4'
+gem 'sqlite3', '>= 2.1' # compatibility matrix: https://dev.to/galtzo/activerecord-sqlite3-compatibility-matrix-58id
 
 group :development do
   gem 'listen'
@@ -84,11 +84,11 @@ group :development, :test do
   gem 'capybara', '~> 3.39'
   gem 'database_cleaner', '~> 2.1.0'
   gem 'equivalent-xml'
-  gem 'factory_bot_rails', '~> 6.4.0'
+  gem 'factory_bot_rails', '~> 6.5.0'
   gem 'jettywrapper', '>=1.4.0', git: 'https://github.com/samvera-deprecated/jettywrapper.git', branch: 'master'
   # gem 'json_spec'
   gem 'rspec-its', '~> 2.0.0'
-  gem 'rspec-rails', '~> 7.1.0'
+  gem 'rspec-rails', '~> 8.0.0'
   gem 'selenium-webdriver', '~> 4.11'
   gem 'simplecov', '>= 0.22.0', require: false
   gem 'solr_wrapper', '~> 4.0'

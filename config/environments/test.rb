@@ -11,15 +11,15 @@ Rails.application.configure do
   # While tests run files are not watched, reloading is not necessary.
   config.enable_reloading = false
 
-  # Eager loading con boot to mimic production environment.
-  # Test might slow down a bit, but we need to mimic production as best as we can.
-  # It's recommended that you enable it in continuous integration systems to ensure eager
-  # loading is working properly before deploying your code. ( config.eager_load = ENV['CI'].present?)
+  # Eager loading loads your entire application. When running a single test locally,
+  # this is usually not necessary, and can slow down your test suite. However, it's
+  # recommended that you enable it in continuous integration systems to ensure eager
+  # loading is working properly before deploying your code.
   config.eager_load = true
 
-  # Configure public file server for tests with Cache-Control for performance.
+  # Configure public file server for tests with cache-control for performance.
   config.public_file_server.enabled = true
-  config.public_file_server.headers = { 'Cache-Control' => "public, max-age=#{1.hour.to_i}" }
+  config.public_file_server.headers = { 'cache-control' => "public, max-age=#{1.hour.to_i}" }
 
   # Show full error reports and disable caching.
   config.consider_all_requests_local       = false # Setting to false for error page tests
@@ -47,7 +47,7 @@ Rails.application.configure do
   # ActionMailer::Base.deliveries array.
   config.action_mailer.delivery_method = :test
 
-  # Setting host so that url helpers can be used in mailer views.
+  # Set host to be used by links generated in mailer templates.
   config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
 
   # Print deprecation notices to the Rails logger
