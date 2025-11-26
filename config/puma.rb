@@ -45,7 +45,6 @@ environment ENV.fetch("RAILS_ENV") { "development" }
 # be configured to provide at least as many connections as the number of
 # threads. This includes Active Record's `pool` parameter in `database.yml`.
 
-
 # See discussion: https://github.com/rails/rails/issues/50450
 # Puma can serve each request in a thread from an internal thread pool.
 # The `threads` method setting takes two numbers a minimum and maximum.
