@@ -1,5 +1,5 @@
 import Dropzone from 'dropzone';
-import * as ActiveStorage from '@rails/activestorage'; // maybe redundant?
+// import * as ActiveStorage from '@rails/activestorage'; // maybe redundant?
 
 // Overriding default file upload action provided by dropzone. Instead loading
 // file via active storage and saving a signed id in a hidden element.

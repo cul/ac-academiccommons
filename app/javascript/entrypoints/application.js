@@ -56,8 +56,7 @@ Turbolinks.start();
 
 import * as ActiveStorage from '@rails/activestorage';
 ActiveStorage.start();
-// No longer needed:
-// window.ActiveStorage = ActiveStorage;
+window.ActiveStorage = ActiveStorage;
 
 // Custom JS modules
 import '../src/admin/enable-optional-fields';
