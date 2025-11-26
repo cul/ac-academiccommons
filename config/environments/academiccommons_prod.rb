@@ -64,7 +64,7 @@ AcademicCommons::Application.configure do
     port: 25
   }
   # Setting host so that url helpers can be used in mailer views.
-  config.action_mailer.default_url_options = { host: 'academiccommons-dev.library.columbia.edu' }
+  config.action_mailer.default_url_options = { host: 'academiccommons.columbia.edu' }
 
   # Enable locale fallbacks for I18n (makes lookups for any locale fall back to
   # the I18n.default_locale when a translation can not be found)
