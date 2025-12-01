@@ -1,21 +1,36 @@
+# frozen_string_literal: true
+
 module AcademicCommons
   class SearchParameters
     MAX_ROWS = 100_000
 
+    SEARCH_TYPE_KEYWORD = :keyword
+    SEARCH_TYPE_SEMANTIC = :semantic
+    SEARCH_TYPE_SUBJECT = :subject
+    SEARCH_TYPE_TITLE = :title
     SEARCH_TYPES = {
-      keyword: {},
-      title: { 'spellcheck.dictionary': 'title', qf: '${title_qf}', pf: '${title_pf}' },
-      subject: { 'spellcheck.dictionary': 'subject', qf: '${subject_qf}', pf: '${subject_pf}' }
+      SEARCH_TYPE_KEYWORD => {},
+      SEARCH_TYPE_SEMANTIC => {},
+      SEARCH_TYPE_SUBJECT => { 'spellcheck.dictionary': 'subject', qf: '${subject_qf}', pf: '${subject_pf}' },
+      SEARCH_TYPE_TITLE => { 'spellcheck.dictionary': 'title', qf: '${title_qf}', pf: '${title_pf}' }
     }.freeze
+    DEFAULT_SEARCH_TYPE = SEARCH_TYPE_KEYWORD
+
+    SEARCH_PATH_SEMANTIC = 'select-vector'
 
     attr_reader :parameters
 
-    def initialize
+    def initialize(embedding_endpoint: nil, fq: [], qt: 'search', rows: MAX_ROWS, search_type: DEFAULT_SEARCH_TYPE)
       @parameters = {
-        qt: 'search',
-        fq: [],
-        rows: MAX_ROWS
+        qt: qt || 'search',
+        fq: Array(fq).compact,
+        rows: rows || MAX_ROWS
       }
+      @search_type = search_type || DEFAULT_SEARCH_TYPE
+      @embedding_endpoint = embedding_endpoint || EmbeddingService::Endpoint.new(
+        destination_url: Rails.application.config.embedding_service[:base_url],
+        model: 'bge_base_en_15_768'
+      )
     end
 
     def q(q)
@@ -130,11 +145,38 @@ module AcademicCommons
 
     def search_type(type)
       raise ArgumentError, 'search type not valid' unless SEARCH_TYPES.key?(type)
+      @search_type = type
       @parameters.merge!(SEARCH_TYPES[type])
       self
     end
 
+    def solr_path
+      SEARCH_PATH_SEMANTIC if @search_type == SEARCH_TYPE_SEMANTIC
+    end
+
+    def vectorized_query(query_text)
+      query_vector = @embedding_endpoint.generate_vector_embedding(query_text)
+
+      if query_vector.nil?
+        error_message = 'The vector embedding service is unreachable right now, so vector search will not work.'
+        Rails.logger.error(error_message)
+        raise error_message
+      end
+
+      query_vector
+    end
+
+    def vector_query_params
+      raise 'requesting vector query params in no-vector search context' unless @search_type == SEARCH_TYPE_SEMANTIC
+      if parameters[:q]
+        q = "{!knn f=searchable_text_vector768i topK=9999}[#{vectorized_query(@parameters[:q]).join(', ')}]"
+      end
+      { q: q, qt: nil }
+    end
+
     def to_h
+      return parameters.merge(vector_query_params) if @search_type == SEARCH_TYPE_SEMANTIC
+
       parameters
     end
   end

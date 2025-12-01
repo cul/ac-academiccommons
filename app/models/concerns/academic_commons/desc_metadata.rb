@@ -341,9 +341,9 @@ module AcademicCommons
 
       if Rails.application.config.embedding_service[:enabled]
         solr_doc['searchable_text_vector768i'] = EmbeddingService::Endpoint.generate_vector_embedding(
-          Rails.application.config.embedding_service[:base_url],
-          EmbeddingService::Endpoint::MODEL_MAPPING['bge_base_en_15_768'],
-          semantic_search_source_text(solr_doc)
+          destination_url: Rails.application.config.embedding_service[:base_url],
+          model: 'bge_base_en_15_768',
+          text: semantic_search_source_text(solr_doc)
         )
       end
 

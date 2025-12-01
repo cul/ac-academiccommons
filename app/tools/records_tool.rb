@@ -12,8 +12,10 @@ class RecordsTool < ApplicationTool
 
   arguments do
     optional(:search_type)
-      .filled(Dry::Types['string'].default('keyword')).value(included_in?: V1::Helpers::Solr::SEARCH_TYPES.map(&:to_s))
-      .description('type of search to be conducted, in most cases a keyword search should be sufficient')
+      .filled(Dry::Types['string'].default('semantic')).value(included_in?: V1::Helpers::Solr::SEARCH_TYPES.map(&:to_s))
+      .description(
+        'type of search to use; use \'semantic\' for natural language queries, or \'keyword\' for term matching'
+      )
     optional(:q)
       .maybe(:string).description('query string')
     optional(:page)
