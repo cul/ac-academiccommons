@@ -432,6 +432,7 @@ Metrics/ClassLength:
     - 'app/models/deposit.rb'
     - 'app/models/solr_document.rb'
     - 'lib/academic_commons/metrics/usage_statistics.rb'
+    - 'lib/academic_commons/search_parameters.rb'
 
 # Offense count: 10
 # Configuration parameters: AllowedMethods, AllowedPatterns, IgnoredMethods, Max.
