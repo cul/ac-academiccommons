@@ -43,6 +43,13 @@ module AcademicCommons
   def self.search
     params = SearchParameters.new
     yield(params)
-    Blacklight.default_index.search(params.to_h)
+    solr_path = params.solr_path
+    # in Blacklight >= 8.4, the search method accepts a path kwarg; in 7, we have to call send_and_receive
+    # this unrolls the call to search for BL 7 and uses our solr_path if present
+    if solr_path
+      Blacklight.default_index.send_and_receive(solr_path, params.to_h)
+    else
+      Blacklight.default_index.search(params.to_h)
+    end
   end
 end

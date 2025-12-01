@@ -3,7 +3,7 @@ module V1
     module Solr
       extend Grape::API::Helpers
 
-      SEARCH_TYPES = %i[keyword title subject].freeze
+      SEARCH_TYPES = %i[keyword semantic subject title].freeze
       FILTERS = %i[author author_id date department subject type columbia_series degree_level].freeze
       SORT    = %i[best_match date title].freeze
       ORDER   = %i[desc asc].freeze
