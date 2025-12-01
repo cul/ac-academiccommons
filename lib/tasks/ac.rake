@@ -12,6 +12,12 @@ namespace :ac do
     Rails.application.config.embedding_service[:enabled] = embedding_service_enabled
   end
 
+  def run_indexer(*pids)
+    index = AcademicCommons::Indexer.new
+    index.items(*pids, only_in_solr: false)
+    index.close
+  end
+
   desc "Adds item and collection to the repository."
   task :populate_solr => :environment do
     Rake::Task["load:fixtures"].invoke unless ActiveFedora::Base.exists?('actest:1')
@@ -28,14 +34,10 @@ namespace :ac do
 
     if ENV['skip_vector_embeddings_during_populate_solr'] == 'true'
       with_temporarily_disabled_embedding_service do
-        index = AcademicCommons::Indexer.new
-        index.items('actest:1', only_in_solr: false)
-        index.close
+        run_indexer('actest:1')
       end
     else
-      index = AcademicCommons::Indexer.new
-      index.items('actest:1', only_in_solr: false)
-      index.close
+      run_indexer('actest:1')
     end
   end
 
