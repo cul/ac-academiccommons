@@ -169,7 +169,7 @@ module AcademicCommons
     def vector_query_params
       raise 'requesting vector query params in no-vector search context' unless @search_type == SEARCH_TYPE_SEMANTIC
       if parameters[:q]
-        q = "{!knn f=searchable_text_vector768i topK=9999}[#{vectorized_query(@parameters[:q]).join(', ')}]"
+        q = "{!knn f=searchable_text_vector768i topK=50}[#{vectorized_query(@parameters[:q]).join(', ')}]"
       end
       { q: q, qt: nil }
     end
