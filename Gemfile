@@ -9,8 +9,8 @@ gem 'rails', '8.0.4'
 gem 'active-fedora', '~> 8.7'
 gem 'active-triples', git: 'https://github.com/cul/ActiveTriples', branch: 'deprecation_update'
 gem 'addressable'
-gem 'blacklight', '~> 7.41.0'
-gem 'blacklight_oai_provider'
+gem 'blacklight', '~> 8.12.3'
+gem 'blacklight_oai_provider', github: 'projectblacklight/blacklight_oai_provider'
 # will wait for vite migration to use rangelimit (ACHYDRA-1022)
 # gem 'blacklight_range_limit',
 #     git: 'https://github.com/JackBlackLight/blacklight_range_limit.git', branch: 'use_blacklight_component'
