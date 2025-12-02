@@ -33,7 +33,7 @@ describe AcademicCommons::SearchParameters do
 
       it 'sets vector params' do
         params.q('a value')
-        expect(params.to_h[:q]).to eql '{!knn f=searchable_text_vector768i topK=9999}[1, 2, 3, 4]'
+        expect(params.to_h[:q]).to eql '{!knn f=searchable_text_vector768i topK=50}[1, 2, 3, 4]'
       end
     end
   end
