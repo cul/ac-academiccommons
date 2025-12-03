@@ -18,7 +18,7 @@ Current recommended version of Ruby is specified in `.ruby-version`.
 
 3. Create local config files from templates
    ```
-   bundle exec rake config_files
+   bin/copy-config-template-files
    ```
 
 4. Create encrypted credentials files for development and test environments
@@ -164,7 +164,7 @@ For every asset and item in Academic Commons we store view and download statisti
 - Depositors that self-identify as students are sent a notification that serves as a reminder that departmental approval is required for student works.
 
 ### Worker Queue
-We are using redis and resque for our worker queue. The worker queue UI can be accessed by administrators are `/admin/resque`. Redis/resque are configured for our deployed production and test environments. Development does not have a worker queue yet. 
+We are using redis and resque for our worker queue. The worker queue UI can be accessed by administrators are `/admin/resque`. Redis/resque are configured for our deployed production and test environments. Development does not have a worker queue yet.
 
 ### Indexing Digital Objects
 
@@ -201,7 +201,7 @@ To index select item/assets, use the following rake task:
 ```
 # available parameters: pids and pidlist
 # pids should be a comma-delineated list of pids
-# pidlist should be a file with a pid in everyline 
+# pidlist should be a file with a pid in everyline
 
 rake ac:index:by_pid pids=ac:test1,ac:test2
 ```
