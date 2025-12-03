@@ -1,7 +1,12 @@
 require 'rails_helper'
 
 describe 'Item Page', type: :feature do
+  let(:mock_vector_embedding_value) do
+    fixture_to_json('desc_metadata/mock_vector_embedding_value_string-research.json')
+  end
+
   before do
+    allow(EmbeddingService::Endpoint).to receive(:generate_vector_embedding).and_return(mock_vector_embedding_value)
     allow_any_instance_of(SiteConfigurationHelper).to receive(:downloads_enabled?).and_return(true) # rubocop:disable RSpec/AnyInstance
     visit solr_document_path('10.7916/ALICE')
   end

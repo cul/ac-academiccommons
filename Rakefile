@@ -53,6 +53,7 @@ begin
   task ci: [:config_files] do
     ENV['RAILS_ENV'] = 'test'
     Rails.env = ENV['RAILS_ENV']
+    ENV['skip_vector_embeddings_during_populate_solr'] = 'true'
     rspec_system_exit_failure_exception = nil
 
     begin

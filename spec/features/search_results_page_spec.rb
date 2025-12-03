@@ -1,6 +1,14 @@
 require 'rails_helper'
 
 describe 'Search Results Page', type: :feature do
+  let(:mock_vector_embedding_value) do
+    fixture_to_json('desc_metadata/mock_vector_embedding_value_string-research.json')
+  end
+
+  before do
+    allow(EmbeddingService::Endpoint).to receive(:generate_vector_embedding).and_return(mock_vector_embedding_value)
+  end
+
   it 'finds by title' do
     visit search_catalog_path(q: 'alice')
     expect(page).to have_css('a[href="/doi/10.7916/ALICE"]', text: 'Alice\'s Adventures in Wonderland')

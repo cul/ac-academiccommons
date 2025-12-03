@@ -22,6 +22,7 @@ config/secrets.yml
 config/google_analytics.yml
 config/blacklight.yml
 config/local_credentials.yml
+config/embedding_service.yml
 # docker ignores
 docker/docker-compose.*.yml
 #pre-docker ignores, so they don't get committed if still in workspace
