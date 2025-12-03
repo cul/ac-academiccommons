@@ -37,8 +37,8 @@ jobs:
           node-version: ${{ matrix.node }}
       - run: npm install -g yarn
       - run: yarn install --frozen-lockfile
-      - name: Create config files from config/template files
-        run: for c in config/*.template.yml; do cp $c ${c/template.}; done
+      - name: Copy config files
+        run: bin/copy-config-template-files
       - name: Create test credentials
         run: bundle exec rake "ac:templated_credentials:add[test]"
       - name: Load DB Schema
