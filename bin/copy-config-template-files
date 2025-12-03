@@ -1,0 +1,25 @@
+#!/bin/bash
+
+# App config files
+for file in config/templates/*.template.yml; do
+  filename=$(basename "$file")
+  dest="config/${filename//.template.yml/.yml}"
+  if [ -f "$dest" ]; then
+    echo "File already exists (skipping): $dest"
+  else
+    cp "$file" "$dest"
+    echo "Created file at: $dest"
+  fi
+done
+
+# Docker config files
+for file in docker/templates/*.template.yml; do
+  filename=$(basename "$file")
+  dest="docker/${filename//.template.yml/.yml}"
+  if [ -f "$dest" ]; then
+    echo "File already exists (skipping): $dest"
+  else
+    cp "$file" "$dest"
+    echo "Created file at: $dest"
+  fi
+done

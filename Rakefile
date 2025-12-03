@@ -22,35 +22,8 @@ begin
   require 'rubocop/rake_task'
   RuboCop::RakeTask.new(:rubocop)
 
-  # Note: Don't include Rails environment for this task, since enviroment includes a check for the presence of database.yml
-  task :config_files do
-    # yml templates
-    Dir.glob(Rails.root.join("config", "*.template.yml")).each do |template_yml_path|
-      target_yml_path = Rails.root.join('config', File.basename(template_yml_path).sub(".template.yml", ".yml"))
-      next if File.exist?(target_yml_path)
-      FileUtils.touch(target_yml_path) # Create if it doesn't exist
-      target_yml = YAML.load_file(target_yml_path) || YAML.load_file(template_yml_path, aliases: true)
-      File.open(target_yml_path, 'w') { |f| f.write target_yml.to_yaml }
-    end
-    Dir.glob(Rails.root.join("config", "*.template.yml.erb")).each do |template_yml_path|
-      target_yml_path = Rails.root.join('config', File.basename(template_yml_path).sub(".template.yml.erb", ".yml"))
-      next if File.exist?(target_yml_path)
-      FileUtils.touch(target_yml_path) # Create if it doesn't exist
-      target_yml = YAML.load_file(target_yml_path, aliases: true) || YAML.safe_load(ERB.new(File.read(template_yml_path)).result(binding), aliases: true)
-      File.open(target_yml_path, 'w') { |f| f.write target_yml.to_yaml }
-    end
-    # docker yml templates
-    Dir.glob(Rails.root.join("docker/templates", "*.yml")).each do |template_yml_path|
-      target_yml_path = Rails.root.join('docker', File.basename(template_yml_path))
-      next if File.exist?(target_yml_path)
-      FileUtils.touch(target_yml_path) # Create if it doesn't exist
-      target_yml = YAML.load_file(target_yml_path, aliases: true) || YAML.load_file(template_yml_path, aliases: true)
-      File.open(target_yml_path, 'w') { |f| f.write target_yml.to_yaml }
-    end
-  end
-
   desc 'Run all tests regardless of tags'
-  task ci: [:config_files] do
+  task :ci do
     ENV['RAILS_ENV'] = 'test'
     Rails.env = ENV['RAILS_ENV']
     ENV['skip_vector_embeddings_during_populate_solr'] = 'true'
