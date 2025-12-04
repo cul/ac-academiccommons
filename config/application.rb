@@ -8,29 +8,27 @@ Bundler.require(*Rails.groups)
 
 module AcademicCommons
   class Application < Rails::Application
-    # Initialize configuration defaults for originally generated Rails version.
-    config.load_defaults 7.2
-
-    # Please, add to the `ignore` list any other `lib` subdirectories that do
-    # not contain `.rb` files, or that should not be reloaded or eager loaded.
-    # Common ones are `templates`, `generators`, or `middleware`, for example.
-    config.autoload_lib(ignore: %w(assets tasks))
-
     # Configuration for the application, engines, and railties goes here.
     #
     # These settings can be overridden in specific environments using the files
     # in config/environments, which are processed later.
     #
-    # config.time_zone = "Central Time (US & Canada)"
-    # config.eager_load_paths << Rails.root.join("extras")
     # Application configuration should go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded.
+    #
 
-    # Custom directories with classes and modules you want to be eager loaded.
-    # After Rails 5, using autoload_paths is discouraged.
-    config.paths.add File.join('app', 'api'), glob: File.join('**', '*.rb')
-    config.eager_load_paths += Dir[Rails.root.join('app', 'api')]
-    config.autoload_lib(ignore: %w(tasks))
+    # Initialize configuration defaults for originally generated Rails version.
+    config.load_defaults 8.0
+
+    # Please, add to the `ignore` list any other `lib` subdirectories that do
+    # not contain `.rb` files, or that should not be reloaded or eager loaded.
+    # Common ones are `templates`, `generators`, or `middleware`, for example.
+    config.autoload_lib(ignore: %w[tasks])
+    # N.B. The autoload_paths contains app/** (** = subdirectories) except
+    #      assets/, javascript/, and views/ by default. The above config adds
+    #      lib/** to autoload_paths, except what we ignore.
+    #      The eager_load_paths contains app/ and all subdirectories by default.
+    #      Engines will also add to these paths as neede during initialization.
 
     # Only load the plugins named here, in the order given (default is alphabetical).
     # :all can be used as a placeholder for all plugins not explicitly named.
