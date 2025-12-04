@@ -75,6 +75,9 @@ yarn-debug.log*
 /config/credentials.yml.enc
 /config/master.key
 
+# Since we use yarn instead of npm, avoid accidentally committing a top level package-lock.json file
+/package-lock.json
+
 # Vite Ruby
 /public/vite*
 node_modules
