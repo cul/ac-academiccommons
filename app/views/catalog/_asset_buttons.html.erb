@@ -15,7 +15,7 @@
 
   <% end %>
 
-  <%= link_to t('blacklight.tools.download_button'), assets.first.download_path, class: 'btn btn-primary download-button', 'aria-label': 'Download file', data: { turbo: false, turbolinks: false } %>
+  <%= link_to t('blacklight.tools.download_button'), assets.first.download_path, class: 'btn btn-primary download-button', 'aria-label': 'Download file', data: { turbolinks: false } %>
 <% else %>
   <% if assets.any?(&:playable?) %>
 
@@ -25,5 +25,5 @@
 
   <% end %>
 
-  <a href="#assets-panel" class="btn btn-primary download-button scroll" aria-label="Download file" data-turbolinks="false" data-turb0="false"><%= t('blacklight.tools.download_button') %></a>
+  <a href="#assets-panel" class="btn btn-primary download-button scroll" aria-label="Download file" data-turbolinks="false"><%= t('blacklight.tools.download_button') %></a>
 <% end %>
