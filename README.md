@@ -1,6 +1,6 @@
 # 1002analysis branch: I added borders to all of our overridden blacklight components, so that it is easier to see the order/manner they are rendered.
 
-<img width="890" height="473" alt="image" src="https://github.com/user-attachments/assets/578c7982-8a5a-4de7-9607-49b7f85fc3f7" />
+<img width="901" height="547" alt="image" src="https://github.com/user-attachments/assets/99c510c5-1ced-41c3-867d-c915dcc3c043" />
 
 
 ***
