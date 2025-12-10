@@ -1,0 +1,15 @@
+<h1>Download Button! -- this is not used though...</h1>
+
+<% assets = @document.assets %>
+
+<% if @document.restricted? %>
+  <p><em><%= @document.access_restriction %></em></p>
+<% elsif @document.embargoed? %>
+  <p><em><%= t('blacklight.search.show.assets.embargoed', date: @document[:free_to_read_start_date_ssi]) %></em></p>
+<% elsif assets.count == 1 %>
+<h3>hello</h3>
+  <%= link_to t('blacklight.tools.download_button'), assets.first.download_path, class: 'btn btn-primary download-button', 'aria-label': 'Download file' %>
+<% else %>
+<h3>hello</h3>
+  <a href="#assets-panel" class="btn btn-primary download-button scroll" aria-label="Download file"><%= t('blacklight.tools.download_button') %></a>
+<% end %>

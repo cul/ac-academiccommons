@@ -4,13 +4,19 @@
 
 %>
 <% if show_doc_actions? %>
+<div style="border: solid blue">
+<h1>SHOW TOOLS</h1>
   <div class="card show-tools">
     <ul class="list-group list-group-flush">
       <%= render_show_doc_actions @document do |config, inner| %>
         <li class="list-group-item <%= config.key %>">
+          <div style='border: solid yellow'>
           <%= inner %>
+          </div>
         </li>
       <% end %>
     </ul>
   </div>
+</div>
+
 <% end %>

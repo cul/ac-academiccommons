@@ -4,14 +4,17 @@
   - removes previous_next_doc search widget
 
 %>
-
+<div style="border: solid pink">
+<h1>SHOW MAIN CONTENT</h1>
 <% @page_title = t('blacklight.search.show.title', :document_title => document_presenter(@document).html_title, :application_name => application_name).html_safe %>
 <% content_for(:head) { render_link_rel_alternates } %>
 
 <div id="document" class="document <%= render_document_class %>" itemscope  itemtype="<%= @document.itemtype %>">
   <div id="doc_<%= @document.id.to_s.parameterize %>">
+    <h3> rendering document partials -- <%= blacklight_config.view_config(:show).partials %>
     <%= render_document_partials @document, blacklight_config.view_config(:show).partials %>
   </div>
+  <h1>^u^</h1>
 </div>
 
 <% if @document.respond_to?(:export_as_openurl_ctx_kev) %>
@@ -22,3 +25,4 @@
   -->
   <span class="Z3988" title="<%= @document.export_as_openurl_ctx_kev(document_partial_name(@document)) %>"></span>
 <% end %>
+</div>

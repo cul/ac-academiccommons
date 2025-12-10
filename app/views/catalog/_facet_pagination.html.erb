@@ -1,3 +1,5 @@
+<div style='border: solid blue'>
+<h1> facet pagination partial </h1>
 <div class="prev_next_links btn-group pull-left">
   <%= link_to_previous_page(@pagination, raw(t('views.pagination.previous')), params: search_state.to_h, param_name: blacklight_config.facet_paginator_class.request_keys[:page], class: 'btn btn-link', data: { ajax_modal: "preserve" }) {|| content_tag(:span, raw(t('views.pagination.previous')).html_safe, class: "disabled btn btn-disabled") } %>
 
@@ -12,4 +14,5 @@
     <%=  link_to(t('blacklight.search.facets.sort.index'), @pagination.params_for_resort_url('index', search_state.to_h), class: "sort_change az btn btn-default",  data: { ajax_modal: "preserve" }) %>
     <span class="active numeric btn btn-default"><%= t('blacklight.search.facets.sort.count') %></span>
   <% end -%>
+</div>
 </div>
