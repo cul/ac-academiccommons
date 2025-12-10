@@ -1,3 +1,10 @@
+# 1002analysis branch: I added borders to all of our overridden blacklight components, so that it is easier to see the order/manner they are rendered.
+
+<img width="890" height="473" alt="image" src="https://github.com/user-attachments/assets/578c7982-8a5a-4de7-9607-49b7f85fc3f7" />
+
+
+***
+
 # Academic Commons 4.0
 
 [![Build Status](https://travis-ci.org/cul/ac-academiccommons.svg?branch=master)](https://travis-ci.org/cul/ac-academiccommons) [![Coverage Status](https://coveralls.io/repos/github/cul/ac-academiccommons/badge.svg?branch=master)](https://coveralls.io/github/cul/ac-academiccommons?branch=master)
