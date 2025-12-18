@@ -1,0 +1,14 @@
+<%# 
+    Overriding the deafult show_tools_component.html.erb to remove the card header section
+    (see app/components/blacklight/document/show_tools_component.html.erb in Blacklight 8 gem)
+%>
+
+<div class="card show-tools">
+  <%= render Blacklight::Document::ActionsComponent.new(document: document,
+                                                        tag: 'ul',
+                                                        classes: 'list-group list-group-flush',
+                                                        wrapping_tag: 'li',
+                                                        wrapping_classes: 'list-group-item list-group-item-action',
+                                                        actions: actions,
+                                                        url_opts: Blacklight::Parameters.sanitize(params.to_unsafe_h)) %>
+</div>

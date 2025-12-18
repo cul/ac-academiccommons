@@ -1,0 +1,31 @@
+<%# 
+    Overriding defaults for Modal Component Blacklight 8 view
+
+    - change header flex-direction to column (to stack prev/next and title in the display)
+%>
+
+<div data-blacklight-modal="container">
+  <%= prefix %>
+
+  <div class="modal-header flex-column">
+    <%= header || (capture do %>
+      <h1 class="modal-title" style='border: solid gren'><%= title %></h1>
+    <% end) %>
+
+    <button type="button" class="blacklight-modal-close btn-close close" data-bl-dismiss="modal" aria-label="<%= t('blacklight.modal.close') %>">
+      <span aria-hidden="true" class="visually-hidden">&times;</span>
+    </button>
+  </div>
+
+  <%= body || (capture do %>
+    <div class="modal-body">
+      <%= content %>
+    </div>
+  <% end) %>
+
+  <% if footer.present? %>
+    <div class="modal-footer">
+      <%= footer %>
+    </div>
+  <% end %>
+</div>

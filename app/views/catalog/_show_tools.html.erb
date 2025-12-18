@@ -1,16 +1,11 @@
+
+<% Blacklight.deprecation.warn('The partial _show_tools.html.erb will be removed in Blacklight 9.0. Configure blacklight_config.show.show_tools_component instead (default Blacklight::Document::ShowToolsComponent).') unless local_assigns[:silence_deprecation] %>
+<%= render Blacklight::Document::ShowToolsComponent.new(document: document) %>
+
+
+
 <%#
   Overriding Blacklight v7.2.0 template.
   - removes card heading
 
 %>
-<% if show_doc_actions? %>
-  <div class="card show-tools">
-    <ul class="list-group list-group-flush">
-      <%= render_show_doc_actions @document do |config, inner| %>
-        <li class="list-group-item <%= config.key %>">
-          <%= inner %>
-        </li>
-      <% end %>
-    </ul>
-  </div>
-<% end %>
