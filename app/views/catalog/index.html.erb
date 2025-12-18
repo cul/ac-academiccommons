@@ -5,10 +5,28 @@
   - removes homepage conditional logic, homepage moved to its own template
 
 %>
+<% content_for(:head) do %>
+  <meta name="blacklight-search-storage" content="<%= blacklight_config.track_search_session.storage %>">
+<% end %>
+
+
+<%# 
+    We used to render the BL7 _search_sidebar partial,
+        which rendered the _facets partial,
+        which rendered the _facet_group partial,
+        which renders the facet_group's viewComponent
+
+    Now, we simply render the BL 8 sidebar component, which reads our config
+    and displays the facets as expected.
+%>
 
 <div id="sidebar" class="<%= sidebar_classes %>">
-  <%= render 'search_sidebar' %>
+  <% conf = blacklight_config.view_config(document_index_view_type) %>
+  <%= render conf.sidebar_component.new(blacklight_config: blacklight_config,
+                                        response: @response,
+                                        view_config: conf) %>
 </div>
+
 <div id="content" class="<%= main_content_classes %>">
   <%= render :partial=>'/shared/featured_searches' %>
   <%= render 'search_results' %>

@@ -767,6 +767,7 @@ DEPENDENCIES
   omniauth (>= 2.1)
   omniauth-cul
   omniauth-rails_csrf_protection (~> 1.0)
+  partial_finder (~> 0.1)
   premailer (~> 1.27.0)
   premailer-rails
   puma (~> 5.2)

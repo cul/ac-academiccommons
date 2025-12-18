@@ -1,3 +1,9 @@
+<%# 
+    Using our custom catlog layout instead of the blacklight provided ones
+      - main difference is that we have a content_for :head block and if else around content_for :sidebar
+      - otherwise, we are very similar to the blacklight catalog_result layout
+%>
+
 <% content_for :head do %>
   <%= render 'shared/google_analytics' %>
   <%= render 'shared/highwire_press_tags' %>
@@ -5,6 +11,7 @@
   <meta name="bitly-verification" content="35191b8f3154"/>
   <meta name="baidu-site-verification" content="vQh9AyuWzB"/>
 <% end %>
+
 <% content_for(:content) do %>
   <% if content_for? :sidebar %>
     <section id="content" class="<%= main_content_classes %> order-first" aria-label="<%= t('blacklight.search.documents.aria.search_results') %>">

@@ -1,0 +1,43 @@
+<%#
+    Overriding the Blacklight v8.12.3 DocumentComponent
+
+    - remove metadata section
+%>
+
+<%= content_tag @component,
+  id: @id,
+  data: {
+    'document-id': @document.id.to_s.parameterize,
+    'document-counter': @counter,
+  },
+  itemscope: true,
+  itemtype: @document.itemtype,
+  class: classes.flatten.join(' ') do %>
+  <%= header %>
+  <% if body.present? %>
+    <%= body %>
+  <% else %>
+    <div class="document-main-section">
+      <%# If we are in index (search result) view, render the metadata section slots (the partials array will be empty) %>
+      <% unless show? %>
+        <%= title %>
+        <%= embed %>
+        <%= content %>
+        <%= metadata %>
+        <% metadata_sections.each do |section| %>
+          <%= section %>
+        <% end %>
+      <% end %>
+      
+      <%# If we are in show view, render show tools - configure with config.add_show_tools_partial %>
+      <% if show? %>
+        <% partials.each do |partial| %>
+          <%= partial %>
+        <% end %>
+      <% end %>
+    </div>
+
+    <%= thumbnail %>
+  <% end %>
+  <%= footer %>
+<% end %>

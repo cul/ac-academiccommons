@@ -35,6 +35,8 @@ class CatalogController < ApplicationController
   end
 
   configure_blacklight do |config|
+    config.bootstrap_version = 4
+
     allowed_params = [:id, :commit, :usage_statistics_reports_form, :verb,
                       :metadataPrefix, :_method, :deposit, :category_id, :agreement, :deposits_enabled]
     config.search_state_fields.concat(allowed_params)
@@ -43,16 +45,6 @@ class CatalogController < ApplicationController
     config.index.document_actions.delete(:bookmark)
 
     config.add_results_collection_tool(:sort_widget)
-
-    config.show.document_actions.delete(:bookmark)
-    config.show.document_actions.delete(:sms)
-    config.show.document_actions.delete(:citation)
-    config.show.document_actions.delete(:email)
-
-    config.add_show_tools_partial :asset_buttons,        partial: 'asset_buttons'
-    config.add_show_tools_partial :doi,                  partial: 'doi'
-    config.add_show_tools_partial :social_buttons,       partial: 'social_buttons'
-    config.add_show_tools_partial :use_and_reproduction, partial: 'use_and_reproduction'
 
     config.navbar.partials.delete(:bookmark)
     config.navbar.partials.delete(:saved_searches)
@@ -63,13 +55,70 @@ class CatalogController < ApplicationController
                                                                   .aggregators_only
                                                                   .to_h
 
+    # Configuring show action and views:
+    config.show.document_actions.delete(:bookmark)
+    config.show.document_actions.delete(:sms)
+    config.show.document_actions.delete(:citation)
+    config.show.document_actions.delete(:email)
+
+    config.add_show_tools_partial :asset_buttons,        partial: 'asset_buttons'
+    config.add_show_tools_partial :doi,                  partial: 'doi'
+    config.add_show_tools_partial :social_buttons,       partial: 'social_buttons'
+    config.add_show_tools_partial :use_and_reproduction, partial: 'use_and_reproduction'
+
     # solr field configuration for search results/index views
     config.show.title_field = 'title_ssi'
-    config.show.display_type_field = 'format'
+    #  this determines how the show partial is chosen -->
+    #  todo: add comments to this and index
+    config.show.display_type_field = 'degree_level_name_ssim'
     config.show.genre = 'genre_ssim'
     config.show.author = 'author_ssim'
 
+    # TODO: upgrade note 5
     config.show.partials = [:show] # Removing :show_header partial
+
+    # config.show.show_tools_component = MyShowToolsComponent # default is Blacklight::Document::ShowToolsComponent
+
+    # solr fields to be displayed in the show (single result) view
+    #   The ordering of the field names is the order of the display
+    # :display configuration is for our customized show view, it describes where on the page it should go.
+    config.add_show_field 'pub_date_isi',           display: :tag, itemprop: 'datePublished'
+    config.add_show_field 'genre_ssim',             display: :tag, itemprop: 'genre'
+    config.add_show_field 'degree_level_name_ssim', display: :tag
+
+    config.add_show_field 'author_ssim',  display: :main_content, itemprop: 'creator', link_to_facet: 'author_ssim',
+                                          separator_options: { words_connector: '; ', two_words_connector: '; ', last_word_connector: '; ' }
+    config.add_show_field 'abstract_ssi', display: :main_content, itemprop: 'description', auto_link: true
+
+    config.add_show_field 'geographic_area_ssim',   display: :table, label: 'Geographic Areas', link_to_facet: 'geographic_area_ssim'
+    config.add_show_field 'subject_ssim',           display: :table, label: 'Subjects',         link_to_facet: 'subject_ssim',        itemprop: 'keywords'
+
+    config.add_show_field 'book_journal_title_ssi', display: :published_in, label: 'Title'
+    config.add_show_field 'host_publisher_ssi',     display: :published_in, label: 'Publisher'
+    config.add_show_field 'publisher_doi_ssi',      display: :published_in, label: 'DOI', helper_method: :link_identifier
+    config.add_show_field 'uri_ssi',                display: :published_in, label: 'URL',           auto_link: true
+    config.add_show_field 'related_url_ssi',        display: :published_in, label: 'Related URL',   auto_link: true
+
+    # config.add_show_field 'volume_ssi',             label: 'Volume'
+    # config.add_show_field 'issue_ssi',              label: 'Issue'
+    # config.add_show_field 'pages',                  label: 'Pages', accessor: true, unless: ->(_, _, doc) { doc.pages.blank? }
+    # config.add_show_field 'publisher_location_ssi', label: 'Publication Origin'
+
+    config.add_show_field 'department_ssim',        label: 'Academic Units', link_to_facet: 'department_ssim'
+    config.add_show_field 'thesis_advisor_ssim',    label: 'Thesis Advisors'
+    config.add_show_field 'degree',                 label: 'Degree', accessor: true, unless: ->(_, _, doc) { doc.degree.blank? }
+    config.add_show_field 'publisher_ssi',          label: 'Publisher'
+    config.add_show_field 'series_ssim',            label: 'Series', helper_method: :combine_title_and_part_number
+    config.add_show_field 'non_cu_series_ssim',     label: 'Series', helper_method: :combine_title_and_part_number
+    config.add_show_field 'record_creation_dtsi',   label: 'Published Here', helper_method: :date_format
+    config.add_show_field 'fedora3_pid_ssi',        label: 'Fedora 3 PID', if: ->(context, _, _) { context.current_user&.admin? }
+
+    config.add_show_field 'notes_ssim',             display: :notes, auto_link: true
+
+    # Only renders metatags for schema.org, does not display anything on the page.
+    config.add_show_field 'full_doi',               display: :main_content, accessor: true, itemprop: 'url',        helper_method: :metatags
+    config.add_show_field 'language_ssim',          display: :main_content,                 itemprop: 'inLanguage', helper_method: :metatags
+
 
     # Default values of parameters to send when requesting a single document
     config.default_document_solr_params = AcademicCommons::SearchParameters.new
@@ -82,6 +131,8 @@ class CatalogController < ApplicationController
     config.index.title_field = 'title_ssi'
     config.index.num_per_page = 10
     config.index.display_type_field = 'format'
+    # config.index.group = false
+    # config.index.partials = [:index_header, :thumbnail, :index]
 
     # solr fields that will be treated as facets by the blacklight application
     # The ordering of the field names is the order of the display
@@ -137,47 +188,6 @@ class CatalogController < ApplicationController
     config.add_index_field 'pub_date_isi', label: 'Date'
     config.add_index_field 'genre_ssim',   label: 'Type'
     config.add_index_field 'subject_ssim', label: 'Subjects', helper_method: :wrap_in_spans
-
-
-    # :display configuration is for our customized show view, it describes where on the page it should go.
-    config.add_show_field 'pub_date_isi',           display: :tag, itemprop: 'datePublished'
-    config.add_show_field 'genre_ssim',             display: :tag, itemprop: 'genre'
-    config.add_show_field 'degree_level_name_ssim', display: :tag
-
-    config.add_show_field 'author_ssim',  display: :main_content, itemprop: 'creator', link_to_facet: 'author_ssim',
-                                          separator_options: { words_connector: '; ', two_words_connector: '; ', last_word_connector: '; ' }
-    config.add_show_field 'abstract_ssi', display: :main_content, itemprop: 'description', auto_link: true
-
-    config.add_show_field 'geographic_area_ssim',   display: :table, label: 'Geographic Areas', link_to_facet: 'geographic_area_ssim'
-    config.add_show_field 'subject_ssim',           display: :table, label: 'Subjects',         link_to_facet: 'subject_ssim',        itemprop: 'keywords'
-
-    config.add_show_field 'book_journal_title_ssi', display: :published_in, label: 'Title'
-    config.add_show_field 'host_publisher_ssi',     display: :published_in, label: 'Publisher'
-    config.add_show_field 'publisher_doi_ssi',      display: :published_in, label: 'DOI', helper_method: :link_identifier
-    config.add_show_field 'uri_ssi',                display: :published_in, label: 'URL',           auto_link: true
-    config.add_show_field 'related_url_ssi',        display: :published_in, label: 'Related URL',   auto_link: true
-
-    # config.add_show_field 'volume_ssi',             label: 'Volume'
-    # config.add_show_field 'issue_ssi',              label: 'Issue'
-    # config.add_show_field 'pages',                  label: 'Pages', accessor: true, unless: ->(_, _, doc) { doc.pages.blank? }
-    # config.add_show_field 'publisher_location_ssi', label: 'Publication Origin'
-
-    config.add_show_field 'department_ssim',        label: 'Academic Units', link_to_facet: 'department_ssim'
-    config.add_show_field 'thesis_advisor_ssim',    label: 'Thesis Advisors'
-    config.add_show_field 'degree',                 label: 'Degree', accessor: true, unless: ->(_, _, doc) { doc.degree.blank? }
-    config.add_show_field 'publisher_ssi',          label: 'Publisher'
-    config.add_show_field 'series_ssim',            label: 'Series', helper_method: :combine_title_and_part_number
-    config.add_show_field 'non_cu_series_ssim',     label: 'Series', helper_method: :combine_title_and_part_number
-    config.add_show_field 'record_creation_dtsi',   label: 'Published Here', helper_method: :date_format
-    config.add_show_field 'fedora3_pid_ssi',        label: 'Fedora 3 PID', if: ->(context, _, _) { context.current_user&.admin? }
-
-    config.add_show_field 'notes_ssim',             display: :notes, auto_link: true
-
-    # Only renders metatags for schema.org, does not display anything on the page.
-    config.add_show_field 'full_doi',               display: :main_content, accessor: true, itemprop: 'url',        helper_method: :metatags
-    config.add_show_field 'language_ssim',          display: :main_content,                 itemprop: 'inLanguage', helper_method: :metatags
-
-
 
 
     # "fielded" search configuration. Used by pulldown among other places.

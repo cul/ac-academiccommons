@@ -1,0 +1,19 @@
+<%# 
+    We used to render the BL7 _search_sidebar partial,
+        which rendered the _facets partial,
+        which rendered the _facet_group partial,
+        which renders the facet_group's viewComponent
+
+    Now, we simply 
+%>
+
+<search>
+  <% facet_group_names.each do |groupname| %>
+    <% fields = facet_fields_in_group(groupname) %>
+    <%= render group_component_class.new(id: groupname, fields: fields, response: response) do |component| %>
+      <% component.with_body do %>
+        <%= render Blacklight::FacetComponent.with_collection(fields, response: response) %>
+      <% end %>
+    <% end %>
+  <% end %>
+</search>

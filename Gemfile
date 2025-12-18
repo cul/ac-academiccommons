@@ -66,6 +66,7 @@ gem 'sqlite3', '>= 2.1' # compatibility matrix: https://dev.to/galtzo/activereco
 
 group :development do
   gem 'listen'
+  gem 'partial_finder', '~> 0.1'
   gem 'spring'
 end
 
