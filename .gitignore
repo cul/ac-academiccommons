@@ -22,6 +22,7 @@ config/secrets.yml
 config/google_analytics.yml
 config/blacklight.yml
 config/local_credentials.yml
+config/embedding_service.yml
 # docker ignores
 docker/docker-compose.*.yml
 #pre-docker ignores, so they don't get committed if still in workspace
@@ -73,6 +74,9 @@ yarn-debug.log*
 /config/credentials/test.key
 /config/credentials.yml.enc
 /config/master.key
+
+# Since we use yarn instead of npm, avoid accidentally committing a top level package-lock.json file
+/package-lock.json
 
 # Vite Ruby
 /public/vite*

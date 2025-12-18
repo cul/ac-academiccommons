@@ -339,11 +339,48 @@ module AcademicCommons
         add_field.call 'use_and_reproduction_uri_ssim',   r.attribute('href')
       end
 
+      if Rails.application.config.embedding_service[:enabled]
+        solr_doc['searchable_text_vector768i'] = EmbeddingService::Endpoint.generate_vector_embedding(
+          Rails.application.config.embedding_service[:base_url],
+          EmbeddingService::Endpoint::MODEL_MAPPING['bge_base_en_15_768'],
+          semantic_search_source_text(solr_doc)
+        )
+      end
+
       solr_doc
     end
 
     def multivalued?(field)
       !MULTIVALUED_FIELDS.map { |f| /^#{f}$/.match field }.compact.empty?
+    end
+
+    def semantic_search_source_text(solr_doc)
+      title = solr_doc['title_ssi']
+      genres = solr_doc['genre_ssim']
+      authors = solr_doc['author_ssim']
+      abstract = solr_doc['abstract_ssi']
+
+      content_as_embeddings = ''
+
+      # NOTE: We expect title to always be present.
+      content_as_embeddings += "This record is labeled \"#{title}\". " if title.present?
+
+      if genres.present?
+        content_as_embeddings += "This record has the following genres:\n"
+        genres.each do |genre|
+          content_as_embeddings += "#{genre}\n"
+        end
+      end
+      if authors.present?
+        content_as_embeddings += "This record has the following authors:\n"
+        authors.each do |author|
+          content_as_embeddings += "#{author}\n"
+        end
+      end
+
+      content_as_embeddings += abstract if abstract.present?
+
+      content_as_embeddings
     end
   end
 end

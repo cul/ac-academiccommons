@@ -36,6 +36,7 @@ set :linked_files, fetch(:linked_files, []).push(
   'config/solr.yml',
   'config/blacklight.yml',
   'config/fedora.yml',
+  'config/embedding_service.yml',
   'config/secrets.yml',
   'config/custom_bots.json',
   'config/crawler-user-agents.json',

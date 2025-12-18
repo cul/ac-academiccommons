@@ -1,0 +1,26 @@
+version: '3.9'
+
+name: 'ac-development'
+
+volumes:
+  solr-cores:
+  fedora-data:
+services:
+  solr:
+    build: ./solr
+    restart: always
+    ports:
+      - '8983:8983'
+    environment:
+      # In a Docker environment we enable the analysis-extras module via SOLR_OPTS, but in a production
+      # environment we're more likely to set `SOLR_MODULES=analysis-extras` in solr.in.sh.
+      - SOLR_OPTS=-Dsolr.modules=analysis-extras
+    volumes:
+      - solr-cores:/data
+  fedora:
+    build: ./fedora
+    restart: always
+    ports:
+      - '8080:8080'
+    volumes:
+      - fedora-data:/opt/fedora/data

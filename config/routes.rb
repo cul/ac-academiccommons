@@ -50,12 +50,8 @@ Rails.application.routes.draw do
   concern :searchable, Blacklight::Routes::Searchable.new
   concern :exportable, Blacklight::Routes::Exportable.new
 
-  # TODO: Error
-  # resources :catalog, only: [:index], as: 'catalog', path: 'search', controller: 'catalog', constraints: { id: /.*/ } do
-  #   concerns :searchable
-  #   # concerns :range_searchable
-  # end
-  # Use singular resource with custom collection route
+  # Use singular resource with custom collection route to achieve:
+  #   search_catalog_url = GET|POST /search |-> catalog#index
   resource :catalog, only: [], as: 'catalog', path: 'search', controller: 'catalog', constraints: { id: /.*/ } do
     collection do
       get '', action: :index

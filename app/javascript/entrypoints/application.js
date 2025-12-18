@@ -37,9 +37,6 @@ import Popper from 'popper.js';
 window.Popper = Popper;
 import 'bootstrap';
 
-// NOTE : are we using Bloodhound? ask Jack
-// import Bloodhound from 'corejs-typeahead'; window.Bloodhound = Bloodhound
-
 // n.b.--we should consider migrating to turbo instead of UJS" https://guides.rubyonrails.org/v7.2/working_with_javascript_in_rails.html#replacements-for-rails-ujs-functionality
 // See ACHYDRA-1032
 // Also, momento mori: https://github.com/rails/rails/pull/50535
@@ -56,8 +53,7 @@ Turbolinks.start();
 
 import * as ActiveStorage from '@rails/activestorage';
 ActiveStorage.start();
-// No longer needed:
-// window.ActiveStorage = ActiveStorage;
+window.ActiveStorage = ActiveStorage;
 
 // Custom JS modules
 import '../src/admin/enable-optional-fields';

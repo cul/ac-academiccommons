@@ -16,7 +16,6 @@ const ready = function(){
     e.preventDefault()
 
     let creatorListId = $(this).data("creator-list-id")
-    // let textColor = $(this).data("text-color")
     addCreatorField(creatorListId)
   });
 };

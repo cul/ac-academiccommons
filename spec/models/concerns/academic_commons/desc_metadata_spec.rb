@@ -9,7 +9,17 @@ RSpec.describe AcademicCommons::DescMetadata do
     json
   end
 
-  let(:expected_json) { fixture_to_json_symbol_id('desc_metadata/to_solr.json') }
+  let(:mock_vector_embedding_value) do
+    fixture_to_json('desc_metadata/mock_vector_embedding_value_string-research.json')
+  end
+  let(:searchable_text_vector768i_key_value_pair) do
+    { 'searchable_text_vector768i' => mock_vector_embedding_value }
+  end
+  let(:expected_json) do
+    fixture_to_json_symbol_id('desc_metadata/to_solr.json').merge(
+      searchable_text_vector768i_key_value_pair
+    )
+  end
   let(:start_solr_doc) { { 'doi_ssim' => '10.7916/TESTTEST' } }
 
   # rubocop:disable RSpec/DescribedClass
@@ -40,8 +50,14 @@ RSpec.describe AcademicCommons::DescMetadata do
   shared_examples 'indexing mods' do
     subject { indexable.index_descmetadata(start_solr_doc) }
 
+    before do
+      allow(EmbeddingService::Endpoint).to receive(:generate_vector_embedding).and_return(mock_vector_embedding_value)
+    end
+
     describe '#index_descMetadata' do
-      it  { is_expected.to eql(expected_json) }
+      it {
+        expect(subject).to eql(expected_json)
+      }
 
       it 'has one :id field' do
         expect(subject.key?(:id)).to be(true)
@@ -73,70 +89,122 @@ RSpec.describe AcademicCommons::DescMetadata do
 
     context 'correctly indexes the title' do
       let(:mods_fixture) { fixture_to_str('desc_metadata/non_sort_title.xml') }
-      let(:expected_json) { fixture_to_json_symbol_id('desc_metadata/non_sort_title.json') }
+      let(:expected_json) do
+        fixture_to_json_symbol_id('desc_metadata/non_sort_title.json').merge(
+          searchable_text_vector768i_key_value_pair
+        )
+      end
 
       include_examples 'indexing mods'
     end
 
     context 'contains title cased genre value' do
       let(:mods_fixture) { fixture_to_str('desc_metadata/genre_title_case.xml') }
-      let(:expected_json) { fixture_to_json_symbol_id('desc_metadata/genre_title_case.json') }
+      let(:expected_json) do
+        fixture_to_json_symbol_id('desc_metadata/genre_title_case.json').merge(
+          searchable_text_vector768i_key_value_pair
+        )
+      end
 
       include_examples 'indexing mods'
     end
 
     context 'contains mapped genre value' do
       let(:mods_fixture) { fixture_to_str('desc_metadata/genre_mapping.xml') }
-      let(:expected_json) { fixture_to_json_symbol_id('desc_metadata/genre_mapping.json') }
+      let(:expected_json) do
+        fixture_to_json_symbol_id('desc_metadata/genre_mapping.json').merge(
+          searchable_text_vector768i_key_value_pair
+        )
+      end
 
       include_examples 'indexing mods'
     end
 
     context 'contains degree information' do
       let(:mods_fixture) { fixture_to_str('desc_metadata/etd_mods.xml') }
-      let(:expected_json) { fixture_to_json_symbol_id('desc_metadata/etd_to_solr.json') }
+      let(:expected_json) do
+        fixture_to_json_symbol_id('desc_metadata/etd_to_solr.json').merge(
+          searchable_text_vector768i_key_value_pair
+        )
+      end
 
       include_examples 'indexing mods'
     end
 
     context 'contains multiple parent publication authors' do
       let(:mods_fixture) { fixture_to_str('desc_metadata/parent_publication_names.xml') }
-      let(:expected_json) { fixture_to_json_symbol_id('desc_metadata/parent_publication_names.json') }
+      let(:expected_json) do
+        fixture_to_json_symbol_id('desc_metadata/parent_publication_names.json').merge(
+          searchable_text_vector768i_key_value_pair
+        )
+      end
 
       include_examples 'indexing mods'
     end
 
     context 'contains related items' do
       let(:mods_fixture) { fixture_to_str('desc_metadata/related_items.xml') }
-      let(:expected_json) { fixture_to_json_symbol_id('desc_metadata/related_items.json') }
+      let(:expected_json) do
+        fixture_to_json_symbol_id('desc_metadata/related_items.json').merge(
+          searchable_text_vector768i_key_value_pair
+        )
+      end
 
       include_examples 'indexing mods'
     end
 
     context 'contains subject titles and subject names' do
       let(:mods_fixture) { fixture_to_str('desc_metadata/subject_names_and_titles.xml') }
-      let(:expected_json) { fixture_to_json_symbol_id('desc_metadata/subject_names_and_titles.json') }
+      let(:expected_json) do
+        fixture_to_json_symbol_id('desc_metadata/subject_names_and_titles.json').merge(
+          searchable_text_vector768i_key_value_pair
+        )
+      end
 
       include_examples 'indexing mods'
     end
 
     context 'contains access restriction' do
       let(:mods_fixture) { fixture_to_str('desc_metadata/access_restriction.xml') }
-      let(:expected_json) { fixture_to_json_symbol_id('desc_metadata/access_restriction.json') }
+      let(:expected_json) do
+        fixture_to_json_symbol_id('desc_metadata/access_restriction.json').merge(
+          searchable_text_vector768i_key_value_pair
+        )
+      end
 
       include_examples 'indexing mods'
     end
 
     context 'contains multiple series' do
       let(:mods_fixture) { fixture_to_str('desc_metadata/multiple_series.xml') }
-      let(:expected_json) { fixture_to_json_symbol_id('desc_metadata/multiple_series.json') }
+      let(:expected_json) do
+        fixture_to_json_symbol_id('desc_metadata/multiple_series.json').merge(searchable_text_vector768i_key_value_pair)
+      end
 
       include_examples 'indexing mods'
     end
 
     context 'contains multiple languages' do
       let(:mods_fixture) { fixture_to_str('desc_metadata/languages.xml') }
-      let(:expected_json) { fixture_to_json_symbol_id('desc_metadata/languages.json') }
+      let(:expected_json) do
+        fixture_to_json_symbol_id('desc_metadata/languages.json').merge(
+          searchable_text_vector768i_key_value_pair
+        )
+      end
+
+      include_examples 'indexing mods'
+    end
+
+    context 'when embedding_service[:enabled] config option equals false' do
+      let(:mods_fixture) { fixture_to_str('desc_metadata/non_sort_title.xml') }
+      let(:expected_json) do
+        # NOTE: We are not merging searchable_text_vector768i_key_value_pair into the expected json for this test
+        fixture_to_json_symbol_id('desc_metadata/non_sort_title.json')
+      end
+
+      before do
+        allow(Rails.application.config.embedding_service).to receive(:[]).with(:enabled).and_return(false)
+      end
 
       include_examples 'indexing mods'
     end

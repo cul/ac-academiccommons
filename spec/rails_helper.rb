@@ -47,7 +47,7 @@ RSpec.configure do |config|
   config.include Warden::Test::Helpers
   config.include ActiveSupport::Testing::TimeHelpers
 
-  config.fixture_paths = File.join(::Rails.root, 'spec', 'fixtures')
+  config.fixture_paths = Rails.root.join('spec/fixtures').to_s
 
   # If you're not using ActiveRecord, or you'd prefer not to run each of your
   # examples within a transaction, remove the following line or assign false

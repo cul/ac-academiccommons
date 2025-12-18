@@ -39,7 +39,7 @@ namespace :ac do
         end
       end
 
-      bots.sort! { |a, b| a['pattern'] <=> b['pattern'] }
+      bots.sort_by! { |bot| bot['pattern'] }
 
       puts Rainbow("\nListing #{bots.count} Bots\n").cyan
 

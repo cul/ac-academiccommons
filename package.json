@@ -5,6 +5,9 @@
   "repository": "git@github.com:cul/ac-academiccommons.git",
   "author": "Carla Galarza <cmg2228@columbia.edu>",
   "license": "MIT",
+  "scripts": {
+    "start:dev": "./bin/vite dev"
+  },
   "dependencies": {
     "@fortawesome/fontawesome-free": "^5.2.0",
     "@popperjs/core": "^2.11.6",

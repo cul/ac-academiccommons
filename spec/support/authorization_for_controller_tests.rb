@@ -37,7 +37,6 @@ shared_examples 'authorization required' do |success_status|
       http_request
     end
 
-    # rubocop:disable RSpec/ExampleLength
     it 'returns correct status code based on content type' do
       if response.media_type == 'application/json'
         expect(response.status).to eq(403)
@@ -47,7 +46,6 @@ shared_examples 'authorization required' do |success_status|
       end
     end
   end
-  # rubocop:enable RSpec/ExampleLength
 
   context 'logged in as a non-admin user' do
     include_context 'non-admin user for controller'
