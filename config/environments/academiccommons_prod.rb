@@ -21,6 +21,7 @@ AcademicCommons::Application.configure do
 
   # Compress JavaScripts and CSS.
   config.assets.js_compressor = Uglifier.new(harmony: true)
+  puts 'EVALUATING ACADEMIC COMMONS PROD CONFIG FILE!!!!!!!'
   # Compress CSS
   # config.assets.css_compressor = :sass
 
