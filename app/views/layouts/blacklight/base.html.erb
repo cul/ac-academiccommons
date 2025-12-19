@@ -1,8 +1,10 @@
 <%#
-  Overriding Blacklight v7.2.0 template.
-  - use pack asset helpers
+  Overriding Blacklight v8 template.
+  - use vite asset tag helpers
   - render the cul_banner and alert_box partials
+  - add 0 padding to #main-container
 -%>
+
 <!DOCTYPE html>
 <html lang="en" class="no-js">
   <head>
@@ -29,9 +31,10 @@
     <%= render :partial => 'shared/cul_banner' %>
     <%= render :partial => 'shared/header_navbar' %>
 
-    <main id="main-container" class="<%= container_classes %>" role="main" aria-label="<%= t('blacklight.main.aria.main_container') %>">
+    <main id="main-container" class="p-0 <%= container_classes %>" role="main" aria-label="<%= t('blacklight.main.aria.main_container') %>">
       <%= content_for(:container_header) %>
 
+        <%# why render to a layout? %>
         <%= render partial: 'shared/flash_msg', layout: 'shared/flash_messages' %>
 
         <div class="row">

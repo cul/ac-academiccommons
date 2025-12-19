@@ -10,6 +10,7 @@ gem 'active-fedora', '~> 8.7'
 gem 'active-triples', git: 'https://github.com/cul/ActiveTriples', branch: 'deprecation_update'
 gem 'addressable'
 gem 'blacklight', '~> 8.12.3'
+# Technically this does not officially support BL 8 (https://github.com/projectblacklight/blacklight_oai_provider/commit/492ca112dcc1ecd150c23ca27cd2554e58492562)
 gem 'blacklight_oai_provider', github: 'projectblacklight/blacklight_oai_provider'
 # will wait for vite migration to use rangelimit (ACHYDRA-1022)
 # gem 'blacklight_range_limit',
@@ -47,13 +48,16 @@ gem 'resque', '~> 2.7.0'
 gem 'rinku'
 gem 'rsolr-ext'
 gem 'rubyzip', require: 'zip'
-gem 'sassc-rails'
+# gem 'sassc-rails'
 gem 'sitemap_generator'
+gem 'sprockets-rails'
+# gem 'terser', '~> 1.2'
 gem 'turbolinks'
 # We had to pin uglifier gem below 4.2 in order for assets to compile properly in a deployed environment.
 # See the following discussions: https://github.com/lautis/uglifier/issues/173 & https://github.com/lautis/uglifier/issues/185
 # See config.assets.js_compressor in configuration problems
-gem 'uglifier', '4.2.1'
+# gem 'concurrent-ruby', '~> 1.3.6'
+# gem 'uglifier', '4.2.1'
 gem 'unicode'
 gem 'vite_rails'
 gem 'voight_kampff', '~>2.0', require: 'voight_kampff/rails'

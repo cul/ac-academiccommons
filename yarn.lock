@@ -622,7 +622,19 @@
   resolved "https://registry.npmjs.org/@popperjs/core/-/core-2.11.8.tgz"
   integrity sha512-P1st0aksCrn9sGZhp8GMYwBnQsbvAWsZAX44oXNNvLHGqAOcoVxmjZiohstwQ7SqKnbR47akdNi+uleWD8+g6A==
 
-"@rails/activestorage@^8.0.4":
+"@rails/actioncable@^8.0.0":
+  version "8.1.100"
+  resolved "https://registry.yarnpkg.com/@rails/actioncable/-/actioncable-8.1.100.tgz#b1f85f3482425fb91e5eba1deb55152ee0bb2f85"
+  integrity sha512-j4vJQqz51CDVYv2UafKRu4jiZi5/gTnm7NkyL+VMIgEw3s8jtVtmzu9uItUaZccUg9NJ6o05yVyBAHxNfTuCRA==
+
+"@rails/actiontext@^8.0.0":
+  version "8.1.100"
+  resolved "https://registry.yarnpkg.com/@rails/actiontext/-/actiontext-8.1.100.tgz#206688f9989c57afa5908e6d1b09302fe00fdfde"
+  integrity sha512-gnLK1HgGCmmVGY40hCiAJ4RwGALwRmiRzqyht6fiM/hrQnul278CqCg9jwV2IQOo7+jMbktGx2O9luGUzayQIA==
+  dependencies:
+    "@rails/activestorage" ">= 8.1.0-alpha"
+
+"@rails/activestorage@>= 8.1.0-alpha", "@rails/activestorage@^8.0.4":
   version "8.1.100"
   resolved "https://registry.npmjs.org/@rails/activestorage/-/activestorage-8.1.100.tgz"
   integrity sha512-rlZg23KYT7JFYXl1tj1WD9nm/yvtUvZT6pzNMVX+HaOjPyGq8xpEv1ADrrhawkbMktKxRj3xDVZ3d/qy0akHvw==
@@ -766,6 +778,11 @@
   resolved "https://registry.npmjs.org/@types/sizzle/-/sizzle-2.3.3.tgz"
   integrity sha512-JYM8x9EGF163bEyhdJBpR2QX1R5naCJHC8ucJylJ3w9/CVBaskdQ8WqBf8MmQrd1kRvp/a4TS8HJ+bxzR7ZJYQ==
 
+"@types/trusted-types@^2.0.7":
+  version "2.0.7"
+  resolved "https://registry.yarnpkg.com/@types/trusted-types/-/trusted-types-2.0.7.tgz#baccb07a970b91707df3a3e8ba6896c57ead2d11"
+  integrity sha512-ScaPdn1dQczgbl0QFTeTOmVHFULt394XJgOQNoyVhZ6r2vLnMLJfBPd53SB52T/3G36VI1/g2MZaX0cwDuXsfw==
+
 "@types/typeahead.js@^0.11.1":
   version "0.11.1"
   resolved "https://registry.npmjs.org/@types/typeahead.js/-/typeahead.js-0.11.1.tgz"
@@ -855,14 +872,12 @@ big.js@^5.2.2:
   resolved "https://registry.npmjs.org/big.js/-/big.js-5.2.2.tgz"
   integrity sha512-vyL2OymJxmarO8gxMr0mhChsO9QGwhynfuu4+MHTAW6czfq9humCB7rKpUjDd9YUiDPU4mzpyupFSvOClAwbmQ==
 
-blacklight-frontend@^7.33.1:
-  version "7.38.0"
-  resolved "https://registry.npmjs.org/blacklight-frontend/-/blacklight-frontend-7.38.0.tgz"
-  integrity sha512-zsX+cMgeuUuKxwx1FydE4H1XzkTJoywmwGOznllyVYCatIlG2xCVM8IFbuv+VB9Qwoss9z0MjH87l2nMnSPKIA==
+blacklight-frontend@^8.12.1:
+  version "8.12.3"
+  resolved "https://registry.yarnpkg.com/blacklight-frontend/-/blacklight-frontend-8.12.3.tgz#1996706d7da84f84b64fbf1d2e997473199edf2d"
+  integrity sha512-o93FffPgANUWtS6tzzFmX7Q7n/JrzXryRQa/QprwhDBRRlNRa7VTIikan2HESoJ5kVcDu0X8OEOblPhtqozXIA==
   dependencies:
     bootstrap ">=4.3.1 <6.0.0"
-    jquery "^3.5.1"
-    typeahead.js "^0.11.1"
 
 bootstrap-slider@^11.0.2:
   version "11.0.2"
@@ -1024,6 +1039,13 @@ dom-walk@^0.1.0:
   version "0.1.2"
   resolved "https://registry.npmjs.org/dom-walk/-/dom-walk-0.1.2.tgz"
   integrity sha512-6QvTW9mrGeIegrFXdtQi9pk7O/nSK6lSdXW2eqUspN5LWD7UTji2Fqw5V2YLjBpHEoU9Xl/eUWNpDeZvoyOv2w==
+
+dompurify@^3.2.5:
+  version "3.3.1"
+  resolved "https://registry.yarnpkg.com/dompurify/-/dompurify-3.3.1.tgz#c7e1ddebfe3301eacd6c0c12a4af284936dbbb86"
+  integrity sha512-qkdCKzLNtrgPFP1Vo+98FRzJnBRGe4ffyCea9IwHB1fyxPOeNTHpLKYGd4Uk9xvNoH0ZoOjwZxNptyMwqrId1Q==
+  optionalDependencies:
+    "@types/trusted-types" "^2.0.7"
 
 dropzone@^6.0.0-beta.2:
   version "6.0.0-beta.2"
@@ -1218,11 +1240,6 @@ jquery@>=1.11, "jquery@>=1.12.0 <5.0.0", jquery@>=1.7, "jquery@>=1.8.0 <4.0.0", 
   version "3.6.0"
   resolved "https://registry.npmjs.org/jquery/-/jquery-3.6.0.tgz"
   integrity sha512-JVzAR/AjBvVt2BmYhxRCSYysDsPcssdmTFnzyLEts9qNwmjmu4JTAMYubEfwVOSwpQ1I1sKKFcxhZCI2buerfw==
-
-jquery@^3.5.1:
-  version "3.7.1"
-  resolved "https://registry.npmjs.org/jquery/-/jquery-3.7.1.tgz"
-  integrity sha512-m4avr8yL8kmFN8psrbFFFmB/If14iN5o9nw/NgnnM+kybDJpRsAynV2BsfpTYrTRysYUdADVD7CkUUizgkpLfg==
 
 json5@^2.1.2:
   version "2.2.0"
@@ -1989,6 +2006,13 @@ to-regex-range@^5.0.1:
   integrity sha512-65P7iz6X5yEr1cwcgvQxbbIw7Uk3gOy5dIdtZ4rDveLqhrdJP+Li/Hx6tyK0NEb+2GCyneCMJiGqrADCSNk8sQ==
   dependencies:
     is-number "^7.0.0"
+
+trix@^2.0.0:
+  version "2.1.15"
+  resolved "https://registry.yarnpkg.com/trix/-/trix-2.1.15.tgz#fabad796ea779a8ae96522402fbc214cbfc4015f"
+  integrity sha512-LoaXWczdTUV8+3Box92B9b1iaDVbxD14dYemZRxi3PwY+AuDm97BUJV2aHLBUFPuDABhxp0wzcbf0CxHCVmXiw==
+  dependencies:
+    dompurify "^3.2.5"
 
 tslib@^2.1.0:
   version "2.8.1"

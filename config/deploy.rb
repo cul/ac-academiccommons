@@ -72,6 +72,10 @@ set :ssh_options, { forward_agent: true }
 # Namespace crontab based on app environment.
 set :whenever_identifier, ->{ fetch(:deploy_name) }
 
+# Configure Capistrano for Vite (from https://vite-ruby.netlify.app/guide/deployment.html#using-capistrano)
+append :linked_dirs, 'public/vite'
+append :assets_manifests, 'public/vite/manifest*.*'
+
 namespace :deploy do
   desc "Report the environment"
   task :report do

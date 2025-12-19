@@ -1,0 +1,12 @@
+<%# 
+    Overriding some Blacklight 8 styles:
+      - Add 'close' class for Blacklight 8 flash message element
+%>
+
+<div class="alert alert-dismissible <%= @classes %>">
+  <%= message %>
+  <%= tag.button button_contents, type: "button", class: "btn-close close",
+                     data: { dismiss: "alert", bs_dismiss: "alert" },
+                     aria: { label: "Close" } %>
+</div>
+
