@@ -662,6 +662,8 @@ GEM
     stomp (1.4.10)
     stringio (3.1.7)
     temple (0.8.2)
+    terser (1.2.6)
+      execjs (>= 0.3.0, < 3)
     thor (1.4.0)
     tilt (2.0.10)
     timeout (0.4.3)
@@ -788,6 +790,7 @@ DEPENDENCIES
   solr_wrapper (~> 4.0)
   spring
   sqlite3 (>= 2.1)
+  terser (~> 1.2)
   turbolinks
   uglifier (= 4.2.1)
   unicode
