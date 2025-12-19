@@ -1,4 +1,4 @@
-require Rails.root.join("config/environments/academiccommons_prod")
+require Rails.root.join("config/environments/deployed")
 
 AcademicCommons::Application.configure do
   # Expands the lines which load the assets

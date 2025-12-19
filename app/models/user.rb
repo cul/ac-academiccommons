@@ -45,6 +45,7 @@ class User < ApplicationRecord
 
     begin
       ldap = Cul::LDAP.new
+      # TODO: tests fail here...
       person = ldap.find_by_uni(uid)
 
       if person

@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe Deposit, type: :model do
+describe Deposit, type: :model, focus: true do # rubocop:disable RSpec/Focus
   describe '#mets' do
     shared_examples 'generates expected mets' do
       it 'generates correct mets' do
@@ -9,7 +9,7 @@ describe Deposit, type: :model do
     end
 
     context 'when deposit contains url' do
-      subject(:deposit) { FactoryBot.create(:deposit) }
+      subject(:deposit) { FactoryBot.create(:deposit, :with_user) }
 
       let(:expected_xml) { fixture_to_xml('deposit_mets', 'mets.xml') }
 
