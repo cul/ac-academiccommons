@@ -53,8 +53,8 @@ gem 'turbolinks'
 # We had to pin uglifier gem below 4.2 in order for assets to compile properly in a deployed environment.
 # See the following discussions: https://github.com/lautis/uglifier/issues/173 & https://github.com/lautis/uglifier/issues/185
 # See config.assets.js_compressor in configuration problems
-gem 'concurrent-ruby', '~> 1.3.6'
-gem 'uglifier', '4.2.1'
+# gem 'concurrent-ruby', '~> 1.3.6'
+# gem 'uglifier', '4.2.1'
 gem 'unicode'
 gem 'vite_rails'
 gem 'voight_kampff', '~>2.0', require: 'voight_kampff/rails'
