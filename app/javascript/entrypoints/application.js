@@ -55,6 +55,12 @@ import * as ActiveStorage from '@rails/activestorage';
 ActiveStorage.start();
 window.ActiveStorage = ActiveStorage;
 
+import * as ActionCable from '@rails/actioncable';
+window.ActionCable = ActionCable;
+
+import "trix";
+import "@rails/actiontext";
+
 // Custom JS modules
 import '../src/admin/enable-optional-fields';
 import '../src/admin/datatables'; 
