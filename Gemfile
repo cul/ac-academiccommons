@@ -48,6 +48,7 @@ gem 'rsolr-ext'
 gem 'rubyzip', require: 'zip'
 # gem 'sassc-rails'
 gem 'sitemap_generator'
+gem 'sprockets-rails'
 # gem 'terser', '~> 1.2'
 gem 'turbolinks'
 # We had to pin uglifier gem below 4.2 in order for assets to compile properly in a deployed environment.

@@ -82,5 +82,8 @@ module AcademicCommons
     config.active_storage.service = :local
 
     config.embedding_service = config_for(:embedding_service)
+
+    # Disable assets (sprockets) for actiontext (will be handled by vite)
+    config.action_text.embed_assets = false
   end
 end

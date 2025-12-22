@@ -2,18 +2,18 @@ require Rails.root.join("config/environments/deployed")
 
 AcademicCommons::Application.configure do
   # Does not expand the lines which load the assets
-  # config.assets.debug = true
+  config.assets.debug = true
 
   # Do not fallback to assets pipeline if a precompiled asset is missed.
-  # config.assets.compile = true
+  config.assets.compile = true
 
   # Compresses assets.
-  # config.assets.compress = false
+  config.assets.compress = false
 
   # Adds additional error checking when serving assets at runtime.
   # Checks for improperly declared sprockets dependencies.
   # Raises helpful error messages.
-  # config.assets.raise_runtime_errors = true
+  config.assets.raise_runtime_errors = true
 
   config.action_dispatch.trusted_proxies = [
     # Add 127.0.0.1 as a trusted proxy so that the X-Forwarded-For value set by Anubis (or any other internal proxy)
