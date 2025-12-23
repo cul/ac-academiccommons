@@ -11,10 +11,11 @@ Rails.application.config.after_initialize do
   config.assets.paths.reject! do |path|
     FRAMEWORKS_WITH_ASSETS.any? { |dir| path.to_s.include? "/#{dir}/" }
   end
-
-  # Reset precompile list to Blacklight assets only
-  config.assets.precompile = %w[
-    blacklight/blacklight.js
-    blacklight_oai_provider/oai2.xsl
-  ]
+  puts '0000000000 the pathhhhhsss'
+  puts config.assets.paths
+  puts '0000000000'
 end
+
+# ToDO :
+# maybe, we do not need this file...?
+#
