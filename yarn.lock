@@ -872,14 +872,12 @@ big.js@^5.2.2:
   resolved "https://registry.npmjs.org/big.js/-/big.js-5.2.2.tgz"
   integrity sha512-vyL2OymJxmarO8gxMr0mhChsO9QGwhynfuu4+MHTAW6czfq9humCB7rKpUjDd9YUiDPU4mzpyupFSvOClAwbmQ==
 
-blacklight-frontend@^7.33.1:
-  version "7.38.0"
-  resolved "https://registry.npmjs.org/blacklight-frontend/-/blacklight-frontend-7.38.0.tgz"
-  integrity sha512-zsX+cMgeuUuKxwx1FydE4H1XzkTJoywmwGOznllyVYCatIlG2xCVM8IFbuv+VB9Qwoss9z0MjH87l2nMnSPKIA==
+blacklight-frontend@^8.12.1:
+  version "8.12.3"
+  resolved "https://registry.yarnpkg.com/blacklight-frontend/-/blacklight-frontend-8.12.3.tgz#1996706d7da84f84b64fbf1d2e997473199edf2d"
+  integrity sha512-o93FffPgANUWtS6tzzFmX7Q7n/JrzXryRQa/QprwhDBRRlNRa7VTIikan2HESoJ5kVcDu0X8OEOblPhtqozXIA==
   dependencies:
     bootstrap ">=4.3.1 <6.0.0"
-    jquery "^3.5.1"
-    typeahead.js "^0.11.1"
 
 bootstrap-slider@^11.0.2:
   version "11.0.2"
@@ -1242,11 +1240,6 @@ jquery@>=1.11, "jquery@>=1.12.0 <5.0.0", jquery@>=1.7, "jquery@>=1.8.0 <4.0.0", 
   version "3.6.0"
   resolved "https://registry.npmjs.org/jquery/-/jquery-3.6.0.tgz"
   integrity sha512-JVzAR/AjBvVt2BmYhxRCSYysDsPcssdmTFnzyLEts9qNwmjmu4JTAMYubEfwVOSwpQ1I1sKKFcxhZCI2buerfw==
-
-jquery@^3.5.1:
-  version "3.7.1"
-  resolved "https://registry.npmjs.org/jquery/-/jquery-3.7.1.tgz"
-  integrity sha512-m4avr8yL8kmFN8psrbFFFmB/If14iN5o9nw/NgnnM+kybDJpRsAynV2BsfpTYrTRysYUdADVD7CkUUizgkpLfg==
 
 json5@^2.1.2:
   version "2.2.0"

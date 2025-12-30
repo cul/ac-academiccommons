@@ -24,9 +24,6 @@ import 'datatables.net-bs4'
 // it is only used on the element in the new upload view (with id creator-list)
 import 'jquery-ui-dist/jquery-ui';
 
-// Loading blacklight -- what to import depends on the version! (https://github.com/projectblacklight/blacklight/issues/3050)
-import 'blacklight-frontend/app/assets/javascripts/blacklight/blacklight';
-
 // We are waiting until the vite migration is complete to add the range limit slider back --- ACHYDRA 1022
 // import '../src/blacklight_range_limit/blacklight_range_limit';
 
@@ -36,6 +33,9 @@ import '@fortawesome/fontawesome-free/js/all.js';
 import Popper from 'popper.js';
 window.Popper = Popper;
 import 'bootstrap';
+
+// Loading blacklight -- what to import depends on the version! (https://github.com/projectblacklight/blacklight/issues/3050)
+import 'blacklight-frontend/app/assets/javascripts/blacklight/blacklight';
 
 // n.b.--we should consider migrating to turbo instead of UJS" https://guides.rubyonrails.org/v7.2/working_with_javascript_in_rails.html#replacements-for-rails-ujs-functionality
 // See ACHYDRA-1032

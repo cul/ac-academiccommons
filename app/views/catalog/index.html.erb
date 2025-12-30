@@ -1,8 +1,10 @@
 <%#
-  Overriding Blacklight v6.14.1 template.
+  Overriding Blacklight v8 template.
 
   - removes facet sidenav from front page
   - removes homepage conditional logic, homepage moved to its own template
+  - render view components for sidebar (instead of overriding partials, during pre-Blacklight 8)
+    based on the configuration in app/controllers/catalog_controller.rb
 
 %>
 <% content_for(:head) do %>

@@ -3,11 +3,9 @@
 
 @import '../stylesheets/modules/variables';
 
-@import 'bootstrap';
-
 @import 'bootstrap/scss/bootstrap';
 
-@import 'blacklight-frontend/app/assets/stylesheets/blacklight/blacklight_base';
+@import 'blacklight-frontend/app/assets/stylesheets/blacklight/blacklight';
 
 // @import '~bootstrap-slider/src/sass/bootstrap-slider';
 @import 'bootstrap-slider/src/sass/bootstrap-slider';
