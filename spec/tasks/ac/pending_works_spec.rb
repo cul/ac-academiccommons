@@ -6,10 +6,8 @@ describe 'rake ac:delete_stale_pending_works', type: :task do
   context 'when a deposit with no hyacinth identifier' do
     puts 'inside context'
     let!(:deposit_fresh) { FactoryBot.create(:deposit, :with_user) }
-    puts '1'
     let!(:deposit_stale) do
       FactoryBot.create(:deposit, :with_user, created_at: 7.months.ago)
-      puts '2'
     end
 
     describe 'that is less than 6 months old' do
