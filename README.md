@@ -88,6 +88,14 @@ If you would like to see pages that require authentication follow the steps belo
    rake db:seed
    ```
 
+2. Create a `config/cul_ldap.yml` file with the following content. Replace the username and password with the values as instructed in this [wiki page](https://columbiauniversitylibraries.atlassian.net/wiki/spaces/USGSERVICES/pages/10947594/LDAP+Lookup+including+affiliations+via+privileged+lookup).
+   ```
+   shared:
+     auth:
+      username: "uni=PLACEHOLDER_USERNAME,ou=People,o=Columbia University,c=US"  # Distinguished Name (dn)
+      password: PLACEHOLDER_PASSWORD 
+   ```
+
 2. Log in as one of the users that was just added. When you click the `log in` link, you will be prompted for a uni.
 
    For administrative privileges, log in as `ta123`.
