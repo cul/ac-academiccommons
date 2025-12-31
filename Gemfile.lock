@@ -11,6 +11,14 @@ GIT
       rdf-vocab (~> 0.8)
 
 GIT
+  remote: https://github.com/cul/cul-ldap
+  revision: f679c3441e56e1d8472dc6ac70941c0e82f8c187
+  branch: better-error-handling
+  specs:
+    cul-ldap (0.0.1)
+      net-ldap (~> 0.16)
+
+GIT
   remote: https://github.com/samvera-deprecated/jettywrapper.git
   revision: 6b03c21726a83dcecf09d9b20683bfcd63f106d1
   branch: master
@@ -177,8 +185,6 @@ GEM
     css_parser (1.21.1)
       addressable
     csv (3.3.5)
-    cul-ldap (0.0.1)
-      net-ldap (~> 0.16)
     daemons (1.4.1)
     database_cleaner (2.1.0)
       database_cleaner-active_record (>= 2, < 3)
@@ -347,7 +353,9 @@ GEM
     net-imap (0.5.9)
       date
       net-protocol
-    net-ldap (0.17.0)
+    net-ldap (0.20.0)
+      base64
+      ostruct
     net-pop (0.1.2)
       net-protocol
     net-protocol (0.2.2)
@@ -390,7 +398,7 @@ GEM
       actionpack (>= 4.2)
       omniauth (~> 2.0)
     orm_adapter (0.5.0)
-    ostruct (0.5.5)
+    ostruct (0.6.3)
     parallel (1.27.0)
     parser (3.3.10.0)
       ast (~> 2.4.1)
@@ -733,7 +741,7 @@ DEPENDENCIES
   capistrano-resque (= 0.2.1)
   capybara (~> 3.39)
   csv (~> 3.3)
-  cul-ldap
+  cul-ldap!
   database_cleaner (~> 2.1.0)
   deprecation (>= 1.1.0)
   devise

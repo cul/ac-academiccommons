@@ -16,7 +16,8 @@ gem 'blacklight_oai_provider'
 #     git: 'https://github.com/JackBlackLight/blacklight_range_limit.git', branch: 'use_blacklight_component'
 gem 'bootsnap'
 gem 'cancancan'
-gem 'cul-ldap'
+# Point to our branch of cul-ldap -- this handles no results case for find_by_uni queries without raising an error
+gem 'cul-ldap', git: 'https://github.com/cul/cul-ldap', branch: 'better-error-handling'
 gem 'deprecation', '>= 1.1.0'
 gem 'devise' # consider pinning
 gem 'fancybox2-rails' # Used in helper classes. TODO: Confirm that this is needed and used by the application.
