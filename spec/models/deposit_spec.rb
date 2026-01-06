@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe Deposit, type: :model, focus: true do # rubocop:disable RSpec/Focus
+describe Deposit, type: :model do
   describe '#mets' do
     shared_examples 'generates expected mets' do
       it 'generates correct mets' do
