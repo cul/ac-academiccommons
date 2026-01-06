@@ -4,4 +4,4 @@ development:
 
 test:
   base_url: http://localhost:9292
-  enabled: false
+  enabled: true
