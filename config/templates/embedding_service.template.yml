@@ -1,7 +1,7 @@
 development:
   base_url: http://localhost:9292
-  enabled: true
+  enabled: false
 
 test:
   base_url: http://localhost:9292
-  enabled: true
+  enabled: false
