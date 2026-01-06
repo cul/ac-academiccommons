@@ -12,6 +12,8 @@ module Admin
     end
 
     def create
+      Rails.logger.debug 'why here?'
+      Rails.logger.debug @featured_search
       @featured_search = FeaturedSearch.new(featured_search_params)
       if @featured_search.save
         flash[:success] = "Created!"

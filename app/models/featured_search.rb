@@ -6,6 +6,11 @@ class FeaturedSearch < ActiveRecord::Base
   belongs_to :feature_category
   has_many :featured_search_values, dependent: :destroy
 
+  validates :slug, presence: true
+  validates :label, presence: true
+  validates :feature_category, presence: true
+  validates :priority, presence: true
+
   accepts_nested_attributes_for :featured_search_values, allow_destroy: true, reject_if: proc { |atts| atts['value'].strip.blank? }
 
   def image_url
