@@ -68,16 +68,12 @@ class CatalogController < ApplicationController
 
     # solr field configuration for search results/index views
     config.show.title_field = 'title_ssi'
-    #  this determines how the show partial is chosen -->
-    #  todo: add comments to this and index
+    # solr field to use to render format-specific partials
     config.show.display_type_field = 'degree_level_name_ssim'
     config.show.genre = 'genre_ssim'
     config.show.author = 'author_ssim'
 
-    # TODO: upgrade note 5
     config.show.partials = [:show] # Removing :show_header partial
-
-    # config.show.show_tools_component = MyShowToolsComponent # default is Blacklight::Document::ShowToolsComponent
 
     # solr fields to be displayed in the show (single result) view
     #   The ordering of the field names is the order of the display

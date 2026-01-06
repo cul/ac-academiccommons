@@ -20,15 +20,6 @@ GIT
       rexml
 
 GIT
-  remote: https://github.com/projectblacklight/blacklight_oai_provider.git
-  revision: 69795b06cc37150386b6d9732be027d200412598
-  specs:
-    blacklight_oai_provider (7.0.2)
-      blacklight (>= 7.0, < 9)
-      oai (~> 1.2)
-      rexml
-
-GIT
   remote: https://github.com/samvera-deprecated/jettywrapper.git
   revision: 6b03c21726a83dcecf09d9b20683bfcd63f106d1
   branch: master
@@ -132,8 +123,7 @@ GEM
     bcrypt_pbkdf (1.1.0)
     benchmark (0.5.0)
     bigdecimal (3.3.1)
-    blacklight (7.41.0)
-      deprecation
+    blacklight (8.12.3)
       globalid
       i18n (>= 1.7.0)
       jbuilder (~> 2.7)
@@ -765,7 +755,6 @@ DEPENDENCIES
   omniauth (>= 2.1)
   omniauth-cul
   omniauth-rails_csrf_protection (~> 1.0)
-  partial_finder (~> 0.1)
   premailer (~> 1.27.0)
   premailer-rails
   puma (~> 5.2)
