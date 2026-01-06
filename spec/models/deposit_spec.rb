@@ -9,7 +9,7 @@ describe Deposit, type: :model do
     end
 
     context 'when deposit contains url' do
-      subject(:deposit) { FactoryBot.create(:deposit, :with_user) }
+      subject(:deposit) { FactoryBot.create(:deposit) }
 
       let(:expected_xml) { fixture_to_xml('deposit_mets', 'mets.xml') }
 

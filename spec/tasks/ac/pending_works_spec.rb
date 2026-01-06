@@ -13,9 +13,7 @@ describe 'rake ac:delete_stale_pending_works', type: :task do
 
     describe 'that is less than 6 months old' do
       it 'does not delete the deposit' do
-        puts 'inside pending works test!!'
         task.execute
-        puts Deposit
         expect(Deposit.exists?(deposit_fresh.id)).to be true
       end
     end

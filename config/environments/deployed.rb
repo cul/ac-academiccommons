@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+# This is our default configuration -- override these values in the environment files (they all require this file)
+
 AcademicCommons::Application.configure do # rubocop:disable Metrics/BlockLength
   # Settings specified here will take precedence over those in config/application.rb
 
