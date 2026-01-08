@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe SolrDocumentsController, type: :controller, focus: true do # rubocop:disable RSpec/Focus
+describe SolrDocumentsController, type: :controller do
   include_context 'mock ldap request'
 
   shared_context 'good api key' do
