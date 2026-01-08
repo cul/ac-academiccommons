@@ -1,6 +1,8 @@
 require 'rails_helper'
 
-describe SolrDocumentsController, type: :controller do
+describe SolrDocumentsController, type: :controller, focus: true do # rubocop:disable RSpec/Focus
+  include_context 'mock ldap request'
+
   shared_context 'good api key' do
     let(:api_key) do
       key = Rails.application.credentials.index_api_key
