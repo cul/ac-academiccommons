@@ -24,6 +24,8 @@ import 'datatables.net-bs4'
 // it is only used on the element in the new upload view (with id creator-list)
 import 'jquery-ui-dist/jquery-ui';
 
+import 'blacklight-frontend/app/assets/javascripts/blacklight/blacklight';
+
 // We are waiting until the vite migration is complete to add the range limit slider back --- ACHYDRA 1022
 // import '../src/blacklight_range_limit/blacklight_range_limit';
 
