@@ -20,7 +20,8 @@ shared_context 'mock ldap request' do
   end
 
   before :each do
-    allow_any_instance_of(Cul::LDAP).to receive(:initialize).and_return(cul_ldap)
-    allow_any_instance_of(Cul::LDAP).to receive(:find_by_uni).with(uni).and_return(cul_ldap_entry)
+    # allow_any_instance_of(Cul::LDAP).to receive(:find_by_uni).with(uni).and_return(cul_ldap_entry)
+    allow(Cul::LDAP).to receive(:new).and_return(cul_ldap)
+    allow(cul_ldap).to receive(:find_by_uni).and_return(cul_ldap_entry)
   end
 end
