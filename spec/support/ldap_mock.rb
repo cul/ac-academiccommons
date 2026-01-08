@@ -1,11 +1,11 @@
 shared_context 'mock ldap request' do
-  let(:uni) { 'abc123' }
+  let(:uni) { 'tu123' } # Matches the first uid created by User Factory as in "FactoryBot.create(:deposit, :with_user)"
 
   let(:cul_ldap_entry) do
     instance_double(
       'Cul::LDAP::Entry',
-      email: 'janedoe@columbia.edu', last_name: 'Doe', first_name: 'Jane',
-      name: 'Jane Doe', title: 'Librarian', organizational_unit: 'Columbia University Libraries'
+      email: 'tu123@columbia.edu', last_name: 'Test', first_name: 'User',
+      name: 'Test User', title: 'Librarian', organizational_unit: 'Columbia University Libraries'
     )
   end
 
