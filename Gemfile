@@ -17,7 +17,7 @@ gem 'blacklight_oai_provider'
 gem 'bootsnap'
 gem 'cancancan'
 # Point to our branch of cul-ldap -- this handles no results case for find_by_uni queries without raising an error
-gem 'cul-ldap', git: 'https://github.com/cul/cul-ldap', branch: 'better-error-handling'
+gem 'cul-ldap', '~> 0.1.0'
 gem 'deprecation', '>= 1.1.0'
 gem 'devise' # consider pinning
 gem 'fancybox2-rails' # Used in helper classes. TODO: Confirm that this is needed and used by the application.
