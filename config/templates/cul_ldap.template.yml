@@ -1,0 +1,8 @@
+shared:
+  host: 'server'                   # Required.
+  port: 636                                   # Required. Standard port for simple-tls encrypted ldap connections.
+  encryption: simple_tls
+  auth:                                       # Required (all fields).
+      method: simple
+      username: "USERNAME"
+      password: "PASSWORD"

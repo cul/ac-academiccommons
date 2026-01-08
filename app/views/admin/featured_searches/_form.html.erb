@@ -11,6 +11,15 @@
     <%= f.label :label, 'Feature Label' %>
     <%= f.text_field :label %>
   </div>
+
+
+<%#  todo : here (in app views admin featured_searches _form.html.erb %>
+<% puts 'inside the form view!!!' %>
+<% puts @featured_search.inspect %>
+<% puts @featured_search.featured_search_values.inspect %>
+<% puts 'aoaoaoaoaoaoaoaoao' %>
+
+
   <%= f.fields_for :featured_search_values do |value_form| %>
     <div class="form-group">
       <%= value_form.label :value, 'Filter Value' %>
@@ -18,12 +27,39 @@
       <%= value_form.text_field :value %>
     </div>
   <%- end %>
+
   <%= f.fields_for :featured_search_values, FeaturedSearchValue.new do |value_form| %>
     <div class="form-group">
       <%= value_form.label :value, 'Add Filter Value' %>
       <%= value_form.text_field :value %>
     </div>
   <%- end %>
+
+
+  <%# copy below: %>
+  <div class="m-5" style='width: 500px; height: 5px; border: solid red'>break</div>
+
+<%= f.label :featured_search_values, 'Filter Values', class: 'control-label' %>
+<% (@featured_search.featured_search_values.presence || [FeaturedSearchValue.new]).each do |search_value| %>
+  <%= f.fields_for :featured_search_values, search_value, index: nil do |value_form| %>
+    <div class="form-row filter-value-fields">
+      <div class="form-group col-xs-6">
+        <%= value_form.text_field :value, class: 'form-control', placeholder: 'Enter filter value' %>
+      </div>
+      <% if search_value.persisted? %>
+        <div class="form-group col-xs-2">
+          <%= value_form.label :_destroy, 'Delete', class: 'form-check-label' %>
+          <%= value_form.check_box :_destroy, class: 'form-check-input' %>
+        </div>
+      <% end %>
+    </div>
+  <% end %>
+<% end %>
+<%= button_tag "<i class=\"fas fa-plus\"></i> Add another filter value".html_safe,
+               class: 'btn btn-outline-secondary',
+               data: { duplicate_fields_template: "filter-value-fields" } %>
+
+               
   <div class="form-group">
     <%= f.label :priority, 'Priority' %>
     <%= f.text_field :priority %>

@@ -10,6 +10,7 @@ class FeaturedSearch < ActiveRecord::Base
   validates :label, presence: true
   validates :feature_category, presence: true
   validates :priority, presence: true
+  validates :featured_search_values, presence: true
 
   accepts_nested_attributes_for :featured_search_values, allow_destroy: true, reject_if: proc { |atts| atts['value'].strip.blank? }
 
