@@ -3,9 +3,11 @@
 require 'rails_helper'
 
 describe 'rake ac:delete_stale_pending_works', type: :task do
+  include_context 'mock ldap request'
+
   context 'when a deposit with no hyacinth identifier' do
-    let!(:deposit_fresh) { FactoryBot.create(:deposit, :with_user) }
-    let!(:deposit_stale) do
+    let(:deposit_fresh) { FactoryBot.create(:deposit, :with_user) }
+    let(:deposit_stale) do
       FactoryBot.create(:deposit, :with_user, created_at: 7.months.ago)
     end
 
@@ -18,6 +20,7 @@ describe 'rake ac:delete_stale_pending_works', type: :task do
 
     describe 'that is over 6 months old' do
       it 'deletes the deposit' do
+        deposit_stale # Evaluate FactoryBot.create(...)
         task.execute
         expect { deposit_stale.reload }.to raise_error(ActiveRecord::RecordNotFound)
       end
@@ -26,10 +29,10 @@ describe 'rake ac:delete_stale_pending_works', type: :task do
 
   context 'when a deposit with an identifier that is unindexed' do
     let(:empty_response) { wrap_solr_response_data('response' => { 'docs' => [] }) }
-    let!(:deposit_fresh) do
+    let(:deposit_fresh) do
       FactoryBot.create(:deposit, :with_user, hyacinth_identifier: 'unindexed')
     end
-    let!(:deposit_stale) do
+    let(:deposit_stale) do
       FactoryBot.create(:deposit, :with_user, created_at: 7.months.ago, hyacinth_identifier: 'unindexed')
     end
 
@@ -46,6 +49,7 @@ describe 'rake ac:delete_stale_pending_works', type: :task do
 
     describe 'and is over 6 months old' do
       it 'deletes the deposit' do
+        deposit_stale # Evaluate FactoryBot.create(...)
         task.execute
         expect { deposit_stale.reload }.to raise_error(ActiveRecord::RecordNotFound)
       end
@@ -64,10 +68,10 @@ describe 'rake ac:delete_stale_pending_works', type: :task do
         }
       )
     end
-    let!(:deposit_fresh) do
+    let(:deposit_fresh) do
       FactoryBot.create(:deposit, :with_user, hyacinth_identifier: 'actest:10')
     end
-    let!(:deposit_stale) do
+    let(:deposit_stale) do
       FactoryBot.create(:deposit, :with_user, created_at: 7.months.ago, hyacinth_identifier: 'actest:10')
     end
 

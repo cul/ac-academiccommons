@@ -177,7 +177,7 @@ GEM
     css_parser (1.21.1)
       addressable
     csv (3.3.5)
-    cul-ldap (0.0.1)
+    cul-ldap (0.1.0)
       net-ldap (~> 0.16)
     daemons (1.4.1)
     database_cleaner (2.1.0)
@@ -347,7 +347,9 @@ GEM
     net-imap (0.5.9)
       date
       net-protocol
-    net-ldap (0.17.0)
+    net-ldap (0.20.0)
+      base64
+      ostruct
     net-pop (0.1.2)
       net-protocol
     net-protocol (0.2.2)
@@ -390,7 +392,7 @@ GEM
       actionpack (>= 4.2)
       omniauth (~> 2.0)
     orm_adapter (0.5.0)
-    ostruct (0.5.5)
+    ostruct (0.6.3)
     parallel (1.27.0)
     parser (3.3.10.0)
       ast (~> 2.4.1)
@@ -733,7 +735,7 @@ DEPENDENCIES
   capistrano-resque (= 0.2.1)
   capybara (~> 3.39)
   csv (~> 3.3)
-  cul-ldap
+  cul-ldap (~> 0.1.0)
   database_cleaner (~> 2.1.0)
   deprecation (>= 1.1.0)
   devise

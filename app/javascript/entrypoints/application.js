@@ -37,15 +37,10 @@ import Popper from 'popper.js';
 window.Popper = Popper;
 import 'bootstrap';
 
-// n.b.--we should consider migrating to turbo instead of UJS" https://guides.rubyonrails.org/v7.2/working_with_javascript_in_rails.html#replacements-for-rails-ujs-functionality
-// See ACHYDRA-1032
-// Also, momento mori: https://github.com/rails/rails/pull/50535
-import Rails from '@rails/ujs';
-// Allegedly, there is no need to call start with this config/bundler: https://github.com/rails/rails/issues/49499#issuecomment-1749092948
-// ... and nevertheless, we must do it for UJS to work!
-Rails.start();
+// UJS (which will eventually go away when we migrate to Hotwire/Turbo)
+import '../src/ujs-setup.js';
 
-// We need to explicitly start Turbolinks if we import it 
+// We need to explicitly start Turbolinks if we import it
 // https://github.com/turbolinks/turbolinks?tab=readme-ov-file#installation-using-npm
 // N.b. This will be replaced by hotwire eventually, see ACHYDRA-1032
 import Turbolinks from 'turbolinks';
@@ -57,7 +52,7 @@ window.ActiveStorage = ActiveStorage;
 
 // Custom JS modules
 import '../src/admin/enable-optional-fields';
-import '../src/admin/datatables'; 
+import '../src/admin/datatables';
 import '../src/admin/usage-statistics';
 import '../src/copy-to-clipboard';
 import '../src/duplicate-input-fields';
