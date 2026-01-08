@@ -37,6 +37,8 @@ import 'bootstrap';
 // UJS (which will eventually go away when we migrate to Hotwire/Turbo)
 import '../src/ujs-setup.js';
 
+import 'blacklight-frontend/app/assets/javascripts/blacklight/blacklight';
+
 // We need to explicitly start Turbolinks if we import it
 // https://github.com/turbolinks/turbolinks?tab=readme-ov-file#installation-using-npm
 // N.b. This will be replaced by hotwire eventually, see ACHYDRA-1032
