@@ -19,7 +19,7 @@ module CatalogHelper
     part_number_field = field.gsub('_ssim', '_part_number_ssim')
     part_numbers = options[:document].fetch(part_number_field, [])
     options.fetch(:value, []).zip(part_numbers).map do |title, part_number|
-      facet_params = search_state.reset.add_facet_params(field, title)
+      facet_params = search_state.reset.filter(field).add(title).params
       value = link_to title, search_action_path(facet_params)
 
       value.concat(", #{part_number}") unless part_number == 'NONE'
