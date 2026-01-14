@@ -10,8 +10,16 @@ class FeaturedSearch < ActiveRecord::Base
   validates :label, presence: true
   validates :feature_category, presence: true
   validates :priority, presence: true
+  validate :at_least_one_filter_value
 
-  accepts_nested_attributes_for :featured_search_values, allow_destroy: true, reject_if: proc { |atts| atts['value'].strip.blank? }
+  def at_least_one_filter_value
+    return unless featured_search_values.reject(&:marked_for_destruction?).empty?
+    errors.add(:filter_field, 'Must have at least one filter value')
+  end
+
+  accepts_nested_attributes_for :featured_search_values,
+                                allow_destroy: true,
+                                reject_if: proc { |atts| atts['value'].strip.blank? } # remove blank values
 
   def image_url
     thumbnail_url.present? ? thumbnail_url : feature_category.thumbnail_url
