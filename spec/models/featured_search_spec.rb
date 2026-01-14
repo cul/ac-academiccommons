@@ -7,6 +7,27 @@ describe FeaturedSearch, type: :model do
   let(:properties_path) { File.join(temp_dir, FeaturedSearch::PROPERTIES_FILE) }
   let(:description_path) { File.join(temp_dir, FeaturedSearch::DESCRIPTION_FILE) }
   before { featured_search.export(temp_dir) }
+
+  describe 'with missing fields:' do
+    it 'is invalid without slug' do
+      expect(FactoryBot.build(:libraries_featured_search, slug: nil)).not_to be_valid
+    end
+    it 'is invalid without label' do
+      expect(FactoryBot.build(:libraries_featured_search, label: nil)).not_to be_valid
+    end
+    it 'is invalid without feature_category' do
+      expect(FactoryBot.build(:libraries_featured_search, feature_category: nil)).not_to be_valid
+    end
+    it 'is invalid without priority' do
+      expect(FactoryBot.build(:libraries_featured_search, priority: nil)).not_to be_valid
+    end
+    it 'is invalid without at least one filter value' do
+      test_fs = FactoryBot.build(:libraries_featured_search)
+      test_fs.featured_search_values.clear
+      expect(test_fs).not_to be_valid
+    end
+  end
+
   describe '.import' do
     let(:expected) { featured_search.export_attributes }
     let(:import) { FeaturedSearch.import(temp_dir) }
