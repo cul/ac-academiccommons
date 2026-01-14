@@ -8,9 +8,10 @@ FactoryBot.define do
       priority { 1 }
       url { "https://library.columbia.edu" }
       description { "The Libraries are at Columbia University.\n\nColumbia University is around the Libraries." }
-      association :feature_category, factory: :partner_feature_category, strategy: :create
-      after(:create) do |feature, _evaluator|
-        create_list :featured_search_value, 1, featured_search: feature, value: 'Libraries'
+      association :feature_category, factory: :partner_feature_category
+      after(:build) do |feature, _evaluator|
+        # build a :featured_search_value factory for nested attribute
+        feature.featured_search_values.build(value: 'Libraries')
       end
     end
   end

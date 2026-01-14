@@ -12,8 +12,8 @@
     <%= f.text_field :label %>
   </div>
 
-  <%# manage filters %>
   <div class='filter-fields-container row'>
+    <h3 class='col-12 pl-3'>Manage Filters:</h3>
     <%= f.fields_for :featured_search_values do |value_form| %>
       <% editing = value_form.object.persisted? %>
       <hr>
@@ -28,11 +28,13 @@
         <%= value_form.text_field :value %>
       </div>
     <%- end %>
-  </div>
- <%= button_tag "<i class=\"fas fa-plus\"></i> Add another filter".html_safe,
+    <div class='col-12'>
+     <%= button_tag "<i class=\"fas fa-plus\"></i> Add another filter".html_safe,
                    class: 'btn btn-outline-secondary my-4',
                    type: 'button',
                    data: { featured_search_duplicate_fields_template: "filter-fields-item" } %>
+    </div>
+  </div>
 
 
   <div class="form-group">
