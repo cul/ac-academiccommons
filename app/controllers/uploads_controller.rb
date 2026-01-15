@@ -29,7 +29,6 @@ class UploadsController < ApplicationController
 
   # POST /upload
   def create
-    # warn:  Can't verify CSRF token authenticity.
     @deposit = Deposit.new(upload_params)
     @deposit.user = current_user
     @deposit.authenticated = true
