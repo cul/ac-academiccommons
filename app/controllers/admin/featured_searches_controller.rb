@@ -13,8 +13,6 @@ module Admin
     end
 
     def create
-      Rails.logger.debug 'why here?'
-      Rails.logger.debug @featured_search
       @featured_search = FeaturedSearch.new(featured_search_params)
       if @featured_search.save
         flash[:success] = "Created!"
@@ -56,10 +54,7 @@ module Admin
     private
 
     def featured_search_params
-      res = params.require(:featured_search).permit(:feature_category_id, :label, :slug, :description, :priority, :url, :thumbnail_url, featured_search_values_attributes: [:id, :value, :_destroy])
-      Rails.logger.debug 'PARAMS RECEIVED:'
-      Rails.logger.debug res
-      res
+      params.require(:featured_search).permit(:feature_category_id, :label, :slug, :description, :priority, :url, :thumbnail_url, featured_search_values_attributes: [:id, :value, :_destroy])
     end
 
     # When we render a blank form, there must exist an empty FeaturedSearchValue object to supply to the form helper
