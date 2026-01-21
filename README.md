@@ -178,7 +178,7 @@ example: http://petstore.swagger.io/?url=http://www.example.com/api/v1/swagger_d
 
 ## Helpful things to know
 ### Authentication/Authorization
-We are using cul_omniauth to provide Columbia CAS login (authentication). In addition, we are using CanCanCan for authorization of specific tasks. Right now, we just have one role, and that's 'admin.' Later, we might want a more complex permissions structure, but for right now this fits our needs. Any page that requires authentication will redirect the user to the Columbia CAS login page. If a json response is requested, the user is not redirected.
+We are using [omniauth-cul gem](https://github.com/cul/omniauth-cul) to provide Columbia CAS login (_authentication_). In addition, we are using CanCanCan for _authorization_ of specific tasks. Right now, we just have one role, and that's 'admin.' Later, we might want a more complex permissions structure, but for right now this fits our needs. Any page that requires authentication will redirect the user to the Columbia CAS login page. If a json response is requested, the user is not redirected.
 
 ### Statistics
 For every asset and item in Academic Commons we store view and download statistics. Assets should only have download statistics and items should only have view statistics. When we calculate download statistics for an item we use the download statistics of its assets. If there are multiple assets associated with an item, we use the download statistics for the most downloaded asset.

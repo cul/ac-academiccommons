@@ -11,7 +11,7 @@ class User < ApplicationRecord
   before_save       :set_personal_info_via_ldap
 
   # Configure devise for our User model
-  devise :rememberable, :trackable, :omniauthable, omniauth_providers: [Rails.env.development? ? :developer : :cas]
+  devise :rememberable, :trackable, :omniauthable, omniauth_providers: Devise.omniauth_configs.keys
 
   ADMIN = 'admin'.freeze
   ROLES = [ADMIN].freeze

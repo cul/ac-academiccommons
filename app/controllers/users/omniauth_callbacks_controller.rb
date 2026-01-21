@@ -3,39 +3,43 @@
 require 'omniauth/cul'
 
 class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
-  # Adding the line below so that if the auth endpoint POSTs to our cas endpoint, it won't
-  # be rejected by authenticity token verification.
   # See https://github.com/omniauth/omniauth/wiki/FAQ#rails-session-is-clobbered-after-callback-on-developer-strategy
-  skip_before_action :verify_authenticity_token, only: :cas
+  # The CAS login redirect to the columbia_cas callback endpoint AND the developer form submission to the
+  # developer_uid callback do not send authenticity tokens, so we'll skip token verification for these actions.
+  skip_before_action :verify_authenticity_token, only: [:columbia_cas, :developer_uid]
 
-  def app_cas_callback_endpoint
-    "#{request.base_url}/users/auth/cas/callback"
-  end
+  # POST /users/auth/developer_uid/callback
+  def developer_uid
+    return unless Rails.env.development? # Only allow this action to run in the development environment
 
-  # In local development, use devise's controller action. In deployed env, use CAS server
-  def passthru
-    if Rails.env.development?
-      super
-    else
-      redirect_to Omniauth::Cul::Cas3.passthru_redirect_url(app_cas_callback_endpoint), allow_other_host: true
+    uid = params[:uid]
+    user = User.find_by(uid: uid)
+
+    unless user
+      flash[:alert] = "Login attempt failed.  User #{uid} does not have an account."
+      redirect_to root_path
+      return
     end
+
+    flash[:success] = 'You have succesfully logged in.'
+    sign_in_and_redirect user, event: :authentication # this will throw if user is not activated
   end
 
-  def developer
-    current_user ||= User.find_or_create_by(
-      uid: request.env['omniauth.auth'][:uid], provider: :developer
-    )
+  # POST /users/auth/columbia_cas/callback
+  def columbia_cas # rubocop:disable Metrics/AbcSize
+    callback_url = user_columbia_cas_omniauth_callback_url # The columbia_cas callback route in this application
+    uid, _affils = Omniauth::Cul::ColumbiaCas.validation_callback(request.params['ticket'], callback_url)
 
-    sign_in_and_redirect current_user, event: :authentication
-  end
-
-  def cas
-    user_id, _affils = Omniauth::Cul::Cas3.validation_callback(request.params['ticket'], app_cas_callback_endpoint)
-
-    user = User.find_by(uid: user_id) || User.create!(
-      uid: user_id,
-      email: "#{user_id}@columbia.edu"
-    )
+    user = User.find_by(uid: uid) || User.create(uid: uid, email: "#{uid}@columbia.edu")
+    flash[:success] = 'You have succesfully logged in.'
     sign_in_and_redirect user, event: :authentication
+  rescue Omniauth::Cul::Exceptions::Error => e
+    # If an unexpected CAS ticket validation occurs, log the error message and ask the user to try
+    # logging in again.  Do not display the exception object's original message to the user because it may
+    # contain information that only a developer should see.
+    error_message = 'CAS login validation failed. Please try again.'
+    Rails.logger.debug(error_message + "  #{e.class.name}: #{e.message}")
+    flash[:alert] = error_message
+    redirect_to root_path
   end
 end
