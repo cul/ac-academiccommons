@@ -12,11 +12,12 @@ module Admin
 
       respond_to do |f|
         if @usage_statistics_reports_form.generate_statistics
-          f.html { render :new }
-          f.csv  { send_data @usage_statistics_reports_form.to_csv, type: 'application/csv', filename: 'usage_statistics.csv' }
+          f.turbo_stream
+          f.html { render :new, status: :ok }
+          f.csv { send_data @usage_statistics_reports_form.to_csv, type: 'application/csv', filename: 'usage_statistics.csv' }
         else
           flash[:error] = @usage_statistics_reports_form.errors.full_messages.to_sentence
-          f.html { render :new }
+          f.html { render :new, status: :unprocessable_entity }
           f.csv  { head :unprocessable_entity }
         end
       end

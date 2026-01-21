@@ -18,10 +18,10 @@ module Admin
       @email_preference = EmailPreference.new(email_preference_params)
       if @email_preference.save
         flash[:success] = 'Successfully created email preference.'
-        render :show
+        render :show, status: :ok
       else
         flash[:error] = @email_preference.errors.full_messages.to_sentence
-        render :new
+        render :new, status: :unprocessable_entity
       end
     end
 
@@ -36,13 +36,13 @@ module Admin
         if @email_preference.update(email_preference_params)
           f.html do
             flash[:success] = 'Successfully updated email preference.'
-            render :show
+            render :show, status: :ok
           end
           f.json { render json: { message: 'Successfully updated email preference.' }.to_json, status: 200 }
         else
           f.html do
             flash[:error] = @email_preference.errors.full_messages.to_sentence
-            render :edit
+            render :edit, status: :unprocessable_entity
           end
           f.json { render json: { message: @email_preference.errors.full_messages.to_sentence }.to_json, status: 500 }
         end

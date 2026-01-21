@@ -2,4 +2,4 @@ const ready = function(){
   $( "#creator-list" ).sortable();
 };
 
-document.addEventListener('turbolinks:load', ready)
+document.addEventListener('turbo:load', ready)

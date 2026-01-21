@@ -1,3 +1,5 @@
+<%# TODO form_tag light deprecated in favor of form_with - https://discuss.rubyonrails.org/t/should-form-tag-and-form-for-be-fully-deprecated-now/86501/2 %>
+<%# Currently, we are not using BL range limit gem... %>
 <%= form_tag search_action_path, method: :get, class: [@classes[:form], "range_#{@facet_field.key} d-flex justify-content-center"].join(' ') do %>
   <%= render hidden_search_state %>
 

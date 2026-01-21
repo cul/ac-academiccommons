@@ -154,7 +154,7 @@ RSpec.describe 'Upload', type: :feature do
       end
 
       it 'redirects to /new' do
-        expect(page).to have_current_path uploads_path
+        expect(page).to have_current_path new_upload_path
       end
 
       it 'fills in already filled in values' do
