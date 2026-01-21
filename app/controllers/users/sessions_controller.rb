@@ -7,8 +7,8 @@ class Users::SessionsController < Devise::SessionsController
   # that sends a POST req to our omniauth endpoint (this is the secure way and
   # POST is not possible with redirect_to)
   # inspiration: https://stackoverflow.com/questions/985596/redirect-to-using-post-in-rails
-  def new
-    render 'users/sessions/new'
+  def new # rubocop:disable Lint/UselessMethodDefinition
+    super
   end
 
   # This is needed if not using database authenticable (see https://github.com/heartcombo/devise/wiki/OmniAuth:-Overview#using-omniauth-without-other-authentications)

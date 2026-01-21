@@ -4,32 +4,13 @@ Rails.application.routes.draw do
   # temporarily removing range slider
   # concern :range_searchable, BlacklightRangeLimit::Routes::RangeSearchable.new
 
-  # When we are doing local development, we use omniauth's built-in developer strategy with devise's built-in omniauth
-  # engine. By not skipping :omniauth_callbacks in development, devise creates the routes /users/auth/developer and
-  # /users/auth/developer/callback and configures them to use devise's omniauth_callbacks_controller actions.
-  # In deployed environments, we use CUL's cas server (with the omniauth-cul gem) to authenticate users, with our
-  #  custom defined routes and custom omniauth_callbacks_controller.
-  # If we had not skipped the creation of these routes by devise, we would be able to authenticate users with our CAS
-  # server, but Academic Commons would be vulnerable to CVE-2015-9284, because the devise routes allow clients to make
-  # a GET request to users/auth/cas (instead of requiring a POST request).
-  # We are trying to find a more elegant way to do this (and the documentation for omniauth implies that with v2, GET
-  # requests should not be allowed, even if we have not gotten it to work), but this is a secure workaround for now.
-  skip_omniauth_callbacks = Rails.env.development? ? [] : [:omniauth_callbacks]
-  devise_for :users,
-             controllers: { sessions: 'users/sessions', omniauth_callbacks: 'users/omniauth_callbacks' },
-             skip: skip_omniauth_callbacks
-
+  # Create the sign in and sign out routes (simply redirects to our auth endpoint), needed for redirecting on
+  # cancancan access denied error
   devise_scope :user do
-    # Create the sign in and sign out routes (simply redirects to our auth endpoint), needed for redirecting on
-    # cancancan access denied error
     delete 'sign_out', to: 'users/sessions#destroy', as: :destroy_user_session
     get 'sign_in', to: 'users/sessions#new', as: :new_user_session
-    # Create the routes for omniauth auth and callback routes (unless doing local development) (see comment above)
-    unless Rails.env.development?
-      post 'users/auth/cas', to: 'users/omniauth_callbacks#passthru', as: :user_cas_omniauth_authorize
-      get 'users/auth/cas/callback', to: 'users/omniauth_callbacks#cas', as: :user_cas_omniauth_callback
-    end
   end
+  devise_for :users, controllers: { omniauth_callbacks: 'users/omniauth_callbacks' }
 
   root to: "catalog#home"
 
