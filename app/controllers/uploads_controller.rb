@@ -43,7 +43,7 @@ class UploadsController < ApplicationController
       @deposit.files.attachments.each(&:destroy) # Remove attachment until we can persist them across requests.
       flash.now[:error] = @deposit.errors.full_messages.to_sentence
       Rails.logger.error @deposit.errors.inspect
-      redirect_to :new, status: :bad_request
+      render :new, status: :bad_request
     end
   end
 

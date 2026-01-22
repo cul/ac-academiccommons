@@ -121,7 +121,7 @@ RSpec.describe 'Upload', type: :feature do
         choose 'deposit[license]', option: 'https://creativecommons.org/publicdomain/zero/1.0/'
         choose 'deposit[previously_published]', option: true
         attach_file nil, fixture('test_file.txt'), class: 'dz-hidden-input', visible: false
-        sleep(3) # Adding sleep so file properly attaches
+        # sleep(3) # Adding sleep so file properly attaches
         click_button 'Submit'
         # do a find to make sure page loaded and action completed
         find('h3', text: 'Thank you for uploading your work to Academic Commons.')
@@ -150,6 +150,7 @@ RSpec.describe 'Upload', type: :feature do
         fill_in 'Title*', with: 'Test Deposit'
         fill_in 'Abstract*', with: 'Blah Blah Blah'
         fill_in 'Year Created*', with: '2017'
+        # missing field: file-upload
         click_button 'Submit'
       end
 
