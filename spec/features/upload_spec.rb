@@ -157,10 +157,11 @@ RSpec.describe 'Upload', type: :feature do
         expect(page).to have_current_path new_upload_path
       end
 
+      #  todo : failing
       it 'fills in already filled in values' do
         expect(page).to have_field 'Title*', with: 'Test Deposit'
-        expect(page).to have_field 'Abstract*', with: 'Blah Blah Blah'
         expect(page).to have_field 'Year Created*', with: '2017'
+        expect(page).to have_field 'Abstract*', with: 'Blah Blah Blah'
       end
 
       it 'renders error messages' do
