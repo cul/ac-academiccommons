@@ -24,17 +24,18 @@ const ready = function(){
     });
 
     // Set initial state based on what was selected (when rerendering the form due to validation errors)
-    var selectedForRadioBtn = $('name="email_author_reports_form[reports_for]"');
-    var uniField = $('name="email_author_reports_form[uni]"');
+    var selectedForRadioBtn = $('[name="email_author_reports_form[reports_for]"]:checked');
+    var uniField = $('[name="email_author_reports_form[uni]"]');
     if (selectedForRadioBtn.val() == 'one') {
       uniField.prop('disabled', false);
     }
-    var selectedDeliveryOptRadioBtn = $('name="email_author_reports_form[deliver]"');
-    var emailField = $('name="email_author_reports_form[email]"');
-    if (selectedDeliveryOptRadioBtn.va() == 'all_reports_to_one_email') {
+    var selectedDeliveryOptRadioBtn = $('[name="email_author_reports_form[deliver]"]:checked');
+    var emailField = $('[name="email_author_reports_form[email]"]');
+    if (selectedDeliveryOptRadioBtn.val() == 'all_reports_to_one_email') {
       emailField.prop('disabled', false);
     }
   };
+
 
   if ($('body').is('.blacklight-contact_authors')) {
 
@@ -50,7 +51,7 @@ const ready = function(){
 
     // Set initial state based on what was selected (when rerendering the form due to validation errors)
     var selectedRadioBtn = $('[name="contact_authors_form[send_to]"]:checked');
-    var unisField = $('[name="contact_authors_form[unis]');
+    var unisField = $('[name="contact_authors_form[unis]"]');
     if (selectedRadioBtn.val() == 'specific_authors') {
       unisField.prop('disabled', false);
     }

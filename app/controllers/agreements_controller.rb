@@ -35,7 +35,7 @@ class AgreementsController < ApplicationController
         redirect_to token? ? root_path : uploads_path
       else
         flash[:error] = @agreement.errors.full_messages.to_sentence
-        render :new, status: :created # TODO: broken?
+        render :new, status: :unprocessable_entity
       end
     else
       flash[:error] = 'You must accept the participation agreement.'
