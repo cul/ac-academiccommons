@@ -18,7 +18,7 @@
 import './jquery.js';
 
 import 'datatables.net';
-import 'datatables.net-bs4'
+import 'datatables.net-bs4';
 
 // we just need sortable, but let's bring in the whole jquery-ui
 // it is only used on the element in the new upload view (with id creator-list)
