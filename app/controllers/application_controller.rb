@@ -9,6 +9,8 @@ class ApplicationController < ActionController::Base
   helper :all # include all helpers, all the time
   helper_method :fedora_config # share some methods w/ views via helpers
 
+  attr_reader :meta_nofollow, :meta_noindex
+
   rescue_from CanCan::AccessDenied do |exception|
     if current_user.nil?
       respond_to do |format|
@@ -31,6 +33,14 @@ class ApplicationController < ActionController::Base
 
   def new_session_path(scope)
     new_user_session_path
+  end
+
+  def meta_nofollow!
+    @meta_nofollow = true
+  end
+
+  def meta_noindex!
+    @meta_noindex = true
   end
 
   private
