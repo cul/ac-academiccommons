@@ -25,6 +25,12 @@ describe 'Search Results Page', type: :feature do
     expect(page).to have_content('No entries found')
   end
 
+  it 'has robots meta tags' do
+    visit search_catalog_path(q: 'alice')
+    expect(page).to have_xpath("//meta[@name='robots' and @content='noindex']", visible: false) # rubocop:disable RSpec/Capybara/VisibilityMatcher
+    expect(page).to have_xpath("//meta[@name='robots' and @content='noindex']", visible: false) # rubocop:disable RSpec/Capybara/VisibilityMatcher
+  end
+
   it 'indicates active search in the form widget' do
     visit search_catalog_path(q: 'alice')
     click_button 'Sort by Best Match'

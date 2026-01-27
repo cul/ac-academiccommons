@@ -15,6 +15,8 @@ class CatalogController < ApplicationController
   # rubocop:disable Rails/LexicallyScopedActionFilter
   before_action :record_view_stats, only: :show
   before_action :set_xrobots_tag_to_none, only: :index
+  before_action :meta_nofollow!, only: [:index]
+  before_action :meta_noindex!, only: [:index]
   # rubocop:enable Rails/LexicallyScopedActionFilter
 
   class LazyFeatureQueryFacet < Hash
