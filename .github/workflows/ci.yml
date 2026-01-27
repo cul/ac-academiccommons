@@ -47,5 +47,7 @@ jobs:
         run: bundle exec rake db:schema:load
       - name: Prepare DB
         run: bundle exec rake db:test:prepare
+      - name: Run Type Checks
+        run: bundle exec rake ac:type_check
       - name: Run default rake task (CI)
         run: bundle exec rake

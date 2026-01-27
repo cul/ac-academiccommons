@@ -32,10 +32,10 @@ Current recommended version of Ruby is specified in `.ruby-version`.
    ```
 
 6. Install required Javascript libraries using Yarn
-    ```
-    brew install yarn
-    yarn
-    ```
+   ```
+   brew install yarn
+   yarn
+   ```
 
 7. Setup your local development DB.
    ```
@@ -56,6 +56,12 @@ Current recommended version of Ruby is specified in `.ruby-version`.
    ```
    rails server
    ```
+
+11. (Optional, but recommended if writing any JavaScript) In a separate terminal, run the typescript compiler to typecheck code and watch for changes. Typescript is not used for transpilation in this project, only static type checking. You can use the provided rake task, or run `tsc --watch` yourself.
+   ```
+   bundle exec rake ac:watch_type_check 
+   ```
+
 
 ## Populating your development instance with items
 If you need an object in AC to do further testing and development, add an item with the following instructions.
@@ -119,6 +125,17 @@ bin/rubocop
 
 The cops also run in the default rake task, `bundle exec rake`.
 
+## Editing TypeScript/JavaScript
+Academic Commons is in the process of migrating our JavaScript code to TypeScript. We use TypeScript for static type checking only--**type checking does not occur during deployment**.
+
+Run the following command before committing changes, and address any type errors that get printed:
+   ```
+   tsc
+   ```
+
+The way that TypeScript integrates with our asset pipeline is a bit unique; we use Vite, which will transpile our `.ts` files into `.js` files for us (using `ESBuild`), but **it will not run a type analysis before doing so** (as that would take time and Vite is all about saving time!).
+The way that we ensure type-safety is by A) Using an IDE that statically type-checks our `.ts` files and by B) running the typescript compiler without transpilation (`--noEmit` flag/option), so that type errors are printed to console (do so before committing changes). This is configured in `./tsconfig.json`.
+
 ## Running tests
 1. In order to run tests that require javascript you might need `chrome` installed (needs to be tested).
 2. Run tests locally by running `rake ci`.
@@ -133,7 +150,7 @@ The cops also run in the default rake task, `bundle exec rake`.
 
 ## Editing encrypted credentials
 ### In development
-Academic Commons uses Rails credentials to encrypt and load sensative information. During local development, an encrypted `development.enc.yml` file is used
+Academic Commons uses Rails credentials to encrypt and load sensitive information. During local development, an encrypted `development.enc.yml` file is used
 with dummy values loaded from the local template file: `config/development_credentials_template.yml`. The encrypted credentials are created from the template using the following rake task:
 ```
    bundle exec rake ac:templated_credentials:add_all
@@ -198,7 +215,7 @@ To index specific items/assets, use the following rake task:
 ```
 # available parameters: pids and pidlist
 # pids should be a comma-delineated list of pids
-# pidlist should be a file with a pid in everyline
+# pidlist should be a file with a pid in every line
 
 ac:reindex_by_pid
 ```
@@ -213,7 +230,7 @@ To index select item/assets, use the following rake task:
 ```
 # available parameters: pids and pidlist
 # pids should be a comma-delineated list of pids
-# pidlist should be a file with a pid in everyline
+# pidlist should be a file with a pid in every line
 
 rake ac:index:by_pid pids=ac:test1,ac:test2
 ```
