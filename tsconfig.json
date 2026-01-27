@@ -8,6 +8,8 @@
   "compilerOptions": {
     "isolatedModules": true, // https://vite.dev/guide/features#isolatedmodules
     "noEmit": true,
+    "esModuleInterop": true, // allow imports from non-ESM modules
+    // "noImplicitReturns": true,
     "allowJs": true, // remove after migrating
     "strict": false, // remove after migrating
   },

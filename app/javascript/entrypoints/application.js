@@ -15,7 +15,7 @@
 
 // Issues with vite: https://github.com/jquery/jquery-ui/issues/2123#event-13186348290
 // We will initialized jquery for the browser in this file (import and set the window. variables):
-import './jquery.js';
+import './jquery_setup';
 
 import 'datatables.net';
 import 'datatables.net-bs4';

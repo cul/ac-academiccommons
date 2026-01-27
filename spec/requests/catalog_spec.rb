@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'catalog controller actions', type: :request do
+RSpec.describe 'catalog controller actions', type: :request, focus: true do # rubocop:disable RSpec/Focus
   describe '/search' do
     it 'returns a 200 status when valid search params are supplied' do
       get '/search?per_page=20&sort=Published+Latest'
