@@ -1,0 +1,16 @@
+// Vite does not include typechecking during its transpilation step (converting TypeScript to JavaScript).
+// We will just use TypeScript for static type checking in the IDE during development.
+// Therefore, we include the 'noEmit' option to prevent the tsc compiler from generating any output files when we run it locally.
+// We also enable 'isolatedModules' to ensure compatibility with Vite's module handling; Vite processes each file as an isolated module,
+// and this option catches certain errors that could arise from not adhering to the isolated module structure.
+// Additionally, Vite will ignore any set "target" in tsconfig.json, because it uses esbuild for transpilation, which has its own target settings.
+{
+  "compilerOptions": {
+    "isolatedModules": true, // https://vite.dev/guide/features#isolatedmodules
+    "noEmit": true,
+    "allowJs": true, // remove after migrating
+    "strict": false, // remove after migrating
+  },
+  "include": [ "./app/javascript/**/*" ],
+  "exclude": [ "./node_modules" ],
+}
