@@ -34,16 +34,13 @@ import Popper from 'popper.js';
 window.Popper = Popper;
 import 'bootstrap';
 
+// Importing Turbo- Turbo will automatically be assigned to window.Turbo
+import "@hotwired/turbo-rails"
+
 // UJS (which will eventually go away when we migrate to Hotwire/Turbo)
 import '../src/ujs-setup.js';
 
 import 'blacklight-frontend/app/assets/javascripts/blacklight/blacklight';
-
-// We need to explicitly start Turbolinks if we import it
-// https://github.com/turbolinks/turbolinks?tab=readme-ov-file#installation-using-npm
-// N.b. This will be replaced by hotwire eventually, see ACHYDRA-1032
-import Turbolinks from 'turbolinks';
-Turbolinks.start();
 
 import * as ActiveStorage from '@rails/activestorage';
 ActiveStorage.start();

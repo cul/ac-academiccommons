@@ -15,7 +15,7 @@ module Admin
         redirect_to action: :new
       else
         flash[:error] = @contact_authors_form.errors.full_messages.to_sentence
-        render :new
+        render :new, status: :unprocessable_entity
       end
     end
 

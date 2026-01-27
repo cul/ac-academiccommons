@@ -7,11 +7,11 @@ module Admin
     def update
       if SiteConfiguration.instance.update(site_configuration_params)
         flash[:success] = 'Succesfully updated site option.'
+        render :show, status: :ok
       else
         flash[:error] = 'There was an error updating the site option.'
+        render :show, status: :unprocessable_entity
       end
-
-      render :show
     end
 
     private

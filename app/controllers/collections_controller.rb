@@ -1,4 +1,4 @@
-class CollectionsController < ApplicationController
+class CollectionsController < ApplicationController # rubocop:disable Metrics/ClassLength
   CONFIG = {
     featured: {
       title: 'Featured Partners',
@@ -67,6 +67,9 @@ class CollectionsController < ApplicationController
       c.search_url = search_url(filters)
       c
     end
+  rescue Blacklight::Exceptions::InvalidRequest
+    Rails.logger.error 'A problem occurred querying the solr index -- make sure all featured searches are valid! Manage these values at /admin/featured_searches.'
+    @collections = [] if @collections.nil?
   end
 
   def featured

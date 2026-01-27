@@ -1,4 +1,4 @@
-<%= form_with url: admin_site_configuration_path, method: :patch, local: true do |form| %>
+<%= form_with url: admin_site_configuration_path, method: :patch, local: true, data: { turbo: false } do |form| %>
   <% if SiteConfiguration.deposits_enabled  %>
     <% action_label = "Disable Deposits" %>
     <% enable = false %>

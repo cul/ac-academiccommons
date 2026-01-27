@@ -83,6 +83,6 @@
 </fieldset>
 
 <div class="form-group">
-  <%= f.submit 'Send Reports', data: { confirm: 'This will send most likely hundreds of emails. Are you sure?' }, class: 'btn btn-primary'  %>
+  <%= f.submit 'Send Reports', data: { turbo_confirm: 'This will send most likely hundreds of emails. Are you sure?' }, class: 'btn btn-primary'  %>
 </div>
 <% end %>

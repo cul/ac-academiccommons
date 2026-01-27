@@ -38,7 +38,7 @@ class UploadsController < ApplicationController
     if @deposit.save
       send_student_reminder_email
       SwordDepositJob.perform_later(@deposit)
-      render template: 'uploads/successful_upload'
+      render template: 'uploads/successful_upload', status: :created
     else
       @deposit.files.attachments.each(&:destroy) # Remove attachment until we can persist them across requests.
       flash.now[:error] = @deposit.errors.full_messages.to_sentence

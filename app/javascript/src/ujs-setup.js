@@ -10,6 +10,6 @@ Rails.start();
 // Hotwire/Turbo should automatically refresh form CSRF tokens.  After we switch to Hotwire/Turbo,
 // make sure to test out https://academiccommons-dev.library.columbia.edu/upload/new
 // to make sure we don't enounter any CSRF-related submission issues.
-document.addEventListener('DOMContentLoaded', () => {
-  document.addEventListener('turbolinks:load', Rails.refreshCSRFTokens);
-});
+// document.addEventListener('DOMContentLoaded', () => {
+//   document.addEventListener('turbo:load', Rails.refreshCSRFTokens);
+// });

@@ -3,4 +3,4 @@ const ready = function(){
   $('form.disable :input').prop('disabled', true);
 };
 
-document.addEventListener('turbolinks:load', ready);
+document.addEventListener('turbo:load', ready);

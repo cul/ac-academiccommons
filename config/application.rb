@@ -85,5 +85,8 @@ module AcademicCommons
 
     # Disable assets (sprockets) for actiontext (will be handled by vite)
     config.action_text.embed_assets = false
+
+    # https://github.com/hotwired/turbo-rails/blob/main/UPGRADING.md#upgrading-from-rails-ujs--turbolinks-to-turbo
+    # config.action_view.form_with_generates_remote_forms = false # Default value
   end
 end

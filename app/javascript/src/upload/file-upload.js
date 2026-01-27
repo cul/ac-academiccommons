@@ -65,4 +65,4 @@ const ready = function() {
   hiddenFileInputs.forEach( function(currentValue, currentIndex, listObj) { currentValue.remove(); } );
 };
 
-document.addEventListener('turbolinks:load', ready);
+document.addEventListener('turbo:load', ready);
