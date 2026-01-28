@@ -1,13 +1,15 @@
-<%= form_with url: admin_site_configuration_path, method: :patch, local: true, data: { turbo: false } do |form| %>
-  <% if SiteConfiguration.downloads_enabled  %>
-    <% action_label = "Disable Downloads" %>
-    <% enable = false %>
-  <% else %>
-    <% action_label = "Enable Downloads" %>
-    <% enable = true %>
+<div id='downloads-toggle-form'>
+  <%= form_with url: admin_site_configuration_path, method: :patch, local: true, data: { turbo: false } do |form| %>
+    <% if SiteConfiguration.downloads_enabled  %>
+      <% action_label = "Disable Downloads" %>
+      <% enable = false %>
+    <% else %>
+      <% action_label = "Enable Downloads" %>
+      <% enable = true %>
+    <% end %>
+    <div>
+      <%= form.hidden_field :downloads_enabled, value: enable %>
+      <%= form.submit action_label, class: "btn btn-primary" %>
+    </div>
   <% end %>
-  <div>
-    <%= form.hidden_field :downloads_enabled, value: enable %>
-    <%= form.submit action_label, class: "btn btn-primary" %>
-  </div>
-<% end %>
+</div>
