@@ -142,6 +142,11 @@ RSpec.describe 'Upload', type: :feature do
         expect(email.subject).to eql 'Department approval may be needed'
         expect(email.to).to include User.first.email
       end
+
+      it 'appears in the self-deposits list' do
+        visit myworks_path
+        expect(page).to have_content 'Test Deposit'
+      end
     end
 
     context 'when student submits form with missing required data' do
