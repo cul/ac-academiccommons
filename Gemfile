@@ -84,6 +84,7 @@ group :development, :test do
   gem 'factory_bot_rails', '~> 6.5.0'
   gem 'jettywrapper', '>=1.4.0', git: 'https://github.com/samvera-deprecated/jettywrapper.git', branch: 'master'
   # gem 'json_spec'
+  gem 'rails-controller-testing'
   gem 'rspec-its', '~> 2.0.0'
   gem 'rspec-rails', '~> 8.0.0'
   gem 'selenium-webdriver', '~> 4.11'
