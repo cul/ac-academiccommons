@@ -7,6 +7,8 @@ shared_context 'non-admin user for feature' do
     ldap = instance_double('Cul::LDAP')
     allow(Cul::LDAP).to receive(:new).and_return(ldap)
     allow(ldap).to receive(:find_by_uni).with('tu123').and_return(nil)
+    # for tests where we need to login as an admin user to test a non-admin action
+    allow(ldap).to receive(:find_by_uni).with('ta123').and_return(nil)
     login_as FactoryBot.create(:user), scope: :user
   end
 end

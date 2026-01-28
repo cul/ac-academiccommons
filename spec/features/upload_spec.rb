@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe 'Upload', type: :feature do
@@ -140,7 +142,33 @@ RSpec.describe 'Upload', type: :feature do
       it 'sends student reminder email' do
         email = ActionMailer::Base.deliveries.pop
         expect(email.subject).to eql 'Department approval may be needed'
+
         expect(email.to).to include User.first.email
+      end
+
+      it 'appears in the myworks list' do
+        visit myworks_path
+        expect(page).to have_content 'Test Deposit'
+      end
+
+      it 'appears in the myworks list as pending' do
+        visit myworks_path
+        within '[id="pending-works-table"]' do
+          expect(page).to have_content 'Test Deposit'
+        end
+      end
+
+      it 'appears in the admin self-deposits list' do
+        logout(:user)
+        login_as FactoryBot.create(:admin), scope: :user
+        visit admin_deposits_path
+        expect(page).to have_content 'Test Deposit'
+      end
+
+      it 'is downloadable within the admin self-deposits section' do
+        deposit = Deposit.last
+        visit admin_deposit_path(deposit)
+        expect(page).to have_link 'test_file.txt', href: rails_blob_path(deposit.files.first, disposition: 'attachment')
       end
     end
 
