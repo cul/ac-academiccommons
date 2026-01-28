@@ -11,9 +11,9 @@ class Users::SessionsController < Devise::SessionsController
     render 'users/sessions/new'
   end
 
-  # This is needed if not using database authenticable (see https://github.com/heartcombo/devise/wiki/OmniAuth:-Overview#using-omniauth-without-other-authentications)
+  # This is needed if not using database authenticatable (see https://github.com/heartcombo/devise/wiki/OmniAuth:-Overview#using-omniauth-without-other-authentications)
   def new_session_path(scope)
-    new_user_session_path # this accomodates Users namespace of the controller
+    new_user_session_path # this accommodates Users namespace of the controller
   end
 
   private
