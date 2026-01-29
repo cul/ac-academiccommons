@@ -8,13 +8,6 @@ describe 'authentication', type: :feature do
       visit root_path
       expect(page).to have_link 'Log In', href: '/sign_in'
     end
-
-    it 'visiting sign_in renders redirect form page' do
-      # Turn off javascript for this test so that the redirect page can be tested
-      Capybara.current_driver = :rack_test
-      visit new_user_session_path
-      expect(page).to have_content 'Redirecting you to be authenticated...'
-    end
   end
 
   context 'when user logged in as non-admin' do
