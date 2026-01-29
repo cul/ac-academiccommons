@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-describe 'admin', type: :feature, focus: true do # rubocop:disable RSpec/Focus
+describe 'admin', type: :feature do
   context 'when admin user' do
     include_context 'admin user for feature'
 

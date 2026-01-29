@@ -1,3 +1,4 @@
+<div id='deposits-toggle-form'>
 <%= form_with url: admin_site_configuration_path, method: :patch, local: true, data: { turbo: false } do |form| %>
   <% if SiteConfiguration.deposits_enabled  %>
     <% action_label = "Disable Deposits" %>
@@ -6,6 +7,4 @@
     <% action_label = "Enable Deposits" %>
     <% enable = true %>
   <% end %>
-  <%= form.hidden_field :deposits_enabled, value: enable %>
-  <%= form.submit action_label, class: "btn btn-primary" %>
-<% end %>
+</div>
