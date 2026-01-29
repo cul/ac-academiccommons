@@ -4,6 +4,10 @@ require 'rails_helper'
 
 describe 'authentication', type: :feature do
   context 'when user not logged in' do
+    before do
+      logout(:user)
+    end
+
     it 'contains log in link' do
       visit root_path
       expect(page).to have_link 'Log In', href: '/sign_in'
