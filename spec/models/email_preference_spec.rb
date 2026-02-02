@@ -1,13 +1,19 @@
 require 'rails_helper'
 
 describe EmailPreference, type: :model do
-  context 'when creating multiple records with the same uni' do
-    before do
-      EmailPreference.create!(uni: 'abc123')
+  context 'when creating an invalid record' do
+    it 'with missing uni returns error' do
+      expect { EmailPreference.create! }.to raise_error ActiveRecord::RecordInvalid
     end
 
-    it 'returns error' do
-      expect { EmailPreference.create!(uni: 'abc123') }.to raise_error ActiveRecord::RecordInvalid
+    describe 'with a uni that already has existing preferences' do
+      before do
+        EmailPreference.create!(uni: 'abc123')
+      end
+
+      it 'returns error' do
+        expect { EmailPreference.create!(uni: 'abc123') }.to raise_error ActiveRecord::RecordInvalid
+      end
     end
   end
 

@@ -1,5 +1,5 @@
 
-<%= form_with model: [:admin, @email_preference], local: true, data: { turbo: false } do |f| %>
+<%= form_with model: [:admin, @email_preference], local: true, data: { turbo: false, testid: 'email-preference-form' } do |f| %>
   <p>
     <%= f.label :uni %>
     <%= f.text_field :uni %>
