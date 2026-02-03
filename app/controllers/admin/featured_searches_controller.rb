@@ -5,6 +5,7 @@ module Admin
 
     def new
       @featured_search ||= FeaturedSearch.new
+      @featured_search.featured_search_values.build
     end
 
     def edit
@@ -18,6 +19,7 @@ module Admin
         redirect_to action: :edit, id: @featured_search
       else
         flash[:error] = @featured_search.errors.full_messages.to_sentence
+        ensure_non_empty_filter_values
         render :new, status: :unprocessable_entity
       end
     end
@@ -30,6 +32,7 @@ module Admin
         redirect_to action: :edit
       else
         flash[:error] = @featured_search.errors.full_messages.to_sentence
+        ensure_non_empty_filter_values
         render :edit, status: :unprocessable_entity
       end
     end
@@ -50,8 +53,13 @@ module Admin
 
     private
 
-      def featured_search_params
-        params.require(:featured_search).permit(:feature_category_id, :label, :slug, :description, :priority, :url, :thumbnail_url, featured_search_values_attributes: [:id, :value, :_destroy])
-      end
+    def featured_search_params
+      params.require(:featured_search).permit(:feature_category_id, :label, :slug, :description, :priority, :url, :thumbnail_url, featured_search_values_attributes: [:id, :value, :_destroy])
+    end
+
+    # When we render a blank form, there must exist an empty FeaturedSearchValue object to supply to the form helper
+    def ensure_non_empty_filter_values
+        @featured_search.featured_search_values.build if @featured_search.featured_search_values.empty?
+    end
   end
 end

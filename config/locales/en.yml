@@ -52,3 +52,7 @@ en:
     :18: eighteen
     :19: nineteen
     :20: twenty
+  activerecord:
+    attributes:
+      featured_search:
+        featured_search_values: "Filter Fields" # Matches UI for admin/featured_searches/_form.html.erb
