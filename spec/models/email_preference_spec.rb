@@ -38,7 +38,7 @@ describe EmailPreference, type: :model do
       expect(preferred_emails).to include('nop123' => 'nop123@columbia.edu')
     end
 
-    it 'removes unsubcribed users' do
+    it 'removes unsubscribed users' do
       expect(preferred_emails).not_to include 'abc123'
     end
 
