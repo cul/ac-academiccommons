@@ -2,6 +2,7 @@
 
 require 'rails_helper'
 
+#  TODO : Add more feature tests after the update to omniauth-cul 0.3.0 is complete (in review PR #345)
 describe 'authentication', type: :feature do
   context 'when user not logged in' do
     before do
