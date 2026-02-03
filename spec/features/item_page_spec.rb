@@ -43,14 +43,30 @@ describe 'Item Page', type: :feature do
     expect(page).to have_xpath('//a[@href=\'/search?f%5Bsubject_ssim%5D%5B%5D=Tea+Parties\']', text: 'Tea Parties')
   end
 
+  it 'clicking subject link shows correct results' do
+    find('//a[@href=\'/search?f%5Bsubject_ssim%5D%5B%5D=Tea+Parties\']', text: 'Tea Parties').click
+    expect(page).to have_current_path '/search?f%5Bsubject_ssim%5D%5B%5D=Tea+Parties'
+    expect(page).to have_content 'Alice\'s Adventures in Wonderland'
+  end
+
   it 'has linked publisher doi' do
     expect(page).to have_xpath('//a[@href=\'https://doi.org/10.1378/wonderland.01-2345\']', text: 'https://doi.org/10.1378/wonderland.01-2345')
   end
 
-  xit 'links to the MODS download' do # TODO: Only for administrators
-    expect(page).to have_css('a[href="/download/fedora_content/show_pretty/actest:1/descMetadata/actest1_description.xml?data=meta"]', text: 'text')
-    page.find('a[href="/download/fedora_content/show_pretty/actest:1/descMetadata/actest1_description.xml?data=meta"]', text: 'text').click
-    expect(page).to have_text('Alice\'s Adventures in Wonderland')
+  # TODO: Only for administrators - not sure how to test this right now
+  context 'when admin' do
+    include_context 'admin user for feature'
+
+    xit 'shows the correct Fedora PID' do
+      expect(page).to have_content 'Fedora 3 PID'
+      expect(page).to have_content 'actest:1'
+    end
+
+    xit 'links to the MODS download' do
+      expect(page).to have_css('a[href="/download/fedora_content/show_pretty/actest:1/descMetadata/actest1_description.xml?data=meta"]', text: 'text')
+      page.find('a[href="/download/fedora_content/show_pretty/actest:1/descMetadata/actest1_description.xml?data=meta"]', text: 'text').click
+      expect(page).to have_text('Alice\'s Adventures in Wonderland')
+    end
   end
 
   it 'has license/rights information' do
@@ -126,6 +142,24 @@ describe 'Item Page', type: :feature do
       expect(page).to have_xpath('//head/meta[@name="citation_pdf_url"][@content="http://www.example.com/doi/10.7916/TESTDOC2/download"]', visible: false)
       expect(page).to have_xpath('//head/meta[@name="citation_pdf_url"][@content="http://www.example.com/doi/10.7916/TESTDOC3/download"]', visible: false)
       expect(page).to have_xpath('//head/meta[@name="citation_pdf_url"][@content="http://www.example.com/doi/10.7916/TESTDOC4/download"]', visible: false)
+    end
+  end
+
+  describe 'author section' do
+    it 'displays all authors' do
+      expect(page).to have_content 'Carroll, Lewis'
+      expect(page).to have_content 'Weird Old Guys'
+    end
+
+    it 'names are clickable links' do
+      expect(page).to have_xpath('//a[@href="/search?f%5Bauthor_ssim%5D%5B%5D=Carroll%2C+Lewis"]', text: 'Carroll, Lewis')
+      expect(page).to have_xpath('//a[@href="/search?f%5Bauthor_ssim%5D%5B%5D=Weird+Old+Guys."]', text: 'Weird Old Guys.')
+    end
+
+    it 'clicking author link shows correct results' do
+      find('//a[@href="/search?f%5Bauthor_ssim%5D%5B%5D=Carroll%2C+Lewis"]', text: 'Carroll, Lewis').click
+      expect(page).to have_current_path '/search?f%5Bauthor_ssim%5D%5B%5D=Carroll%2C+Lewis'
+      expect(page).to have_content 'Alice\'s Adventures in Wonderland'
     end
   end
 end
