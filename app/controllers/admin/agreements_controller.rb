@@ -4,6 +4,7 @@ module Admin
 
     def index
       @agreements = Agreement.paginate(page: params[:page], per_page: 30)
+
       respond_to do |format|
         format.html
         format.csv { send_data Agreement.to_csv }
