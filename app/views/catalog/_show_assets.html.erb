@@ -21,7 +21,7 @@
             <% if asset.playable? %>
               <span class="icon play"><%= link_to ('<span class="far fa-play-circle" aria-hidden="true" title="Play"></span><span class="visually-hidden">Play</span>').html_safe, "#play-collapse-#{asset.id.gsub(/\/|\./, '-')}", data: { toggle: 'collapse' } %></span>
             <% end %>
-            <span class="icon download"><%= link_to ('<span class="far fa-arrow-alt-circle-down" aria-hidden="true" title="Download file"></span><span class="visually-hidden">Download File</span>').html_safe, asset.download_path, data: { turbolinks: false } %></span>
+            <span class="icon download"><%= link_to ('<span class="far fa-arrow-alt-circle-down" aria-hidden="true" title="Download file"></span><span class="visually-hidden">Download File</span>').html_safe, asset.download_path, data: { turbo: false } %></span>
           </li>
         </ul>
         <% if asset.playable? %>

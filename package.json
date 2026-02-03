@@ -33,8 +33,8 @@
     "popper.js": "1.16.1",
     "readmore-js": "^3.0.0-beta-1",
     "resolve-url-loader": "^4.0.0",
-    "turbolinks": "^5.2.0",
     "typeahead.js": "^0.11.1",
+    "@hotwired/turbo-rails":"^8.0.0",
     "video.js": "^7.17.0"
   },
   "devDependencies": {

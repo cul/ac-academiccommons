@@ -1,6 +1,5 @@
 <h2>Usage Statistics</h2>
-
-<%= form_with model: @usage_statistics_reports_form, url: admin_usage_statistics_reports_path, local: true, class: 'form-horizontal admin-form' do |f| %>
+<%= form_with model: @usage_statistics_reports_form, url: admin_usage_statistics_reports_path, class: 'form-horizontal admin-form' do |f| %>
 <p><em>Select parameters to calculate usage statistics by work:</em></p>
 
 <hr>
@@ -120,4 +119,5 @@
 
 <% end %>
 
-<%= render 'display_statistics' %>
+<%# The following element will be replaced via turbostream with the generated csv table %>
+<div id='generated-report'></div>

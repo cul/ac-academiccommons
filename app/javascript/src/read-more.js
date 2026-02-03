@@ -17,4 +17,4 @@ const ready = function(){
   });
 };
 
-document.addEventListener('turbolinks:load', ready);
+document.addEventListener('turbo:load', ready);

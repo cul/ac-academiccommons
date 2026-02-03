@@ -18,7 +18,7 @@ module Admin
         redirect_to action: :edit, id: @featured_search
       else
         flash[:error] = @featured_search.errors.full_messages.to_sentence
-        render :new
+        render :new, status: :unprocessable_entity
       end
     end
 
@@ -30,7 +30,7 @@ module Admin
         redirect_to action: :edit
       else
         flash[:error] = @featured_search.errors.full_messages.to_sentence
-        render :edit
+        render :edit, status: :unprocessable_entity
       end
     end
 
