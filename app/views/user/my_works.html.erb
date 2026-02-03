@@ -2,7 +2,7 @@
 
 <% unless @pending_works.empty? %>
   <h3>Pending Works</h3>
-  <table class="table small">
+  <table class="table small" data-testid="pending-works-table">
   <% @pending_works.each do |document| %>
     <tr>
       <td><%= document.title %></td>
