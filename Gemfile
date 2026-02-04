@@ -30,7 +30,6 @@ gem 'mustermann', '~> 2.0'
 gem 'om', '3.1.1'
 gem 'omniauth', '>= 2.1'
 gem 'omniauth-cul'
-gem 'omniauth-rails_csrf_protection', '~> 1.0'
 
 gem 'http'
 gem 'jbuilder', '~> 2.13.0'

@@ -256,6 +256,9 @@ Devise.setup do |config|
     config.omniauth :cas, strategy_class: Omniauth::Cul::Strategies::Cas3Strategy
   end
 
+  # Protect against
+  OmniAuth.config.request_validation_phase = OmniAuth::AuthenticityTokenProtection.new(key: :_csrf_token)
+
   # ==> Warden configuration
   # If you want to use other strategies, that are not supported by Devise, or
   # change the failure app, you can configure them inside the config.warden block.
