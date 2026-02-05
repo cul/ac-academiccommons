@@ -13,9 +13,16 @@
         <%= link_to t('blacklight.header_links.faq'), faq_path %> <span>|</span>
         <%= link_to t('blacklight.header_links.policies'), policies_path %> <span>|</span>
         <%= link_to t('blacklight.header_links.developers'), developers_path %><span>|</span>
-        <%= link_to t('blacklight.header_links.credits'), credits_path %>
-      </div>
-      <div class="col-md-3 contact">
+        <%= link_to t('blacklight.header_links.credits'), credits_path %><span>|</span>
+        <a href="https://feedback.cul.columbia.edu/feedback_submission/ac" class="feedback-trigger">Feedback & Suggestions</a>
+        <div id="feedbackModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.8); z-index:9999;">
+          <div style="background:white; margin:5% auto; width:80%; height:80%; position:relative; padding:20px;">
+            <button id="closeModal" style="position:absolute; right:10px; top:10px;">&times;</button>
+            <iframe id="feedbackFrame" src="" style="width:100%; height:100%; border:none;"></iframe>
+          </div>
+        </div>
+        </div>
+        <div class="col-md-3 contact">
         <i class="far fa-envelope" aria-hidden="true"></i> <%= mail_to "ac@columbia.edu" %>
       </div>
     </div>
