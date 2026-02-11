@@ -250,11 +250,8 @@ Devise.setup do |config|
   # config.omniauth :github, 'APP_ID', 'APP_SECRET', scope: 'user,public_repo'
   # config.omniauth :developer, { fields: [:uid], uid_field: :uid } # TODO : These options...
 
-  if Rails.env.development?
-    config.omniauth :developer, fields: [:uid], uid_field: :uid
-  else
-    config.omniauth :cas, strategy_class: Omniauth::Cul::Strategies::Cas3Strategy
-  end
+  config.omniauth :columbia_cas, { label: 'Columbia SSO (CAS)' }
+  config.omniauth :developer_uid, { label: 'Developer UID' } if Rails.env.development?
 
   # ==> Warden configuration
   # If you want to use other strategies, that are not supported by Devise, or

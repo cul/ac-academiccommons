@@ -5,26 +5,19 @@ require 'rails_helper'
 RSpec.describe Users::OmniauthCallbacksController, type: :controller do
   include_context 'mock ldap request' # provides uni, cul_ldap, and cul_ldap entry as well as mocks LDAP methods
 
-  # let(:uid) { 'abc123' }
   let(:auth_hash) do
     OmniAuth::AuthHash.new({ 'uid' => uni, 'extra' => {} })
   end
 
-  # let(:cul_ldap_entry) do
-  #   instance_double('Cul::LDAP::Entry', uni: 'abc123', email: 'abc123@columbia.edu', last_name: 'Doe', first_name: 'Jane')
-  # end
-
   before :each do
     request.env['devise.mapping'] = Devise.mappings[:user]
-    allow(Omniauth::Cul::Cas3).to receive(:validation_callback).and_return([uni, nil])
-    # allow_any_instance_of(Cul::LDAP).to receive(:initialize).and_return(cul_ldap)
-    # allow_any_instance_of(Cul::LDAP).to receive(:find_by_uni).with(uid).and_return(cul_ldap_entry)
+    allow(Omniauth::Cul::ColumbiaCas).to receive(:validation_callback).and_return([uni, nil])
   end
 
   # GET :cas
   describe '#cas' do
     before :each do
-      get :cas
+      get :columbia_cas
     end
 
     it 'creates new user' do
