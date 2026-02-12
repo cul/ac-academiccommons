@@ -18,7 +18,8 @@
   <% if body.present? %>
     <%= body %>
   <% else %>
-    <div class="document-main-section">
+    <%# We must specify a width value for this element, so nested grid elements display properly %>
+    <div class="document-main-section w-100"> 
       <%# If we are in index (search result) view, render the metadata section slots (the partials array will be empty) %>
       <% unless show? %>
         <%= title %>
