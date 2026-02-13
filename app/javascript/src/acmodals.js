@@ -1,25 +1,28 @@
 document.addEventListener('DOMContentLoaded', function() {
     const trigger = document.querySelector('.feedback-trigger');
-    const modal = document.getElementById('feedbackModal');
+    const modalElement = document.getElementById('feedbackModal');
     const frame = document.getElementById('feedbackFrame');
-    const closeBtn = document.getElementById('closeModal');
+    const closeBtn = modalElement ? modalElement.querySelector('.close') : null;
 
-    if (trigger && modal && frame) {
+    if (trigger && modalElement && frame) {
         
         trigger.addEventListener('click', function(e) {
             e.preventDefault();
             
-            const baseUrl = this.getAttribute('href');
+            const baseUrl = this.getAttribute('data-url');
             const contextUrl = encodeURIComponent(window.location.href);
-            
             frame.src = `${baseUrl}?referer=${contextUrl}`;
-            modal.style.display = 'block';
             
-            document.body.style.overflow = 'hidden';
+            $(modalElement).modal('show');
+        });
+
+        $(modalElement).on('hidden.bs.modal', function () {
+            frame.src = '';
         });
 
         const closeModal = function() {
-            modal.style.display = 'none';
+            modalElement.style.display = 'none';
+            modalElement.classList.remove('show');
             frame.src = '';
             document.body.style.overflow = '';
         };
@@ -29,7 +32,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
 
         window.addEventListener('click', function(e) {
-            if (e.target === modal) {
+            if (e.target === modalElement) {
                 closeModal();
             }
         });
