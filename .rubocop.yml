@@ -14,5 +14,6 @@ Rails/UnknownEnv:
     - production
     - academiccommons_dev
     - academiccommons_test
+    - academiccommons_staging
     - academiccommons_prod
 
