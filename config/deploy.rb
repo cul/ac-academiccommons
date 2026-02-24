@@ -99,3 +99,10 @@ namespace :deploy do
   before :publishing, 'sitemap:create'
   after  :publishing, :generate_500_html
 end
+
+# Now that we're using vite for our main site asset build rather than sprockets, the `deploy:assets:backup_manifest`
+# task doesn't do anything useful for us.  And in fact, it causes issues for fresh deployments.  See:
+# https://stackoverflow.com/questions/47914115/rails-manifest-file-not-found-deploying-with-capistrano
+# and
+# https://github.com/capistrano/rails/issues/235
+Rake::Task["deploy:assets:backup_manifest"].clear_actions
