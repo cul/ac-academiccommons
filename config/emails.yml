@@ -29,6 +29,11 @@ academiccommons_test:
   administrative_notifications: ac@columbia.edu
   error_notifications: diag@library.columbia.edu
 
+academiccommons_staging:
+  mail_deliverer: ac@columbia.edu
+  administrative_notifications: ac@columbia.edu
+  error_notifications: diag@library.columbia.edu
+
 academiccommons_prod:
   mail_deliverer: ac@columbia.edu
   administrative_notifications: ac@columbia.edu
