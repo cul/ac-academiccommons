@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_09_26_191135) do
+ActiveRecord::Schema[8.0].define(version: 2026_03_20_203309) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -26,7 +26,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_09_26_191135) do
     t.string "filename", null: false
     t.string "content_type"
     t.text "metadata"
-    t.bigint "byte_size", null: false
+    t.integer "byte_size", null: false
     t.string "checksum"
     t.datetime "created_at", precision: nil, null: false
     t.string "service_name", null: false
@@ -199,6 +199,17 @@ ActiveRecord::Schema[8.0].define(version: 2025_09_26_191135) do
     t.index ["at_time"], name: "index_statistics_on_at_time"
     t.index ["event"], name: "index_statistics_on_event"
     t.index ["identifier"], name: "index_statistics_on_identifier"
+  end
+
+  create_table "statistics_summaries", force: :cascade do |t|
+    t.string "identifier"
+    t.string "event"
+    t.integer "year"
+    t.integer "month"
+    t.integer "count"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["identifier", "event", "year", "month"], name: "index_statistics_summaries_on_identifier_event_year_month", unique: true
   end
 
   create_table "taggings", force: :cascade do |t|
