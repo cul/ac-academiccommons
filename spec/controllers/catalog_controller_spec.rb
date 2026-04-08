@@ -19,4 +19,16 @@ describe CatalogController, type: :controller do
       end
     end
   end
+
+  describe '#index' do
+    it 'sets meta \'robots: nofollow\' tag attributes' do
+      get :index
+      expect(controller.instance_variable_get(:@meta_nofollow)).to be true
+    end
+
+    it 'sets meta \'robots: noindex\' tag attributes' do
+      get :index
+      expect(controller.instance_variable_get(:@meta_noindex)).to be true
+    end
+  end
 end
