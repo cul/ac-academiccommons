@@ -25,7 +25,9 @@
 
     <%= csrf_meta_tags %>
     <%= content_for(:head) %>
+    <%= render 'shared/meta_tags' %>
   </head>
+
   <body class="<%= render_body_class %>">
     <%= render 'shared/alert_box' %>
     <%= render :partial => 'shared/cul_banner' %>
