@@ -1,12 +1,12 @@
 class CollectionsController < ApplicationController # rubocop:disable Metrics/ClassLength
   CONFIG = {
-    featured: {
+    featured_partners: {
       title: 'Featured Partners',
       summary: 'Works shared by our partner centers and departments. These groups actively collaborate with repository staff to provide long-term access to their research.',
       facet: 'department_ssim',
       filter: {}
     },
-    doctoraltheses: {
+    doctoral_theses: {
       title: 'Doctoral Theses',
       summary: 'Full-text Columbia dissertations from 2011 forward. Some dissertations dated prior to 2011 are also available.',
       facet: 'department_ssim',
@@ -17,12 +17,20 @@ class CollectionsController < ApplicationController # rubocop:disable Metrics/Cl
       },
       values: {}
     },
-    producedatcolumbia: {
+    produced_at_columbia: {
       title: 'Produced at Columbia',
       summary: 'Series of working papers, event videos, and more from departments and centers on campus.',
       facet: 'series_ssim',
       filter: {},
-      values: {}
+      values: {},
+      # We do not display produced at columbia on the explore page, but link to its show view in the featured series show view (bottom partial).
+      hide_in_index_view: true
+    },
+    featured_series: {
+      title: 'Featured Series',
+      summary: 'Collections of materials produced at Columbia, including working papers series, white papers, event videos, podcast archives, and curriculum guides.',
+      facet: 'series_ssim',
+      filter: {}
     },
     journals: {
       title: 'Columbia Journals',
@@ -41,6 +49,7 @@ class CollectionsController < ApplicationController # rubocop:disable Metrics/Cl
   # GET /explore/:category_id
   # NB custom resource path for collections
   def show
+    params[:category_id] = params[:category_id].tr('-', '_')
     # Render 404 if category_id not valid
     raise(ActionController::RoutingError, 'not found') unless collections_config[params[:category_id].to_sym]
 
@@ -72,18 +81,24 @@ class CollectionsController < ApplicationController # rubocop:disable Metrics/Cl
     @collections = [] if @collections.nil?
   end
 
-  def featured
-    config = collections_config[:featured]
+  def featured_series
+    config = collections_config[:featured_series]
     add_category_data(config) unless config.values
     config
   end
 
-  def doctoraltheses
-    collections_config[:doctoraltheses]
+  def featured_partners
+    config = collections_config[:featured_partners]
+    add_category_data(config) unless config.values
+    config
   end
 
-  def producedatcolumbia
-    collections_config[:producedatcolumbia]
+  def doctoral_theses
+    collections_config[:doctoral_theses]
+  end
+
+  def produced_at_columbia
+    collections_config[:produced_at_columbia]
   end
 
   def journals
@@ -99,7 +114,7 @@ class CollectionsController < ApplicationController # rubocop:disable Metrics/Cl
     config.use_queries = true
     feature_category = FeatureCategory.find_by(field_name: config.facet)
     return unless feature_category
-    feature_category.featured_searches.all.order("label ASC").map do |feature|
+    feature_category.featured_searches.all.order("label ASC").each do |feature|
       struct_data = { value: feature.slug, query: AcademicCommons::FeaturedSearches.to_fq(feature) }
       [:description, :image_url, :label, :url].each { |key| struct_data[key] = feature.send(key) }
       config.values[feature.slug] = OpenStruct.new(struct_data)
