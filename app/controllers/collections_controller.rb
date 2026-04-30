@@ -29,6 +29,12 @@ class CollectionsController < ApplicationController # rubocop:disable Metrics/Cl
       summary: 'The ongoing archives of journals published in collaboration with Columbia University Libraries.',
       facet: 'partner_journal_ssi',
       filter: {}
+    },
+    featuredseries: {
+      title: 'Featured Series',
+      summary: 'Collections of materials produced at Columbia, including working papers series, white papers. event videos, podcast archives, and curriculum guides.',
+      facet: 'series_ssim',
+      filter: {}
     }
   }.freeze
 
@@ -72,6 +78,12 @@ class CollectionsController < ApplicationController # rubocop:disable Metrics/Cl
     @collections = [] if @collections.nil?
   end
 
+  def featuredseries
+    config = collections_config[:featuredseries]
+    add_category_data(config) unless config.values
+    config
+  end
+
   def featured
     config = collections_config[:featured]
     add_category_data(config) unless config.values
@@ -95,11 +107,12 @@ class CollectionsController < ApplicationController # rubocop:disable Metrics/Cl
   private
 
   def add_category_data(config)
+    puts ' -------------------- add_category_data --------------------  '
     config.values = {}
     config.use_queries = true
     feature_category = FeatureCategory.find_by(field_name: config.facet)
     return unless feature_category
-    feature_category.featured_searches.all.order("label ASC").map do |feature|
+    feature_category.featured_searches.all.order("label ASC").each do |feature|
       struct_data = { value: feature.slug, query: AcademicCommons::FeaturedSearches.to_fq(feature) }
       [:description, :image_url, :label, :url].each { |key| struct_data[key] = feature.send(key) }
       config.values[feature.slug] = OpenStruct.new(struct_data)
