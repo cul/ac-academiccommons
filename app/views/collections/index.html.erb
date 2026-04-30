@@ -12,7 +12,7 @@
   <% @categories.each do |category| %>
     <% next if category[:hide_in_index_view] %>
     <div class="col-md-5 tile">
-      <h2><%= link_to category.title, category.url %></h2>
+      <h2><%= link_to category.title, category.url.tr('_', '-') %></h2>
       <p><%= raw category.summary %></p>
     </div>
   <% end %>
