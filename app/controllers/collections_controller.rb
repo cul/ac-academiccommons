@@ -1,12 +1,12 @@
 class CollectionsController < ApplicationController # rubocop:disable Metrics/ClassLength
   CONFIG = {
-    featured: {
+    featured_partners: {
       title: 'Featured Partners',
       summary: 'Works shared by our partner centers and departments. These groups actively collaborate with repository staff to provide long-term access to their research.',
       facet: 'department_ssim',
       filter: {}
     },
-    doctoraltheses: {
+    doctoral_theses: {
       title: 'Doctoral Theses',
       summary: 'Full-text Columbia dissertations from 2011 forward. Some dissertations dated prior to 2011 are also available.',
       facet: 'department_ssim',
@@ -17,7 +17,7 @@ class CollectionsController < ApplicationController # rubocop:disable Metrics/Cl
       },
       values: {}
     },
-    producedatcolumbia: {
+    produced_at_columbia: {
       title: 'Produced at Columbia',
       summary: 'Series of working papers, event videos, and more from departments and centers on campus.',
       facet: 'series_ssim',
@@ -84,18 +84,18 @@ class CollectionsController < ApplicationController # rubocop:disable Metrics/Cl
     config
   end
 
-  def featured
-    config = collections_config[:featured]
+  def featured_partners
+    config = collections_config[:featured_partners]
     add_category_data(config) unless config.values
     config
   end
 
-  def doctoraltheses
-    collections_config[:doctoraltheses]
+  def doctoral_theses
+    collections_config[:doctoral_theses]
   end
 
-  def producedatcolumbia
-    collections_config[:producedatcolumbia]
+  def produced_at_columbia
+    collections_config[:produced_at_columbia]
   end
 
   def journals
