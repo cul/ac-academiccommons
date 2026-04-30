@@ -107,7 +107,6 @@ class CollectionsController < ApplicationController # rubocop:disable Metrics/Cl
   private
 
   def add_category_data(config)
-    puts ' -------------------- add_category_data --------------------  '
     config.values = {}
     config.use_queries = true
     feature_category = FeatureCategory.find_by(field_name: config.facet)
