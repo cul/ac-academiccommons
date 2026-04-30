@@ -49,6 +49,7 @@ class CollectionsController < ApplicationController # rubocop:disable Metrics/Cl
   # GET /explore/:category_id
   # NB custom resource path for collections
   def show
+    params[:category_id] = params[:category_id].tr('-', '_')
     # Render 404 if category_id not valid
     raise(ActionController::RoutingError, 'not found') unless collections_config[params[:category_id].to_sym]
 
