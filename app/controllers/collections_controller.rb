@@ -22,18 +22,20 @@ class CollectionsController < ApplicationController # rubocop:disable Metrics/Cl
       summary: 'Series of working papers, event videos, and more from departments and centers on campus.',
       facet: 'series_ssim',
       filter: {},
-      values: {}
+      values: {},
+      # We do not display produced at columbia on the explore page, but link to its show view in the featured series show view (bottom partial).
+      hide_in_index_view: true
+    },
+    featured_series: {
+      title: 'Featured Series',
+      summary: 'Collections of materials produced at Columbia, including working papers series, white papers, event videos, podcast archives, and curriculum guides.',
+      facet: 'series_ssim',
+      filter: {}
     },
     journals: {
       title: 'Columbia Journals',
       summary: 'The ongoing archives of journals published in collaboration with Columbia University Libraries.',
       facet: 'partner_journal_ssi',
-      filter: {}
-    },
-    featuredseries: {
-      title: 'Featured Series',
-      summary: 'Collections of materials produced at Columbia, including working papers series, white papers. event videos, podcast archives, and curriculum guides.',
-      facet: 'series_ssim',
       filter: {}
     }
   }.freeze
@@ -78,8 +80,8 @@ class CollectionsController < ApplicationController # rubocop:disable Metrics/Cl
     @collections = [] if @collections.nil?
   end
 
-  def featuredseries
-    config = collections_config[:featuredseries]
+  def featured_series
+    config = collections_config[:featured_series]
     add_category_data(config) unless config.values
     config
   end
