@@ -41,6 +41,7 @@ class CollectionsController < ApplicationController # rubocop:disable Metrics/Cl
       slug: 'featured-series',
       summary: 'Collections of materials produced at Columbia, including working papers series, white papers, event videos, podcast archives, and curriculum guides.',
       facet: 'series_ssim',
+      hide_thumbnails?: true,
       # This has no legacy URL
       filter: {}
     },
