@@ -19,7 +19,7 @@ set :job_template, "/usr/local/bin/mailifrc -s 'Error - :email_subject' :error_r
 job_type :rake, 'cd :path && :environment_variable=:environment bundle exec rake :task'
 
 # Delete searches table daily.
-every :day, at: '5am' do
+every :hour do
   rake 'blacklight:delete_old_searches[7]', email_subject: 'Searches table cleanout'
 end
 
