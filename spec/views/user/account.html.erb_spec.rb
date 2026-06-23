@@ -3,6 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe 'user/account', type: :view do
+  include_context 'mock ldap request' # provides uni, cul_ldap, and cul_ldap entry as well as mocks LDAP methods
   let(:email_preference) { FactoryBot.create(:email_preference, uni: test_user.uid, email: test_user.email) }
   let(:test_user) { FactoryBot.create(:user) }
   let(:token) { FactoryBot.create(:token, authorizable: test_user) }
