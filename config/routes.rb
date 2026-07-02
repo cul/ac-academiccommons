@@ -98,6 +98,7 @@ Rails.application.routes.draw do
     end
     resources :featured_searches, except: :show
     resource :contact_authors, only: [:new, :create]
+    resources :tokens, only: [:index, :edit, :destroy]
   end
 
   # Resque web interface, only administrators have access
