@@ -5,9 +5,9 @@ require 'date'
 class Users::TokensController < ApplicationController
   before_action :authenticate_user!, only: :create
 
-  def current_user_token
+  def current_user_token(scope: Token::MCP)
     token_args = {
-      authorizable: current_user, scope: Token::API
+      authorizable: current_user, scope: scope
     }
     Token.find_or_create_by(token_args) do |token|
       token.token = SecureRandom.hex(32)
@@ -31,6 +31,7 @@ class Users::TokensController < ApplicationController
     flash[flash_type] = flash_msg
   end
 
+  # Right now, we create an MCP scoped token by default!
   def create
     as_of = DateTime.now
 
