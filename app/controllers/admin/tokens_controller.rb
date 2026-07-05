@@ -13,6 +13,7 @@ module Admin
       redirect_to action: :index
     rescue StandardError
       flash[:error] = 'There was an error deleting this token'
+      redirect_to action: :index
     end
   end
 end
