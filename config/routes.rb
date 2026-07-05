@@ -77,7 +77,7 @@ Rails.application.routes.draw do
   get 'account',             to: 'user#account'
   get 'unsubscribe_monthly', to: 'user#unsubscribe_monthly'
   resources :users, only: [:show] do
-    resource :token, only: [:create, :update], module: :users
+    resource :token, only: [:create, :update, :destroy], module: :users
   end
 
   get '/admin',                   to: 'admin#index',                 as: 'admin'

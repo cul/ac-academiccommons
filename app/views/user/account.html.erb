@@ -44,11 +44,12 @@
     </div>
   <% else %>
     <div class="form-group">
-      <%= f.label :token, 'Personal API Token', class: 'control-label' %>
+      <%= f.label :token, 'Personal MCP API Token', class: 'control-label' %>
       <%= f.text_field :token, class: 'form-control', disabled: true %>
     </div>
     <div class="form-group">
       <%= button_to 'Generate new token', user_token_path(current_user), class: 'btn btn-primary', method: :patch, data: { disable_with: 'Regenerating...' } %>
+      <%= button_to 'Delete token', user_token_path(current_user), class: 'btn btn-danger', method: :delete, data: { disable_with: 'Regenerating...' } %>
     </div>
   <% end %>
 <% end %>
