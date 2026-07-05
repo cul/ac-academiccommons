@@ -12,7 +12,7 @@ class Users::TokensController < ApplicationController
     Token.find_or_create_by(token_args) do |token|
       token.token = SecureRandom.hex(32)
       token.contact_email = current_user.email
-      token.description = "#{current_user.uid} personal api token"
+      token.description = "#{current_user.uid} personal #{scope.upcase} token"
     end
   end
 
