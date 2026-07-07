@@ -7,9 +7,8 @@ module Admin
     def index; end
 
     def destroy
-      Rails.logger.debug "DESTROY TOKEN: #{@token}"
       @token.destroy!
-      flash[:success] = 'Token deleted'
+      flash[:success] = 'Token successfully deleted.'
       redirect_to action: :index
     rescue StandardError
       flash[:error] = 'There was an error deleting this token'

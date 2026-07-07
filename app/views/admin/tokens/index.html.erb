@@ -1,9 +1,10 @@
-<h2>All Tokens</h2>
+<h2>API Token Management</h2>
 
 <%- if @tokens.empty? %>
   <p>No api tokens</p>
 <%- else %>
-  <table class="table table-striped">
+  <table class="table table-striped" id="api-tokens-table">
+    <caption>API Tokens</caption>
     <thead>
       <tr>
         <th scope="col">#</th>
@@ -11,15 +12,30 @@
         <th scope="col">Contact Email</th>
         <th scope="col">Scope</th>
         <th scope="col">Actions</th>
+        <th scope="col">Token Value</th>
       </tr>
     </thead>
     <tbody>
       <%- @tokens.each_with_index do |token, index| %>
-        <th scope="row"><%= index %></th>
-        <td><%= token.authorizable %></td>
-        <td><%= token.contact_email %></td>
-        <td><%= token.scope.upcase %></td>
-        <td><%= link_to 'Destroy token', admin_token_path(token), class: 'text-danger', data: { turbo_method: :delete, turbo_confirm: "Deleting #{token.scope.upcase} token - Are you sure?" } %></td>
+        <tr >
+          <th scope="row"><%= index %></th>
+          <td><%= token.authorizable %></td>
+          <td><%= token.contact_email %></td>
+          <td><%= token.scope.upcase %></td>
+          <td>
+            <%= button_to 'Delete Token', admin_token_path(token), method: :delete, class: 'btn btn-danger', data: { turbo_method: :delete, turbo_confirm: "Deleting #{token.scope.upcase} token - Are you sure?" } %>
+          </td>
+          <td>
+            <button class="btn btn-primary" type="button" data-toggle="collapse" data-target=<%= "#token-value-#{index}" %> aria-expanded="false" aria-controls=<%= "token-value-#{index}" %>>
+              Show Value
+            </button>
+          </td>
+        </tr>
+        <tr class="collapse" id=<%= "token-value-#{index}" %>>
+          <td colspan="6">
+          <code><%= token.token %></code>
+          </td>
+        </tr>
       <%- end %>
     </tbody>
   </table>
