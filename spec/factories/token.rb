@@ -10,6 +10,6 @@ FactoryBot.define do
   factory :mcp_token, class: 'Token' do
     scope { Token::MCP }
     token { 'mcp-token-value' }
-    association :authorizable, factory: :user, strategy: :build
+    association :authorizable, factory: :user, strategy: :create
   end
 end
