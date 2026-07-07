@@ -8,6 +8,7 @@
       <tr>
         <th scope="col">#</th>
         <th scope="col">Owner</th>
+        <th scope="col">Contact Email</th>
         <th scope="col">Scope</th>
         <th scope="col">Actions</th>
       </tr>
@@ -15,9 +16,10 @@
     <tbody>
       <%- @tokens.each_with_index do |token, index| %>
         <th scope="row"><%= index %></th>
+        <td><%= token.authorizable %></td>
         <td><%= token.contact_email %></td>
         <td><%= token.scope.upcase %></td>
-        <td><%= link_to 'Destroy token', admin_token_path(token), data: { turbo_method: :delete, turbo_confirm: "Deleting #{token.scope.upcase} token - Are you sure?" } %></td>
+        <td><%= link_to 'Destroy token', admin_token_path(token), class: 'text-danger', data: { turbo_method: :delete, turbo_confirm: "Deleting #{token.scope.upcase} token - Are you sure?" } %></td>
       <%- end %>
     </tbody>
   </table>

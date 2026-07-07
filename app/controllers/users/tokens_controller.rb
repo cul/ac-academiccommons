@@ -7,7 +7,7 @@ class Users::TokensController < ApplicationController
 
   def destroy
     Token.find_by!(authorizable: current_user, scope: Token::MCP).destroy!
-    token_response(:success, 'Successfully deleted token.', :ok)
+    token_response(:success, 'Successfully deleted API token.', :ok)
   rescue StandardError
     token_response(:error, 'Was not able to destroy API token.', :internal_server_error)
   end
