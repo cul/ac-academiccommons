@@ -44,6 +44,10 @@ class Statistic < ApplicationRecord
     end
   end
 
+  def self.between(from, to)
+    where(at_time: from..to)
+  end
+
   def self.valid_event?(e)
     EVENTS.include?(e)
   end

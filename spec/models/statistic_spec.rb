@@ -71,4 +71,39 @@ RSpec.describe Statistic, type: :model do
       end
     end
   end
+
+  describe '.between' do
+    let!(:before) do
+      Statistic.create!(
+        identifier: '1',
+        event: 'download',
+        at_time: Time.zone.parse('2026-07-09 23:59')
+      )
+    end
+
+    let!(:inside) do
+      Statistic.create!(
+        identifier: '1',
+        event: 'download',
+        at_time: Time.zone.parse('2026-07-10 12:00')
+      )
+    end
+
+    let!(:after) do
+      Statistic.create!(
+        identifier: '1',
+        event: 'download',
+        at_time: Time.zone.parse('2026-07-11 00:01')
+      )
+    end
+
+    it 'returns records within the range' do
+      results = Statistic.between(
+        Time.zone.parse('2026-07-10 00:00'),
+        Time.zone.parse('2026-07-10 23:59:59')
+      )
+
+      expect(results).to contain_exactly(inside)
+    end
+  end
 end
