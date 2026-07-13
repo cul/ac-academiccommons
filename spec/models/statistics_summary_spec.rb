@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe StatisticsSummary, type: :model do
@@ -51,7 +53,7 @@ RSpec.describe StatisticsSummary, type: :model do
 
   describe '.for_period' do
     let!(:june) do
-      StatisticsSummary.create!(
+      described_class.create!(
         identifier: '1',
         event: 'download',
         summary_month: Date.new(2026, 6, 1),
@@ -60,7 +62,7 @@ RSpec.describe StatisticsSummary, type: :model do
     end
 
     let!(:july) do
-      StatisticsSummary.create!(
+      described_class.create!(
         identifier: '1',
         event: 'download',
         summary_month: Date.new(2026, 7, 1),
@@ -68,8 +70,9 @@ RSpec.describe StatisticsSummary, type: :model do
       )
     end
 
+    #  FIX: Wrapped in let! so it executes cleanly during the test run
     let!(:august) do
-      StatisticsSummary.create!(
+      described_class.create!(
         identifier: '1',
         event: 'download',
         summary_month: Date.new(2026, 8, 1),
@@ -78,12 +81,13 @@ RSpec.describe StatisticsSummary, type: :model do
     end
 
     it 'returns summaries whose months fall within the period' do
-      results = StatisticsSummary.for_period(
+      results = described_class.for_period(
         Date.new(2026, 6, 15),
         Date.new(2026, 7, 20)
       )
 
       expect(results).to contain_exactly(june, july)
+      expect(results).not_to include(august)
     end
   end
 end

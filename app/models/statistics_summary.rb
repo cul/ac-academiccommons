@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class StatisticsSummary < ApplicationRecord
   validates :identifier, presence: true
   validates :event, presence: true
