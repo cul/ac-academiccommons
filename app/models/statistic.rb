@@ -8,8 +8,10 @@ class Statistic < ApplicationRecord
   EVENTS = [VIEW, DOWNLOAD, STREAM].freeze
 
   # Calculate the number of times the event given has occured for all the given
-  # ids. If start and end date are given, the query is limited to that time period.
-  # When querying with dates, timestamps are ignored.
+  # ids using the monthly summary table. If start and end date are given, the
+  # query is limited to that time period (inclusive of the months they fall in).
+  # When querying with dates, timestamps are ignored — only the month/year matters,
+  # since StatisticsSummary aggregates at month granularity.
   #
   # @note When querying for downloads asset ids must be used, not aggregator ids.
   #
@@ -21,31 +23,20 @@ class Statistic < ApplicationRecord
   def self.event_count(ids, event, start_date: nil, end_date: nil)
     # Check parameters.
     ids = [ids] if ids.is_a? String
-
     raise 'ids must be an Array or String' unless ids.is_a? Array
     raise "event must one of #{EVENTS}"    unless valid_event?(event)
 
-    if start_date || end_date
-      if start_date.respond_to?(:to_time) && end_date.respond_to?(:to_time)
-        start_date = start_date.to_time.beginning_of_day
-        end_date = end_date.to_time.end_of_day
-        ids.each_slice(5000).each_with_object({}) do |identifiers, hash|
-          hash.merge!(
-            group(:identifier).where('identifier IN (?) and event = ? AND at_time BETWEEN ? and ?', identifiers, event, start_date, end_date).count
-          )
-        end
-      else
-        raise 'start_date and end_date must respond to :to_time'
-      end
-    else
-      ids.each_slice(5000).each_with_object({}) do |identifiers, hash|
-        hash.merge!(group(:identifier).where('identifier IN (?) and event = ?', identifiers, event).count)
-      end
-    end
-  end
+    scope = StatisticsSummary.for_event(event)
 
-  def self.between(from, to)
-    where(at_time: from..to)
+    if start_date || end_date
+      raise 'start_date and end_date must respond to :to_time' unless start_date.respond_to?(:to_time) && end_date.respond_to?(:to_time)
+
+      scope = scope.for_period(start_date.to_time, end_date.to_time)
+    end
+
+    ids.each_slice(5000).each_with_object({}) do |identifiers, hash|
+      hash.merge!(scope.where(identifier: identifiers).group(:identifier).sum(:count))
+    end
   end
 
   def self.valid_event?(e)

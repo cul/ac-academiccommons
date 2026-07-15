@@ -8,6 +8,7 @@ RSpec.describe Statistic, type: :model do
       FactoryBot.create(:download_stat, identifier: '10.7916/ALICE')
       FactoryBot.create(:view_stat, identifier: 'ac:duplicate')
       FactoryBot.create(:download_stat, identifier: 'ac:duplicate')
+      rebuild_statistics_summary!
     end
 
     it 'merges statistics correctly' do
@@ -36,6 +37,7 @@ RSpec.describe Statistic, type: :model do
       it 'returns correct counts' do
         FactoryBot.create_list(:view_stat, 3, identifier: '10.7916/ALICE')
         FactoryBot.create(:view_stat, identifier: '10.7916/TESTDOC2')
+        rebuild_statistics_summary!
         expect(
           Statistic.event_count(['10.7916/ALICE', '10.7916/TESTDOC2', 'actest:3'], Statistic::VIEW)
         ).to match('10.7916/ALICE' => 3, '10.7916/TESTDOC2' => 1)
@@ -50,6 +52,7 @@ RSpec.describe Statistic, type: :model do
         FactoryBot.create(:view_stat, at_time: Time.local(2015, 1, 21, 4, 0))
         FactoryBot.create(:view_stat, at_time: Time.local(2015, 2, 1))
         FactoryBot.create(:view_stat, identifier: '10.7916/TESTDOC2', at_time: Time.local(2015, 12, 5))
+        rebuild_statistics_summary!
       end
 
       it 'returns correct counts for Jan 2015' do
@@ -69,41 +72,6 @@ RSpec.describe Statistic, type: :model do
           Statistic.event_count(['10.7916/ALICE', '10.7916/TESTDOC2'], Statistic::VIEW, start_date: Date.civil(2015, 12), end_date: Date.civil(2015, 12, -1))
         ).to match('10.7916/ALICE' => 1, '10.7916/TESTDOC2' => 1)
       end
-    end
-  end
-
-  describe '.between' do
-    let!(:before) do
-      Statistic.create!(
-        identifier: '1',
-        event: 'download',
-        at_time: Time.zone.parse('2026-07-09 23:59')
-      )
-    end
-
-    let!(:inside) do
-      Statistic.create!(
-        identifier: '1',
-        event: 'download',
-        at_time: Time.zone.parse('2026-07-10 12:00')
-      )
-    end
-
-    let!(:after) do
-      Statistic.create!(
-        identifier: '1',
-        event: 'download',
-        at_time: Time.zone.parse('2026-07-11 00:01')
-      )
-    end
-
-    it 'returns records within the range' do
-      results = Statistic.between(
-        Time.zone.parse('2026-07-10 00:00'),
-        Time.zone.parse('2026-07-10 23:59:59')
-      )
-
-      expect(results).to contain_exactly(inside)
     end
   end
 end
