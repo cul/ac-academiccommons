@@ -13,31 +13,13 @@ module Statistics
     end
 
     def call
-      checkpoint = StatisticsSummaryCheckpoint.fetch!
-
       from = @from || checkpoint.processed_until
-      to   = @to || default_to
+      to   = @to   || default_to
 
       raise ArgumentError, 'from must be before to' if from >= to
 
-      result = nil
-
-      ApplicationRecord.transaction do
-        result = Statistics::SummaryRollup.call(
-          from: from,
-          to: to
-        )
-
-        Statistics::SummaryVerifier.call(result)
-
-        checkpoint.advance_to!(to)
-
-        Statistics::Pruner.call(
-          before: prune_before || default_prune_before
-        )
-      end
-
-      result
+      run_transaction(from, to).tap { checkpoint.advance_to!(to) }
+      Statistics::Pruner.call(before: prune_before || default_prune_before)
     end
 
     private
@@ -50,6 +32,18 @@ module Statistics
 
     def default_prune_before
       1.year.ago.beginning_of_day
+    end
+
+    def checkpoint
+      @checkpoint ||= StatisticsSummaryCheckpoint.fetch!
+    end
+
+    def run_transaction(from, to)
+      ApplicationRecord.transaction do
+        Statistics::SummaryRollup.call(from: from, to: to).tap do |result|
+          Statistics::SummaryVerifier.call(result)
+        end
+      end
     end
   end
 end

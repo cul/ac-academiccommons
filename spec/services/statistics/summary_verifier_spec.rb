@@ -37,11 +37,7 @@ RSpec.describe Statistics::SummaryVerifier do
     end
 
     it 'raises when the raw statistic count does not match the rollup result' do
-      create_statistic(
-        identifier: 'abc',
-        event: 'download',
-        at_time: Time.zone.parse('2026-07-10 12:00:00')
-      )
+      create_statistic(identifier: 'abc', event: 'download', at_time: Time.zone.parse('2026-07-10 12:00:00'))
 
       result = rollup_result
 
@@ -62,18 +58,11 @@ RSpec.describe Statistics::SummaryVerifier do
     end
 
     it 'raises when a summary count does not match statistics' do
-      create_statistic(
-        identifier: 'abc',
-        event: 'download',
-        at_time: Time.zone.parse('2026-07-10 12:00:00')
-      )
+      create_statistic(identifier: 'abc', event: 'download', at_time: Time.zone.parse('2026-07-10 12:00:00'))
 
       result = rollup_result
 
-      summary = StatisticsSummary.find_by!(
-        identifier: 'abc',
-        event: 'download'
-      )
+      summary = StatisticsSummary.find_by!(identifier: 'abc', event: 'download')
 
       summary.update!(
         count: 50
@@ -88,17 +77,8 @@ RSpec.describe Statistics::SummaryVerifier do
     end
 
     it 'checks different identifiers separately' do
-      create_statistic(
-        identifier: 'abc',
-        event: 'download',
-        at_time: Time.zone.parse('2026-07-10 12:00:00')
-      )
-
-      create_statistic(
-        identifier: 'xyz',
-        event: 'download',
-        at_time: Time.zone.parse('2026-07-10 12:00:00')
-      )
+      create_statistic(identifier: 'abc', event: 'download', at_time: Time.zone.parse('2026-07-10 12:00:00'))
+      create_statistic(identifier: 'xyz', event: 'download', at_time: Time.zone.parse('2026-07-10 12:00:00'))
 
       result = rollup_result
 
@@ -118,17 +98,8 @@ RSpec.describe Statistics::SummaryVerifier do
     end
 
     it 'checks different events separately' do
-      create_statistic(
-        identifier: 'abc',
-        event: 'download',
-        at_time: Time.zone.parse('2026-07-10 12:00:00')
-      )
-
-      create_statistic(
-        identifier: 'abc',
-        event: 'view',
-        at_time: Time.zone.parse('2026-07-10 12:00:00')
-      )
+      create_statistic(identifier: 'abc', event: 'download', at_time: Time.zone.parse('2026-07-10 12:00:00'))
+      create_statistic(identifier: 'abc', event: 'view', at_time: Time.zone.parse('2026-07-10 12:00:00'))
 
       result = rollup_result
 

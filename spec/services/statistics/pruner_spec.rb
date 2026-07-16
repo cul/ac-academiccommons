@@ -80,23 +80,10 @@ RSpec.describe Statistics::Pruner do
   end
 
   it 'requires from and to together' do
-    expect {
-      described_class.call(
-        from: Time.zone.parse('2016-01-01')
-      )
-    }.to raise_error(
-      ArgumentError,
-      'from and to must be provided together'
-    )
-
-    expect {
-      described_class.call(
-        to: Time.zone.parse('2017-01-01')
-      )
-    }.to raise_error(
-      ArgumentError,
-      'from and to must be provided together'
-    )
+    [{ from: Time.zone.parse('2016-01-01') }, { to: Time.zone.parse('2017-01-01') }].each do |params|
+      expect { described_class.call(**params) }
+        .to raise_error(ArgumentError, 'from and to must be provided together')
+    end
   end
 
   it 'does not allow before with from/to' do

@@ -40,20 +40,32 @@ module Statistics
     end
 
     def validate_arguments!
-      if before && (from || to)
-        raise ArgumentError,
-              'Specify either before or from/to, not both'
-      end
+      validate_exclusivity!
+      validate_coexistence!
+      validate_chronology!
+    end
 
-      if (from && !to) || (!from && to)
-        raise ArgumentError,
-              'from and to must be provided together'
-      end
+    def validate_exclusivity!
+      return unless before && (from || to)
 
+      raise ArgumentError, 'Specify either before or from/to, not both'
+    end
+
+    def validate_coexistence!
+      # Using active support's presence, or a simple XOR logic:
+      return unless [from, to].one?(&:nil?) && [from, to].any?(&:present?) # Or:
+      # return if (from && to) || (!from && !to)
+
+      # A clean way to say "one is present but the other is not":
+      return unless from.nil? ^ to.nil?
+
+      raise ArgumentError, 'from and to must be provided together'
+    end
+
+    def validate_chronology!
       return unless from && to && from >= to
 
-      raise ArgumentError,
-            'from must be before to'
+      raise ArgumentError, 'from must be before to'
     end
   end
 end

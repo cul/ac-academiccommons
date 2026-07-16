@@ -1,26 +1,23 @@
 # frozen_string_literal: true
 
 namespace :statistics do
-
-  desc "Update statistics summaries and prune old statistics"
+  desc 'Update statistics summaries and prune old statistics'
   task update: :environment do
     started_at = Time.current
 
-    from = parse_time(ENV["FROM"])
-    to   = parse_time(ENV["TO"])
+    from = parse_time(ENV['FROM'])
+    to   = parse_time(ENV['TO'])
 
-    if from.present? != to.present?
-      abort "FROM and TO must be supplied together"
-    end
+    abort 'FROM and TO must be supplied together' if from.present? != to.present?
 
     dry_run = ActiveModel::Type::Boolean.new.cast(
-      ENV["DRY_RUN"]
+      ENV['DRY_RUN']
     )
 
     begin
       Rails.logger.info(
         {
-          message: "Statistics update started",
+          message: 'Statistics update started',
           from: from,
           to: to,
           dry_run: dry_run
@@ -35,7 +32,7 @@ namespace :statistics do
 
       Rails.logger.info(
         {
-          message: "Statistics update completed",
+          message: 'Statistics update completed',
           events_processed: result.events_processed,
           summary_rows_written: result.summary_rows_written,
           months_processed: result.months_processed,
@@ -53,11 +50,10 @@ namespace :statistics do
         Dry run:              #{dry_run}
         Duration:             #{(Time.current - started_at).round(2)} seconds
       OUTPUT
-
     rescue StandardError => e
       Rails.logger.error(
         {
-          message: "Statistics update failed",
+          message: 'Statistics update failed',
           error: e.class.name,
           detail: e.message,
           backtrace: e.backtrace.first(10)

@@ -21,14 +21,12 @@ module Statistics
         rows_written += process_batch(batch)
       end
 
-      months_processed = aggregates.keys.map(&:last).uniq.sort
-
       SummaryRollupResult.new(
         from: from,
         to: to,
         events_processed: aggregates.values.sum,
         summary_rows_written: rows_written,
-        months_processed: months_processed
+        months_processed: aggregates.keys.map(&:last).uniq.sort
       )
     end
 
@@ -40,63 +38,49 @@ module Statistics
       @aggregated_events ||= begin
         totals = Hash.new(0)
 
-        Statistic
-          .where(at_time: from...to)
-          .find_in_batches(batch_size: 10_000) do |batch|
-            batch.each do |statistic|
-              totals[
-                [
-                  statistic.identifier,
-                  statistic.event,
-                  statistic.at_time.beginning_of_month.to_date
-                ]
-              ] += 1
-            end
-          end
+        Statistic.where(at_time: from...to).find_in_batches(batch_size: 10_000) do |batch|
+          batch.each { |stat| totals[event_key(stat)] += 1 }
+        end
 
         totals
       end
     end
 
+    def event_key(statistic)
+      [
+        statistic.identifier,
+        statistic.event,
+        statistic.at_time.beginning_of_month.to_date
+      ]
+    end
+
     def process_batch(batch)
       existing = existing_summaries(batch.map(&:first))
 
-      summaries = batch.map do |(identifier, event, month), count|
-        summary = existing[
-          [identifier, event, month]
-        ] || StatisticsSummary.new(
-          identifier: identifier,
-          event: event,
-          summary_month: month,
-          count: 0
-        )
-
-        summary.count += count
-
-        summary
+      summaries = batch.map do |key, count|
+        find_or_initialize_summary(existing, key).tap { |summary| summary.count += count }
       end
 
-      summaries.each(&:save!)
+      summaries.each(&:save!).size
+    end
 
-      summaries.size
+    def find_or_initialize_summary(existing, key)
+      identifier, event, month = key
+
+      existing[key] || StatisticsSummary.new(
+        identifier: identifier,
+        event: event,
+        summary_month: month,
+        count: 0
+      )
     end
 
     def existing_summaries(keys)
-      identifiers = keys.map(&:first).uniq
-      events      = keys.map { |_, event, _| event }.uniq
-      months      = keys.map(&:last).uniq
+      identifiers, events, months = keys.transpose.map(&:uniq)
 
       StatisticsSummary
-        .where(identifier: identifiers)
-        .where(event: events)
-        .where(summary_month: months)
-        .index_by do |summary|
-          [
-            summary.identifier,
-            summary.event,
-            summary.summary_month
-          ]
-        end
+        .where(identifier: identifiers, event: events, summary_month: months)
+        .index_by { |s| [s.identifier, s.event, s.summary_month] }
     end
   end
 end
