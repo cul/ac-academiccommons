@@ -24,7 +24,7 @@ RSpec.describe Statistic, type: :model do
     it 'checks event param' do
       expect {
         Statistic.event_count('10.7916/ALICE', 'foo')
-      }.to raise_error "event must one of #{Statistic::EVENTS}"
+      }.to raise_error "event must be one of #{Statistic::EVENTS}"
     end
 
     it 'checks asset_pids' do

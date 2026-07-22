@@ -24,23 +24,6 @@ RSpec.describe StatisticsSummaryCheckpoint, type: :model do
     end
   end
 
-  describe '.fetch!' do
-    it 'returns the singleton checkpoint' do
-      checkpoint = described_class.create!(
-        processed_until: Time.current
-      )
-
-      expect(described_class.fetch!).to eq(checkpoint)
-      expect(checkpoint.id).to eq(1)
-    end
-
-    it 'raises if no checkpoint exists' do
-      expect {
-        described_class.fetch!
-      }.to raise_error(ActiveRecord::RecordNotFound)
-    end
-  end
-
   describe '#advance_to!' do
     it 'updates the processed_until timestamp' do
       checkpoint = described_class.create!(

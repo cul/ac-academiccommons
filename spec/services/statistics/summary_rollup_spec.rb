@@ -12,18 +12,18 @@ RSpec.describe Statistics::SummaryRollup do
   end
 
   describe '.call' do
-    let(:from) { Time.zone.parse('2026-07-01 00:00:00') }
-    let(:to)   { Time.zone.parse('2026-08-01 00:00:00') }
+    let(:to) { Time.zone.parse('2026-08-01 00:00:00') }
+    let(:checkpoint_time) { StatisticsSummaryCheckpoint.current.processed_until }
 
     it 'creates summary rows from statistics' do
       create_statistic(identifier: 'abc', event: 'download', at_time: Time.zone.parse('2026-07-10 12:00:00'))
 
-      result = described_class.call(from: from, to: to)
+      result = described_class.call(to_date: to)
       summary = StatisticsSummary.find_by!(identifier: 'abc', event: 'download', summary_month: Date.new(2026, 7, 1))
 
       expect(summary.count).to eq(1)
       expect(result).to have_attributes(
-        from: from,
+        from: checkpoint_time,
         to: to,
         events_processed: 1,
         summary_rows_written: 1,
@@ -40,7 +40,7 @@ RSpec.describe Statistics::SummaryRollup do
         )
       end
 
-      described_class.call(from: from, to: to)
+      described_class.call(to_date: to)
 
       summary = StatisticsSummary.find_by(
         identifier: 'abc',
@@ -54,7 +54,7 @@ RSpec.describe Statistics::SummaryRollup do
       create_statistic(identifier: 'abc', event: 'download', at_time: Time.zone.parse('2026-07-10 12:00:00'))
       create_statistic(identifier: 'xyz', event: 'download', at_time: Time.zone.parse('2026-07-10 12:00:00'))
 
-      described_class.call(from: from, to: to)
+      described_class.call(to_date: to)
 
       expect(StatisticsSummary.find_by(identifier: 'abc')&.count).to eq(1)
       expect(StatisticsSummary.find_by(identifier: 'xyz')&.count).to eq(1)
@@ -64,7 +64,7 @@ RSpec.describe Statistics::SummaryRollup do
       create_statistic(identifier: 'abc', event: 'download', at_time: Time.zone.parse('2026-07-10 12:00:00'))
       create_statistic(identifier: 'abc', event: 'view', at_time: Time.zone.parse('2026-07-10 12:00:00'))
 
-      described_class.call(from: from, to: to)
+      described_class.call(to_date: to)
 
       expect(StatisticsSummary.find_by(identifier: 'abc', event: 'download').count).to eq(1)
       expect(StatisticsSummary.find_by(identifier: 'abc', event: 'view').count).to eq(1)
@@ -75,7 +75,7 @@ RSpec.describe Statistics::SummaryRollup do
 
       create_statistic(identifier: 'abc', event: 'download', at_time: Time.zone.parse('2026-07-10 12:00:00'))
 
-      described_class.call(from: from, to: to)
+      described_class.call(to_date: to)
 
       summary = StatisticsSummary.find_by(identifier: 'abc', event: 'download')
 
@@ -86,16 +86,16 @@ RSpec.describe Statistics::SummaryRollup do
       create_statistic(
         identifier: 'abc',
         event: 'download',
-        at_time: Time.zone.parse('2026-06-30 23:59:59')
+        at_time: checkpoint_time - 1.day
       )
 
       create_statistic(
         identifier: 'abc',
         event: 'download',
-        at_time: Time.zone.parse('2026-08-01 00:00:00')
+        at_time: to + 1.day
       )
 
-      described_class.call(from: from, to: to)
+      described_class.call(to_date: to)
 
       expect(StatisticsSummary.count).to eq(0)
     end
@@ -105,8 +105,7 @@ RSpec.describe Statistics::SummaryRollup do
       create_statistic(identifier: 'abc', event: 'download', at_time: Time.zone.parse('2026-08-01 00:00:00'))
 
       described_class.call(
-        from: Time.zone.parse('2026-07-01 00:00:00'),
-        to: Time.zone.parse('2026-09-01 00:00:00')
+        to_date: Time.zone.parse('2026-09-01 00:00:00')
       )
 
       expect(StatisticsSummary.find_by(summary_month: Date.new(2026, 7, 1)).count).to eq(1)
@@ -124,7 +123,7 @@ RSpec.describe Statistics::SummaryRollup do
         )
       end
 
-      described_class.call(from: from, to: to)
+      described_class.call(to_date: to)
 
       expect(StatisticsSummary.count).to eq(3)
     end

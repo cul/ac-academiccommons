@@ -13,7 +13,7 @@ RSpec.describe Statistics::Updater do
   let(:result) do
     instance_double(
       Statistics::SummaryRollupResult,
-      from: 1.day.ago.beginning_of_day,
+      from: checkpoint.processed_until,
       to: Time.current,
       events_processed: 10,
       summary_rows_written: 1
@@ -23,7 +23,7 @@ RSpec.describe Statistics::Updater do
   before do
     allow(
       StatisticsSummaryCheckpoint
-    ).to receive(:fetch!)
+    ).to receive(:current)
       .and_return(checkpoint)
 
     allow(
@@ -55,17 +55,6 @@ RSpec.describe Statistics::Updater do
     expect(
       checkpoint
     ).to have_received(:advance_to!)
-  end
-
-  it 'prunes after updating' do
-    described_class.call
-
-    expect(
-      Statistics::Pruner
-    ).to have_received(:call)
-      .with(
-        before: kind_of(ActiveSupport::TimeWithZone)
-      )
   end
 
   it 'verifies before advancing the checkpoint' do
@@ -107,5 +96,60 @@ RSpec.describe Statistics::Updater do
     expect(
       checkpoint
     ).not_to have_received(:advance_to!)
+  end
+
+  # These examples use real ActiveRecord objects to confirm the DB transaction rolls back on failure
+  context 'when checking transactional integrity' do
+    def create_statistic(identifier:, event:, at_time:)
+      Statistic.create!(
+        identifier: identifier,
+        event: event,
+        at_time: at_time
+      )
+    end
+
+    it 'does not advance the persisted checkpoint if verification fails' do
+      checkpoint = StatisticsSummaryCheckpoint.current
+      original_processed_until = checkpoint.processed_until
+
+      from = original_processed_until
+      to = from + 1.day
+
+      create_statistic(identifier: 'abc', event: 'download', at_time: from + 1.hour)
+
+      allow(
+        Statistics::SummaryVerifier
+      ).to receive(:call)
+        .and_raise(Statistics::SummaryVerifier::VerificationError)
+
+      expect {
+        described_class.call(to_date: to)
+      }.to raise_error(
+        Statistics::SummaryVerifier::VerificationError
+      )
+
+      expect(checkpoint.reload.processed_until).to eq(original_processed_until)
+    end
+
+    it 'rolls back summary rows written earlier in the same failed transaction' do
+      checkpoint = StatisticsSummaryCheckpoint.current
+      from = checkpoint.processed_until
+      to = from + 1.day
+
+      create_statistic(identifier: 'abc', event: 'download', at_time: from + 1.hour)
+
+      allow(
+        Statistics::SummaryVerifier
+      ).to receive(:call)
+        .and_raise(Statistics::SummaryVerifier::VerificationError)
+
+      expect {
+        described_class.call(to_date: to)
+      }.to raise_error(
+        Statistics::SummaryVerifier::VerificationError
+      )
+
+      expect(StatisticsSummary.count).to eq(0)
+    end
   end
 end

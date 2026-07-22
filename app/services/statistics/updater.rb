@@ -2,48 +2,38 @@
 
 module Statistics
   class Updater
+    IN_FLIGHT_REQUEST_BUFFER = 5.minutes
+
     def self.call(...)
       new(...).call
     end
 
-    def initialize(from: nil, to: nil, prune_before: nil)
-      @from = from
-      @to = to
-      @prune_before = prune_before
+    def initialize(to_date: nil)
+      @to_date = to_date || (Time.current - IN_FLIGHT_REQUEST_BUFFER)
+
+      return unless checkpoint.processed_until && @to_date <= checkpoint.processed_until
+
+      raise ArgumentError, 'to date must be after checkpoint'
     end
 
     def call
-      from = @from || checkpoint.processed_until
-      to   = @to   || default_to
+      ApplicationRecord.transaction do
+        result = Statistics::SummaryRollup.call(to_date: to_date)
 
-      raise ArgumentError, 'from must be before to' if from >= to
+        Statistics::SummaryVerifier.call(result)
 
-      run_transaction(from, to).tap { checkpoint.advance_to!(to) }
-      Statistics::Pruner.call(before: prune_before || default_prune_before)
+        checkpoint.advance_to!(to_date)
+
+        result
+      end
     end
 
     private
 
-    attr_reader :prune_before
-
-    def default_to
-      1.day.ago.end_of_day
-    end
-
-    def default_prune_before
-      1.year.ago.beginning_of_day
-    end
+    attr_reader :to_date
 
     def checkpoint
-      @checkpoint ||= StatisticsSummaryCheckpoint.fetch!
-    end
-
-    def run_transaction(from, to)
-      ApplicationRecord.transaction do
-        Statistics::SummaryRollup.call(from: from, to: to).tap do |result|
-          Statistics::SummaryVerifier.call(result)
-        end
-      end
+      @checkpoint ||= StatisticsSummaryCheckpoint.current
     end
   end
 end

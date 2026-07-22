@@ -4,13 +4,12 @@ module Statistics
   class SummaryRollup
     BATCH_SIZE = 1_000
 
-    def self.call(from:, to:)
-      new(from: from, to: to).call
+    def self.call(to_date:)
+      new(to_date: to_date).call
     end
 
-    def initialize(from:, to:)
-      @from = from
-      @to = to
+    def initialize(to_date:)
+      @to_date = to_date
     end
 
     def call
@@ -21,24 +20,18 @@ module Statistics
         rows_written += process_batch(batch)
       end
 
-      SummaryRollupResult.new(
-        from: from,
-        to: to,
-        events_processed: aggregates.values.sum,
-        summary_rows_written: rows_written,
-        months_processed: aggregates.keys.map(&:last).uniq.sort
-      )
+      build_result(aggregates, rows_written)
     end
 
     private
 
-    attr_reader :from, :to
+    attr_reader :to_date
 
     def aggregated_events
       @aggregated_events ||= begin
         totals = Hash.new(0)
 
-        Statistic.where(at_time: from...to).find_in_batches(batch_size: 10_000) do |batch|
+        Statistic.where(at_time: checkpoint.processed_until...to_date).find_in_batches(batch_size: 10_000) do |batch|
           batch.each { |stat| totals[event_key(stat)] += 1 }
         end
 
@@ -64,6 +57,17 @@ module Statistics
       summaries.each(&:save!).size
     end
 
+    def build_result(aggregates, rows_written)
+      SummaryRollupResult.new(
+        from: checkpoint.processed_until,
+        to: to_date,
+        events_processed: aggregates.values.sum,
+        summary_rows_written: rows_written,
+        months_processed: aggregates.keys.map(&:last).uniq.sort,
+        touched_keys: aggregates.keys
+      )
+    end
+
     def find_or_initialize_summary(existing, key)
       identifier, event, month = key
 
@@ -81,6 +85,10 @@ module Statistics
       StatisticsSummary
         .where(identifier: identifiers, event: events, summary_month: months)
         .index_by { |s| [s.identifier, s.event, s.summary_month] }
+    end
+
+    def checkpoint
+      @checkpoint ||= StatisticsSummaryCheckpoint.current
     end
   end
 end

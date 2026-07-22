@@ -70,7 +70,6 @@ RSpec.describe StatisticsSummary, type: :model do
       )
     end
 
-    #  FIX: Wrapped in let! so it executes cleanly during the test run
     let!(:august) do
       described_class.create!(
         identifier: '1',

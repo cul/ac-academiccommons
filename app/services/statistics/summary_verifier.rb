@@ -38,34 +38,43 @@ module Statistics
     end
 
     def verify_summary_rows!
-      StatisticsSummary
-        .where(summary_month: result.months_processed)
-        .find_in_batches(batch_size: BATCH_SIZE) do |batch|
-          batch.each do |summary|
-            verify_summary_row!(summary)
-          end
-        end
+      result.touched_keys
+            .group_by { |_identifier, _event, month| month }
+            .each { |month, keys| verify_month!(month, keys) }
     end
 
-    def verify_summary_row!(summary)
-      expected = Statistic
-                 .where(
-                   identifier: summary.identifier,
-                   event: summary.event,
-                   at_time: summary_month_range(summary.summary_month)
-                 )
-                 .count
+    def verify_month!(month, keys)
+      keys.each_slice(BATCH_SIZE) { |batch| verify_batch!(month, batch) }
+    end
 
-      return if expected == summary.count
+    def verify_batch!(month, batch)
+      identifiers, events, = batch.transpose
 
-      raise VerificationError,
-            "Summary mismatch for #{summary.identifier}/#{summary.event}/#{summary.summary_month}: " \
-            "expected #{expected}, found #{summary.count}"
+      expected_counts = Statistic
+                        .where(identifier: identifiers.uniq, event: events.uniq, at_time: summary_month_range(month))
+                        .group(:identifier, :event)
+                        .count
+
+      summaries = StatisticsSummary
+                  .where(identifier: identifiers.uniq, event: events.uniq, summary_month: month)
+                  .index_by { |s| [s.identifier, s.event] }
+
+      batch.each { |identifier, event, _month| verify_key!(month, identifier, event, expected_counts, summaries) }
+    end
+
+    def verify_key!(month, identifier, event, expected_counts, summaries)
+      expected = expected_counts[[identifier, event]] || 0
+      summary = summaries[[identifier, event]]
+
+      return if summary && expected == summary.count
+
+      raise VerificationError, "Summary mismatch for #{identifier}/#{event}/#{month}: " \
+            "expected #{expected}, found #{summary&.count.inspect}"
     end
 
     def summary_month_range(month)
-      month.beginning_of_month.beginning_of_day...
-        month.next_month.beginning_of_month.beginning_of_day
+      (month.beginning_of_month.beginning_of_day...
+        month.next_month.beginning_of_month.beginning_of_day)
     end
   end
 end

@@ -3,8 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe Statistics::SummaryVerifier do
-  let(:from) { Time.zone.parse('2026-07-01 00:00:00') }
-  let(:to)   { Time.zone.parse('2026-08-01 00:00:00') }
+  let(:to) { Time.zone.parse('2026-08-01 00:00:00') }
 
   def create_statistic(identifier:, event:, at_time:)
     Statistic.create!(
@@ -16,8 +15,7 @@ RSpec.describe Statistics::SummaryVerifier do
 
   def rollup_result
     Statistics::SummaryRollup.call(
-      from: from,
-      to: to
+      to_date: to
     )
   end
 
@@ -39,18 +37,10 @@ RSpec.describe Statistics::SummaryVerifier do
     it 'raises when the raw statistic count does not match the rollup result' do
       create_statistic(identifier: 'abc', event: 'download', at_time: Time.zone.parse('2026-07-10 12:00:00'))
 
-      result = rollup_result
-
-      tampered_result = Statistics::SummaryRollupResult.new(
-        from: result.from,
-        to: result.to,
-        events_processed: 99,
-        summary_rows_written: result.summary_rows_written,
-        months_processed: result.months_processed
-      )
+      altered_result = rollup_result.with(events_processed: 99)
 
       expect {
-        described_class.call(tampered_result)
+        described_class.call(altered_result)
       }.to raise_error(
         Statistics::SummaryVerifier::VerificationError,
         /Statistics count mismatch/
@@ -116,6 +106,37 @@ RSpec.describe Statistics::SummaryVerifier do
       }.to raise_error(
         Statistics::SummaryVerifier::VerificationError
       )
+    end
+
+    it 'raises when a touched summary row is missing entirely' do
+      create_statistic(identifier: 'abc', event: 'download', at_time: Time.zone.parse('2026-07-10 12:00:00'))
+
+      result = rollup_result
+
+      StatisticsSummary.find_by!(identifier: 'abc', event: 'download').destroy!
+
+      expect {
+        described_class.call(result)
+      }.to raise_error(
+        Statistics::SummaryVerifier::VerificationError,
+        /Summary mismatch/
+      )
+    end
+
+    it 'does not re-verify summary rows outside this run\'s touched keys' do
+      create_statistic(identifier: 'abc', event: 'download', at_time: Time.zone.parse('2026-07-05 12:00:00'))
+      first_to = Time.zone.parse('2026-07-06 00:00:00')
+      Statistics::SummaryRollup.call(to_date: first_to)
+
+      StatisticsSummaryCheckpoint.current.update!(processed_until: first_to)
+
+      StatisticsSummary.find_by!(identifier: 'abc', event: 'download').update!(count: 999)
+
+      create_statistic(identifier: 'xyz', event: 'download', at_time: Time.zone.parse('2026-07-20 12:00:00'))
+      second_result = Statistics::SummaryRollup.call(to_date: to)
+
+      expect(second_result.touched_keys.map(&:first)).to eq(['xyz'])
+      expect(described_class.call(second_result)).to eq(true)
     end
   end
 end

@@ -1,34 +1,18 @@
 # frozen_string_literal: true
 
 namespace :statistics do
-  desc 'Update statistics summaries and prune old statistics'
-  task update: :environment do
+  desc "For cron; to update yesterday's statistics summaries and prune statistics older than one year"
+  task nightly_update: :environment do
     started_at = Time.current
-
-    from = parse_time(ENV['FROM'])
-    to   = parse_time(ENV['TO'])
-
-    abort 'FROM and TO must be supplied together' if from.present? != to.present?
-
-    dry_run = ActiveModel::Type::Boolean.new.cast(
-      ENV['DRY_RUN']
-    )
 
     begin
       Rails.logger.info(
         {
-          message: 'Statistics update started',
-          from: from,
-          to: to,
-          dry_run: dry_run
+          message: 'Statistics update started'
         }.to_json
       )
 
-      result = Statistics::Updater.call(
-        from: from,
-        to: to,
-        dry_run: dry_run
-      )
+      result = Statistics::Updater.call
 
       Rails.logger.info(
         {
@@ -36,20 +20,13 @@ namespace :statistics do
           events_processed: result.events_processed,
           summary_rows_written: result.summary_rows_written,
           months_processed: result.months_processed,
-          dry_run: dry_run,
           duration_seconds: Time.current - started_at
         }.to_json
       )
 
-      puts <<~OUTPUT
-        Statistics update complete
+      deleted = Statistics::Pruner.call
 
-        Events processed:     #{result.events_processed}
-        Summary rows written: #{result.summary_rows_written}
-        Months processed:     #{result.months_processed.join(', ')}
-        Dry run:              #{dry_run}
-        Duration:             #{(Time.current - started_at).round(2)} seconds
-      OUTPUT
+      Rails.logger.info("Deleted #{deleted} statistics rows")
     rescue StandardError => e
       Rails.logger.error(
         {
@@ -64,60 +41,49 @@ namespace :statistics do
     end
   end
 
-  desc 'Summarize and remove historical statistics for a specific time window'
+  desc 'Summarize historical statistics for a specific time window'
   task backfill: :environment do
-    from = parse_date(ENV['FROM'])
-    to   = parse_date(ENV['TO'])
+    to_date = parse_date(ENV['TO'])
 
-    unless from && to
+    unless to_date
       abort <<~MESSAGE
-        FROM and TO are required.
+        TO is required.
 
         Example:
-          rails statistics:backfill FROM=2016-01-01 TO=2017-01-01
+          rails statistics:backfill TO=2017-01-01
       MESSAGE
     end
 
-    abort 'FROM must be before TO' if from >= to
+    puts "Summarizing statistics to #{to_date}"
 
-    dry_run = ActiveModel::Type::Boolean.new.cast(
-      ENV['DRY_RUN']
-    )
-
-    puts "Summarizing statistics from #{from} to #{to}"
-
-    result = Statistics::SummaryRollup.call(
-      from: from.beginning_of_day,
-      to: to.beginning_of_day
+    result = Statistics::Updater.call(
+      to_date: to_date.beginning_of_day
     )
 
     puts "Processed #{result.events_processed} events"
     puts "Updated #{result.summary_rows_written} summary rows"
-
-    Statistics::SummaryVerifier.call(result)
-
-    puts 'Verification passed'
-
-    if dry_run
-      puts 'DRY RUN: skipping deletion of statistics rows'
-    else
-      deleted = Statistics::Pruner.call(
-        from: from.beginning_of_day,
-        to: to.beginning_of_day
-      )
-
-      puts "Deleted #{deleted} statistics rows"
-    end
   end
 
-  private
+  desc 'Prune up to a certain date before checkpoint'
+  task prune: :environment do
+    to_date = parse_date(ENV['TO'])
 
-  def parse_time(value)
-    return nil if value.blank?
+    unless to_date
+      abort <<~MESSAGE
+        TO is required.
 
-    Time.zone.parse(value)
-  rescue ArgumentError
-    abort "Invalid date/time value: #{value}"
+        Example:
+          rails statistics:prune TO=2017-01-01
+      MESSAGE
+    end
+
+    puts "Pruning statistics to #{to_date}"
+
+    num_deleted = Statistics::Pruner.call(
+      to_date: to_date.beginning_of_day
+    )
+
+    puts "Removed #{num_deleted} events"
   end
 
   def parse_date(value)

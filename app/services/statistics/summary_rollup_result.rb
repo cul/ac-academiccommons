@@ -6,6 +6,7 @@ module Statistics
     :to,
     :events_processed,
     :summary_rows_written,
-    :months_processed
+    :months_processed,
+    :touched_keys
   )
 end
