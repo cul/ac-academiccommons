@@ -7,6 +7,12 @@ class Statistic < ApplicationRecord
 
   EVENTS = [VIEW, DOWNLOAD, STREAM].freeze
 
+  scope :rollup_eligible, lambda {
+    where.not(identifier: [nil, ''])
+         .where.not(event: [nil, ''])
+         .where.not(at_time: nil)
+  }
+
   # Calculate the number of times the event given has occured for all the given
   # ids using the monthly summary table. If start and end date are given, the
   # query is limited to that time period (inclusive of the months they fall in).
@@ -103,5 +109,11 @@ class Statistic < ApplicationRecord
         end
       end
     end
+  end
+
+  def rollup_eligible?
+    identifier.present? &&
+      event.present? &&
+      at_time.present?
   end
 end

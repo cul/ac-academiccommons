@@ -30,12 +30,23 @@ module Statistics
     def aggregated_events
       @aggregated_events ||= begin
         totals = Hash.new(0)
+        @skipped_statistics = 0
 
-        Statistic.where(at_time: checkpoint.processed_until...to_date).find_in_batches(batch_size: 10_000) do |batch|
-          batch.each { |stat| totals[event_key(stat)] += 1 }
-        end
+        Statistic
+          .where(at_time: checkpoint.processed_until...to_date)
+          .find_in_batches(batch_size: 10_000) do |batch|
+            aggregate_batch(batch, totals)
+          end
 
         totals
+      end
+    end
+
+    def aggregate_batch(batch, totals)
+      batch.each do |stat|
+        next unless processable?(stat)
+
+        totals[event_key(stat)] += 1
       end
     end
 
@@ -64,7 +75,8 @@ module Statistics
         events_processed: aggregates.values.sum,
         summary_rows_written: rows_written,
         months_processed: aggregates.keys.map(&:last).uniq.sort,
-        touched_keys: aggregates.keys
+        touched_keys: aggregates.keys,
+        skipped_statistics: @skipped_statistics
       )
     end
 
@@ -89,6 +101,23 @@ module Statistics
 
     def checkpoint
       @checkpoint ||= StatisticsSummaryCheckpoint.current
+    end
+
+    def processable?(stat)
+      return true if stat.rollup_eligible?
+
+      @skipped_statistics += 1
+      log_skipped(stat)
+      false
+    end
+
+    def log_skipped(stat)
+      Rails.logger.warn(
+        "Skipping Statistic #{stat.id}: " \
+        "identifier=#{stat.identifier.inspect}, " \
+        "event=#{stat.event.inspect}, " \
+        "at_time=#{stat.at_time.inspect}"
+      )
     end
   end
 end

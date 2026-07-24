@@ -74,4 +74,40 @@ RSpec.describe Statistic, type: :model do
       end
     end
   end
+
+  describe '#rollup_eligible?' do
+    subject(:statistic) { FactoryBot.build(:statistic, identifier: identifier, event: event, at_time: at_time) }
+
+    context 'with all required attributes' do
+      let(:identifier) { 'abc123' }
+      let(:event) { 'download' }
+      let(:at_time) { Time.current }
+
+      it { is_expected.to be_rollup_eligible }
+    end
+
+    context 'without an identifier' do
+      let(:identifier) { nil }
+      let(:event) { 'view' }
+      let(:at_time) { Time.current }
+
+      it { is_expected.not_to be_rollup_eligible }
+    end
+
+    context 'without an event' do
+      let(:identifier) { 'abc123' }
+      let(:event) { nil }
+      let(:at_time) { Time.current }
+
+      it { is_expected.not_to be_rollup_eligible }
+    end
+
+    context 'without an at_time' do
+      let(:identifier) { 'abc123' }
+      let(:event) { 'view' }
+      let(:at_time) { nil }
+
+      it { is_expected.not_to be_rollup_eligible }
+    end
+  end
 end

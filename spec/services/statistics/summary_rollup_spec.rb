@@ -127,5 +127,43 @@ RSpec.describe Statistics::SummaryRollup do
 
       expect(StatisticsSummary.count).to eq(3)
     end
+
+    it 'skips statistics that are not rollup eligible' do
+      create_statistic(identifier: 'abc', event: 'download', at_time: Time.zone.parse('2026-07-31 23:59:59'))
+      create_statistic(identifier: 'xyz', event: '', at_time: Time.zone.parse('2026-08-01 00:00:00'))
+
+      result = described_class.call(to_date: Date.parse('2026-08-05'))
+
+      expect(result.events_processed).to eq(1)
+      expect(result.skipped_statistics).to eq(1)
+
+      expect(StatisticsSummary.count).to eq(1)
+    end
+
+    it 'logs skipped statistics' do
+      create_statistic(identifier: '', event: 'view', at_time: Time.zone.parse('2026-08-01 00:00:00'))
+
+      expect(Rails.logger)
+        .to receive(:warn)
+        .with(/Skipping Statistic/)
+
+      described_class.call(to_date: Date.parse('2026-08-05'))
+    end
+
+    it 'does not create summaries for invalid statistics' do
+      create_statistic(identifier: '', event: 'view', at_time: Time.zone.parse('2026-08-01 00:00:00'))
+
+      described_class.call(to_date: Date.parse('2026-08-05'))
+
+      expect(StatisticsSummary.count).to eq(0)
+    end
+
+    it 'reports zero skipped statistics when all records are valid' do
+      create_statistic(identifier: 'xyz', event: 'view', at_time: Time.zone.parse('2026-08-01 00:00:00'))
+
+      result = described_class.call(to_date: Date.parse('2026-08-05'))
+
+      expect(result.skipped_statistics).to eq(0)
+    end
   end
 end
