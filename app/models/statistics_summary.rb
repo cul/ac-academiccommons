@@ -16,7 +16,7 @@ class StatisticsSummary < ApplicationRecord
 
   def self.for_period(from, to)
     where(
-      summary_month: from.beginning_of_month..to.beginning_of_month
+      summary_month: from.beginning_of_month...to.beginning_of_month
     )
   end
 end

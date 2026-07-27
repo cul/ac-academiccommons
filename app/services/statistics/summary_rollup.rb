@@ -52,7 +52,7 @@ module Statistics
 
     def event_key(statistic)
       [
-        statistic.identifier,
+        statistic.identifier.downcase,
         statistic.event,
         statistic.at_time.beginning_of_month.to_date
       ]
@@ -96,7 +96,7 @@ module Statistics
 
       StatisticsSummary
         .where(identifier: identifiers, event: events, summary_month: months)
-        .index_by { |s| [s.identifier, s.event, s.summary_month] }
+        .index_by { |s| [s.identifier.downcase, s.event, s.summary_month] }
     end
 
     def checkpoint

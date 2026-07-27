@@ -78,23 +78,16 @@ module Statistics
     def expected_counts_for(month, identifiers, events)
       Statistic
         .rollup_eligible
-        .where(
-          identifier: identifiers,
-          event: events,
-          at_time: summary_month_range(month)
-        )
-        .group(:identifier, :event)
+        .where('LOWER(identifier) IN (?)', identifiers)
+        .where(event: events, at_time: summary_month_range(month))
+        .group('LOWER(identifier)', :event)
         .count
     end
 
     def summaries_for(month, identifiers, events)
       StatisticsSummary
-        .where(
-          identifier: identifiers,
-          event: events,
-          summary_month: month
-        )
-        .index_by { |summary| [summary.identifier, summary.event] }
+        .where(identifier: identifiers, event: events, summary_month: month)
+        .index_by { |summary| [summary.identifier.downcase, summary.event] }
     end
 
     def verify_key!(month, identifier, event, expected_counts, summaries)

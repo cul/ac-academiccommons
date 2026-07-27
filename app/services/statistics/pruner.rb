@@ -15,7 +15,7 @@ module Statistics
     end
 
     def call
-      Statistic.where(at_time: ..to_date)
+      Statistic.where(at_time: ...to_date)
                .find_in_batches(batch_size: BATCH_SIZE)
                .sum do |batch|
         Statistic.where(id: batch.map(&:id)).delete_all

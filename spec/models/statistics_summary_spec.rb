@@ -85,8 +85,8 @@ RSpec.describe StatisticsSummary, type: :model do
         Date.new(2026, 7, 20)
       )
 
-      expect(results).to contain_exactly(june, july)
-      expect(results).not_to include(august)
+      expect(results).to contain_exactly(june)
+      expect(results).not_to include(august, july)
     end
   end
 end

@@ -43,22 +43,23 @@ namespace :statistics do
 
   desc 'Summarize historical statistics for a specific time window'
   task backfill: :environment do
-    to_date = parse_date(ENV['TO'])
+    to_date = parse_year_month(ENV['TO'])
 
     unless to_date
       abort <<~MESSAGE
-        TO is required.
+        TO is required and must be in YYYY-MM format.
+
+        TO is the exclusive end of the range: events from that month
+        onward are excluded and will be picked up by a later run.
 
         Example:
-          rails statistics:backfill TO=2017-01-01
+          rails statistics:backfill TO=2017-01
       MESSAGE
     end
 
-    puts "Summarizing statistics to #{to_date}"
+    puts "Summarizing statistics up to (not including) #{to_date}"
 
-    result = Statistics::Updater.call(
-      to_date: to_date.beginning_of_day
-    )
+    result = Statistics::Updater.call(to_date: to_date.beginning_of_day)
 
     puts "Processed #{result.events_processed} events"
     puts "Updated #{result.summary_rows_written} summary rows"
@@ -66,30 +67,35 @@ namespace :statistics do
 
   desc 'Prune up to a certain date before checkpoint'
   task prune: :environment do
-    to_date = parse_date(ENV['TO'])
+    to_date = parse_year_month(ENV['TO'])
 
     unless to_date
       abort <<~MESSAGE
-        TO is required.
+        TO is required and must be in YYYY-MM format.
+
+        TO is the exclusive end of the range: statistics from that month
+        onward are kept, not pruned.
 
         Example:
-          rails statistics:prune TO=2017-01-01
+          rails statistics:prune TO=2017-01
       MESSAGE
     end
 
-    puts "Pruning statistics to #{to_date}"
+    puts "Pruning statistics up to (not including) #{to_date}"
 
-    num_deleted = Statistics::Pruner.call(
-      to_date: to_date.beginning_of_day
-    )
+    num_deleted = Statistics::Pruner.call(to_date: to_date.beginning_of_day)
 
     puts "Removed #{num_deleted} events"
   end
 
-  def parse_date(value)
+  def parse_year_month(value)
     return nil if value.blank?
 
-    Date.parse(value)
+    unless /\A\d{4}-(0[1-9]|1[0-2])\z/.match?(value)
+      abort "Invalid value: #{value.inspect}. TO must be in YYYY-MM format (e.g. 2014-01)."
+    end
+
+    Date.strptime(value, '%Y-%m')
   rescue ArgumentError
     abort "Invalid date: #{value}"
   end
