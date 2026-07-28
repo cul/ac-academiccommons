@@ -23,6 +23,7 @@ Rails.application.routes.draw do
 
   # Mounting API endpoint at /api/v1/
   mount API => '/'
+  post "/mcp", to: "mcp#create"
 
   # Collections routes
   resources :collections, only: [:index, :show], param: 'category_slug', path: 'explore'

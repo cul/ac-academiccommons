@@ -50,21 +50,28 @@ def mount_in_rails(app, options = {})
   )
 end
 
-mount_in_rails(
-  Rails.application,
-  name: 'cul-academic-commons',
-  version: '1.0.0',
-  transport: :authenticated,
-  path: '/mcp', # This is the default path prefix
-  # Add allowed origins below, it defaults to Rails.application.config.hosts
-  allowed_origins: ['localhost', '127.0.0.1', '::1'] + Rails.application.config.hosts,
-  localhost_only: Rails.env.development?, # Set to false to allow connections from other hosts
-  require_https: !Rails.env.development?,
-  # whitelist specific ips to if you want to run on localhost and allow connections from other IPs
-  # allowed_ips: ['127.0.0.1', '::1'],
-  authenticate: true
-) do |server|
-  Rails.application.config.after_initialize do
-    server.register_tool(RecordsTool)
-  end
-end
+# mount_in_rails(
+#   Rails.application,
+#   name: 'cul-academic-commons',
+#   version: '1.0.0',
+#   transport: :authenticated,
+#   path: '/mcp', # This is the default path prefix
+#   # Add allowed origins below, it defaults to Rails.application.config.hosts
+#   allowed_origins: ['localhost', '127.0.0.1', '::1'] + Rails.application.config.hosts,
+#   localhost_only: Rails.env.development?, # Set to false to allow connections from other hosts
+#   require_https: !Rails.env.development?,
+#   # whitelist specific ips to if you want to run on localhost and allow connections from other IPs
+#   # allowed_ips: ['127.0.0.1', '::1'],
+#   authenticate: true
+# ) do |server|
+#   Rails.application.config.after_initialize do
+#     server.register_tool(RecordsTool)
+#   end
+# end
+
+# TODO : confirm that these settings are in the mcp sdk implementation:
+# - allowed origins
+# - only local host in dev
+# - only https in non-dev
+# - transport is ManagedTokensStreamableTransport-equivalent
+# -
