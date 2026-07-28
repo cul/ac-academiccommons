@@ -12,6 +12,7 @@ class McpController < ActionController::API
     )
     transport = MCP::Server::Transports::StreamableHTTPTransport.new(
       server,
+      allowed_hosts: Rails.application.config.hosts.map(&:to_s),
       stateless: true
     )
     status, headers, body = transport.handle_request(request)
