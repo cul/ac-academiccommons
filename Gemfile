@@ -100,3 +100,5 @@ gem 'puma', '~> 5.2'
 gem 'csv', '~> 3.3'
 
 gem 'fast-mcp', '~> 1.6', git: 'https://github.com/yjacquin/fast-mcp', branch: 'mcp-2025-06-18'
+
+gem "mcp", "~> 1.0"
