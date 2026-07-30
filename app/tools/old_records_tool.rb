@@ -31,7 +31,7 @@ class OldRecordsTool < ApplicationTool
       .description('ordering of results')
   end
 
-  def call(order: :desc, page: 1, per_page: 25, q: nil, search_type: :keyword, sort: :best_match)
+  def call(order: :desc, page: 1, per_page: 25, q: nil, search_type: :keyword, sort: :best_match) # rubocop:disable Naming/MethodParameterName
     solr_response = query_solr(
       order: order.to_sym, page: page, per_page: per_page,
       q: q, search_type: search_type.to_sym, sort: sort.to_sym
