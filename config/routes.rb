@@ -1,17 +1,5 @@
 require 'resque/server'
 
-# MCP Server with Streamable HTTP Transport initialization
-server = MCP::Server.new(
-  name: 'cul-academic-commons',
-  version: '1.0.0',
-  tools: [RecordsTool]
-)
-transport = MCP::Server::Transports::StreamableHTTPTransport.new(
-  server,
-  stateless: true,
-  allowed_hosts: Rails.application.config.hosts.map(&:to_s)
-)
-
 Rails.application.routes.draw do
   # temporarily removing range slider
   # concern :range_searchable, BlacklightRangeLimit::Routes::RangeSearchable.new
@@ -35,8 +23,8 @@ Rails.application.routes.draw do
 
   # Mounting API endpoint at /api/v1/
   mount API => '/'
-  # Mounting our MCP server at /mcp/
-  mount AcademicCommons::TokenAuthMcp.new(transport) => '/mcp'
+  # Exposing our MCP server at /mcp/
+  post '/mcp', to: 'mcp#create'
 
   # Collections routes
   resources :collections, only: [:index, :show], param: 'category_slug', path: 'explore'
