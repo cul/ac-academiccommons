@@ -9,10 +9,10 @@ module AcademicCommons
     end
 
     def call(env)
-      req_token = Rack::Request.new(env).get_header('HTTP_AUTHORIZATION').gsub('Bearer ', '')
+      req_token = Rack::Request.new(env).get_header('HTTP_AUTHORIZATION').to_s.gsub('Bearer ', '')
       api_token = Token.find_by(token: req_token, scope: Token::API)
 
-      return unauthorized_response if api_token.nil?
+      return unauthorized_response if req_token.nil? || api_token.nil?
 
       @app.call(env)
     end
