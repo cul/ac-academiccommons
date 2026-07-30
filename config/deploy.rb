@@ -33,6 +33,7 @@ set :passenger_restart_with_touch, true
 
 set :linked_files, fetch(:linked_files, []).push(
   'config/cul_ldap.yml',
+  'config/mcp.yml',
   'config/database.yml',
   'config/solr.yml',
   'config/blacklight.yml',
