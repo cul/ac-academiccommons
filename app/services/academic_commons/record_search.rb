@@ -33,7 +33,7 @@ module AcademicCommons
         params.rows(1)
       end
       response.docs.first
-    rescue StandardError
+    rescue StandardError => e
       Rails.logger.error e
       raise
     end

@@ -26,6 +26,7 @@ class RecordsTool < MCP::Tool
     required: []
   )
 
+  # rubocop:disable Lint/UnusedMethodArgument
   def self.call(server_context:, search_type: 'semantic', q: nil,
                 page: 1, per_page: 25, sort: 'best_match', order: 'desc')
     response = AcademicCommons::RecordSearch.call(
@@ -35,4 +36,5 @@ class RecordsTool < MCP::Tool
     )
     MCP::Tool::Response.new([{ type: 'text', text: response }])
   end
+  # rubocop:enable Lint/UnusedMethodArgument
 end
