@@ -1,7 +1,7 @@
 require 'rails_helper'
 require 'json'
 
-RSpec.describe 'mcp server', type: :request, focus: true do
+RSpec.describe 'mcp server', type: :request do
   before { host! 'localhost' }
 
   let!(:token) { FactoryBot.create(:token, scope: Token::API) }
