@@ -5,6 +5,7 @@ class UserController < ApplicationController
 
   def account
     @email_preference = current_user.email_preference
+    @user_api_token = user_api_token || Token.new
   end
 
   def my_works
@@ -76,5 +77,9 @@ class UserController < ApplicationController
     AcademicCommons::Metrics::UsageStatistics.new(**options)
                                              .calculate_lifetime
                                              .calculate_period
+  end
+
+  def user_api_token
+    Token.find_by(authorizable: current_user, scope: Token::API)
   end
 end
