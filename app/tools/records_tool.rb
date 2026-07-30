@@ -14,8 +14,11 @@ class RecordsTool < MCP::Tool
 
   input_schema(
     properties: {
-      search_type: { type: 'string', enum: %w[keyword semantic subject title],
-                     description: 'type of search to use; use \'semantic\' for natural language queries, or \'keyword\' for term matching' },
+      search_type: {
+        type: 'string', enum: %w[keyword semantic subject title],
+        description:
+          'type of search to use; use \'semantic\' for natural language queries, or \'keyword\' for term matching'
+      },
       q: { type: 'string', description: 'query string' },
       page: { type: 'integer', minimum: 1, description: 'page number' },
       per_page: { type: 'integer', minimum: 1, maximum: 100,

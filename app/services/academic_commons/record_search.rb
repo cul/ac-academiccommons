@@ -11,7 +11,7 @@ module AcademicCommons
 
     MAP_TO_SOLR_FIELD = SolrDocument.field_semantics
 
-    def self.query_solr(order:, page:, per_page:, q:, sort:, search_type: :semantic)
+    def self.query_solr(order:, page:, per_page:, q:, sort:, search_type: :semantic) # rubocop:disable Naming/MethodParameterName
       AcademicCommons.search do |solr_params|
         solr_params.q q
         solr_params.sort_by SORT_TO_SOLR_SORT.dig(sort, order)
@@ -38,7 +38,7 @@ module AcademicCommons
       raise
     end
 
-    def self.call(search_type:, q:, page:, per_page:, sort:, order:)
+    def self.call(search_type:, q:, page:, per_page:, sort:, order:) # rubocop:disable Naming/MethodParameterName
       solr_response = query_solr(
         order: order.to_sym, page: page, per_page: per_page,
         q: q, search_type: search_type.to_sym, sort: sort.to_sym
