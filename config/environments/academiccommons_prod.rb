@@ -1,3 +1,5 @@
 require Rails.root.join('config/environments/deployed')
 
-config.hosts << 'academiccommons.columbia.edu'
+Rails.application.configure do
+  config.hosts << 'academiccommons.columbia.edu'
+end
