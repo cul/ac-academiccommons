@@ -21,7 +21,7 @@ RSpec.describe 'user/account', type: :view do
   end
 
   it 'renders token text box label' do
-    expect(rendered).to have_css('label', text: 'Personal API Token')
+    expect(rendered).to have_css('label', text: 'Personal MCP API Token')
   end
 
   it 'renders token text box' do
