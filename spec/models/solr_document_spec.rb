@@ -276,4 +276,27 @@ describe SolrDocument do
       expect(document.file_uri_ds_location_to_file_path(triple_slash_file_uri)).to eq(file_path)
     end
   end
+
+  describe '#wowza_media_url' do
+    let(:document) do
+      described_class.new(
+        'id' => '10.7916/TESTDOC2',
+        'active_fedora_model_ssi' => 'GenericResource'
+      )
+    end
+    let(:request) do
+      req_double = instance_double('ActionDispatch::Request double')
+      allow(req_double).to receive(:is_a?).with(ActionDispatch::Request).and_return(true)
+      allow(req_double).to receive(:remote_ip).and_return('1.2.3.4')
+      req_double
+    end
+    before do
+      allow(document).to receive(:playable?).and_return(true)
+      allow(document).to receive(:file_uri_ds_location_to_file_path).and_return('abc://unmapped-location-uri/file.mp4')
+    end
+
+    it 'returns nil and logs error when AcademicCommons::Utils::WowzaUtils.wowza_url_for_video_location returns nil' do
+      document.wowza_media_url(request)
+    end
+  end
 end

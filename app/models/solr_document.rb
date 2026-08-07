@@ -164,23 +164,16 @@ class SolrDocument
   def wowza_media_url(request)
     raise ArgumentError, 'Request object invalid' unless request.is_a?(ActionDispatch::Request)
     return unless playable?
-    # Check that it is free to read
-
-    wowza_config = Rails.application.credentials.wowza
-    raise 'Missing wowza config' unless wowza_config
 
     access_copy_location = file_uri_ds_location_to_file_path(fetch('access_copy_location_ssi', nil))
-
     return unless access_copy_location
 
-    Wowza::SecureToken::Params.new(
-      stream: wowza_config[:application] + '/_definst_/mp4:' + access_copy_location.gsub(%r{^\/}, ''),
-      secret: wowza_config[:shared_secret],
-      client_ip: request.remote_ip,
-      starttime: Time.now.to_i,
-      endtime: Time.now.to_i + wowza_config[:token_lifetime].to_i,
-      prefix: wowza_config[:token_prefix]
-    ).to_url_with_token_hash(wowza_config[:host], wowza_config[:ssl_port], 'hls-ssl')
+    url = AcademicCommons::Utils::WowzaUtils.wowza_url_for_video_location(access_copy_location, request.remote_ip)
+    if url.nil?
+      Rails.logger.error "Unable to translate access_copy_location #{access_copy_location} to wowza url. Verify wowza config rules."
+    end
+
+    url
   end
 
   def related_items
