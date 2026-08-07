@@ -127,12 +127,12 @@ RSpec.describe AcademicCommons::Utils::WowzaUtils do
       expect(params[:client_ip]).to eq('10.10.10.10')
     end
 
-    it 'raises when the bucket has no configured wowza application mapping' do
-      expect {
+    it 'returns nil when the bucket has no configured wowza application mapping' do
+      expect(
         described_class.wowza_secure_token_params_for_s3_file(
           wowza_config, 'unmapped-bucket', 'movie.mp4', remote_ip
         )
-      }.to raise_error(ArgumentError)
+      ).to be_nil
     end
   end
 

@@ -168,12 +168,7 @@ class SolrDocument
     access_copy_location = file_uri_ds_location_to_file_path(fetch('access_copy_location_ssi', nil))
     return unless access_copy_location
 
-    url = AcademicCommons::Utils::WowzaUtils.wowza_url_for_video_location(access_copy_location, request.remote_ip)
-    if url.nil?
-      Rails.logger.error "Unable to translate access_copy_location #{access_copy_location} to wowza url. Verify wowza config rules."
-    end
-
-    url
+    AcademicCommons::Utils::WowzaUtils.wowza_url_for_video_location(access_copy_location, request.remote_ip)
   end
 
   def related_items

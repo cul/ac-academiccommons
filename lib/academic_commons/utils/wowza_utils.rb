@@ -6,7 +6,10 @@ module AcademicCommons::Utils::WowzaUtils
     video_location_uri = "file://#{video_location_uri}" if video_location_uri.start_with?('/')
 
     wowza_config = Rails.application.credentials.wowza
-    return nil if wowza_config.nil?
+    if wowza_config.nil?
+      Rails.logger.error 'Wowza config not found in credentials file.'
+      return nil
+    end
 
     # Select the correct wowza config base on the location protocol (file vs. s3)
     uri = URI(video_location_uri)
@@ -37,9 +40,13 @@ module AcademicCommons::Utils::WowzaUtils
     }
   end
 
-  def self.wowza_secure_token_params_for_s3_file(wowza_config, bucket_name, object_key, remote_ip)
+  def self.wowza_secure_token_params_for_s3_file(wowza_config, bucket_name, object_key, remote_ip) # rubocop:disable Metrics/AbcSize,Metrics/MethodLength
     wowza_application = wowza_config.dig(:wowza_bucket_to_application_mapping_for_s3_resources, bucket_name.to_sym)
-    raise ArgumentError, 'Could not resolve bucket name to wowza application name' if wowza_application.nil?
+
+    if wowza_application.nil?
+      Rails.logger.error "Unable to map bucket_name #{bucket_name} to wowza application. Check wowza config."
+      return nil
+    end
 
     {
       stream: "#{wowza_application}/_definst_/#{object_key.downcase.end_with?('.mp3') ? 'mp3:' : 'mp4:'}"\
