@@ -10,7 +10,7 @@ class CreateStatisticsSummaryCheckpoints < ActiveRecord::Migration[8.0]
       t.timestamps
     end
 
-    checkpoint_time = Time.current
+    checkpoint_time = Time.at(0).utc
 
     StatisticsSummaryCheckpoint.create!(
       id: 1,

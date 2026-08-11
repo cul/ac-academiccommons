@@ -1,102 +1,104 @@
 # frozen_string_literal: true
 
-namespace :statistics do
-  desc "For cron; to update yesterday's statistics summaries and prune statistics older than one year"
-  task nightly_update: :environment do
-    started_at = Time.current
+namespace :ac do
+  namespace :statistics do
+    desc "For cron; to update yesterday's statistics summaries and prune statistics older than one year"
+    task nightly_update: :environment do
+      started_at = Time.current
 
-    begin
-      Rails.logger.info(
-        {
-          message: 'Statistics update started'
-        }.to_json
-      )
+      begin
+        Rails.logger.info(
+          {
+            message: 'Statistics update started'
+          }.to_json
+        )
 
-      result = Statistics::Updater.call
+        result = Statistics::Updater.call
 
-      Rails.logger.info(
-        {
-          message: 'Statistics update completed',
-          events_processed: result.events_processed,
-          summary_rows_written: result.summary_rows_written,
-          months_processed: result.months_processed,
-          duration_seconds: Time.current - started_at
-        }.to_json
-      )
+        Rails.logger.info(
+          {
+            message: 'Statistics update completed',
+            events_processed: result.events_processed,
+            summary_rows_written: result.summary_rows_written,
+            months_processed: result.months_processed,
+            duration_seconds: Time.current - started_at
+          }.to_json
+        )
 
-      deleted = Statistics::Pruner.call
+        deleted = Statistics::Pruner.call
 
-      Rails.logger.info("Deleted #{deleted} statistics rows")
-    rescue StandardError => e
-      Rails.logger.error(
-        {
-          message: 'Statistics update failed',
-          error: e.class.name,
-          detail: e.message,
-          backtrace: e.backtrace.first(10)
-        }.to_json
-      )
+        Rails.logger.info("Deleted #{deleted} statistics rows")
+      rescue StandardError => e
+        Rails.logger.error(
+          {
+            message: 'Statistics update failed',
+            error: e.class.name,
+            detail: e.message,
+            backtrace: e.backtrace.first(10)
+          }.to_json
+        )
 
-      raise
-    end
-  end
-
-  desc 'Summarize historical statistics for a specific time window'
-  task backfill: :environment do
-    to_date = parse_year_month(ENV['TO'])
-
-    unless to_date
-      abort <<~MESSAGE
-        TO is required and must be in YYYY-MM format.
-
-        TO is the exclusive end of the range: events from that month
-        onward are excluded and will be picked up by a later run.
-
-        Example:
-          rails statistics:backfill TO=2017-01
-      MESSAGE
+        raise
+      end
     end
 
-    puts "Summarizing statistics up to (not including) #{to_date}"
+    desc 'Summarize historical statistics for a specific time window'
+    task backfill: :environment do
+      to_date = parse_year_month(ENV['TO'])
 
-    result = Statistics::Updater.call(to_date: to_date.beginning_of_day)
+      unless to_date
+        abort <<~MESSAGE
+          TO is required and must be in YYYY-MM format.
 
-    puts "Processed #{result.events_processed} events"
-    puts "Updated #{result.summary_rows_written} summary rows"
-  end
+          TO is the exclusive end of the range: events from that month
+          onward are excluded and will be picked up by a later run.
 
-  desc 'Prune up to a certain date before checkpoint'
-  task prune: :environment do
-    to_date = parse_year_month(ENV['TO'])
+          Example:
+            rails ac:statistics:backfill TO=2017-01
+        MESSAGE
+      end
 
-    unless to_date
-      abort <<~MESSAGE
-        TO is required and must be in YYYY-MM format.
+      puts "Summarizing statistics up to (not including) #{to_date}"
 
-        TO is the exclusive end of the range: statistics from that month
-        onward are kept, not pruned.
+      result = Statistics::Updater.call(to_date: to_date.beginning_of_day)
 
-        Example:
-          rails statistics:prune TO=2017-01
-      MESSAGE
+      puts "Processed #{result.events_processed} events"
+      puts "Updated #{result.summary_rows_written} summary rows"
     end
 
-    puts "Pruning statistics up to (not including) #{to_date}"
+    desc 'Prune up to a certain date before checkpoint'
+    task prune: :environment do
+      to_date = parse_year_month(ENV['TO'])
 
-    num_deleted = Statistics::Pruner.call(to_date: to_date.beginning_of_day)
+      unless to_date
+        abort <<~MESSAGE
+          TO is required and must be in YYYY-MM format.
 
-    puts "Removed #{num_deleted} events"
-  end
+          TO is the exclusive end of the range: statistics from that month
+          onward are kept, not pruned.
 
-  def parse_year_month(value)
-    return nil if value.blank?
+          Example:
+            rails ac:statistics:prune TO=2017-01
+        MESSAGE
+      end
 
-    unless /\A\d{4}-(0[1-9]|1[0-2])\z/.match?(value)
-      abort "Invalid value: #{value.inspect}. TO must be in YYYY-MM format (e.g. 2014-01)."
+      puts "Pruning statistics up to (not including) #{to_date}"
+
+      num_deleted = Statistics::Pruner.call(to_date: to_date.beginning_of_day)
+
+      puts "Removed #{num_deleted} events"
     end
 
-    Date.strptime(value, '%Y-%m')
-  rescue ArgumentError
-    abort "Invalid date: #{value}"
+    def parse_year_month(value)
+      return nil if value.blank?
+
+      unless /\A\d{4}-(0[1-9]|1[0-2])\z/.match?(value)
+        abort "Invalid value: #{value.inspect}. TO must be in YYYY-MM format (e.g. 2014-01)."
+      end
+
+      Date.strptime(value, '%Y-%m')
+    rescue ArgumentError
+      abort "Invalid date: #{value}"
+    end
   end
 end

@@ -26,11 +26,12 @@ RSpec.describe StatisticsSummaryCheckpoint, type: :model do
 
   describe '#advance_to!' do
     it 'updates the processed_until timestamp' do
+      now = Time.current
+      now = now.change(usec: now.usec)
+
       checkpoint = described_class.create!(
         processed_until: 1.day.ago
       )
-
-      now = Time.current
 
       checkpoint.advance_to!(now)
 

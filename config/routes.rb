@@ -1,6 +1,7 @@
 require 'resque/server'
 
 Rails.application.routes.draw do
+  id_constraint = RouteConstraints::IdConstraint.new
   # temporarily removing range slider
   # concern :range_searchable, BlacklightRangeLimit::Routes::RangeSearchable.new
 
@@ -55,10 +56,16 @@ Rails.application.routes.draw do
   #     concerns :exportable
   #   end
   # Specifying routes using glob (*) in id param, this way slashes and period are accepted as part of the id.
-  match 'doi/*id/download', to: 'assets#download', via: :get, as: 'content_download'
-  match 'doi/*id/embed',    to: 'assets#embed',    via: :get, as: 'embed'
-  match 'doi/*id/captions', to: 'assets#captions', via: :get, as: 'captions_download'
-  match 'doi/*id',          to: 'catalog#show',    via: :get, as: :solr_document
+  #
+
+  match 'doi/*id/download', to: 'assets#download', via: :get, as: 'content_download',
+    constraints: id_constraint
+  match 'doi/*id/embed',    to: 'assets#embed',    via: :get, as: 'embed',
+    constraints: id_constraint
+  match 'doi/*id/captions', to: 'assets#captions', via: :get, as: 'captions_download',
+    constraints: id_constraint
+  match 'doi/*id',          to: 'catalog#show',    via: :get, as: :solr_document,
+    constraints: id_constraint
 
   mount Blacklight::Engine => '/'
 
