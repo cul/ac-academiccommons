@@ -6,7 +6,7 @@ require 'json'
 RSpec.describe 'mcp server', type: :request do
   before { host! 'localhost' }
 
-  let!(:token) { FactoryBot.create(:token, scope: Token::API) }
+  let!(:token) { FactoryBot.create(:token, scope: Token::MCP) }
   let(:body) do
     JSON.generate(
       'jsonrpc' => '2.0',
