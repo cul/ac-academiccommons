@@ -13,10 +13,14 @@ class Users::TokensController < ApplicationController
   end
 
   def update
-    old_token = current_user_token
-    old_token.destroy
+    new_token = nil
+    ActiveRecord::Base.transaction do
+      old_token = current_user_token
+      old_token.destroy!
 
-    new_token = current_user_token
+      new_token = current_user_token
+      raise ActiveRecord::Rollback unless new_token.persisted?
+    end
     http_status = new_token.persisted? ? 200 : 500
 
     flash_type = new_token.persisted? ? :success : :error

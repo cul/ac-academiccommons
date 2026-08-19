@@ -45,7 +45,7 @@ namespace :ac do
 
     desc 'Migrate API scopes for MCP tokens (API to MCP)'
     task api_to_mcp_tokens: :environment do
-      Token.where(scope: Token::API) do |token|
+      Token.where(scope: Token::API).find_each do |token|
         token.update(scope: Token::MCP)
       end
     end
