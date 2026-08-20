@@ -1,8 +1,10 @@
 class ApplicationController < ActionController::Base
   include Blacklight::Controller
   include Devise::Controllers::Helpers
+  include IdSanitizable
 
   protect_from_forgery
+  before_action :sanitize_id_param
 
   layout 'main'
 
