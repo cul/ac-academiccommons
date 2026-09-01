@@ -23,6 +23,23 @@ footer[role="contentinfo"] {
   & .contact {
     text-align: left;
   }
+
+  & .footer-links .feedback-trigger {
+    background: none;
+    border: 0;
+    border-radius: 0;
+    padding: 0;
+    color: $link-color;
+    font: inherit;
+    line-height: inherit;
+    vertical-align: baseline;
+  }
+
+  & .footer-links .feedback-trigger:hover,
+  & .footer-links .feedback-trigger:focus {
+    color: $link-hover-color;
+    text-decoration: underline;
+  }
 }
 
 /* site description */
