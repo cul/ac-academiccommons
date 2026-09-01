@@ -1,21 +1,24 @@
-document.addEventListener('turbo:load', function() {
-    const trigger = document.querySelector('.feedback-trigger');
+document.addEventListener('click', function(e) {
+    const trigger = e.target.closest('.feedback-trigger');
+    if (!trigger) return;
+
+    e.preventDefault();
+
     const modalElement = document.getElementById('feedbackModal');
     const frame = document.getElementById('feedbackFrame');
+    if (!modalElement || !frame) return;
 
-    if (trigger && modalElement && frame) {
-        trigger.addEventListener('click', function(e) {
-            e.preventDefault();
-            
-            const baseUrl = this.getAttribute('data-url');
-            const contextUrl = encodeURIComponent(window.location.href);
-            frame.src = `${baseUrl}?referer=${contextUrl}`;
-            
-            $(modalElement).modal('show');
-        });
+    const url = new URL(trigger.dataset.url);
+    url.searchParams.set('submitted_from_page', window.location.origin + window.location.pathname);
+    url.searchParams.set('window_width', window.innerWidth);
+    url.searchParams.set('window_height', window.innerHeight);
+    frame.src = url.toString();
 
-        $(modalElement).on('hidden.bs.modal', function () {
-            frame.src = '';
-        });
-    }
+    $(modalElement).modal('show');
 });
+
+$(document).on('hidden.bs.modal', '#feedbackModal', function() {
+    const frame = document.getElementById('feedbackFrame');
+    if (frame) frame.src = '';
+});
+
