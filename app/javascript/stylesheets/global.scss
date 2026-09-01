@@ -134,3 +134,16 @@ p.summary strong {
   background: $link-hover-color;
   border-color: $link-hover-color;
 }
+
+/* feedback modal */
+
+.feedback-modal-body {
+  height: 80vh;
+  padding: 0;
+}
+
+.feedback-modal-iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+}

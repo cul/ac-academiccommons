@@ -13,7 +13,10 @@
         <%= link_to t('blacklight.header_links.faq'), faq_path %> <span>|</span>
         <%= link_to t('blacklight.header_links.policies'), policies_path %> <span>|</span>
         <%= link_to t('blacklight.header_links.developers'), developers_path %><span>|</span>
-        <%= link_to t('blacklight.header_links.credits'), credits_path %>
+        <%= link_to t('blacklight.header_links.credits'), credits_path %><span>|</span>
+        <button type="button" class="feedback-trigger" data-url="<%= Rails.application.config.feedback_url %>">
+          Feedback & Suggestions
+        </button>
       </div>
       <div class="col-md-3 contact">
         <i class="far fa-envelope" aria-hidden="true"></i> <%= mail_to "ac@columbia.edu" %>
