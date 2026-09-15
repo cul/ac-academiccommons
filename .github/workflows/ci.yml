@@ -2,15 +2,15 @@ name: CI
 
 on:
   push:
-    branches: [ '*' ]
+    branches: ["**"]
 
 jobs:
   ci-rails-app:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        ruby-version: ['3.3.8']
-        node: ['20']
+        ruby-version: ["3.3.8"]
+        node: ["20"]
     env:
       RAILS_ENV: test
       NOKOGIRI_USE_SYSTEM_LIBRARIES: true
@@ -31,8 +31,8 @@ jobs:
       - name: Set up Java
         uses: actions/setup-java@v3
         with:
-          distribution: 'adopt-hotspot'
-          java-version: '8'
+          distribution: "adopt-hotspot"
+          java-version: "8"
       - name: Set up Node
         uses: actions/setup-node@v3
         with:

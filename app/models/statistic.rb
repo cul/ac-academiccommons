@@ -13,7 +13,7 @@ class Statistic < ApplicationRecord
          .where.not(at_time: nil)
   }
 
-  # Calculate the number of times the event given has occured for all the given
+  # Calculate the number of times the event given has occurred for all the given
   # ids using the monthly summary table. If start and end date are given, the
   # query is limited to that time period (inclusive of the months they fall in).
   # When querying with dates, timestamps are ignored — only the month/year matters,
@@ -25,12 +25,16 @@ class Statistic < ApplicationRecord
   # @param [String] event
   # @param [Date|Time] start_date
   # @param [Date|Time] end_date
-  # @return [Hash<String,Integer>] keys are ids and the value is the number of times said event occured
-  def self.summarized_event_count(ids, event, start_date: nil, end_date: nil)
+  # @return [Hash<String,Integer>] keys are ids and the value is the number of times said event occurred
+  def self.event_count(ids, event, start_date: nil, end_date: nil)
     # Check parameters.
     ids = [ids] if ids.is_a? String
     raise 'ids must be an Array or String' unless ids.is_a? Array
     raise "event must be one of #{EVENTS}" unless valid_event?(event)
+
+    # If the event is Download and the identifier has no assets (so most_downloaded_asset returns nil), then the id passed
+    # to this method has value nil and it is not included in the returned hash -- is this the behavior we want?
+    ids = ids.map { |id| id.downcase if id.is_a? String } # Summarized statistics are always normalized to downcase during rollup
 
     scope = StatisticsSummary.for_event(event)
 
@@ -45,7 +49,7 @@ class Statistic < ApplicationRecord
     end
   end
 
-  # Calculate the number of times the event given has occured for all the given
+  # Calculate the number of times the event given has occurred for all the given
   # ids. If start and end date are given, the query is limited to that time period.
   # When querying with dates, timestamps are ignored.
   #
@@ -55,8 +59,8 @@ class Statistic < ApplicationRecord
   # @param [String] event
   # @param [Date|Time] start_date
   # @param [Date|Time] end_date
-  # @return [Hash<String,Integer>] keys are ids and the value is the number of times said event occured
-  def self.event_count(ids, event, start_date: nil, end_date: nil)
+  # @return [Hash<String,Integer>] keys are ids and the value is the number of times said event occurred
+  def self.raw_event_count(ids, event, start_date: nil, end_date: nil)
     # Check parameters.
     ids = [ids] if ids.is_a? String
 

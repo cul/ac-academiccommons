@@ -66,7 +66,7 @@ module AcademicCommons
       end
 
       def item(id)
-        (item = @item_stats.find { |i| i.id == id }) ? item : raise("Could not find #{id}")
+        (item = @item_stats.find { |i| i.id == id || i.id == id.downcase }) ? item : raise("Could not find #{id}")
       end
 
       def each(&block)
@@ -173,7 +173,7 @@ module AcademicCommons
       end
 
       def ids
-        @ids ||= @item_stats.collect(&:id)
+        @ids ||= @item_stats.map(&:id)
       end
 
       # Map of IDs from item id to most downloaded asset id.
@@ -229,7 +229,7 @@ module AcademicCommons
 
         return asset_ids.first if asset_ids.count == 1
 
-        # Get the higest value stored here.
+        # Get the highest value stored here.
         counts = Statistic.event_count(asset_ids, Statistic::DOWNLOAD)
 
         # Return first pid, if items have never been downloaded.
