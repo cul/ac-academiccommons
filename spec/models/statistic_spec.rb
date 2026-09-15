@@ -40,7 +40,7 @@ RSpec.describe Statistic, type: :model do
         rebuild_statistics_summary!
         expect(
           Statistic.event_count(['10.7916/ALICE', '10.7916/TESTDOC2', 'actest:3'], Statistic::VIEW)
-        ).to match('10.7916/ALICE' => 3, '10.7916/TESTDOC2' => 1)
+        ).to match('10.7916/alice' => 3, '10.7916/testdoc2' => 1)
       end
     end
 
@@ -58,19 +58,19 @@ RSpec.describe Statistic, type: :model do
       it 'returns correct counts for Jan 2015' do
         expect(
           Statistic.event_count('10.7916/ALICE', Statistic::VIEW, start_date: Date.civil(2015, 1), end_date: Date.civil(2015, 1, -1))
-        ).to match('10.7916/ALICE' => 3)
+        ).to match('10.7916/alice' => 3)
       end
 
       it 'returns correct counts for Feb 2015' do
         expect(
           Statistic.event_count('10.7916/ALICE', Statistic::VIEW, start_date: Date.civil(2015, 2), end_date: Date.civil(2015, 2, -1))
-        ).to match('10.7916/ALICE' => 1)
+        ).to match('10.7916/alice' => 1)
       end
 
       it 'returns correct counts for Dec 2015' do
         expect(
           Statistic.event_count(['10.7916/ALICE', '10.7916/TESTDOC2'], Statistic::VIEW, start_date: Date.civil(2015, 12), end_date: Date.civil(2015, 12, -1))
-        ).to match('10.7916/ALICE' => 1, '10.7916/TESTDOC2' => 1)
+        ).to match('10.7916/alice' => 1, '10.7916/testdoc2' => 1)
       end
     end
   end
