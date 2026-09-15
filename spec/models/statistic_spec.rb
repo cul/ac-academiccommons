@@ -46,12 +46,12 @@ RSpec.describe Statistic, type: :model do
 
     context 'when query is limited by date' do
       before :each do
-        FactoryBot.create(:view_stat, at_time: Time.local(2015, 12, 31, 23, 0))
-        FactoryBot.create(:view_stat, at_time: Time.local(2015, 1, 1))
-        FactoryBot.create(:view_stat, at_time: Time.local(2015, 1, 31, 23, 0))
-        FactoryBot.create(:view_stat, at_time: Time.local(2015, 1, 21, 4, 0))
-        FactoryBot.create(:view_stat, at_time: Time.local(2015, 2, 1))
-        FactoryBot.create(:view_stat, identifier: '10.7916/TESTDOC2', at_time: Time.local(2015, 12, 5))
+        FactoryBot.create(:view_stat, at_time: Time.zone.local(2015, 12, 31, 23, 0))
+        FactoryBot.create(:view_stat, at_time: Time.zone.local(2015, 1, 1))
+        FactoryBot.create(:view_stat, at_time: Time.zone.local(2015, 1, 31, 23, 0))
+        FactoryBot.create(:view_stat, at_time: Time.zone.local(2015, 1, 21, 4, 0))
+        FactoryBot.create(:view_stat, at_time: Time.zone.local(2015, 2, 1))
+        FactoryBot.create(:view_stat, identifier: '10.7916/TESTDOC2', at_time: Time.zone.local(2015, 12, 5))
         rebuild_statistics_summary!
       end
 
