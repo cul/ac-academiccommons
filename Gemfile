@@ -23,11 +23,11 @@ gem 'deprecation', '>= 1.1.0'
 gem 'devise' # consider pinning
 gem 'fancybox2-rails' # Used in helper classes. TODO: Confirm that this is needed and used by the application.
 gem 'gaffe'
-# Grape is capped at 3.2 by a transitive Mustermann conflict
+# Grape is capped at 3.2 by a transitive Mustermann conflict:
 # grape >= 3.3.0 requires `mustermann >= 4.0` but Sinatra (required by resque )
-# pins `mustermann ~> 3.0`, and in order to upgrade sinatra to v4 we must upgrade rack to v3.
-# The problem: capybara is not compatible with sinatra 4/rack 3.
-# https://github.com/sinatra/sinatra/pull/2163 - once this is merged we can upgrade
+# pins `mustermann ~> 3.0`.
+# The problem: Sinatra compatibility with mustermann v4 is in progress: https://github.com/sinatra/sinatra/pull/2163
+# Once this is merged we should be able to upgrade.
 gem 'grape', '~> 3.2.0'
 gem 'grape-entity', '~> 1.1.0'
 gem 'grape-swagger', '~> 2.2.0'
@@ -48,13 +48,14 @@ gem 'nokogiri', '>= 1.18.9'
 gem 'okcomputer'
 gem 'premailer', '~> 1.27.0'
 gem 'premailer-rails'
-gem 'rack', '~> 2.0'
+gem 'rack', '~> 3.0'
 gem 'rainbow'
 gem 'resque', '~> 3.1.0'
 gem 'resque-scheduler', '>= 4.10.2'
 gem 'rinku'
 gem 'rsolr-ext'
 gem 'rubyzip', require: 'zip'
+gem 'sinatra', '~> 4.0'
 gem 'sitemap_generator'
 gem 'sprockets-rails'
 gem 'turbo-rails'
@@ -85,13 +86,13 @@ group :development, :test do
   gem 'rubocul', '~> 4.0', require: false
 
   gem 'byebug'
-  gem 'capybara', '~> 3.39'
+  gem 'capybara', '~> 3.40'
   gem 'database_cleaner', '~> 2.1.0'
   gem 'equivalent-xml'
   gem 'factory_bot_rails', '~> 6.5.0'
   gem 'jettywrapper', '>=1.4.0', git: 'https://github.com/samvera-deprecated/jettywrapper.git', branch: 'master'
   # gem 'json_spec'
-  gem 'puma', '~> 5.2'
+  gem 'puma', '~> 6.0'
   gem 'rails-controller-testing'
   gem 'rspec-its', '~> 2.0.0'
   gem 'rspec-rails', '~> 8.0.0'
