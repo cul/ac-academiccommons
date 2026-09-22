@@ -259,9 +259,8 @@ GEM
       mustermann-grape (~> 1.0.0)
       rack (>= 1.3.0)
       rack-accept
-    grape-entity (1.0.1)
+    grape-entity (1.1.0)
       activesupport (>= 3.0.0)
-      multi_json (>= 1.3.2)
     grape-swagger (2.0.0)
       grape (>= 1.7, < 3.0)
       rack-test (~> 2)
@@ -747,7 +746,7 @@ DEPENDENCIES
   fugit (>= 1.11.1)
   gaffe
   grape (~> 2.0.0)
-  grape-entity (~> 1.0.0)
+  grape-entity (~> 1.1.0)
   grape-swagger (~> 2.0.0)
   http
   jbuilder (~> 2.13.0)
