@@ -23,9 +23,9 @@ gem 'deprecation', '>= 1.1.0'
 gem 'devise' # consider pinning
 gem 'fancybox2-rails' # Used in helper classes. TODO: Confirm that this is needed and used by the application.
 gem 'gaffe'
-gem 'grape', '~> 2.0.0'
+gem 'grape', '~> 3.0.0'
 gem 'grape-entity', '~> 1.1.0'
-gem 'grape-swagger', '~> 2.0.0'
+gem 'grape-swagger', '~> 2.2.0'
 gem 'mustermann', '~> 2.0'
 gem 'om', '3.1.1'
 gem 'omniauth', '>= 2.1'
