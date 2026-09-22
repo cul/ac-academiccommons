@@ -23,7 +23,12 @@ gem 'deprecation', '>= 1.1.0'
 gem 'devise' # consider pinning
 gem 'fancybox2-rails' # Used in helper classes. TODO: Confirm that this is needed and used by the application.
 gem 'gaffe'
-gem 'grape', '~> 3.0.0'
+# Grape is capped at 3.2 by a transitive Mustermann conflict
+# grape >= 3.3.0 requires `mustermann >= 4.0` but Sinatra (required by resque )
+# pins `mustermann ~> 3.0`, and in order to upgrade sinatra to v4 we must upgrade rack to v3.
+# The problem: capybara is not compatible with sinatra 4/rack 3.
+# https://github.com/sinatra/sinatra/pull/2163 - once this is merged we can upgrade
+gem 'grape', '~> 3.2.0'
 gem 'grape-entity', '~> 1.1.0'
 gem 'grape-swagger', '~> 2.2.0'
 gem 'mustermann', '~> 3.0'
@@ -43,8 +48,9 @@ gem 'nokogiri', '>= 1.18.9'
 gem 'okcomputer'
 gem 'premailer', '~> 1.27.0'
 gem 'premailer-rails'
+gem 'rack', '~> 2.0'
 gem 'rainbow'
-gem 'resque', '~> 3.0.0'
+gem 'resque', '~> 3.1.0'
 gem 'resque-scheduler', '>= 4.10.2'
 gem 'rinku'
 gem 'rsolr-ext'
@@ -85,6 +91,7 @@ group :development, :test do
   gem 'factory_bot_rails', '~> 6.5.0'
   gem 'jettywrapper', '>=1.4.0', git: 'https://github.com/samvera-deprecated/jettywrapper.git', branch: 'master'
   # gem 'json_spec'
+  gem 'puma', '~> 5.2'
   gem 'rails-controller-testing'
   gem 'rspec-its', '~> 2.0.0'
   gem 'rspec-rails', '~> 8.0.0'
@@ -93,9 +100,6 @@ group :development, :test do
   gem 'solr_wrapper', '~> 4.0'
   gem 'webmock'
 end
-
-# Use Puma for local development
-gem 'puma', '~> 5.2'
 
 gem 'csv', '~> 3.3'
 
