@@ -143,7 +143,8 @@ describe 'GET /api/v1/data_feed/:key', type: :request do
               'degree_grantor' => 'Columbia University',
               'degree_discipline' => 'Biotechnology',
               'embargo_end' => '2018-01-01',
-              'notes' => 'M.S. Columbia University'
+              'notes' => 'M.S. Columbia University',
+              'partner_journal_title' => nil
             }
           ]
         }
@@ -155,6 +156,38 @@ describe 'GET /api/v1/data_feed/:key', type: :request do
         get '/api/v1/data_feed/masters', headers: headers
 
         expect(JSON.parse(response.body)).to match(json_response)
+      end
+    end
+
+    context 'when a record has a partner journal' do
+      let(:partner_journal_response) do
+        wrap_solr_response_data(
+          'response' => {
+            'numFound' => 1,
+            'docs' => [
+              {
+                'id' => '10.52214/uw.v33i.12456',
+                'cul_doi_ssi' => '10.52214/uw.v33i.12456',
+                'fedora3_pid_ssi' => 'actest:10',
+                'object_state_ssi' => 'A',
+                'title_ssi' => 'An article in a partner journal',
+                'genre_ssim' => ['Articles'],
+                'partner_journal_ssi' => 'Al-ʿUsur al-Wusta',
+                'assets' => { 'numFound' => 0, 'start' => 0, 'docs' => [] }
+              }
+            ]
+          }
+        )
+      end
+
+      it 'exposes the partner journal title' do
+        allow(Blacklight.default_index).to receive(:search).and_return(partner_journal_response)
+
+        get '/api/v1/data_feed/ncdp', headers: headers
+
+        expect(JSON.parse(response.body)['records'].first).to include(
+          'partner_journal_title' => 'Al-ʿUsur al-Wusta'
+        )
       end
     end
   end

@@ -5,7 +5,7 @@ module V1
         solr_response.dig('response', 'numFound')
       end
 
-      expose :records, using: FullRecord do |solr_response, _options|
+      expose :records, using: DataFeedRecord do |solr_response, _options|
         solr_response.docs
       end
     end
