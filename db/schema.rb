@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_10_20_193031) do
+ActiveRecord::Schema[8.0].define(version: 2026_09_24_184711) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -65,6 +65,14 @@ ActiveRecord::Schema[8.0].define(version: 2025_10_20_193031) do
     t.datetime "created_at", precision: nil
     t.datetime "updated_at", precision: nil
     t.string "user_type"
+  end
+
+  create_table "data_feeds", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "key", null: false
+    t.text "search_fields", default: "{}", null: false
+    t.index ["key"], name: "index_data_feeds_on_key", unique: true
   end
 
   create_table "deposits", force: :cascade do |t|
