@@ -1,0 +1,25 @@
+<h2>API Data Feeds</h2>
+
+<%- if @data_feeds.empty? %>
+  <p>No data feeds are currently configured for this environment.</p>
+<%- else %>
+  <table class="table table-striped" id="data-feed-keys-table">
+    <caption>Data Feed Keys and Search Fields</caption>
+    <thead>
+      <th scope="col">Key</th>
+      <th scope="col">Search Fields</th>
+      <th scope="col">Actions</th>
+    </thead>
+    <tbody>
+      <%- @data_feeds.each_with_index do |data_feed, index| %>
+        <tr>
+          <td><%= data_feed.key %></td>
+          <td><%= data_feed.search_fields %></td>
+          <td><%= link_to 'Edit', edit_admin_data_feed_path(data_feed.id), class: 'btn btn-primary' %>
+        </tr>
+      <%- end %>
+    </tbody>
+  </table>
+<%- end %>
+
+<%= link_to 'Create a new Data Feed', new_admin_data_feed_path, class: 'btn btn-primary' %>
