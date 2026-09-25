@@ -1,0 +1,26 @@
+<%= form_with model: [:admin, @data_feed], id: 'data-feed-form', data: { turbo: false } do |f| %>
+  <div class="border border-primary rounded p-2">
+    <%= f.label :key %>
+    <%= f.text_field :key %>
+    <small class="form-text text-muted">The key is used to uniquely identify your data feed. This value is included in the request URL made to the Data Feed API.</small>
+  </div>
+  <div class="mt-1 mb-3 border border-primary rounded p-2">
+    <fieldset>
+      <div id="search-fields-inputs" >
+        <legend>Search Fields</legend>
+        <% pairs = @data_feed.search_fields_attributes.empty? ? [{ key: '', value: '' }] : @data_feed.search_fields_attributes %>
+        <% pairs.each_with_index do |pair, i| %>
+          <%= render partial: 'search_fields_input_row', locals: { key: pair[:key], value: pair[:value], index: i } %>
+        <%- end %>
+        <template>
+          <%= render partial: 'search_fields_input_row', locals: { key: '', value: '', index: "NEW_INDEX" } %>
+        </template>
+      </div>
+      <small class="form-text text-muted mb-1">These key-value pairs are used as the search parameters against the index that define your data stream.</small>
+      <button type="button" id="data-feed-search-fields-add-button" class="btn btn-success">Add a field</button>
+    </fieldset>
+  </div>
+  <div>
+    <%= f.submit class: 'btn btn-primary' %>
+  </div>
+<%- end %>

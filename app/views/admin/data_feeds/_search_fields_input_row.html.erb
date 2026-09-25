@@ -1,0 +1,13 @@
+<%# Receives key, value, and index as arguments %>
+<% key_id = "data_feed[search_fields_attributes][#{index}][key]"%>
+<% value_id = "data_feed[search_fields_attributes][#{index}][value]"%>
+<div class="row">
+  <div class="col">
+    <%= label_tag key_id, 'Key'%>
+    <%= text_field_tag key_id, key %>
+  </div>
+  <div class="col">
+    <%= label_tag value_id, 'Value'%>
+    <%= text_field_tag value_id, value %>
+  </div>
+</div>
