@@ -2,7 +2,7 @@
   <div class="border border-subtle rounded p-2">
     <%= f.label :key %>
     <%= f.text_field :key %>
-    <small class="form-text text-muted">The key is used to uniquely identify your data feed. This value is included in the request URL made to the Data Feed API.</small>
+    <small class="form-text text-muted">The key is included in the request URL made to the Data Feed API. It must be unique.</small>
   </div>
   <div class="mt-1 mb-3 border border-subtle rounded p-2">
     <fieldset>
@@ -16,7 +16,7 @@
           <%= render partial: 'search_fields_input_row', locals: { key: '', value: '', index: "NEW_INDEX" } %>
         </template>
       </div>
-      <small class="form-text text-muted mb-1">These key-value pairs are used as the search parameters against the index that define your data stream.</small>
+      <small class="form-text text-muted my-2">Search field key-value pairs are used as the search parameters against the Academic Commons index - these define your data stream.</small>
       <button type="button" id="data-feed-search-fields-add-button" class="data-fields-remove-button btn btn-success">Add a field</button>
     </fieldset>
   </div>
