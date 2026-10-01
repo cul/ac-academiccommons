@@ -36,6 +36,8 @@ module V1
              else
                error! 'Feed key invalid', 400
              end
+      Rails.logger.debug 'Creating data_feed response with feed:'
+      Rails.logger.debug feed
       solr_response = query_solr(params: feed.merge(DEFAULT_PARAMS), with_facets: false)
       present solr_response, with: Entities::DataFeedResponse, params: params
     end

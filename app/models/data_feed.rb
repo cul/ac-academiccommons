@@ -30,7 +30,7 @@ class DataFeed < ApplicationRecord
   def search_fields_for_db
     search_fields_attributes.each_with_object({}) do |pair, object|
       value = pair[:value].to_s.strip
-      object[pair[:key].to_s.strip] = value
+      object[pair[:key].to_s.strip] = [value]
     end
   end
 
