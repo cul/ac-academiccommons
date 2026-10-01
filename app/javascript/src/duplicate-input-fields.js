@@ -44,16 +44,24 @@ const ready = function () {
     newFormEl.insertAfter($("." + fieldsTemplateClass).last());
   });
 
+  $(".data-feed-search-fields-remove-button").on("click", (e) => {
+    const row = e.currentTarget.closest(".row");
+    row.remove();
+  });
+
   $("#data-feed-search-fields-add-button").on("click", (e) => {
+    e.preventDefault();
     const templateContent = $("#data-feed-search-fields-add-button")
       .closest("fieldset")
       .find("template")
       .html();
     const newElement = $(templateContent);
-    const timestamp = new Date().getTime();
-
-    const newKeyId = `data_feed_search_fields_attributes_${timestamp}_key`;
-    const newValueId = `data_feed_search_fields_attributes_${timestamp}_value`;
+    // Each search field consists of 2 inputs (key, value). So the newest field's
+    // index should be the number of indices divided by 2.
+    const newIndex = $("#search-fields-inputs").find("input").length / 2;
+    const newKeyId = `data_feed_search_fields_attributes_${newIndex}_key`;
+    const newName = `data_feed[search_fields_attributes][${newIndex}]`;
+    const newValueId = `data_feed_search_fields_attributes_${newIndex}_value`;
     const oldKeyInput = newElement.find(
       "#data_feed_search_fields_attributes_NEW_INDEX_key",
     );
@@ -61,8 +69,10 @@ const ready = function () {
       "#data_feed_search_fields_attributes_NEW_INDEX_value",
     );
     oldKeyInput.attr("id", newKeyId);
+    oldKeyInput.attr("name", `${newName}[key]`);
     oldKeyInput.prev("label").attr("for", newKeyId);
     oldValueInput.attr("id", newValueId);
+    oldValueInput.attr("name", `${newName}[value]`);
     oldValueInput.prev("label").attr("for", newValueId);
     $("#search-fields-inputs").append(newElement);
   });
