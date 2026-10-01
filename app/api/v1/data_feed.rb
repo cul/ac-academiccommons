@@ -31,6 +31,8 @@ module V1
                { 'type': ['Theses'], 'degree_level': ['Master\'s'] }
              elsif params[:key] == 'ncdp'
                { 'department': ['National Center for Disaster Preparedness'] }
+             elsif ::DataFeed.where(key: params[:key]).exists?
+               ::DataFeed.find_by(key: params[:key]).search_fields
              else
                error! 'Feed key invalid', 400
              end
