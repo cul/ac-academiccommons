@@ -8,7 +8,7 @@ module V1
     end
 
     DEFAULT_PARAMS = {
-      'sort' => 'best_match', 'order': 'desc', 'page': 1, 'per_page': 100_000
+      'sort' => 'best_match', 'order': 'desc', 'page': 1, 'per_page': 25_000
     }.freeze
 
     auth :http_token do |token, _options|
