@@ -5,6 +5,14 @@ module V1
         solr_response.dig('response', 'numFound')
       end
 
+      expose :page_number do |_solr_response, options|
+        options[:params][:page]
+      end
+
+      expose :per_page do |_solr_response, options|
+        options[:params][:per_page]
+      end
+
       expose :records, using: FullRecord do |solr_response, _options|
         solr_response.docs
       end
