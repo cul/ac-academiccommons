@@ -29,8 +29,9 @@ module V1
          ],
          produces: ['application/json']
     get :search do
-      solr_response = query_solr(params: params)
-      present solr_response, with: Entities::SearchResponse, params: params
+      safe_params = declared(params)
+      solr_response = query_solr(params: safe_params)
+      present solr_response, with: Entities::SearchResponse, params: safe_params
     end
   end
 end
