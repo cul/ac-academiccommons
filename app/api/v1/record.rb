@@ -22,7 +22,8 @@ module V1
 
     desc 'Retrieves full record'
     get '/record/doi/:doi', requirements: { doi: /10[.].*/i } do
-      record = get_document(params[:doi])
+      safe_params = declared(params)
+      record = get_document(safe_params[:doi])
       if record.blank?
         error! 'Record not found', 404
       else
