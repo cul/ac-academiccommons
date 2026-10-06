@@ -29,9 +29,17 @@ module V1
          ],
          produces: ['application/json']
     get :search do
+      # TODO: why did this change and what did it change and does it matter?
+      # puts 'COMPARING'
+      # puts 'params:'
+      # pp params
       safe_params = declared(params)
+      # puts 'safe params:'
+      # pp safe_params
       solr_response = query_solr(params: safe_params)
       present solr_response, with: Entities::SearchResponse, params: safe_params
+      # solr_response = query_solr(params: params)
+      # present solr_response, with: Entities::SearchResponse, params: params
     end
   end
 end

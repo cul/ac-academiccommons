@@ -131,7 +131,7 @@ describe 'GET /api/v1/search', type: :request do
       {
         'total_number_of_results' => 1,
         'page' => 1,
-        'params' => { 'q' => nil, 'sort' => 'best_match', 'order' => 'desc', 'search_type' => 'keyword', 'filters' => { 'date' => ['1865'], 'type' => ['Articles'] } },
+        'params' => { 'filters' => { 'author' => [], 'author_id' => [], 'columbia_series' => [], 'date' => ['1865'], 'degree_level' => [], 'department' => [], 'subject' => [], 'type' => ['Articles'] }, 'order' => 'desc', 'q' => nil, 'search_type' => 'keyword', 'sort' => 'best_match' },
         'per_page' => 25,
         'records' => [
           {

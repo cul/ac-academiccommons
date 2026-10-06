@@ -56,7 +56,9 @@ describe 'GET /api/v1/data_feed/:key', type: :request do
         get '/api/v1/data_feed/masters', headers: headers
         expect(JSON.parse(response.body)).to match(
           'records' => [],
-          'total_number_of_results' => 0
+          'total_number_of_results' => 0,
+          'page_number' => 1,
+          'per_page' => 100
         )
       end
     end
@@ -64,7 +66,7 @@ describe 'GET /api/v1/data_feed/:key', type: :request do
     context 'if records match feed' do
       let(:parameters) do
         {
-          q: nil, sort: nil, start: 0, rows: 100_000,
+          q: nil, sort: nil, start: 0, rows: 100,
           fq: ['genre_ssim:"Theses"', 'degree_level_name_ssim:"Master\'s"', "has_model_ssim:\"#{ContentAggregator.to_class_uri}\""],
           qt: 'search', fl: '*,assets:[subquery]',
           'assets.fq': ['object_state_ssi:A', '{!terms f=cul_member_of_ssim v=$row.fedora3_uri_ssi}'],
@@ -120,6 +122,8 @@ describe 'GET /api/v1/data_feed/:key', type: :request do
       let(:json_response) do
         {
           'total_number_of_results' => 1,
+          'page_number' => 1,
+          'per_page' => 100,
           'records' => [
             {
               'id' => '10.7916/D8WS9153',
