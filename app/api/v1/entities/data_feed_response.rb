@@ -5,7 +5,7 @@ module V1
         solr_response.dig('response', 'numFound')
       end
 
-      expose :page_number do |_solr_response, options|
+      expose :page do |_solr_response, options|
         options[:params][:page]
       end
 
