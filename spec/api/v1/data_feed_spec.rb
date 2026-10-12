@@ -57,7 +57,7 @@ describe 'GET /api/v1/data_feed/:key', type: :request do
         expect(JSON.parse(response.body)).to match(
           'records' => [],
           'total_number_of_results' => 0,
-          'page_number' => 1,
+          'page' => 1,
           'per_page' => 100
         )
       end
@@ -122,7 +122,7 @@ describe 'GET /api/v1/data_feed/:key', type: :request do
       let(:json_response) do
         {
           'total_number_of_results' => 1,
-          'page_number' => 1,
+          'page' => 1,
           'per_page' => 100,
           'records' => [
             {
