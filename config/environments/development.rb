@@ -42,6 +42,7 @@ Rails.application.configure do
   end
 
   config.default_host = 'http://localhost:3000'
+  config.feedback_url = 'https://feedback.cul.columbia.edu/feedback_submission/ac'
 
   # Do not compress assets
   #config.assets.compress = false

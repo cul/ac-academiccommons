@@ -89,4 +89,5 @@ AcademicCommons::Application.configure do # rubocop:disable Metrics/BlockLength
   config.default_host = 'https://academiccommons.columbia.edu'
   config.prod_environment = true
   config.sending_deposits_to_sword = true
+  config.feedback_url = 'https://feedback.cul.columbia.edu/feedback_submission/ac'
 end
