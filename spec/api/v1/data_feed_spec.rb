@@ -252,7 +252,7 @@ describe 'GET /api/v1/data_feed/:key', type: :request do
         }
       end
 
-      it 'returns results from requested page', focus: true do
+      it 'returns results from requested page' do
         allow(Blacklight.default_index).to receive(:search).with(hash_including(parameters)).and_return(solr_response)
 
         get '/api/v1/data_feed/masters?page=2&per_page=1', headers: headers
