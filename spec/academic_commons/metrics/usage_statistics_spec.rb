@@ -141,6 +141,7 @@ RSpec.describe AcademicCommons::Metrics::UsageStatistics do
         FactoryBot.create(:view_stat, identifier: item_identifier, at_time: yesterday)
         FactoryBot.create(:download_stat, identifier: open_asset_identifier, at_time: yesterday)
         FactoryBot.create(:streaming_stat, identifier: item_identifier, at_time: yesterday)
+        rebuild_statistics_summary!
       end
 
       context 'when requesting stats for an author with embargoed material' do
@@ -164,6 +165,7 @@ RSpec.describe AcademicCommons::Metrics::UsageStatistics do
         let(:decade_ago) { Date.current.in_time_zone - 10.years }
         before do
           FactoryBot.create(:view_stat, at_time: decade_ago)
+          rebuild_statistics_summary!
         end
 
         subject(:usage_stats) do
@@ -307,6 +309,7 @@ RSpec.describe AcademicCommons::Metrics::UsageStatistics do
       FactoryBot.create(:download_stat, identifier: open_asset_identifier, at_time: Time.zone.parse('April 2, 2016'))
       FactoryBot.create(:download_stat, identifier: open_asset_identifier, at_time: Time.zone.parse('April 2, 2016'))
       FactoryBot.create(:streaming_stat, identifier: item_identifier, at_time: Time.zone.parse('May 3, 2015'))
+      rebuild_statistics_summary!
     end
 
     it 'creates the expected csv' do
@@ -351,6 +354,7 @@ RSpec.describe AcademicCommons::Metrics::UsageStatistics do
       FactoryBot.create(:download_stat, at_time: Time.zone.parse('April 2, 2016'))
       FactoryBot.create(:download_stat, at_time: Time.zone.parse('April 2, 2016'))
       FactoryBot.create(:streaming_stat, at_time: Time.zone.parse('May 3, 2015'))
+      rebuild_statistics_summary!
     end
 
     it 'creates the expected csv' do
@@ -373,6 +377,7 @@ RSpec.describe AcademicCommons::Metrics::UsageStatistics do
       FactoryBot.create(:download_stat, identifier: open_asset_identifier, at_time: Time.zone.parse('April 2, 2016'))
       FactoryBot.create(:download_stat, identifier: open_asset_identifier, at_time: Time.zone.parse('April 2, 2016'))
       FactoryBot.create(:streaming_stat, identifier: item_identifier, at_time: Time.zone.parse('May 3, 2015'))
+      rebuild_statistics_summary!
     end
 
     it 'return correct value for view period stats' do
@@ -455,6 +460,7 @@ RSpec.describe AcademicCommons::Metrics::UsageStatistics do
         FactoryBot.create(:download_stat, identifier: open_asset_identifier)
         FactoryBot.create(:download_stat, identifier: other_open_asset_identifier)
         FactoryBot.create(:download_stat, identifier: other_open_asset_identifier)
+        rebuild_statistics_summary!
       end
 
       it 'returns most downloaded' do

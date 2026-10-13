@@ -47,6 +47,7 @@ RSpec.describe AcademicCommons::Metrics::AuthorAffiliationReport do
   before :each do
     FactoryBot.create(:view_stat, identifier: '10.7916/ALICE')
     FactoryBot.create(:download_stat, identifier: '10.7916/PRIDE')
+    rebuild_statistics_summary!
 
     allow(Blacklight.default_index).to receive(:search).with({ fq: ['id:"10.7916/ALICE"'], qt: 'search', rows: 100_000 }).and_return(solr_doc_alice)
     allow(Blacklight.default_index).to receive(:search).with({ fq: ['id:"10.7916/PRIDE"'], qt: 'search', rows: 100_000 }).and_return(solr_doc_pride)
