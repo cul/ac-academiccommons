@@ -7,7 +7,7 @@ module Admin
     def update
       if @data_feed.update(data_feed_params)
         flash[:success] = 'updated'
-        redirect_to action: :edit
+        render :edit
       else
         flash[:error] = @data_feed.errors.full_messages.to_sentence
         render :edit, status: :unprocessable_entity
@@ -16,8 +16,8 @@ module Admin
 
     def create
       if @data_feed.save
-        flash[:success] = 'Created!'
-        redirect_to action: :edit, id: @data_feed
+        flash[:success] = 'Successfully created data feed.'
+        render :edit
       else
         flash[:error] = @data_feed.errors.full_messages.to_sentence
         render :new, status: :unprocessable_entity
@@ -28,7 +28,8 @@ module Admin
       key = @data_feed[:key]
       @data_feed.destroy!
       flash[:success] = "Data feed for '#{key}' has been deleted."
-      redirect_to admin_data_feeds_path
+      @data_feeds = DataFeed.all
+      render :index
     end
 
     private
