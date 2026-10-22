@@ -23,7 +23,7 @@
   <div class='d-flex flex-row justify-content-between'>
     <%= f.submit class: 'btn btn-primary' %>
     <%- if @data_feed.persisted? %>
-        <%= button_to 'Delete Data Feed', admin_data_feed_path, method: :delete, class: 'btn btn-danger' %>
+        <%= button_to 'Delete Data Feed', admin_data_feed_path(@data_feed), method: :delete, class: 'btn btn-danger' %>
     <%- end %>
   </div>
 <%- end %>
