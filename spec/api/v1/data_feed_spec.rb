@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe 'GET /api/v1/data_feed/:key', type: :request do
+describe 'GET /api/v1/data_feed/:key', type: :request, focus: true do
   let(:invalid_token_value) { "invalid_#{token.token}" }
   let(:token) { FactoryBot.create(:token, token: 'foobar') }
 
