@@ -1,6 +1,6 @@
 <%= form_with model: [:admin, @data_feed], id: 'data-feed-form', data: { turbo: false } do |f| %>
   <div class="border border-subtle rounded p-2">
-    <%= f.label :key %>
+    <%= f.label :key, 'Data Feed Key' %>
     <%= f.text_field :key %>
     <small class="form-text text-muted">The key is included in the request URL made to the Data Feed API. It must be unique.</small>
   </div>
@@ -20,7 +20,10 @@
       <button type="button" id="data-feed-search-fields-add-button" class="data-fields-remove-button btn btn-success">Add a field</button>
     </fieldset>
   </div>
-  <div>
+  <div class='d-flex flex-row justify-content-between'>
     <%= f.submit class: 'btn btn-primary' %>
+    <%- if @data_feed.persisted? %>
+        <%= button_to 'Delete Data Feed', admin_data_feed_path, method: :delete, class: 'btn btn-danger' %>
+    <%- end %>
   </div>
 <%- end %>
