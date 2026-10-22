@@ -40,7 +40,7 @@ describe Admin::DataFeedsController, type: :controller do
   end
 
   describe 'DELETE #destroy' do
-    include_examples 'authorization required' do
+    include_examples 'authorization required', 302 do
       let(:http_request) { delete :destroy, params: { id: test_data_feed.id } }
     end
   end

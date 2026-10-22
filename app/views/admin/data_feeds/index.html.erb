@@ -15,11 +15,14 @@
         <tr>
           <td><%= data_feed.key %></td>
           <td><%= data_feed.search_fields %></td>
-          <td><%= link_to 'Edit', edit_admin_data_feed_path(data_feed.id), class: 'btn btn-primary' %>
+          <td>
+            <%= link_to 'Edit', edit_admin_data_feed_path(data_feed.id), class: 'btn btn-primary' %>
+            <%= button_to 'Delete', admin_data_feed_path(data_feed.id), method: :delete, class: 'btn btn-danger', data: { turbo_method: :delete, turbo_confirm: "Deleting '#{data_feed[:key]}' data feed - are you sure?" } %>
+          </td>
         </tr>
       <%- end %>
     </tbody>
   </table>
 <%- end %>
 
-<%= link_to 'Create a new Data Feed', new_admin_data_feed_path, class: 'btn btn-primary' %>
+<%= link_to 'Create a New Data Feed', new_admin_data_feed_path, class: 'btn btn-primary' %>

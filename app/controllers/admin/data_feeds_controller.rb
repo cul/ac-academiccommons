@@ -6,7 +6,7 @@ module Admin
 
     def update
       if @data_feed.update(data_feed_params)
-        flash[:success] = 'updated'
+        flash[:success] = 'Successfully updated data feed.'
         render :edit
       else
         flash[:error] = @data_feed.errors.full_messages.to_sentence
@@ -28,8 +28,7 @@ module Admin
       key = @data_feed[:key]
       @data_feed.destroy!
       flash[:success] = "Data feed for '#{key}' has been deleted."
-      @data_feeds = DataFeed.all
-      render :index
+      redirect_to action: :index
     end
 
     private
