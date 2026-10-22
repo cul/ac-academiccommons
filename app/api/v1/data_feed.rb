@@ -3,9 +3,11 @@ module V1
     content_type :json, 'application/json'
     default_format :json
 
-    params do
-      requires :key
-    end
+    DEFAULT_KEYS = {
+      'doctoral' => { 'type': ['Theses'], 'degree_level': ['Doctoral'] },
+      'masters' => { 'type': ['Theses'], 'degree_level': ['Master\'s'] },
+      'ncdp' => { 'department': ['National Center for Disaster Preparedness'] }
+    }.freeze
 
     DEFAULT_PARAMS = {
       'sort' => 'best_match', 'order': 'desc', 'page': 1, 'per_page': 25_000
@@ -16,30 +18,37 @@ module V1
       valid_tokens.include?(token)
     end
 
-    desc 'Retrieves data feed. Key maps to a set of preconfigured search results',
-         success: { code: 202, message: 'successful response' },
-         failure: [
-           { code: 400, message: 'invalid parameter' },
-           { code: 401, message: 'not authorized' }
-         ]
-    get '/data_feed/:key' do
-      # check authorization
-      # error! 'Access Denied', 401 if credentials not valid
-      feed = if params[:key] == 'doctoral'
-               { 'type': ['Theses'], 'degree_level': ['Doctoral'] }
-             elsif params[:key] == 'masters'
-               { 'type': ['Theses'], 'degree_level': ['Master\'s'] }
-             elsif params[:key] == 'ncdp'
-               { 'department': ['National Center for Disaster Preparedness'] }
-             elsif ::DataFeed.where(key: params[:key]).exists?
-               ::DataFeed.find_by(key: params[:key]).search_fields
-             else
-               error! 'Feed key invalid', 400
-             end
-      Rails.logger.debug 'Creating data_feed response with feed:'
-      Rails.logger.debug feed
-      solr_response = query_solr(params: feed.merge(DEFAULT_PARAMS), with_facets: false)
-      present solr_response, with: Entities::DataFeedResponse, params: params
+    namespace :data_feed do
+      desc 'Lists all available data feed keys',
+           success: { code: 202, message: 'successful response' },
+           failure: { code: 401, message: 'not authorized' }
+      get do
+        keys = ::DataFeed.all.map(&:key) + DEFAULT_KEYS.keys
+        present :keys, keys
+      end
+
+      route_param :key do
+        desc 'Retrieves data feed. Key maps to a set of preconfigured search results',
+             success: { code: 202, message: 'successful response' },
+             failure: [
+               { code: 400, message: 'invalid parameter' },
+               { code: 401, message: 'not authorized' }
+             ]
+        get do
+          # check authorization
+          # error! 'Access Denied', 401 if credentials not valid
+          feed = if DEFAULT_KEYS.key? params[:key]
+                   DEFAULT_KEYS[params[:key]]
+                 elsif ::DataFeed.where(key: params[:key]).exists?
+                   ::DataFeed.find_by(key: params[:key]).search_fields
+                 else
+                   puts 'this case!'
+                   error! 'Feed key invalid', 400
+                 end
+          solr_response = query_solr(params: feed.merge(DEFAULT_PARAMS), with_facets: false)
+          present solr_response, with: Entities::DataFeedResponse, params: params
+        end
+      end
     end
   end
 end

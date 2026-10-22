@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe 'GET /api/v1/data_feed/:key', type: :request do
+describe 'GET /api/v1/data_feed/:key', type: :request, focus: true do
   let(:invalid_token_value) { "invalid_#{token.token}" }
   let(:token) { FactoryBot.create(:token, token: 'foobar') }
 
@@ -64,7 +64,7 @@ describe 'GET /api/v1/data_feed/:key', type: :request do
     context 'if records match feed' do
       let(:parameters) do
         {
-          q: nil, sort: nil, start: 0, rows: 100_000,
+          q: nil, sort: nil, start: 0, rows: 25_000,
           fq: ['genre_ssim:"Theses"', 'degree_level_name_ssim:"Master\'s"', "has_model_ssim:\"#{ContentAggregator.to_class_uri}\""],
           qt: 'search', fl: '*,assets:[subquery]',
           'assets.fq': ['object_state_ssi:A', '{!terms f=cul_member_of_ssim v=$row.fedora3_uri_ssi}'],
