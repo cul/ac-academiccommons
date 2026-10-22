@@ -71,7 +71,7 @@ ActiveRecord::Schema[8.0].define(version: 2026_09_24_184711) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "key", null: false
-    t.text "search_fields", default: "{}", null: false
+    t.text "search_fields", null: false
     t.index ["key"], name: "index_data_feeds_on_key", unique: true
   end
 
