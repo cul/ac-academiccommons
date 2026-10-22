@@ -42,7 +42,6 @@ module V1
                  elsif ::DataFeed.where(key: params[:key]).exists?
                    ::DataFeed.find_by(key: params[:key]).search_fields
                  else
-                   puts 'this case!'
                    error! 'Feed key invalid', 400
                  end
           solr_response = query_solr(params: feed.merge(DEFAULT_PARAMS), with_facets: false)
