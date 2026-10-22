@@ -24,6 +24,13 @@ module Admin
       end
     end
 
+    def destroy
+      key = @data_feed[:key]
+      @data_feed.destroy!
+      flash[:success] = "Data feed for '#{key}' has been deleted."
+      redirect_to admin_data_feeds_path
+    end
+
     private
 
     def data_feed_params
