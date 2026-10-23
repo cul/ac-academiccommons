@@ -66,7 +66,7 @@ module AcademicCommons
       end
 
       def item(id)
-        (item = @item_stats.find { |i| i.id == id || i.id == id.downcase }) ? item : raise("Could not find #{id}")
+        (item = @item_stats.find { |i| i.id.casecmp?(id) }) ? item : raise("Could not find #{id}")
       end
 
       def each(&block)
