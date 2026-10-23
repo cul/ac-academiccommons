@@ -33,8 +33,8 @@ module AcademicCommons::Utils::WowzaUtils
               "#{file_path.downcase.end_with?('.mp3') ? 'mp3:' : 'mp4:'}#{file_path.gsub(%r{^/}, '')}",
       secret: wowza_config[:shared_secret],
       client_ip: wowza_config[:client_ip_override] || remote_ip,
-      starttime: Time.now.to_i,
-      endtime: Time.now.to_i + wowza_config[:token_lifetime].to_i,
+      starttime: Time.zone.now.to_i,
+      endtime: Time.zone.now.to_i + wowza_config[:token_lifetime].to_i,
       # Important: token_prefix in Wowza application should always be 'wowza' (see: UNIX-5941)
       prefix: wowza_config[:token_prefix]
     }
@@ -53,8 +53,8 @@ module AcademicCommons::Utils::WowzaUtils
               "#{wowza_application}/#{object_key}",
       secret: wowza_config[:shared_secret],
       client_ip: wowza_config[:client_ip_override] || remote_ip,
-      starttime: Time.now.to_i,
-      endtime: Time.now.to_i + wowza_config[:token_lifetime].to_i,
+      starttime: Time.zone.now.to_i,
+      endtime: Time.zone.now.to_i + wowza_config[:token_lifetime].to_i,
       # Important: token_prefix in Wowza application should always be 'wowza' (see: UNIX-5941)
       prefix: wowza_config[:token_prefix]
     }

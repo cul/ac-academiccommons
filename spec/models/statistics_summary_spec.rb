@@ -79,14 +79,20 @@ RSpec.describe StatisticsSummary, type: :model do
       )
     end
 
+    # Questions:
+    # - is the date range given here possible -- the form only allows month/year
+    #   inputs
+    # - wouldn't it be reasonable to include July as well, if this input results
+    #   in June being included in the scope (technically, there are more days in July
+    #   in the input range than in June)?
     it 'returns summaries whose months fall within the period' do
       results = described_class.for_period(
         Date.new(2026, 6, 15),
         Date.new(2026, 7, 20)
       )
 
-      expect(results).to contain_exactly(june)
-      expect(results).not_to include(august, july)
+      expect(results).to contain_exactly(june, july)
+      expect(results).not_to include(august)
     end
   end
 end

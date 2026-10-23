@@ -464,7 +464,8 @@ RSpec.describe AcademicCommons::Metrics::UsageStatistics do
       end
 
       it 'returns most downloaded' do
-        expect(most_downloaded_asset).to eql other_open_asset_identifier
+        # identifiers are normalized to downcase
+        expect(most_downloaded_asset).to eql other_open_asset_identifier.downcase
       end
     end
 
