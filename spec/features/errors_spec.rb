@@ -5,7 +5,7 @@ require 'rails_helper'
 describe 'error pages', type: :feature do
   context 'when visiting 404 page (not found)' do
     before do
-      visit '/this_page_does_not_exist'
+      visit '/ac:00000'
     end
 
     it 'displays custom 404 error message' do
@@ -17,7 +17,7 @@ describe 'error pages', type: :feature do
   context 'when visiting a 404 page for a blacklight record (record not found)' do
     before do
       allow_any_instance_of(CatalogController).to receive(:show).and_raise(Blacklight::Exceptions::RecordNotFound) # rubocop:disable RSpec/AnyInstance
-      visit solr_document_path('nonexistent_id')
+      visit solr_document_path('ac:1234')
     end
 
     it 'displays custom record not found error message' do

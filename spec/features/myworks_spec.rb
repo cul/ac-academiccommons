@@ -9,6 +9,7 @@ describe 'myworks', type: :feature do
       FactoryBot.create(:download_stat)
       FactoryBot.create(:download_stat)
       FactoryBot.create(:view_stat, at_time: Time.current - 1.month)
+      rebuild_statistics_summary!
       visit myworks_path
     end
 

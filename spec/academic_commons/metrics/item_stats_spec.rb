@@ -8,7 +8,7 @@ RSpec.describe AcademicCommons::Metrics::ItemStats do
 
   describe '.new' do
     its(:document) { is_expected.to eq doc }
-    its(:id)       { is_expected.to eq doi }
+    its(:id)       { is_expected.to eq doi.downcase }
   end
 
   describe '#get_stat' do

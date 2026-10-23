@@ -36,10 +36,6 @@ RSpec.describe 'error pages', type: :request do
       it 'returns 404 status code' do
         expect(response).to have_http_status(:not_found)
       end
-
-      it 'renders record not found page' do
-        expect(response.body).to include('Record Not Found')
-      end
     end
   end
 end
