@@ -1,4 +1,4 @@
-<%# 
+<%#
     Overriding some blacklight 8 styles:
       - adding p-0 to the search input fields
 %>
@@ -34,6 +34,17 @@
       <% else %>
         <%= f.search_field @query_param, value: @q, placeholder: scoped_t('search.placeholder'), class: "p-1 seaerch-q q form-control #{rounded_border_class}", autofocus: @autofocus, aria: { label: scoped_t('search.label') }  %>
       <% end %>
+
+      <% default_min_vector_similarity_for_model = Rails.application.config.embedding_service[:supported_embeddings].dig(params[:search_field]&.to_sym, :default_min_vector_similarity) || 1 %>
+      <% if Rails.application.config.embedding_service[:enabled] && default_min_vector_similarity_for_model.present? %>
+        <%= f.label :min_return, 'Minimum Vector Similarity', class: 'sr-only visually-hidden' %>
+        <%= f.number_field :min_vector_similarity,
+                          value: params[:min_vector_similarity].present? ? params[:min_vector_similarity] : nil,
+                          min: 0, max: 1, step: 0.05,
+                          placeholder: default_min_vector_similarity_for_model.to_s,
+                          title: 'Minimum vector similarity',
+                          class: 'form-control', style: 'max-width: 6rem' %>
+      <% end%>
 
       <%= append %>
       <%= search_button || render(Blacklight::SearchButtonComponent.new(id: "#{@prefix}search", text: scoped_t('submit'))) %>

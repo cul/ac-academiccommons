@@ -13,11 +13,11 @@ describe AcademicCommons::SearchParameters do
     end
   end
 
-  context 'when search_type is semantic' do
+  context 'when search_field is semantic' do
     let(:embedding_endpoint) { instance_double(EmbeddingService::Endpoint, generate_vector_embedding: [1, 2, 3, 4]) }
 
     before do
-      params.search_type(described_class::SEARCH_TYPE_SEMANTIC)
+      params.search_field(described_class::SEARCH_FIELD_SEMANTIC)
     end
 
     describe '#solr_path' do
@@ -38,9 +38,9 @@ describe AcademicCommons::SearchParameters do
     end
   end
 
-  context 'when search_type is keyword' do
+  context 'when search_field is keyword' do
     before do
-      params.search_type(described_class::SEARCH_TYPE_KEYWORD)
+      params.search_field(described_class::SEARCH_FIELD_KEYWORD)
     end
 
     describe '#solr_path' do
@@ -50,9 +50,9 @@ describe AcademicCommons::SearchParameters do
     end
   end
 
-  context 'when search_type is subject' do
+  context 'when search_field is subject' do
     before do
-      params.search_type(described_class::SEARCH_TYPE_SUBJECT)
+      params.search_field(described_class::SEARCH_FIELD_SUBJECT)
     end
 
     describe '#solr_path' do
@@ -62,9 +62,9 @@ describe AcademicCommons::SearchParameters do
     end
   end
 
-  context 'when search_type is title' do
+  context 'when search_field is title' do
     before do
-      params.search_type(described_class::SEARCH_TYPE_TITLE)
+      params.search_field(described_class::SEARCH_FIELD_TITLE)
     end
 
     describe '#solr_path' do

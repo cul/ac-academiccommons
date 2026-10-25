@@ -4,33 +4,30 @@ module AcademicCommons
   class SearchParameters
     MAX_ROWS = 100_000
 
-    SEARCH_TYPE_KEYWORD = :keyword
-    SEARCH_TYPE_SEMANTIC = :semantic
-    SEARCH_TYPE_SUBJECT = :subject
-    SEARCH_TYPE_TITLE = :title
-    SEARCH_TYPES = {
-      SEARCH_TYPE_KEYWORD => {},
-      SEARCH_TYPE_SEMANTIC => {},
-      SEARCH_TYPE_SUBJECT => { 'spellcheck.dictionary': 'subject', qf: '${subject_qf}', pf: '${subject_pf}' },
-      SEARCH_TYPE_TITLE => { 'spellcheck.dictionary': 'title', qf: '${title_qf}', pf: '${title_pf}' }
+    SEARCH_FIELD_KEYWORD = :keyword
+    SEARCH_FIELD_SEMANTIC = :semantic
+    SEARCH_FIELD_SUBJECT = :subject
+    SEARCH_FIELD_TITLE = :title
+    SEARCH_FIELDS = {
+      SEARCH_FIELD_KEYWORD => {},
+      SEARCH_FIELD_SEMANTIC => {},
+      SEARCH_FIELD_SUBJECT => { 'spellcheck.dictionary': 'subject', qf: '${subject_qf}', pf: '${subject_pf}' },
+      SEARCH_FIELD_TITLE => { 'spellcheck.dictionary': 'title', qf: '${title_qf}', pf: '${title_pf}' }
     }.freeze
-    DEFAULT_SEARCH_TYPE = SEARCH_TYPE_KEYWORD
+    DEFAULT_SEARCH_FIELD = SEARCH_FIELD_KEYWORD
 
     SEARCH_PATH_SEMANTIC = 'select-vector'
 
     attr_reader :parameters
 
-    def initialize(embedding_endpoint: nil, fq: [], qt: 'search', rows: MAX_ROWS, search_type: DEFAULT_SEARCH_TYPE)
+    def initialize(fq: [], qt: 'search', rows: MAX_ROWS, search_field: DEFAULT_SEARCH_FIELD)
       @parameters = {
         qt: qt || 'search',
         fq: Array(fq).compact,
         rows: rows || MAX_ROWS
       }
-      @search_type = search_type || DEFAULT_SEARCH_TYPE
-      @embedding_endpoint = embedding_endpoint || EmbeddingService::Endpoint.new(
-        destination_url: Rails.application.config.embedding_service[:base_url],
-        model: 'bge_base_en_15_768'
-      )
+      @search_field = search_field
+      search_field(@search_field)
     end
 
     def q(q)
@@ -143,19 +140,21 @@ module AcademicCommons
       self
     end
 
-    def search_type(type)
-      raise ArgumentError, 'search type not valid' unless SEARCH_TYPES.key?(type)
-      @search_type = type
-      @parameters.merge!(SEARCH_TYPES[type])
+    def search_field(field)
+      unless SEARCH_FIELDS.key?(field) || Rails.application.config.embedding_service[:supported_embeddings].key?(field.to_sym)
+        raise ArgumentError, "search field #{field} not valid"
+      end
+      @search_field = field
+      @parameters.merge!(SEARCH_FIELDS[field]) unless SEARCH_FIELDS[field].nil?
       self
     end
 
     def solr_path
-      SEARCH_PATH_SEMANTIC if @search_type == SEARCH_TYPE_SEMANTIC
+      SEARCH_PATH_SEMANTIC if @search_field == SEARCH_FIELD_SEMANTIC
     end
 
-    def vectorized_query(query_text)
-      query_vector = @embedding_endpoint.generate_vector_embedding(query_text)
+    def vectorized_query(model_name, query_text)
+      query_vector = EmbeddingService::Endpoint.embedding_for(model_name: model_name, text: query_text)
 
       if query_vector.nil?
         error_message = 'The vector embedding service is unreachable right now, so vector search will not work.'
@@ -167,15 +166,19 @@ module AcademicCommons
     end
 
     def vector_query_params
-      raise 'requesting vector query params in no-vector search context' unless @search_type == SEARCH_TYPE_SEMANTIC
+      raise 'requesting vector query params in no-vector search context' unless @search_field == SEARCH_FIELD_SEMANTIC
+
+      model_name = get model name from query string params
+      vector_search_field_name = EmbeddingService::Endpoint.vector_search_field_name_for(model_name: model_name)
+
       if parameters[:q]
-        q = "{!knn f=searchable_text_vector768i topK=50}[#{vectorized_query(@parameters[:q]).join(', ')}]"
+        q = "{!knn f=searchable_text_vector768i topK=50}[#{vectorized_query(model_name, @parameters[:q]).join(', ')}]"
       end
       { q: q, qt: nil }
     end
 
     def to_h
-      return parameters.merge(vector_query_params) if @search_type == SEARCH_TYPE_SEMANTIC
+      return parameters.merge(vector_query_params) if @search_field == SEARCH_FIELD_SEMANTIC
 
       parameters
     end

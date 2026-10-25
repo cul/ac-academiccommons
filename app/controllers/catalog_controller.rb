@@ -37,8 +37,16 @@ class CatalogController < ApplicationController
   configure_blacklight do |config|
     config.bootstrap_version = 4
 
-    allowed_params = [:id, :commit, :usage_statistics_reports_form, :verb,
-                      :metadataPrefix, :_method, :deposit, :category_id, :agreement, :deposits_enabled]
+    # Use post requests for solr searches (since we send a lot of parameters and can exceed url length limits).
+    # This is especially important for vector search queries, which are very long.
+    config.http_method = :post
+
+    allowed_params = [
+      :id, :commit, :usage_statistics_reports_form, :verb,
+      :metadataPrefix, :_method, :deposit, :category_id, :agreement, :deposits_enabled,
+      # For vector search
+      :min_vector_similarity
+    ]
     config.search_state_fields.concat(allowed_params)
 
     # Delete default blacklight components we aren't using
@@ -184,6 +192,7 @@ class CatalogController < ApplicationController
     config.add_index_field 'pub_date_isi', label: 'Date'
     config.add_index_field 'genre_ssim',   label: 'Type'
     config.add_index_field 'subject_ssim', label: 'Subjects', helper_method: :wrap_in_spans
+    config.add_index_field 'score', label: 'Score'
 
 
     # "fielded" search configuration. Used by pulldown among other places.
@@ -204,7 +213,13 @@ class CatalogController < ApplicationController
     # solr request handler? The one set in config[:default_solr_parameters][:qt],
     # since we aren't specifying it otherwise.
 
-    config.add_search_field 'all_fields', label: 'All Fields'
+    config.add_search_field 'keyword', label: 'Keyword (all fields)'
+
+    if Rails.application.config.embedding_service[:enabled]
+      Rails.application.config.embedding_service[:supported_embeddings].each do |model_name, model_config|
+        config.add_search_field model_name, label: "Vector: #{model_config[:label]}"
+      end
+    end
 
     # Now we see how to over-ride Solr request handler defaults, in this
     # case for a BL "search field", which is really a dismax aggregate

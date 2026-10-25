@@ -15,6 +15,9 @@
     background-color: $well-bg;
     border-color: $gray-lighter;
     font-size: $font-size-small;
+    &:hover {
+      color: $gray-light;
+    }
   }
 
   & a.catalog_startOverLink,
@@ -69,7 +72,7 @@
   .facets-header {
     border-color: transparent;
   }
-  
+
   .page-links {
     background: transparent;
     border: 0;

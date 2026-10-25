@@ -17,7 +17,7 @@ describe AcademicCommons do
       described_class.search { |d| d.filter(:fizz, :buzz) }
     end
 
-    context 'when search_type is :semantic' do
+    context 'when search_field is :semantic' do
       let(:expected_solr_path) { AcademicCommons::SearchParameters::SEARCH_PATH_SEMANTIC }
 
       before do
@@ -32,7 +32,7 @@ describe AcademicCommons do
         )
         described_class.search do |d|
           d.filter(:fizz, :buzz)
-          d.search_type(:semantic)
+          d.search_field(:semantic)
         end
       end
     end

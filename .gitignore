@@ -31,6 +31,7 @@ docker/docker-compose.*.yml
 config/solr.yml
 config/solr_wrapper.yml
 config/fedora.yml
+config/resque.yml
 jetty
 *~
 *.cache
@@ -90,3 +91,5 @@ node_modules
 
 # Ignore local rake tasks
 /lib/tasks/ac/local*.rake
+
+/config/credentials/academiccommons_semantic_beta.key

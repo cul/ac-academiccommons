@@ -3,7 +3,7 @@ module V1
     module Solr
       extend Grape::API::Helpers
 
-      SEARCH_TYPES = %i[keyword semantic subject title].freeze
+      SEARCH_FIELDS = %i[keyword semantic subject title].freeze
       FILTERS = %i[author author_id date department subject type columbia_series degree_level].freeze
       SORT    = %i[best_match date title].freeze
       ORDER   = %i[desc asc].freeze
@@ -43,7 +43,7 @@ module V1
             solr_params.facet_limit(5)
           end
 
-          solr_params.search_type(params[:search_type]) if params.key?(:search_type)
+          solr_params.search_field(params[:search_field]) if params.key?(:search_field)
         end
       rescue StandardError => e
         Rails.logger.error e

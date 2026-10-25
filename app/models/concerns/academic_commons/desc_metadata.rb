@@ -340,11 +340,12 @@ module AcademicCommons
       end
 
       if Rails.application.config.embedding_service[:enabled]
-        solr_doc['searchable_text_vector768i'] = EmbeddingService::Endpoint.generate_vector_embedding(
-          destination_url: Rails.application.config.embedding_service[:base_url],
-          model: 'bge_base_en_15_768',
-          text: semantic_search_source_text(solr_doc)
-        )
+        EmbeddingService::Endpoint.generate_vector_embeddings(document_id: solr_doc[:id], text: semantic_search_source_text(solr_doc)) do |model_name, embedding_value|
+          solr_doc[EmbeddingService::Endpoint.vector_search_field_name_for(model_name)] = embedding_value
+
+          # This is temporary, just so we can see the embeddings in the solr index during early testing. Remove this after testing because it makes the solr index much larger.
+          solr_doc[EmbeddingService::Endpoint.vector_search_field_name_for(model_name, stored: true)] = embedding_value
+        end
       end
 
       solr_doc

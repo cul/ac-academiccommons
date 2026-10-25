@@ -14,7 +14,7 @@ class RecordsTool < MCP::Tool
 
   input_schema(
     properties: {
-      search_type: {
+      search_field: {
         type: 'string', enum: %w[keyword semantic subject title],
         description:
           'type of search to use; use \'semantic\' for natural language queries, or \'keyword\' for term matching'
@@ -30,10 +30,10 @@ class RecordsTool < MCP::Tool
   )
 
   # rubocop:disable Lint/UnusedMethodArgument
-  def self.call(server_context:, search_type: 'semantic', q: nil,
+  def self.call(server_context:, search_field: 'semantic', q: nil,
                 page: 1, per_page: 25, sort: 'best_match', order: 'desc')
     response = AcademicCommons::RecordSearch.call(
-      search_type: search_type.to_sym, q: q,
+      search_field: search_field.to_sym, q: q,
       page: page.to_i, per_page: per_page.to_i,
       sort: sort.to_sym, order: order.to_sym
     )
