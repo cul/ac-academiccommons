@@ -21,19 +21,21 @@ class SearchBuilder < Blacklight::SearchBuilder
     # Check if search field corresponds to a registered embedding model
     search_field = blacklight_params[:search_field]
     query_text = blacklight_params[:q]
+    model_for_search_field = Rails.application.config.embedding_service.dig(:supported_embeddings, search_field.to_sym)
 
-    if query_text.present? && search_field.present? && Rails.application.config.embedding_service[:supported_embeddings].key?(search_field.to_sym)
+    if query_text.present? && search_field.present? && model_for_search_field.present?
       model_name = search_field # Reassign to a better-named variable for use with the lines below
 
       default_min_vector_similarity = Rails.application.config.embedding_service.dig(
         :supported_embeddings, model_name.to_sym, :default_min_vector_similarity
       ) || 0.9 # Fall back to 0.9 if no default threshold has been supplied
 
-      min_vector_similarity = if blacklight_params[:blacklight_params].present?
-                                blacklight_params[:blacklight_params].to_f
+      min_vector_similarity = if blacklight_params[:min_vector_similarity].to_f.positive?
+                                blacklight_params[:min_vector_similarity].to_f
                               else
                                 default_min_vector_similarity
                               end
+      puts "min_vector_similarity: #{min_vector_similarity}"
 
       query_as_vector = EmbeddingService::Endpoint.embedding_for(model_name: model_name, text: query_text)
       if query_as_vector.present?
