@@ -37,7 +37,9 @@
 
       <% default_min_vector_similarity_for_model = Rails.application.config.embedding_service.dig(:supported_embeddings, params[:search_field]&.to_sym, :default_min_vector_similarity) || 0.75 %>
       <% if Rails.application.config.embedding_service[:enabled] %>
-        <%= f.label :min_vector_similarity, 'Minimum Vector Similarity', class: 'sr-only visually-hidden' %>
+      <div class="input-group-prepend">
+        <%= f.label :min_vector_similarity, 'Min similarity score:', class: 'input-group-text' %>
+      </div>
         <%= f.number_field(
           :min_vector_similarity,
           {

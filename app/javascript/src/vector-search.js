@@ -1,9 +1,11 @@
 const hideOrShowMinVectorSimilarityInputBasedOnSelectedSearchField = () => {
   const minVectorSimilarityInput = document.querySelector('#min_vector_similarity');
+  const minVectorSimilarityLabel = document.querySelector('[for="min_vector_similarity"]');
   if (minVectorSimilarityInput) {
     const searchFieldInput = document.querySelector('#search_field');
     if (searchFieldInput) {
       minVectorSimilarityInput.style.display = searchFieldInput.value === 'keyword' ? "none" : "block";
+      minVectorSimilarityLabel.style.display = searchFieldInput.value === 'keyword' ? "none" : "block";
     }
   }
 };
