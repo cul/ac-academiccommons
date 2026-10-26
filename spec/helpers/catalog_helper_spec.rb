@@ -23,4 +23,14 @@ describe CatalogHelper, type: :helper do
       it { expect(helper.exclusive_feature_search?(featured_search)).to be false }
     end
   end
+
+  describe 'format_score' do
+    let(:config) { Blacklight::Configuration::IndexField.new(key: 'score', label: 'Score') }
+
+    it 'prefixes the value with the configured label' do
+      expect(helper.format_score(config: config, value: [0.87])).to eq(
+        '<div class="badge badge-info">Score: 0.87</div>'
+      )
+    end
+  end
 end

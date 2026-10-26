@@ -44,6 +44,12 @@ module CatalogHelper
     safe_join(options.fetch(:value, []).map { |v| content_tag(:span, html_escape(v)) })
   end
 
+  # Prefixes a score field's configured label (for search results, where labels are normally hidden).
+  def format_score(**options)
+    label = options[:config].label
+    "<div class=\"badge badge-info\">#{label}: #{Array(options[:value]).first}</div>".html_safe
+  end
+
   # Render values as metatags. Not displayed on the page, but are visible to search engines.
   def metatags(**options)
     itemprop = options.dig(:config, :itemprop)

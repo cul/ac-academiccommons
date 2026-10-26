@@ -192,7 +192,11 @@ class CatalogController < ApplicationController
     config.add_index_field 'pub_date_isi', label: 'Date'
     config.add_index_field 'genre_ssim',   label: 'Type'
     config.add_index_field 'subject_ssim', label: 'Subjects', helper_method: :wrap_in_spans
-    config.add_index_field 'score', label: 'Score'
+
+    # We show document scores when the embedding service is enabled
+    if Rails.application.config.embedding_service[:enabled]
+      config.add_index_field 'score', label: 'Search score', helper_method: :format_score
+    end
 
 
     # "fielded" search configuration. Used by pulldown among other places.
@@ -215,7 +219,7 @@ class CatalogController < ApplicationController
 
     config.add_search_field 'keyword', label: 'Keyword (all fields)'
 
-    if Rails.application.config.embedding_service[:enabled]
+    if Rails.application.config.embedding_service[:enabled] && Rails.application.config.embedding_service[:supported_embeddings].present?
       Rails.application.config.embedding_service[:supported_embeddings].each do |model_name, model_config|
         config.add_search_field model_name, label: "Vector: #{model_config[:label]}"
       end
