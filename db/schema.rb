@@ -15,7 +15,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_10_20_193031) do
     t.string "name", null: false
     t.string "record_type", null: false
     t.integer "record_id", null: false
-    t.integer "blob_id", null: false
+    t.bigint "blob_id", null: false
     t.datetime "created_at", precision: nil, null: false
     t.index ["blob_id"], name: "index_active_storage_attachments_on_blob_id"
     t.index ["record_type", "record_id", "name", "blob_id"], name: "index_active_storage_attachments_uniqueness", unique: true
@@ -34,7 +34,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_10_20_193031) do
   end
 
   create_table "active_storage_variant_records", force: :cascade do |t|
-    t.integer "blob_id", null: false
+    t.bigint "blob_id", null: false
     t.string "variation_digest", null: false
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
   end
@@ -46,7 +46,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_10_20_193031) do
     t.string "agreement_version", null: false
     t.datetime "created_at", precision: nil
     t.datetime "updated_at", precision: nil
-    t.integer "user_id"
+    t.bigint "user_id"
     t.index ["user_id"], name: "index_agreements_on_user_id"
   end
 
@@ -82,7 +82,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_10_20_193031) do
     t.boolean "archived", default: false
     t.datetime "created_at", precision: nil
     t.datetime "updated_at", precision: nil
-    t.integer "user_id"
+    t.bigint "user_id"
     t.text "metadata"
     t.string "hyacinth_identifier"
     t.boolean "proxied"
@@ -129,7 +129,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_10_20_193031) do
 
   create_table "featured_search_values", force: :cascade do |t|
     t.string "value", null: false
-    t.integer "featured_search_id", null: false
+    t.bigint "featured_search_id", null: false
     t.index ["featured_search_id"], name: "index_featured_search_values_on_featured_search_id"
     t.index ["value"], name: "index_featured_search_values_on_value"
   end
@@ -141,7 +141,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_10_20_193031) do
     t.string "url"
     t.string "thumbnail_url"
     t.text "description"
-    t.integer "feature_category_id", null: false
+    t.bigint "feature_category_id", null: false
     t.index ["feature_category_id"], name: "index_featured_searches_on_feature_category_id"
     t.index ["label"], name: "index_featured_searches_on_label"
     t.index ["slug"], name: "index_featured_searches_on_slug", unique: true
