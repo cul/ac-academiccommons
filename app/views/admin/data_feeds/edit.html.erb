@@ -1,0 +1,9 @@
+<h3>Edit data feed</h3>
+
+<%= link_to '<< Back to all Data Feeds', admin_data_feeds_path %>
+
+<%= render partial: 'form' %>
+
+<%- if @data_feed.persisted? %>
+    <%= button_to 'Delete Data Feed', admin_data_feed_path(@data_feed), method: :delete, class: 'btn btn-danger mt-4' %>
+<%- end %>
