@@ -10,7 +10,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
+<<<<<<< HEAD
 ActiveRecord::Schema[8.0].define(version: 2026_09_24_184711) do
+=======
+ActiveRecord::Schema[8.0].define(version: 2026_10_27_153102) do
+>>>>>>> 08b37312 (create token exp notification column)
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -72,6 +76,7 @@ ActiveRecord::Schema[8.0].define(version: 2026_09_24_184711) do
     t.datetime "updated_at", null: false
     t.string "key", null: false
     t.text "search_fields", null: false
+    t.boolean "has_been_notified", default: false
     t.index ["key"], name: "index_data_feeds_on_key", unique: true
   end
 
