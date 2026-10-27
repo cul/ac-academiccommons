@@ -17,4 +17,14 @@ class Token < ApplicationRecord
   def self.generate_token
     SecureRandom.hex(13)
   end
+
+  # Tokens are valid if:
+  # - they exist in the DB under the correct scope
+  # - they have not reached their 1 year expiration date
+  def self.valid_token?(token_str, scope)
+    match = Token.find_by(token: token_str, scope: scope)
+    return false if match.nil?
+
+    (match.created_at - 365) > (DateTime.now - 365)
+  end
 end
