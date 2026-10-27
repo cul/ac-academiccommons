@@ -17,11 +17,11 @@
     </thead>
     <tbody>
       <%- @tokens.each_with_index do |token, index| %>
-        <tr >
+        <tr class=<%= token.expired? ? 'text-danger' : ''%>>
           <th scope="row"><%= index %></th>
           <td><%= token.authorizable %></td>
           <td><%= token.contact_email %></td>
-          <td><%= token.scope.upcase %></td>
+          <td><%= token.expired? ? "EXPIRED (#{token.scope.upcase})" : token.scope.upcase %></td>
           <td>
             <%= button_to 'Delete Token', admin_token_path(token), method: :delete, class: 'btn btn-danger', data: { turbo_method: :delete, turbo_confirm: "Deleting #{token.scope.upcase} token - Are you sure?" } %>
           </td>
