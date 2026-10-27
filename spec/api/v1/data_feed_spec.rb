@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe 'Data Feed API', type: :request do
+describe 'Data Feed API', type: :request, focus: true do
   let(:invalid_token_value) { "invalid_#{token.token}" }
   let(:token) { FactoryBot.create(:token, token: 'foobar') }
 
@@ -36,7 +36,7 @@ describe 'Data Feed API', type: :request do
       let(:headers) { { 'HTTP_AUTHORIZATION' => "Token token=#{token.token}" } }
       let(:test_key) { 'test-key' }
       let(:json_response) do
-        { 'keys' => [test_key, *API::V1::DataFeed::DEFAULT_KEYS.keys] }
+        { 'keys' => [test_key, *V1::DataFeed::DEFAULT_KEYS.keys] }
       end
 
       before do
