@@ -3,7 +3,7 @@
 FactoryBot.define do
   factory :token, class: 'Token' do
     scope { Token::DATAFEED }
-    token { 'token-value' }
+    sequence(:token) { |n| "token-#{n}-value" }
     association :authorizable, factory: :api_client, strategy: :create
   end
 

@@ -19,6 +19,7 @@ describe 'admin token management', js: true, type: :feature do
       current_user = User.find_by(uid: 'ta123')
       FactoryBot.create(:mcp_token, authorizable: current_user)
       FactoryBot.create(:token)
+      FactoryBot.create(:token, created_at: (DateTime.now - 500), scope: Token::API)
       visit admin_tokens_path
     end
 
@@ -33,7 +34,7 @@ describe 'admin token management', js: true, type: :feature do
 
       it 'lists token owner' do
         find('td', text: 'Test Admin')
-        find('td', text: 'Test Service')
+        expect(all('td', text: 'Test Service').length).to eq(2)
       end
 
       it 'lists token scope' do
@@ -42,11 +43,15 @@ describe 'admin token management', js: true, type: :feature do
       end
 
       it 'includes a delete button for each row' do
-        expect(all(:button, 'Delete Token').length).to eq(2)
+        expect(all(:button, 'Delete Token').length).to eq(3)
       end
 
       it 'includes a show/hide toggle for each row' do
-        expect(all(:button, 'Show Value').length).to eq(2)
+        expect(all(:button, 'Show Value').length).to eq(3)
+      end
+
+      it 'identifies expired tokens' do
+        find('td', text: 'EXPIRED')
       end
     end
 
@@ -72,7 +77,7 @@ describe 'admin token management', js: true, type: :feature do
       it 'removes the row from the table' do
         accept_confirm { all(:button, text: 'Delete Token').first.click }
         expect(page).to have_content('Token successfully deleted.')
-        expect(all(:button, 'Delete Token').length).to eq(1)
+        expect(all(:button, 'Delete Token').length).to eq(2)
       end
     end
   end
