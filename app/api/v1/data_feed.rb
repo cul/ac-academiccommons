@@ -12,8 +12,7 @@ module V1
     }.freeze
 
     auth :http_token do |token, _options|
-      valid_tokens = Token.where(scope: Token::DATAFEED).map(&:token)
-      valid_tokens.include?(token)
+      Token.valid_token?(token, Token::DATAFEED)
     end
 
     desc 'Retrieves data feed. Key maps to a set of preconfigured search results',

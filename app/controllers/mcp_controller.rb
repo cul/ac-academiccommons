@@ -23,7 +23,6 @@ class McpController < ActionController::API
 
   def authenticate_api_token!
     req_token = request.headers['Authorization'].to_s.gsub('Bearer ', '')
-    api_token = Token.find_by(token: req_token, scope: Token::MCP)
-    render(json: { error: 'Unauthorized' }, status: :unauthorized) if req_token.nil? || api_token.nil?
+    render(json: { error: 'Unauthorized' }, status: :unauthorized) unless Token.valid_token?(req_token, Token::MCP)
   end
 end
