@@ -69,6 +69,7 @@ Rails.application.configure do
   config.active_job.queue_adapter = :test
 
   config.default_host = 'http://localhost:3000'
+  config.feedback_url = 'https://feedback.cul.columbia.edu/feedback_submission/ac'
 
   # Raises error for missing translations.
   # config.i18n.raise_on_missing_translations = true
