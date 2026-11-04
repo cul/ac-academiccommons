@@ -1,0 +1,16 @@
+<%# Receives key, value, and index as arguments %>
+<% key_id = "data_feed[search_fields_attributes][#{index}][key]"%>
+<% value_id = "data_feed[search_fields_attributes][#{index}][value]"%>
+<div class="row">
+  <div class="col">
+    <%= label_tag key_id, 'Key'%>
+    <%= text_field_tag key_id, key %>
+  </div>
+  <div class="col">
+    <%= label_tag value_id, 'Value'%>
+    <%= text_field_tag value_id, value %>
+  </div>
+  <div class="col d-flex flex-column-reverse">
+    <button type="button" class="data-feed-search-fields-remove-button btn btn-danger btn-sm w-50 mb-1">Remove Field</button>
+  </div>
+</div>
