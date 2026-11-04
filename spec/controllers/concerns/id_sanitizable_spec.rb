@@ -90,10 +90,11 @@ RSpec.describe IdSanitizable do
       expect(instance.params[:id]).to eq('ac:12345')
     end
 
-    it 'does nothing when there is no :id param' do
+    it 'does not perform any sanitization when there is no :id param' do
       instance = mock_controller.new(other_param: 'value')
 
-      expect { instance.sanitize_id_param }.not_to raise_error
+      expect(described_class).not_to receive(:sanitize_id)
+      instance.sanitize_id_param
       expect(instance.params).to eq(other_param: 'value')
     end
 

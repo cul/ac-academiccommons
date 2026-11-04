@@ -6,15 +6,15 @@ module Statistics
 
     BATCH_SIZE = 1_000
 
-    def self.call(result)
-      new(result).call
+    def self.run(result)
+      new(result).run
     end
 
     def initialize(result)
       @result = result
     end
 
-    def call
+    def run
       verify_processed_count!
       verify_skipped_count!
       verify_summary_rows!
@@ -102,7 +102,7 @@ module Statistics
     end
 
     def statistics_in_window
-      Statistic.where(at_time: result.from...result.to)
+      Statistic.where(at_time: result.from...result.before)
     end
 
     def summary_month_range(month)

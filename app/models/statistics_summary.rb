@@ -14,6 +14,7 @@ class StatisticsSummary < ApplicationRecord
   scope :for_event, ->(event) { where(event: event) }
   scope :for_month, ->(month) { where(summary_month: month.beginning_of_month) }
 
+  # Inclusive on both ends: includes the full months containing `from` and `to`.
   def self.for_period(from, to)
     where(
       summary_month: from.beginning_of_month..to.beginning_of_month

@@ -3,7 +3,7 @@
 module Statistics
   SummaryRollupResult = Data.define(
     :from,
-    :to,
+    :before,
     :events_processed,
     :summary_rows_written,
     :months_processed,

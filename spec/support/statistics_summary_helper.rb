@@ -11,8 +11,8 @@ module StatisticsSummaryHelper
 
     checkpoint.update!(processed_until: at_time)
 
-    Statistics::Updater.call(
-      to_date: Time.current
+    Statistics::Updater.run(
+      before_date: Time.current
     )
   end
 end

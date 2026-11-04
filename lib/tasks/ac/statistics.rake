@@ -13,7 +13,7 @@ namespace :ac do
           }.to_json
         )
 
-        result = Statistics::Updater.call
+        result = Statistics::Updater.run
 
         Rails.logger.info(
           {
@@ -25,7 +25,7 @@ namespace :ac do
           }.to_json
         )
 
-        deleted = Statistics::Pruner.call
+        deleted = Statistics::Pruner.run
 
         Rails.logger.info("Deleted #{deleted} statistics rows")
       rescue StandardError => e
@@ -44,23 +44,23 @@ namespace :ac do
 
     desc 'Summarize historical statistics for a specific time window'
     task backfill: :environment do
-      to_date = parse_year_month(ENV['TO'])
+      before_date = parse_year_month(ENV['BEFORE'])
 
-      unless to_date
+      unless before_date
         abort <<~MESSAGE
-          TO is required and must be in YYYY-MM format.
+          BEFORE is required and must be in YYYY-MM format.
 
-          TO is the exclusive end of the range: events from that month
+          BEFORE is the exclusive end of the range: events from that month
           onward are excluded and will be picked up by a later run.
 
           Example:
-            rails ac:statistics:backfill TO=2017-01
+            rails ac:statistics:backfill BEFORE=2017-01
         MESSAGE
       end
 
-      puts "Summarizing statistics up to (not including) #{to_date}"
+      puts "Summarizing statistics up to (not including) #{before_date}"
 
-      result = Statistics::Updater.call(to_date: to_date.beginning_of_day)
+      result = Statistics::Updater.run(before_date: before_date.beginning_of_day)
 
       puts "Processed #{result.events_processed} events"
       puts "Updated #{result.summary_rows_written} summary rows"
@@ -68,23 +68,23 @@ namespace :ac do
 
     desc 'Prune up to a certain date before checkpoint'
     task prune: :environment do
-      to_date = parse_year_month(ENV['TO'])
+      before_date = parse_year_month(ENV['BEFORE'])
 
-      unless to_date
+      unless before_date
         abort <<~MESSAGE
-          TO is required and must be in YYYY-MM format.
+          BEFORE is required and must be in YYYY-MM format.
 
-          TO is the exclusive end of the range: statistics from that month
+          BEFORE is the exclusive end of the range: statistics from that month
           onward are kept, not pruned.
 
           Example:
-            rails ac:statistics:prune TO=2017-01
+            rails ac:statistics:prune BEFORE=2017-01
         MESSAGE
       end
 
-      puts "Pruning statistics up to (not including) #{to_date}"
+      puts "Pruning statistics up to (not including) #{before_date}"
 
-      num_deleted = Statistics::Pruner.call(to_date: to_date.beginning_of_day)
+      num_deleted = Statistics::Pruner.run(before_date: before_date.beginning_of_day)
 
       puts "Removed #{num_deleted} events"
     end
@@ -93,7 +93,7 @@ namespace :ac do
       return nil if value.blank?
 
       unless /\A\d{4}-(0[1-9]|1[0-2])\z/.match?(value)
-        abort "Invalid value: #{value.inspect}. TO must be in YYYY-MM format (e.g. 2014-01)."
+        abort "Invalid value: #{value.inspect}. BEFORE must be in YYYY-MM format (e.g. 2014-01)."
       end
 
       Date.strptime(value, '%Y-%m')

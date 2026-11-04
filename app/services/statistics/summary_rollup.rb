@@ -4,15 +4,15 @@ module Statistics
   class SummaryRollup
     BATCH_SIZE = 1_000
 
-    def self.call(to_date:)
-      new(to_date: to_date).call
+    def self.run(before_date:)
+      new(before_date: before_date).run
     end
 
-    def initialize(to_date:)
-      @to_date = to_date
+    def initialize(before_date:)
+      @before_date = before_date
     end
 
-    def call
+    def run
       aggregates = aggregated_events
       rows_written = 0
 
@@ -25,7 +25,7 @@ module Statistics
 
     private
 
-    attr_reader :to_date
+    attr_reader :before_date
 
     def aggregated_events
       @aggregated_events ||= begin
@@ -33,7 +33,7 @@ module Statistics
         @skipped_statistics = 0
 
         Statistic
-          .where(at_time: checkpoint.processed_until...to_date)
+          .where(at_time: checkpoint.processed_until...before_date)
           .find_in_batches(batch_size: 10_000) do |batch|
             aggregate_batch(batch, totals)
           end
@@ -71,7 +71,7 @@ module Statistics
     def build_result(aggregates, rows_written)
       SummaryRollupResult.new(
         from: checkpoint.processed_until,
-        to: to_date,
+        before: before_date,
         events_processed: aggregates.values.sum,
         summary_rows_written: rows_written,
         months_processed: aggregates.keys.map(&:last).uniq.sort,

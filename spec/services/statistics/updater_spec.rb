@@ -14,7 +14,7 @@ RSpec.describe Statistics::Updater do
     instance_double(
       Statistics::SummaryRollupResult,
       from: checkpoint.processed_until,
-      to: Time.current,
+      before: Time.current,
       events_processed: 10,
       summary_rows_written: 1
     )
@@ -28,28 +28,28 @@ RSpec.describe Statistics::Updater do
 
     allow(
       Statistics::SummaryRollup
-    ).to receive(:call)
+    ).to receive(:run)
       .and_return(result)
 
     allow(
       Statistics::SummaryVerifier
-    ).to receive(:call)
+    ).to receive(:run)
 
     allow(
       Statistics::Pruner
-    ).to receive(:call)
+    ).to receive(:run)
   end
 
   it 'rolls up statistics and advances the checkpoint' do
-    described_class.call
+    described_class.run
 
     expect(
       Statistics::SummaryRollup
-    ).to have_received(:call)
+    ).to have_received(:run)
 
     expect(
       Statistics::SummaryVerifier
-    ).to have_received(:call)
+    ).to have_received(:run)
       .with(result)
 
     expect(
@@ -62,7 +62,7 @@ RSpec.describe Statistics::Updater do
 
     allow(
       Statistics::SummaryVerifier
-    ).to receive(:call) do
+    ).to receive(:run) do
       order << :verify
     end
 
@@ -72,7 +72,7 @@ RSpec.describe Statistics::Updater do
       order << :checkpoint
     end
 
-    described_class.call
+    described_class.run
 
     expect(order).to eq(
       [:verify, :checkpoint]
@@ -82,13 +82,13 @@ RSpec.describe Statistics::Updater do
   it 'does not advance the checkpoint if verification fails' do
     allow(
       Statistics::SummaryVerifier
-    ).to receive(:call)
+    ).to receive(:run)
       .and_raise(
         Statistics::SummaryVerifier::VerificationError
       )
 
     expect {
-      described_class.call
+      described_class.run
     }.to raise_error(
       Statistics::SummaryVerifier::VerificationError
     )
@@ -119,11 +119,11 @@ RSpec.describe Statistics::Updater do
 
       allow(
         Statistics::SummaryVerifier
-      ).to receive(:call)
+      ).to receive(:run)
         .and_raise(Statistics::SummaryVerifier::VerificationError)
 
       expect {
-        described_class.call(to_date: to)
+        described_class.run(before_date: to)
       }.to raise_error(
         Statistics::SummaryVerifier::VerificationError
       )
@@ -140,11 +140,11 @@ RSpec.describe Statistics::Updater do
 
       allow(
         Statistics::SummaryVerifier
-      ).to receive(:call)
+      ).to receive(:run)
         .and_raise(Statistics::SummaryVerifier::VerificationError)
 
       expect {
-        described_class.call(to_date: to)
+        described_class.run(before_date: to)
       }.to raise_error(
         Statistics::SummaryVerifier::VerificationError
       )

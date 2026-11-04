@@ -4,25 +4,25 @@ module Statistics
   class Updater
     IN_FLIGHT_REQUEST_BUFFER = 5.minutes
 
-    def self.call(...)
-      new(...).call
+    def self.run(...)
+      new(...).run
     end
 
-    def initialize(to_date: nil)
-      @to_date = to_date || (Time.current - IN_FLIGHT_REQUEST_BUFFER)
+    def initialize(before_date: nil)
+      @before_date = before_date || (Time.current - IN_FLIGHT_REQUEST_BUFFER)
 
-      return unless checkpoint.processed_until && @to_date <= checkpoint.processed_until
+      return unless checkpoint.processed_until && @before_date <= checkpoint.processed_until
 
-      raise ArgumentError, 'to date must be after checkpoint'
+      raise ArgumentError, 'before_date must be after checkpoint'
     end
 
-    def call
+    def run
       ApplicationRecord.transaction do
-        result = Statistics::SummaryRollup.call(to_date: to_date)
+        result = Statistics::SummaryRollup.run(before_date: before_date)
 
-        Statistics::SummaryVerifier.call(result)
+        Statistics::SummaryVerifier.run(result)
 
-        checkpoint.advance_to!(to_date)
+        checkpoint.advance_to!(before_date)
 
         result
       end
@@ -30,7 +30,7 @@ module Statistics
 
     private
 
-    attr_reader :to_date
+    attr_reader :before_date
 
     def checkpoint
       @checkpoint ||= StatisticsSummaryCheckpoint.current

@@ -1,7 +1,5 @@
 class CreateStatisticsSummaryCheckpoints < ActiveRecord::Migration[8.0]
-  class StatisticsSummaryCheckpoint < ActiveRecord::Base
-    self.table_name = "statistics_summary_checkpoints"
-  end
+  class StatisticsSummaryCheckpoint < ActiveRecord::Base; end
 
   def up
     create_table :statistics_summary_checkpoints do |t|
