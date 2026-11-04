@@ -44,10 +44,13 @@ const ready = function () {
     newFormEl.insertAfter($("." + fieldsTemplateClass).last());
   });
 
-  $(".data-feed-search-fields-remove-button").on("click", (e) => {
-    const row = e.currentTarget.closest(".row");
-    row.remove();
-  });
+  $("#search-fields-inputs").on(
+    "click",
+    ".data-feed-search-fields-remove-button",
+    (e) => {
+      e.currentTarget.closest(".row").remove();
+    },
+  );
 
   $("#data-feed-search-fields-add-button").on("click", (e) => {
     e.preventDefault();
@@ -56,9 +59,8 @@ const ready = function () {
       .find("template")
       .html();
     const newElement = $(templateContent);
-    // Each search field consists of 2 inputs (key, value). So the newest field's
-    // index should be the number of indices divided by 2.
-    const newIndex = $("#search-fields-inputs").find("input").length / 2;
+    // Index need only be unique, so use timestamp
+    const newIndex = new Date().getTime();
     const newKeyId = `data_feed_search_fields_attributes_${newIndex}_key`;
     const newName = `data_feed[search_fields_attributes][${newIndex}]`;
     const newValueId = `data_feed_search_fields_attributes_${newIndex}_value`;

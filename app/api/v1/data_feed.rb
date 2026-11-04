@@ -10,7 +10,7 @@ module V1
     }.freeze
 
     DEFAULT_PARAMS = {
-      'sort': 'date', 'order': 'desc', 'page': 1, 'per_page': 100
+      'sort': 'date', 'order': 'desc'
     }.freeze
 
     auth :http_token do |token, _options|
@@ -28,7 +28,7 @@ module V1
       end
 
       route_param :key do
-        desc 'Retrieves data feed. Key maps to a set of preconfigured search results',
+        desc 'Retrieves data feed. Key maps to a set of preconfigured search result filters',
              success: { code: 202, message: 'successful response' },
              failure: [
                { code: 400, message: 'invalid parameter' },
@@ -41,12 +41,11 @@ module V1
         end
         get do
           safe_params = declared(params)
-          # check authorization
-          # error! 'Access Denied', 401 if credentials not valid
-          feed = if DEFAULT_KEYS.key? safe_params[:key]
-                   DEFAULT_KEYS[safe_params[:key]]
-                 elsif ::DataFeed.where(key: safe_params[:key]).exists?
-                   ::DataFeed.find_by(key: safe_params[:key]).search_fields
+          key = safe_params[:key]
+          feed = if DEFAULT_KEYS.key? key
+                   DEFAULT_KEYS[key]
+                 elsif ::DataFeed.where(key: key).exists?
+                   ::DataFeed.find_by(key: key).search_fields
                  else
                    error! 'Feed key invalid', 400
                  end
