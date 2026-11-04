@@ -14,7 +14,7 @@
         <%= link_to t('blacklight.header_links.policies'), policies_path %> <span>|</span>
         <%= link_to t('blacklight.header_links.developers'), developers_path %><span>|</span>
         <%= link_to t('blacklight.header_links.credits'), credits_path %><span>|</span>
-        <button type="button" class="feedback-trigger" data-url="<%= Rails.application.config.feedback_url %>">
+        <button type="button" id="feedback-trigger" data-url="<%= Rails.application.config.feedback_url %>">
           Feedback & Suggestions
         </button>
       </div>

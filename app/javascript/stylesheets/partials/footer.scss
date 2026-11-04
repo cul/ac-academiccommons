@@ -24,7 +24,7 @@ footer[role="contentinfo"] {
     text-align: left;
   }
 
-  & .footer-links .feedback-trigger {
+  & .footer-links #feedback-trigger {
     background: none;
     border: 0;
     border-radius: 0;
@@ -35,8 +35,8 @@ footer[role="contentinfo"] {
     vertical-align: baseline;
   }
 
-  & .footer-links .feedback-trigger:hover,
-  & .footer-links .feedback-trigger:focus {
+  & .footer-links #feedback-trigger:hover,
+  & .footer-links #feedback-trigger:focus {
     color: $link-hover-color;
     text-decoration: underline;
   }

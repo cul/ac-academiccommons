@@ -1,5 +1,5 @@
 document.addEventListener('click', function(e) {
-    const trigger = e.target.closest('.feedback-trigger');
+    const trigger = e.target.closest('#feedback-trigger');
     if (!trigger) return;
 
     e.preventDefault();
