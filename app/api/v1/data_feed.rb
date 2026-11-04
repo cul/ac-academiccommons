@@ -3,12 +3,6 @@ module V1
     content_type :json, 'application/json'
     default_format :json
 
-    params do
-      requires :key, type: String
-      optional :page, type: Integer, default: 1
-      optional :per_page, type: Integer, default: 100, values: 1..10_000
-    end
-
     DEFAULT_KEYS = {
       'doctoral' => { 'type': ['Theses'], 'degree_level': ['Doctoral'] },
       'masters' => { 'type': ['Theses'], 'degree_level': ['Master\'s'] },
@@ -40,6 +34,11 @@ module V1
                { code: 400, message: 'invalid parameter' },
                { code: 401, message: 'not authorized' }
              ]
+        params do
+          requires :key, type: String
+          optional :page, type: Integer, default: 1
+          optional :per_page, type: Integer, default: 100, values: 1..10_000
+        end
         get do
           safe_params = declared(params)
           # check authorization
