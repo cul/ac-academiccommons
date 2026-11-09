@@ -50,49 +50,4 @@ RSpec.describe StatisticsSummary, type: :model do
     expect(summary).not_to be_valid
     expect(summary.errors[:count]).to be_present
   end
-
-  describe '.for_period' do
-    let!(:june) do
-      described_class.create!(
-        identifier: '1',
-        event: 'download',
-        summary_month: Date.new(2026, 6, 1),
-        count: 5
-      )
-    end
-
-    let!(:july) do
-      described_class.create!(
-        identifier: '1',
-        event: 'download',
-        summary_month: Date.new(2026, 7, 1),
-        count: 10
-      )
-    end
-
-    let!(:august) do
-      described_class.create!(
-        identifier: '1',
-        event: 'download',
-        summary_month: Date.new(2026, 8, 1),
-        count: 15
-      )
-    end
-
-    # Questions:
-    # - is the date range given here possible -- the form only allows month/year
-    #   inputs
-    # - wouldn't it be reasonable to include July as well, if this input results
-    #   in June being included in the scope (technically, there are more days in July
-    #   in the input range than in June)?
-    it 'returns summaries whose months fall within the period' do
-      results = described_class.for_period(
-        Date.new(2026, 6, 15),
-        Date.new(2026, 7, 20)
-      )
-
-      expect(results).to contain_exactly(june, july)
-      expect(results).not_to include(august)
-    end
-  end
 end

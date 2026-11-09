@@ -32,8 +32,6 @@ class Statistic < ApplicationRecord
     raise 'ids must be an Array or String' unless ids.is_a? Array
     raise "event must be one of #{EVENTS}" unless valid_event?(event)
 
-    # If the event is Download and the identifier has no assets (so most_downloaded_asset returns nil), then the id passed
-    # to this method has value nil and it is not included in the returned hash -- is this the behavior we want?
     ids = ids.map { |id| id.downcase if id.is_a? String } # Summarized statistics are always normalized to downcase during rollup
 
     scope = StatisticsSummary.for_event(event)
