@@ -18,6 +18,7 @@ class User < ApplicationRecord
 
   has_many :agreements, dependent: :destroy
   has_many :deposits,   dependent: :nullify # Keep deposits even if the user has been removed.
+  # TODO : should probably has_many --- if we are going to use API scope tokens...
   has_one :token, as: :authorizable, dependent: :destroy
 
   def self.admins

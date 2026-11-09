@@ -1,7 +1,8 @@
 class Token < ApplicationRecord
   DATAFEED = :data_feed
   API = :api
-  SCOPES = [API, DATAFEED].map(&:to_s).freeze
+  MCP = :mcp
+  SCOPES = [API, DATAFEED, MCP].map(&:to_s).freeze
   AUTHORIZABLE_TYPE_USER = :User
   AUTHORIZABLE_TYPE_API_CLIENT = :APIClient
   AUTHORIZABLE_TYPES = [AUTHORIZABLE_TYPE_USER, AUTHORIZABLE_TYPE_API_CLIENT].map(&:to_s).freeze

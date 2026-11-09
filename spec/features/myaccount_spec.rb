@@ -40,7 +40,7 @@ describe 'My Account', type: :feature do
     end
   end
 
-  context 'generating a token' do
+  context 'generating a new token' do
     before do
       click_button 'Generate Token'
     end
@@ -50,7 +50,55 @@ describe 'My Account', type: :feature do
     end
 
     it 'shows the new token' do
-      expect(page).to have_css('label', text: 'Personal API Token')
+      expect(page).to have_css('label', text: 'Personal MCP API Token')
+    end
+  end
+
+  context 'refreshing a token' do
+    let(:current_user) { User.find_by(uid: 'tu123') }
+
+    before do
+      FactoryBot.create(:mcp_token, authorizable: current_user)
+      visit account_path
+    end
+
+    it 'displays the current token first' do
+      expect(page).to have_css('label', text: 'Personal MCP API Token')
+      expect(page).to have_field('Personal MCP API Token', with: 'mcp-token-value', disabled: true)
+    end
+
+    it 'creates a new token' do
+      old_token = find_field('Personal MCP API Token', disabled: true).value
+      click_button 'Generate New Token'
+      new_token = find_field('Personal MCP API Token', disabled: true).value
+      expect(old_token).not_to eq(new_token)
+    end
+
+    it 'renders flash message' do
+      click_button 'Generate New Token'
+      expect(page).to have_content 'Successfully refreshed API token.'
+    end
+  end
+
+  context 'deleting a token' do
+    let(:current_user) { User.find_by(uid: 'tu123') }
+
+    before do
+      FactoryBot.create(:mcp_token, authorizable: current_user)
+      visit account_path
+      click_button 'Delete Token'
+    end
+
+    it 'removes the token field' do
+      expect(page).not_to have_field('Personal MCP API Token', disabled: true)
+    end
+
+    it 'renders flash message' do
+      expect(page).to have_content 'Successfully deleted API token.'
+    end
+
+    it 'renders new token button' do
+      expect(page).to have_button('Generate Token')
     end
   end
 end

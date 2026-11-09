@@ -33,7 +33,7 @@ module V1
           end
 
           solr_params.q params[:q]
-          solr_params.sort_by SORT_TO_SOLR_SORT.dig(params[:sort], params[:order])
+          solr_params.sort_by SORT_TO_SOLR_SORT.dig(params[:sort].to_sym, params[:order].to_sym)
           solr_params.start((params[:page].to_i - 1) * params[:per_page].to_i)
           solr_params.rows params[:per_page].to_i
           solr_params.aggregators_with_assets

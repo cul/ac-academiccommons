@@ -13,6 +13,7 @@ tmp/**/*
 tmp/*_visits
 tmp/*_visitors
 config/cul_ldap.yml
+config/mcp.yml
 config/database.yml
 config/solr.yml
 config/solr_wrapper.yml

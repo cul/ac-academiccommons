@@ -24,6 +24,8 @@ Rails.application.routes.draw do
 
   # Mounting API endpoint at /api/v1/
   mount API => '/'
+  # Exposing our MCP server at /mcp/
+  post '/mcp', to: 'mcp#create' if Rails.application.config_for(:mcp)[:enabled]
 
   # Collections routes
   resources :collections, only: [:index, :show], param: 'category_slug', path: 'explore'
@@ -84,7 +86,7 @@ Rails.application.routes.draw do
   get 'account',             to: 'user#account'
   get 'unsubscribe_monthly', to: 'user#unsubscribe_monthly'
   resources :users, only: [:show] do
-    resource :token, only: [:create], module: :users
+    resource :token, only: [:create, :update, :destroy], module: :users
   end
 
   get '/admin',                   to: 'admin#index',                 as: 'admin'
@@ -105,6 +107,8 @@ Rails.application.routes.draw do
     end
     resources :featured_searches, except: :show
     resource :contact_authors, only: [:new, :create]
+    resources :tokens, only: [:index, :destroy]
+    resources :data_feeds, except: [:show]
   end
 
   # Resque web interface, only administrators have access
