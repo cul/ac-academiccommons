@@ -4,7 +4,7 @@ module AcademicCommons
       attr_reader :id, :document, :stats
 
       def initialize(document)
-        @id = document.id
+        @id = document.id.downcase
         @document = document
         @stats = { Statistic::VIEW => {}, Statistic::DOWNLOAD => {}, Statistic::STREAM => {} }
       end

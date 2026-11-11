@@ -212,9 +212,28 @@ ActiveRecord::Schema[8.0].define(version: 2026_09_24_184711) do
     t.datetime "at_time", precision: nil, null: false
     t.datetime "created_at", precision: nil
     t.datetime "updated_at", precision: nil
+    t.index ["at_time", "event", "identifier"], name: "index_statistics_rollup"
     t.index ["at_time"], name: "index_statistics_on_at_time"
     t.index ["event"], name: "index_statistics_on_event"
     t.index ["identifier"], name: "index_statistics_on_identifier"
+  end
+
+  create_table "statistics_summaries", force: :cascade do |t|
+    t.string "identifier", null: false
+    t.string "event", null: false
+    t.date "summary_month", null: false
+    t.bigint "count", default: 0, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["event", "summary_month"], name: "index_statistics_summaries_event_month"
+    t.index ["identifier", "event", "summary_month"], name: "index_statistics_summaries_unique", unique: true
+    t.index ["identifier"], name: "index_statistics_summaries_on_identifier"
+  end
+
+  create_table "statistics_summary_checkpoints", force: :cascade do |t|
+    t.datetime "processed_until", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "taggings", force: :cascade do |t|
