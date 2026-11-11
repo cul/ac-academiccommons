@@ -65,22 +65,21 @@ class Statistic < ApplicationRecord
     raise 'ids must be an Array or String' unless ids.is_a? Array
     raise "event must be one of #{EVENTS}" unless valid_event?(event)
 
+    # TEMPORARY: legacy raw-table query, normalized to downcased keys to match
+    # summarized_event_count. Remove once the summary backfill is complete and
+    # summarized_event_count is renamed back to event_count.
+    # or if renaming to legacy_event_count, note that this method matches case-insensitively; returns downcased keys;     # and does not use the identifier index.
+    ids = ids.map { |id| id.downcase if id.is_a? String }
+    scope = where(event: event)
+
     if start_date || end_date
-      if start_date.respond_to?(:to_time) && end_date.respond_to?(:to_time)
-        start_date = start_date.to_time.beginning_of_day
-        end_date = end_date.to_time.end_of_day
-        ids.each_slice(5000).each_with_object({}) do |identifiers, hash|
-          hash.merge!(
-            group(:identifier).where('identifier IN (?) and event = ? AND at_time BETWEEN ? and ?', identifiers, event, start_date, end_date).count
-          )
-        end
-      else
-        raise 'start_date and end_date must respond to :to_time'
-      end
-    else
-      ids.each_slice(5000).each_with_object({}) do |identifiers, hash|
-        hash.merge!(group(:identifier).where('identifier IN (?) and event = ?', identifiers, event).count)
-      end
+      raise 'start_date and end_date must respond to :to_time' unless start_date.respond_to?(:to_time) && end_date.respond_to?(:to_time)
+
+      scope = scope.where(at_time: start_date.to_time.beginning_of_day..end_date.to_time.end_of_day)
+    end
+
+    ids.each_slice(5000).each_with_object({}) do |identifiers, hash|
+      hash.merge!(scope.where('LOWER(identifier) IN (?)', identifiers).group('LOWER(identifier)').count)
     end
   end
 
