@@ -50,6 +50,47 @@ RSpec.describe Statistics::SummaryRollup do
       expect(summary.count).to eq(3)
     end
 
+    it 'combines identifiers that differ only by case or surrounding spaces' do
+      ['abc', 'ABC ', ' abc'].each do |identifier|
+        create_statistic(identifier: identifier, event: 'download', at_time: Time.zone.parse('2026-07-10 12:00:00'))
+      end
+
+      described_class.run(before_date: to)
+
+      expect(StatisticsSummary.pluck(:identifier, :count)).to eq([['abc', 3]])
+    end
+
+    it 'combines identifiers that differ only by interior whitespace' do
+      ['10.7916/d8abc', '10.7916/ d8 abc', "10.7916/d8\tabc", "10.7916/d8\u3000abc"].each do |identifier|
+        create_statistic(identifier: identifier, event: 'download', at_time: Time.zone.parse('2026-07-10 12:00:00'))
+      end
+
+      described_class.run(before_date: to)
+
+      expect(StatisticsSummary.pluck(:identifier, :count)).to eq([['10.7916/d8abc', 4]])
+    end
+
+    it 'combines identifiers that differ only by invisible characters' do
+      ["abc\u200B", "a\u00ADbc", "\uFEFFabc", 'abc'].each do |identifier|
+        create_statistic(identifier: identifier, event: 'download', at_time: Time.zone.parse('2026-07-10 12:00:00'))
+      end
+
+      described_class.run(before_date: to)
+
+      expect(StatisticsSummary.pluck(:identifier, :count)).to eq([['abc', 4]])
+    end
+
+    it 'combines identifiers that differ only by compatibility characters' do
+      ['10.7916/D8...', '10.7916/D8…', '10.7916/ABC)', '10.7916/ABC）'].each do |identifier|
+        create_statistic(identifier: identifier, event: 'download', at_time: Time.zone.parse('2026-07-10 12:00:00'))
+      end
+
+      described_class.run(before_date: to)
+
+      expect(StatisticsSummary.order(:identifier).pluck(:identifier, :count))
+        .to eq([['10.7916/abc)', 2], ['10.7916/d8...', 2]])
+    end
+
     it 'keeps different identifiers separate' do
       create_statistic(identifier: 'abc', event: 'download', at_time: Time.zone.parse('2026-07-10 12:00:00'))
       create_statistic(identifier: 'xyz', event: 'download', at_time: Time.zone.parse('2026-07-10 12:00:00'))

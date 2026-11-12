@@ -13,7 +13,9 @@ class CatalogController < ApplicationController
   layout 'catalog'
 
   # rubocop:disable Rails/LexicallyScopedActionFilter
-  before_action :record_view_stats, only: :show
+  # Recorded after the page renders, and only on success, so requests for ids
+  # that don't resolve to a record (404s, redirects) aren't counted as views.
+  after_action :record_view_stats, only: :show, if: -> { response.successful? }
   before_action :set_xrobots_tag_to_none, only: :index
   # rubocop:enable Rails/LexicallyScopedActionFilter
 
