@@ -25,7 +25,7 @@ Rails.application.routes.draw do
   # Mounting API endpoint at /api/v1/
   mount API => '/'
   # Exposing our MCP server at /mcp/
-  post '/mcp', to: 'mcp#create' if Rails.application.config_for(:mcp)[:enabled]
+  match '/mcp', to: 'mcp#create', via: [:get, :post, :delete] if Rails.application.config_for(:mcp)[:enabled]
 
   # Collections routes
   resources :collections, only: [:index, :show], param: 'category_slug', path: 'explore'

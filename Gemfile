@@ -104,4 +104,6 @@ end
 
 gem 'csv', '~> 3.3'
 
-gem 'mcp', '~> 1.0'
+gem 'mcp', '~> 1.8'
+
+gem "jwt", "~> 3.3"

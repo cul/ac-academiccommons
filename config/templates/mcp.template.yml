@@ -1,5 +1,17 @@
 development:
   enabled: true
+  resource: "http://localhost:3000/mcp"
+  authorization_servers: ["auth-dev-server"]
+  scopes: ["dev"]
+  client_id: "dev_id"
+  client_secret: "dev_secret"
+  introspection_endpoint: "dev-introspection-endpoint"
 
 test:
   enabled: true
+  resource: "http://localhost:3000/mcp"
+  authorization_servers: ["auth-test-server"]
+  scopes: ["test"]
+  client_id: "test_id"
+  client_secret: "test_secret"
+  introspection_endpoint: "test-introspection-endpoint"

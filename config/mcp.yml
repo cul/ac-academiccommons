@@ -1,5 +1,11 @@
 development:
   enabled: true
+  resource: "http://localhost:3333/mcp"
+  authorization_servers: ["https://oauth-test.cc.columbia.edu"]
+  scopes: ["auth-columbia"]
+  client_id: "libraries_mcp_service"
+  client_secret: "7Po7fh2NdPkqCDIcFDiXUeLNJ8iZhsULT8lP3dtUjahvxCcGMzSdp129eyirJPMe"
+  introspection_endpoint: "https://oauth-test.cc.columbia.edu/as/introspect.oauth2"
 
 test:
   enabled: true

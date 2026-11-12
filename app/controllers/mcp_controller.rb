@@ -1,7 +1,8 @@
 # frozen_string_literal: true
 
 class McpController < ActionController::API
-  before_action :authenticate_api_token!
+  # Disabling ot use oauth middleware instead
+  # before_action :authenticate_api_token!
 
   def create
     server = MCP::Server.new(
@@ -12,7 +13,11 @@ class McpController < ActionController::API
     transport = MCP::Server::Transports::StreamableHTTPTransport.new(
       server,
       stateless: true,
-      allowed_hosts: Rails.application.config.hosts.map(&:to_s)
+      allowed_hosts: Rails.application.config.hosts.map(&:to_s),
+      serve_subscriptions_listen: false,
+      token_verifier: MCP_VERIFIER,
+      required_scopes: Rails.application.config_for(:mcp)[:scopes],
+      resource_metadata: MCP_METADATA
     )
     status, headers, body = transport.handle_request(request)
 

@@ -122,7 +122,7 @@ GEM
     bcrypt (3.1.20)
     bcrypt_pbkdf (1.1.0)
     benchmark (0.5.0)
-    bigdecimal (3.3.1)
+    bigdecimal (4.1.3)
     blacklight (8.12.3)
       globalid
       i18n (>= 1.7.0)
@@ -304,6 +304,8 @@ GEM
       hana (~> 1.3)
       regexp_parser (~> 2.0)
       simpleidn (~> 0.2)
+    jwt (3.3.0)
+      base64
     kaminari (1.2.2)
       activesupport (>= 4.1.0)
       kaminari-actionview (= 1.2.2)
@@ -335,7 +337,7 @@ GEM
       net-smtp
     marcel (1.1.0)
     matrix (0.4.3)
-    mcp (1.0.0)
+    mcp (1.10.0)
       json_schemer (>= 2.4)
     mime-types (3.4.1)
       mime-types-data (~> 3.2015)
@@ -503,7 +505,7 @@ GEM
     redis (4.6.0)
     redis-namespace (1.11.0)
       redis (>= 4)
-    regexp_parser (2.11.3)
+    regexp_parser (2.13.1)
     reline (0.6.2)
       io-console (~> 0.5)
     responders (3.1.1)
@@ -625,7 +627,7 @@ GEM
       simplecov_json_formatter (~> 0.1)
     simplecov-html (0.12.3)
     simplecov_json_formatter (0.1.4)
-    simpleidn (0.2.3)
+    simpleidn (0.3.0)
     sinatra (4.2.1)
       logger (>= 1.6.0)
       mustermann (~> 3.0)
@@ -758,9 +760,10 @@ DEPENDENCIES
   jbuilder (~> 2.13.0)
   jettywrapper (>= 1.4.0)!
   jquery-rails (~> 4.6.0)
+  jwt (~> 3.3)
   listen
   mail (~> 2.8)
-  mcp (~> 1.0)
+  mcp (~> 1.8)
   multipart-post (~> 2.0.0)
   mustermann (~> 3.0)
   mysql2 (>= 0.5.6)
