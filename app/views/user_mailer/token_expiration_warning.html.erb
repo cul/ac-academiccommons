@@ -1,0 +1,23 @@
+<div>Dear <%= @name %>,</div>
+
+<p>
+  This is a notification that your <%= @scope %> token for Academic Commons API Access is set to expire on <%= @expiration_date %>.
+</p>
+
+<%# Currently, users can only manage their own API tokens; MCP and data feed tokens are managed by admin %>
+<% if @scope == Token::API%>
+  <p>
+    Please visit the account settings page to generate a new token. Make sure to update your token to the new value in any programs that use it.
+  </p>
+<% else %>
+  <p>
+    Please contact an Academic Commons administrator to generate a new <%= @scope %> token. You can contact by email at <a href='ac@columbia.edu'>ac@columbia.edu</a>.
+  </p>
+<% end %>
+
+
+<div>
+  Sincerely,
+  Academic Commons
+  Columbia University Libraries
+</div>

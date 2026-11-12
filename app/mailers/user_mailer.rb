@@ -3,6 +3,17 @@ class UserMailer < ApplicationMailer
   helper :catalog # Needed to correctly render persistent url.
   default from: Rails.application.config_for(:emails)[:mail_deliverer]
 
+  def token_expiration_warning(name, email, scope, expiration_date)
+    @name = name
+    @email = email
+    @scope = scope
+    @expiration_date = expiration_date
+    subject = 'Your Academic Commons API Token is About to Expire'
+
+    mail(to: @email, subject: subject)
+    logger.info "New token expiration warning sent to: #{@email}"
+  end
+
   def new_item_available(solr_doc, uni, email, name = nil)
     @uni = uni
     @name = name
@@ -48,7 +59,6 @@ class UserMailer < ApplicationMailer
   # Email to authors from AC administrators
   # Called when the admin 'Contact Authors' form is submitted
   def contact_authors(recipients, body, subject)
-    Rails.logger.debug 'UserMailer#notify_users: entry'
     @body = body
     @subject = subject
 
