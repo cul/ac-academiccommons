@@ -45,7 +45,7 @@ class Statistic < ApplicationRecord
   # @param [Date|Time] start_date
   # @param [Date|Time] end_date
   # @return [Hash<String,Integer>] keys are ids and the value is the number of times said event occurred
-  def self.summarized_event_count(ids, event, start_date: nil, end_date: nil)
+  def self.event_count(ids, event, start_date: nil, end_date: nil)
     # Check parameters.
     ids = [ids] if ids.is_a? String
     raise 'ids must be an Array or String' unless ids.is_a? Array
@@ -77,7 +77,7 @@ class Statistic < ApplicationRecord
   # @param [Date|Time] start_date
   # @param [Date|Time] end_date
   # @return [Hash<String,Integer>] keys are ids and the value is the number of times said event occurred
-  def self.event_count(ids, event, start_date: nil, end_date: nil)
+  def self.raw_event_count(ids, event, start_date: nil, end_date: nil)
     # Check parameters.
     ids = [ids] if ids.is_a? String
 
