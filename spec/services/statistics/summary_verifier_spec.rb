@@ -34,6 +34,62 @@ RSpec.describe Statistics::SummaryVerifier do
       ).to eq(true)
     end
 
+    it 'passes when identifiers differ only by case or surrounding spaces' do
+      ['abc', 'ABC ', ' abc'].each do |identifier|
+        create_statistic(identifier: identifier, event: 'download', at_time: Time.zone.parse('2026-07-10 12:00:00'))
+      end
+
+      expect(described_class.run(rollup_result)).to eq(true)
+    end
+
+    it 'passes when identifiers differ only by invisible characters' do
+      ["abc\u200B", "a\u00ADbc", 'abc'].each do |identifier|
+        create_statistic(identifier: identifier, event: 'download', at_time: Time.zone.parse('2026-07-10 12:00:00'))
+      end
+
+      expect(described_class.run(rollup_result)).to eq(true)
+    end
+
+    it 'counts rows with invisible characters toward the normalized identifier' do
+      create_statistic(identifier: 'abc', event: 'download', at_time: Time.zone.parse('2026-07-10 12:00:00'))
+      create_statistic(identifier: "abc\u200B", event: 'download', at_time: Time.zone.parse('2026-07-10 12:00:00'))
+
+      result = rollup_result
+      StatisticsSummary.find_by!(identifier: 'abc').update!(count: 1)
+
+      expect {
+        described_class.run(result)
+      }.to raise_error(
+        Statistics::SummaryVerifier::VerificationError,
+        %r{abc/download/2026-07-01: expected 2, found 1}
+      )
+    end
+
+    it 'passes when identifiers differ only by compatibility characters' do
+      ['10.7916/D8...', '10.7916/D8…'].each do |identifier|
+        create_statistic(identifier: identifier, event: 'download', at_time: Time.zone.parse('2026-07-10 12:00:00'))
+      end
+
+      expect(described_class.run(rollup_result)).to eq(true)
+      expect(StatisticsSummary.pluck(:identifier, :count)).to eq([['10.7916/d8...', 2]])
+    end
+
+    it 'handles non-ASCII identifiers' do
+      create_statistic(identifier: 'Café', event: 'download', at_time: Time.zone.parse('2026-07-10 12:00:00'))
+
+      expect(described_class.run(rollup_result)).to eq(true)
+      expect(StatisticsSummary.pluck(:identifier)).to eq(['café'])
+    end
+
+    it 'includes legacy summary rows whose identifier is not normalized' do
+      StatisticsSummary.create!(identifier: 'abc ', event: 'download', summary_month: Date.new(2026, 7, 1), count: 1)
+      create_statistic(identifier: 'abc', event: 'download', at_time: Time.zone.parse('2026-07-01 12:00:00'))
+      create_statistic(identifier: 'abc', event: 'download', at_time: Time.zone.parse('2026-07-10 12:00:00'))
+      StatisticsSummaryCheckpoint.current.update!(processed_until: Time.zone.parse('2026-07-05 00:00:00'))
+
+      expect(described_class.run(rollup_result)).to eq(true)
+    end
+
     it 'raises when the raw statistic count does not match the rollup result' do
       create_statistic(identifier: 'abc', event: 'download', at_time: Time.zone.parse('2026-07-10 12:00:00'))
 

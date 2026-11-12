@@ -4,8 +4,6 @@ module Statistics
   class SummaryVerifier
     class VerificationError < StandardError; end
 
-    BATCH_SIZE = 1_000
-
     def self.run(result)
       new(result).run
     end
@@ -55,50 +53,58 @@ module Statistics
             .each { |month, keys| verify_month!(month, keys) }
     end
 
+    # Both sides are keyed in Ruby with Statistic.summary_identifier, the same
+    # normalization the rollup uses. Raw statistics are grouped by their exact
+    # bytes (HEX) rather than with SQL string comparison, because MySQL
+    # collations treat strings as equal that Ruby does not (case, trailing
+    # spaces, zero-width characters, ...), which made the verifier and the
+    # rollup disagree about which rows belong to which summary.
     def verify_month!(month, keys)
-      keys.each_slice(BATCH_SIZE) do |batch|
-        verify_batch!(month, batch)
+      expected_counts = expected_counts_for(month)
+      summary_counts = summary_counts_for(month)
+
+      keys.each do |identifier, event, _month|
+        verify_key!(month, identifier, event, expected_counts, summary_counts)
       end
     end
 
-    def verify_batch!(month, batch)
-      identifiers, events, = batch.transpose
-
-      identifiers = identifiers.uniq
-      events = events.uniq
-
-      expected_counts = expected_counts_for(month, identifiers, events)
-      summaries = summaries_for(month, identifiers, events)
-
-      batch.each do |identifier, event, _month|
-        verify_key!(month, identifier, event, expected_counts, summaries)
-      end
-    end
-
-    def expected_counts_for(month, identifiers, events)
+    def expected_counts_for(month)
       Statistic
         .rollup_eligible
-        .where('LOWER(identifier) IN (?)', identifiers)
-        .where(event: events, at_time: summary_month_range(month))
-        .group('LOWER(identifier)', :event)
+        .where(at_time: summary_month_range(month))
+        .group(Arel.sql('HEX(identifier)'), Arel.sql('HEX(event)'))
         .count
+        .each_with_object(Hash.new(0)) do |((identifier_hex, event_hex), count), totals|
+          identifier = Statistic.summary_identifier(decode_hex(identifier_hex))
+          totals[[identifier, decode_hex(event_hex)]] += count
+        end
     end
 
-    def summaries_for(month, identifiers, events)
+    # Summed per normalized key so that summary rows written before the current
+    # normalization (e.g. with a trailing space) are still accounted for.
+    def summary_counts_for(month)
       StatisticsSummary
-        .where(identifier: identifiers, event: events, summary_month: month)
-        .index_by { |summary| [summary.identifier.downcase, summary.event] }
+        .where(summary_month: month)
+        .pluck(:identifier, :event, :count)
+        .each_with_object(Hash.new(0)) do |(identifier, event, count), totals|
+          totals[[Statistic.summary_identifier(identifier), event]] += count
+        end
     end
 
-    def verify_key!(month, identifier, event, expected_counts, summaries)
-      expected = expected_counts[[identifier, event]] || 0
-      summary = summaries[[identifier, event]]
+    def verify_key!(month, identifier, event, expected_counts, summary_counts)
+      key = [identifier, event]
+      expected = expected_counts.fetch(key, 0)
+      found = summary_counts.key?(key) ? summary_counts[key] : nil
 
-      return if summary && expected == summary.count
+      return if found == expected
 
       raise VerificationError,
             "Summary mismatch for #{identifier}/#{event}/#{month}: " \
-            "expected #{expected}, found #{summary&.count.inspect}"
+            "expected #{expected}, found #{found.inspect}"
+    end
+
+    def decode_hex(hex)
+      [hex].pack('H*').force_encoding(Encoding::UTF_8)
     end
 
     def statistics_in_window

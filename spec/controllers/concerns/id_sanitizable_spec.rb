@@ -55,6 +55,18 @@ RSpec.describe IdSanitizable do
       expect(described_class.sanitize_id("ac:123\u202945")).to eq('ac:12345')
     end
 
+    it 'strips left-to-right and right-to-left marks' do
+      expect(described_class.sanitize_id("10.7916/d8-sc8g-5787\u200E\u200F")).to eq('10.7916/d8-sc8g-5787')
+    end
+
+    it 'strips other default-ignorable characters' do
+      expect(described_class.sanitize_id("ac:1\u206323\uFE0F45\u180E")).to eq('ac:12345')
+    end
+
+    it 'leaves visible non-ASCII characters alone' do
+      expect(described_class.sanitize_id('10.7916/D8…')).to eq('10.7916/D8…')
+    end
+
     it 'strips multiple different hidden characters in the same string' do
       dirty = "\uFEFFac\u200B:1\u00A02\u200D345\u2028"
       expect(described_class.sanitize_id(dirty)).to eq('ac:12345')
@@ -62,6 +74,22 @@ RSpec.describe IdSanitizable do
 
     it 'strips repeated occurrences of the same hidden character' do
       expect(described_class.sanitize_id("ac\u200B\u200B\u200B:12345")).to eq('ac:12345')
+    end
+
+    it 'strips leading and trailing whitespace' do
+      expect(described_class.sanitize_id(" \t10.7916/d8c553bs \n")).to eq('10.7916/d8c553bs')
+    end
+
+    it 'strips whitespace exposed by removing hidden characters' do
+      expect(described_class.sanitize_id("10.7916/d8c553bs \u200B")).to eq('10.7916/d8c553bs')
+    end
+
+    it 'removes interior whitespace' do
+      expect(described_class.sanitize_id("10.7916/D89G5VCT è\taccademico")).to eq('10.7916/D89G5VCTèaccademico')
+    end
+
+    it 'removes unicode whitespace such as an ideographic space' do
+      expect(described_class.sanitize_id("10.7916/d8\u3000abc")).to eq('10.7916/d8abc')
     end
 
     it 'returns nil for a nil input' do

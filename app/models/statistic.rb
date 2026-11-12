@@ -7,6 +7,25 @@ class Statistic < ApplicationRecord
 
   EVENTS = [VIEW, DOWNLOAD, STREAM].freeze
 
+  # Normalized identifier used as the summary key. Rows that MySQL's collation
+  # considers the same identifier must end up under the same key, otherwise
+  # the rollup and the summaries table disagree. In order:
+  #   - remove hidden characters (the same set IdSanitizable strips from
+  #     incoming ids: zero-width and other default-ignorable characters, NBSP,
+  #     line/paragraph separators), which MySQL collations largely ignore
+  #   - NFKC-normalize, mapping compatibility characters to their plain forms
+  #     (e.g. an ellipsis to '...', fullwidth punctuation to ASCII)
+  #   - downcase, and remove all whitespace (MySQL's PAD SPACE collation treats
+  #     'abc' and 'abc ' as equal; interior whitespace never belongs in an id).
+  #     Done after NFKC, which can itself produce spaces.
+  # Invalid UTF-8 is scrubbed first so normalization can't raise.
+  def self.summary_identifier(identifier)
+    normalized = IdSanitizable.remove_hidden_characters(identifier.scrub)
+                              .unicode_normalize(:nfkc)
+                              .downcase
+    IdSanitizable.remove_whitespace(normalized)
+  end
+
   scope :rollup_eligible, lambda {
     where.not(identifier: [nil, ''])
          .where.not(event: [nil, ''])
@@ -26,7 +45,7 @@ class Statistic < ApplicationRecord
   # @param [Date|Time] start_date
   # @param [Date|Time] end_date
   # @return [Hash<String,Integer>] keys are ids and the value is the number of times said event occurred
-  def self.summarized_event_count(ids, event, start_date: nil, end_date: nil)
+  def self.event_count(ids, event, start_date: nil, end_date: nil)
     # Check parameters.
     ids = [ids] if ids.is_a? String
     raise 'ids must be an Array or String' unless ids.is_a? Array
@@ -58,7 +77,7 @@ class Statistic < ApplicationRecord
   # @param [Date|Time] start_date
   # @param [Date|Time] end_date
   # @return [Hash<String,Integer>] keys are ids and the value is the number of times said event occurred
-  def self.event_count(ids, event, start_date: nil, end_date: nil)
+  def self.raw_event_count(ids, event, start_date: nil, end_date: nil)
     # Check parameters.
     ids = [ids] if ids.is_a? String
 
