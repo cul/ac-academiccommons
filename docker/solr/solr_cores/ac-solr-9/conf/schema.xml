@@ -170,11 +170,13 @@
   <!-- If you don't need to sort records randomly, then you can remove this field: -->
   <dynamicField name="random_*" type="random"        stored="true"   indexed="true" multiValued="false"   />
 
-  <!-- If you're not using vector embedding search, then you can remove the next four fields: -->
+  <!-- If you're not using vector embedding search, then you can remove these fields: -->
   <dynamicField name="*_vector768si" type="knn768_vector"  indexed="true"  stored="true" />
   <dynamicField name="*_vector768i" type="knn768_vector"  indexed="true"  stored="false" />
   <dynamicField name="*_vector1024si" type="knn1024_vector"  indexed="true"  stored="true" />
   <dynamicField name="*_vector1024i" type="knn1024_vector"  indexed="true"  stored="false" />
+  <dynamicField name="*_vector4096si" type="knn4096_vector"  indexed="true"  stored="true" />
+  <dynamicField name="*_vector4096i" type="knn4096_vector"  indexed="true"  stored="false" />
 
   <dynamicField name="*_sort" type="alphaNumericSort" />
   <dynamicField name="*spell" type="textSpell" indexed="true" stored="false" multiValued="true" />
@@ -251,6 +253,7 @@
   <!-- If you're not using vector embedding search, then you can remove the next two field types: -->
   <fieldType name="knn768_vector"  class="solr.DenseVectorField" vectorDimension="768"  similarityFunction="cosine" />
   <fieldType name="knn1024_vector" class="solr.DenseVectorField" vectorDimension="1024" similarityFunction="cosine" />
+  <fieldType name="knn4096_vector" class="solr.DenseVectorField" vectorDimension="4096" similarityFunction="cosine" />
 
   <!--  sortMissingLast and sortMissingFirst attributes are optional attributes are
         currently supported on types that are sorted internally as strings
