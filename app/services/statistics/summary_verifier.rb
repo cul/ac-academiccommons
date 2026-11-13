@@ -71,7 +71,7 @@ module Statistics
     def expected_counts_for(month)
       Statistic
         .rollup_eligible
-        .where(at_time: summary_month_range(month))
+        .where(at_time: verification_range(month))
         .group(Arel.sql('HEX(identifier)'), Arel.sql('HEX(event)'))
         .count
         .each_with_object(Hash.new(0)) do |((identifier_hex, event_hex), count), totals|
@@ -111,9 +111,15 @@ module Statistics
       Statistic.where(at_time: result.from...result.before)
     end
 
-    def summary_month_range(month)
-      month.beginning_of_month.beginning_of_day...
-        month.next_month.beginning_of_month.beginning_of_day
+    # The summaries for a month cover its events from the start of the month up
+    # to this run's cutoff (result.before), not the whole month: the nightly
+    # update stops a few minutes before "now", so events after the cutoff exist
+    # but haven't been summarized yet.
+    def verification_range(month)
+      month_start = month.beginning_of_month.beginning_of_day
+      month_end = month.next_month.beginning_of_month.beginning_of_day
+
+      month_start...[month_end, result.before].min
     end
   end
 end

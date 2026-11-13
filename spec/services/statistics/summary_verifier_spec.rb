@@ -90,6 +90,16 @@ RSpec.describe Statistics::SummaryVerifier do
       expect(described_class.run(rollup_result)).to eq(true)
     end
 
+    it 'ignores events after the cutoff in a month that is still in progress' do
+      create_statistic(identifier: 'abc', event: 'download', at_time: Time.zone.parse('2026-07-10 12:00:00'))
+      create_statistic(identifier: 'abc', event: 'download', at_time: Time.zone.parse('2026-07-20 12:00:00'))
+
+      result = Statistics::SummaryRollup.run(before_date: Time.zone.parse('2026-07-15 00:00:00'))
+
+      expect(described_class.run(result)).to eq(true)
+      expect(StatisticsSummary.find_by!(identifier: 'abc').count).to eq(1)
+    end
+
     it 'raises when the raw statistic count does not match the rollup result' do
       create_statistic(identifier: 'abc', event: 'download', at_time: Time.zone.parse('2026-07-10 12:00:00'))
 
