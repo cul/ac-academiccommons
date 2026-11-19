@@ -35,6 +35,11 @@ unless Rails.env.academiccommons_dev?
   end
 end
 
+# Roll up statistics into summaries and prune old rows nightly.
+every :day, at: '3am' do
+  rake 'ac:statistics:nightly_update', email_subject: 'Statistics nightly update'
+end
+
 # Delete stale pending works once a month
 every :month do
   rake 'ac:delete_stale_pending_works', email_subject: 'Delete stale pending works'
